@@ -7,9 +7,12 @@
 #define TILE_BYTES_X                   8
 #define TILE_TEXTURE_BYTES             128   // 4 bpp, so (16 / 2) * 16
 #define TILE_TEXTURE_COUNT             64
-#define TILE_COUNT                     18900    // 140x135 (overworld size)
+#define TILE_COUNT_X                   140   // overworld size
+#define TILE_COUNT_Y                   135
+#define TILE_COUNT                     18900
 
-#define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x3F )
+#define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
+#define SET_TILETEXTUREINDEX( t, i )   t = ( ( ( t ) & 0xFFE0 ) | i )
 
 typedef struct Screen_t Screen_t;
 
@@ -21,8 +24,8 @@ TileTexture_t;
 
 typedef struct TileMap_t
 {
-   // lowest 6 bits are the texture index (max 64 textures)
-   // highest 10 bits are for other things (portals? encounter rates? damage?)
+   // lowest 5 bits are the texture index (max 32 textures)
+   // highest 11 bits are for other things (portals? encounter rates? damage?)
    uint16_t tiles[TILE_COUNT];
    uint8_t tilesX;
    uint8_t tilesY;
@@ -38,6 +41,7 @@ extern "C" {
 void TileMap_Init( TileMap_t* tileMap );
 
 // data.c
+void TileMap_LoadTextures( TileMap_t* tileMap );
 void TileMap_Load( TileMap_t* tileMap, Screen_t* screen, uint8_t index );
 
 #if defined( __cplusplus )

@@ -6,6 +6,7 @@ void Game_Init( Game_t* game )
 {
    Screen_Init( &( game->screen ) );
    TileMap_Init( &( game->tileMap ) );
+   TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), &( game->screen ), 0 );
    Clock_Init( &( game->clock ) );
 }
@@ -25,7 +26,7 @@ internal void Game_DrawTileMap( Game_t* game )
    {
       for ( tileX = 0; tileX < 20; tileX++ )
       {
-         textureIndex = GET_TILETEXTUREINDEX( tileMap->tiles[(tileY * tileMap->tilesX) + tileX] );
+         textureIndex = GET_TILETEXTUREINDEX( tileMap->tiles[( tileY * TILE_COUNT_X ) + tileX] );
          textureBufferPos = tileMap->textures[textureIndex].memory;
          screenBufferPos = game->screen.buffer + ( ( tileY * TILE_SIZE ) * SCREEN_BUFFER_BYTES_X ) + ( ( tileX * TILE_SIZE ) / 2 );
 
