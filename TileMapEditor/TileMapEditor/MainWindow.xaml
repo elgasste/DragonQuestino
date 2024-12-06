@@ -4,24 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TileMapEditor"
+        xmlns:TileMapEditorConverters="clr-namespace:TileMapEditor.Converters"
         mc:Ignorable="d"
         Title="Dragon Questino Tile Map Editor"
         Height="540"
         Width="800"
         ResizeMode="NoResize">
    <Window.Resources>
-      <Style x:Key="TileListItemContainerStyle"
-             TargetType="{x:Type ListViewItem}">
-         <Setter Property="Background"
-           Value="Transparent" />
-         <Setter Property="Template">
-            <Setter.Value>
-               <ControlTemplate TargetType="{x:Type ListViewItem}">
-                  <ContentPresenter />
-               </ControlTemplate>
-            </Setter.Value>
-         </Setter>
-      </Style>
+      <ResourceDictionary>
+         <Style x:Key="TileListItemContainerStyle"
+                TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type ListViewItem}">
+                     <ContentPresenter />
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+         <TileMapEditorConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
+                                                            TrueValue="Visible"
+                                                            FalseValue="Collapsed" />
+      </ResourceDictionary>
    </Window.Resources>
    <Grid>
       <StackPanel Orientation="Horizontal">
@@ -64,9 +70,16 @@
             </ItemsControl.ItemsPanel>
             <ListView.ItemTemplate>
                <DataTemplate>
-                  <Image Source="{Binding Image}"
-                         Width="32"
-                         Height="32"/>
+                  <Grid DragEnter="TileMapListViewImage_OnDragEnter"
+                        DragLeave="TileMapListViewImage_OnDragLeave">
+                     <Image Source="{Binding Image}"
+                            Width="32"
+                            Height="32"/>
+                     <Rectangle Width="32"
+                                 Height="32"
+                                 Fill="#660000FF"
+                                 Visibility="{Binding ShouldHighlight, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                  </Grid>
                </DataTemplate>
             </ListView.ItemTemplate>
          </ListView>
