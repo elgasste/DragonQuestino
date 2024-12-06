@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using TileMapEditor.ViewModels;
 
 namespace TileMapEditor
 {
@@ -7,6 +8,7 @@ namespace TileMapEditor
       public MainWindow()
       {
          InitializeComponent();
+         DataContext = new MainWindowViewModel();
       }
    }
 }
