@@ -27,10 +27,12 @@
       <StackPanel Orientation="Horizontal">
          
          <!-- Tile Picker -->
-         <ListView ItemsSource="{Binding TileSelectionViewDatas}"
+         <ListView x:Name="tileSelectionListView"
+                   ItemsSource="{Binding TileSelectionViewModels}"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
-                   ItemContainerStyle="{StaticResource TileListItemContainerStyle}">
+                   ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
+                   MouseMove="TileSelectionListView_OnMouseMove">
             <ItemsControl.ItemsPanel>
                <ItemsPanelTemplate>
                   <UniformGrid Columns="4"/>
@@ -46,12 +48,15 @@
          </ListView>
 
          <!-- Tile Map -->
-         <ListView ItemsSource="{Binding TileMapViewDatas}"
+         <ListView x:Name="tileMapListView"
+                   ItemsSource="{Binding TileMapViewModels}"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    Width="640"
                    Height="480"
-                   ItemContainerStyle="{StaticResource TileListItemContainerStyle}">
+                   ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
+                   AllowDrop="True"
+                   Drop="TileMapListView_OnDrop">
             <ItemsControl.ItemsPanel>
                <ItemsPanelTemplate>
                   <UniformGrid Columns="140"/>

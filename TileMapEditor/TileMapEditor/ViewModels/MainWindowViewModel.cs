@@ -1,5 +1,4 @@
 ﻿using DeviceFrameEditor.ViewModels;
-using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Media.Imaging;
@@ -11,8 +10,8 @@ namespace TileMapEditor.ViewModels
    {
       private readonly TileSet _tileSet;
 
-      public ObservableCollection<TileViewData> TileSelectionViewDatas { get; } = [];
-      public ObservableCollection<TileViewData> TileMapViewDatas { get; } = [];
+      public ObservableCollection<TileViewModel> TileSelectionViewModels { get; } = [];
+      public ObservableCollection<TileViewModel> TileMapViewModels { get; } = [];
 
       public MainWindowViewModel()
       {
@@ -34,12 +33,12 @@ namespace TileMapEditor.ViewModels
                image.Freeze();
             }
 
-            TileSelectionViewDatas.Add( new( i, image ) );
+            TileSelectionViewModels.Add( new( i, image ) );
          }
 
          for ( int i = 0; i < Constants.TileMapTileCount; i++ )
          {
-            TileMapViewDatas.Add( new( 0, TileSelectionViewDatas[0].Image ) );
+            TileMapViewModels.Add( new( 0, TileSelectionViewModels[0].Image ) );
          }
       }
    }
