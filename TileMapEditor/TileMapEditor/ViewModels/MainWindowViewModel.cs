@@ -1,7 +1,11 @@
-﻿using DeviceFrameEditor.ViewModels;
+﻿using DeviceFrameEditor.Commands;
+using DeviceFrameEditor.ViewModels;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using TileMapEditor.Output;
 using TileMapEditor.Tiles;
 
 namespace TileMapEditor.ViewModels
@@ -41,5 +45,15 @@ namespace TileMapEditor.ViewModels
             TileMapViewModels.Add( new( 0, TileSelectionViewModels[0].Image ) );
          }
       }
+
+      private void WriteFile()
+      {
+         var writer = new DataSourceCodeWriter( _tileSet, TileMapViewModels );
+         writer.WriteFile( "..\\..\\..\\..\\..\\DragonQuestino\\tile_data.c" );
+         MessageBox.Show( "Data file has been written!" );
+      }
+
+      private ICommand? _writeFileCommand;
+      public ICommand? WriteFileCommand => _writeFileCommand ?? ( _writeFileCommand = new RelayCommand( WriteFile, () => true ) );
    }
 }

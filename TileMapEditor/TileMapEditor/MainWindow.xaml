@@ -32,26 +32,34 @@
    <Grid>
       <StackPanel Orientation="Horizontal">
          
-         <!-- Tile Picker -->
-         <ListView x:Name="tileSelectionListView"
+         <StackPanel>
+            
+            <!-- Tile Picker -->
+            <ListView x:Name="tileSelectionListView"
                    ItemsSource="{Binding TileSelectionViewModels}"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
                    MouseMove="TileSelectionListView_OnMouseMove">
-            <ItemsControl.ItemsPanel>
-               <ItemsPanelTemplate>
-                  <UniformGrid Columns="4"/>
-               </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ListView.ItemTemplate>
-               <DataTemplate>
-                  <Image Source="{Binding Image}"
+               <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                     <UniformGrid Columns="4"/>
+                  </ItemsPanelTemplate>
+               </ItemsControl.ItemsPanel>
+               <ListView.ItemTemplate>
+                  <DataTemplate>
+                     <Image Source="{Binding Image}"
                          Width="32"
                          Height="32"/>
-               </DataTemplate>
-            </ListView.ItemTemplate>
-         </ListView>
+                  </DataTemplate>
+               </ListView.ItemTemplate>
+            </ListView>
+            
+            <!-- Control Panel -->
+            <Button Content="Write File"
+                    Command="{Binding WriteFileCommand, Mode=OneTime}"/>
+
+         </StackPanel>
 
          <!-- Tile Map -->
          <ListView x:Name="tileMapListView"
