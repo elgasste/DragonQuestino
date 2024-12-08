@@ -17,5 +17,26 @@ namespace TileMapEditor.FileOps
 
          File.WriteAllText( filePath, JsonSerializer.Serialize( tileIndexes ) );
       }
+
+      public static bool LoadTileMap( string filePath, ICollection<TileViewModel> mapTiles )
+      {
+         var contents = File.ReadAllText( filePath );
+         var tileIndexes = JsonSerializer.Deserialize<List<int>>( contents );
+
+         if ( tileIndexes == null || tileIndexes.Count != Constants.TileMapTileCount )
+         {
+            return false;
+         }
+
+         int i = 0;
+
+         foreach ( var tile in mapTiles )
+         {
+            tile.SetIndex( tileIndexes[i] );
+            i++;
+         }
+
+         return true;
+      }
    }
 }

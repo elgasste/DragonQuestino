@@ -63,7 +63,7 @@ namespace TileMapEditor
 
             if ( mapTileVM != null )
             {
-               mapTileVM.Copy( droppedTileVM );
+               mapTileVM.SetIndex( droppedTileVM.Index );
                mapTileVM.ShouldHighlight = false;
             }
          }

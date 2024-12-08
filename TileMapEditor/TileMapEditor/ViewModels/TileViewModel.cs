@@ -1,19 +1,22 @@
 ﻿using DeviceFrameEditor.ViewModels;
 using System.Windows.Media.Imaging;
+using TileMapEditor.Tiles;
 
 namespace TileMapEditor.ViewModels
 {
-   internal class TileViewModel( int index, BitmapImage image ) : ViewModelBase
+   internal class TileViewModel : ViewModelBase
    {
-      private int _index = index;
+      private TileSet _tileSet;
+
+      private int _index;
       public int Index
       {
          get => _index;
          private set => SetProperty( ref _index, value );
       }
 
-      private BitmapImage _image = image;
-      public BitmapImage Image
+      private BitmapSource? _image;
+      public BitmapSource? Image
       {
          get => _image;
          private set => SetProperty( ref _image, value );
@@ -26,10 +29,16 @@ namespace TileMapEditor.ViewModels
          set => SetProperty( ref _shouldHighlight, value );
       }
 
-      public void Copy( TileViewModel vm )
+      public TileViewModel( TileSet tileSet, int index )
       {
-         Index = vm.Index;
-         Image = vm.Image;
+         _tileSet = tileSet;
+         SetIndex( index );
+      }
+
+      public void SetIndex( int index )
+      {
+         Index = index;
+         Image = _tileSet.TileBitmaps[index];
       }
    }
 }

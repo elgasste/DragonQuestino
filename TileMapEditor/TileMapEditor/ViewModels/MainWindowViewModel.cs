@@ -37,12 +37,17 @@ namespace TileMapEditor.ViewModels
                image.Freeze();
             }
 
-            TileSelectionViewModels.Add( new( i, image ) );
+            TileSelectionViewModels.Add( new( _tileSet, i ) );
          }
 
          for ( int i = 0; i < Constants.TileMapTileCount; i++ )
          {
-            TileMapViewModels.Add( new( 0, TileSelectionViewModels[0].Image ) );
+            TileMapViewModels.Add( new( _tileSet, 0 ) );
+         }
+
+         if ( !TileMapFileOps.LoadTileMap( Constants.TileMapSaveFilePath, TileMapViewModels ) )
+         {
+            MessageBox.Show( "Could not load tile map save file!" );
          }
       }
 
