@@ -56,6 +56,8 @@
             </ListView>
             
             <!-- Control Panel -->
+            <Button Content="Save Tile Map"
+                    Command="{Binding SaveTileMapCommand, Mode=OneTime}"/>
             <Button Content="Write File"
                     Command="{Binding WriteFileCommand, Mode=OneTime}"/>
 

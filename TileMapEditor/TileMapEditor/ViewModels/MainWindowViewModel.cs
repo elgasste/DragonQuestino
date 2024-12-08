@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using TileMapEditor.Output;
+using TileMapEditor.FileOps;
 using TileMapEditor.Tiles;
 
 namespace TileMapEditor.ViewModels
@@ -19,7 +19,7 @@ namespace TileMapEditor.ViewModels
 
       public MainWindowViewModel()
       {
-         _tileSet = new TileSet( "..\\..\\..\\..\\..\\Assets\\tile_textures.png" );
+         _tileSet = new TileSet( Constants.TileTexturesFilePath );
 
          for ( int i = 0; i < Constants.TileCount; i++ )
          {
@@ -46,12 +46,21 @@ namespace TileMapEditor.ViewModels
          }
       }
 
+      private void SaveTileMap()
+      {
+         TileMapFileOps.SaveTileMap( Constants.TileMapSaveFilePath, TileMapViewModels );
+         MessageBox.Show( "Tile map has been saved!" );
+      }
+
       private void WriteFile()
       {
          var writer = new DataSourceCodeWriter( _tileSet, TileMapViewModels );
-         writer.WriteFile( "..\\..\\..\\..\\..\\DragonQuestino\\tile_data.c" );
+         writer.WriteFile( Constants.DataSourceFilePath );
          MessageBox.Show( "Data file has been written!" );
       }
+
+      private ICommand? _saveTileMapCommand;
+      public ICommand? SaveTileMapCommand => _saveTileMapCommand ?? ( _saveTileMapCommand = new RelayCommand( SaveTileMap, () => true ) );
 
       private ICommand? _writeFileCommand;
       public ICommand? WriteFileCommand => _writeFileCommand ?? ( _writeFileCommand = new RelayCommand( WriteFile, () => true ) );

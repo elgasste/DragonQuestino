@@ -2,12 +2,12 @@
 using TileMapEditor.Tiles;
 using TileMapEditor.ViewModels;
 
-namespace TileMapEditor.Output
+namespace TileMapEditor.FileOps
 {
    internal class DataSourceCodeWriter( TileSet tileSet, ICollection<TileViewModel> mapTiles )
    {
-      private TileSet _tileSet = tileSet;
-      private ICollection<TileViewModel> _tiles = mapTiles;
+      private readonly TileSet _tileSet = tileSet;
+      private readonly ICollection<TileViewModel> _tiles = mapTiles;
       private string _fileContents = string.Empty;
 
       public void WriteFile( string filePath )
