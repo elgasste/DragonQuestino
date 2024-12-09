@@ -28,9 +28,9 @@
     <ClInclude Include="win_pixel_buffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\DragonQuestino\data.c" />
     <ClCompile Include="..\..\DragonQuestino\game.c" />
     <ClCompile Include="..\..\DragonQuestino\screen.c" />
+    <ClCompile Include="..\..\DragonQuestino\tile_data.c" />
     <ClCompile Include="..\..\DragonQuestino\tile_map.c" />
     <ClCompile Include="win_clock.c" />
     <ClCompile Include="win_main.c" />
