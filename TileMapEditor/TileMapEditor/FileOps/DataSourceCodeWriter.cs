@@ -88,6 +88,7 @@ namespace TileMapEditor.FileOps
       {
          _fileContents += "\nvoid TileMap_Load( TileMap_t* tileMap, Screen_t* screen, uint8_t index )\n";
          _fileContents += "{\n";
+         _fileContents += "   int32_t i;\n";
          _fileContents += "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n";
          _fileContents += "   switch( index )\n";
          _fileContents += "   {\n";
@@ -96,13 +97,48 @@ namespace TileMapEditor.FileOps
          _fileContents += string.Format( "         tileMap->tilesX = {0};\n", Constants.TileMapTileCountX );
          _fileContents += string.Format( "         tileMap->tilesY = {0};\n", Constants.TileMapTileCountY );
 
+         var indexCounts = new Dictionary<UInt32, int>();
+
+         for ( int i = 0; i < _tiles.Count; i += 2 )
+         {
+            var index0 = (UInt32)_tiles[i].Index;
+            var index1 = (UInt32)_tiles[i + 1].Index;
+            var packed = ( index1 << 16 ) | index0;
+
+            if ( indexCounts.TryGetValue( packed, out int value ) )
+            {
+               indexCounts[packed] = ++value;
+            }
+            else
+            {
+               indexCounts[packed] = 1;
+            }
+         }
+
+         int highestCount = 0;
+         UInt32 mostCommonValue = 0;
+
+         foreach ( var pair in indexCounts )
+         {
+            if ( pair.Value > highestCount )
+            {
+               highestCount = pair.Value;
+               mostCommonValue = pair.Key;
+            }
+         }
+
+         _fileContents += string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) );
+
          for ( int i = 0, tileIndex = 0; i < _tiles.Count; i += 2, tileIndex++ )
          {
             var index0 = (UInt32)_tiles[i].Index;
             var index1 = (UInt32)_tiles[i + 1].Index;
             var packed = ( index1 << 16 ) | index0;
 
-            _fileContents += string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex, packed.ToString( "X8" ) );
+            if ( packed != mostCommonValue )
+            {
+               _fileContents += string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex, packed.ToString( "X8" ) );
+            }
          }
 
          _fileContents += "         break;\n";
