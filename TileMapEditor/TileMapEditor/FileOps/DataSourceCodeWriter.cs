@@ -1,13 +1,14 @@
-﻿using System.IO;
+﻿using System.Collections.ObjectModel;
+using System.IO;
 using TileMapEditor.Tiles;
 using TileMapEditor.ViewModels;
 
 namespace TileMapEditor.FileOps
 {
-   internal class DataSourceCodeWriter( TileSet tileSet, ICollection<TileViewModel> mapTiles )
+   internal class DataSourceCodeWriter( TileSet tileSet, ObservableCollection<TileViewModel> mapTiles )
    {
       private readonly TileSet _tileSet = tileSet;
-      private readonly ICollection<TileViewModel> _tiles = mapTiles;
+      private readonly ObservableCollection<TileViewModel> _tiles = mapTiles;
       private string _fileContents = string.Empty;
 
       public void WriteFile( string filePath )
@@ -48,22 +49,35 @@ namespace TileMapEditor.FileOps
       {
          _fileContents += "\nvoid TileMap_LoadTextures( TileMap_t* tileMap )\n";
          _fileContents += "{\n";
+         _fileContents += "   uint32_t* mem32;\n\n";
 
          for ( int i = 0; i < Constants.TileCount; i++ )
          {
+            _fileContents += string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i );
+
             var pixelIndexes = _tileSet.TilePaletteIndexes[i];
-            int memoryIndex = 0;
 
-            for ( int j = 0; j < Constants.TilePixels; j++ )
+            for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 8, memoryIndex++ )
             {
-               var index1 = pixelIndexes[j];
-               j++;
-               var index2 = pixelIndexes[j];
-               var packed = ( index1 << 4 ) | index2;
+               var index0 = (UInt32)( pixelIndexes[j + 0] );
+               var index1 = (UInt32)( pixelIndexes[j + 1] );
+               var index2 = (UInt32)( pixelIndexes[j + 2] );
+               var index3 = (UInt32)( pixelIndexes[j + 3] );
+               var index4 = (UInt32)( pixelIndexes[j + 4] );
+               var index5 = (UInt32)( pixelIndexes[j + 5] );
+               var index6 = (UInt32)( pixelIndexes[j + 6] );
+               var index7 = (UInt32)( pixelIndexes[j + 7] );
 
-               _fileContents += string.Format( "   tileMap->textures[{0}].memory[{1}] = 0x{2};\n", i, memoryIndex, packed.ToString( "X4" ) );
+               var packed = ( index6 << 28 ) |
+                            ( index7 << 24 ) |
+                            ( index4 << 20 ) |
+                            ( index5 << 16 ) |
+                            ( index2 << 12 ) |
+                            ( index3 << 8  ) |
+                            ( index0 << 4  ) |
+                            ( index1 << 0  );
 
-               memoryIndex++;
+               _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) );
             }
          }
 
@@ -74,6 +88,7 @@ namespace TileMapEditor.FileOps
       {
          _fileContents += "\nvoid TileMap_Load( TileMap_t* tileMap, Screen_t* screen, uint8_t index )\n";
          _fileContents += "{\n";
+         _fileContents += "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n";
          _fileContents += "   switch( index )\n";
          _fileContents += "   {\n";
          _fileContents += "      case 0:\n";
@@ -81,12 +96,13 @@ namespace TileMapEditor.FileOps
          _fileContents += string.Format( "         tileMap->tilesX = {0};\n", Constants.TileMapTileCountX );
          _fileContents += string.Format( "         tileMap->tilesY = {0};\n", Constants.TileMapTileCountY );
 
-         int i = 0;
-
-         foreach ( var tile in _tiles )
+         for ( int i = 0, tileIndex = 0; i < _tiles.Count; i += 2, tileIndex++ )
          {
-            _fileContents += string.Format( "         SET_TILETEXTUREINDEX( tileMap->tiles[{0}], {1} );\n", i, tile.Index );
-            i++;
+            var index0 = (UInt32)_tiles[i].Index;
+            var index1 = (UInt32)_tiles[i + 1].Index;
+            var packed = ( index1 << 16 ) | index0;
+
+            _fileContents += string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex, packed.ToString( "X8" ) );
          }
 
          _fileContents += "         break;\n";
