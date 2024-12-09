@@ -9,6 +9,7 @@ namespace TileMapEditor
    public partial class MainWindow : Window
    {
       private readonly MainWindowViewModel _viewModel;
+      private int _tileIndexCache = 0;
 
       public MainWindow()
       {
@@ -27,7 +28,7 @@ namespace TileMapEditor
 
             if ( tileViewData != null )
             {
-               DataObject data = new DataObject();
+               var data = new DataObject();
                data.SetData( "Object", tileViewData );
 
                DragDrop.DoDragDrop( this, data, DragDropEffects.Copy | DragDropEffects.Move );
@@ -37,21 +38,49 @@ namespace TileMapEditor
 
       private void TileMapListViewImage_OnDragEnter( object sender, DragEventArgs e )
       {
-         var tileVm = FindTileViewModelAtPoint( e.GetPosition( this ) );
+         var tileVM = FindTileViewModelAtPoint( e.GetPosition( this ) );
 
-         if ( tileVm != null )
+         if ( tileVM != null )
          {
-            tileVm.ShouldHighlight = true;
+            tileVM.ShouldHighlight = true;
          }
       }
 
       private void TileMapListViewImage_OnDragLeave( object sender, DragEventArgs e )
       {
-         var tileVm = FindTileViewModelFromObject( sender );
+         var tileVM = FindTileViewModelFromObject( sender );
 
-         if ( tileVm != null )
+         if ( tileVM != null )
          {
-            tileVm.ShouldHighlight = false;
+            tileVM.ShouldHighlight = false;
+         }
+      }
+
+      private void TileMapListView_OnPreviewMouseDown( object sender, MouseButtonEventArgs e )
+      {
+         if ( Mouse.LeftButton == MouseButtonState.Pressed )
+         {
+            var tileVM = FindTileViewModelAtPoint( Mouse.GetPosition( this ) );
+
+            if ( tileVM != null )
+            {
+               _tileIndexCache = tileVM.Index;
+            }
+         }
+      }
+
+      private void TileMapListView_OnMouseMove( object sender, MouseEventArgs e )
+      {
+         base.OnMouseMove( e );
+
+         if ( Mouse.LeftButton == MouseButtonState.Pressed && ( Keyboard.IsKeyDown( Key.LeftShift ) || Keyboard.IsKeyDown( Key.RightShift ) ) )
+         {
+            var tileVM = FindTileViewModelAtPoint( e.GetPosition( this ) );
+
+            if ( tileVM != null && tileVM.Index != _tileIndexCache )
+            {
+               tileVM.SetIndex( _tileIndexCache );
+            }
          }
       }
 

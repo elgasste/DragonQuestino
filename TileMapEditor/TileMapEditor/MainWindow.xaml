@@ -16,6 +16,7 @@
                 TargetType="{x:Type ListViewItem}">
             <Setter Property="Background"
                     Value="Transparent" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Template">
                <Setter.Value>
                   <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -72,6 +73,8 @@
                    Height="480"
                    ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
                    AllowDrop="True"
+                   PreviewMouseDown="TileMapListView_OnPreviewMouseDown"
+                   MouseMove="TileMapListView_OnMouseMove"
                    Drop="TileMapListView_OnDrop">
             <ItemsControl.ItemsPanel>
                <ItemsPanelTemplate>
