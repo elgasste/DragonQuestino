@@ -1,6 +1,7 @@
 #include "game.h"
 
 internal void Game_DrawTileMap( Game_t* game );
+internal void Game_HandleInput( Game_t* game );
 
 void Game_Init( Game_t* game )
 {
@@ -10,13 +11,46 @@ void Game_Init( Game_t* game )
    TileMap_Load( &( game->tileMap ), &( game->screen ), 0 );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
+
+   game->tileMapPixelOffsetX = 0;
+   game->tileMapPixelOffsetY = 0;
 }
 
 void Game_Tic( Game_t* game )
 {
    Input_Read( &( game->input ) );
+   Game_HandleInput( game );
    Game_DrawTileMap( game );
    Screen_RenderBuffer( &( game->screen ) );
+}
+
+internal void Game_HandleInput( Game_t* game )
+{
+   Bool_t leftIsDown = game->input.buttonStates[Button_Left].down;
+   Bool_t upIsDown = game->input.buttonStates[Button_Up].down;
+   Bool_t rightIsDown = game->input.buttonStates[Button_Right].down;
+   Bool_t downIsDown = game->input.buttonStates[Button_Down].down;
+
+   if ( leftIsDown )
+   {
+      game->tileMapPixelOffsetX -= 5;
+      if ( game->tileMapPixelOffsetX < 0 ) game->tileMapPixelOffsetX = 0;
+   }
+   if ( upIsDown )
+   {
+      game->tileMapPixelOffsetY -= 5;
+      if ( game->tileMapPixelOffsetY < 0 ) game->tileMapPixelOffsetY = 0;
+   }
+   if ( rightIsDown )
+   {
+      game->tileMapPixelOffsetX += 5;
+      if ( ( ( TILE_COUNT_X * TILE_SIZE ) - game->tileMapPixelOffsetX ) < SCREEN_BUFFER_WIDTH ) game->tileMapPixelOffsetX = ( TILE_COUNT_X * TILE_SIZE ) - SCREEN_BUFFER_WIDTH;
+   }
+   if ( downIsDown )
+   {
+      game->tileMapPixelOffsetY += 5;
+      if ( ( ( TILE_COUNT_Y * TILE_SIZE ) - game->tileMapPixelOffsetY ) < SCREEN_BUFFER_HEIGHT ) game->tileMapPixelOffsetY = ( TILE_COUNT_Y * TILE_SIZE ) - SCREEN_BUFFER_HEIGHT;
+   }
 }
 
 internal void Game_DrawTileMap( Game_t* game )

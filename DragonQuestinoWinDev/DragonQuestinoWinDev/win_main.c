@@ -295,6 +295,14 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
+   sprintf_s( str, STRING_SIZE_DEFAULT, "Map Offset X: %i", g_globals.game.tileMapPixelOffsetX );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "Map Offset Y: %i", g_globals.game.tileMapPixelOffsetY );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
    if ( g_globals.game.input.buttonStates[Button_Up].down )
    {
       sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );

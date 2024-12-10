@@ -13,6 +13,9 @@ typedef struct Game_t
    TileMap_t tileMap;
    Clock_t clock;
    Input_t input;
+
+   int32_t tileMapPixelOffsetX;
+   int32_t tileMapPixelOffsetY;
 }
 Game_t;
 

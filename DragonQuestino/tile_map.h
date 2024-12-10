@@ -12,7 +12,6 @@
 #define TILE_COUNT                     18900
 
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
-#define SET_TILETEXTUREINDEX( t, i )   t = ( ( ( t ) & 0xFFE0 ) | i )
 
 typedef struct Screen_t Screen_t;
 
