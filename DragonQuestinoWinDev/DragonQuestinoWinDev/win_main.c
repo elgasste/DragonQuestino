@@ -169,9 +169,8 @@ internal void InitButtonMap()
    g_globals.buttonMap[Button_Up] = VK_UP;
    g_globals.buttonMap[Button_Right] = VK_RIGHT;
    g_globals.buttonMap[Button_Down] = VK_DOWN;
-   // MUFFINS: change these to X and Z
-   g_globals.buttonMap[Button_A] = 0x41; // A
-   g_globals.buttonMap[Button_B] = VK_ESCAPE;
+   g_globals.buttonMap[Button_A] = 0x58; // X
+   g_globals.buttonMap[Button_B] = 0x5A; // Z
 }
 
 internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
@@ -294,6 +293,30 @@ internal void DrawDiagnostics( HDC* dcMem )
    realSeconds = ( g_globals.game.clock.absoluteEndMicro - g_globals.game.clock.absoluteStartMicro ) / 1000000;
    sprintf_s( str, STRING_SIZE_DEFAULT, "    Real Time: %u:%02u:%02u", realSeconds / 3600, realSeconds / 60, realSeconds );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   if ( g_globals.game.input.buttonStates[Button_Up].down )
+   {
+      sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
+      DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   }
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "         " );
+   if ( g_globals.game.input.buttonStates[Button_Left].down ) str[0] = '-';
+   if ( g_globals.game.input.buttonStates[Button_Left].down ) str[1] = '-';
+   if ( g_globals.game.input.buttonStates[Button_Right].down ) str[3] = '-';
+   if ( g_globals.game.input.buttonStates[Button_Right].down ) str[4] = '-';
+   if ( g_globals.game.input.buttonStates[Button_B].down ) str[6] = 'B';
+   if ( g_globals.game.input.buttonStates[Button_A].down ) str[8] = 'A';
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   if ( g_globals.game.input.buttonStates[Button_Down].down )
+   {
+      sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
+      DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   }
 
    SelectObject( *dcMem, oldFont );
 }
