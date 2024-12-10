@@ -3,6 +3,16 @@
 
 #include "common.h"
 
+// TODO: these aren't defined for the Giga R1, figure that out
+// #define PIN_ANALOG_X          A15
+// #define PIN_ANALOG_Y          A14
+#define PIN_A_BUTTON          50
+#define PIN_B_BUTTON          52
+
+// the analog stick ranges from 0 to 1024
+#define ANALOG_THRESHOLD_LOW  200
+#define ANALOG_THRESHOLD_HIGH 824
+
 typedef enum
 {
    Button_Left = 0,
@@ -42,8 +52,6 @@ extern "C" {
    void Input_ResetState( Input_t* input );
    void Input_ButtonPressed( Input_t* input, uint8_t button );
    void Input_ButtonReleased( Input_t* input, uint8_t button );
-#else
-   void Input_SetPinModes( Input_t* input );
 #endif
 
 #if defined( __cplusplus )

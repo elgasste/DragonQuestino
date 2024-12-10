@@ -1,11 +1,5 @@
 #include "input.h"
 
-void Input_Read( Input_t* input )
-{
-   // not necessary in Windows
-   UNUSED_PARAM( input );
-}
-
 void Input_ResetState( Input_t* input )
 {
    uint32_t i;
