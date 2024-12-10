@@ -5,6 +5,7 @@
 
 internal void FatalError( const char* message );
 internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam );
+internal void InitButtonMap();
 internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags );
 internal void RenderScreen();
 internal void DrawDiagnostics( HDC* dcMem );
@@ -91,6 +92,8 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_globals.bmpInfo.bmiHeader.biBitCount = 32;
    g_globals.bmpInfo.bmiHeader.biCompression = BI_RGB;
 
+   InitButtonMap();
+
    Game_Init( &( g_globals.game ) );
    g_globals.shutdown = False;
    g_globals.debugFlags.showDiagnostics = False;
@@ -160,10 +163,22 @@ internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ W
    return result;
 }
 
+internal void InitButtonMap()
+{
+   g_globals.buttonMap[Button_Left] = VK_LEFT;
+   g_globals.buttonMap[Button_Up] = VK_UP;
+   g_globals.buttonMap[Button_Right] = VK_RIGHT;
+   g_globals.buttonMap[Button_Down] = VK_DOWN;
+   // MUFFINS: change these to X and Z
+   g_globals.buttonMap[Button_A] = 0x41; // A
+   g_globals.buttonMap[Button_B] = VK_ESCAPE;
+}
+
 internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
 {
    Bool_t keyWasDown = ( flags & ( (LONG_PTR)1 << 30 ) ) != 0 ? True : False;
    Bool_t keyIsDown = ( flags & ( (LONG_PTR)1 << 31 ) ) == 0 ? True : False;
+   uint8_t i;
 
    // ignore repeat presses
    if ( keyWasDown != keyIsDown )
@@ -177,11 +192,32 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
             return;
          }
 
+         for ( i = 0; i < Button_Count; i++ )
+         {
+            if ( g_globals.buttonMap[i] == keyCode )
+            {
+               Input_ButtonPressed( &( g_globals.game.input ), i );
+               break;
+            }
+         }
+
+         // Windows-specific diagnostic/debug keys
          switch ( keyCode )
          {
             case VK_F8:
                TOGGLE_BOOL( g_globals.debugFlags.showDiagnostics );
                break;
+         }
+      }
+      else
+      {
+         for ( i = 0; i < Button_Count; i++ )
+         {
+            if ( g_globals.buttonMap[i] == keyCode )
+            {
+               Input_ButtonReleased( &( g_globals.game.input ), i );
+               break;
+            }
          }
       }
    }

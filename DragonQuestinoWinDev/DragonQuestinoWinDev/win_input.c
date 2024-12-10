@@ -1,0 +1,42 @@
+#include "input.h"
+
+void Input_Read( Input_t* input )
+{
+   // not necessary in Windows
+   UNUSED_PARAM( input );
+}
+
+void Input_ResetState( Input_t* input )
+{
+   uint32_t i;
+   ButtonState_t* state = input->buttonStates;
+
+   for ( i = 0; i < Button_Count; i++ )
+   {
+      state->pressed = False;
+      state->released = False;
+      state++;
+   }
+}
+
+void Input_ButtonPressed( Input_t* input, uint8_t button )
+{
+   ButtonState_t* state = &( input->buttonStates[button] );
+
+   if ( !state->down )
+   {
+      state->down = True;
+      state->pressed = True;
+   }
+}
+
+void Input_ButtonReleased( Input_t* input, uint8_t button )
+{
+   ButtonState_t* state = &( input->buttonStates[button] );
+
+   if ( state->down )
+   {
+      state->down = False;
+      state->released = True;
+   }
+}

@@ -9,10 +9,12 @@ void Game_Init( Game_t* game )
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), &( game->screen ), 0 );
    Clock_Init( &( game->clock ) );
+   Input_Init( &( game->input ) );
 }
 
 void Game_Tic( Game_t* game )
 {
+   Input_Read( &( game->input ) );
    Game_DrawTileMap( game );
    Screen_RenderBuffer( &( game->screen ) );
 }

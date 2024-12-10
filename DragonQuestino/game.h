@@ -5,12 +5,14 @@
 #include "screen.h"
 #include "tile_map.h"
 #include "clock.h"
+#include "input.h"
 
 typedef struct Game_t
 {
    Screen_t screen;
    TileMap_t tileMap;
    Clock_t clock;
+   Input_t input;
 }
 Game_t;
 

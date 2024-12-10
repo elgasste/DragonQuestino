@@ -22,6 +22,7 @@
     <ClInclude Include="..\..\DragonQuestino\clock.h" />
     <ClInclude Include="..\..\DragonQuestino\common.h" />
     <ClInclude Include="..\..\DragonQuestino\game.h" />
+    <ClInclude Include="..\..\DragonQuestino\input.h" />
     <ClInclude Include="..\..\DragonQuestino\screen.h" />
     <ClInclude Include="..\..\DragonQuestino\tile_map.h" />
     <ClInclude Include="win_common.h" />
@@ -29,10 +30,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\DragonQuestino\game.c" />
+    <ClCompile Include="..\..\DragonQuestino\input.c" />
     <ClCompile Include="..\..\DragonQuestino\screen.c" />
     <ClCompile Include="..\..\DragonQuestino\tile_data.c" />
     <ClCompile Include="..\..\DragonQuestino\tile_map.c" />
     <ClCompile Include="win_clock.c" />
+    <ClCompile Include="win_input.c" />
     <ClCompile Include="win_main.c" />
     <ClCompile Include="win_pixel_buffer.c" />
     <ClCompile Include="win_screen.c" />
