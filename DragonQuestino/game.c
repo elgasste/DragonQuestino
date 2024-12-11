@@ -12,8 +12,10 @@ void Game_Init( Game_t* game )
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
 
-   game->tileMapPixelOffsetX = 0;
-   game->tileMapPixelOffsetY = 0;
+   game->tileMapViewport.x = 0;
+   game->tileMapViewport.y = 0;
+   game->tileMapViewport.w = SCREEN_BUFFER_WIDTH;
+   game->tileMapViewport.h = SCREEN_BUFFER_HEIGHT;
 }
 
 void Game_Tic( Game_t* game )
@@ -26,6 +28,7 @@ void Game_Tic( Game_t* game )
 
 internal void Game_HandleInput( Game_t* game )
 {
+   Vector4u32_t* viewport = &( game->tileMapViewport );
    Bool_t leftIsDown = game->input.buttonStates[Button_Left].down;
    Bool_t upIsDown = game->input.buttonStates[Button_Up].down;
    Bool_t rightIsDown = game->input.buttonStates[Button_Right].down;
@@ -33,23 +36,23 @@ internal void Game_HandleInput( Game_t* game )
 
    if ( leftIsDown )
    {
-      game->tileMapPixelOffsetX -= 5;
-      if ( game->tileMapPixelOffsetX < 0 ) game->tileMapPixelOffsetX = 0;
+      viewport->x -= 5;
+      if ( viewport->x < 0 ) viewport->x = 0;
    }
    if ( upIsDown )
    {
-      game->tileMapPixelOffsetY -= 5;
-      if ( game->tileMapPixelOffsetY < 0 ) game->tileMapPixelOffsetY = 0;
+      viewport->y -= 5;
+      if ( viewport->y < 0 ) viewport->y = 0;
    }
    if ( rightIsDown )
    {
-      game->tileMapPixelOffsetX += 5;
-      if ( ( ( TILE_COUNT_X * TILE_SIZE ) - game->tileMapPixelOffsetX ) < SCREEN_BUFFER_WIDTH ) game->tileMapPixelOffsetX = ( TILE_COUNT_X * TILE_SIZE ) - SCREEN_BUFFER_WIDTH;
+      viewport->x += 5;
+      if ( ( ( TILE_COUNT_X * TILE_SIZE ) - viewport->x ) < SCREEN_BUFFER_WIDTH ) viewport->x = ( TILE_COUNT_X * TILE_SIZE ) - SCREEN_BUFFER_WIDTH;
    }
    if ( downIsDown )
    {
-      game->tileMapPixelOffsetY += 5;
-      if ( ( ( TILE_COUNT_Y * TILE_SIZE ) - game->tileMapPixelOffsetY ) < SCREEN_BUFFER_HEIGHT ) game->tileMapPixelOffsetY = ( TILE_COUNT_Y * TILE_SIZE ) - SCREEN_BUFFER_HEIGHT;
+      viewport->y += 5;
+      if ( ( ( TILE_COUNT_Y * TILE_SIZE ) - viewport->y ) < SCREEN_BUFFER_HEIGHT ) viewport->y = ( TILE_COUNT_Y * TILE_SIZE ) - SCREEN_BUFFER_HEIGHT;
    }
 }
 

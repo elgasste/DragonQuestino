@@ -25,6 +25,7 @@
     <ClInclude Include="..\..\DragonQuestino\input.h" />
     <ClInclude Include="..\..\DragonQuestino\screen.h" />
     <ClInclude Include="..\..\DragonQuestino\tile_map.h" />
+    <ClInclude Include="..\..\DragonQuestino\vector.h" />
     <ClInclude Include="win_common.h" />
     <ClInclude Include="win_pixel_buffer.h" />
   </ItemGroup>

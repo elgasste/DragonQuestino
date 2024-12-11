@@ -295,11 +295,11 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "Map Offset X: %i", g_globals.game.tileMapPixelOffsetX );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "Map Offset X: %i", g_globals.game.tileMapViewport.x );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "Map Offset Y: %i", g_globals.game.tileMapPixelOffsetY );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "Map Offset Y: %i", g_globals.game.tileMapViewport.y );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
