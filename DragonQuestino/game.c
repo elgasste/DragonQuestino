@@ -28,7 +28,7 @@ void Game_Tic( Game_t* game )
 
 internal void Game_HandleInput( Game_t* game )
 {
-   Vector4u32_t* viewport = &( game->tileMapViewport );
+   Vector4i32_t* viewport = &( game->tileMapViewport );
    Bool_t leftIsDown = game->input.buttonStates[Button_Left].down;
    Bool_t upIsDown = game->input.buttonStates[Button_Up].down;
    Bool_t rightIsDown = game->input.buttonStates[Button_Right].down;
@@ -37,7 +37,8 @@ internal void Game_HandleInput( Game_t* game )
    if ( leftIsDown )
    {
       viewport->x -= 5;
-      if ( viewport->x < 0 ) viewport->x = 0;
+      if ( viewport->x < 0 )
+         viewport->x = 0;
    }
    if ( upIsDown )
    {

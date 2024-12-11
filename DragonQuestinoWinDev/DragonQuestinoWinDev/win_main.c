@@ -303,28 +303,31 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   if ( g_globals.game.input.buttonStates[Button_Up].down )
-   {
-      sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
-      DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
-   }
-   r.top += 16;
-
-   sprintf_s( str, STRING_SIZE_DEFAULT, "         " );
-   if ( g_globals.game.input.buttonStates[Button_Left].down ) str[0] = '-';
-   if ( g_globals.game.input.buttonStates[Button_Left].down ) str[1] = '-';
-   if ( g_globals.game.input.buttonStates[Button_Right].down ) str[3] = '-';
-   if ( g_globals.game.input.buttonStates[Button_Right].down ) str[4] = '-';
-   if ( g_globals.game.input.buttonStates[Button_B].down ) str[6] = 'B';
-   if ( g_globals.game.input.buttonStates[Button_A].down ) str[8] = 'A';
+   sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Up].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   if ( g_globals.game.input.buttonStates[Button_Down].down )
-   {
-      sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
-      DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
-   }
+   sprintf_s( str, STRING_SIZE_DEFAULT, "--" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Left].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "   --" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Right].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "      B" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_B].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "        A" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_A].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Down].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
 }

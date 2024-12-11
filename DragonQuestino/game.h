@@ -15,7 +15,7 @@ typedef struct Game_t
    Clock_t clock;
    Input_t input;
 
-   Vector4u32_t tileMapViewport;
+   Vector4i32_t tileMapViewport;
 }
 Game_t;
 
