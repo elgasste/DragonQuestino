@@ -25,8 +25,8 @@ void Screen_Init( Screen_t* screen );
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );
 
-// data.c
-void Screen_LoadPalette( Screen_t* screen, uint8_t index );
+// game_data.c
+void Screen_LoadPalette( Screen_t* screen );
 
 #if defined( __cplusplus )
 }

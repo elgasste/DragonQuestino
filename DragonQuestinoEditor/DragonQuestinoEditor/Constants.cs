@@ -4,7 +4,7 @@
    {
       public const string TileTexturesFilePath = "..\\..\\..\\..\\..\\Assets\\tile_textures.png";
       public const string TileMapSaveFilePath = "..\\..\\..\\..\\..\\Assets\\tile_map_save.json";
-      public const string DataSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\tile_data.c";
+      public const string DataSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\game_data.c";
 
       public const int TileSize = 16;
       public const int TilePixels = 256;

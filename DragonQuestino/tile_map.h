@@ -38,9 +38,9 @@ extern "C" {
 
 void TileMap_Init( TileMap_t* tileMap );
 
-// data.c
+// game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
-void TileMap_Load( TileMap_t* tileMap, Screen_t* screen, uint8_t index );
+void TileMap_Load( TileMap_t* tileMap, uint8_t index );
 
 #if defined( __cplusplus )
 }

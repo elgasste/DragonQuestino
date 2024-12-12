@@ -29,21 +29,16 @@ namespace TileMapEditor.FileOps
 
       private void BuildPaletteFunction()
       {
-         _fileContents += "\nvoid Screen_LoadPalette( Screen_t* screen, uint8_t index )\n";
+         _fileContents += "\nvoid Screen_LoadPalette( Screen_t* screen )\n";
          _fileContents += "{\n";
          _fileContents += "   uint16_t i;\n\n";
          _fileContents += string.Format( "   for ( i = 0; i < {0}; i++ ) {{ screen->palette[i] = 0; }}\n\n", Constants.PaletteSize );
-         _fileContents += "   switch( index )\n";
-         _fileContents += "   {\n";
-         _fileContents += "      case 0:\n";
 
          for ( int i = 0; i < _tileSet.PaletteCount; i++ )
          {
-            _fileContents += string.Format( "         screen->palette[{0}] = 0x{1};\n", i, _tileSet.Palette[i].ToString( "X4" ) );
+            _fileContents += string.Format( "   screen->palette[{0}] = 0x{1};\n", i, _tileSet.Palette[i].ToString( "X4" ) );
          }
 
-         _fileContents += "         break;\n";
-         _fileContents += "   }\n";
          _fileContents += "}\n";
       }
 
@@ -80,14 +75,13 @@ namespace TileMapEditor.FileOps
 
       private void BuildTileMapFunction()
       {
-         _fileContents += "\nvoid TileMap_Load( TileMap_t* tileMap, Screen_t* screen, uint8_t index )\n";
+         _fileContents += "\nvoid TileMap_Load( TileMap_t* tileMap, uint8_t index )\n";
          _fileContents += "{\n";
          _fileContents += "   int32_t i;\n";
          _fileContents += "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n";
          _fileContents += "   switch( index )\n";
          _fileContents += "   {\n";
          _fileContents += "      case 0:\n";
-         _fileContents += "         Screen_LoadPalette( screen, 0 );\n";
          _fileContents += string.Format( "         tileMap->tilesX = {0};\n", Constants.TileMapTileCountX );
          _fileContents += string.Format( "         tileMap->tilesY = {0};\n", Constants.TileMapTileCountY );
 

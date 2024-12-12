@@ -11,7 +11,7 @@ void Game_Init( Game_t* game )
    Screen_Init( &( game->screen ) );
    TileMap_Init( &( game->tileMap ) );
    TileMap_LoadTextures( &( game->tileMap ) );
-   TileMap_Load( &( game->tileMap ), &( game->screen ), 0 );
+   TileMap_Load( &( game->tileMap ), 0 );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
 

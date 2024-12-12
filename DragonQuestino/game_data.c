@@ -1,27 +1,22 @@
 #include "screen.h"
 #include "tile_map.h"
 
-void Screen_LoadPalette( Screen_t* screen, uint8_t index )
+void Screen_LoadPalette( Screen_t* screen )
 {
    uint16_t i;
 
    for ( i = 0; i < 256; i++ ) { screen->palette[i] = 0; }
 
-   switch( index )
-   {
-      case 0:
-         screen->palette[0] = 0x9720;
-         screen->palette[1] = 0x4521;
-         screen->palette[2] = 0x0000;
-         screen->palette[3] = 0xFCE0;
-         screen->palette[4] = 0xFEB3;
-         screen->palette[5] = 0x7BEF;
-         screen->palette[6] = 0xB5D6;
-         screen->palette[7] = 0xDA60;
-         screen->palette[8] = 0x3AFE;
-         screen->palette[9] = 0xFFFF;
-         break;
-   }
+   screen->palette[0] = 0x9720;
+   screen->palette[1] = 0x4521;
+   screen->palette[2] = 0x0000;
+   screen->palette[3] = 0xFCE0;
+   screen->palette[4] = 0xFEB3;
+   screen->palette[5] = 0x7BEF;
+   screen->palette[6] = 0xB5D6;
+   screen->palette[7] = 0xDA60;
+   screen->palette[8] = 0x3AFE;
+   screen->palette[9] = 0xFFFF;
 }
 
 void TileMap_LoadTextures( TileMap_t* tileMap )
@@ -2110,7 +2105,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap )
    mem32[63] = 0x02020202;
 }
 
-void TileMap_Load( TileMap_t* tileMap, Screen_t* screen, uint8_t index )
+void TileMap_Load( TileMap_t* tileMap, uint8_t index )
 {
    int32_t i;
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
@@ -2118,7 +2113,6 @@ void TileMap_Load( TileMap_t* tileMap, Screen_t* screen, uint8_t index )
    switch( index )
    {
       case 0:
-         Screen_LoadPalette( screen, 0 );
          tileMap->tilesX = 140;
          tileMap->tilesY = 135;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x000C000C; }

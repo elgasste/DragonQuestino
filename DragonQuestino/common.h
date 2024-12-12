@@ -36,6 +36,17 @@
 #define DELAY_MS( x )                  delay( x )
 #endif
 
+typedef enum Direction_t
+{
+   Direction_Left = 0,
+   Direction_Up,
+   Direction_Right,
+   Direction_Down,
+
+   Direction_Count
+}
+Direction_t;
+
 #if defined( __cplusplus )
 extern "C" {
 #endif
