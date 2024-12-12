@@ -2,6 +2,9 @@
 
 internal void Game_DrawTileMap( Game_t* game );
 internal void Game_HandleInput( Game_t* game );
+internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
+                                           uint16_t tx, uint16_t ty, uint16_t tw, uint16_t th,
+                                           uint16_t sx, uint16_t sy );
 
 void Game_Init( Game_t* game )
 {
@@ -59,7 +62,7 @@ internal void Game_HandleInput( Game_t* game )
 
 internal void Game_DrawTileMap( Game_t* game )
 {
-   uint8_t tileX, tileY, textureIndex, *textureBufferPos, *screenBufferPos, y;
+   uint8_t tileX, tileY, textureIndex;
    TileMap_t* tileMap = &( game->tileMap );
 
    for ( tileY = 0; tileY < 15; tileY++ )
@@ -67,15 +70,23 @@ internal void Game_DrawTileMap( Game_t* game )
       for ( tileX = 0; tileX < 20; tileX++ )
       {
          textureIndex = GET_TILETEXTUREINDEX( tileMap->tiles[( tileY * TILE_COUNT_X ) + tileX] );
-         textureBufferPos = tileMap->textures[textureIndex].memory;
-         screenBufferPos = game->screen.buffer + ( ( tileY * TILE_SIZE ) * SCREEN_BUFFER_WIDTH ) + ( tileX * TILE_SIZE );
-
-         for ( y = 0; y < TILE_SIZE; y++ )
-         {
-            memcpy( screenBufferPos, textureBufferPos, TILE_SIZE );
-            textureBufferPos += TILE_SIZE;
-            screenBufferPos += SCREEN_BUFFER_WIDTH;
-         }
+         Game_DrawTileTextureSection( game, textureIndex, 0, 0, TILE_SIZE, TILE_SIZE, tileX * TILE_SIZE, tileY * TILE_SIZE );
       }
+   }
+}
+
+internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
+                                           uint16_t tx, uint16_t ty, uint16_t tw, uint16_t th,
+                                           uint16_t sx, uint16_t sy )
+{
+   uint8_t y;
+   uint8_t* textureBufferPos = game->tileMap.textures[index].memory + ( ty * TILE_SIZE ) + tx;
+   uint8_t* screenBufferPos = game->screen.buffer + ( sy * SCREEN_BUFFER_WIDTH ) + sx;
+
+   for ( y = 0; y < th; y++ )
+   {
+      memcpy( screenBufferPos, textureBufferPos, tw );
+      textureBufferPos += tw + tx + ( TILE_SIZE - ( tx + tw ) );
+      screenBufferPos += ( SCREEN_BUFFER_WIDTH );
    }
 }
