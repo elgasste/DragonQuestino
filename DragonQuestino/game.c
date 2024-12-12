@@ -68,13 +68,13 @@ internal void Game_DrawTileMap( Game_t* game )
       {
          textureIndex = GET_TILETEXTUREINDEX( tileMap->tiles[( tileY * TILE_COUNT_X ) + tileX] );
          textureBufferPos = tileMap->textures[textureIndex].memory;
-         screenBufferPos = game->screen.buffer + ( ( tileY * TILE_SIZE ) * SCREEN_BUFFER_BYTES_X ) + ( ( tileX * TILE_SIZE ) / 2 );
+         screenBufferPos = game->screen.buffer + ( ( tileY * TILE_SIZE ) * SCREEN_BUFFER_WIDTH ) + ( tileX * TILE_SIZE );
 
          for ( y = 0; y < TILE_SIZE; y++ )
          {
-            memcpy( screenBufferPos, textureBufferPos, TILE_BYTES_X );
-            textureBufferPos += TILE_BYTES_X;
-            screenBufferPos += SCREEN_BUFFER_BYTES_X;
+            memcpy( screenBufferPos, textureBufferPos, TILE_SIZE );
+            textureBufferPos += TILE_SIZE;
+            screenBufferPos += SCREEN_BUFFER_WIDTH;
          }
       }
    }

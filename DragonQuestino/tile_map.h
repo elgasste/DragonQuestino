@@ -4,8 +4,7 @@
 #include "common.h"
 
 #define TILE_SIZE                      16
-#define TILE_BYTES_X                   8
-#define TILE_TEXTURE_BYTES             128   // 4 bpp, so (16 / 2) * 16
+#define TILE_TEXTURE_BYTES             256   // 8 bpp
 #define TILE_TEXTURE_COUNT             32
 #define TILE_COUNT_X                   140   // overworld size
 #define TILE_COUNT_Y                   135

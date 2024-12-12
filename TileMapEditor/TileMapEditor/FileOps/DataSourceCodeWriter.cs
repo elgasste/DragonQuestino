@@ -31,11 +31,13 @@ namespace TileMapEditor.FileOps
       {
          _fileContents += "\nvoid Screen_LoadPalette( Screen_t* screen, uint8_t index )\n";
          _fileContents += "{\n";
+         _fileContents += "   uint16_t i;\n\n";
+         _fileContents += string.Format( "   for ( i = 0; i < {0}; i++ ) {{ screen->palette[i] = 0; }}\n\n", Constants.PaletteSize );
          _fileContents += "   switch( index )\n";
          _fileContents += "   {\n";
          _fileContents += "      case 0:\n";
 
-         for ( int i = 0; i < Constants.PaletteSize; i++ )
+         for ( int i = 0; i < _tileSet.PaletteCount; i++ )
          {
             _fileContents += string.Format( "         screen->palette[{0}] = 0x{1};\n", i, _tileSet.Palette[i].ToString( "X4" ) );
          }
@@ -57,25 +59,17 @@ namespace TileMapEditor.FileOps
 
             var pixelIndexes = _tileSet.TilePaletteIndexes[i];
 
-            for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 8, memoryIndex++ )
+            for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
             {
                var index0 = (UInt32)( pixelIndexes[j + 0] );
                var index1 = (UInt32)( pixelIndexes[j + 1] );
                var index2 = (UInt32)( pixelIndexes[j + 2] );
                var index3 = (UInt32)( pixelIndexes[j + 3] );
-               var index4 = (UInt32)( pixelIndexes[j + 4] );
-               var index5 = (UInt32)( pixelIndexes[j + 5] );
-               var index6 = (UInt32)( pixelIndexes[j + 6] );
-               var index7 = (UInt32)( pixelIndexes[j + 7] );
 
-               var packed = ( index6 << 28 ) |
-                            ( index7 << 24 ) |
-                            ( index4 << 20 ) |
-                            ( index5 << 16 ) |
-                            ( index2 << 12 ) |
-                            ( index3 << 8  ) |
-                            ( index0 << 4  ) |
-                            ( index1 << 0  );
+               var packed = ( index3 << 24 ) |
+                            ( index2 << 16  ) |
+                            ( index1 << 8  ) |
+                            ( index0 << 0  );
 
                _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) );
             }

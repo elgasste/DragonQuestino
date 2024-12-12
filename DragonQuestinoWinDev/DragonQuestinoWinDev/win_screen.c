@@ -21,25 +21,19 @@ internal uint32_t Convert565To32( uint16_t color )
 
 void Screen_RenderBuffer( Screen_t* screen )
 {
-   uint8_t x, y, *bufferPos = screen->buffer;
-   uint16_t color16;
+   uint8_t *bufferPos = screen->buffer;
+   uint16_t x, y, color16;
    uint32_t color32;
    uint32_t* winBufferPos = g_globals.screenBuffer.memory;
 
    for ( y = 0; y < SCREEN_BUFFER_HEIGHT; y++ )
    {
-      for ( x = 0; x < SCREEN_BUFFER_BYTES_X; x++ )
+      for ( x = 0; x < SCREEN_BUFFER_WIDTH; x++ )
       {
-         color16 = screen->palette[( *bufferPos & 0xF0 ) >> 4];
+         color16 = screen->palette[*bufferPos];
          color32 = Convert565To32( color16 );
          *winBufferPos = color32;
          winBufferPos++;
-
-         color16 = screen->palette[( *bufferPos & 0xF )];
-         color32 = Convert565To32( color16 );
-         *winBufferPos = color32;
-         winBufferPos++;
-
          bufferPos++;
       }
    }
