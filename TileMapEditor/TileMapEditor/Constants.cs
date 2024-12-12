@@ -12,6 +12,6 @@
       public const int TileMapTileCountX = 140;
       public const int TileMapTileCountY = 135;
       public const int TileMapTileCount = TileMapTileCountX * TileMapTileCountY;
-      public const int PaletteSize = 16;
+      public const int PaletteSize = 256;
    }
 }

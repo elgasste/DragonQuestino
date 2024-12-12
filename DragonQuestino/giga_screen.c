@@ -9,13 +9,10 @@ void Screen_RenderBuffer( Screen_t* screen )
    // as long as SetAddrWindow is still a thing. I guess we'll see.
    for ( y = 0; y < SCREEN_BUFFER_HEIGHT; y++ )
    {
-      for ( x = 0; x < SCREEN_BUFFER_BYTES_X; x++ )
+      for ( x = 0; x < SCREEN_BUFFER_WIDTH; x++ )
       {
-         color = screen->palette[( *bufferPos & 0xF0 ) >> 4];
-         // TODO: render it at the correct position (remember x needs to be scaled)
-         color = screen->palette[( *bufferPos & 0xF )];
-         // TODO: render it at the correct position (remember x needs to be scaled)
-
+         color = screen->palette[*bufferPos];
+         // TODO: render it at the correct position
          bufferPos++;
       }
    }

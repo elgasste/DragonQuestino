@@ -5,6 +5,7 @@
 
 internal void FatalError( const char* message );
 internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam );
+internal void InitButtonMap();
 internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags );
 internal void RenderScreen();
 internal void DrawDiagnostics( HDC* dcMem );
@@ -91,6 +92,8 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_globals.bmpInfo.bmiHeader.biBitCount = 32;
    g_globals.bmpInfo.bmiHeader.biCompression = BI_RGB;
 
+   InitButtonMap();
+
    Game_Init( &( g_globals.game ) );
    g_globals.shutdown = False;
    g_globals.debugFlags.showDiagnostics = False;
@@ -160,10 +163,21 @@ internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ W
    return result;
 }
 
+internal void InitButtonMap()
+{
+   g_globals.buttonMap[Button_Left] = VK_LEFT;
+   g_globals.buttonMap[Button_Up] = VK_UP;
+   g_globals.buttonMap[Button_Right] = VK_RIGHT;
+   g_globals.buttonMap[Button_Down] = VK_DOWN;
+   g_globals.buttonMap[Button_A] = 0x58; // X
+   g_globals.buttonMap[Button_B] = 0x5A; // Z
+}
+
 internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
 {
    Bool_t keyWasDown = ( flags & ( (LONG_PTR)1 << 30 ) ) != 0 ? True : False;
    Bool_t keyIsDown = ( flags & ( (LONG_PTR)1 << 31 ) ) == 0 ? True : False;
+   uint8_t i;
 
    // ignore repeat presses
    if ( keyWasDown != keyIsDown )
@@ -177,11 +191,32 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
             return;
          }
 
+         for ( i = 0; i < Button_Count; i++ )
+         {
+            if ( g_globals.buttonMap[i] == keyCode )
+            {
+               Input_ButtonPressed( &( g_globals.game.input ), i );
+               break;
+            }
+         }
+
+         // Windows-specific diagnostic/debug keys
          switch ( keyCode )
          {
             case VK_F8:
                TOGGLE_BOOL( g_globals.debugFlags.showDiagnostics );
                break;
+         }
+      }
+      else
+      {
+         for ( i = 0; i < Button_Count; i++ )
+         {
+            if ( g_globals.buttonMap[i] == keyCode )
+            {
+               Input_ButtonReleased( &( g_globals.game.input ), i );
+               break;
+            }
          }
       }
    }
@@ -257,6 +292,41 @@ internal void DrawDiagnostics( HDC* dcMem )
 
    realSeconds = ( g_globals.game.clock.absoluteEndMicro - g_globals.game.clock.absoluteStartMicro ) / 1000000;
    sprintf_s( str, STRING_SIZE_DEFAULT, "    Real Time: %u:%02u:%02u", realSeconds / 3600, realSeconds / 60, realSeconds );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "Map Offset X: %i", g_globals.game.tileMapViewport.x );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "Map Offset Y: %i", g_globals.game.tileMapViewport.y );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Up].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "--" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Left].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "   --" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Right].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "      B" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_B].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "        A" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_A].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
+   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Down].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );

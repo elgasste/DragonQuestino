@@ -32,7 +32,6 @@
 
 #if defined( VISUAL_STUDIO_DEV )
 #define DELAY_MS( x )                  Sleep( x )
-#pragma warning( disable: 4996 )  // this avoids having to use sprintf_s
 #else
 #define DELAY_MS( x )                  delay( x )
 #endif
