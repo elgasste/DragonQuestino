@@ -62,16 +62,34 @@ internal void Game_HandleInput( Game_t* game )
 
 internal void Game_DrawTileMap( Game_t* game )
 {
-   uint8_t tileX, tileY, textureIndex;
-   TileMap_t* tileMap = &( game->tileMap );
+   uint8_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex;
+   uint16_t tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY;
 
-   for ( tileY = 0; tileY < 15; tileY++ )
+   firstTileX = (uint8_t)( game->tileMapViewport.x / TILE_SIZE );
+   firstTileY = (uint8_t)( game->tileMapViewport.y / TILE_SIZE );
+   lastTileX = (uint8_t)( ( game->tileMapViewport.x + SCREEN_BUFFER_WIDTH ) / TILE_SIZE );
+   lastTileY = (uint8_t)( ( game->tileMapViewport.y + SCREEN_BUFFER_HEIGHT ) / TILE_SIZE );
+   tileOffsetX = (uint16_t)( game->tileMapViewport.x % TILE_SIZE );
+   tileOffsetY = (uint16_t)( game->tileMapViewport.y % TILE_SIZE );
+
+   for ( tileY = firstTileY, screenY = 0; tileY <= lastTileY; tileY++ )
    {
-      for ( tileX = 0; tileX < 20; tileX++ )
+      tileHeight = ( tileY == firstTileY ) ? TILE_SIZE - tileOffsetY : ( tileY == lastTileY ) ? ( game->tileMapViewport.y + SCREEN_BUFFER_HEIGHT ) % TILE_SIZE : TILE_SIZE;
+
+      for ( tileX = firstTileX, screenX = 0; tileX <= lastTileX; tileX++ )
       {
-         textureIndex = GET_TILETEXTUREINDEX( tileMap->tiles[( tileY * TILE_COUNT_X ) + tileX] );
-         Game_DrawTileTextureSection( game, textureIndex, 0, 0, TILE_SIZE, TILE_SIZE, tileX * TILE_SIZE, tileY * TILE_SIZE );
+         textureIndex = GET_TILETEXTUREINDEX( game->tileMap.tiles[( tileY * TILE_COUNT_X ) + tileX] );
+         tileWidth = ( tileX == firstTileX ) ? TILE_SIZE - tileOffsetX : ( tileX == lastTileX ) ? ( game->tileMapViewport.x + SCREEN_BUFFER_WIDTH ) % TILE_SIZE : TILE_SIZE;
+
+         Game_DrawTileTextureSection( game, textureIndex,
+                                      tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
+                                      tileWidth, tileHeight,
+                                      screenX, screenY );
+
+         screenX += tileWidth;
       }
+
+      screenY += tileHeight;
    }
 }
 
