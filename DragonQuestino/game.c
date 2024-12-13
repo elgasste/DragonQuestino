@@ -5,7 +5,7 @@ internal void Game_HandleInput( Game_t* game );
 internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
                                            uint16_t tx, uint16_t ty, uint16_t tw, uint16_t th,
                                            uint16_t sx, uint16_t sy );
-internal void Game_DrawPlayerSprite( Game_t* game, uint16_t x, uint16_t y );
+internal void Game_DrawSprite( Game_t* game, uint16_t x, uint16_t y );
 
 void Game_Init( Game_t* game )
 {
@@ -28,7 +28,7 @@ void Game_Tic( Game_t* game )
    Input_Read( &( game->input ) );
    Game_HandleInput( game );
    Game_DrawTileMap( game );
-   Game_DrawPlayerSprite( game, 12 * TILE_SIZE, 8 * TILE_SIZE );
+   Game_DrawSprite( game, 12 * TILE_SIZE, 8 * TILE_SIZE );
    Screen_RenderBuffer( &( game->screen ) );
 }
 
@@ -111,7 +111,7 @@ internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
    }
 }
 
-internal void Game_DrawPlayerSprite( Game_t* game, uint16_t x, uint16_t y )
+internal void Game_DrawSprite( Game_t* game, uint16_t x, uint16_t y )
 {
    uint8_t i, j;
    uint8_t* textureBufferPos = game->playerSprite.textures[0].memory;
