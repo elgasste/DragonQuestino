@@ -22,7 +22,7 @@ namespace DragonQuestinoEditor.ViewModels
       {
          _palette = new Palette();
          _tileSet = new TileSet( Constants.TileTexturesFilePath, _palette );
-         _playerSpriteSheet = new SpriteSheet( Constants.PlayerSpriteFilePath );
+         _playerSpriteSheet = new SpriteSheet( Constants.PlayerSpriteFilePath, _palette );
 
          for ( int i = 0; i < Constants.TileCount; i++ )
          {

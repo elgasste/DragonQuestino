@@ -17,6 +17,7 @@
       public const int TileMapTileCount = TileMapTileCountX * TileMapTileCountY;
 
       public const int SpriteFrameSize = 16;
+      public const int SpriteFramePixels = 256;
       public const int SpriteFrameCount = 2;
       public const int SpritePositionCount = 4;
    }
