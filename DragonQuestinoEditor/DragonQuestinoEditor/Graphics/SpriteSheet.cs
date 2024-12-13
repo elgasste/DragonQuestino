@@ -51,6 +51,8 @@ namespace DragonQuestinoEditor.Graphics
       {
          for ( int i = 0; i < Constants.SpritePositionCount; i++ )
          {
+            FramePaletteIndexes.Add( new( Constants.SpriteFrameCount ) );
+
             for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
                FramePaletteIndexes[i].Add( new( Constants.SpriteFramePixels ) );
@@ -61,7 +63,7 @@ namespace DragonQuestinoEditor.Graphics
                }
             }
 
-            for ( int j = 0; j < Constants.TileCount; j++ )
+            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
                var frameBitmap = _frameBitmaps[i][j];
 

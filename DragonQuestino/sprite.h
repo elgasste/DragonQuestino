@@ -15,7 +15,7 @@ SpriteTexture_t;
 
 typedef struct Sprite_t
 {
-   SpriteTexture_t textures[8];
+   SpriteTexture_t textures[SPRITE_TEXTURES];
    Direction_t direction;
 }
 Sprite_t;
