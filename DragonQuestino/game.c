@@ -5,6 +5,7 @@ internal void Game_HandleInput( Game_t* game );
 internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
                                            uint16_t tx, uint16_t ty, uint16_t tw, uint16_t th,
                                            uint16_t sx, uint16_t sy );
+internal void Game_DrawPlayerSprite( Game_t* game, uint16_t x, uint16_t y );
 
 void Game_Init( Game_t* game )
 {
@@ -12,6 +13,7 @@ void Game_Init( Game_t* game )
    TileMap_Init( &( game->tileMap ) );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 0 );
+   Sprite_Load( &( game->playerSprite ), 0 );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
 
@@ -26,6 +28,7 @@ void Game_Tic( Game_t* game )
    Input_Read( &( game->input ) );
    Game_HandleInput( game );
    Game_DrawTileMap( game );
+   Game_DrawPlayerSprite( game, 16, 16 );
    Screen_RenderBuffer( &( game->screen ) );
 }
 
@@ -105,6 +108,19 @@ internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
    {
       memcpy( screenBufferPos, textureBufferPos, tw );
       textureBufferPos += tw + tx + ( TILE_SIZE - ( tx + tw ) );
-      screenBufferPos += ( SCREEN_BUFFER_WIDTH );
+      screenBufferPos += SCREEN_BUFFER_WIDTH;
+   }
+}
+
+internal void Game_DrawPlayerSprite( Game_t* game, uint16_t x, uint16_t y )
+{
+   uint8_t i;
+   uint8_t* textureBufferPos = game->playerSprite.textures[0].memory;
+   uint8_t* screenBufferPos = game->screen.buffer + ( y * SCREEN_BUFFER_WIDTH ) + x;
+
+   for ( i = 0; i < SPRITE_TEXTURE_SIZE; i++ )
+   {
+      memcpy( screenBufferPos, textureBufferPos, SPRITE_TEXTURE_SIZE );
+      screenBufferPos += SCREEN_BUFFER_WIDTH;
    }
 }
