@@ -273,7 +273,7 @@ internal void DrawDiagnostics( HDC* dcMem )
    SetTextColor( *dcMem, 0x00FFFFFF );
    SetBkMode( *dcMem, TRANSPARENT );
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "   Frame Rate: %u", GAME_FPS );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "   Frame Rate: %u", CLOCK_FPS );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
@@ -285,7 +285,7 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   gameSeconds = g_globals.game.clock.frameCount / GAME_FPS;
+   gameSeconds = g_globals.game.clock.frameCount / CLOCK_FPS;
    sprintf_s( str, STRING_SIZE_DEFAULT, " In-Game Time: %u:%02u:%02u", gameSeconds / 3600, gameSeconds / 60, gameSeconds );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;

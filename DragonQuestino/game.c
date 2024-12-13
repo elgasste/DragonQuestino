@@ -21,6 +21,8 @@ void Game_Init( Game_t* game )
    game->tileMapViewport.y = 0;
    game->tileMapViewport.w = SCREEN_BUFFER_WIDTH;
    game->tileMapViewport.h = SCREEN_BUFFER_HEIGHT;
+
+   game->playerSprite.direction = Direction_Down;
 }
 
 void Game_Tic( Game_t* game )
@@ -28,6 +30,7 @@ void Game_Tic( Game_t* game )
    Input_Read( &( game->input ) );
    Game_HandleInput( game );
    Game_DrawTileMap( game );
+   Sprite_Tic( &( game->playerSprite ) );
    Game_DrawSprite( game, 12 * TILE_SIZE, 8 * TILE_SIZE );
    Screen_RenderBuffer( &( game->screen ) );
 }
@@ -42,21 +45,25 @@ internal void Game_HandleInput( Game_t* game )
 
    if ( leftIsDown )
    {
+      game->playerSprite.direction = Direction_Left;
       viewport->x -= 5;
       if ( viewport->x < 0 ) viewport->x = 0;
    }
    if ( upIsDown )
    {
+      game->playerSprite.direction = Direction_Up;
       viewport->y -= 5;
       if ( viewport->y < 0 ) viewport->y = 0;
    }
    if ( rightIsDown )
    {
+      game->playerSprite.direction = Direction_Right;
       viewport->x += 5;
       if ( ( ( TILE_COUNT_X * TILE_SIZE ) - viewport->x ) < SCREEN_BUFFER_WIDTH ) viewport->x = ( TILE_COUNT_X * TILE_SIZE ) - SCREEN_BUFFER_WIDTH;
    }
    if ( downIsDown )
    {
+      game->playerSprite.direction = Direction_Down;
       viewport->y += 5;
       if ( ( ( TILE_COUNT_Y * TILE_SIZE ) - viewport->y ) < SCREEN_BUFFER_HEIGHT ) viewport->y = ( TILE_COUNT_Y * TILE_SIZE ) - SCREEN_BUFFER_HEIGHT;
    }
@@ -114,7 +121,8 @@ internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
 internal void Game_DrawSprite( Game_t* game, uint16_t x, uint16_t y )
 {
    uint8_t i, j;
-   uint8_t* textureBufferPos = game->playerSprite.textures[0].memory;
+   uint8_t textureIndex = (uint8_t)( game->playerSprite.direction * 2 ) + game->playerSprite.currentFrame;
+   uint8_t* textureBufferPos = game->playerSprite.textures[textureIndex].memory;
    uint8_t* screenBufferPos = game->screen.buffer + ( y * SCREEN_BUFFER_WIDTH ) + x;
 
    for ( i = 0; i < SPRITE_TEXTURE_SIZE; i++ )

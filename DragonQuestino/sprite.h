@@ -6,6 +6,8 @@
 #define SPRITE_TEXTURE_SIZE      16
 #define SPRITE_TEXTURE_BYTES     256
 #define SPRITE_TEXTURES          8  // two for each direction
+#define SPRITE_FRAMES            2
+#define SPRITE_FRAME_SECONDS     0.2f
 
 typedef struct SpriteTexture_t
 {
@@ -17,6 +19,8 @@ typedef struct Sprite_t
 {
    SpriteTexture_t textures[SPRITE_TEXTURES];
    Direction_t direction;
+   uint8_t currentFrame;
+   float elapsedFrameSeconds;
 }
 Sprite_t;
 
@@ -24,7 +28,10 @@ Sprite_t;
 extern "C" {
 #endif
 
-// TODO: implement in game_data.c
+void Sprite_SetDirection( Sprite_t* sprite, Direction_t direction );
+void Sprite_Tic( Sprite_t* sprite );
+
+// game_data.c
 void Sprite_Load( Sprite_t* sprite, uint8_t index );
 
 #if defined( __cplusplus )

@@ -35,6 +35,7 @@
     <ClCompile Include="..\..\DragonQuestino\game_data.c" />
     <ClCompile Include="..\..\DragonQuestino\input.c" />
     <ClCompile Include="..\..\DragonQuestino\screen.c" />
+    <ClCompile Include="..\..\DragonQuestino\sprite.c\sprite.c" />
     <ClCompile Include="..\..\DragonQuestino\tile_map.c" />
     <ClCompile Include="win_clock.c" />
     <ClCompile Include="win_input.c" />
