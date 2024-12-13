@@ -9,6 +9,8 @@
 
 #define PALETTE_COLORS           256
 
+#define TRANSPARENT_COLOR_INDEX  0x0A
+
 typedef struct Screen_t
 {
    uint8_t buffer[SCREEN_BUFFER_BYTES];

@@ -43,8 +43,7 @@ internal void Game_HandleInput( Game_t* game )
    if ( leftIsDown )
    {
       viewport->x -= 5;
-      if ( viewport->x < 0 )
-         viewport->x = 0;
+      if ( viewport->x < 0 ) viewport->x = 0;
    }
    if ( upIsDown )
    {
@@ -114,14 +113,23 @@ internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
 
 internal void Game_DrawPlayerSprite( Game_t* game, uint16_t x, uint16_t y )
 {
-   uint8_t i;
+   uint8_t i, j;
    uint8_t* textureBufferPos = game->playerSprite.textures[0].memory;
    uint8_t* screenBufferPos = game->screen.buffer + ( y * SCREEN_BUFFER_WIDTH ) + x;
 
    for ( i = 0; i < SPRITE_TEXTURE_SIZE; i++ )
    {
-      memcpy( screenBufferPos, textureBufferPos, SPRITE_TEXTURE_SIZE );
-      textureBufferPos += SPRITE_TEXTURE_SIZE;
-      screenBufferPos += SCREEN_BUFFER_WIDTH;
+      for ( j = 0; j < SPRITE_TEXTURE_SIZE; j++ )
+      {
+         if ( *textureBufferPos != TRANSPARENT_COLOR_INDEX )
+         {
+            *screenBufferPos = *textureBufferPos;
+         }
+
+         textureBufferPos++;
+         screenBufferPos++;
+      }
+
+      screenBufferPos += ( SCREEN_BUFFER_WIDTH - SPRITE_TEXTURE_SIZE );
    }
 }
