@@ -19,7 +19,7 @@ namespace DragonQuestinoEditor.Tiles
          var textFileStream = new FileStream( imagePath, FileMode.Open, FileAccess.Read, FileShare.Read );
          var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
          var bitmapSource = textDecoder.Frames[0];
-         BitmapUtils.CheckBitmapFormat( bitmapSource );
+         BitmapUtils.CheckTileSetBitmapFormat( bitmapSource );
          ReadTileBitmaps( bitmapSource );
          LoadPalette();
       }
