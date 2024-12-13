@@ -1,8 +1,8 @@
-﻿using DeviceFrameEditor.ViewModels;
-using System.Windows.Media.Imaging;
-using TileMapEditor.Tiles;
+﻿using System.Windows.Media.Imaging;
+using DragonQuestinoEditor.Tiles;
+using DragonQuestinoEditor.ViewModels;
 
-namespace TileMapEditor.ViewModels
+namespace DragonQuestinoEditor.ViewModels
 {
    internal class TileViewModel : ViewModelBase
    {

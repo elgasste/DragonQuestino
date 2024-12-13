@@ -1,10 +1,9 @@
 ﻿using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using TileMapEditor.Utilities;
+using DragonQuestinoEditor.Utilities;
 
-namespace TileMapEditor.Tiles
+namespace DragonQuestinoEditor.Tiles
 {
    internal class TileSet
    {
@@ -20,25 +19,9 @@ namespace TileMapEditor.Tiles
          var textFileStream = new FileStream( imagePath, FileMode.Open, FileAccess.Read, FileShare.Read );
          var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
          var bitmapSource = textDecoder.Frames[0];
-         BitmapSanityCheck( bitmapSource );
+         BitmapUtils.CheckBitmapFormat( bitmapSource );
          ReadTileBitmaps( bitmapSource );
          LoadPalette();
-      }
-
-      private static void BitmapSanityCheck( BitmapSource bitmapSource )
-      {
-         if ( bitmapSource.Format != PixelFormats.Indexed8 )
-         {
-            throw new Exception( "Expecting tileset image pixel format to be Indexed8" );
-         }
-         else if ( bitmapSource.PixelWidth != ( Constants.TileSize * Constants.TileCount ) )
-         {
-            throw new Exception( string.Format( "Tileset image width should be {0}", Constants.TileSize * Constants.TileCount ) );
-         }
-         else if ( bitmapSource.PixelHeight != Constants.TileSize )
-         {
-            throw new Exception( string.Format( "Tileset image height should be {0}", Constants.TileSize ) );
-         }
       }
 
       private void ReadTileBitmaps( BitmapSource bitmapSource )

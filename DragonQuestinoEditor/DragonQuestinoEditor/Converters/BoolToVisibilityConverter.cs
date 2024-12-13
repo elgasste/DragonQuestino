@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace TileMapEditor.Converters
+namespace DragonQuestinoEditor.Converters
 {
    internal class BoolToVisibilityConverter : IValueConverter
    {

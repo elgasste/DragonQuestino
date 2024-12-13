@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
-using TileMapEditor.Tiles;
-using TileMapEditor.ViewModels;
+using DragonQuestinoEditor.Tiles;
+using DragonQuestinoEditor.ViewModels;
 
-namespace TileMapEditor.FileOps
+namespace DragonQuestinoEditor.FileOps
 {
    internal class DataSourceCodeWriter( TileSet tileSet, ObservableCollection<TileViewModel> mapTiles )
    {

@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace TileMapEditor.Utilities
+namespace DragonQuestinoEditor.Utilities
 {
    internal static class ColorUtils
    {

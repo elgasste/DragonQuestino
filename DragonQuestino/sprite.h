@@ -24,7 +24,7 @@ Sprite_t;
 extern "C" {
 #endif
 
-// TODO: game_data.c
+// TODO: implement in game_data.c
 void Sprite_Load( Sprite_t* sprite, uint8_t index );
 
 #if defined( __cplusplus )
