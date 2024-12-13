@@ -5,12 +5,13 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using DragonQuestinoEditor.Commands;
 using DragonQuestinoEditor.FileOps;
-using DragonQuestinoEditor.Tiles;
+using DragonQuestinoEditor.Graphics;
 
 namespace DragonQuestinoEditor.ViewModels
 {
    internal class MainWindowViewModel : ViewModelBase
    {
+      private readonly Palette _palette;
       private readonly TileSet _tileSet;
       private readonly SpriteSheet _playerSpriteSheet;
 
@@ -19,7 +20,8 @@ namespace DragonQuestinoEditor.ViewModels
 
       public MainWindowViewModel()
       {
-         _tileSet = new TileSet( Constants.TileTexturesFilePath );
+         _palette = new Palette();
+         _tileSet = new TileSet( Constants.TileTexturesFilePath, _palette );
          _playerSpriteSheet = new SpriteSheet( Constants.PlayerSpriteFilePath );
 
          for ( int i = 0; i < Constants.TileCount; i++ )
@@ -60,7 +62,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void WriteFile()
       {
-         var writer = new DataSourceCodeWriter( _tileSet, TileMapViewModels );
+         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileMapViewModels );
          writer.WriteFile( Constants.DataSourceFilePath );
          MessageBox.Show( "Data file has been written!" );
       }

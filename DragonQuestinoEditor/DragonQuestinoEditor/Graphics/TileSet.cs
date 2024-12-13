@@ -3,25 +3,27 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using DragonQuestinoEditor.Utilities;
 
-namespace DragonQuestinoEditor.Tiles
+namespace DragonQuestinoEditor.Graphics
 {
    internal class TileSet
    {
       private readonly List<WriteableBitmap> _tileBitmaps = new( Constants.TileCount );
+      private readonly Palette _palette;
+
       public List<List<int>> TilePaletteIndexes = new ( Constants.TileCount );
-      public List<UInt16> Palette { get; } = new( Constants.PaletteSize );
-      public int PaletteCount { get; private set; } = 0;
 
       public List<WriteableBitmap> TileBitmaps => _tileBitmaps;
 
-      public TileSet( string imagePath )
+      public TileSet( string imagePath, Palette palette )
       {
+         _palette = palette;
+
          var textFileStream = new FileStream( imagePath, FileMode.Open, FileAccess.Read, FileShare.Read );
          var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
          var bitmapSource = textDecoder.Frames[0];
          BitmapUtils.CheckTileSetBitmapFormat( bitmapSource );
          ReadTileBitmaps( bitmapSource );
-         LoadPalette();
+         UpdatePalette();
       }
 
       private void ReadTileBitmaps( BitmapSource bitmapSource )
@@ -36,13 +38,8 @@ namespace DragonQuestinoEditor.Tiles
          }
       }
 
-      private void LoadPalette()
+      private void UpdatePalette()
       {
-         for ( int i = 0; i < Constants.PaletteSize; i++ )
-         {
-            Palette.Add( 0 );
-         }
-
          for ( int i = 0; i < Constants.TileCount; i++ )
          {
             TilePaletteIndexes.Add( new( Constants.TilePixels ) );
@@ -52,8 +49,6 @@ namespace DragonQuestinoEditor.Tiles
                TilePaletteIndexes[i].Add( 0 );
             }
          }
-
-         PaletteCount = 0;
 
          for ( int i = 0; i < Constants.TileCount; i++ )
          {
@@ -65,38 +60,11 @@ namespace DragonQuestinoEditor.Tiles
                {
                   var pixelColor = ColorUtils.GetPixelColor( tileBitmap, x, y );
                   var pixelColor16 = ColorUtils.ColortoUInt16( pixelColor );
-                  var paletteIndex = GetPaletteIndexForColor( pixelColor16 );
-
-                  if ( paletteIndex < 0 )
-                  {
-                     PaletteCount++;
-
-                     if ( PaletteCount > Constants.PaletteSize )
-                     {
-                        throw new Exception( "tile map contains too many colors for the palette" );
-                     }
-
-                     paletteIndex = PaletteCount - 1;
-                     Palette[paletteIndex] = pixelColor16;
-                  }
-
-                  TilePaletteIndexes[i][( y * Constants.TileSize ) + x] = paletteIndex;
+                  _palette.AddColor( pixelColor16 );
+                  TilePaletteIndexes[i][( y * Constants.TileSize ) + x] = _palette.GetIndexForColor( pixelColor16 );
                }
             }
          }
-      }
-
-      public int GetPaletteIndexForColor( UInt16 color16 )
-      {
-         for ( int i = 0; i < PaletteCount; i++ )
-         {
-            if (  Palette[i] == color16 )
-            {
-               return i;
-            }
-         }
-
-         return -1;
       }
    }
 }

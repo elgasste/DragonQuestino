@@ -1,6 +1,5 @@
 ﻿using System.Windows.Media.Imaging;
-using DragonQuestinoEditor.Tiles;
-using DragonQuestinoEditor.ViewModels;
+using DragonQuestinoEditor.Graphics;
 
 namespace DragonQuestinoEditor.ViewModels
 {

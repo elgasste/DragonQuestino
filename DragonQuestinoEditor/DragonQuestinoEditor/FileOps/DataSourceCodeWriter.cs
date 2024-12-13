@@ -1,12 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
-using DragonQuestinoEditor.Tiles;
+using DragonQuestinoEditor.Graphics;
 using DragonQuestinoEditor.ViewModels;
 
 namespace DragonQuestinoEditor.FileOps
 {
-   internal class DataSourceCodeWriter( TileSet tileSet, ObservableCollection<TileViewModel> mapTiles )
+   internal class DataSourceCodeWriter( Palette palette, TileSet tileSet, ObservableCollection<TileViewModel> mapTiles )
    {
+      private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
       private readonly ObservableCollection<TileViewModel> _tiles = mapTiles;
       private string _fileContents = string.Empty;
@@ -34,9 +35,9 @@ namespace DragonQuestinoEditor.FileOps
          _fileContents += "   uint16_t i;\n\n";
          _fileContents += string.Format( "   for ( i = 0; i < {0}; i++ ) {{ screen->palette[i] = 0; }}\n\n", Constants.PaletteSize );
 
-         for ( int i = 0; i < _tileSet.PaletteCount; i++ )
+         for ( int i = 0; i < _palette.ColorCount; i++ )
          {
-            _fileContents += string.Format( "   screen->palette[{0}] = 0x{1};\n", i, _tileSet.Palette[i].ToString( "X4" ) );
+            _fileContents += string.Format( "   screen->palette[{0}] = 0x{1};\n", i, _palette.Colors[i].ToString( "X4" ) );
          }
 
          _fileContents += "}\n";
