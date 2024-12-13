@@ -28,7 +28,7 @@ void Game_Tic( Game_t* game )
    Input_Read( &( game->input ) );
    Game_HandleInput( game );
    Game_DrawTileMap( game );
-   Game_DrawPlayerSprite( game, 16, 16 );
+   Game_DrawPlayerSprite( game, 12 * TILE_SIZE, 8 * TILE_SIZE );
    Screen_RenderBuffer( &( game->screen ) );
 }
 
@@ -121,6 +121,7 @@ internal void Game_DrawPlayerSprite( Game_t* game, uint16_t x, uint16_t y )
    for ( i = 0; i < SPRITE_TEXTURE_SIZE; i++ )
    {
       memcpy( screenBufferPos, textureBufferPos, SPRITE_TEXTURE_SIZE );
+      textureBufferPos += SPRITE_TEXTURE_SIZE;
       screenBufferPos += SCREEN_BUFFER_WIDTH;
    }
 }

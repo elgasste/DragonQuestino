@@ -37,11 +37,11 @@
             
             <!-- Tile Picker -->
             <ListView x:Name="tileSelectionListView"
-                   ItemsSource="{Binding TileSelectionViewModels}"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Left"
-                   ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                   MouseMove="TileSelectionListView_OnMouseMove">
+                      ItemsSource="{Binding TileSelectionViewModels}"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
+                      MouseMove="TileSelectionListView_OnMouseMove">
                <ItemsControl.ItemsPanel>
                   <ItemsPanelTemplate>
                      <UniformGrid Columns="4"/>
@@ -50,8 +50,8 @@
                <ListView.ItemTemplate>
                   <DataTemplate>
                      <Image Source="{Binding Image}"
-                         Width="32"
-                         Height="32"/>
+                            Width="32"
+                            Height="32"/>
                   </DataTemplate>
                </ListView.ItemTemplate>
             </ListView>
@@ -89,9 +89,9 @@
                             Width="32"
                             Height="32"/>
                      <Rectangle Width="32"
-                                 Height="32"
-                                 Fill="#660000FF"
-                                 Visibility="{Binding ShouldHighlight, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                Height="32"
+                                Fill="#660000FF"
+                                Visibility="{Binding ShouldHighlight, Converter={StaticResource BoolToVisibilityConverter}}"/>
                   </Grid>
                </DataTemplate>
             </ListView.ItemTemplate>

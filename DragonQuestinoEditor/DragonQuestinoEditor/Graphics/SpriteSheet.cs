@@ -21,7 +21,6 @@ namespace DragonQuestinoEditor.Graphics
          var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
          var bitmapSource = textDecoder.Frames[0];
          BitmapUtils.CheckSpriteSheetBitmapFormat( bitmapSource );
-         // MUFFINS: make sure both of these worked correctly
          ReadFrameBitmaps( bitmapSource );
          UpdatePalette();
       }
@@ -30,17 +29,19 @@ namespace DragonQuestinoEditor.Graphics
       {
          for ( int i = 0; i < Constants.SpritePositionCount; i++ )
          {
-            _frameBitmaps.Add( [] );
+            _frameBitmaps.Add( new( Constants.SpriteFrameCount ) );
+
+            int stride = bitmapSource.PixelWidth * ( bitmapSource.Format.BitsPerPixel / 8 );
+            var data = new byte[stride * bitmapSource.PixelHeight];
+            bitmapSource.CopyPixels( data, stride, 0 );
 
             for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
-               int stride = bitmapSource.PixelWidth * ( bitmapSource.Format.BitsPerPixel / 8 );
-               var data = new byte[stride * bitmapSource.PixelHeight];
-               bitmapSource.CopyPixels( data, stride, 0 );
                _frameBitmaps[i].Add( new WriteableBitmap( Constants.SpriteFrameSize, Constants.SpriteFrameSize,
                                                           bitmapSource.DpiX, bitmapSource.DpiY,
                                                           bitmapSource.Format, bitmapSource.Palette ) );
-               int offset = ( Constants.SpriteFrameCount * Constants.SpriteFrameSize * i ) + j;
+               int offset = ( Constants.SpriteFrameCount * Constants.SpriteFrameSize * i * Constants.SpriteFrameSize ) +
+                            ( j * Constants.SpriteFrameSize );
                _frameBitmaps[i][j].WritePixels( new Int32Rect( 0, 0, Constants.SpriteFrameSize, Constants.SpriteFrameSize ),
                                                 data, stride, offset );
             }
@@ -74,7 +75,7 @@ namespace DragonQuestinoEditor.Graphics
                      var pixelColor = ColorUtils.GetPixelColor( frameBitmap, x, y );
                      var pixelColor16 = ColorUtils.ColortoUInt16( pixelColor );
                      _palette.AddColor( pixelColor16 );
-                     FramePaletteIndexes[i][j][( y * Constants.TileSize ) + x] = _palette.GetIndexForColor( pixelColor16 );
+                     FramePaletteIndexes[i][j][( y * Constants.SpriteFrameSize ) + x] = _palette.GetIndexForColor( pixelColor16 );
                   }
                }
             }
