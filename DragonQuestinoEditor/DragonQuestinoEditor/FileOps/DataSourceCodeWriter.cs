@@ -150,6 +150,7 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int i = 0; i < Constants.SpritePositionCount; i++ )
          {
+            // MUFFINS: I think we should compress these, probably
             for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
                _fileContents += string.Format( "         mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j );

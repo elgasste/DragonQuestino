@@ -7,7 +7,7 @@
 #define SPRITE_TEXTURE_BYTES     256
 #define SPRITE_TEXTURES          8  // two for each direction
 #define SPRITE_FRAMES            2
-#define SPRITE_FRAME_SECONDS     0.2f
+#define SPRITE_FRAME_SECONDS     0.3f
 
 typedef struct SpriteTexture_t
 {

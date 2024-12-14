@@ -2154,6 +2154,7 @@ void TileMap_Load( TileMap_t* tileMap, uint8_t index )
          tiles32[506] = 0x00000000;
          tiles32[507] = 0x00000000;
          tiles32[508] = 0x00150000;
+         tiles32[509] = 0x000C0011;
          tiles32[515] = 0x00140011;
          tiles32[516] = 0x00000000;
          tiles32[517] = 0x00000000;
