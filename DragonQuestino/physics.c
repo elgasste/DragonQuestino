@@ -14,18 +14,18 @@ void Physics_Tic( Game_t* game )
    {
       player->position.x = COLLISION_THETA;
    }
-   else if ( ( player->position.x + player->hitBoxSize.x ) >= SCREEN_BUFFER_WIDTH )
+   else if ( ( player->position.x + player->hitBoxSize.x ) >= ( game->tileMap.tilesX * TILE_SIZE ) )
    {
-      player->position.x = SCREEN_BUFFER_WIDTH - player->hitBoxSize.x - COLLISION_THETA;
+      player->position.x = ( game->tileMap.tilesX * TILE_SIZE ) - player->hitBoxSize.x - COLLISION_THETA;
    }
 
    if ( player->position.y < 0 )
    {
       player->position.y = COLLISION_THETA;
    }
-   else if ( ( player->position.y + player->hitBoxSize.y ) >= SCREEN_BUFFER_HEIGHT )
+   else if ( ( player->position.y + player->hitBoxSize.y ) >= ( game->tileMap.tilesY * TILE_SIZE ) )
    {
-      player->position.y = SCREEN_BUFFER_HEIGHT - player->hitBoxSize.y - COLLISION_THETA;
+      player->position.y = ( game->tileMap.tilesY * TILE_SIZE ) - player->hitBoxSize.y - COLLISION_THETA;
    }
 
    player->velocity.x = 0;
