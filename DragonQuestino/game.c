@@ -159,7 +159,7 @@ internal void Game_DrawTileMap( Game_t* game )
 
 internal void Game_DrawSprite( Game_t* game, Sprite_t* sprite, int32_t x, int32_t y )
 {
-   uint8_t textureIndex = (uint8_t)( sprite->direction * SPRITE_FRAMES ) + sprite->currentFrame;
+   uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * SPRITE_FRAMES ) + sprite->currentFrame;
    uint32_t tx = ( x < 0 ) ? (uint32_t)( -x ) : 0;
    uint32_t ty = ( y < 0 ) ? (uint32_t)( -y ) : 0;
    uint32_t tw = ( ( x + SPRITE_TEXTURE_SIZE ) >= SCREEN_BUFFER_WIDTH ) ? ( SCREEN_BUFFER_WIDTH - x ) : ( SPRITE_TEXTURE_SIZE - tx );
@@ -174,7 +174,7 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
                                        uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
                                        uint32_t sx, uint32_t sy, Bool_t transparency )
 {
-   uint8_t x, y;
+   uint32_t x, y;
    uint8_t* textureBufferPos = memory + ( ty * stride ) + tx;
    uint8_t* screenBufferPos = game->screen.buffer + ( sy * SCREEN_BUFFER_WIDTH ) + sx;
 

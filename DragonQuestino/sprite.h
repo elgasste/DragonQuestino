@@ -19,7 +19,7 @@ typedef struct Sprite_t
 {
    SpriteTexture_t textures[SPRITE_TEXTURES];
    Direction_t direction;
-   uint8_t currentFrame;
+   uint32_t currentFrame;
    float elapsedFrameSeconds;
 }
 Sprite_t;
@@ -32,7 +32,7 @@ void Sprite_SetDirection( Sprite_t* sprite, Direction_t direction );
 void Sprite_Tic( Sprite_t* sprite );
 
 // game_data.c
-void Sprite_Load( Sprite_t* sprite, uint8_t index );
+void Sprite_Load( Sprite_t* sprite, uint32_t index );
 
 #if defined( __cplusplus )
 }

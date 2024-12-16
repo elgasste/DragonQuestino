@@ -80,7 +80,7 @@ namespace DragonQuestinoEditor.FileOps
 
       private void BuildTileMapFunction()
       {
-         _fileContents += "\nvoid TileMap_Load( TileMap_t* tileMap, uint8_t index )\n";
+         _fileContents += "\nvoid TileMap_Load( TileMap_t* tileMap, uint32_t index )\n";
          _fileContents += "{\n";
          _fileContents += "   int32_t i;\n";
          _fileContents += "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n";
@@ -141,7 +141,7 @@ namespace DragonQuestinoEditor.FileOps
 
       private void BuildSpriteFunction()
       {
-         _fileContents += "\nvoid Sprite_Load( Sprite_t* sprite, uint8_t index )\n";
+         _fileContents += "\nvoid Sprite_Load( Sprite_t* sprite, uint32_t index )\n";
          _fileContents += "{\n";
          _fileContents += "   uint32_t* mem32;\n\n";
          _fileContents += "   switch( index )\n";

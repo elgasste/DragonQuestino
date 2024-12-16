@@ -2,7 +2,7 @@
 
 void TileMap_Init( TileMap_t* tileMap )
 {
-   uint16_t i, j;
+   uint32_t i, j;
 
    tileMap->tilesX = 0;
    tileMap->tilesY = 0;

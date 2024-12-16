@@ -2111,7 +2111,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap )
    mem32[63] = 0x02020202;
 }
 
-void TileMap_Load( TileMap_t* tileMap, uint8_t index )
+void TileMap_Load( TileMap_t* tileMap, uint32_t index )
 {
    int32_t i;
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
@@ -8321,7 +8321,7 @@ void TileMap_Load( TileMap_t* tileMap, uint8_t index )
    }
 }
 
-void Sprite_Load( Sprite_t* sprite, uint8_t index )
+void Sprite_Load( Sprite_t* sprite, uint32_t index )
 {
    uint32_t* mem32;
 

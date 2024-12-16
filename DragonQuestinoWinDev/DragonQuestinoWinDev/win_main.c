@@ -177,7 +177,7 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
 {
    Bool_t keyWasDown = ( flags & ( (LONG_PTR)1 << 30 ) ) != 0 ? True : False;
    Bool_t keyIsDown = ( flags & ( (LONG_PTR)1 << 31 ) ) == 0 ? True : False;
-   uint8_t i;
+   uint32_t i;
 
    // ignore repeat presses
    if ( keyWasDown != keyIsDown )
@@ -191,7 +191,7 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
             return;
          }
 
-         for ( i = 0; i < Button_Count; i++ )
+         for ( i = 0; i < (uint32_t)Button_Count; i++ )
          {
             if ( g_globals.buttonMap[i] == keyCode )
             {
@@ -210,7 +210,7 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
       }
       else
       {
-         for ( i = 0; i < Button_Count; i++ )
+         for ( i = 0; i < (uint32_t)Button_Count; i++ )
          {
             if ( g_globals.buttonMap[i] == keyCode )
             {

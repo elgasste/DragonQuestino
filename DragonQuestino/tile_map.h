@@ -25,8 +25,8 @@ typedef struct TileMap_t
    // lowest 5 bits are the texture index (max 32 textures)
    // highest 11 bits are for other things (portals? encounter rates? damage?)
    uint16_t tiles[TILE_COUNT];
-   uint8_t tilesX;
-   uint8_t tilesY;
+   uint32_t tilesX;
+   uint32_t tilesY;
 
    TileTexture_t textures[TILE_TEXTURE_COUNT];
 }
@@ -40,7 +40,7 @@ void TileMap_Init( TileMap_t* tileMap );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
-void TileMap_Load( TileMap_t* tileMap, uint8_t index );
+void TileMap_Load( TileMap_t* tileMap, uint32_t index );
 
 #if defined( __cplusplus )
 }

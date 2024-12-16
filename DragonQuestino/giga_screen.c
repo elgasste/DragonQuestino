@@ -2,8 +2,9 @@
 
 void Screen_RenderBuffer( Screen_t* screen )
 {
-   uint8_t x, y, paletteIndex, *bufferPos = screen->buffer;
+   uint32_t x, y, paletteIndex;
    uint16_t color;
+   uint8_t* bufferPos = screen->buffer;
 
    // TODO: It needs to be this way in Windows, but on Arduino it can probably be consolidated,
    // as long as SetAddrWindow is still a thing. I guess we'll see.
