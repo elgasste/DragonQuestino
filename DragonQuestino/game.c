@@ -5,11 +5,10 @@
 
 internal void Game_DrawTileMap( Game_t* game );
 internal void Game_HandleInput( Game_t* game );
-internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
-                                           uint16_t tx, uint16_t ty, uint16_t tw, uint16_t th,
-                                           uint16_t sx, uint16_t sy );
-internal void Game_DrawPlayer( Game_t* game );
-internal void Game_DrawSprite( Game_t* game, Sprite_t* sprite, uint16_t x, uint16_t y );
+internal void Game_DrawSprite( Game_t* game, Sprite_t* sprite, int32_t x, int32_t y );
+internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t stride,
+                                       uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
+                                       uint32_t sx, uint32_t sy, Bool_t transparency );
 
 void Game_Init( Game_t* game )
 {
@@ -31,10 +30,10 @@ void Game_Init( Game_t* game )
    game->player.position.y = 0.0f;
    game->player.velocity.x = 0.0f;
    game->player.velocity.y = 0.0f;
-   game->player.hitBoxSize.x = TILE_SIZE;
-   game->player.hitBoxSize.y = TILE_SIZE;
-   game->player.spriteOffset.x = 0;
-   game->player.spriteOffset.y = 0;
+   game->player.hitBoxSize.x = TILE_SIZE - 4;
+   game->player.hitBoxSize.y = TILE_SIZE - 4;
+   game->player.spriteOffset.x = -2;
+   game->player.spriteOffset.y = -4;
    game->playerSprite.direction = Direction_Down;
 }
 
@@ -45,7 +44,9 @@ void Game_Tic( Game_t* game )
    Game_DrawTileMap( game );
    Physics_Tic( game );
    Sprite_Tic( &( game->playerSprite ) );
-   Game_DrawPlayer( game );
+   Game_DrawSprite( game, &( game->playerSprite ),
+                    (int16_t)( game->player.position.x ) + game->player.spriteOffset.x,
+                    (int16_t)( game->player.position.y ) + game->player.spriteOffset.y );
    Screen_RenderBuffer( &( game->screen ) );
 }
 
@@ -126,15 +127,14 @@ internal void Game_HandleInput( Game_t* game )
 
 internal void Game_DrawTileMap( Game_t* game )
 {
-   uint8_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex;
-   uint16_t tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY;
+   uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY;
 
-   firstTileX = (uint8_t)( game->tileMapViewport.x / TILE_SIZE );
-   firstTileY = (uint8_t)( game->tileMapViewport.y / TILE_SIZE );
-   lastTileX = (uint8_t)( ( game->tileMapViewport.x + SCREEN_BUFFER_WIDTH ) / TILE_SIZE );
-   lastTileY = (uint8_t)( ( game->tileMapViewport.y + SCREEN_BUFFER_HEIGHT ) / TILE_SIZE );
-   tileOffsetX = (uint16_t)( game->tileMapViewport.x % TILE_SIZE );
-   tileOffsetY = (uint16_t)( game->tileMapViewport.y % TILE_SIZE );
+   firstTileX = game->tileMapViewport.x / TILE_SIZE;
+   firstTileY = game->tileMapViewport.y / TILE_SIZE;
+   lastTileX = ( game->tileMapViewport.x + SCREEN_BUFFER_WIDTH ) / TILE_SIZE;
+   lastTileY = ( game->tileMapViewport.y + SCREEN_BUFFER_HEIGHT ) / TILE_SIZE;
+   tileOffsetX = game->tileMapViewport.x % TILE_SIZE;
+   tileOffsetY = game->tileMapViewport.y % TILE_SIZE;
 
    for ( tileY = firstTileY, screenY = 0; tileY <= lastTileY; tileY++ )
    {
@@ -145,10 +145,10 @@ internal void Game_DrawTileMap( Game_t* game )
          textureIndex = GET_TILETEXTUREINDEX( game->tileMap.tiles[( tileY * TILE_COUNT_X ) + tileX] );
          tileWidth = ( tileX == firstTileX ) ? TILE_SIZE - tileOffsetX : ( tileX == lastTileX ) ? ( game->tileMapViewport.x + SCREEN_BUFFER_WIDTH ) % TILE_SIZE : TILE_SIZE;
 
-         Game_DrawTileTextureSection( game, textureIndex,
-                                      tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
-                                      tileWidth, tileHeight,
-                                      screenX, screenY );
+         Game_DrawTextureSection( game, game->tileMap.textures[textureIndex].memory, TILE_SIZE,
+                                  tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
+                                  tileWidth, tileHeight,
+                                  screenX, screenY, False );
 
          screenX += tileWidth;
       }
@@ -157,48 +157,50 @@ internal void Game_DrawTileMap( Game_t* game )
    }
 }
 
-internal void Game_DrawTileTextureSection( Game_t* game, uint8_t index,
-                                           uint16_t tx, uint16_t ty, uint16_t tw, uint16_t th,
-                                           uint16_t sx, uint16_t sy )
+internal void Game_DrawSprite( Game_t* game, Sprite_t* sprite, int32_t x, int32_t y )
 {
-   uint8_t y;
-   uint8_t* textureBufferPos = game->tileMap.textures[index].memory + ( ty * TILE_SIZE ) + tx;
+   uint8_t textureIndex = (uint8_t)( sprite->direction * SPRITE_FRAMES ) + sprite->currentFrame;
+   uint32_t tx = ( x < 0 ) ? (uint32_t)( -x ) : 0;
+   uint32_t ty = ( y < 0 ) ? (uint32_t)( -y ) : 0;
+   uint32_t tw = ( ( x + SPRITE_TEXTURE_SIZE ) >= SCREEN_BUFFER_WIDTH ) ? ( SCREEN_BUFFER_WIDTH - x ) : ( SPRITE_TEXTURE_SIZE - tx );
+   uint32_t th = ( ( y + SPRITE_TEXTURE_SIZE ) >= SCREEN_BUFFER_HEIGHT ) ? ( SCREEN_BUFFER_HEIGHT - y ) : ( SPRITE_TEXTURE_SIZE - ty );
+   uint32_t sx = ( x < 0 ) ? 0 : x;
+   uint32_t sy = ( y < 0 ) ? 0 : y;
+
+   Game_DrawTextureSection( game, sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sx, sy, True );
+}
+
+internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t stride,
+                                       uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
+                                       uint32_t sx, uint32_t sy, Bool_t transparency )
+{
+   uint8_t x, y;
+   uint8_t* textureBufferPos = memory + ( ty * stride ) + tx;
    uint8_t* screenBufferPos = game->screen.buffer + ( sy * SCREEN_BUFFER_WIDTH ) + sx;
 
    for ( y = 0; y < th; y++ )
    {
-      memcpy( screenBufferPos, textureBufferPos, tw );
-      textureBufferPos += tw + tx + ( TILE_SIZE - ( tx + tw ) );
-      screenBufferPos += SCREEN_BUFFER_WIDTH;
-   }
-}
-
-internal void Game_DrawPlayer( Game_t* game )
-{
-   // TODO: take the sprite offset into consideration
-   Game_DrawSprite( game, &( game->playerSprite ), (uint16_t)( game->player.position.x ), (uint16_t)( game->player.position.y ) );
-}
-
-internal void Game_DrawSprite( Game_t* game, Sprite_t* sprite, uint16_t x, uint16_t y )
-{
-   uint8_t i, j;
-   uint8_t textureIndex = (uint8_t)( sprite->direction * SPRITE_FRAMES ) + sprite->currentFrame;
-   uint8_t* textureBufferPos = sprite->textures[textureIndex].memory;
-   uint8_t* screenBufferPos = game->screen.buffer + ( y * SCREEN_BUFFER_WIDTH ) + x;
-
-   for ( i = 0; i < SPRITE_TEXTURE_SIZE; i++ )
-   {
-      for ( j = 0; j < SPRITE_TEXTURE_SIZE; j++ )
+      if ( transparency )
       {
-         if ( *textureBufferPos != TRANSPARENT_COLOR_INDEX )
+         for ( x = 0; x < tw; x++ )
          {
-            *screenBufferPos = *textureBufferPos;
+            if ( *textureBufferPos != TRANSPARENT_COLOR_INDEX )
+            {
+               *screenBufferPos = *textureBufferPos;
+            }
+
+            textureBufferPos++;
+            screenBufferPos++;
          }
 
-         textureBufferPos++;
-         screenBufferPos++;
+         textureBufferPos += tx + ( stride - ( tx + tw ) );
+         screenBufferPos += ( SCREEN_BUFFER_WIDTH - tw );
       }
-
-      screenBufferPos += ( SCREEN_BUFFER_WIDTH - SPRITE_TEXTURE_SIZE );
+      else
+      {
+         memcpy( screenBufferPos, textureBufferPos, tw );
+         textureBufferPos += tw + tx + ( stride - ( tx + tw ) );
+         screenBufferPos += SCREEN_BUFFER_WIDTH;
+      }
    }
 }
