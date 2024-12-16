@@ -7,6 +7,7 @@
 #include "sprite.h"
 #include "clock.h"
 #include "input.h"
+#include "player.h"
 #include "vector.h"
 
 typedef struct Game_t
@@ -16,6 +17,7 @@ typedef struct Game_t
    Sprite_t playerSprite;
    Clock_t clock;
    Input_t input;
+   Player_t player;
 
    Vector4i32_t tileMapViewport;
 }
