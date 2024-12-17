@@ -35,6 +35,10 @@ void Physics_Tic( Game_t* game )
       newPos.y = ( game->tileMap.tilesY * TILE_SIZE ) - player->hitBoxSize.y - COLLISION_THETA;
    }
 
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.noClip == False ) {
+#endif
+
    // clip to unpassable horizontal tiles
    if ( newPos.x != player->position.x )
    {
@@ -118,6 +122,10 @@ void Physics_Tic( Game_t* game )
          }
       }
    }
+
+#if defined( VISUAL_STUDIO_DEV )
+   }
+#endif
 
    player->position = newPos;
    player->velocity.x = 0;

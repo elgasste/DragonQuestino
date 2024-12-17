@@ -96,7 +96,8 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
    Game_Init( &( g_globals.game ) );
    g_globals.shutdown = False;
-   g_globals.debugFlags.showDiagnostics = False;
+   g_debugFlags.showDiagnostics = False;
+   g_debugFlags.noClip = False;
 
    while ( 1 )
    {
@@ -204,7 +205,10 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
          switch ( keyCode )
          {
             case VK_F8:
-               TOGGLE_BOOL( g_globals.debugFlags.showDiagnostics );
+               TOGGLE_BOOL( g_debugFlags.showDiagnostics );
+               break;
+            case VK_NOCLIP:
+               TOGGLE_BOOL( g_debugFlags.noClip );
                break;
          }
       }
@@ -249,7 +253,7 @@ internal void RenderScreen()
       DIB_RGB_COLORS, SRCCOPY
    );
 
-   if ( g_globals.debugFlags.showDiagnostics )
+   if ( g_debugFlags.showDiagnostics )
    {
       DrawDiagnostics( &dcMem );
    }
@@ -327,6 +331,11 @@ internal void DrawDiagnostics( HDC* dcMem )
 
    sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
    SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Down].down ? 0x00FFFFFF : 0x00333333 );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   SetTextColor( *dcMem, g_debugFlags.noClip ? 0x00FFFFFF : 0x00333333 );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "1: No clip mode" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );

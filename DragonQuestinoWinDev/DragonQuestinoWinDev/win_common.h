@@ -16,11 +16,7 @@
 #define STRING_SIZE_DEFAULT         1024
 #define GRAPHICS_SCALE              3.0f
 
-typedef struct DebugFlags_t
-{
-   Bool_t showDiagnostics;
-}
-DebugFlags_t;
+#define VK_NOCLIP                   49    // 1
 
 typedef struct GlobalObjects_t
 {
@@ -32,7 +28,6 @@ typedef struct GlobalObjects_t
    Bool_t shutdown;
    BITMAPINFO bmpInfo;   
    WinPixelBuffer_t screenBuffer;
-   DebugFlags_t debugFlags;
 }
 GlobalObjects_t;
 
