@@ -17,7 +17,7 @@ void Game_Init( Game_t* game )
    TileMap_Init( &( game->tileMap ) );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 0 );
-   Sprite_Load( &( game->playerSprite ), 0 );
+   Sprite_Load( &( game->player.sprite ), 0 );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
@@ -36,8 +36,7 @@ void Game_Init( Game_t* game )
    game->player.spriteOffset.x = -2;
    game->player.spriteOffset.y = -4;
    game->player.tileIndexCache = TILE_COUNT_X * TILE_COUNT_Y; // off the map
-
-   game->playerSprite.direction = Direction_Down;
+   game->player.sprite.direction = Direction_Down;
 }
 
 void Game_Tic( Game_t* game )
@@ -45,7 +44,7 @@ void Game_Tic( Game_t* game )
    Input_Read( &( game->input ) );
    Game_HandleInput( game );
    Physics_Tic( game );
-   Sprite_Tic( &( game->playerSprite ) );
+   Sprite_Tic( &( game->player.sprite ) );
    Game_UpdateTileMapViewport( game );
    Game_DrawTileMap( game );
    Game_DrawSprites( game );
@@ -55,7 +54,7 @@ void Game_Tic( Game_t* game )
 internal void Game_HandleInput( Game_t* game )
 {
    Player_t* player = &( game->player );
-   Sprite_t* sprite = &( game->playerSprite );
+   Sprite_t* playerSprite = &( game->player.sprite );
    Bool_t leftIsDown = game->input.buttonStates[Button_Left].down;
    Bool_t upIsDown = game->input.buttonStates[Button_Up].down;
    Bool_t rightIsDown = game->input.buttonStates[Button_Right].down;
@@ -67,10 +66,10 @@ internal void Game_HandleInput( Game_t* game )
       {
          player->velocity.x = -PLAYER_MAX_VELOCITY;
 
-         if ( !( upIsDown && sprite->direction == Direction_Up ) &&
-              !( downIsDown && sprite->direction == Direction_Down ) )
+         if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
+              !( downIsDown && playerSprite->direction == Direction_Down ) )
          {
-            Sprite_SetDirection( sprite, Direction_Left );
+            Sprite_SetDirection( playerSprite, Direction_Left );
          }
 
          if ( upIsDown || downIsDown )
@@ -82,10 +81,10 @@ internal void Game_HandleInput( Game_t* game )
       {
          player->velocity.x = PLAYER_MAX_VELOCITY;
 
-         if ( !( upIsDown && sprite->direction == Direction_Up ) &&
-              !( downIsDown && sprite->direction == Direction_Down ) )
+         if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
+              !( downIsDown && playerSprite->direction == Direction_Down ) )
          {
-            Sprite_SetDirection( sprite, Direction_Right );
+            Sprite_SetDirection( playerSprite, Direction_Right );
          }
 
          if ( upIsDown || downIsDown )
@@ -98,10 +97,10 @@ internal void Game_HandleInput( Game_t* game )
       {
          player->velocity.y = -PLAYER_MAX_VELOCITY;
 
-         if ( !( leftIsDown && sprite->direction == Direction_Left ) &&
-              !( rightIsDown && sprite->direction == Direction_Right ) )
+         if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
+              !( rightIsDown && playerSprite->direction == Direction_Right ) )
          {
-            Sprite_SetDirection( sprite, Direction_Up );
+            Sprite_SetDirection( playerSprite, Direction_Up );
          }
 
          if ( leftIsDown || rightIsDown )
@@ -113,10 +112,10 @@ internal void Game_HandleInput( Game_t* game )
       {
          player->velocity.y = PLAYER_MAX_VELOCITY;
 
-         if ( !( leftIsDown && sprite->direction == Direction_Left ) &&
-              !( rightIsDown && sprite->direction == Direction_Right ) )
+         if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
+              !( rightIsDown && playerSprite->direction == Direction_Right ) )
          {
-            Sprite_SetDirection( sprite, Direction_Down );
+            Sprite_SetDirection( playerSprite, Direction_Down );
          }
 
          if ( leftIsDown || rightIsDown )
@@ -187,7 +186,7 @@ internal void Game_DrawTileMap( Game_t* game )
 
 internal void Game_DrawSprites( Game_t* game )
 {
-   Sprite_t* sprite = &( game->playerSprite );
+   Sprite_t* sprite = &( game->player.sprite );
    int32_t wx = (int32_t)( game->player.position.x ) + game->player.spriteOffset.x;
    int32_t wy = (int32_t)( game->player.position.y ) + game->player.spriteOffset.y;
    int32_t sx = wx - game->tileMapViewport.x;

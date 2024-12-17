@@ -4,7 +4,6 @@
 #include "common.h"
 #include "screen.h"
 #include "tile_map.h"
-#include "sprite.h"
 #include "clock.h"
 #include "input.h"
 #include "player.h"
@@ -14,7 +13,6 @@ typedef struct Game_t
 {
    Screen_t screen;
    TileMap_t tileMap;
-   Sprite_t playerSprite;
    Clock_t clock;
    Input_t input;
    Player_t player;
