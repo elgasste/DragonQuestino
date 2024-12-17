@@ -4,7 +4,7 @@
 #include "common.h"
 #include "vector.h"
 
-#define PLAYER_MAX_VELOCITY   64    // pixels per second
+#define PLAYER_MAX_VELOCITY   72    // pixels per second
 
 typedef struct Player_t
 {
