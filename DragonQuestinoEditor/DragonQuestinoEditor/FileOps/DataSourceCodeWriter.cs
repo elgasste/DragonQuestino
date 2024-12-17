@@ -22,7 +22,7 @@ namespace DragonQuestinoEditor.FileOps
          BuildPaletteFunction();
          BuildTileTexturesFunction();
          BuildTileMapFunction();
-         BuildSpriteFunction();
+         BuildSpriteFunctions();
 
          File.WriteAllText( filePath, _fileContents );
       }
@@ -144,21 +144,18 @@ namespace DragonQuestinoEditor.FileOps
          _fileContents += "}\n";
       }
 
-      private void BuildSpriteFunction()
+      private void BuildSpriteFunctions()
       {
-         _fileContents += "\nvoid Sprite_Load( Sprite_t* sprite, uint32_t index )\n";
+         _fileContents += "\nvoid Sprite_LoadPlayer( Sprite_t* sprite )\n";
          _fileContents += "{\n";
          _fileContents += "   uint32_t* mem32;\n\n";
-         _fileContents += "   switch( index )\n";
-         _fileContents += "   {\n";
-         _fileContents += "      case 0:\n";
 
          for ( int i = 0; i < Constants.SpritePositionCount; i++ )
          {
             // MUFFINS: I think we should compress these, probably
             for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
-               _fileContents += string.Format( "         mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j );
+               _fileContents += string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j );
 
                var pixelIndexes = _spriteSheet.FramePaletteIndexes[i][j];
 
@@ -171,13 +168,18 @@ namespace DragonQuestinoEditor.FileOps
 
                   var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
 
-                  _fileContents += string.Format( "         mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) );
+                  _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) );
                }
             }
          }
 
-         _fileContents += "         break;\n";
-         _fileContents += "   }\n";
+         _fileContents += "}\n\n";
+
+         // TODO
+         _fileContents += "\nvoid Sprite_LoadGeneric( Sprite_t* sprite, uint32_t index )\n";
+         _fileContents += "{\n";
+         _fileContents += "   UNUSED_PARAM( sprite );\n";
+         _fileContents += "   UNUSED_PARAM( index );\n";
          _fileContents += "}\n";
       }
    }

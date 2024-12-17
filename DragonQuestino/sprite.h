@@ -32,7 +32,8 @@ void Sprite_SetDirection( Sprite_t* sprite, Direction_t direction );
 void Sprite_Tic( Sprite_t* sprite );
 
 // game_data.c
-void Sprite_Load( Sprite_t* sprite, uint32_t index );
+void Sprite_LoadPlayer( Sprite_t* sprite );
+void Sprite_LoadGeneric( Sprite_t* sprite, uint32_t index );
 
 #if defined( __cplusplus )
 }
