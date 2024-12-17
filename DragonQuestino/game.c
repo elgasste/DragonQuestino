@@ -35,7 +35,6 @@ void Game_Init( Game_t* game )
    game->player.hitBoxSize.y = TILE_SIZE - 4;
    game->player.spriteOffset.x = -2;
    game->player.spriteOffset.y = -4;
-   game->player.tileIndexCache = TILE_COUNT_X * TILE_COUNT_Y; // off the map
    game->player.sprite.direction = Direction_Down;
 }
 

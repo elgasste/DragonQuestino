@@ -15,8 +15,6 @@ typedef struct Player_t
 
    Sprite_t sprite;
    Vector2i32_t spriteOffset;
-
-   uint32_t tileIndexCache;
 }
 Player_t;
 
