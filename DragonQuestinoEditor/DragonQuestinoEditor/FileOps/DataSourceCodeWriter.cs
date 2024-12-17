@@ -89,6 +89,7 @@ namespace DragonQuestinoEditor.FileOps
          _fileContents += "      case 0:\n";
          _fileContents += string.Format( "         tileMap->tilesX = {0};\n", Constants.TileMapTileCountX );
          _fileContents += string.Format( "         tileMap->tilesY = {0};\n", Constants.TileMapTileCountY );
+         _fileContents += string.Format( "         tileMap->spriteCount = 0;\n" );
 
          var indexCounts = new Dictionary<UInt32, int>();
 

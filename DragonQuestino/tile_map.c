@@ -19,4 +19,6 @@ void TileMap_Init( TileMap_t* tileMap )
          tileMap->textures[i].memory[j] = 0;
       }
    }
+
+   tileMap->spriteCount = 0;
 }

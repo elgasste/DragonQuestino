@@ -2,6 +2,7 @@
 #define TILE_MAP_H
 
 #include "common.h"
+#include "sprite.h"
 
 #define TILE_SIZE                      16
 #define TILE_TEXTURE_BYTES             256   // 8 bpp
@@ -9,6 +10,8 @@
 #define TILE_COUNT_X                   140   // overworld size
 #define TILE_COUNT_Y                   135
 #define TILE_COUNT                     18900
+
+#define TILEMAP_MAX_SPRITES            12
 
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
 #define GET_TILEPASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
@@ -31,6 +34,9 @@ typedef struct TileMap_t
    uint32_t tilesY;
 
    TileTexture_t textures[TILE_TEXTURE_COUNT];
+
+   Sprite_t sprites[TILEMAP_MAX_SPRITES];
+   uint32_t spriteCount;
 }
 TileMap_t;
 
