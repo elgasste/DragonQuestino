@@ -148,11 +148,53 @@ namespace DragonQuestinoEditor.FileOps
       {
          _fileContents += "\nvoid Sprite_LoadPlayer( Sprite_t* sprite )\n";
          _fileContents += "{\n";
-         _fileContents += "   uint32_t* mem32;\n\n";
+         _fileContents += "   int32_t i;\n";
+         _fileContents += "   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );\n\n";
+
+         var indexCounts = new Dictionary<UInt32, int>();
 
          for ( int i = 0; i < Constants.SpritePositionCount; i++ )
          {
-            // MUFFINS: I think we should compress these, probably
+            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
+            {
+               var pixelIndexes = _spriteSheet.FramePaletteIndexes[i][j];
+
+               for ( int k = 0; k < Constants.SpriteFramePixels; k += 4 )
+               {
+                  var index0 = (UInt32)( pixelIndexes[k + 0] );
+                  var index1 = (UInt32)( pixelIndexes[k + 1] );
+                  var index2 = (UInt32)( pixelIndexes[k + 2] );
+                  var index3 = (UInt32)( pixelIndexes[k + 3] );
+                  var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
+
+                  if ( indexCounts.TryGetValue( packed, out int value ) )
+                  {
+                     indexCounts[packed] = ++value;
+                  }
+                  else
+                  {
+                     indexCounts[packed] = 1;
+                  }
+               }
+            }
+         }
+
+         int highestCount = 0;
+         UInt32 mostCommonValue = 0;
+
+         foreach ( var pair in indexCounts )
+         {
+            if ( pair.Value > highestCount )
+            {
+               highestCount = pair.Value;
+               mostCommonValue = pair.Key;
+            }
+         }
+
+         _fileContents += string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) );
+
+         for ( int i = 0; i < Constants.SpritePositionCount; i++ )
+         {
             for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
                _fileContents += string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j );
@@ -165,10 +207,12 @@ namespace DragonQuestinoEditor.FileOps
                   var index1 = (UInt32)( pixelIndexes[k + 1] );
                   var index2 = (UInt32)( pixelIndexes[k + 2] );
                   var index3 = (UInt32)( pixelIndexes[k + 3] );
-
                   var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
 
-                  _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) );
+                  if ( packed != mostCommonValue )
+                  {
+                     _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) );
+                  }
                }
             }
          }
