@@ -12,6 +12,8 @@ typedef struct Player_t
    Vector2f_t velocity;
    Vector2u32_t hitBoxSize;
    Vector2i32_t spriteOffset;
+
+   uint32_t tileIndexCache;
 }
 Player_t;
 

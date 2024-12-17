@@ -11,6 +11,7 @@
 #define TILE_COUNT                     18900
 
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
+#define GET_TILEPASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
 
 typedef struct Screen_t Screen_t;
 
