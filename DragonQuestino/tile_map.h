@@ -22,7 +22,8 @@ TileTexture_t;
 
 typedef struct TileMap_t
 {
-   // lowest 5 bits are the texture index (max 32 textures)
+   // lowest 5 bits: texture index (max 32 textures)
+   // bit 6: "is passable" flag
    // highest 11 bits are for other things (portals? encounter rates? damage?)
    uint16_t tiles[TILE_COUNT];
    uint32_t tilesX;

@@ -94,8 +94,10 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int i = 0; i < _tiles.Count; i += 2 )
          {
-            var index0 = (UInt32)_tiles[i].Index;
-            var index1 = (UInt32)_tiles[i + 1].Index;
+            // the 6th lowest bit is the passable flag (0x20)
+            var index0 = (UInt32)( _tiles[i].Index ) | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 );
+            var index1 = (UInt32)( _tiles[i + 1].Index ) | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 );
+
             var packed = ( index1 << 16 ) | index0;
 
             if ( indexCounts.TryGetValue( packed, out int value ) )
@@ -124,8 +126,10 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int i = 0, tileIndex = 0; i < _tiles.Count; i += 2, tileIndex++ )
          {
-            var index0 = (UInt32)_tiles[i].Index;
-            var index1 = (UInt32)_tiles[i + 1].Index;
+            // the 6th lowest bit is the passable flag (0x20)
+            var index0 = (UInt32)( _tiles[i].Index ) | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 );
+            var index1 = (UInt32)( _tiles[i + 1].Index ) | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 );
+
             var packed = ( index1 << 16 ) | index0;
 
             if ( packed != mostCommonValue )
