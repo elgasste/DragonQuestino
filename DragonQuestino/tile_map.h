@@ -2,6 +2,7 @@
 #define TILE_MAP_H
 
 #include "common.h"
+#include "sprite.h"
 
 #define TILE_SIZE                      16
 #define TILE_TEXTURE_BYTES             256   // 8 bpp
@@ -10,7 +11,10 @@
 #define TILE_COUNT_Y                   135
 #define TILE_COUNT                     18900
 
+#define TILEMAP_MAX_SPRITES            12
+
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
+#define GET_TILEPASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
 
 typedef struct Screen_t Screen_t;
 
@@ -22,13 +26,17 @@ TileTexture_t;
 
 typedef struct TileMap_t
 {
-   // lowest 5 bits are the texture index (max 32 textures)
+   // lowest 5 bits: texture index (max 32 textures)
+   // bit 6: "is passable" flag
    // highest 11 bits are for other things (portals? encounter rates? damage?)
    uint16_t tiles[TILE_COUNT];
-   uint8_t tilesX;
-   uint8_t tilesY;
+   uint32_t tilesX;
+   uint32_t tilesY;
 
    TileTexture_t textures[TILE_TEXTURE_COUNT];
+
+   Sprite_t sprites[TILEMAP_MAX_SPRITES];
+   uint32_t spriteCount;
 }
 TileMap_t;
 
@@ -38,9 +46,9 @@ extern "C" {
 
 void TileMap_Init( TileMap_t* tileMap );
 
-// data.c
+// game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
-void TileMap_Load( TileMap_t* tileMap, Screen_t* screen, uint8_t index );
+void TileMap_Load( TileMap_t* tileMap, uint32_t index );
 
 #if defined( __cplusplus )
 }

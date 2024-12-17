@@ -2,7 +2,7 @@
 
 void Input_Init( Input_t* input )
 {
-   uint8_t i;
+   uint32_t i;
 
    for ( i = 0; i < Button_Count; i++ )
    {
@@ -39,7 +39,7 @@ void Input_Read( Input_t* input )
 
 Bool_t Input_AnyButtonPressed( Input_t* input )
 {
-   uint8_t i;
+   uint32_t i;
 
    for ( i = 0; i < Button_Count; i++ )
    {

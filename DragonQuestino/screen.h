@@ -9,6 +9,8 @@
 
 #define PALETTE_COLORS           256
 
+#define TRANSPARENT_COLOR_INDEX  0x0A
+
 typedef struct Screen_t
 {
    uint8_t buffer[SCREEN_BUFFER_BYTES];
@@ -25,8 +27,8 @@ void Screen_Init( Screen_t* screen );
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );
 
-// data.c
-void Screen_LoadPalette( Screen_t* screen, uint8_t index );
+// game_data.c
+void Screen_LoadPalette( Screen_t* screen );
 
 #if defined( __cplusplus )
 }

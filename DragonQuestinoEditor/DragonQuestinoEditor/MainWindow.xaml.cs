@@ -2,9 +2,9 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using TileMapEditor.ViewModels;
+using DragonQuestinoEditor.ViewModels;
 
-namespace TileMapEditor
+namespace DragonQuestinoEditor
 {
    public partial class MainWindow : Window
    {

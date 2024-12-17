@@ -50,8 +50,8 @@ extern "C" {
 
 #if defined( VISUAL_STUDIO_DEV )
    void Input_ResetState( Input_t* input );
-   void Input_ButtonPressed( Input_t* input, uint8_t button );
-   void Input_ButtonReleased( Input_t* input, uint8_t button );
+   void Input_ButtonPressed( Input_t* input, uint32_t button );
+   void Input_ButtonReleased( Input_t* input, uint32_t button );
 #endif
 
 #if defined( __cplusplus )

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace DeviceFrameEditor.Commands
+namespace DragonQuestinoEditor.Commands
 {
    public class RelayCommand : ICommand
    {

@@ -1,11 +1,13 @@
-﻿using DeviceFrameEditor.ViewModels;
-using System.Windows.Media.Imaging;
-using TileMapEditor.Tiles;
+﻿using System.Windows.Media.Imaging;
+using DragonQuestinoEditor.Graphics;
 
-namespace TileMapEditor.ViewModels
+namespace DragonQuestinoEditor.ViewModels
 {
    internal class TileViewModel : ViewModelBase
    {
+      // TODO: allow updating this with the tile editor
+      private readonly int[] _passableIndexes = [ 0, 1, 2, 3, 4, 7, 9, 13 ];
+
       private TileSet _tileSet;
 
       private int _index;
@@ -22,6 +24,13 @@ namespace TileMapEditor.ViewModels
          private set => SetProperty( ref _image, value );
       }
 
+      private bool _isPassable;
+      public bool IsPassable
+      {
+         get => _isPassable;
+         private set => SetProperty( ref _isPassable, value );
+      }
+
       private bool _shouldHighlight = false;
       public bool ShouldHighlight
       {
@@ -33,12 +42,15 @@ namespace TileMapEditor.ViewModels
       {
          _tileSet = tileSet;
          SetIndex( index );
+
+         _isPassable = _passableIndexes.Contains( index );
       }
 
       public void SetIndex( int index )
       {
          Index = index;
          Image = _tileSet.TileBitmaps[index];
+         IsPassable = _passableIndexes.Contains( index );
       }
    }
 }

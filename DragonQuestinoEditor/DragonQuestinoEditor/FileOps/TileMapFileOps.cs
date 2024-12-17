@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Text.Json;
-using TileMapEditor.ViewModels;
+using DragonQuestinoEditor.ViewModels;
 
-namespace TileMapEditor.FileOps
+namespace DragonQuestinoEditor.FileOps
 {
    internal static class TileMapFileOps
    {

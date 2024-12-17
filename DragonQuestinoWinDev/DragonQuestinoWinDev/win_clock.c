@@ -45,9 +45,9 @@ void Clock_EndFrame( Clock_t* clock )
 
    clock->lastFrameMicro = elapsedMicro;
 
-   if ( elapsedMicro <= FRAME_MICROSECONDS )
+   if ( elapsedMicro <= CLOCK_FRAME_MICROSECONDS )
    {
-      DELAY_MS( ( FRAME_MICROSECONDS - elapsedMicro ) / 1000 );
+      DELAY_MS( ( CLOCK_FRAME_MICROSECONDS - elapsedMicro ) / 1000 );
    }
 }
 

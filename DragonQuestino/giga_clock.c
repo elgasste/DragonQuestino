@@ -25,10 +25,10 @@ void Clock_EndFrame( Clock_t* clock )
       elapsedMicro = frameEndMicro - clock->frameStartMicro;
    }
 
-   if ( elapsedMicro <= CLOCK_FRAMEMICROSECONDS )
+   if ( elapsedMicro <= CLOCK_FRAME_MICROSECONDS )
    {
       // I'd like to use delayMicroseconds here, but there are some serious
       // issues with precision. regular "delay" works much better, strangely.
-      DELAY_MS( ( CLOCK_FRAMEMICROSECONDS - elapsedMicro ) / 1000 );
+      DELAY_MS( ( CLOCK_FRAME_MICROSECONDS - elapsedMicro ) / 1000 );
    }
 }

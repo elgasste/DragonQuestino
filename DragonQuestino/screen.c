@@ -9,8 +9,5 @@ void Screen_Init( Screen_t* screen )
       screen->buffer[i] = 0;
    }
 
-   for ( i = 0; i < PALETTE_COLORS; i++ )
-   {
-      screen->palette[i] = 0;
-   }
+   Screen_LoadPalette( screen );
 }

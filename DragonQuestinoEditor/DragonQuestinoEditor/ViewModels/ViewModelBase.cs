@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace DeviceFrameEditor.ViewModels
+namespace DragonQuestinoEditor.ViewModels
 {
    internal abstract class ViewModelBase : INotifyPropertyChanged
    {

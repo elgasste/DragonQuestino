@@ -6,6 +6,7 @@
 #include "tile_map.h"
 #include "clock.h"
 #include "input.h"
+#include "player.h"
 #include "vector.h"
 
 typedef struct Game_t
@@ -14,6 +15,7 @@ typedef struct Game_t
    TileMap_t tileMap;
    Clock_t clock;
    Input_t input;
+   Player_t player;
 
    Vector4i32_t tileMapViewport;
 }

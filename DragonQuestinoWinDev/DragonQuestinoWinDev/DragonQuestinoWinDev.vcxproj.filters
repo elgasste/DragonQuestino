@@ -42,6 +42,15 @@
     <ClInclude Include="..\..\DragonQuestino\vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\DragonQuestino\sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DragonQuestino\player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DragonQuestino\physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="win_clock.c">
@@ -65,13 +74,22 @@
     <ClCompile Include="..\..\DragonQuestino\tile_map.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\DragonQuestino\tile_data.c">
+    <ClCompile Include="..\..\DragonQuestino\game_data.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\DragonQuestino\input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_input.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\sprite.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\player.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\physics.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
