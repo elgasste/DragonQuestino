@@ -16,6 +16,38 @@ namespace DragonQuestinoEditor.FileOps
       private readonly SpriteSheet _spriteSheet = spriteSheet;
       private string _fileContents = string.Empty;
 
+      private readonly UInt32[] _tileSetIndexWalkSpeeds = [
+         0,       // grass
+         0x40,    // trees
+         0x80,    // hills
+         0x40,    // desert
+         0xC0,    // swamp
+         0,       // mountains
+         0,       // stone wall
+         0,       // brick path
+         0,       // void
+         0xC0,    // barrier
+         0,       // counter
+         0,       // metal wall
+         0,       // water, no shore
+         0,       // bridge
+         0,       // water, left shore
+         0,       // water, top shore
+         0,       // water, right shore
+         0,       // water, bottom shore
+         0,       // water, upper-left shore
+         0,       // water, upper-right shore
+         0,       // water, lower-right shore
+         0,       // water, lower-left shore
+         0,       // water, upper-stop
+         0,       // water, right-stop
+         0,       // water, bottom-stop
+         0,       // water, left-stop
+         0,       // water, full-stop
+         0,       // water, horizontal river
+         0        // water, vertical river
+      ];
+
       public void WriteFile( string filePath )
       {
          BuildHeaderSection();
@@ -56,6 +88,7 @@ namespace DragonQuestinoEditor.FileOps
          _fileContents += "{\n";
          _fileContents += "   uint32_t* mem32;\n\n";
 
+         // TODO: try compressing this, it only ever gets called once
          for ( int i = 0; i < Constants.TileCount; i++ )
          {
             _fileContents += string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i );
@@ -91,15 +124,20 @@ namespace DragonQuestinoEditor.FileOps
          _fileContents += string.Format( "         tileMap->tilesY = {0};\n", Constants.TileMapTileCountY );
          _fileContents += string.Format( "         tileMap->spriteCount = 0;\n" );
 
+         var packedTiles = new List<UInt32>( _tiles.Count / 2 );
          var indexCounts = new Dictionary<UInt32, int>();
 
          for ( int i = 0; i < _tiles.Count; i += 2 )
          {
-            // the 6th lowest bit is the passable flag (0x20)
-            var index0 = (UInt32)( _tiles[i].Index ) | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 );
-            var index1 = (UInt32)( _tiles[i + 1].Index ) | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 );
+            var index0 = (UInt32)( _tiles[i].Index )
+               | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 )                  // "is passable" flag
+               | _tileSetIndexWalkSpeeds[_tiles[i].Index];                    // walk speed
+            var index1 = (UInt32)( _tiles[i + 1].Index )
+               | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 )              // "is passable" flag
+               | _tileSetIndexWalkSpeeds[_tiles[i + 1].Index];                // walk speed
 
             var packed = ( index1 << 16 ) | index0;
+            packedTiles.Add( packed );
 
             if ( indexCounts.TryGetValue( packed, out int value ) )
             {
@@ -125,17 +163,11 @@ namespace DragonQuestinoEditor.FileOps
 
          _fileContents += string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) );
 
-         for ( int i = 0, tileIndex = 0; i < _tiles.Count; i += 2, tileIndex++ )
+         for ( int i = 0, packedTileIndex = 0; i < _tiles.Count; i += 2, packedTileIndex++ )
          {
-            // the 6th lowest bit is the passable flag (0x20)
-            var index0 = (UInt32)( _tiles[i].Index ) | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 );
-            var index1 = (UInt32)( _tiles[i + 1].Index ) | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 );
-
-            var packed = ( index1 << 16 ) | index0;
-
-            if ( packed != mostCommonValue )
+            if ( packedTiles[packedTileIndex] != mostCommonValue )
             {
-               _fileContents += string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex, packed.ToString( "X8" ) );
+               _fileContents += string.Format( "         tiles32[{0}] = 0x{1};\n", packedTileIndex, packedTiles[packedTileIndex].ToString( "X8" ) );
             }
          }
 
@@ -152,6 +184,7 @@ namespace DragonQuestinoEditor.FileOps
          _fileContents += "   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );\n\n";
 
          var indexCounts = new Dictionary<UInt32, int>();
+         var packedIndexes = new List<UInt32>();
 
          for ( int i = 0; i < Constants.SpritePositionCount; i++ )
          {
@@ -166,6 +199,8 @@ namespace DragonQuestinoEditor.FileOps
                   var index2 = (UInt32)( pixelIndexes[k + 2] );
                   var index3 = (UInt32)( pixelIndexes[k + 3] );
                   var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
+
+                  packedIndexes.Add( packed );
 
                   if ( indexCounts.TryGetValue( packed, out int value ) )
                   {
@@ -193,7 +228,7 @@ namespace DragonQuestinoEditor.FileOps
 
          _fileContents += string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) );
 
-         for ( int i = 0; i < Constants.SpritePositionCount; i++ )
+         for ( int i = 0, packedIndex = 0; i < Constants.SpritePositionCount; i++ )
          {
             for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
@@ -201,17 +236,11 @@ namespace DragonQuestinoEditor.FileOps
 
                var pixelIndexes = _spriteSheet.FramePaletteIndexes[i][j];
 
-               for ( int k = 0, memoryIndex = 0; k < Constants.SpriteFramePixels; k += 4, memoryIndex++ )
+               for ( int k = 0, memoryIndex = 0; k < Constants.SpriteFramePixels; k += 4, memoryIndex++, packedIndex++ )
                {
-                  var index0 = (UInt32)( pixelIndexes[k + 0] );
-                  var index1 = (UInt32)( pixelIndexes[k + 1] );
-                  var index2 = (UInt32)( pixelIndexes[k + 2] );
-                  var index3 = (UInt32)( pixelIndexes[k + 3] );
-                  var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
-
-                  if ( packed != mostCommonValue )
+                  if ( packedIndexes[packedIndex] != mostCommonValue )
                   {
-                     _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) );
+                     _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packedIndexes[packedIndex].ToString( "X8" ) );
                   }
                }
             }

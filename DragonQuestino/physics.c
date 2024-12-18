@@ -3,6 +3,8 @@
 
 #define COLLISION_THETA  0.001f
 
+internal void Physics_UpdatePlayerTileIndex( Game_t* game );
+
 void Physics_Tic( Game_t* game )
 {
    Vector2f_t newPos;
@@ -130,4 +132,19 @@ void Physics_Tic( Game_t* game )
    player->position = newPos;
    player->velocity.x = 0;
    player->velocity.y = 0;
+
+   Physics_UpdatePlayerTileIndex( game );
+}
+
+internal void Physics_UpdatePlayerTileIndex( Game_t* game )
+{
+   uint32_t centerX = (uint32_t)( game->player.position.x + ( game->player.hitBoxSize.x / 2 ) );
+   uint32_t centerY = (uint32_t)( game->player.position.y + ( game->player.hitBoxSize.y / 2 ) );
+   uint32_t newTileIndex = ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
+
+   if ( newTileIndex != game->player.tileIndex )
+   {
+      game->player.tileIndex = newTileIndex;
+      Game_PlayerSteppedOnTile( game, newTileIndex );
+   }
 }

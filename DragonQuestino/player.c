@@ -1,7 +1,7 @@
 #include "player.h"
+#include "tile_map.h"
 
 void Player_Init( Player_t* player )
 {
-   // TODO: not sure if this function will ever be necessary?
-   UNUSED_PARAM( player );
+   player->tileIndex = TILE_COUNT_X * TILE_COUNT_Y; // off the map
 }
