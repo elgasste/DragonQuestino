@@ -27,6 +27,7 @@ extern "C" {
 
 void Game_Init( Game_t* game );
 void Game_Tic( Game_t* game );
+void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 
 #if defined( __cplusplus )
 }

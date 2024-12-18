@@ -9,6 +9,7 @@ internal void InitButtonMap();
 internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags );
 internal void RenderScreen();
 internal void DrawDiagnostics( HDC* dcMem );
+internal void ToggleFastWalk();
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -98,6 +99,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_globals.shutdown = False;
    g_debugFlags.showDiagnostics = False;
    g_debugFlags.noClip = False;
+   g_debugFlags.fastWalk = False;
 
    while ( 1 )
    {
@@ -209,6 +211,9 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
                break;
             case VK_NOCLIP:
                TOGGLE_BOOL( g_debugFlags.noClip );
+               break;
+            case VK_FASTWALK:
+               ToggleFastWalk();
                break;
          }
       }
@@ -335,8 +340,28 @@ internal void DrawDiagnostics( HDC* dcMem )
    r.top += 16;
 
    SetTextColor( *dcMem, g_debugFlags.noClip ? 0x00FFFFFF : 0x00333333 );
-   sprintf_s( str, STRING_SIZE_DEFAULT, "1: No clip mode" );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "1: No clip" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   SetTextColor( *dcMem, g_debugFlags.fastWalk ? 0x00FFFFFF : 0x00333333 );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "2: Fast walk" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
+}
+
+internal void ToggleFastWalk()
+{
+   TOGGLE_BOOL( g_debugFlags.fastWalk );
+
+   if ( g_debugFlags.fastWalk )
+   {
+      g_globals.game.player.maxVelocity = TILE_WALKSPEED_FAST;
+   }
+   else
+   {
+      uint16_t tile = g_globals.game.tileMap.tiles[g_globals.game.player.tileIndex];
+      g_globals.game.player.maxVelocity = TileMap_GetWalkSpeedForTile( tile );
+   }
 }

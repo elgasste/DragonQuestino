@@ -11,10 +11,18 @@
 #define TILE_COUNT_Y                   135
 #define TILE_COUNT                     18900
 
+// pixels per second
+#define TILE_WALKSPEED_FAST            192.0f
+#define TILE_WALKSPEED_NORMAL          72.0f
+#define TILE_WALKSPEED_SLOW            60.0f
+#define TILE_WALKSPEED_VERYSLOW        48.0f
+#define TILE_WALKSPEED_CRAWL           36.0f
+
 #define TILEMAP_MAX_SPRITES            12
 
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
 #define GET_TILEPASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
+#define GET_TILEWALKSPEED( t )         ( ( ( t ) & 0xC0 ) >> 6 )
 
 typedef struct Screen_t Screen_t;
 
@@ -28,7 +36,8 @@ typedef struct TileMap_t
 {
    // lowest 5 bits: texture index (max 32 textures)
    // bit 6: "is passable" flag
-   // highest 11 bits are for other things (portals? encounter rates? damage?)
+   // bits 7 and 8: "slow-down" factor (0 = walk normal, 3 = walk very slow)
+   // highest 3 bits are for other things (portals? encounter rates? damage?)
    uint16_t tiles[TILE_COUNT];
    uint32_t tilesX;
    uint32_t tilesY;
@@ -45,6 +54,7 @@ extern "C" {
 #endif
 
 void TileMap_Init( TileMap_t* tileMap );
+float TileMap_GetWalkSpeedForTile( uint16_t tile );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );

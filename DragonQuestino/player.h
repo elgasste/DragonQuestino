@@ -5,16 +5,17 @@
 #include "vector.h"
 #include "sprite.h"
 
-#define PLAYER_MAX_VELOCITY   72    // pixels per second
-
 typedef struct Player_t
 {
    Vector2f_t position;
    Vector2f_t velocity;
+   float maxVelocity;
    Vector2u32_t hitBoxSize;
 
    Sprite_t sprite;
    Vector2i32_t spriteOffset;
+
+   uint32_t tileIndex;
 }
 Player_t;
 

@@ -31,6 +31,7 @@ void Game_Init( Game_t* game )
    game->player.position.y = (float)( TILE_SIZE * 8 );
    game->player.velocity.x = 0.0f;
    game->player.velocity.y = 0.0f;
+   game->player.maxVelocity = TILE_WALKSPEED_NORMAL;
    game->player.hitBoxSize.x = TILE_SIZE - 4;
    game->player.hitBoxSize.y = TILE_SIZE - 4;
    game->player.spriteOffset.x = -2;
@@ -50,6 +51,19 @@ void Game_Tic( Game_t* game )
    Screen_RenderBuffer( &( game->screen ) );
 }
 
+void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
+{
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.fastWalk )
+   {
+      return;
+   }
+#endif
+
+   game->player.tileIndex = tileIndex;
+   game->player.maxVelocity = TileMap_GetWalkSpeedForTile( game->tileMap.tiles[tileIndex] );
+}
+
 internal void Game_HandleInput( Game_t* game )
 {
    Player_t* player = &( game->player );
@@ -63,7 +77,7 @@ internal void Game_HandleInput( Game_t* game )
    {
       if ( leftIsDown && !rightIsDown )
       {
-         player->velocity.x = -PLAYER_MAX_VELOCITY;
+         player->velocity.x = -( player->maxVelocity );
 
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
@@ -78,7 +92,7 @@ internal void Game_HandleInput( Game_t* game )
       }
       else if ( rightIsDown && !leftIsDown )
       {
-         player->velocity.x = PLAYER_MAX_VELOCITY;
+         player->velocity.x = player->maxVelocity;
 
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
@@ -94,7 +108,7 @@ internal void Game_HandleInput( Game_t* game )
 
       if ( upIsDown && !downIsDown )
       {
-         player->velocity.y = -PLAYER_MAX_VELOCITY;
+         player->velocity.y = -( player->maxVelocity );
 
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
@@ -109,7 +123,7 @@ internal void Game_HandleInput( Game_t* game )
       }
       else if ( downIsDown && !upIsDown )
       {
-         player->velocity.y = PLAYER_MAX_VELOCITY;
+         player->velocity.y = player->maxVelocity;
 
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )

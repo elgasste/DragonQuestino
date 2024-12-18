@@ -6,7 +6,16 @@ namespace DragonQuestinoEditor.ViewModels
    internal class TileViewModel : ViewModelBase
    {
       // TODO: allow updating this with the tile editor
-      private readonly int[] _passableIndexes = [ 0, 1, 2, 3, 4, 7, 9, 13 ];
+      private readonly int[] _passableIndexes = [
+         0,    // grass
+         1,    // trees
+         2,    // hills
+         3,    // desert
+         4,    // swamp
+         7,    // brick path
+         9,    // barrier
+         13    // bridge
+      ];
 
       private TileSet _tileSet;
 
