@@ -31,7 +31,7 @@ void Game_Init( Game_t* game )
    game->player.position.y = (float)( TILE_SIZE * 8 );
    game->player.velocity.x = 0.0f;
    game->player.velocity.y = 0.0f;
-   game->player.maxVelocity = PLAYER_VELOCITY_NORMAL;
+   game->player.maxVelocity = TILE_WALKSPEED_NORMAL;
    game->player.hitBoxSize.x = TILE_SIZE - 4;
    game->player.hitBoxSize.y = TILE_SIZE - 4;
    game->player.spriteOffset.x = -2;
@@ -53,26 +53,15 @@ void Game_Tic( Game_t* game )
 
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 {
-   game->player.tileIndex = tileIndex;
-
-   uint16_t tile = game->tileMap.tiles[tileIndex];
-   uint16_t walkSpeed = GET_TILEWALKSPEED( tile );
-
-   switch ( walkSpeed )
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.fastWalk )
    {
-      case 0:
-         game->player.maxVelocity = PLAYER_VELOCITY_NORMAL;
-         break;
-      case 1:
-         game->player.maxVelocity = PLAYER_VELOCITY_SLOW;
-         break;
-      case 2:
-         game->player.maxVelocity = PLAYER_VELOCITY_VERYSLOW;
-         break;
-      case 3:
-         game->player.maxVelocity = PLAYER_VELOCITY_CRAWL;
-         break;
+      return;
    }
+#endif
+
+   game->player.tileIndex = tileIndex;
+   game->player.maxVelocity = TileMap_GetWalkSpeedForTile( game->tileMap.tiles[tileIndex] );
 }
 
 internal void Game_HandleInput( Game_t* game )

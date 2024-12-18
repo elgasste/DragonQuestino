@@ -11,6 +11,13 @@
 #define TILE_COUNT_Y                   135
 #define TILE_COUNT                     18900
 
+// pixels per second
+#define TILE_WALKSPEED_FAST            192.0f
+#define TILE_WALKSPEED_NORMAL          72.0f
+#define TILE_WALKSPEED_SLOW            60.0f
+#define TILE_WALKSPEED_VERYSLOW        48.0f
+#define TILE_WALKSPEED_CRAWL           36.0f
+
 #define TILEMAP_MAX_SPRITES            12
 
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
@@ -47,6 +54,7 @@ extern "C" {
 #endif
 
 void TileMap_Init( TileMap_t* tileMap );
+float TileMap_GetWalkSpeedForTile( uint16_t tile );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );

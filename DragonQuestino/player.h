@@ -5,11 +5,6 @@
 #include "vector.h"
 #include "sprite.h"
 
-#define PLAYER_VELOCITY_NORMAL      72.0f    // pixels per second
-#define PLAYER_VELOCITY_SLOW        60.0f
-#define PLAYER_VELOCITY_VERYSLOW    48.0f
-#define PLAYER_VELOCITY_CRAWL       36.0f
-
 typedef struct Player_t
 {
    Vector2f_t position;

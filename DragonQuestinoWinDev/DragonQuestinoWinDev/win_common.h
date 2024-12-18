@@ -17,6 +17,7 @@
 #define GRAPHICS_SCALE              3.0f
 
 #define VK_NOCLIP                   49    // 1
+#define VK_FASTWALK                 50    // 2
 
 typedef struct GlobalObjects_t
 {
