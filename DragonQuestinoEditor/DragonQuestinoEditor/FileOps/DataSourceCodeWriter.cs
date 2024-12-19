@@ -16,38 +16,6 @@ namespace DragonQuestinoEditor.FileOps
       private readonly SpriteSheet _spriteSheet = spriteSheet;
       private string _fileContents = string.Empty;
 
-      private readonly UInt32[] _tileSetIndexWalkSpeeds = [
-         0,       // grass
-         0x40,    // trees
-         0x80,    // hills
-         0x40,    // desert
-         0xC0,    // swamp
-         0,       // mountains
-         0,       // stone wall
-         0,       // brick path
-         0,       // void
-         0xC0,    // barrier
-         0,       // counter
-         0,       // metal wall
-         0,       // water, no shore
-         0,       // bridge
-         0,       // water, left shore
-         0,       // water, top shore
-         0,       // water, right shore
-         0,       // water, bottom shore
-         0,       // water, upper-left shore
-         0,       // water, upper-right shore
-         0,       // water, lower-right shore
-         0,       // water, lower-left shore
-         0,       // water, upper-stop
-         0,       // water, right-stop
-         0,       // water, bottom-stop
-         0,       // water, left-stop
-         0,       // water, full-stop
-         0,       // water, horizontal river
-         0        // water, vertical river
-      ];
-
       public void WriteFile( string filePath )
       {
          BuildHeaderSection();
@@ -130,11 +98,15 @@ namespace DragonQuestinoEditor.FileOps
          for ( int i = 0; i < _tiles.Count; i += 2 )
          {
             var index0 = (UInt32)( _tiles[i].Index )
-               | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 )                  // "is passable" flag
-               | _tileSetIndexWalkSpeeds[_tiles[i].Index];                    // walk speed
+               | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 )
+               | Constants.TileSetIndexWalkSpeeds[_tiles[i].Index]
+               | Constants.TileSetIndexEncounterRates[_tiles[i].Index]
+               | Constants.TileSetIndexDamageRates[_tiles[i].Index];
             var index1 = (UInt32)( _tiles[i + 1].Index )
-               | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 )              // "is passable" flag
-               | _tileSetIndexWalkSpeeds[_tiles[i + 1].Index];                // walk speed
+               | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 )
+               | Constants.TileSetIndexWalkSpeeds[_tiles[i + 1].Index]
+               | Constants.TileSetIndexEncounterRates[_tiles[i + 1].Index]
+               | Constants.TileSetIndexDamageRates[_tiles[i + 1].Index];
 
             var packed = ( index1 << 16 ) | index0;
             packedTiles.Add( packed );

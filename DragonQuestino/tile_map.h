@@ -23,6 +23,8 @@
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
 #define GET_TILEPASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
 #define GET_TILEWALKSPEED( t )         ( ( ( t ) & 0xC0 ) >> 6 )
+#define GET_TILEENCOUNTERRATE( t )     ( ( ( t ) & 0x700 ) >> 8 )
+#define GET_TILEDAMAGERATE( t )        ( ( ( t ) & 0x1800 ) >> 11 )
 
 typedef struct Screen_t Screen_t;
 
@@ -34,10 +36,12 @@ TileTexture_t;
 
 typedef struct TileMap_t
 {
-   // lowest 5 bits: texture index (max 32 textures)
-   // bit 6: "is passable" flag
-   // bits 7 and 8: "slow-down" factor (0 = walk normal, 3 = walk very slow)
-   // highest 3 bits are for other things (portals? encounter rates? damage?)
+   // bits 1-5: texture index (max 32 textures)
+   // bit 6: is-passable flag
+   // bits 7-8: walk speed (0 = normal, 3 = crawl)
+   // bits 9-11: encounter rate
+   // bits 12-13: damage rate
+   // bits 14-16: reserved
    uint16_t tiles[TILE_COUNT];
    uint32_t tilesX;
    uint32_t tilesY;
