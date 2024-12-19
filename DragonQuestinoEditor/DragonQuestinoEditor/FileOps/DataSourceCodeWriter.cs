@@ -90,6 +90,7 @@ namespace DragonQuestinoEditor.FileOps
          _fileContents += "      case 0:\n";
          _fileContents += string.Format( "         tileMap->tilesX = {0};\n", Constants.TileMapTileCountX );
          _fileContents += string.Format( "         tileMap->tilesY = {0};\n", Constants.TileMapTileCountY );
+         _fileContents += "         for ( i = 0; i < TILEMAP_MAX_PORTALS; i++ ) {{ tileMap->portals[i].sourceTileIndex = -1; }}\n";
          _fileContents += string.Format( "         tileMap->spriteCount = 0;\n" );
 
          var packedTiles = new List<UInt32>( _tiles.Count / 2 );

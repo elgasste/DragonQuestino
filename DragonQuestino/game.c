@@ -14,7 +14,6 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
 void Game_Init( Game_t* game )
 {
    Screen_Init( &( game->screen ) );
-   TileMap_Init( &( game->tileMap ) );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 0 );
    Sprite_LoadPlayer( &( game->player.sprite ) );

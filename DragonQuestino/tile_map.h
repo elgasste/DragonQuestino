@@ -18,6 +18,7 @@
 #define TILE_WALKSPEED_VERYSLOW        48.0f
 #define TILE_WALKSPEED_CRAWL           36.0f
 
+#define TILEMAP_MAX_PORTALS            256
 #define TILEMAP_MAX_SPRITES            12
 
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
@@ -34,6 +35,14 @@ typedef struct TileTexture_t
 }
 TileTexture_t;
 
+typedef struct TilePortal_t
+{
+   int32_t sourceTileIndex;
+   uint16_t destinationTileMapIndex;
+   uint16_t destinationTileIndex;
+}
+TilePortal_t;
+
 typedef struct TileMap_t
 {
    // bits 1-5: texture index (max 32 textures)
@@ -46,6 +55,7 @@ typedef struct TileMap_t
    uint32_t tilesX;
    uint32_t tilesY;
 
+   TilePortal_t portals[TILEMAP_MAX_PORTALS];
    TileTexture_t textures[TILE_TEXTURE_COUNT];
 
    Sprite_t sprites[TILEMAP_MAX_SPRITES];
@@ -57,7 +67,6 @@ TileMap_t;
 extern "C" {
 #endif
 
-void TileMap_Init( TileMap_t* tileMap );
 float TileMap_GetWalkSpeedForTile( uint16_t tile );
 
 // game_data.c

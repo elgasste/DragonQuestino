@@ -2121,6 +2121,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
       case 0:
          tileMap->tilesX = 140;
          tileMap->tilesY = 135;
+         for ( i = 0; i < TILEMAP_MAX_PORTALS; i++ ) {{ tileMap->portals[i].sourceTileIndex = -1; }}
          tileMap->spriteCount = 0;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x000C000C; }
          tiles32[426] = 0x00110011;
