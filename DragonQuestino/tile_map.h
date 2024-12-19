@@ -38,8 +38,9 @@ TileTexture_t;
 typedef struct TilePortal_t
 {
    int32_t sourceTileIndex;
-   uint16_t destinationTileMapIndex;
-   uint16_t destinationTileIndex;
+   uint32_t destinationTileMapIndex;
+   uint32_t destinationTileIndex;
+   Direction_t arrivalDirection;
 }
 TilePortal_t;
 
@@ -68,6 +69,7 @@ extern "C" {
 #endif
 
 float TileMap_GetWalkSpeedForTile( uint16_t tile );
+TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );

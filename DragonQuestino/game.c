@@ -5,6 +5,7 @@
 
 internal void Game_HandleInput( Game_t* game );
 internal void Game_UpdateTileMapViewport( Game_t* game );
+internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal );
 internal void Game_DrawTileMap( Game_t* game );
 internal void Game_DrawSprites( Game_t* game );
 internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t stride,
@@ -52,15 +53,26 @@ void Game_Tic( Game_t* game )
 
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 {
+   TilePortal_t* portal;
+
 #if defined( VISUAL_STUDIO_DEV )
-   if ( g_debugFlags.fastWalk )
+   if ( g_debugFlags.fastWalk == False )
    {
-      return;
+#endif
+
+   game->player.maxVelocity = TileMap_GetWalkSpeedForTile( game->tileMap.tiles[tileIndex] );
+
+#if defined( VISUAL_STUDIO_DEV )
    }
 #endif
 
    game->player.tileIndex = tileIndex;
-   game->player.maxVelocity = TileMap_GetWalkSpeedForTile( game->tileMap.tiles[tileIndex] );
+   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
+
+   if ( portal )
+   {
+      Game_EnterTilePortal( game, portal );
+   }
 }
 
 internal void Game_HandleInput( Game_t* game )
@@ -162,6 +174,16 @@ internal void Game_UpdateTileMapViewport( Game_t* game )
    {
       viewport->y = ( game->tileMap.tilesY * TILE_SIZE ) - viewport->h;
    }
+}
+
+internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
+{
+   TileMap_Load( &( game->tileMap ), portal->destinationTileMapIndex );
+
+   game->player.position.x = (float)( ( int32_t )( TILE_SIZE * ( portal->destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x );
+   game->player.position.y = (float)( ( int32_t )( TILE_SIZE * ( portal->destinationTileIndex / game->tileMap.tilesY ) ) - game->player.spriteOffset.y );
+
+   Sprite_SetDirection( &( game->player.sprite ), portal->arrivalDirection );
 }
 
 internal void Game_DrawTileMap( Game_t* game )
