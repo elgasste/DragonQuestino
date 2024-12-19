@@ -101,11 +101,13 @@ namespace DragonQuestinoEditor.FileOps
             var index0 = (UInt32)( _tiles[i].Index )
                | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 )
                | Constants.TileSetIndexWalkSpeeds[_tiles[i].Index]
+               | 0x100  // is encounterable
                | Constants.TileSetIndexEncounterRates[_tiles[i].Index]
                | Constants.TileSetIndexDamageRates[_tiles[i].Index];
             var index1 = (UInt32)( _tiles[i + 1].Index )
                | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 )
                | Constants.TileSetIndexWalkSpeeds[_tiles[i + 1].Index]
+               | 0x100  // is encounterable
                | Constants.TileSetIndexEncounterRates[_tiles[i + 1].Index]
                | Constants.TileSetIndexDamageRates[_tiles[i + 1].Index];
 

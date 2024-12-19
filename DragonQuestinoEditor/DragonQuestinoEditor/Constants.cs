@@ -54,9 +54,9 @@
          0        // water, vertical river
       ];
 
-      // bits 9-11
+      // bits 10-11
       public static readonly UInt32[] TileSetIndexEncounterRates = [
-         0x100,   // grass
+         0,       // grass
          0x200,   // trees
          0x300,   // hills
          0x200,   // desert
@@ -69,7 +69,7 @@
          0,       // counter
          0,       // metal wall
          0,       // water, no shore
-         0x100,   // bridge
+         0,       // bridge
          0,       // water, left shore
          0,       // water, top shore
          0,       // water, right shore
