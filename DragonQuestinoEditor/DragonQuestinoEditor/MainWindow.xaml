@@ -51,7 +51,7 @@
 
             <!-- Tile Map -->
             <ListView x:Name="tileMapListView"
-                      ItemsSource="{Binding TileMap}"
+                      ItemsSource="{Binding SelectedTileMap.Tiles}"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
                       Width="1120"
