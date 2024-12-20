@@ -16,7 +16,7 @@ namespace DragonQuestinoEditor.ViewModels
       private readonly SpriteSheet _playerSpriteSheet;
 
       public ObservableCollection<TileViewModel> TileSelectionViewModels { get; } = [];
-      public ObservableCollection<TileViewModel> TileViewModels { get; } = [];
+      public ObservableCollection<TileViewModel> TileMap { get; } = [];
 
       public MainWindowViewModel()
       {
@@ -45,10 +45,10 @@ namespace DragonQuestinoEditor.ViewModels
 
          for ( int i = 0; i < Constants.TileMapTileCount; i++ )
          {
-            TileViewModels.Add( new( _tileSet, 0 ) );
+            TileMap.Add( new( _tileSet, 0 ) );
          }
 
-         if ( !TileMapFileOps.LoadTileMap( Constants.TileMapSaveFilePath, TileViewModels ) )
+         if ( !TileMapFileOps.LoadTileMap( Constants.TileMapSaveFilePath, TileMap ) )
          {
             MessageBox.Show( "Could not load tile map save file!" );
          }
@@ -56,21 +56,37 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void SaveTileMap()
       {
-         TileMapFileOps.SaveTileMap( Constants.TileMapSaveFilePath, TileViewModels );
+         TileMapFileOps.SaveTileMap( Constants.TileMapSaveFilePath, TileMap );
          MessageBox.Show( "Tile map has been saved!" );
       }
 
-      private void WriteFile()
+      private void NewTileMap()
       {
-         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileViewModels, _playerSpriteSheet );
+         // TODO
+      }
+
+      private void DeleteTileMap()
+      {
+         // TODO
+      }
+
+      private void WriteGameData()
+      {
+         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileMap, _playerSpriteSheet );
          writer.WriteFile( Constants.DataSourceFilePath );
          MessageBox.Show( "Data file has been written!" );
       }
 
-      private ICommand? _saveTileMapCommand;
-      public ICommand? SaveTileMapCommand => _saveTileMapCommand ?? ( _saveTileMapCommand = new RelayCommand( SaveTileMap, () => true ) );
+      private ICommand? _newTileMapCommand;
+      public ICommand? NewTileMapCommand => _newTileMapCommand ??= new RelayCommand( NewTileMap, () => true );
 
-      private ICommand? _writeFileCommand;
-      public ICommand? WriteFileCommand => _writeFileCommand ?? ( _writeFileCommand = new RelayCommand( WriteFile, () => true ) );
+      private ICommand? _deleteTileMapCommand;
+      public ICommand? DeleteTileMapCommand => _deleteTileMapCommand ??= new RelayCommand( DeleteTileMap, () => true );
+
+      private ICommand? _saveTileMapCommand;
+      public ICommand? SaveTileMapCommand => _saveTileMapCommand ??= new RelayCommand( SaveTileMap, () => true ) ;
+
+      private ICommand? _writeGameDataCommand;
+      public ICommand? WriteGameDataCommand => _writeGameDataCommand ??= new RelayCommand( WriteGameData, () => true ) ;
    }
 }
