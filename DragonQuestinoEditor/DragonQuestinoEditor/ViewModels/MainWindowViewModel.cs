@@ -16,7 +16,7 @@ namespace DragonQuestinoEditor.ViewModels
       private readonly SpriteSheet _playerSpriteSheet;
 
       public ObservableCollection<TileViewModel> TileSelectionViewModels { get; } = [];
-      public ObservableCollection<TileViewModel> TileMapViewModels { get; } = [];
+      public ObservableCollection<TileViewModel> TileViewModels { get; } = [];
 
       public MainWindowViewModel()
       {
@@ -45,10 +45,10 @@ namespace DragonQuestinoEditor.ViewModels
 
          for ( int i = 0; i < Constants.TileMapTileCount; i++ )
          {
-            TileMapViewModels.Add( new( _tileSet, 0 ) );
+            TileViewModels.Add( new( _tileSet, 0 ) );
          }
 
-         if ( !TileMapFileOps.LoadTileMap( Constants.TileMapSaveFilePath, TileMapViewModels ) )
+         if ( !TileMapFileOps.LoadTileMap( Constants.TileMapSaveFilePath, TileViewModels ) )
          {
             MessageBox.Show( "Could not load tile map save file!" );
          }
@@ -56,13 +56,13 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void SaveTileMap()
       {
-         TileMapFileOps.SaveTileMap( Constants.TileMapSaveFilePath, TileMapViewModels );
+         TileMapFileOps.SaveTileMap( Constants.TileMapSaveFilePath, TileViewModels );
          MessageBox.Show( "Tile map has been saved!" );
       }
 
       private void WriteFile()
       {
-         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileMapViewModels, _playerSpriteSheet );
+         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileViewModels, _playerSpriteSheet );
          writer.WriteFile( Constants.DataSourceFilePath );
          MessageBox.Show( "Data file has been written!" );
       }
