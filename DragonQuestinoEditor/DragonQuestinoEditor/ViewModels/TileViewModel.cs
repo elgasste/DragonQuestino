@@ -1,10 +1,13 @@
-﻿using System.Windows.Media.Imaging;
+﻿using DragonQuestinoEditor.FileOps;
 using DragonQuestinoEditor.Graphics;
+using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.ViewModels
 {
    internal class TileViewModel : ViewModelBase
    {
+      private ITileTextureProvider? _tileTextureProvider = null;
+
       // TODO: allow updating this with the tile editor
       private readonly int[] _passableIndexes = [
          0,    // grass
@@ -17,8 +20,6 @@ namespace DragonQuestinoEditor.ViewModels
          13    // bridge
       ];
 
-      private TileSet _tileSet;
-
       private int _index;
       public int Index
       {
@@ -26,12 +27,7 @@ namespace DragonQuestinoEditor.ViewModels
          private set => SetProperty( ref _index, value );
       }
 
-      private BitmapSource? _image;
-      public BitmapSource? Image
-      {
-         get => _image;
-         private set => SetProperty( ref _image, value );
-      }
+      public BitmapSource? Image => _tileTextureProvider?.GetImageFromIndex( Index );
 
       private bool _isPassable;
       public bool IsPassable
@@ -47,19 +43,25 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _shouldHighlight, value );
       }
 
-      public TileViewModel( TileSet tileSet, int index )
+      public TileViewModel( int index )
       {
-         _tileSet = tileSet;
          SetIndex( index );
-
          _isPassable = _passableIndexes.Contains( index );
       }
+
+      public TileViewModel( TileSaveData saveData )
+      {
+         SetIndex( saveData.Index );
+         _isPassable = saveData.IsPassable;
+      }
+
+      public void SetTileTextureProvider( ITileTextureProvider? provider ) => _tileTextureProvider = provider;
 
       public void SetIndex( int index )
       {
          Index = index;
-         Image = _tileSet.TileBitmaps[index];
          IsPassable = _passableIndexes.Contains( index );
+         OnPropertyChanged( nameof( Image ) );
       }
    }
 }

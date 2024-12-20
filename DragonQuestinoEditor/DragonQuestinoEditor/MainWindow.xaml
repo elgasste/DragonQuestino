@@ -87,7 +87,7 @@
                
                <!-- Texture Picker -->
                <ListView x:Name="tileSelectionListView"
-                         ItemsSource="{Binding TileSelectionViewModels}"
+                         ItemsSource="{Binding TileTextureViewModels}"
                          VerticalAlignment="Top"
                          HorizontalAlignment="Left"
                          ItemContainerStyle="{StaticResource TileListItemContainerStyle}"

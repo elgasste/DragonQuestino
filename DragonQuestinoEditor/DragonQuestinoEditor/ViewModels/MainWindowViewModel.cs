@@ -16,7 +16,7 @@ namespace DragonQuestinoEditor.ViewModels
       private readonly SpriteSheet _playerSpriteSheet;
       private readonly List<TileMapViewModel> _tileMaps;
 
-      public ObservableCollection<TileViewModel> TileSelectionViewModels { get; } = [];
+      public ObservableCollection<TileTextureViewModel> TileTextureViewModels { get; } = [];
 
       private TileMapViewModel? _selectedTileMap;
       public TileMapViewModel? SelectedTileMap
@@ -32,7 +32,7 @@ namespace DragonQuestinoEditor.ViewModels
          _playerSpriteSheet = new SpriteSheet( Constants.PlayerSpriteFilePath, _palette );
          _tileMaps = [];
 
-         for ( int i = 0; i < Constants.TileCount; i++ )
+         for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
             var image = new BitmapImage();
 
@@ -48,19 +48,20 @@ namespace DragonQuestinoEditor.ViewModels
                image.Freeze();
             }
 
-            TileSelectionViewModels.Add( new( _tileSet, i ) );
+            TileTextureViewModels.Add( new( _tileSet, i ) );
          }
 
-         _tileMaps.Add( new( "Overworld" ) );
-
-         for ( int i = 0; i < Constants.TileMapTileCount; i++ )
+         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileMaps ) )
          {
-            _tileMaps[0].Tiles.Add( new( _tileSet, 0 ) );
+            MessageBox.Show( "Could not load editor save file!" );
          }
 
-         if ( !TileMapFileOps.LoadTileMap( Constants.TileMapSaveFilePath, _tileMaps[0].Tiles ) )
+         foreach ( var tileMap in _tileMaps )
          {
-            MessageBox.Show( "Could not load tile map save file!" );
+            foreach( var tile in tileMap.Tiles )
+            {
+               tile.SetTileTextureProvider( _tileSet );
+            }
          }
 
          SelectedTileMap = _tileMaps[0];
@@ -68,8 +69,8 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void SaveTileMap()
       {
-         TileMapFileOps.SaveTileMap( Constants.TileMapSaveFilePath, _tileMaps[0].Tiles );
-         MessageBox.Show( "Tile map has been saved!" );
+         SaveDataFileOps.SaveData( Constants.EditorSaveDataFilePath, _tileMaps );
+         MessageBox.Show( "Editor data has been saved!" );
       }
 
       private void NewTileMap()
@@ -86,7 +87,7 @@ namespace DragonQuestinoEditor.ViewModels
       {
          var writer = new DataSourceCodeWriter( _palette, _tileSet, _tileMaps[0].Tiles, _playerSpriteSheet );
          writer.WriteFile( Constants.DataSourceFilePath );
-         MessageBox.Show( "Data file has been written!" );
+         MessageBox.Show( "Game data file has been written!" );
       }
 
       private ICommand? _newTileMapCommand;

@@ -5,12 +5,12 @@ using DragonQuestinoEditor.Utilities;
 
 namespace DragonQuestinoEditor.Graphics
 {
-   internal class TileSet
+   internal class TileSet : ITileTextureProvider
    {
-      private readonly List<WriteableBitmap> _tileBitmaps = new( Constants.TileCount );
+      private readonly List<WriteableBitmap> _tileBitmaps = new( Constants.TileTextureCount );
       private readonly Palette _palette;
 
-      public List<List<int>> TilePaletteIndexes = new ( Constants.TileCount );
+      public List<List<int>> TilePaletteIndexes = new ( Constants.TileTextureCount );
 
       public List<WriteableBitmap> TileBitmaps => _tileBitmaps;
 
@@ -28,7 +28,7 @@ namespace DragonQuestinoEditor.Graphics
 
       private void ReadTileBitmaps( BitmapSource bitmapSource )
       {
-         for ( int i = 0; i < Constants.TileCount; i++ )
+         for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
             int stride = bitmapSource.PixelWidth * ( bitmapSource.Format.BitsPerPixel / 8 );
             var data = new byte[stride * bitmapSource.PixelHeight];
@@ -40,7 +40,7 @@ namespace DragonQuestinoEditor.Graphics
 
       private void UpdatePalette()
       {
-         for ( int i = 0; i < Constants.TileCount; i++ )
+         for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
             TilePaletteIndexes.Add( new( Constants.TilePixels ) );
 
@@ -50,7 +50,7 @@ namespace DragonQuestinoEditor.Graphics
             }
          }
 
-         for ( int i = 0; i < Constants.TileCount; i++ )
+         for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
             var tileBitmap = _tileBitmaps[i];
 
@@ -66,5 +66,7 @@ namespace DragonQuestinoEditor.Graphics
             }
          }
       }
+
+      public BitmapSource GetImageFromIndex( int index ) => _tileBitmaps[index];
    }
 }

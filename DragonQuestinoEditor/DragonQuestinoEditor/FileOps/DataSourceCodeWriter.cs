@@ -57,7 +57,7 @@ namespace DragonQuestinoEditor.FileOps
          _fileContents += "   uint32_t* mem32;\n\n";
 
          // TODO: try compressing this, it only ever gets called once
-         for ( int i = 0; i < Constants.TileCount; i++ )
+         for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
             _fileContents += string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i );
 
