@@ -86,12 +86,12 @@
             <StackPanel Orientation="Vertical">
                
                <!-- Texture Picker -->
-               <ListView x:Name="tileSelectionListView"
+               <ListView x:Name="tileTextureListView"
                          ItemsSource="{Binding TileTextureViewModels}"
                          VerticalAlignment="Top"
                          HorizontalAlignment="Left"
                          ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                         MouseMove="TileSelectionListView_OnMouseMove">
+                         MouseMove="TileTextureListView_OnMouseMove">
                   <ItemsControl.ItemsPanel>
                      <ItemsPanelTemplate>
                         <UniformGrid Columns="4"/>

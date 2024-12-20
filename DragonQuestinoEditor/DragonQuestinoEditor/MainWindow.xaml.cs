@@ -18,18 +18,18 @@ namespace DragonQuestinoEditor
          DataContext = _viewModel;
       }
 
-      private void TileSelectionListView_OnMouseMove( object sender, MouseEventArgs e )
+      private void TileTextureListView_OnMouseMove( object sender, MouseEventArgs e )
       {
          base.OnMouseMove( e );
 
          if ( e.LeftButton == MouseButtonState.Pressed )
          {
-            var tileViewData = FindTileViewModelAtPoint( e.GetPosition( this ) );
+            var tileTextureViewData = FindTileTextureViewModelAtPoint( e.GetPosition( this ) );
 
-            if ( tileViewData != null )
+            if ( tileTextureViewData != null )
             {
                var data = new DataObject();
-               data.SetData( "Object", tileViewData );
+               data.SetData( "Object", tileTextureViewData );
 
                DragDrop.DoDragDrop( this, data, DragDropEffects.Copy | DragDropEffects.Move );
             }
@@ -86,13 +86,13 @@ namespace DragonQuestinoEditor
 
       private void TileMapListView_OnDrop( object sender, DragEventArgs e )
       {
-         if ( e.Data.GetData( "Object" ) is TileViewModel droppedTileVM )
+         if ( e.Data.GetData( "Object" ) is TileTextureViewModel droppedTileTextureVM )
          {
             var mapTileVM = FindTileViewModelAtPoint( e.GetPosition( this ) );
 
             if ( mapTileVM != null )
             {
-               mapTileVM.SetIndex( droppedTileVM.Index );
+               mapTileVM.SetIndex( droppedTileTextureVM.Index );
                mapTileVM.ShouldHighlight = false;
             }
          }
@@ -114,6 +114,36 @@ namespace DragonQuestinoEditor
          }
 
          return null;
+      }
+
+      private TileTextureViewModel? FindTileTextureViewModelAtPoint( Point p )
+      {
+         var hitResult = VisualTreeHelper.HitTest( this, p );
+         return hitResult == null ? null : FindTileTextureViewModelInTree( hitResult.VisualHit );
+      }
+
+      private static TileTextureViewModel? FindTileTextureViewModelInTree( DependencyObject? obj )
+      {
+         if ( obj == null )
+         {
+            return null;
+         }
+
+         var visual = VisualTreeHelper.GetParent( obj );
+
+         while ( visual != null && visual.GetType().Name != "ListViewItem" )
+         {
+            visual = VisualTreeHelper.GetParent( visual );
+         }
+
+         if ( visual != null )
+         {
+            return ( visual is not ListViewItem item || item.Content is not TileTextureViewModel vm ) ? null : vm;
+         }
+         else
+         {
+            return null;
+         }
       }
 
       private TileViewModel? FindTileViewModelAtPoint( Point p )
