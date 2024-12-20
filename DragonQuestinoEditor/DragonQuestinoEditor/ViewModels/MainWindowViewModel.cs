@@ -85,7 +85,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void WriteGameData()
       {
-         var writer = new DataSourceCodeWriter( _palette, _tileSet, _tileMaps[0].Tiles, _playerSpriteSheet );
+         var writer = new DataSourceCodeWriter( _palette, _tileSet, _tileMaps, _playerSpriteSheet );
          writer.WriteFile( Constants.DataSourceFilePath );
          MessageBox.Show( "Game data file has been written!" );
       }

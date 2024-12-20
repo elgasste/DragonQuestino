@@ -8,12 +8,12 @@ namespace DragonQuestinoEditor.FileOps
 {
    internal class DataSourceCodeWriter( Palette palette,
                                         TileSet tileSet,
-                                        ObservableCollection<TileViewModel> mapTiles,
+                                        List<TileMapViewModel> tileMaps,
                                         SpriteSheet spriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
-      private readonly ObservableCollection<TileViewModel> _tiles = mapTiles;
+      private readonly List<TileMapViewModel> _tileMaps = tileMaps;
       private readonly SpriteSheet _spriteSheet = spriteSheet;
 
       public void WriteFile( string filePath )
@@ -26,7 +26,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteSpriteFunctions( fs );
       }
 
-      private void WriteHeaderSection( FileStream fs )
+      private static void WriteHeaderSection( FileStream fs )
       {
          WriteText( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
          WriteText( fs, "#include \"screen.h\"\n" );
@@ -86,66 +86,72 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n" );
          WriteText( fs, "   switch( index )\n" );
          WriteText( fs, "   {\n" );
-         WriteText( fs, "      case 0:\n" );
-         WriteText( fs, string.Format( "         tileMap->tilesX = {0};\n", Constants.TileMapTileCountX ) );
-         WriteText( fs, string.Format( "         tileMap->tilesY = {0};\n", Constants.TileMapTileCountY ) );
-         WriteText( fs, "         for ( i = 0; i < TILEMAP_MAX_PORTALS; i++ ) {{ tileMap->portals[i].sourceTileIndex = -1; }}\n" );
-         WriteText( fs, string.Format( "         tileMap->spriteCount = 0;\n" ) );
 
-         var packedTiles = new List<UInt32>( _tiles.Count / 2 );
-         var indexCounts = new Dictionary<UInt32, int>();
-
-         for ( int i = 0; i < _tiles.Count; i += 2 )
+         for ( int i = 0; i < _tileMaps.Count; i++ )
          {
-            var index0 = (UInt32)( _tiles[i].Index )
-               | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 )
-               | Constants.TileSetIndexWalkSpeeds[_tiles[i].Index]
-               | 0x100  // is encounterable
-               | Constants.TileSetIndexEncounterRates[_tiles[i].Index]
-               | Constants.TileSetIndexDamageRates[_tiles[i].Index];
-            var index1 = (UInt32)( _tiles[i + 1].Index )
-               | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 )
-               | Constants.TileSetIndexWalkSpeeds[_tiles[i + 1].Index]
-               | 0x100  // is encounterable
-               | Constants.TileSetIndexEncounterRates[_tiles[i + 1].Index]
-               | Constants.TileSetIndexDamageRates[_tiles[i + 1].Index];
+            var tiles = _tileMaps[i].Tiles;
 
-            var packed = ( index1 << 16 ) | index0;
-            packedTiles.Add( packed );
+            WriteText( fs, string.Format( "      case {0}:\n", i ) );
+            WriteText( fs, string.Format( "         tileMap->tilesX = {0};\n", _tileMaps[i].TilesX ) );
+            WriteText( fs, string.Format( "         tileMap->tilesY = {0};\n", _tileMaps[i].TilesY ) );
+            WriteText( fs, "         for ( i = 0; i < TILEMAP_MAX_PORTALS; i++ ) {{ tileMap->portals[i].sourceTileIndex = -1; }}\n" );
+            WriteText( fs, string.Format( "         tileMap->spriteCount = 0;\n" ) );
 
-            if ( indexCounts.TryGetValue( packed, out int value ) )
+            var packedTiles = new List<UInt32>( tiles.Count / 2 );
+            var indexCounts = new Dictionary<UInt32, int>();
+
+            for ( int j = 0; j < tiles.Count; j += 2 )
             {
-               indexCounts[packed] = ++value;
+               var index0 = (UInt32)( tiles[j].Index )
+                  | ( tiles[j].IsPassable ? (UInt32)0x20 : 0 )
+                  | Constants.TileSetIndexWalkSpeeds[tiles[j].Index]
+                  | 0x100  // is encounterable
+                  | Constants.TileSetIndexEncounterRates[tiles[j].Index]
+                  | Constants.TileSetIndexDamageRates[tiles[j].Index];
+               var index1 = (UInt32)( tiles[j + 1].Index )
+                  | ( tiles[j + 1].IsPassable ? (UInt32)0x20 : 0 )
+                  | Constants.TileSetIndexWalkSpeeds[tiles[j + 1].Index]
+                  | 0x100  // is encounterable
+                  | Constants.TileSetIndexEncounterRates[tiles[j + 1].Index]
+                  | Constants.TileSetIndexDamageRates[tiles[j + 1].Index];
+
+               var packed = ( index1 << 16 ) | index0;
+               packedTiles.Add( packed );
+
+               if ( indexCounts.TryGetValue( packed, out int value ) )
+               {
+                  indexCounts[packed] = ++value;
+               }
+               else
+               {
+                  indexCounts[packed] = 1;
+               }
             }
-            else
+
+            int highestCount = 0;
+            UInt32 mostCommonValue = 0;
+
+            foreach ( var pair in indexCounts )
             {
-               indexCounts[packed] = 1;
+               if ( pair.Value > highestCount )
+               {
+                  highestCount = pair.Value;
+                  mostCommonValue = pair.Key;
+               }
             }
+
+            WriteText( fs, string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
+
+            for ( int j = 0, packedTileIndex = 0; j < tiles.Count; j += 2, packedTileIndex++ )
+            {
+               if ( packedTiles[packedTileIndex] != mostCommonValue )
+               {
+                  WriteText( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", packedTileIndex, packedTiles[packedTileIndex].ToString( "X8" ) ) );
+               }
+            }
+
+            WriteText( fs, "         break;\n" );
          }
-
-         int highestCount = 0;
-         UInt32 mostCommonValue = 0;
-
-         foreach ( var pair in indexCounts )
-         {
-            if ( pair.Value > highestCount )
-            {
-               highestCount = pair.Value;
-               mostCommonValue = pair.Key;
-            }
-         }
-
-         WriteText( fs, string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
-
-         for ( int i = 0, packedTileIndex = 0; i < _tiles.Count; i += 2, packedTileIndex++ )
-         {
-            if ( packedTiles[packedTileIndex] != mostCommonValue )
-            {
-               WriteText( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", packedTileIndex, packedTiles[packedTileIndex].ToString( "X8" ) ) );
-            }
-         }
-
-         WriteText( fs, "         break;\n" );
          WriteText( fs, "   }\n" );
          WriteText( fs, "}\n" );
       }
