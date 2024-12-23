@@ -75,8 +75,13 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void NewTileMap()
       {
-         var window = new CreateTileMapWindow();
-         window.ShowDialog();
+         var window = new CreateTileMapWindow( _tileMaps.Select( m => m.Name ) );
+         var result = window.ShowDialog();
+
+         if ( result.HasValue && result.Value )
+         {
+            // TODO: add a new TileMapViewModel, fill out the textures with a default value, and set SelectedTileMap
+         }
       }
 
       private void DeleteTileMap()

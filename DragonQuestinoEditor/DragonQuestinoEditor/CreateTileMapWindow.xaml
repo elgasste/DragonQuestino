@@ -29,31 +29,36 @@
                  VerticalAlignment="Center"
                  Margin="3"
                  Text="Name:"/>
-      <TextBox Grid.Column="1"
+      <TextBox x:Name="TileMapName"
+               Grid.Column="1"
                Grid.Row="0"
                Margin="3"/>
 
-      <!-- X tiles -->
+      <!-- Horizontal Tiles -->
       <TextBlock Grid.Column="0"
                  Grid.Row="1"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Center"
                  Margin="3"
                  Text="Horizontal Tiles:"/>
-      <TextBox Grid.Column="1"
+      <TextBox x:Name="HorizontalTilesTextBox"
+               Grid.Column="1"
                Grid.Row="1"
-               Margin="3"/>
+               Margin="3"
+               PreviewTextInput="TileCount_PreviewTextInput"/>
       
-      <!-- Y tiles -->
+      <!-- Vertical Tiles -->
       <TextBlock Grid.Column="0"
                  Grid.Row="2"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Center"
                  Margin="3"
                  Text="Vertical Tiles:"/>
-      <TextBox Grid.Column="1"
+      <TextBox x:Name="VerticalTilesTextBox"
+               Grid.Column="1"
                Grid.Row="2"
-               Margin="3"/>
+               Margin="3"
+               PreviewTextInput="TileCount_PreviewTextInput"/>
       
       <!-- Create/Cancel buttons -->
       <StackPanel Grid.Column="0"
@@ -63,9 +68,11 @@
                   HorizontalAlignment="Right"
                   VerticalAlignment="Bottom">
          <Button Margin="6"
-                 Content="Create Tile Map"/>
+                 Content="Create Tile Map"
+                 Click="CreateButton_Click"/>
          <Button Margin="6"
-                 Content="Cancel"/>
+                 Content="Cancel"
+                 Click="CancelButton_Click"/>
       </StackPanel>
 
    </Grid>

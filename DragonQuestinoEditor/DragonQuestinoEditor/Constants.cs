@@ -12,6 +12,8 @@
       public const int TileSize = 16;
       public const int TilePixels = 256;
       public const int TileTextureCount = 32;
+      public const int TileMapMinTilesX = 20;
+      public const int TileMapMinTilesY = 15;
       public const int TileMapMaxTilesX = 140;
       public const int TileMapMaxTilesY = 135;
       public const int TileMapTileCount = TileMapMaxTilesX * TileMapMaxTilesY;
