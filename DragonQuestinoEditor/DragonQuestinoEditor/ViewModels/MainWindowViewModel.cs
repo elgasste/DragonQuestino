@@ -75,7 +75,8 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void NewTileMap()
       {
-         // TODO
+         var window = new CreateTileMapWindow();
+         window.ShowDialog();
       }
 
       private void DeleteTileMap()
