@@ -50,12 +50,11 @@
          <StackPanel Orientation="Horizontal">
 
             <!-- Tile Map -->
-            <ListView x:Name="tileMapListView"
-                      ItemsSource="{Binding SelectedTileMap.Tiles}"
+            <ListView ItemsSource="{Binding SelectedTileMap.Tiles}"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
-                      Width="1120"
-                      Height="760"
+                      Width="{Binding TileMapListViewWidth}"
+                      Height="{Binding TileMapListViewHeight}"
                       ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
                       AllowDrop="True"
                       PreviewMouseDown="TileMapListView_OnPreviewMouseDown"
@@ -63,7 +62,7 @@
                       Drop="TileMapListView_OnDrop">
                <ItemsControl.ItemsPanel>
                   <ItemsPanelTemplate>
-                     <UniformGrid Columns="140"/>
+                     <UniformGrid Columns="{Binding SelectedTileMap.TilesX}"/>
                   </ItemsPanelTemplate>
                </ItemsControl.ItemsPanel>
                <ListView.ItemTemplate>
@@ -107,8 +106,8 @@
                </ListView>
 
                <StackPanel Orientation="Horizontal">
-                  <Button Content="Save Tile Map"
-                          Command="{Binding SaveTileMapCommand, Mode=OneTime}"/>
+                  <Button Content="Save Tile Maps"
+                          Command="{Binding SaveTileMapsCommand, Mode=OneTime}"/>
                   <Button Content="Write Game Data"
                           Command="{Binding WriteGameDataCommand, Mode=OneTime}"/>
                </StackPanel>

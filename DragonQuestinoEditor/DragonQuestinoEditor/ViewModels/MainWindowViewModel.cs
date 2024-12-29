@@ -25,6 +25,14 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _selectedTileMap, value );
       }
 
+      public int TileMapListViewWidth => _selectedTileMap == null
+         ? Constants.TileMapListViewMaxWidth
+         : Math.Min( Constants.TileMapListViewMaxWidth, _selectedTileMap.TilesX * Constants.TileMapListViewItemSize );
+
+      public int TileMapListViewHeight => _selectedTileMap == null
+         ? Constants.TileMapListViewMaxHeight
+         : Math.Min( Constants.TileMapListViewMaxHeight, _selectedTileMap.TilesY * Constants.TileMapListViewItemSize );
+      
       public MainWindowViewModel()
       {
          _palette = new Palette();
@@ -67,10 +75,10 @@ namespace DragonQuestinoEditor.ViewModels
          SelectedTileMap = _tileMaps[0];
       }
 
-      private void SaveTileMap()
+      private void SaveTileMaps()
       {
          SaveDataFileOps.SaveData( Constants.EditorSaveDataFilePath, _tileMaps );
-         MessageBox.Show( "Editor data has been saved!" );
+         MessageBox.Show( "Tile maps have been saved!" );
       }
 
       private void NewTileMap()
@@ -80,7 +88,17 @@ namespace DragonQuestinoEditor.ViewModels
 
          if ( result.HasValue && result.Value )
          {
-            // TODO: add a new TileMapViewModel, fill out the textures with a default value, and set SelectedTileMap
+            var newTileMap = new TileMapViewModel( window.NewTileMapName, window.NewTilesX, window.NewTilesY, Constants.TileTextureDefaultIndex );
+
+            foreach ( var tile in newTileMap.Tiles )
+            {
+               tile.SetTileTextureProvider( _tileSet );
+            }
+
+            _tileMaps.Add( newTileMap );
+            SelectedTileMap = newTileMap;
+            OnPropertyChanged( nameof( TileMapListViewWidth ) );
+            OnPropertyChanged( nameof( TileMapListViewHeight ) );
          }
       }
 
@@ -102,8 +120,8 @@ namespace DragonQuestinoEditor.ViewModels
       private ICommand? _deleteTileMapCommand;
       public ICommand? DeleteTileMapCommand => _deleteTileMapCommand ??= new RelayCommand( DeleteTileMap, () => true );
 
-      private ICommand? _saveTileMapCommand;
-      public ICommand? SaveTileMapCommand => _saveTileMapCommand ??= new RelayCommand( SaveTileMap, () => true ) ;
+      private ICommand? _saveTileMapsCommand;
+      public ICommand? SaveTileMapsCommand => _saveTileMapsCommand ??= new RelayCommand( SaveTileMaps, () => true ) ;
 
       private ICommand? _writeGameDataCommand;
       public ICommand? WriteGameDataCommand => _writeGameDataCommand ??= new RelayCommand( WriteGameData, () => true ) ;

@@ -17,6 +17,11 @@
       public const int TileMapMaxTilesX = 140;
       public const int TileMapMaxTilesY = 135;
       public const int TileMapTileCount = TileMapMaxTilesX * TileMapMaxTilesY;
+      public const int TileTextureDefaultIndex = 8;  // black square
+
+      public const int TileMapListViewItemSize = 32;
+      public const int TileMapListViewMaxWidth = 1120;
+      public const int TileMapListViewMaxHeight = 760;
 
       public const int SpriteFrameSize = 16;
       public const int SpriteFramePixels = 256;

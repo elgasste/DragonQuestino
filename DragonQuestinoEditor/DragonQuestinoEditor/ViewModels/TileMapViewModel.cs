@@ -28,16 +28,23 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _name, value );
       }
 
-      public TileMapViewModel( string? name )
+      public TileMapViewModel( string? name, int tilesX, int tilesY, int defaultTileTextureIndex )
       {
          _name = name;
+         _tilesX = tilesX;
+         _tilesY = tilesY;
+
+         for( int i = 0; i < tilesX * tilesY; i++ )
+         {
+            Tiles.Add( new TileViewModel( defaultTileTextureIndex ) );
+         }
       }
 
       public TileMapViewModel( TileMapSaveData saveData )
       {
-         Name = saveData.Name;
-         TilesX = saveData.TilesX;
-         TilesY = saveData.TilesY;
+         _name = saveData.Name;
+         _tilesX = saveData.TilesX;
+         _tilesY = saveData.TilesY;
 
          foreach ( var tileSaveData in saveData.Tiles )
          {
