@@ -7,6 +7,8 @@ namespace DragonQuestinoEditor.ViewModels
    {
       public ObservableCollection<TileViewModel> Tiles { get; } = [];
 
+      public ObservableCollection<TilePortalViewModel> Portals { get; } = [];
+
       private int _tilesX;
       public int TilesX
       {
