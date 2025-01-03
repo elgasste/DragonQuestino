@@ -7,7 +7,7 @@
         xmlns:DragonQuestinoEditorConverters="clr-namespace:DragonQuestinoEditor.Converters"
         mc:Ignorable="d"
         Title="Dragon Questino Editor"
-        Height="820"
+        Height="848"
         Width="1320"
         ResizeMode="NoResize">
    <Window.Resources>
@@ -32,24 +32,28 @@
    </Window.Resources>
    <Grid>
       <!-- Window Contents -->
-      <StackPanel Orientation="Vertical">
+      <TabControl>
+         
+         <!-- Tile Map Texture Editor -->
+         <TabItem Header="Tile Map Textures">
+            <StackPanel Orientation="Vertical">
 
-         <!-- Tile Map Operations -->
-         <StackPanel Orientation="Horizontal">
-            <ComboBox ItemsSource="{Binding TileMaps}"
+               <!-- Tile Map Operations -->
+               <StackPanel Orientation="Horizontal">
+                  <ComboBox ItemsSource="{Binding TileMaps}"
                       SelectedItem="{Binding SelectedTileMap}"
                       DisplayMemberPath="Name"/>
-            <Button Content="New Tile Map"
+                  <Button Content="New Tile Map"
                     Command="{Binding NewTileMapCommand, Mode=OneTime}"/>
-            <Button Content="Delete Tile Map"
+                  <Button Content="Delete Tile Map"
                     Command="{Binding DeleteTileMapCommand, Mode=OneTime}"/>
-         </StackPanel>
+               </StackPanel>
 
-         <!-- Below Tile Map Operations -->
-         <StackPanel Orientation="Horizontal">
+               <!-- Below Tile Map Operations -->
+               <StackPanel Orientation="Horizontal">
 
-            <!-- Tile Map -->
-            <ListView ItemsSource="{Binding SelectedTileMap.Tiles}"
+                  <!-- Tile Map -->
+                  <ListView ItemsSource="{Binding SelectedTileMap.Tiles}"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
                       Width="{Binding TileMapListViewWidth}"
@@ -59,62 +63,67 @@
                       PreviewMouseDown="TileMapListView_OnPreviewMouseDown"
                       MouseMove="TileMapListView_OnMouseMove"
                       Drop="TileMapListView_OnDrop">
-               <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                     <UniformGrid Columns="{Binding SelectedTileMap.TilesX}"/>
-                  </ItemsPanelTemplate>
-               </ItemsControl.ItemsPanel>
-               <ListView.ItemTemplate>
-                  <DataTemplate>
-                     <Grid DragEnter="TileMapListViewImage_OnDragEnter"
+                     <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                           <UniformGrid Columns="{Binding SelectedTileMap.TilesX}"/>
+                        </ItemsPanelTemplate>
+                     </ItemsControl.ItemsPanel>
+                     <ListView.ItemTemplate>
+                        <DataTemplate>
+                           <Grid DragEnter="TileMapListViewImage_OnDragEnter"
                            DragLeave="TileMapListViewImage_OnDragLeave">
-                        <Image Source="{Binding Image}"
+                              <Image Source="{Binding Image}"
                                Width="32"
                                Height="32"/>
-                        <Rectangle Width="32"
+                              <Rectangle Width="32"
                                    Height="32"
                                    Fill="#660000FF"
                                    Visibility="{Binding ShouldHighlight, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                     </Grid>
-                  </DataTemplate>
-               </ListView.ItemTemplate>
-            </ListView>
+                           </Grid>
+                        </DataTemplate>
+                     </ListView.ItemTemplate>
+                  </ListView>
 
-            <!-- Control Panel -->
-            <StackPanel Orientation="Vertical">
-               
-               <!-- Texture Picker -->
-               <ListView x:Name="tileTextureListView"
+                  <!-- Control Panel -->
+                  <StackPanel Orientation="Vertical">
+
+                     <!-- Texture Picker -->
+                     <ListView x:Name="tileTextureListView"
                          ItemsSource="{Binding TileTextureViewModels}"
                          VerticalAlignment="Top"
                          HorizontalAlignment="Left"
                          ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
                          MouseMove="TileTextureListView_OnMouseMove">
-                  <ItemsControl.ItemsPanel>
-                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="4"/>
-                     </ItemsPanelTemplate>
-                  </ItemsControl.ItemsPanel>
-                  <ListView.ItemTemplate>
-                     <DataTemplate>
-                        <Image Source="{Binding Image}"
+                        <ItemsControl.ItemsPanel>
+                           <ItemsPanelTemplate>
+                              <UniformGrid Columns="4"/>
+                           </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                           <DataTemplate>
+                              <Image Source="{Binding Image}"
                             Width="32"
                             Height="32"/>
-                     </DataTemplate>
-                  </ListView.ItemTemplate>
-               </ListView>
+                           </DataTemplate>
+                        </ListView.ItemTemplate>
+                     </ListView>
 
-               <StackPanel Orientation="Horizontal">
-                  <Button Content="Save Tile Maps"
+                     <StackPanel Orientation="Horizontal">
+                        <Button Content="Save Tile Maps"
                           Command="{Binding SaveTileMapsCommand, Mode=OneTime}"/>
-                  <Button Content="Write Game Data"
+                        <Button Content="Write Game Data"
                           Command="{Binding WriteGameDataCommand, Mode=OneTime}"/>
+                     </StackPanel>
+
+                  </StackPanel>
+                  <!-- Control Panel -->
+
                </StackPanel>
+               <!-- Below Tile Map Operations -->
                
-            </StackPanel> <!-- Control Panel -->
+            </StackPanel>
+         </TabItem>
 
-         </StackPanel> <!-- Below Tile Map Operations -->
-
-      </StackPanel> <!-- Window Contents -->
+      </TabControl> <!-- Window Contents -->
    </Grid>
 </Window>
