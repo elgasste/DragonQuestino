@@ -4,6 +4,7 @@ namespace DragonQuestinoEditor.FileOps
 {
    internal class TileMapSaveData
    {
+      public int Id { get; set; }
       public string? Name { get; set; }
       public List<TileSaveData> Tiles { get; set; } = [];
       public int TilesX { get; set; }
@@ -13,6 +14,7 @@ namespace DragonQuestinoEditor.FileOps
 
       public TileMapSaveData( TileMapViewModel tileMap )
       {
+         Id = tileMap.Id;
          Name = tileMap.Name;
          TilesX = tileMap.TilesX;
          TilesY = tileMap.TilesY;

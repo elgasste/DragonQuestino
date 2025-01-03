@@ -88,7 +88,8 @@ namespace DragonQuestinoEditor.ViewModels
 
          if ( result.HasValue && result.Value )
          {
-            var newTileMap = new TileMapViewModel( window.NewTileMapName, window.NewTilesX, window.NewTilesY, Constants.TileTextureDefaultIndex );
+            int id = _tileMaps[_tileMaps.Count - 1].Id + 1;
+            var newTileMap = new TileMapViewModel( id, window.NewTileMapName, window.NewTilesX, window.NewTilesY, Constants.TileTextureDefaultIndex );
 
             foreach ( var tile in newTileMap.Tiles )
             {

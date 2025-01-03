@@ -91,7 +91,7 @@ namespace DragonQuestinoEditor.FileOps
          {
             var tiles = _tileMaps[i].Tiles;
 
-            WriteText( fs, string.Format( "      case {0}:\n", i ) );
+            WriteText( fs, string.Format( "      case {0}:\n", _tileMaps[i].Id ) );
             WriteText( fs, string.Format( "         tileMap->tilesX = {0};\n", _tileMaps[i].TilesX ) );
             WriteText( fs, string.Format( "         tileMap->tilesY = {0};\n", _tileMaps[i].TilesY ) );
             WriteText( fs, "         for ( i = 0; i < TILEMAP_MAX_PORTALS; i++ ) {{ tileMap->portals[i].sourceTileIndex = -1; }}\n" );

@@ -21,6 +21,13 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _tilesY, value );
       }
 
+      private int _id;
+      public int Id
+      {
+         get => _id;
+         set => SetProperty( ref _id, value );
+      }
+
       private string? _name;
       public string? Name
       {
@@ -28,8 +35,9 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _name, value );
       }
 
-      public TileMapViewModel( string? name, int tilesX, int tilesY, int defaultTileTextureIndex )
+      public TileMapViewModel( int id, string? name, int tilesX, int tilesY, int defaultTileTextureIndex )
       {
+         _id = id;
          _name = name;
          _tilesX = tilesX;
          _tilesY = tilesY;
@@ -42,6 +50,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       public TileMapViewModel( TileMapSaveData saveData )
       {
+         _id = saveData.Id;
          _name = saveData.Name;
          _tilesX = saveData.TilesX;
          _tilesY = saveData.TilesY;
