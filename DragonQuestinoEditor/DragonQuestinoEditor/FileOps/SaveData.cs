@@ -8,7 +8,7 @@ namespace DragonQuestinoEditor.FileOps
 
       public SaveData() { }
 
-      public SaveData( List<TileMapViewModel> tileMaps )
+      public SaveData( IEnumerable<TileMapViewModel> tileMaps )
       {
          foreach ( var tileMap in tileMaps )
          {

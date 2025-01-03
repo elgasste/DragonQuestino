@@ -36,10 +36,9 @@
 
          <!-- Tile Map Operations -->
          <StackPanel Orientation="Horizontal">
-            <ComboBox>
-               <ComboBoxItem Content="Overworld" IsSelected="True"></ComboBoxItem>
-               <ComboBoxItem Content="Tantegel Town 1"></ComboBoxItem>
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding TileMaps}"
+                      SelectedItem="{Binding SelectedTileMap}"
+                      DisplayMemberPath="Name"/>
             <Button Content="New Tile Map"
                     Command="{Binding NewTileMapCommand, Mode=OneTime}"/>
             <Button Content="Delete Tile Map"

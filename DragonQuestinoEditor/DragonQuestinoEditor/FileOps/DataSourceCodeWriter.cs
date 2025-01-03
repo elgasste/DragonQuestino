@@ -8,12 +8,12 @@ namespace DragonQuestinoEditor.FileOps
 {
    internal class DataSourceCodeWriter( Palette palette,
                                         TileSet tileSet,
-                                        List<TileMapViewModel> tileMaps,
+                                        ObservableCollection<TileMapViewModel> tileMaps,
                                         SpriteSheet spriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
-      private readonly List<TileMapViewModel> _tileMaps = tileMaps;
+      private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
       private readonly SpriteSheet _spriteSheet = spriteSheet;
 
       public void WriteFile( string filePath )
