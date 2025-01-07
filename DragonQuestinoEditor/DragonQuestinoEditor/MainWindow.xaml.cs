@@ -36,27 +36,27 @@ namespace DragonQuestinoEditor
          }
       }
 
-      private void TileMapListViewImage_OnDragEnter( object sender, DragEventArgs e )
+      private void TileMapTextureListViewImage_OnDragEnter( object sender, DragEventArgs e )
       {
          var tileVM = FindTileViewModelAtPoint( e.GetPosition( this ) );
 
          if ( tileVM != null )
          {
-            tileVM.ShouldHighlight = true;
+            tileVM.IsDraggingTextureOver = true;
          }
       }
 
-      private void TileMapListViewImage_OnDragLeave( object sender, DragEventArgs e )
+      private void TileMapTextureListViewImage_OnDragLeave( object sender, DragEventArgs e )
       {
          var tileVM = FindTileViewModelFromObject( sender );
 
          if ( tileVM != null )
          {
-            tileVM.ShouldHighlight = false;
+            tileVM.IsDraggingTextureOver = false;
          }
       }
 
-      private void TileMapListView_OnPreviewMouseDown( object sender, MouseButtonEventArgs e )
+      private void TileMapTextureListView_OnPreviewMouseDown( object sender, MouseButtonEventArgs e )
       {
          if ( Mouse.LeftButton == MouseButtonState.Pressed )
          {
@@ -69,7 +69,7 @@ namespace DragonQuestinoEditor
          }
       }
 
-      private void TileMapListView_OnMouseMove( object sender, MouseEventArgs e )
+      private void TileMapTextureListView_OnMouseMove( object sender, MouseEventArgs e )
       {
          base.OnMouseMove( e );
 
@@ -84,7 +84,7 @@ namespace DragonQuestinoEditor
          }
       }
 
-      private void TileMapListView_OnDrop( object sender, DragEventArgs e )
+      private void TileMapTextureListView_OnDrop( object sender, DragEventArgs e )
       {
          if ( e.Data.GetData( "Object" ) is TileTextureViewModel droppedTileTextureVM )
          {
@@ -93,12 +93,12 @@ namespace DragonQuestinoEditor
             if ( mapTileVM != null )
             {
                mapTileVM.SetIndex( droppedTileTextureVM.Index );
-               mapTileVM.ShouldHighlight = false;
+               mapTileVM.IsDraggingTextureOver = false;
             }
          }
       }
 
-      private TileViewModel? FindTileViewModelFromObject( object obj )
+      private static TileViewModel? FindTileViewModelFromObject( object obj )
       {
          if ( obj != null )
          {
@@ -173,6 +173,17 @@ namespace DragonQuestinoEditor
          else
          {
             return null;
+         }
+      }
+
+      private void TileMapPortalSourceListView_OnSelectionChanged( object sender, SelectionChangedEventArgs e )
+      {
+         var portalListView = e.OriginalSource as ListView;
+         var selectedTileIndex = portalListView?.SelectedIndex;
+
+         if ( selectedTileIndex != null && _viewModel.SelectedTileMap != null )
+         {
+            _viewModel.SelectTileForPortal( selectedTileIndex.Value );
          }
       }
    }

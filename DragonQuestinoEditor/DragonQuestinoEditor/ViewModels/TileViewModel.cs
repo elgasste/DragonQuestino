@@ -36,11 +36,18 @@ namespace DragonQuestinoEditor.ViewModels
          private set => SetProperty( ref _isPassable, value );
       }
 
-      private bool _shouldHighlight = false;
-      public bool ShouldHighlight
+      private bool _isDraggingTextureOver = false;
+      public bool IsDraggingTextureOver
       {
-         get => _shouldHighlight;
-         set => SetProperty( ref _shouldHighlight, value );
+         get => _isDraggingTextureOver;
+         set => SetProperty( ref _isDraggingTextureOver, value );
+      }
+
+      private bool _isSelectedForPortal = false;
+      public bool IsSelectedForPortal
+      {
+         get => _isSelectedForPortal;
+         set => SetProperty( ref _isSelectedForPortal, value );
       }
 
       public TileViewModel( int index )

@@ -27,20 +27,28 @@ namespace DragonQuestinoEditor.ViewModels
          {
             if ( SetProperty( ref _selectedTileMap, value ) )
             {
-               OnPropertyChanged( nameof( TileMapListViewWidth ) );
-               OnPropertyChanged( nameof( TileMapListViewHeight ) );
+               OnPropertyChanged( nameof( TileMapTextureListViewWidth ) );
+               OnPropertyChanged( nameof( TileMapTextureListViewHeight ) );
             }
          }
       }
 
-      public int TileMapListViewWidth => _selectedTileMap == null
-         ? Constants.TileMapListViewMaxWidth
-         : Math.Min( Constants.TileMapListViewMaxWidth, _selectedTileMap.TilesX * Constants.TileMapListViewItemSize );
+      public int TileMapTextureListViewWidth => _selectedTileMap == null
+         ? Constants.TileMapTextureListViewMaxWidth
+         : Math.Min( Constants.TileMapTextureListViewMaxWidth, _selectedTileMap.TilesX * Constants.TileMapListViewItemSize );
 
-      public int TileMapListViewHeight => _selectedTileMap == null
-         ? Constants.TileMapListViewMaxHeight
-         : Math.Min( Constants.TileMapListViewMaxHeight, _selectedTileMap.TilesY * Constants.TileMapListViewItemSize );
-      
+      public int TileMapTextureListViewHeight => _selectedTileMap == null
+         ? Constants.TileMapTextureListViewMaxHeight
+         : Math.Min( Constants.TileMapTextureListViewMaxHeight, _selectedTileMap.TilesY * Constants.TileMapListViewItemSize );
+
+      public int TileMapPortalListViewWidth => _selectedTileMap == null
+         ? Constants.TileMapPortalListViewMaxWidth
+         : Math.Min( Constants.TileMapPortalListViewMaxWidth, _selectedTileMap.TilesX * Constants.TileMapListViewItemSize );
+
+      public int TileMapPortalListViewHeight => _selectedTileMap == null
+         ? Constants.TileMapPortalListViewMaxHeight
+         : Math.Min( Constants.TileMapPortalListViewMaxHeight, _selectedTileMap.TilesY * Constants.TileMapListViewItemSize );
+
       public MainWindowViewModel()
       {
          _palette = new Palette();
@@ -80,6 +88,19 @@ namespace DragonQuestinoEditor.ViewModels
          }
 
          SelectedTileMap = TileMaps[0];
+      }
+
+      public void SelectTileForPortal( int tileIndex )
+      {
+         if ( SelectedTileMap is not null )
+         {
+            foreach ( var tile in SelectedTileMap.Tiles )
+            {
+               tile.IsSelectedForPortal = false;
+            }
+
+            SelectedTileMap.Tiles[tileIndex].IsSelectedForPortal = true;
+         }
       }
 
       private void SaveTileMaps()
@@ -130,6 +151,6 @@ namespace DragonQuestinoEditor.ViewModels
       public ICommand? SaveTileMapsCommand => _saveTileMapsCommand ??= new RelayCommand( SaveTileMaps, () => true ) ;
 
       private ICommand? _writeGameDataCommand;
-      public ICommand? WriteGameDataCommand => _writeGameDataCommand ??= new RelayCommand( WriteGameData, () => true ) ;
+      public ICommand? WriteGameDataCommand => _writeGameDataCommand ??= new RelayCommand( WriteGameData, () => true );
    }
 }
