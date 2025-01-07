@@ -27,25 +27,48 @@ namespace DragonQuestinoEditor.ViewModels
          {
             if ( SetProperty( ref _selectedTileMap, value ) )
             {
+               if ( _selectedTileMap is not null )
+               {
+                  foreach ( var tile in _selectedTileMap.Tiles )
+                  {
+                     tile.IsSelected = false;
+                  }
+               }
+
+               SelectedTile = null;
+
                OnPropertyChanged( nameof( TileMapTextureListViewWidth ) );
                OnPropertyChanged( nameof( TileMapTextureListViewHeight ) );
             }
          }
       }
 
-      public int TileMapTextureListViewWidth => _selectedTileMap == null
+      private TileViewModel? _selectedTile;
+      public TileViewModel? SelectedTile
+      {
+         get => _selectedTile;
+         set
+         {
+            SetProperty( ref _selectedTile, value );
+            OnPropertyChanged( nameof( TileIsSelected ) );
+         }
+      }
+
+      public bool TileIsSelected => SelectedTile != null;
+
+      public int TileMapTextureListViewWidth => _selectedTileMap is null
          ? Constants.TileMapTextureListViewMaxWidth
          : Math.Min( Constants.TileMapTextureListViewMaxWidth, _selectedTileMap.TilesX * Constants.TileMapListViewItemSize );
 
-      public int TileMapTextureListViewHeight => _selectedTileMap == null
+      public int TileMapTextureListViewHeight => _selectedTileMap is null
          ? Constants.TileMapTextureListViewMaxHeight
          : Math.Min( Constants.TileMapTextureListViewMaxHeight, _selectedTileMap.TilesY * Constants.TileMapListViewItemSize );
 
-      public int TileMapPortalListViewWidth => _selectedTileMap == null
+      public int TileMapPortalListViewWidth => _selectedTileMap is null
          ? Constants.TileMapPortalListViewMaxWidth
          : Math.Min( Constants.TileMapPortalListViewMaxWidth, _selectedTileMap.TilesX * Constants.TileMapListViewItemSize );
 
-      public int TileMapPortalListViewHeight => _selectedTileMap == null
+      public int TileMapPortalListViewHeight => _selectedTileMap is null
          ? Constants.TileMapPortalListViewMaxHeight
          : Math.Min( Constants.TileMapPortalListViewMaxHeight, _selectedTileMap.TilesY * Constants.TileMapListViewItemSize );
 
@@ -90,16 +113,18 @@ namespace DragonQuestinoEditor.ViewModels
          SelectedTileMap = TileMaps[0];
       }
 
-      public void SelectTileForPortal( int tileIndex )
+      public void SelectTile( int tileIndex )
       {
          if ( SelectedTileMap is not null )
          {
             foreach ( var tile in SelectedTileMap.Tiles )
             {
-               tile.IsSelectedForPortal = false;
+               tile.IsSelected = false;
             }
 
-            SelectedTileMap.Tiles[tileIndex].IsSelectedForPortal = true;
+            var selectedTile = SelectedTileMap.Tiles[tileIndex];
+            selectedTile.IsSelected = true;
+            SelectedTile = selectedTile;
          }
       }
 

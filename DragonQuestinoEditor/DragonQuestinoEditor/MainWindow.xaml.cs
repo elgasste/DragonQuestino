@@ -26,7 +26,7 @@ namespace DragonQuestinoEditor
          {
             var tileTextureViewData = FindTileTextureViewModelAtPoint( e.GetPosition( this ) );
 
-            if ( tileTextureViewData != null )
+            if ( tileTextureViewData is not null )
             {
                var data = new DataObject();
                data.SetData( "Object", tileTextureViewData );
@@ -40,7 +40,7 @@ namespace DragonQuestinoEditor
       {
          var tileVM = FindTileViewModelAtPoint( e.GetPosition( this ) );
 
-         if ( tileVM != null )
+         if ( tileVM is not null )
          {
             tileVM.IsDraggingTextureOver = true;
          }
@@ -50,7 +50,7 @@ namespace DragonQuestinoEditor
       {
          var tileVM = FindTileViewModelFromObject( sender );
 
-         if ( tileVM != null )
+         if ( tileVM is not null )
          {
             tileVM.IsDraggingTextureOver = false;
          }
@@ -62,7 +62,7 @@ namespace DragonQuestinoEditor
          {
             var tileVM = FindTileViewModelAtPoint( Mouse.GetPosition( this ) );
 
-            if ( tileVM != null )
+            if ( tileVM is not null )
             {
                _tileIndexCache = tileVM.Index;
             }
@@ -77,7 +77,7 @@ namespace DragonQuestinoEditor
          {
             var tileVM = FindTileViewModelAtPoint( e.GetPosition( this ) );
 
-            if ( tileVM != null && tileVM.Index != _tileIndexCache )
+            if ( tileVM is not null && tileVM.Index != _tileIndexCache )
             {
                tileVM.SetIndex( _tileIndexCache );
             }
@@ -90,7 +90,7 @@ namespace DragonQuestinoEditor
          {
             var mapTileVM = FindTileViewModelAtPoint( e.GetPosition( this ) );
 
-            if ( mapTileVM != null )
+            if ( mapTileVM is not null )
             {
                mapTileVM.SetIndex( droppedTileTextureVM.Index );
                mapTileVM.IsDraggingTextureOver = false;
@@ -100,7 +100,7 @@ namespace DragonQuestinoEditor
 
       private static TileViewModel? FindTileViewModelFromObject( object obj )
       {
-         if ( obj != null )
+         if ( obj is not null )
          {
             if ( obj is TileViewModel )
             {
@@ -119,24 +119,24 @@ namespace DragonQuestinoEditor
       private TileTextureViewModel? FindTileTextureViewModelAtPoint( Point p )
       {
          var hitResult = VisualTreeHelper.HitTest( this, p );
-         return hitResult == null ? null : FindTileTextureViewModelInTree( hitResult.VisualHit );
+         return hitResult is null ? null : FindTileTextureViewModelInTree( hitResult.VisualHit );
       }
 
       private static TileTextureViewModel? FindTileTextureViewModelInTree( DependencyObject? obj )
       {
-         if ( obj == null )
+         if ( obj is null )
          {
             return null;
          }
 
          var visual = VisualTreeHelper.GetParent( obj );
 
-         while ( visual != null && visual.GetType().Name != "ListViewItem" )
+         while ( visual is not null && visual.GetType().Name != "ListViewItem" )
          {
             visual = VisualTreeHelper.GetParent( visual );
          }
 
-         if ( visual != null )
+         if ( visual is not null )
          {
             return ( visual is not ListViewItem item || item.Content is not TileTextureViewModel vm ) ? null : vm;
          }
@@ -149,24 +149,24 @@ namespace DragonQuestinoEditor
       private TileViewModel? FindTileViewModelAtPoint( Point p )
       {
          var hitResult = VisualTreeHelper.HitTest( this, p );
-         return hitResult == null ? null : FindTileViewModelInTree( hitResult.VisualHit );
+         return hitResult is null ? null : FindTileViewModelInTree( hitResult.VisualHit );
       }
 
       private static TileViewModel? FindTileViewModelInTree( DependencyObject? obj )
       {
-         if ( obj == null )
+         if ( obj is null )
          {
             return null;
          }
 
          var visual = VisualTreeHelper.GetParent( obj );
 
-         while ( visual != null && visual.GetType().Name != "ListViewItem" )
+         while ( visual is not null && visual.GetType().Name != "ListViewItem" )
          {
             visual = VisualTreeHelper.GetParent( visual );
          }
 
-         if ( visual != null )
+         if ( visual is not null )
          {
             return ( visual is not ListViewItem item || item.Content is not TileViewModel vm ) ? null : vm;
          }
@@ -181,9 +181,9 @@ namespace DragonQuestinoEditor
          var portalListView = e.OriginalSource as ListView;
          var selectedTileIndex = portalListView?.SelectedIndex;
 
-         if ( selectedTileIndex != null && _viewModel.SelectedTileMap != null )
+         if ( selectedTileIndex is not null && _viewModel.SelectedTileMap is not null )
          {
-            _viewModel.SelectTileForPortal( selectedTileIndex.Value );
+            _viewModel.SelectTile( selectedTileIndex.Value );
          }
       }
    }

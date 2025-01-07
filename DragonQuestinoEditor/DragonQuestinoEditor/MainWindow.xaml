@@ -28,6 +28,9 @@
          <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
                                                                    TrueValue="Visible"
                                                                    FalseValue="Collapsed" />
+         <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"
+                                                                   TrueValue="Collapsed"
+                                                                   FalseValue="Visible" />
       </ResourceDictionary>
    </Window.Resources>
    <Grid>
@@ -121,7 +124,7 @@
             <TabItem Header="Portals">
                <StackPanel Orientation="Horizontal">
                   
-                  <!-- "Source" Portal Tiles -->
+                  <!-- Source Portal Tiles -->
                   <StackPanel Orientation="Vertical">
 
                      <!-- Tile Map Texture Editor Tiles -->
@@ -146,7 +149,7 @@
                                  <Rectangle Width="32"
                                             Height="32"
                                             Fill="#660000FF"
-                                            Visibility="{Binding IsSelectedForPortal, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
                               </Grid>
                            </DataTemplate>
                         </ListView.ItemTemplate>
@@ -154,6 +157,22 @@
 
                   </StackPanel>
                   
+                  <!-- Source Portal Properties -->
+                  <StackPanel Orientation="Vertical"
+                              Visibility="{Binding TileIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                     <StackPanel Orientation="Vertical"
+                                 Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <Button Content="Add Portal"/>
+                     </StackPanel>
+
+                     <StackPanel Orientation="Vertical"
+                                 Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Button Content="Delete Portal"/>
+                     </StackPanel>
+
+                  </StackPanel>
+
                </StackPanel>
             </TabItem> <!-- Tile Map Portal Editor -->
             

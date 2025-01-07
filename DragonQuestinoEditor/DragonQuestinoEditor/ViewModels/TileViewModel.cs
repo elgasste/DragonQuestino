@@ -43,12 +43,32 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _isDraggingTextureOver, value );
       }
 
-      private bool _isSelectedForPortal = false;
-      public bool IsSelectedForPortal
+      private bool _isSelected = false;
+      public bool IsSelected
       {
-         get => _isSelectedForPortal;
-         set => SetProperty( ref _isSelectedForPortal, value );
+         get => _isSelected;
+         set => SetProperty( ref _isSelected, value );
       }
+
+      private int? _portalDestinationTileMapIndex = null;
+      public int? PortalDestinationTileMapIndex
+      {
+         get => _portalDestinationTileMapIndex;
+         set
+         {
+            SetProperty( ref _portalDestinationTileMapIndex, value );
+            OnPropertyChanged( nameof( HasPortal ) );
+         }
+      }
+
+      private Direction? _portalDestinationDirection;
+      public Direction? PortalDestinationDirection
+      {
+         get => _portalDestinationDirection;
+         set => SetProperty( ref _portalDestinationDirection, value );
+      }
+
+      public bool HasPortal => _portalDestinationTileMapIndex != null;
 
       public TileViewModel( int index )
       {

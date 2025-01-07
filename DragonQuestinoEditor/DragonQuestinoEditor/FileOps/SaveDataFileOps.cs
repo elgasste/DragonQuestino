@@ -18,7 +18,7 @@ namespace DragonQuestinoEditor.FileOps
          var contents = File.ReadAllText( filePath );
          var saveData = JsonSerializer.Deserialize<SaveData>( contents );
 
-         if ( saveData == null )
+         if ( saveData is null )
          {
             return false;
          }

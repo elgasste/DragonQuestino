@@ -11,7 +11,7 @@ namespace DragonQuestinoEditor.ViewModels
       {
          PropertyChangedEventHandler? eventHandler = PropertyChanged;
 
-         if ( eventHandler != null )
+         if ( eventHandler is not null )
          {
             var args = new PropertyChangedEventArgs( propertyName );
             eventHandler( this, args );
