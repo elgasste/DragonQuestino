@@ -121,13 +121,13 @@
             </TabItem> <!-- Tile Map Texture Editor -->
 
             <!-- Tile Map Portal Editor -->
-            <TabItem Header="Portals">
+            <TabItem Header="Portals"
+                     IsSelected="True">
                <StackPanel Orientation="Horizontal">
                   
                   <!-- Source Portal Tiles -->
                   <StackPanel Orientation="Vertical">
 
-                     <!-- Tile Map Texture Editor Tiles -->
                      <ListView ItemsSource="{Binding SelectedTileMap.Tiles}"
                                VerticalAlignment="Top"
                                HorizontalAlignment="Left"
@@ -148,6 +148,10 @@
                                         Height="32"/>
                                  <Rectangle Width="32"
                                             Height="32"
+                                            Fill="#66FF00FF"
+                                            Visibility="{Binding HasPortal, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                 <Rectangle Width="32"
+                                            Height="32"
                                             Fill="#660000FF"
                                             Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
                               </Grid>
@@ -155,7 +159,7 @@
                         </ListView.ItemTemplate>
                      </ListView>
 
-                  </StackPanel>
+                  </StackPanel> <!-- Source Portal Tiles -->
                   
                   <!-- Source Portal Properties -->
                   <StackPanel Orientation="Vertical"
@@ -163,15 +167,18 @@
 
                      <StackPanel Orientation="Vertical"
                                  Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        <Button Content="Add Portal"/>
+                        <Button Content="Add Portal"
+                                Command="{Binding AddPortalCommand, Mode=OneTime}"/>
                      </StackPanel>
 
                      <StackPanel Orientation="Vertical"
                                  Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Button Content="Delete Portal"/>
+                        <!-- TODO: add a combo box to set the facing direction -->
+                        <Button Content="Delete This Portal"
+                                Command="{Binding DeleteSelectedPortalCommand, Mode=OneTime}"/>
                      </StackPanel>
 
-                  </StackPanel>
+                  </StackPanel> <!-- Source Portal Properties -->
 
                </StackPanel>
             </TabItem> <!-- Tile Map Portal Editor -->

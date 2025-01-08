@@ -4,14 +4,14 @@ namespace DragonQuestinoEditor.FileOps
 {
    internal class TileSaveData
    {
-      public int Index { get; set; }
+      public int TextureIndex { get; set; }
       public bool IsPassable { get; set; }
 
       public TileSaveData() { }
 
       public TileSaveData( TileViewModel tile )
       {
-         Index = tile.Index;
+         TextureIndex = tile.TextureIndex;
          IsPassable = tile.IsPassable;
       }
    }

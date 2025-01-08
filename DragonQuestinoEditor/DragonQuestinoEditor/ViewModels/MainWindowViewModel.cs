@@ -54,6 +54,8 @@ namespace DragonQuestinoEditor.ViewModels
          }
       }
 
+      private int _selectedTileIndex = -1;
+
       public bool TileIsSelected => SelectedTile != null;
 
       public int TileMapTextureListViewWidth => _selectedTileMap is null
@@ -125,6 +127,7 @@ namespace DragonQuestinoEditor.ViewModels
             var selectedTile = SelectedTileMap.Tiles[tileIndex];
             selectedTile.IsSelected = true;
             SelectedTile = selectedTile;
+            _selectedTileIndex = tileIndex;
          }
       }
 
@@ -166,6 +169,29 @@ namespace DragonQuestinoEditor.ViewModels
          MessageBox.Show( "Game data file has been written!" );
       }
 
+      private void AddPortal()
+      {
+         if ( SelectedTileMap is not null && SelectedTile is not null && !SelectedTile.HasPortal )
+         {
+            // TODO: show a window where we can select the destination info
+            int destinationTileMapIndex = 1;
+            int destinationTileIndex = 5;
+            Direction arrivalDirection = Direction.Left;
+
+            SelectedTile.Portal = new( _selectedTileIndex, destinationTileMapIndex, destinationTileIndex, arrivalDirection );
+            SelectedTileMap.Portals.Add( SelectedTile.Portal );
+         }         
+      }
+
+      private void DeleteSelectedPortal()
+      {
+         if ( SelectedTileMap is not null && SelectedTile?.Portal is not null )
+         {
+            SelectedTileMap.Portals.Remove( SelectedTile.Portal );
+            SelectedTile.Portal = null;
+         }
+      }
+
       private ICommand? _newTileMapCommand;
       public ICommand? NewTileMapCommand => _newTileMapCommand ??= new RelayCommand( NewTileMap, () => true );
 
@@ -177,5 +203,11 @@ namespace DragonQuestinoEditor.ViewModels
 
       private ICommand? _writeGameDataCommand;
       public ICommand? WriteGameDataCommand => _writeGameDataCommand ??= new RelayCommand( WriteGameData, () => true );
+
+      private ICommand? _addPortalCommand;
+      public ICommand? AddPortalCommand => _addPortalCommand ??= new RelayCommand( AddPortal, () => true );
+
+      private ICommand? _deleteSelectedPortalCommand;
+      public ICommand? DeleteSelectedPortalCommand => _deleteSelectedPortalCommand ??= new RelayCommand( DeleteSelectedPortal, () => true );
    }
 }

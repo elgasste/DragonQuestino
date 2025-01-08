@@ -9,7 +9,7 @@ namespace DragonQuestinoEditor.ViewModels
       private ITileTextureProvider? _tileTextureProvider = null;
 
       // TODO: allow updating this with the tile editor
-      private readonly int[] _passableIndexes = [
+      private readonly int[] _passableTextureIndexes = [
          0,    // grass
          1,    // trees
          2,    // hills
@@ -20,14 +20,14 @@ namespace DragonQuestinoEditor.ViewModels
          13    // bridge
       ];
 
-      private int _index;
-      public int Index
+      private int _textureIndex;
+      public int TextureIndex
       {
-         get => _index;
-         private set => SetProperty( ref _index, value );
+         get => _textureIndex;
+         private set => SetProperty( ref _textureIndex, value );
       }
 
-      public BitmapSource? Image => _tileTextureProvider?.GetImageFromIndex( Index );
+      public BitmapSource? Image => _tileTextureProvider?.GetImageFromIndex( TextureIndex );
 
       private bool _isPassable;
       public bool IsPassable
@@ -50,44 +50,37 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _isSelected, value );
       }
 
-      private int? _portalDestinationTileMapIndex = null;
-      public int? PortalDestinationTileMapIndex
+      private TilePortalViewModel? _portal = null;
+      public TilePortalViewModel? Portal
       {
-         get => _portalDestinationTileMapIndex;
+         get => _portal;
          set
          {
-            SetProperty( ref _portalDestinationTileMapIndex, value );
+            SetProperty( ref _portal, value );
             OnPropertyChanged( nameof( HasPortal ) );
          }
       }
 
-      private Direction? _portalDestinationDirection;
-      public Direction? PortalDestinationDirection
-      {
-         get => _portalDestinationDirection;
-         set => SetProperty( ref _portalDestinationDirection, value );
-      }
-
-      public bool HasPortal => _portalDestinationTileMapIndex != null;
+      public bool HasPortal => _portal is not null;
 
       public TileViewModel( int index )
       {
-         SetIndex( index );
-         _isPassable = _passableIndexes.Contains( index );
+         SetTextureIndex( index );
+         _isPassable = _passableTextureIndexes.Contains( index );
       }
 
       public TileViewModel( TileSaveData saveData )
       {
-         SetIndex( saveData.Index );
+         SetTextureIndex( saveData.TextureIndex );
          _isPassable = saveData.IsPassable;
       }
 
       public void SetTileTextureProvider( ITileTextureProvider? provider ) => _tileTextureProvider = provider;
 
-      public void SetIndex( int index )
+      public void SetTextureIndex( int index )
       {
-         Index = index;
-         IsPassable = _passableIndexes.Contains( index );
+         TextureIndex = index;
+         IsPassable = _passableTextureIndexes.Contains( index );
          OnPropertyChanged( nameof( Image ) );
       }
    }

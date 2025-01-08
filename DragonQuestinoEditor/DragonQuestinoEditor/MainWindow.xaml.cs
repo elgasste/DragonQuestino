@@ -64,7 +64,7 @@ namespace DragonQuestinoEditor
 
             if ( tileVM is not null )
             {
-               _tileIndexCache = tileVM.Index;
+               _tileIndexCache = tileVM.TextureIndex;
             }
          }
       }
@@ -77,9 +77,9 @@ namespace DragonQuestinoEditor
          {
             var tileVM = FindTileViewModelAtPoint( e.GetPosition( this ) );
 
-            if ( tileVM is not null && tileVM.Index != _tileIndexCache )
+            if ( tileVM is not null && tileVM.TextureIndex != _tileIndexCache )
             {
-               tileVM.SetIndex( _tileIndexCache );
+               tileVM.SetTextureIndex( _tileIndexCache );
             }
          }
       }
@@ -92,7 +92,7 @@ namespace DragonQuestinoEditor
 
             if ( mapTileVM is not null )
             {
-               mapTileVM.SetIndex( droppedTileTextureVM.Index );
+               mapTileVM.SetTextureIndex( droppedTileTextureVM.Index );
                mapTileVM.IsDraggingTextureOver = false;
             }
          }

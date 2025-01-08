@@ -102,18 +102,18 @@ namespace DragonQuestinoEditor.FileOps
 
             for ( int j = 0; j < tiles.Count; j += 2 )
             {
-               var index0 = (UInt32)( tiles[j].Index )
+               var index0 = (UInt32)( tiles[j].TextureIndex )
                   | ( tiles[j].IsPassable ? (UInt32)0x20 : 0 )
-                  | Constants.TileSetIndexWalkSpeeds[tiles[j].Index]
+                  | Constants.TileSetIndexWalkSpeeds[tiles[j].TextureIndex]
                   | 0x100  // is encounterable
-                  | Constants.TileSetIndexEncounterRates[tiles[j].Index]
-                  | Constants.TileSetIndexDamageRates[tiles[j].Index];
-               var index1 = (UInt32)( tiles[j + 1].Index )
+                  | Constants.TileSetIndexEncounterRates[tiles[j].TextureIndex]
+                  | Constants.TileSetIndexDamageRates[tiles[j].TextureIndex];
+               var index1 = (UInt32)( tiles[j + 1].TextureIndex )
                   | ( tiles[j + 1].IsPassable ? (UInt32)0x20 : 0 )
-                  | Constants.TileSetIndexWalkSpeeds[tiles[j + 1].Index]
+                  | Constants.TileSetIndexWalkSpeeds[tiles[j + 1].TextureIndex]
                   | 0x100  // is encounterable
-                  | Constants.TileSetIndexEncounterRates[tiles[j + 1].Index]
-                  | Constants.TileSetIndexDamageRates[tiles[j + 1].Index];
+                  | Constants.TileSetIndexEncounterRates[tiles[j + 1].TextureIndex]
+                  | Constants.TileSetIndexDamageRates[tiles[j + 1].TextureIndex];
 
                var packed = ( index1 << 16 ) | index0;
                packedTiles.Add( packed );
