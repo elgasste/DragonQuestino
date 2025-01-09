@@ -68,15 +68,31 @@ namespace DragonQuestinoEditor.ViewModels
             {
                OnPropertyChanged( nameof( TileIsSelected ) );
 
-               if ( _selectedTile?.Portal is not null && SelectedTileMap is not null && SelectedTileMap.Portals.Contains( _selectedTile.Portal ) )
+               if ( _selectedTile is not null )
                {
-                  foreach( var portal in SelectedTileMap.Portals )
+                  if ( SelectedTileMap is not null )
                   {
-                     if ( portal == _selectedTile.Portal )
+                     foreach ( var tile in SelectedTileMap.Tiles )
                      {
-                        PortalDestinationTileMap = TileMaps[portal.DestinationTileMapIndex];
-                        break;
+                        tile.IsPortalDestination = false;
                      }
+                  }
+
+                  if ( _selectedTile.Portal is not null && SelectedTileMap is not null && SelectedTileMap.Portals.Contains( _selectedTile.Portal ) )
+                  {
+                     foreach ( var portal in SelectedTileMap.Portals )
+                     {
+                        if ( portal == _selectedTile.Portal )
+                        {
+                           PortalDestinationTileMap = TileMaps[portal.DestinationTileMapIndex];
+                           PortalDestinationTileMap.Tiles[portal.DestinationTileIndex].IsPortalDestination = true;
+                           break;
+                        }
+                     }
+                  }
+                  else
+                  {
+                     PortalDestinationTileMap = null;
                   }
                }
                else
@@ -222,6 +238,14 @@ namespace DragonQuestinoEditor.ViewModels
             {
                SelectedTile.Portal = new( _selectedTileIndex, window.DestinationTileMapIndex, 0, window.ArrivalDirection );
                SelectedTileMap.Portals.Add( SelectedTile.Portal );
+               PortalDestinationTileMap = TileMaps[window.DestinationTileMapIndex];
+
+               foreach ( var tile in PortalDestinationTileMap.Tiles )
+               {
+                  tile.IsPortalDestination = false;
+               }
+
+               PortalDestinationTileMap.Tiles[0].IsPortalDestination = true;
             }
          }         
       }
@@ -232,6 +256,16 @@ namespace DragonQuestinoEditor.ViewModels
          {
             SelectedTileMap.Portals.Remove( SelectedTile.Portal );
             SelectedTile.Portal = null;
+
+            if ( PortalDestinationTileMap is not null )
+            {
+               foreach ( var tile in PortalDestinationTileMap.Tiles )
+               {
+                  tile.IsPortalDestination = false;
+               }
+            }
+
+            PortalDestinationTileMap = null;
          }
       }
 

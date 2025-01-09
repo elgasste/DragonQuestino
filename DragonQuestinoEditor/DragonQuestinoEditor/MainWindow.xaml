@@ -201,15 +201,10 @@
                                  <Image Source="{Binding Image}"
                                         Width="32"
                                         Height="32"/>
-                                 <!-- TODO: we'll get to this -->
-                                 <!--<Rectangle Width="32"
-                                            Height="32"
-                                            Fill="#66FF00FF"
-                                            Visibility="{Binding HasPortal, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                  <Rectangle Width="32"
                                             Height="32"
-                                            Fill="#660000FF"
-                                            Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>-->
+                                            Fill="#66FF00FF"
+                                            Visibility="{Binding IsPortalDestination, Converter={StaticResource BoolToVisibilityConverter}}"/>
                               </Grid>
                            </DataTemplate>
                         </ListView.ItemTemplate>

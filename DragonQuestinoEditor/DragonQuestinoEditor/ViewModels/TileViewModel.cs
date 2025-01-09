@@ -63,6 +63,8 @@ namespace DragonQuestinoEditor.ViewModels
 
       public bool HasPortal => _portal is not null;
 
+      public bool IsPortalDestination { get; set; } = false;
+
       public TileViewModel( int index )
       {
          SetTextureIndex( index );
