@@ -39,6 +39,8 @@ namespace DragonQuestinoEditor.ViewModels
 
                OnPropertyChanged( nameof( TileMapTextureListViewWidth ) );
                OnPropertyChanged( nameof( TileMapTextureListViewHeight ) );
+               OnPropertyChanged( nameof( TileMapPortalListViewWidth ) );
+               OnPropertyChanged( nameof( TileMapPortalListViewHeight ) );
             }
          }
       }
