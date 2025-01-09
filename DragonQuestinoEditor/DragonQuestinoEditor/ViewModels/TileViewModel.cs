@@ -50,6 +50,13 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _isSelected, value );
       }
 
+      private bool _isPortalDestination = false;
+      public bool IsPortalDestination
+      {
+         get => _isPortalDestination;
+         set => SetProperty( ref _isPortalDestination, value );
+      }
+
       private TilePortalViewModel? _portal = null;
       public TilePortalViewModel? Portal
       {
@@ -62,8 +69,6 @@ namespace DragonQuestinoEditor.ViewModels
       }
 
       public bool HasPortal => _portal is not null;
-
-      public bool IsPortalDestination { get; set; } = false;
 
       public TileViewModel( int index )
       {

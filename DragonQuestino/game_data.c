@@ -2128,9 +2128,9 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
             tileMap->portals[i].destinationTileMapIndex = 7;
             tileMap->portals[i].destinationTileIndex = 331;
             tileMap->portals[i].arrivalDirection = (Direction_t)2;
-            tileMap->portals[i].sourceTileIndex = 992;
+            tileMap->portals[i].sourceTileIndex = 6914;
             tileMap->portals[i].destinationTileMapIndex = 4;
-            tileMap->portals[i].destinationTileIndex = 0;
+            tileMap->portals[i].destinationTileIndex = 481;
             tileMap->portals[i].arrivalDirection = (Direction_t)2;
          }
          tileMap->spriteCount = 0;

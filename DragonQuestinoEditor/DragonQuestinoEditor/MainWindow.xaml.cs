@@ -178,10 +178,10 @@ namespace DragonQuestinoEditor
 
       private void TileMapPortalSourceListView_OnSelectionChanged( object sender, SelectionChangedEventArgs e )
       {
-         var portalListView = e.OriginalSource as ListView;
-         var selectedTileIndex = portalListView?.SelectedIndex;
+         var portalSourceListView = e.OriginalSource as ListView;
+         var selectedTileIndex = portalSourceListView?.SelectedIndex;
 
-         if ( selectedTileIndex is not null && _viewModel.SelectedTileMap is not null )
+         if ( selectedTileIndex is not null )
          {
             _viewModel.SelectTile( selectedTileIndex.Value );
          }
@@ -189,7 +189,13 @@ namespace DragonQuestinoEditor
 
       private void TileMapPortalDestinationListView_OnSelectionChanged( object sender, SelectionChangedEventArgs e )
       {
-         // TODO: change the portal destination tile index
+         var portalDestinationListView = e.OriginalSource as ListView;
+         var selectedTileIndex = portalDestinationListView?.SelectedIndex;
+
+         if ( selectedTileIndex is not null )
+         {
+            _viewModel.SelectPortalDestination( selectedTileIndex.Value );
+         }
       }
    }
 }

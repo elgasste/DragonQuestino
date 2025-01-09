@@ -86,6 +86,7 @@ namespace DragonQuestinoEditor.ViewModels
                         {
                            PortalDestinationTileMap = TileMaps[portal.DestinationTileMapIndex];
                            PortalDestinationTileMap.Tiles[portal.DestinationTileIndex].IsPortalDestination = true;
+                           SelectedPortalArrivalDirection = portal.ArrivalDirection.ToString();
                            break;
                         }
                      }
@@ -98,6 +99,24 @@ namespace DragonQuestinoEditor.ViewModels
                else
                {
                   PortalDestinationTileMap = null;
+               }
+            }
+         }
+      }
+
+      public static ObservableCollection<string> PortalArrivalDirections => [ "Left", "Up", "Right", "Down" ];
+
+      private string _selectedPortalArrivalDirection;
+      public string SelectedPortalArrivalDirection
+      {
+         get => _selectedPortalArrivalDirection;
+         set
+         {
+            if ( SetProperty( ref _selectedPortalArrivalDirection, value ) )
+            {
+               if ( SelectedTile?.Portal is not null )
+               {
+                  SelectedTile.Portal.ArrivalDirection = Enum.Parse<Direction>( _selectedPortalArrivalDirection );
                }
             }
          }
@@ -182,9 +201,17 @@ namespace DragonQuestinoEditor.ViewModels
                tile.IsSelected = false;
             }
 
-            var selectedTile = SelectedTileMap.Tiles[tileIndex];
-            selectedTile.IsSelected = true;
-            SelectedTile = selectedTile;
+            if ( tileIndex >= 0 )
+            {
+               var selectedTile = SelectedTileMap.Tiles[tileIndex];
+               selectedTile.IsSelected = true;
+               SelectedTile = selectedTile;
+            }
+            else
+            {
+               SelectedTile = null;
+            }
+
             _selectedTileIndex = tileIndex;
          }
       }
@@ -229,6 +256,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void AddPortal()
       {
+         // TODO: don't allow more than the maximum amount of portals for any given map
          if ( SelectedTileMap is not null && SelectedTile is not null && !SelectedTile.HasPortal )
          {
             var window = new CreateTilePortalWindow( TileMaps );
@@ -239,6 +267,7 @@ namespace DragonQuestinoEditor.ViewModels
                SelectedTile.Portal = new( _selectedTileIndex, window.DestinationTileMapIndex, 0, window.ArrivalDirection );
                SelectedTileMap.Portals.Add( SelectedTile.Portal );
                PortalDestinationTileMap = TileMaps[window.DestinationTileMapIndex];
+               SelectedPortalArrivalDirection = window.ArrivalDirection.ToString();
 
                foreach ( var tile in PortalDestinationTileMap.Tiles )
                {
@@ -266,6 +295,20 @@ namespace DragonQuestinoEditor.ViewModels
             }
 
             PortalDestinationTileMap = null;
+         }
+      }
+
+      public void SelectPortalDestination( int tileIndex )
+      {
+         if ( tileIndex >= 0 && SelectedTile?.Portal is not null && PortalDestinationTileMap is not null )
+         {
+            foreach ( var tile in PortalDestinationTileMap.Tiles )
+            {
+               tile.IsPortalDestination = false;
+            }
+
+            SelectedTile.Portal.DestinationTileIndex = tileIndex;
+            PortalDestinationTileMap.Tiles[tileIndex].IsPortalDestination = true;
          }
       }
 
