@@ -180,6 +180,42 @@
 
                   </StackPanel> <!-- Source Portal Properties -->
 
+                  <!-- Destination Portal Tiles -->
+                  <StackPanel Orientation="Vertical"
+                              Visibility="{Binding PortalIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                     <ListView ItemsSource="{Binding PortalDestinationTileMap.Tiles}"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               Width="{Binding TileMapPortalDestinationListViewWidth}"
+                               Height="{Binding TileMapPortalDestinationListViewHeight}"
+                               ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
+                               SelectionChanged="TileMapPortalDestinationListView_OnSelectionChanged">
+                        <ItemsControl.ItemsPanel>
+                           <ItemsPanelTemplate>
+                              <UniformGrid Columns="{Binding PortalDestinationTileMap.TilesX}"/>
+                           </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                           <DataTemplate>
+                              <Grid>
+                                 <Image Source="{Binding Image}"
+                                        Width="32"
+                                        Height="32"/>
+                                 <!-- TODO: we'll get to this -->
+                                 <!--<Rectangle Width="32"
+                                            Height="32"
+                                            Fill="#66FF00FF"
+                                            Visibility="{Binding HasPortal, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                 <Rectangle Width="32"
+                                            Height="32"
+                                            Fill="#660000FF"
+                                            Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>-->
+                              </Grid>
+                           </DataTemplate>
+                        </ListView.ItemTemplate>
+                     </ListView>
+                  </StackPanel>
+
                </StackPanel>
             </TabItem> <!-- Tile Map Portal Editor -->
             

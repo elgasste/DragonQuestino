@@ -45,20 +45,52 @@ namespace DragonQuestinoEditor.ViewModels
          }
       }
 
+      private TileMapViewModel? _portalDestinationTileMap;
+      public TileMapViewModel? PortalDestinationTileMap
+      {
+         get => _portalDestinationTileMap;
+         set
+         {
+            SetProperty( ref _portalDestinationTileMap, value );
+            OnPropertyChanged( nameof( PortalIsSelected ) );
+            OnPropertyChanged( nameof( TileMapPortalDestinationListViewWidth ) );
+            OnPropertyChanged( nameof( TileMapPortalDestinationListViewHeight ) );
+         }
+      }
+
       private TileViewModel? _selectedTile;
       public TileViewModel? SelectedTile
       {
          get => _selectedTile;
          set
          {
-            SetProperty( ref _selectedTile, value );
-            OnPropertyChanged( nameof( TileIsSelected ) );
+            if ( SetProperty( ref _selectedTile, value ) )
+            {
+               OnPropertyChanged( nameof( TileIsSelected ) );
+
+               if ( _selectedTile?.Portal is not null && SelectedTileMap is not null && SelectedTileMap.Portals.Contains( _selectedTile.Portal ) )
+               {
+                  foreach( var portal in SelectedTileMap.Portals )
+                  {
+                     if ( portal == _selectedTile.Portal )
+                     {
+                        PortalDestinationTileMap = TileMaps[portal.DestinationTileMapIndex];
+                        break;
+                     }
+                  }
+               }
+               else
+               {
+                  PortalDestinationTileMap = null;
+               }
+            }
          }
       }
 
       private int _selectedTileIndex = -1;
 
       public bool TileIsSelected => SelectedTile != null;
+      public bool PortalIsSelected => PortalDestinationTileMap != null;
 
       public int TileMapTextureListViewWidth => _selectedTileMap is null
          ? Constants.TileMapTextureListViewMaxWidth
@@ -75,6 +107,14 @@ namespace DragonQuestinoEditor.ViewModels
       public int TileMapPortalListViewHeight => _selectedTileMap is null
          ? Constants.TileMapPortalListViewMaxHeight
          : Math.Min( Constants.TileMapPortalListViewMaxHeight, _selectedTileMap.TilesY * Constants.TileMapListViewItemSize );
+
+      public int TileMapPortalDestinationListViewWidth => _portalDestinationTileMap is null
+         ? Constants.TileMapPortalListViewMaxWidth
+         : Math.Min(Constants.TileMapPortalListViewMaxWidth, _portalDestinationTileMap.TilesX* Constants.TileMapListViewItemSize );
+
+      public int TileMapPortalDestinationListViewHeight => _portalDestinationTileMap is null
+         ? Constants.TileMapPortalListViewMaxHeight
+         : Math.Min( Constants.TileMapPortalListViewMaxHeight, _portalDestinationTileMap.TilesY * Constants.TileMapListViewItemSize );
 
       public MainWindowViewModel()
       {

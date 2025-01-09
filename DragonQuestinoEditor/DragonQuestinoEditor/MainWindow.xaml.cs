@@ -186,5 +186,10 @@ namespace DragonQuestinoEditor
             _viewModel.SelectTile( selectedTileIndex.Value );
          }
       }
+
+      private void TileMapPortalDestinationListView_OnSelectionChanged( object sender, SelectionChangedEventArgs e )
+      {
+         // TODO: change the portal destination tile index
+      }
    }
 }
