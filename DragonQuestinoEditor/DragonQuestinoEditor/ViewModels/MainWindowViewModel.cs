@@ -9,7 +9,7 @@ using DragonQuestinoEditor.Graphics;
 
 namespace DragonQuestinoEditor.ViewModels
 {
-   internal class MainWindowViewModel : ViewModelBase
+   public class MainWindowViewModel : ViewModelBase
    {
       private readonly Palette _palette;
       private readonly TileSet _tileSet;
@@ -173,13 +173,14 @@ namespace DragonQuestinoEditor.ViewModels
       {
          if ( SelectedTileMap is not null && SelectedTile is not null && !SelectedTile.HasPortal )
          {
-            // TODO: show a window where we can select the destination info
-            int destinationTileMapIndex = 7;  // Garinham
-            int destinationTileIndex = 331;
-            Direction arrivalDirection = Direction.Right;
+            var window = new CreateTilePortalWindow( TileMaps );
+            var result = window.ShowDialog();
 
-            SelectedTile.Portal = new( _selectedTileIndex, destinationTileMapIndex, destinationTileIndex, arrivalDirection );
-            SelectedTileMap.Portals.Add( SelectedTile.Portal );
+            if ( result.HasValue && result.Value )
+            {
+               SelectedTile.Portal = new( _selectedTileIndex, window.DestinationTileMapIndex, 0, window.ArrivalDirection );
+               SelectedTileMap.Portals.Add( SelectedTile.Portal );
+            }
          }         
       }
 

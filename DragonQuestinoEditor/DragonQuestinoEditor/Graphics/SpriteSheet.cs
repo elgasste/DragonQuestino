@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.Graphics
 {
-   internal class SpriteSheet
+   public class SpriteSheet
    {
       private readonly Palette _palette;
       private readonly List<List<WriteableBitmap>> _frameBitmaps = new( Constants.SpriteFrameCount );

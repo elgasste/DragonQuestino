@@ -2,7 +2,7 @@
 
 namespace DragonQuestinoEditor.FileOps
 {
-   internal class TilePortalSaveData
+   public class TilePortalSaveData
    {
       public int SourceTileIndex { get; set; }
       public int DestinationTileMapIndex { get; set; }

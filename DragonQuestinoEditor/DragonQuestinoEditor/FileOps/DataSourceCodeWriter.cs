@@ -6,10 +6,10 @@ using DragonQuestinoEditor.ViewModels;
 
 namespace DragonQuestinoEditor.FileOps
 {
-   internal class DataSourceCodeWriter( Palette palette,
-                                        TileSet tileSet,
-                                        ObservableCollection<TileMapViewModel> tileMaps,
-                                        SpriteSheet spriteSheet )
+   public class DataSourceCodeWriter( Palette palette,
+                                      TileSet tileSet,
+                                      ObservableCollection<TileMapViewModel> tileMaps,
+                                      SpriteSheet spriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace DragonQuestinoEditor.ViewModels
 {
-   internal class TileMapViewModel : ViewModelBase
+   public class TileMapViewModel : ViewModelBase
    {
       public ObservableCollection<TileViewModel> Tiles { get; } = [];
 

@@ -2,7 +2,7 @@
 
 namespace DragonQuestinoEditor.Graphics
 {
-   internal interface ITileTextureProvider
+   public interface ITileTextureProvider
    {
       public BitmapSource GetImageFromIndex( int index );
    }

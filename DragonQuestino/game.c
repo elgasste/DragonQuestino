@@ -178,6 +178,8 @@ internal void Game_UpdateTileMapViewport( Game_t* game )
 
 internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
 {
+   // TODO: some kind of animation between maps, because this is too abrupt
+
    TileMap_Load( &( game->tileMap ), portal->destinationTileMapIndex );
 
    game->player.position.x = (float)( ( int32_t )( TILE_SIZE * ( portal->destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x );

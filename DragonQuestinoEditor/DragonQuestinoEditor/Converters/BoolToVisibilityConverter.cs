@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace DragonQuestinoEditor.Converters
 {
-   internal class BoolToVisibilityConverter : IValueConverter
+   public class BoolToVisibilityConverter : IValueConverter
    {
       public BoolToVisibilityConverter()
       {

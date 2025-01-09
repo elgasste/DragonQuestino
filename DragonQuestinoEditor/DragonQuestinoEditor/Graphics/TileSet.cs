@@ -5,7 +5,7 @@ using DragonQuestinoEditor.Utilities;
 
 namespace DragonQuestinoEditor.Graphics
 {
-   internal class TileSet : ITileTextureProvider
+   public class TileSet : ITileTextureProvider
    {
       private readonly List<WriteableBitmap> _tileBitmaps = new( Constants.TileTextureCount );
       private readonly Palette _palette;

@@ -3,7 +3,7 @@ using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.Utilities
 {
-   internal static class BitmapUtils
+   public static class BitmapUtils
    {
       public static void CheckTileSetBitmapFormat( BitmapSource bitmapSource )
       {

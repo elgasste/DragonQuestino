@@ -5,7 +5,7 @@ using DragonQuestinoEditor.ViewModels;
 
 namespace DragonQuestinoEditor.FileOps
 {
-   internal static class SaveDataFileOps
+   public static class SaveDataFileOps
    {
       public static void SaveData( string filePath, IEnumerable<TileMapViewModel> tileMaps )
       {

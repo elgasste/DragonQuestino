@@ -2,7 +2,7 @@
 
 namespace DragonQuestinoEditor.FileOps
 {
-   internal class TileSaveData
+   public class TileSaveData
    {
       public int TextureIndex { get; set; }
       public bool IsPassable { get; set; }

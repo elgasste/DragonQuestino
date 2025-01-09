@@ -4,7 +4,7 @@ using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.Utilities
 {
-   internal static class ColorUtils
+   public static class ColorUtils
    {
       public static UInt16 ColortoUInt16( Color color )
       {

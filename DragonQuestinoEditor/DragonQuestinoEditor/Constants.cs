@@ -1,6 +1,6 @@
 ﻿namespace DragonQuestinoEditor
 {
-   internal static class Constants
+   public static class Constants
    {
       public const string TileTexturesFilePath = "..\\..\\..\\..\\..\\Assets\\tile_textures.png";
       public const string EditorSaveDataFilePath = "..\\..\\..\\..\\..\\Assets\\editor_save.json";

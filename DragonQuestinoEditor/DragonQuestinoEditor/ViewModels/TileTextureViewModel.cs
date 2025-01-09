@@ -3,7 +3,7 @@ using DragonQuestinoEditor.Graphics;
 
 namespace DragonQuestinoEditor.ViewModels
 {
-   internal class TileTextureViewModel : ViewModelBase
+   public class TileTextureViewModel : ViewModelBase
    {
       private TileSet _tileSet;
 

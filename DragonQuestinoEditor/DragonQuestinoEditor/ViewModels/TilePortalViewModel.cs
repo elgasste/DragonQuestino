@@ -3,7 +3,7 @@ using System.Security.RightsManagement;
 
 namespace DragonQuestinoEditor.ViewModels
 {
-   internal class TilePortalViewModel : ViewModelBase
+   public class TilePortalViewModel : ViewModelBase
    {
       private int _sourceTileIndex;
       public int SourceTileIndex

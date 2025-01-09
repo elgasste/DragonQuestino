@@ -1,6 +1,6 @@
 ﻿namespace DragonQuestinoEditor
 {
-   internal enum Direction
+   public enum Direction
    {
       Left = 0,
       Top = 1,

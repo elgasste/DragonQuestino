@@ -4,7 +4,7 @@ using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.ViewModels
 {
-   internal class TileViewModel : ViewModelBase
+   public class TileViewModel : ViewModelBase
    {
       private ITileTextureProvider? _tileTextureProvider = null;
 
