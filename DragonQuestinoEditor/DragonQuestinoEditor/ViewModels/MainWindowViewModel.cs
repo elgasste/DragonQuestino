@@ -106,15 +106,15 @@ namespace DragonQuestinoEditor.ViewModels
 
       public static ObservableCollection<string> PortalArrivalDirections => [ "Left", "Up", "Right", "Down" ];
 
-      private string _selectedPortalArrivalDirection;
-      public string SelectedPortalArrivalDirection
+      private string? _selectedPortalArrivalDirection;
+      public string? SelectedPortalArrivalDirection
       {
          get => _selectedPortalArrivalDirection;
          set
          {
             if ( SetProperty( ref _selectedPortalArrivalDirection, value ) )
             {
-               if ( SelectedTile?.Portal is not null )
+               if ( SelectedTile?.Portal is not null && _selectedPortalArrivalDirection is not null )
                {
                   SelectedTile.Portal.ArrivalDirection = Enum.Parse<Direction>( _selectedPortalArrivalDirection );
                }
@@ -199,6 +199,14 @@ namespace DragonQuestinoEditor.ViewModels
             foreach ( var tile in SelectedTileMap.Tiles )
             {
                tile.IsSelected = false;
+            }
+
+            if ( PortalDestinationTileMap is not null )
+            {
+               foreach ( var tile in PortalDestinationTileMap.Tiles )
+               {
+                  tile.IsPortalDestination = false;
+               }
             }
 
             if ( tileIndex >= 0 )
