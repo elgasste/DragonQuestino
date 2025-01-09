@@ -174,9 +174,9 @@ namespace DragonQuestinoEditor.ViewModels
          if ( SelectedTileMap is not null && SelectedTile is not null && !SelectedTile.HasPortal )
          {
             // TODO: show a window where we can select the destination info
-            int destinationTileMapIndex = 1;
-            int destinationTileIndex = 5;
-            Direction arrivalDirection = Direction.Left;
+            int destinationTileMapIndex = 7;  // Garinham
+            int destinationTileIndex = 331;
+            Direction arrivalDirection = Direction.Right;
 
             SelectedTile.Portal = new( _selectedTileIndex, destinationTileMapIndex, destinationTileIndex, arrivalDirection );
             SelectedTileMap.Portals.Add( SelectedTile.Portal );

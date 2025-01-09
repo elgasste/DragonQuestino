@@ -38,7 +38,7 @@ TileTexture_t;
 
 typedef struct TilePortal_t
 {
-   int32_t sourceTileIndex;
+   uint32_t sourceTileIndex;
    uint32_t destinationTileMapIndex;
    uint32_t destinationTileIndex;
    Direction_t arrivalDirection;
@@ -58,8 +58,10 @@ typedef struct TileMap_t
    uint32_t tilesX;
    uint32_t tilesY;
 
-   TilePortal_t portals[TILEMAP_MAX_PORTALS];
    TileTexture_t textures[TILE_TEXTURE_COUNT];
+
+   TilePortal_t portals[TILEMAP_MAX_PORTALS];
+   uint32_t portalCount;
 
    Sprite_t sprites[TILEMAP_MAX_SPRITES];
    uint32_t spriteCount;

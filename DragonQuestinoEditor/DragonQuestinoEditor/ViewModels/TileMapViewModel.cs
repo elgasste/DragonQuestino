@@ -61,6 +61,13 @@ namespace DragonQuestinoEditor.ViewModels
          {
             Tiles.Add( new( tileSaveData ) );
          }
+
+         foreach ( var portal in saveData.Portals )
+         {
+            TilePortalViewModel p = new( portal );
+            Tiles[portal.SourceTileIndex].Portal = p;
+            Portals.Add( p );
+         }
       }
    }
 }

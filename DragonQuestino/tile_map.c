@@ -19,7 +19,7 @@ TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index 
 {
    uint32_t i;
 
-   for ( i = 0; i < TILEMAP_MAX_PORTALS; i++ )
+   for ( i = 0; i < tileMap->portalCount; i++ )
    {
       if ( tileMap->portals[i].sourceTileIndex == (int32_t)index )
       {

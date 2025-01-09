@@ -87,44 +87,66 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "   switch( index )\n" );
          WriteText( fs, "   {\n" );
 
-         for ( int i = 0; i < _tileMaps.Count; i++ )
+         foreach ( var tileMap in _tileMaps )
          {
-            var tiles = _tileMaps[i].Tiles;
+            var tiles = tileMap.Tiles;
 
-            WriteText( fs, string.Format( "      case {0}:\n", _tileMaps[i].Id ) );
-            WriteText( fs, string.Format( "         tileMap->tilesX = {0};\n", _tileMaps[i].TilesX ) );
-            WriteText( fs, string.Format( "         tileMap->tilesY = {0};\n", _tileMaps[i].TilesY ) );
-            WriteText( fs, "         for ( i = 0; i < TILEMAP_MAX_PORTALS; i++ ) {{ tileMap->portals[i].sourceTileIndex = -1; }}\n" );
-            WriteText( fs, string.Format( "         tileMap->spriteCount = 0;\n" ) );
+            WriteText( fs, string.Format( "      case {0}:\n", tileMap.Id ) );
+            WriteText( fs, string.Format( "         tileMap->tilesX = {0};\n", tileMap.TilesX ) );
+            WriteText( fs, string.Format( "         tileMap->tilesY = {0};\n", tileMap.TilesY ) );
+            WriteText( fs, string.Format( "         tileMap->portalCount = {0};\n", tileMap.Portals.Count ) );
 
-            var packedTiles = new List<UInt32>( tiles.Count / 2 );
+            if ( tileMap.Portals.Count > 0 )
+            {
+               WriteText( fs, string.Format( "         for ( i = 0; i < {0}; i++ )\n", tileMap.Portals.Count ) );
+               WriteText( fs, "         {\n" );
+
+               foreach ( var portal in tileMap.Portals )
+               {
+                  WriteText( fs, string.Format( "            tileMap->portals[i].sourceTileIndex = {0};\n", portal.SourceTileIndex ) );
+                  WriteText( fs, string.Format( "            tileMap->portals[i].destinationTileMapIndex = {0};\n", portal.DestinationTileMapIndex ) );
+                  WriteText( fs, string.Format( "            tileMap->portals[i].destinationTileIndex = {0};\n", portal.DestinationTileIndex ) );
+                  WriteText( fs, string.Format( "            tileMap->portals[i].arrivalDirection = (Direction_t){0};\n", (int)( portal.ArrivalDirection ) ) );
+               }
+
+               WriteText( fs, "         }\n" );
+            }
+
+            WriteText( fs, "         tileMap->spriteCount = 0;\n" );
+
+            var packedTiles = new List<UInt32>( ( tileMap.TilesX * tileMap.TilesY ) / 2 );
             var indexCounts = new Dictionary<UInt32, int>();
 
-            for ( int j = 0; j < tiles.Count; j += 2 )
+            for ( int row = 0; row < tileMap.TilesY; row++ )
             {
-               var index0 = (UInt32)( tiles[j].TextureIndex )
-                  | ( tiles[j].IsPassable ? (UInt32)0x20 : 0 )
-                  | Constants.TileSetIndexWalkSpeeds[tiles[j].TextureIndex]
-                  | 0x100  // is encounterable
-                  | Constants.TileSetIndexEncounterRates[tiles[j].TextureIndex]
-                  | Constants.TileSetIndexDamageRates[tiles[j].TextureIndex];
-               var index1 = (UInt32)( tiles[j + 1].TextureIndex )
-                  | ( tiles[j + 1].IsPassable ? (UInt32)0x20 : 0 )
-                  | Constants.TileSetIndexWalkSpeeds[tiles[j + 1].TextureIndex]
-                  | 0x100  // is encounterable
-                  | Constants.TileSetIndexEncounterRates[tiles[j + 1].TextureIndex]
-                  | Constants.TileSetIndexDamageRates[tiles[j + 1].TextureIndex];
-
-               var packed = ( index1 << 16 ) | index0;
-               packedTiles.Add( packed );
-
-               if ( indexCounts.TryGetValue( packed, out int value ) )
+               for ( int col = 0; col < tileMap.TilesX; col += 2 )
                {
-                  indexCounts[packed] = ++value;
-               }
-               else
-               {
-                  indexCounts[packed] = 1;
+                  var tileIndex = ( row * tileMap.TilesX ) + col;
+
+                  var index0 = (UInt32)( tiles[tileIndex].TextureIndex )
+                     | ( tiles[tileIndex].IsPassable ? (UInt32)0x20 : 0 )
+                     | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex].TextureIndex]
+                     | 0x100  // is encounterable
+                     | Constants.TileSetIndexEncounterRates[tiles[tileIndex].TextureIndex]
+                     | Constants.TileSetIndexDamageRates[tiles[tileIndex].TextureIndex];
+                  var index1 = (UInt32)( tiles[tileIndex + 1].TextureIndex )
+                     | ( tiles[tileIndex + 1].IsPassable ? (UInt32)0x20 : 0 )
+                     | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex + 1].TextureIndex]
+                     | 0x100  // is encounterable
+                     | Constants.TileSetIndexEncounterRates[tiles[tileIndex + 1].TextureIndex]
+                     | Constants.TileSetIndexDamageRates[tiles[tileIndex + 1].TextureIndex];
+
+                  var packed = ( index1 << 16 ) | index0;
+                  packedTiles.Add( packed );
+
+                  if ( indexCounts.TryGetValue( packed, out int value ) )
+                  {
+                     indexCounts[packed] = ++value;
+                  }
+                  else
+                  {
+                     indexCounts[packed] = 1;
+                  }
                }
             }
 
@@ -140,18 +162,25 @@ namespace DragonQuestinoEditor.FileOps
                }
             }
 
+            // TODO: this can be optimized, we should only fill in the area of TilesX and TilesY
             WriteText( fs, string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
 
-            for ( int j = 0, packedTileIndex = 0; j < tiles.Count; j += 2, packedTileIndex++ )
+            for ( int row = 0, packedTileIndex = 0; row < tileMap.TilesY; row++ )
             {
-               if ( packedTiles[packedTileIndex] != mostCommonValue )
+               for ( int col = 0; col < tileMap.TilesX; packedTileIndex++, col += 2 )
                {
-                  WriteText( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", packedTileIndex, packedTiles[packedTileIndex].ToString( "X8" ) ) );
+                  var tileIndex = ( row * Constants.TileMapMaxTilesX ) + col;
+
+                  if ( packedTiles[packedTileIndex] != mostCommonValue )
+                  {
+                     WriteText( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex / 2, packedTiles[packedTileIndex].ToString( "X8" ) ) );
+                  }
                }
             }
 
             WriteText( fs, "         break;\n" );
          }
+
          WriteText( fs, "   }\n" );
          WriteText( fs, "}\n" );
       }
