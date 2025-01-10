@@ -31,73 +31,71 @@
                                                                    FalseValue="Collapsed" />
       </ResourceDictionary>
    </Window.Resources>
-   <Grid>
-      <StackPanel Orientation="Horizontal">
+   <StackPanel Orientation="Horizontal">
 
-         <StackPanel>
+      <StackPanel>
 
-            <!-- Tile Picker -->
-            <ListView x:Name="tileSelectionListView"
-                      ItemsSource="{Binding TileSelectionViewModels}"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Left"
-                      ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                      MouseMove="TileSelectionListView_OnMouseMove">
-               <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                     <UniformGrid Columns="4" />
-                  </ItemsPanelTemplate>
-               </ItemsControl.ItemsPanel>
-               <ListView.ItemTemplate>
-                  <DataTemplate>
-                     <Image Source="{Binding Image}"
-                            Width="32"
-                            Height="32" />
-                  </DataTemplate>
-               </ListView.ItemTemplate>
-            </ListView>
-
-            <!-- Control Panel -->
-            <Button Content="Save Tile Map"
-                    Command="{Binding SaveTileMapCommand, Mode=OneTime}" />
-            <Button Content="Write File"
-                    Command="{Binding WriteFileCommand, Mode=OneTime}" />
-
-         </StackPanel>
-
-         <!-- Tile Map -->
-         <ListView x:Name="tileMapListView"
-                   ItemsSource="{Binding TileMapViewModels}"
+         <!-- Tile Picker -->
+         <ListView x:Name="tileSelectionListView"
+                   ItemsSource="{Binding TileSelectionViewModels}"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
-                   Width="1120"
-                   Height="760"
                    ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                   AllowDrop="True"
-                   PreviewMouseDown="TileMapListView_OnPreviewMouseDown"
-                   MouseMove="TileMapListView_OnMouseMove"
-                   Drop="TileMapListView_OnDrop">
+                   MouseMove="TileSelectionListView_OnMouseMove">
             <ItemsControl.ItemsPanel>
                <ItemsPanelTemplate>
-                  <UniformGrid Columns="140" />
+                  <UniformGrid Columns="4" />
                </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ListView.ItemTemplate>
                <DataTemplate>
-                  <Grid DragEnter="TileMapListViewImage_OnDragEnter"
-                        DragLeave="TileMapListViewImage_OnDragLeave">
-                     <Image Source="{Binding Image}"
-                            Width="32"
-                            Height="32" />
-                     <Rectangle Width="32"
-                                Height="32"
-                                Fill="#660000FF"
-                                Visibility="{Binding ShouldHighlight, Converter={StaticResource BoolToVisibilityConverter}}" />
-                  </Grid>
+                  <Image Source="{Binding Image}"
+                         Width="32"
+                         Height="32" />
                </DataTemplate>
             </ListView.ItemTemplate>
          </ListView>
 
+         <!-- Control Panel -->
+         <Button Content="Save Tile Map"
+                 Command="{Binding SaveTileMapCommand, Mode=OneTime}" />
+         <Button Content="Write File"
+                 Command="{Binding WriteFileCommand, Mode=OneTime}" />
+
       </StackPanel>
-   </Grid>
+
+      <!-- Tile Map -->
+      <ListView x:Name="tileMapListView"
+                ItemsSource="{Binding TileMapViewModels}"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Width="1120"
+                Height="760"
+                ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
+                AllowDrop="True"
+                PreviewMouseDown="TileMapListView_OnPreviewMouseDown"
+                MouseMove="TileMapListView_OnMouseMove"
+                Drop="TileMapListView_OnDrop">
+         <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+               <UniformGrid Columns="140" />
+            </ItemsPanelTemplate>
+         </ItemsControl.ItemsPanel>
+         <ListView.ItemTemplate>
+            <DataTemplate>
+               <Grid DragEnter="TileMapListViewImage_OnDragEnter"
+                     DragLeave="TileMapListViewImage_OnDragLeave">
+                  <Image Source="{Binding Image}"
+                         Width="32"
+                         Height="32" />
+                  <Rectangle Width="32"
+                             Height="32"
+                             Fill="#660000FF"
+                             Visibility="{Binding ShouldHighlight, Converter={StaticResource BoolToVisibilityConverter}}" />
+               </Grid>
+            </DataTemplate>
+         </ListView.ItemTemplate>
+      </ListView>
+
+   </StackPanel>
 </Window>
