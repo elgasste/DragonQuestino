@@ -16,7 +16,8 @@
                 TargetType="{x:Type ListViewItem}">
             <Setter Property="Background"
                     Value="Transparent" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="FocusVisualStyle"
+                    Value="{x:Null}" />
             <Setter Property="Template">
                <Setter.Value>
                   <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -32,9 +33,9 @@
    </Window.Resources>
    <Grid>
       <StackPanel Orientation="Horizontal">
-         
+
          <StackPanel>
-            
+
             <!-- Tile Picker -->
             <ListView x:Name="tileSelectionListView"
                       ItemsSource="{Binding TileSelectionViewModels}"
@@ -44,23 +45,23 @@
                       MouseMove="TileSelectionListView_OnMouseMove">
                <ItemsControl.ItemsPanel>
                   <ItemsPanelTemplate>
-                     <UniformGrid Columns="4"/>
+                     <UniformGrid Columns="4" />
                   </ItemsPanelTemplate>
                </ItemsControl.ItemsPanel>
                <ListView.ItemTemplate>
                   <DataTemplate>
                      <Image Source="{Binding Image}"
                             Width="32"
-                            Height="32"/>
+                            Height="32" />
                   </DataTemplate>
                </ListView.ItemTemplate>
             </ListView>
-            
+
             <!-- Control Panel -->
             <Button Content="Save Tile Map"
-                    Command="{Binding SaveTileMapCommand, Mode=OneTime}"/>
+                    Command="{Binding SaveTileMapCommand, Mode=OneTime}" />
             <Button Content="Write File"
-                    Command="{Binding WriteFileCommand, Mode=OneTime}"/>
+                    Command="{Binding WriteFileCommand, Mode=OneTime}" />
 
          </StackPanel>
 
@@ -78,7 +79,7 @@
                    Drop="TileMapListView_OnDrop">
             <ItemsControl.ItemsPanel>
                <ItemsPanelTemplate>
-                  <UniformGrid Columns="140"/>
+                  <UniformGrid Columns="140" />
                </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ListView.ItemTemplate>
@@ -87,16 +88,16 @@
                         DragLeave="TileMapListViewImage_OnDragLeave">
                      <Image Source="{Binding Image}"
                             Width="32"
-                            Height="32"/>
+                            Height="32" />
                      <Rectangle Width="32"
                                 Height="32"
                                 Fill="#660000FF"
-                                Visibility="{Binding ShouldHighlight, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                Visibility="{Binding ShouldHighlight, Converter={StaticResource BoolToVisibilityConverter}}" />
                   </Grid>
                </DataTemplate>
             </ListView.ItemTemplate>
          </ListView>
-         
+
       </StackPanel>
    </Grid>
 </Window>
