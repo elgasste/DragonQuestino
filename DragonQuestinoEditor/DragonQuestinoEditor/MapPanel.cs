@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using DragonQuestinoEditor.ViewModels;
 
@@ -9,6 +10,12 @@ namespace DragonQuestinoEditor
 {
    internal class MapPanel : FrameworkElement
    {
+      private static readonly TimeSpan _zoomAnimationDuration = TimeSpan.FromMilliseconds( 500 );
+      private static readonly EasingFunctionBase _zoomAnimationEase = new CircleEase
+      {
+         EasingMode = EasingMode.EaseOut
+      };
+
       private readonly SolidColorBrush _background = new SolidColorBrush( Color.FromRgb( 64, 64, 64 ) );
 
       private bool _isLeftButtonDown;
@@ -16,6 +23,20 @@ namespace DragonQuestinoEditor
 
       private WriteableBitmap? _bitmap;
       private byte[]? _rawBuffer;
+
+      private bool _isAnimatingZooming;
+
+      private static readonly DependencyProperty ZoomProperty = DependencyProperty.Register(
+         nameof( Zoom ),
+         typeof( double ),
+         typeof( MapPanel ),
+         new FrameworkPropertyMetadata( 1.0, FrameworkPropertyMetadataOptions.AffectsRender ) );
+
+      private double Zoom
+      {
+         get => (double)GetValue( ZoomProperty );
+         set => SetValue( ZoomProperty, value );
+      }
 
       private static readonly DependencyProperty OffsetProperty = DependencyProperty.Register(
          nameof( Offset ),
@@ -87,6 +108,38 @@ namespace DragonQuestinoEditor
          _bitmap.WritePixels( new Int32Rect( 0, 0, _bitmap.PixelWidth / 4, _bitmap.PixelHeight / 4 ), _rawBuffer, _bitmap.PixelWidth, 0 );
       }
 
+      private void SetZoomLevel( double zoomFactorDelta )
+      {
+         if (_isAnimatingZooming)
+         {
+            return;
+         }
+
+         _isAnimatingZooming = true;
+         double zoomFactor = Math.Clamp( Zoom + zoomFactorDelta, 0.2, 5 );
+
+         var zoomLevelAnimation = new DoubleAnimation( zoomFactor, _zoomAnimationDuration )
+         {
+            EasingFunction = _zoomAnimationEase
+         };
+
+         zoomLevelAnimation.Completed += OnAnimationComplete;
+         BeginAnimation( ZoomProperty, zoomLevelAnimation );
+
+         void OnAnimationComplete( object? sender, EventArgs e )
+         {
+            _isAnimatingZooming = false;
+         }
+      }
+
+      protected override void OnMouseWheel( MouseWheelEventArgs e )
+      {
+         base.OnMouseWheel( e );
+
+         double delta = e.Delta > 0 ? 1 : -1;
+         SetZoomLevel( delta );
+      }
+
       protected override void OnMouseLeftButtonDown( MouseButtonEventArgs e )
       {
          base.OnMouseLeftButtonDown( e );
@@ -121,7 +174,7 @@ namespace DragonQuestinoEditor
 
          if (_bitmap is not null)
          {
-            dc.PushTransform( new ScaleTransform( _zoom, _zoom ) );
+            dc.PushTransform( new ScaleTransform( Zoom, Zoom ) );
             dc.DrawImage( _bitmap, new Rect( Offset.X, Offset.Y, _bitmap.Width, _bitmap.Height ) );
             dc.Pop();
          }
