@@ -92,6 +92,8 @@ namespace DragonQuestinoEditor
          base.OnMouseLeftButtonDown( e );
 
          _isLeftButtonDown = true;
+         CaptureMouse();
+
          _dragAnchorPoint = e.GetPosition( this ) - Offset;
       }
 
@@ -108,6 +110,8 @@ namespace DragonQuestinoEditor
       protected override void OnMouseLeftButtonUp( MouseButtonEventArgs e )
       {
          base.OnMouseLeftButtonUp( e );
+         ReleaseMouseCapture();
+
          _isLeftButtonDown = false;
       }
 
