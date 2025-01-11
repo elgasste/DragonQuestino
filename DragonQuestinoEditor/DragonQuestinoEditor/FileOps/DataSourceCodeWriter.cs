@@ -98,18 +98,13 @@ namespace DragonQuestinoEditor.FileOps
 
             if ( tileMap.Portals.Count > 0 )
             {
-               WriteText( fs, string.Format( "         for ( i = 0; i < {0}; i++ )\n", tileMap.Portals.Count ) );
-               WriteText( fs, "         {\n" );
-
-               foreach ( var portal in tileMap.Portals )
+               for ( int i = 0; i < tileMap.Portals.Count; i++ )
                {
-                  WriteText( fs, string.Format( "            tileMap->portals[i].sourceTileIndex = {0};\n", portal.SourceTileIndex ) );
-                  WriteText( fs, string.Format( "            tileMap->portals[i].destinationTileMapIndex = {0};\n", portal.DestinationTileMapIndex ) );
-                  WriteText( fs, string.Format( "            tileMap->portals[i].destinationTileIndex = {0};\n", portal.DestinationTileIndex ) );
-                  WriteText( fs, string.Format( "            tileMap->portals[i].arrivalDirection = (Direction_t){0};\n", (int)( portal.ArrivalDirection ) ) );
+                  WriteText( fs, string.Format( "         tileMap->portals[{0}].sourceTileIndex = {1};\n", i, tileMap.Portals[i].SourceTileIndex ) );
+                  WriteText( fs, string.Format( "         tileMap->portals[{0}].destinationTileMapIndex = {1};\n", i, tileMap.Portals[i].DestinationTileMapIndex ) );
+                  WriteText( fs, string.Format( "         tileMap->portals[{0}].destinationTileIndex = {1};\n", i, tileMap.Portals[i].DestinationTileIndex ) );
+                  WriteText( fs, string.Format( "         tileMap->portals[{0}].arrivalDirection = (Direction_t){1};\n", i, (int)( tileMap.Portals[i].ArrivalDirection ) ) );
                }
-
-               WriteText( fs, "         }\n" );
             }
 
             WriteText( fs, "         tileMap->spriteCount = 0;\n" );
