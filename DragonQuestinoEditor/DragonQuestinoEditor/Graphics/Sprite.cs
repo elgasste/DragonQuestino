@@ -57,6 +57,22 @@ namespace DragonQuestinoEditor.Graphics
          return _pixels[x, y];
       }
 
+      public Sprite Extract( int x, int y, int width, int height )
+      {
+         var newSprite = new Sprite( width, height );
+
+         for (int row = 0; row < height; row++)
+         {
+            for (int col = 0; col < width; col++)
+            {
+               var srcPixel = GetPixel( col + x, row + y );
+               newSprite.SetPixel( col, row, srcPixel );
+            }
+         }
+
+         return newSprite;
+      }
+
       private byte[] ConvertToLinearBuffer()
       {
          var linearPixelBuffer = new byte[_pixels.Length * 4];
