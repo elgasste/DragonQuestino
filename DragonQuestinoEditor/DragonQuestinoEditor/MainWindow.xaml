@@ -9,7 +9,8 @@
         Title="Dragon Questino Editor"
         Height="848"
         Width="1320"
-        ResizeMode="NoResize">
+		ResizeMode="NoResize"
+        FocusManager.FocusedElement="{Binding ElementName=MapPanel}">
    <Window.Resources>
       <ResourceDictionary>
          <Style x:Key="TileListItemContainerStyle"
@@ -61,7 +62,8 @@
             <StackPanel Orientation="Horizontal">
 
                <!-- Tile Map Texture Editor Tiles -->
-               <local:MapPanel TileMap="{Binding SelectedTileMap.Tiles}" />
+               <local:MapPanel x:Name="MapPanel"
+                               TileMap="{Binding SelectedTileMap.Tiles}" />
                
                <!--<ListView ItemsSource="{Binding SelectedTileMap.Tiles}"
                          VerticalAlignment="Top"
