@@ -68,7 +68,10 @@
       </StackPanel>
 
       <!-- Tile Map -->
-      <ListView x:Name="tileMapListView"
+      <local:MapPanel Grid.Column="1"
+                      TileMap="{Binding TileMapViewModels}" />
+
+      <!--<ListView x:Name="tileMapListView"
                 Grid.Column="1"
                 ItemsSource="{Binding TileMapViewModels}"
                 VerticalAlignment="Top"
@@ -99,6 +102,6 @@
                </Grid>
             </DataTemplate>
          </ListView.ItemTemplate>
-      </ListView>
+      </ListView>-->
    </Grid>
 </Window>
