@@ -20,8 +20,10 @@ namespace DragonQuestinoEditor.ViewModels
          13    // bridge
       ];
 
+      public TileSet TileSet { get; }
+
       private int _textureIndex;
-      public int TextureIndex
+      public int TextureIndexIndex
       {
          get => _textureIndex;
          private set => SetProperty( ref _textureIndex, value );
@@ -46,8 +48,10 @@ namespace DragonQuestinoEditor.ViewModels
       private bool _isSelected = false;
       public bool IsSelected
       {
-         get => _isSelected;
-         set => SetProperty( ref _isSelected, value );
+         TileSet = tileSet;
+         SetIndex( index );
+
+         _isPassable = _passableIndexes.Contains( index );
       }
 
       private bool _isPortalDestination = false;
@@ -87,6 +91,7 @@ namespace DragonQuestinoEditor.ViewModels
       public void SetTextureIndex( int index )
       {
          TextureIndex = index;
+         Image = TileSet.TileBitmaps[index];
          IsPassable = _passableTextureIndexes.Contains( index );
          OnPropertyChanged( nameof( Image ) );
       }
