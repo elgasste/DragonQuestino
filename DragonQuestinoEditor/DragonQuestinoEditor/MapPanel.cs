@@ -30,6 +30,8 @@ namespace DragonQuestinoEditor
 
       private bool _isAnimatingZooming;
 
+      private InputMode _inputMode;
+
       private static readonly DependencyProperty ZoomProperty = DependencyProperty.Register(
          nameof( Zoom ),
          typeof( double ),
@@ -91,6 +93,7 @@ namespace DragonQuestinoEditor
       public MapPanel()
       {
          ClipToBounds = true;
+         Focusable = true;
       }
 
       /// <summary>
@@ -155,6 +158,23 @@ namespace DragonQuestinoEditor
          }
       }
 
+      protected override void OnPreviewKeyDown( KeyEventArgs e )
+      {
+         if (e.Key == Key.Space)
+         {
+            _inputMode = InputMode.Pan;
+            Cursor = Cursors.ScrollAll;
+         }
+      }
+
+      protected override void OnPreviewKeyUp( KeyEventArgs e )
+      {
+         base.OnPreviewKeyUp( e );
+
+         _inputMode = InputMode.Draw;
+         Cursor = Cursors.Arrow;
+      }
+
       protected override void OnMouseWheel( MouseWheelEventArgs e )
       {
          base.OnMouseWheel( e );
@@ -167,10 +187,17 @@ namespace DragonQuestinoEditor
       {
          base.OnMouseLeftButtonDown( e );
 
-         _isLeftButtonDown = true;
-         CaptureMouse();
+         switch (_inputMode)
+         {
+            case InputMode.Pan:
+            {
+               _isLeftButtonDown = true;
+               CaptureMouse();
+               _dragAnchorPoint = e.GetPosition( this ) - Offset;
 
-         _dragAnchorPoint = e.GetPosition( this ) - Offset;
+               break;
+            }
+         }
       }
 
       protected override void OnMouseMove( MouseEventArgs e )
@@ -225,7 +252,7 @@ namespace DragonQuestinoEditor
             dc.PushTransform( transform );
             dc.DrawImage( _bitmap, new Rect( 0, 0, _bitmap.Width, _bitmap.Height ) );
 
-            if (TileHighlight != Rect.Empty)
+            if (TileHighlight != Rect.Empty && _inputMode == InputMode.Draw)
             {
                dc.DrawRectangle( _highlight, null, TileHighlight );
             }
