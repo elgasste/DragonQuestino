@@ -10,6 +10,9 @@ namespace DragonQuestinoEditor
 {
    internal class MapPanel : FrameworkElement
    {
+      private const int _tilesPerRow = 140;
+      private const int _defaultTileSize = 16;
+
       private static readonly TimeSpan _zoomAnimationDuration = TimeSpan.FromMilliseconds( 500 );
       private static readonly EasingFunctionBase _zoomAnimationEase = new CircleEase
       {
@@ -17,6 +20,7 @@ namespace DragonQuestinoEditor
       };
 
       private readonly SolidColorBrush _background = new SolidColorBrush( Color.FromRgb( 64, 64, 64 ) );
+      private readonly SolidColorBrush _highlight = new SolidColorBrush( Color.FromArgb( 128, 255, 0, 0 ) );
 
       private bool _isLeftButtonDown;
       private Point _dragAnchorPoint;
@@ -36,6 +40,18 @@ namespace DragonQuestinoEditor
       {
          get => (double)GetValue( ZoomProperty );
          set => SetValue( ZoomProperty, value );
+      }
+
+      private static readonly DependencyProperty TileHighlightProperty = DependencyProperty.Register(
+         nameof( TileHighlight ),
+         typeof( Rect ),
+         typeof( MapPanel ),
+         new FrameworkPropertyMetadata( Rect.Empty, FrameworkPropertyMetadataOptions.AffectsRender ) );
+
+      public Rect TileHighlight
+      {
+         get => (Rect)GetValue( TileHighlightProperty );
+         set => SetValue( TileHighlightProperty, value );
       }
 
       private static readonly DependencyProperty OffsetProperty = DependencyProperty.Register(
@@ -77,26 +93,33 @@ namespace DragonQuestinoEditor
          ClipToBounds = true;
       }
 
+      /// <summary>
+      /// Gets the "current" size of the tiles in the UI. This accounts for the various UI states,
+      /// such as pan and zoom.
+      /// </summary>
+      /// <returns>A size instances that describes the pixel size of the tiles in the UI.</returns>
+      private Size GetCurrentTileSize()
+      {
+         return new Size( _defaultTileSize * Zoom, _defaultTileSize * Zoom );
+      }
+
       private void PrepareBitmap()
       {
-         const int tilesPerRow = 140;
-         const int tileWidthInPixels = 16;
-         const int tileHeightInPixels = 16;
          const int bytesPerPixel = 4;
 
-         int width = tilesPerRow * tileWidthInPixels * bytesPerPixel;
-         int height = tilesPerRow * tileHeightInPixels * bytesPerPixel;
+         int width = _tilesPerRow * _defaultTileSize * bytesPerPixel;
+         int height = _tilesPerRow * _defaultTileSize * bytesPerPixel;
 
          _bitmap = new WriteableBitmap( width, height, 96, 96, PixelFormats.Bgra32, null );
          _rawBuffer = new byte[width * height];
 
          for (int i = 0; i < TileMap.Count; i++)
          {
-            int cellX = i % tilesPerRow;
-            int cellY = i / tilesPerRow;
+            int cellX = i % _tilesPerRow;
+            int cellY = i / _tilesPerRow;
 
-            int destX = cellX * tileWidthInPixels * bytesPerPixel;
-            int destY = cellY * tileWidthInPixels;
+            int destX = cellX * _defaultTileSize * bytesPerPixel;
+            int destY = cellY * _defaultTileSize;
 
             int tileIndex = TileMap[i].Index;
             var tile = TileMap[i].TileSet.Tiles[tileIndex];
@@ -154,9 +177,30 @@ namespace DragonQuestinoEditor
       {
          base.OnMouseMove( e );
 
+         if (_bitmap is null)
+         {
+            return;
+         }
+
+         var mousePos = e.GetPosition( this );
+         var mapRect = new Rect( Offset.X * Zoom, Offset.Y * Zoom, _bitmap.Width, _bitmap.Height );
+
+         if (mapRect.Contains( mousePos ))
+         {
+            var tileSize = GetCurrentTileSize();
+            int cellX = (int)((mousePos.X - Offset.X * Zoom) / tileSize.Width);
+            int cellY = (int)((mousePos.Y - Offset.Y * Zoom) / tileSize.Height);
+
+            TileHighlight = new Rect( cellX * _defaultTileSize, cellY * _defaultTileSize, _defaultTileSize, _defaultTileSize );
+         }
+         else
+         {
+            TileHighlight = Rect.Empty;
+         }
+
          if (_isLeftButtonDown)
          {
-            Offset = e.GetPosition( this ) - _dragAnchorPoint;
+            Offset = mousePos - _dragAnchorPoint;
          }
       }
 
@@ -174,8 +218,18 @@ namespace DragonQuestinoEditor
 
          if (_bitmap is not null)
          {
-            dc.PushTransform( new ScaleTransform( Zoom, Zoom ) );
-            dc.DrawImage( _bitmap, new Rect( Offset.X, Offset.Y, _bitmap.Width, _bitmap.Height ) );
+            var transform = new TransformGroup();
+            transform.Children.Add( new TranslateTransform( Offset.X, Offset.Y ) );
+            transform.Children.Add( new ScaleTransform( Zoom, Zoom ) );
+
+            dc.PushTransform( transform );
+            dc.DrawImage( _bitmap, new Rect( 0, 0, _bitmap.Width, _bitmap.Height ) );
+
+            if (TileHighlight != Rect.Empty)
+            {
+               dc.DrawRectangle( _highlight, null, TileHighlight );
+            }
+
             dc.Pop();
          }
       }
