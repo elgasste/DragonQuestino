@@ -17,7 +17,7 @@ namespace DragonQuestinoEditor.ViewModels
          13    // bridge
       ];
 
-      private TileSet _tileSet;
+      public TileSet TileSet { get; }
 
       private int _index;
       public int Index
@@ -49,7 +49,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       public TileViewModel( TileSet tileSet, int index )
       {
-         _tileSet = tileSet;
+         TileSet = tileSet;
          SetIndex( index );
 
          _isPassable = _passableIndexes.Contains( index );
@@ -58,7 +58,7 @@ namespace DragonQuestinoEditor.ViewModels
       public void SetIndex( int index )
       {
          Index = index;
-         Image = _tileSet.TileBitmaps[index];
+         Image = TileSet.TileBitmaps[index];
          IsPassable = _passableIndexes.Contains( index );
       }
    }
