@@ -31,10 +31,14 @@
                                                                    FalseValue="Collapsed" />
       </ResourceDictionary>
    </Window.Resources>
-   <StackPanel Orientation="Horizontal">
+
+   <Grid>
+      <Grid.ColumnDefinitions>
+         <ColumnDefinition Width="Auto" />
+         <ColumnDefinition />
+      </Grid.ColumnDefinitions>
 
       <StackPanel>
-
          <!-- Tile Picker -->
          <ListView x:Name="tileSelectionListView"
                    ItemsSource="{Binding TileSelectionViewModels}"
@@ -61,11 +65,11 @@
                  Command="{Binding SaveTileMapCommand, Mode=OneTime}" />
          <Button Content="Write File"
                  Command="{Binding WriteFileCommand, Mode=OneTime}" />
-
       </StackPanel>
 
       <!-- Tile Map -->
       <ListView x:Name="tileMapListView"
+                Grid.Column="1"
                 ItemsSource="{Binding TileMapViewModels}"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
@@ -96,6 +100,5 @@
             </DataTemplate>
          </ListView.ItemTemplate>
       </ListView>
-
-   </StackPanel>
+   </Grid>
 </Window>
