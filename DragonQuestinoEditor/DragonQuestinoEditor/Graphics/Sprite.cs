@@ -73,6 +73,26 @@ namespace DragonQuestinoEditor.Graphics
          return newSprite;
       }
 
+      public void DrawToBuffer( byte[] buffer, int bufferWidth, int x, int y )
+      {
+         for (int row = 0; row < Height; row++)
+         {
+            for (int col = 0; col < Width; col++)
+            {
+               var pixel = GetPixel( col, row );
+
+               int destX = x + col * 4;
+               int destY = y + row;
+               int offset = destY * bufferWidth + destX;
+
+               buffer[offset + 0] = pixel.B;
+               buffer[offset + 1] = pixel.G;
+               buffer[offset + 2] = pixel.R;
+               buffer[offset + 3] = pixel.A;
+            }
+         }
+      }
+
       private byte[] ConvertToLinearBuffer()
       {
          var linearPixelBuffer = new byte[_pixels.Length * 4];
