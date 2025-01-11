@@ -161,19 +161,20 @@ namespace DragonQuestinoEditor.ViewModels
 
          for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
-            var image = new BitmapImage();
+            // TODO: Unused?
+            //var image = new BitmapImage();
 
-            using var stream = new MemoryStream();
-            {
-               var encoder = new PngBitmapEncoder();
-               encoder.Frames.Add( BitmapFrame.Create( _tileSet.TileBitmaps[i] ) );
-               encoder.Save( stream );
-               image.BeginInit();
-               image.CacheOption = BitmapCacheOption.OnLoad;
-               image.StreamSource = stream;
-               image.EndInit();
-               image.Freeze();
-            }
+            //using var stream = new MemoryStream();
+            //{
+            //   var encoder = new PngBitmapEncoder();
+            //   encoder.Frames.Add( BitmapFrame.Create( _tileSet.TileBitmaps[i] ) );
+            //   encoder.Save( stream );
+            //   image.BeginInit();
+            //   image.CacheOption = BitmapCacheOption.OnLoad;
+            //   image.StreamSource = stream;
+            //   image.EndInit();
+            //   image.Freeze();
+            //}
 
             TileTextureViewModels.Add( new( _tileSet, i ) );
          }
