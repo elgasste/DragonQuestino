@@ -32,7 +32,7 @@ namespace DragonQuestinoEditor.FileOps
 
          foreach ( var tile in mapTiles )
          {
-            tile.SetIndex( tileIndexes[i] );
+            tile.Index = tileIndexes[i];
             i++;
          }
 

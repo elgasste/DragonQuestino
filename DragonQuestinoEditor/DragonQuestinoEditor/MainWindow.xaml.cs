@@ -79,7 +79,7 @@ namespace DragonQuestinoEditor
 
             if ( tileVM != null && tileVM.Index != _tileIndexCache )
             {
-               tileVM.SetIndex( _tileIndexCache );
+               tileVM.Index = _tileIndexCache;
             }
          }
       }
@@ -92,7 +92,7 @@ namespace DragonQuestinoEditor
 
             if ( mapTileVM != null )
             {
-               mapTileVM.SetIndex( droppedTileVM.Index );
+               mapTileVM.Index = droppedTileVM.Index ;
                mapTileVM.ShouldHighlight = false;
             }
          }

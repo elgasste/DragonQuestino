@@ -19,11 +19,18 @@ namespace DragonQuestinoEditor.ViewModels
 
       public TileSet TileSet { get; }
 
-      private int _index;
+      private int _index = -1;
       public int Index
       {
          get => _index;
-         private set => SetProperty( ref _index, value );
+         set
+         {
+            if (SetProperty( ref _index, value ))
+            {
+               Image = TileSet.TileBitmaps[value];
+               IsPassable = _passableIndexes.Contains( value );
+            }
+         }
       }
 
       private BitmapSource? _image;
@@ -50,16 +57,9 @@ namespace DragonQuestinoEditor.ViewModels
       public TileViewModel( TileSet tileSet, int index )
       {
          TileSet = tileSet;
-         SetIndex( index );
+         Index = index;
 
          _isPassable = _passableIndexes.Contains( index );
-      }
-
-      public void SetIndex( int index )
-      {
-         Index = index;
-         Image = TileSet.TileBitmaps[index];
-         IsPassable = _passableIndexes.Contains( index );
       }
    }
 }
