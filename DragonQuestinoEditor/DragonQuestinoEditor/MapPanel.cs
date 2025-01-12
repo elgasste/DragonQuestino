@@ -93,6 +93,17 @@ namespace DragonQuestinoEditor
          set => SetValue( TileMapProperty, value );
       }
 
+      public static readonly DependencyProperty SelectedPaintingIndexProperty = DependencyProperty.Register(
+         nameof( SelectedPaintingIndex ),
+         typeof( int ),
+         typeof( MapPanel ) );
+
+      public int SelectedPaintingIndex
+      {
+         get => (int)GetValue( SelectedPaintingIndexProperty );
+         set => SetValue( SelectedPaintingIndexProperty, value );
+      }
+
       public MapPanel()
       {
          ClipToBounds = true;
@@ -201,7 +212,7 @@ namespace DragonQuestinoEditor
 
                int offset = _cellY * _tilesPerRow + _cellX;
                var tileViewModel = TileMap[offset];
-               tileViewModel.SetIndex( 1 );
+               tileViewModel.Index = SelectedPaintingIndex;
 
                var byteBuffer = new byte[_defaultTileSize * _defaultTileSize * 4];
                var tileSprite = TileMap[tileViewModel.Index].TileSet.Tiles[tileViewModel.Index];

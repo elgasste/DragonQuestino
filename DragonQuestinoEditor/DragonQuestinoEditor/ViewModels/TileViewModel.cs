@@ -22,11 +22,18 @@ namespace DragonQuestinoEditor.ViewModels
 
       public TileSet TileSet { get; }
 
-      private int _textureIndex;
-      public int TextureIndexIndex
+      private int _textureIndex = -1;
+      public int TextureIndex
       {
          get => _textureIndex;
-         private set => SetProperty( ref _textureIndex, value );
+         set
+         {
+            if ( SetProperty( ref _textureIndex, value ) )
+            {
+               Image = TileSet.TileBitmaps[value];
+               IsPassable = _passableTextureIndexes.Contains( value );
+            }
+         }
       }
 
       public BitmapSource? Image => _textureProvider?.GetImageFromIndex( TextureIndex );
@@ -49,7 +56,7 @@ namespace DragonQuestinoEditor.ViewModels
       public bool IsSelected
       {
          TileSet = tileSet;
-         SetIndex( index );
+         Index = index;
 
          _isPassable = _passableIndexes.Contains( index );
       }
@@ -74,10 +81,10 @@ namespace DragonQuestinoEditor.ViewModels
 
       public bool HasPortal => _portal is not null;
 
-      public TileViewModel( int index )
+      public TileViewModel( int textureIndex )
       {
-         SetTextureIndex( index );
-         _isPassable = _passableTextureIndexes.Contains( index );
+         TextureIndex = textureIndex;
+         _isPassable = _passableTextureIndexes.Contains( textureIndex );
       }
 
       public TileViewModel( TileSaveData saveData )
@@ -87,13 +94,5 @@ namespace DragonQuestinoEditor.ViewModels
       }
 
       public void SetTextureProvider( ITileTextureProvider? provider ) => _textureProvider = provider;
-
-      public void SetTextureIndex( int index )
-      {
-         TextureIndex = index;
-         Image = TileSet.TileBitmaps[index];
-         IsPassable = _passableTextureIndexes.Contains( index );
-         OnPropertyChanged( nameof( Image ) );
-      }
    }
 }

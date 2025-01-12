@@ -79,7 +79,7 @@ namespace DragonQuestinoEditor
 
             if ( tileVM is not null && tileVM.TextureIndex != _tileIndexCache )
             {
-               tileVM.SetTextureIndex( _tileIndexCache );
+               tileVM.TextureIndex = _tileIndexCache;
             }
          }
       }
@@ -92,7 +92,7 @@ namespace DragonQuestinoEditor
 
             if ( mapTileVM is not null )
             {
-               mapTileVM.SetTextureIndex( droppedTileTextureVM.Index );
+               mapTileVM.TextureIndex = droppedTileTextureVM.Index;
                mapTileVM.IsDraggingTextureOver = false;
             }
          }
