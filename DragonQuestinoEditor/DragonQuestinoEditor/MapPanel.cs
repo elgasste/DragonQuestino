@@ -172,6 +172,35 @@ namespace DragonQuestinoEditor
          }
       }
 
+      private void ChangeTile()
+      {
+         if (_bitmap is null)
+         {
+            return;
+         }
+
+         int offset = _cellY * _tilesPerRow + _cellX;
+         var tileViewModel = TileMap[offset];
+
+         if ( tileViewModel.Index == SelectedPaintingIndex)
+         {
+            // No need to redraw the tile if it's the same
+            return;
+         }
+
+         tileViewModel.Index = SelectedPaintingIndex;
+
+         var byteBuffer = new byte[_defaultTileSize * _defaultTileSize * 4];
+         var tileSprite = TileMap[tileViewModel.Index].TileSet.Tiles[tileViewModel.Index];
+         tileSprite.DrawToBuffer( byteBuffer, _defaultTileSize * 4, 0, 0 );
+
+         int destX = _cellX * 16;
+         int destY = _cellY * 16;
+
+         _bitmap.WritePixels( new Int32Rect( destX, destY, _defaultTileSize, _defaultTileSize ), byteBuffer, _defaultTileSize * 4, 0 );
+         InvalidateVisual();
+      }
+
       protected override void OnPreviewKeyDown( KeyEventArgs e )
       {
          if (e.Key == Key.Space)
@@ -200,35 +229,18 @@ namespace DragonQuestinoEditor
       protected override void OnMouseLeftButtonDown( MouseButtonEventArgs e )
       {
          base.OnMouseLeftButtonDown( e );
+         _isLeftButtonDown = true;
 
          switch (_inputMode)
          {
             case InputMode.Draw:
             {
-               if (_bitmap is null)
-               {
-                  return;
-               }
-
-               int offset = _cellY * _tilesPerRow + _cellX;
-               var tileViewModel = TileMap[offset];
-               tileViewModel.Index = SelectedPaintingIndex;
-
-               var byteBuffer = new byte[_defaultTileSize * _defaultTileSize * 4];
-               var tileSprite = TileMap[tileViewModel.Index].TileSet.Tiles[tileViewModel.Index];
-               tileSprite.DrawToBuffer( byteBuffer, _defaultTileSize * 4, 0, 0 );
-
-               int destX = _cellX * 16;
-               int destY = _cellY * 16;
-
-               _bitmap.WritePixels( new Int32Rect( destX, destY, _defaultTileSize, _defaultTileSize ), byteBuffer, _defaultTileSize * 4, 0 );
-               InvalidateVisual();
-
+               ChangeTile();
                break;
             }
+
             case InputMode.Pan:
             {
-               _isLeftButtonDown = true;
                CaptureMouse();
                _dragAnchorPoint = e.GetPosition( this ) - Offset;
 
@@ -262,9 +274,25 @@ namespace DragonQuestinoEditor
             TileHighlight = Rect.Empty;
          }
 
-         if (_isLeftButtonDown)
+         switch (_inputMode)
          {
-            Offset = mousePos - _dragAnchorPoint;
+            case InputMode.Draw:
+            {
+               if (_isLeftButtonDown)
+               {
+                  ChangeTile();
+               }
+               break;
+            }
+
+            case InputMode.Pan:
+            {
+               if (_isLeftButtonDown)
+               {
+                  Offset = mousePos - _dragAnchorPoint;
+               }
+               break;
+            }
          }
       }
 
