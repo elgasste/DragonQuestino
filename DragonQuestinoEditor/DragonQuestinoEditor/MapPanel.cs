@@ -182,7 +182,7 @@ namespace DragonQuestinoEditor
          int offset = _cellY * _tilesPerRow + _cellX;
          var tileViewModel = TileMap[offset];
 
-         if ( tileViewModel.Index == SelectedPaintingIndex)
+         if (tileViewModel.Index == SelectedPaintingIndex)
          {
             // No need to redraw the tile if it's the same
             return;
@@ -226,9 +226,18 @@ namespace DragonQuestinoEditor
          SetZoomLevel( delta );
       }
 
+      protected override void OnMouseEnter( MouseEventArgs e )
+      {
+         base.OnMouseEnter( e );
+
+         // Mousing over the control steals focus so the keyboard events will work
+         Focus();
+      }
+
       protected override void OnMouseLeftButtonDown( MouseButtonEventArgs e )
       {
          base.OnMouseLeftButtonDown( e );
+
          _isLeftButtonDown = true;
 
          switch (_inputMode)
