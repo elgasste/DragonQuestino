@@ -30,6 +30,9 @@ namespace DragonQuestinoEditor
 
       private bool _isAnimatingZooming;
 
+      private int _cellX;
+      private int _cellY;
+
       private InputMode _inputMode;
 
       private static readonly DependencyProperty ZoomProperty = DependencyProperty.Register(
@@ -189,6 +192,29 @@ namespace DragonQuestinoEditor
 
          switch (_inputMode)
          {
+            case InputMode.Draw:
+            {
+               if (_bitmap is null)
+               {
+                  return;
+               }
+
+               int offset = _cellY * _tilesPerRow + _cellX;
+               var tileViewModel = TileMap[offset];
+               tileViewModel.SetIndex( 1 );
+
+               var byteBuffer = new byte[_defaultTileSize * _defaultTileSize * 4];
+               var tileSprite = TileMap[tileViewModel.Index].TileSet.Tiles[tileViewModel.Index];
+               tileSprite.DrawToBuffer( byteBuffer, _defaultTileSize * 4, 0, 0 );
+
+               int destX = _cellX * 16;
+               int destY = _cellY * 16;
+
+               _bitmap.WritePixels( new Int32Rect( destX, destY, _defaultTileSize, _defaultTileSize ), byteBuffer, _defaultTileSize * 4, 0 );
+               InvalidateVisual();
+
+               break;
+            }
             case InputMode.Pan:
             {
                _isLeftButtonDown = true;
@@ -215,10 +241,10 @@ namespace DragonQuestinoEditor
          if (mapRect.Contains( mousePos ))
          {
             var tileSize = GetCurrentTileSize();
-            int cellX = (int)((mousePos.X - Offset.X * Zoom) / tileSize.Width);
-            int cellY = (int)((mousePos.Y - Offset.Y * Zoom) / tileSize.Height);
+            _cellX = (int)((mousePos.X - Offset.X * Zoom) / tileSize.Width);
+            _cellY = (int)((mousePos.Y - Offset.Y * Zoom) / tileSize.Height);
 
-            TileHighlight = new Rect( cellX * _defaultTileSize, cellY * _defaultTileSize, _defaultTileSize, _defaultTileSize );
+            TileHighlight = new Rect( _cellX * _defaultTileSize, _cellY * _defaultTileSize, _defaultTileSize, _defaultTileSize );
          }
          else
          {
