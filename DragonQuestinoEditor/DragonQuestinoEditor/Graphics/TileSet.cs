@@ -9,10 +9,12 @@ namespace DragonQuestinoEditor.Graphics
    {
       private readonly List<WriteableBitmap> _tileBitmaps = new( Constants.TileCount );
       private readonly Palette _palette;
+      private readonly Sprite[] _tiles = new Sprite[Constants.TileCount];
 
       public List<List<int>> TilePaletteIndexes = new ( Constants.TileCount );
 
       public List<WriteableBitmap> TileBitmaps => _tileBitmaps;
+      public Sprite[] Tiles => _tiles;
 
       public TileSet( string imagePath, Palette palette )
       {
@@ -21,9 +23,24 @@ namespace DragonQuestinoEditor.Graphics
          var textFileStream = new FileStream( imagePath, FileMode.Open, FileAccess.Read, FileShare.Read );
          var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
          var bitmapSource = textDecoder.Frames[0];
+
          BitmapUtils.CheckTileSetBitmapFormat( bitmapSource );
          ReadTileBitmaps( bitmapSource );
          UpdatePalette();
+
+         // Extract the tiles as sprites
+
+         var tileSheet = Sprite.LoadFromFile( imagePath );
+         int tileCount = tileSheet.Width / Constants.TileSize;
+
+         for (int tileIndex = 0; tileIndex < tileCount; tileIndex++)
+         {
+            int srcX = tileIndex * Constants.TileSize;
+            int srcY = 0;
+
+            var tileSprite = tileSheet.Extract( srcX, srcY, Constants.TileSize, Constants.TileSize );
+            _tiles[tileIndex] = tileSprite;
+         }
       }
 
       private void ReadTileBitmaps( BitmapSource bitmapSource )
