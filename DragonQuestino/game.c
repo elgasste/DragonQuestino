@@ -37,17 +37,36 @@ void Game_Init( Game_t* game )
    game->player.spriteOffset.x = -2;
    game->player.spriteOffset.y = -4;
    game->player.sprite.direction = Direction_Down;
+
+   game->isSwappingTileMap = False;
 }
 
 void Game_Tic( Game_t* game )
 {
-   Input_Read( &( game->input ) );
-   Game_HandleInput( game );
-   Physics_Tic( game );
-   Sprite_Tic( &( game->player.sprite ) );
-   Game_UpdateTileMapViewport( game );
-   Game_DrawTileMap( game );
-   Game_DrawSprites( game );
+   if ( game->isSwappingTileMap )
+   {
+      game->tileMapSwapSecondsElapsed += CLOCK_FRAME_SECONDS;
+
+      if ( game->tileMapSwapSecondsElapsed > TILEMAP_SWAP_SECONDS )
+      {
+         game->isSwappingTileMap = False;
+      }
+   }
+   else
+   {
+      Input_Read( &( game->input ) );
+      Game_HandleInput( game );
+      Physics_Tic( game );
+
+      if ( game->isSwappingTileMap == False )
+      {
+         Sprite_Tic( &( game->player.sprite ) );
+         Game_UpdateTileMapViewport( game );
+         Game_DrawTileMap( game );
+         Game_DrawSprites( game );
+      }
+   }
+   
    Screen_RenderBuffer( &( game->screen ) );
 }
 
@@ -178,16 +197,25 @@ internal void Game_UpdateTileMapViewport( Game_t* game )
 
 internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
 {
-   // TODO: some kind of animation between maps, because this is too abrupt
    uint32_t destinationTileIndex = portal->destinationTileIndex;
    Direction_t arrivalDirection = portal->arrivalDirection;
+   uint8_t  wipePaletteIndex;
 
    TileMap_Load( &( game->tileMap ), portal->destinationTileMapIndex );
 
    game->player.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x );
-   game->player.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y );
+   // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
+   game->player.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
 
    Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+
+   if ( Screen_GetPaletteIndexForColor( &( game->screen ), 0, &wipePaletteIndex ) )
+   {
+      Screen_Wipe( &( game->screen ), wipePaletteIndex );
+   }
+
+   game->isSwappingTileMap = True;
+   game->tileMapSwapSecondsElapsed = 0.0f;
 }
 
 internal void Game_DrawTileMap( Game_t* game )

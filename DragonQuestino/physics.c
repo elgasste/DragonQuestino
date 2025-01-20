@@ -1,8 +1,6 @@
 #include "physics.h"
 #include "game.h"
 
-#define COLLISION_THETA  0.001f
-
 internal void Physics_UpdatePlayerTileIndex( Game_t* game );
 
 void Physics_Tic( Game_t* game )
