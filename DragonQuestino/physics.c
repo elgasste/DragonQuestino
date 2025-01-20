@@ -1,8 +1,6 @@
 #include "physics.h"
 #include "game.h"
 
-#define COLLISION_THETA  0.001f
-
 internal void Physics_UpdatePlayerTileIndex( Game_t* game );
 
 void Physics_Tic( Game_t* game )
@@ -54,7 +52,7 @@ void Physics_Tic( Game_t* game )
 
          for ( row = tileRowStartIndex; row <= tileRowEndIndex; row++ )
          {
-            tileIndex = col + ( row * game->tileMap.tilesX );
+            tileIndex = col + ( row * TILE_COUNT_X );
             tile = game->tileMap.tiles[tileIndex];
 
             if ( !GET_TILEPASSABLE( tile ) )
@@ -71,7 +69,7 @@ void Physics_Tic( Game_t* game )
 
          for ( row = tileRowStartIndex; row <= tileRowEndIndex; row++ )
          {
-            tileIndex = col + ( row * game->tileMap.tilesX );
+            tileIndex = col + ( row * TILE_COUNT_X );
             tile = game->tileMap.tiles[tileIndex];
 
             if ( !GET_TILEPASSABLE( tile ) )
@@ -96,7 +94,7 @@ void Physics_Tic( Game_t* game )
 
          for ( col = tileColStartIndex; col <= tileColEndIndex; col++ )
          {
-            tileIndex = col + ( row * game->tileMap.tilesX );
+            tileIndex = col + ( row * TILE_COUNT_X );
             tile = game->tileMap.tiles[tileIndex];
 
             if ( !GET_TILEPASSABLE( tile ) )
@@ -113,7 +111,7 @@ void Physics_Tic( Game_t* game )
 
          for ( col = tileColStartIndex; col <= tileColEndIndex; col++ )
          {
-            tileIndex = col + ( row * game->tileMap.tilesX );
+            tileIndex = col + ( row * TILE_COUNT_X );
             tile = game->tileMap.tiles[tileIndex];
 
             if ( !GET_TILEPASSABLE( tile ) )

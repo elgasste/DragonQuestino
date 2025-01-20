@@ -1,97 +1,64 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
+using System.Text;
 using DragonQuestinoEditor.Graphics;
 using DragonQuestinoEditor.ViewModels;
 
 namespace DragonQuestinoEditor.FileOps
 {
-   internal class DataSourceCodeWriter( Palette palette,
-                                        TileSet tileSet,
-                                        ObservableCollection<TileViewModel> mapTiles,
-                                        SpriteSheet spriteSheet )
+   public class DataSourceCodeWriter( Palette palette,
+                                      TileSet tileSet,
+                                      ObservableCollection<TileMapViewModel> tileMaps,
+                                      SpriteSheet spriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
-      private readonly ObservableCollection<TileViewModel> _tiles = mapTiles;
+      private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
       private readonly SpriteSheet _spriteSheet = spriteSheet;
-      private string _fileContents = string.Empty;
-
-      private readonly UInt32[] _tileSetIndexWalkSpeeds = [
-         0,       // grass
-         0x40,    // trees
-         0x80,    // hills
-         0x40,    // desert
-         0xC0,    // swamp
-         0,       // mountains
-         0,       // stone wall
-         0,       // brick path
-         0,       // void
-         0xC0,    // barrier
-         0,       // counter
-         0,       // metal wall
-         0,       // water, no shore
-         0,       // bridge
-         0,       // water, left shore
-         0,       // water, top shore
-         0,       // water, right shore
-         0,       // water, bottom shore
-         0,       // water, upper-left shore
-         0,       // water, upper-right shore
-         0,       // water, lower-right shore
-         0,       // water, lower-left shore
-         0,       // water, upper-stop
-         0,       // water, right-stop
-         0,       // water, bottom-stop
-         0,       // water, left-stop
-         0,       // water, full-stop
-         0,       // water, horizontal river
-         0        // water, vertical river
-      ];
 
       public void WriteFile( string filePath )
       {
-         BuildHeaderSection();
-         BuildPaletteFunction();
-         BuildTileTexturesFunction();
-         BuildTileMapFunction();
-         BuildSpriteFunctions();
-
-         File.WriteAllText( filePath, _fileContents );
+         using FileStream fs = File.Create( filePath );
+         WriteHeaderSection( fs );
+         WritePaletteFunction( fs );
+         WriteTileTexturesFunction( fs );
+         WriteTileMapFunction( fs );
+         WriteSpriteFunctions( fs );
       }
 
-      private void BuildHeaderSection()
+      private static void WriteHeaderSection( FileStream fs )
       {
-         _fileContents = "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n";
-         _fileContents += "#include \"screen.h\"\n";
-         _fileContents += "#include \"tile_map.h\"\n";
-         _fileContents += "#include \"sprite.h\"\n";
+         WriteText( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
+         WriteText( fs, "#include \"screen.h\"\n" );
+         WriteText( fs, "#include \"tile_map.h\"\n" );
+         WriteText( fs, "#include \"sprite.h\"\n" );
       }
 
-      private void BuildPaletteFunction()
+      private void WritePaletteFunction( FileStream fs )
       {
-         _fileContents += "\nvoid Screen_LoadPalette( Screen_t* screen )\n";
-         _fileContents += "{\n";
-         _fileContents += "   uint16_t i;\n\n";
-         _fileContents += string.Format( "   for ( i = 0; i < {0}; i++ ) {{ screen->palette[i] = 0; }}\n\n", Constants.PaletteSize );
+         WriteText( fs, "\nvoid Screen_LoadPalette( Screen_t* screen )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   uint16_t i;\n\n" );
+         WriteText( fs, string.Format( "   for ( i = 0; i < {0}; i++ ) {{ screen->palette[i] = 0; }}\n\n", Constants.PaletteSize ) );
 
          for ( int i = 0; i < _palette.ColorCount; i++ )
          {
-            _fileContents += string.Format( "   screen->palette[{0}] = 0x{1};\n", i, _palette.Colors[i].ToString( "X4" ) );
+            WriteText( fs, string.Format( "   screen->palette[{0}] = 0x{1};\n", i, _palette.Colors[i].ToString( "X4" ) ) );
          }
 
-         _fileContents += "}\n";
+         WriteText( fs, "}\n" );
       }
 
-      private void BuildTileTexturesFunction()
+      private void WriteTileTexturesFunction( FileStream fs )
       {
-         _fileContents += "\nvoid TileMap_LoadTextures( TileMap_t* tileMap )\n";
-         _fileContents += "{\n";
-         _fileContents += "   uint32_t* mem32;\n\n";
+         WriteText( fs, "\nvoid TileMap_LoadTextures( TileMap_t* tileMap )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   uint32_t* mem32;\n\n" );
 
          // TODO: try compressing this, it only ever gets called once
-         for ( int i = 0; i < Constants.TileCount; i++ )
+         for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
-            _fileContents += string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i );
+            WriteText( fs, string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
 
             var pixelIndexes = _tileSet.TilePaletteIndexes[i];
 
@@ -104,84 +71,121 @@ namespace DragonQuestinoEditor.FileOps
 
                var packed = ( index3 << 24 ) | ( index2 << 16  ) | ( index1 << 8  ) | ( index0 << 0  );
 
-               _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) );
+               WriteText( fs, string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) ) );
             }
          }
 
-         _fileContents += "}\n";
+         WriteText( fs, "}\n" );
       }
 
-      private void BuildTileMapFunction()
+      private void WriteTileMapFunction( FileStream fs )
       {
-         _fileContents += "\nvoid TileMap_Load( TileMap_t* tileMap, uint32_t index )\n";
-         _fileContents += "{\n";
-         _fileContents += "   int32_t i;\n";
-         _fileContents += "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n";
-         _fileContents += "   switch( index )\n";
-         _fileContents += "   {\n";
-         _fileContents += "      case 0:\n";
-         _fileContents += string.Format( "         tileMap->tilesX = {0};\n", Constants.TileMapTileCountX );
-         _fileContents += string.Format( "         tileMap->tilesY = {0};\n", Constants.TileMapTileCountY );
-         _fileContents += string.Format( "         tileMap->spriteCount = 0;\n" );
+         WriteText( fs, "\nvoid TileMap_Load( TileMap_t* tileMap, uint32_t index )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   int32_t i;\n" );
+         WriteText( fs, "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n" );
+         WriteText( fs, "   switch( index )\n" );
+         WriteText( fs, "   {\n" );
 
-         var packedTiles = new List<UInt32>( _tiles.Count / 2 );
-         var indexCounts = new Dictionary<UInt32, int>();
-
-         for ( int i = 0; i < _tiles.Count; i += 2 )
+         foreach ( var tileMap in _tileMaps )
          {
-            var index0 = (UInt32)( _tiles[i].Index )
-               | ( _tiles[i].IsPassable ? (UInt32)0x20 : 0 )                  // "is passable" flag
-               | _tileSetIndexWalkSpeeds[_tiles[i].Index];                    // walk speed
-            var index1 = (UInt32)( _tiles[i + 1].Index )
-               | ( _tiles[i + 1].IsPassable ? (UInt32)0x20 : 0 )              // "is passable" flag
-               | _tileSetIndexWalkSpeeds[_tiles[i + 1].Index];                // walk speed
+            var tiles = tileMap.Tiles;
 
-            var packed = ( index1 << 16 ) | index0;
-            packedTiles.Add( packed );
+            WriteText( fs, string.Format( "      case {0}:\n", tileMap.Id ) );
+            WriteText( fs, string.Format( "         tileMap->tilesX = {0};\n", tileMap.TilesX ) );
+            WriteText( fs, string.Format( "         tileMap->tilesY = {0};\n", tileMap.TilesY ) );
+            WriteText( fs, string.Format( "         tileMap->portalCount = {0};\n", tileMap.Portals.Count ) );
 
-            if ( indexCounts.TryGetValue( packed, out int value ) )
+            if ( tileMap.Portals.Count > 0 )
             {
-               indexCounts[packed] = ++value;
+               for ( int i = 0; i < tileMap.Portals.Count; i++ )
+               {
+                  WriteText( fs, string.Format( "         tileMap->portals[{0}].sourceTileIndex = {1};\n", i, tileMap.Portals[i].SourceTileIndex ) );
+                  WriteText( fs, string.Format( "         tileMap->portals[{0}].destinationTileMapIndex = {1};\n", i, tileMap.Portals[i].DestinationTileMapIndex ) );
+                  WriteText( fs, string.Format( "         tileMap->portals[{0}].destinationTileIndex = {1};\n", i, tileMap.Portals[i].DestinationTileIndex ) );
+                  WriteText( fs, string.Format( "         tileMap->portals[{0}].arrivalDirection = (Direction_t){1};\n", i, (int)( tileMap.Portals[i].ArrivalDirection ) ) );
+               }
             }
-            else
+
+            WriteText( fs, "         tileMap->spriteCount = 0;\n" );
+
+            var packedTiles = new List<UInt32>( ( tileMap.TilesX * tileMap.TilesY ) / 2 );
+            var indexCounts = new Dictionary<UInt32, int>();
+
+            for ( int row = 0; row < tileMap.TilesY; row++ )
             {
-               indexCounts[packed] = 1;
+               for ( int col = 0; col < tileMap.TilesX; col += 2 )
+               {
+                  var tileIndex = ( row * tileMap.TilesX ) + col;
+
+                  var index0 = (UInt32)( tiles[tileIndex].TextureIndex )
+                     | ( tiles[tileIndex].IsPassable ? (UInt32)0x20 : 0 )
+                     | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex].TextureIndex]
+                     | 0x100  // is encounterable
+                     | Constants.TileSetIndexEncounterRates[tiles[tileIndex].TextureIndex]
+                     | Constants.TileSetIndexDamageRates[tiles[tileIndex].TextureIndex];
+                  var index1 = (UInt32)( tiles[tileIndex + 1].TextureIndex )
+                     | ( tiles[tileIndex + 1].IsPassable ? (UInt32)0x20 : 0 )
+                     | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex + 1].TextureIndex]
+                     | 0x100  // is encounterable
+                     | Constants.TileSetIndexEncounterRates[tiles[tileIndex + 1].TextureIndex]
+                     | Constants.TileSetIndexDamageRates[tiles[tileIndex + 1].TextureIndex];
+
+                  var packed = ( index1 << 16 ) | index0;
+                  packedTiles.Add( packed );
+
+                  if ( indexCounts.TryGetValue( packed, out int value ) )
+                  {
+                     indexCounts[packed] = ++value;
+                  }
+                  else
+                  {
+                     indexCounts[packed] = 1;
+                  }
+               }
             }
+
+            int highestCount = 0;
+            UInt32 mostCommonValue = 0;
+
+            foreach ( var pair in indexCounts )
+            {
+               if ( pair.Value > highestCount )
+               {
+                  highestCount = pair.Value;
+                  mostCommonValue = pair.Key;
+               }
+            }
+
+            // TODO: this can be optimized, we should only fill in the area of TilesX and TilesY
+            WriteText( fs, string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
+
+            for ( int row = 0, packedTileIndex = 0; row < tileMap.TilesY; row++ )
+            {
+               for ( int col = 0; col < tileMap.TilesX; packedTileIndex++, col += 2 )
+               {
+                  var tileIndex = ( row * Constants.TileMapMaxTilesX ) + col;
+
+                  if ( packedTiles[packedTileIndex] != mostCommonValue )
+                  {
+                     WriteText( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex / 2, packedTiles[packedTileIndex].ToString( "X8" ) ) );
+                  }
+               }
+            }
+
+            WriteText( fs, "         break;\n" );
          }
 
-         int highestCount = 0;
-         UInt32 mostCommonValue = 0;
-
-         foreach ( var pair in indexCounts )
-         {
-            if ( pair.Value > highestCount )
-            {
-               highestCount = pair.Value;
-               mostCommonValue = pair.Key;
-            }
-         }
-
-         _fileContents += string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) );
-
-         for ( int i = 0, packedTileIndex = 0; i < _tiles.Count; i += 2, packedTileIndex++ )
-         {
-            if ( packedTiles[packedTileIndex] != mostCommonValue )
-            {
-               _fileContents += string.Format( "         tiles32[{0}] = 0x{1};\n", packedTileIndex, packedTiles[packedTileIndex].ToString( "X8" ) );
-            }
-         }
-
-         _fileContents += "         break;\n";
-         _fileContents += "   }\n";
-         _fileContents += "}\n";
+         WriteText( fs, "   }\n" );
+         WriteText( fs, "}\n" );
       }
 
-      private void BuildSpriteFunctions()
+      private void WriteSpriteFunctions( FileStream fs )
       {
-         _fileContents += "\nvoid Sprite_LoadPlayer( Sprite_t* sprite )\n";
-         _fileContents += "{\n";
-         _fileContents += "   int32_t i;\n";
-         _fileContents += "   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );\n\n";
+         WriteText( fs, "\nvoid Sprite_LoadPlayer( Sprite_t* sprite )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   int32_t i;\n" );
+         WriteText( fs, "   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );\n\n" );
 
          var indexCounts = new Dictionary<UInt32, int>();
          var packedIndexes = new List<UInt32>();
@@ -226,13 +230,13 @@ namespace DragonQuestinoEditor.FileOps
             }
          }
 
-         _fileContents += string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) );
+         WriteText( fs, string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
 
          for ( int i = 0, packedIndex = 0; i < Constants.SpritePositionCount; i++ )
          {
             for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
-               _fileContents += string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j );
+               WriteText( fs, string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j ) );
 
                var pixelIndexes = _spriteSheet.FramePaletteIndexes[i][j];
 
@@ -240,20 +244,26 @@ namespace DragonQuestinoEditor.FileOps
                {
                   if ( packedIndexes[packedIndex] != mostCommonValue )
                   {
-                     _fileContents += string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packedIndexes[packedIndex].ToString( "X8" ) );
+                     WriteText( fs, string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packedIndexes[packedIndex].ToString( "X8" ) ) );
                   }
                }
             }
          }
 
-         _fileContents += "}\n\n";
+         WriteText( fs, "}\n\n" );
 
          // TODO
-         _fileContents += "\nvoid Sprite_LoadGeneric( Sprite_t* sprite, uint32_t index )\n";
-         _fileContents += "{\n";
-         _fileContents += "   UNUSED_PARAM( sprite );\n";
-         _fileContents += "   UNUSED_PARAM( index );\n";
-         _fileContents += "}\n";
+         WriteText( fs, "\nvoid Sprite_LoadGeneric( Sprite_t* sprite, uint32_t index )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   UNUSED_PARAM( sprite );\n" );
+         WriteText( fs, "   UNUSED_PARAM( index );\n" );
+         WriteText( fs, "}\n" );
+      }
+
+      private static void WriteText( FileStream fs, string value )
+      {
+         byte[] info = new UTF8Encoding( true ).GetBytes( value );
+         fs.Write( info, 0, info.Length );
       }
    }
 }

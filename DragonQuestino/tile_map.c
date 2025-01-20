@@ -1,28 +1,5 @@
 #include "tile_map.h"
 
-void TileMap_Init( TileMap_t* tileMap )
-{
-   uint32_t i, j;
-
-   tileMap->tilesX = 0;
-   tileMap->tilesY = 0;
-
-   for ( i = 0; i < TILE_COUNT; i++ )
-   {
-      tileMap->tiles[i] = 0;
-   }
-
-   for ( i = 0; i < TILE_TEXTURE_COUNT; i++ )
-   {
-      for ( j = 0; j < TILE_TEXTURE_BYTES; j++ )
-      {
-         tileMap->textures[i].memory[j] = 0;
-      }
-   }
-
-   tileMap->spriteCount = 0;
-}
-
 float TileMap_GetWalkSpeedForTile( uint16_t tile )
 {
    uint16_t walkSpeed = GET_TILEWALKSPEED( tile );
@@ -36,4 +13,19 @@ float TileMap_GetWalkSpeedForTile( uint16_t tile )
    }
 
    return TILE_WALKSPEED_NORMAL;
+}
+
+TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index )
+{
+   uint32_t i;
+
+   for ( i = 0; i < tileMap->portalCount; i++ )
+   {
+      if ( tileMap->portals[i].sourceTileIndex == (int32_t)index )
+      {
+         return &( tileMap->portals[i] );
+      }
+   }
+
+   return 0;
 }

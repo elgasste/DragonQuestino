@@ -1,6 +1,8 @@
 #if !defined( GAME_H )
 #define GAME_H
 
+#define TILEMAP_SWAP_SECONDS 0.4f
+
 #include "common.h"
 #include "screen.h"
 #include "tile_map.h"
@@ -18,6 +20,9 @@ typedef struct Game_t
    Player_t player;
 
    Vector4i32_t tileMapViewport;
+
+   Bool_t isSwappingTileMap;
+   float tileMapSwapSecondsElapsed;
 }
 Game_t;
 

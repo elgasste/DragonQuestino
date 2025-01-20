@@ -23,18 +23,15 @@ void Screen_RenderBuffer( Screen_t* screen )
 {
    uint8_t *bufferPos = screen->buffer;
    uint16_t color16;
-   uint32_t x, y, color32;
+   uint32_t i, color32;
    uint32_t* winBufferPos = g_globals.screenBuffer.memory;
 
-   for ( y = 0; y < SCREEN_BUFFER_HEIGHT; y++ )
+   for ( i = 0; i < SCREEN_BUFFER_PIXELS; i++ )
    {
-      for ( x = 0; x < SCREEN_BUFFER_WIDTH; x++ )
-      {
-         color16 = screen->palette[*bufferPos];
-         color32 = Convert565To32( color16 );
-         *winBufferPos = color32;
-         winBufferPos++;
-         bufferPos++;
-      }
+      color16 = screen->palette[*bufferPos];
+      color32 = Convert565To32( color16 );
+      *winBufferPos = color32;
+      winBufferPos++;
+      bufferPos++;
    }
 }

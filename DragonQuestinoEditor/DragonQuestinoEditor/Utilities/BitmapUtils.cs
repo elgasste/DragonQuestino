@@ -3,7 +3,7 @@ using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.Utilities
 {
-   internal static class BitmapUtils
+   public static class BitmapUtils
    {
       public static void CheckTileSetBitmapFormat( BitmapSource bitmapSource )
       {
@@ -11,9 +11,9 @@ namespace DragonQuestinoEditor.Utilities
          {
             throw new Exception( "Tileset image pixel format should be Indexed8" );
          }
-         else if ( bitmapSource.PixelWidth != ( Constants.TileSize * Constants.TileCount ) )
+         else if ( bitmapSource.PixelWidth != ( Constants.TileSize * Constants.TileTextureCount ) )
          {
-            throw new Exception( string.Format( "Tileset image width should be {0}", Constants.TileSize * Constants.TileCount ) );
+            throw new Exception( string.Format( "Tileset image width should be {0}", Constants.TileSize * Constants.TileTextureCount ) );
          }
          else if ( bitmapSource.PixelHeight != Constants.TileSize )
          {

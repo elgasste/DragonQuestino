@@ -1,6 +1,6 @@
 ﻿namespace DragonQuestinoEditor.Graphics
 {
-   internal class Palette
+   public class Palette
    {
       public List<UInt16> Colors { get; } = new( Constants.PaletteSize );
       public int ColorCount { get; private set; } = 0;

@@ -5,7 +5,7 @@
 
 #define SCREEN_BUFFER_WIDTH      320
 #define SCREEN_BUFFER_HEIGHT     240
-#define SCREEN_BUFFER_BYTES      76800    // 8 bpp
+#define SCREEN_BUFFER_PIXELS     76800    // 8 bpp
 
 #define PALETTE_COLORS           256
 
@@ -13,7 +13,7 @@
 
 typedef struct Screen_t
 {
-   uint8_t buffer[SCREEN_BUFFER_BYTES];
+   uint8_t buffer[SCREEN_BUFFER_PIXELS];
    uint16_t palette[PALETTE_COLORS];
 }
 Screen_t;
@@ -23,6 +23,8 @@ extern "C" {
 #endif
 
 void Screen_Init( Screen_t* screen );
+Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint8_t* paletteIndex );
+void Screen_Wipe( Screen_t* screen, uint8_t paletteIndex );
 
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );

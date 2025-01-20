@@ -18,20 +18,20 @@ namespace DragonQuestinoEditor.Commands
          _canExecute = canExecute;
       }
 
-      public bool CanExecute( object? parameter ) => _canExecute == null ? true : _canExecute();
+      public bool CanExecute( object? parameter ) => _canExecute is null || _canExecute();
 
       public event EventHandler? CanExecuteChanged
       {
          add
          {
-            if ( _canExecute != null )
+            if ( _canExecute is not null )
             {
                CommandManager.RequerySuggested += value;
             }
          }
          remove
          {
-            if ( _canExecute != null )
+            if ( _canExecute is not null )
             {
                CommandManager.RequerySuggested -= value;
             }
