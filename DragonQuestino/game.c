@@ -179,15 +179,13 @@ internal void Game_UpdateTileMapViewport( Game_t* game )
 internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
 {
    // TODO: some kind of animation between maps, because this is too abrupt
-
-   // MUFFINS: Garinham's inside area is messed up, why is that?
    uint32_t destinationTileIndex = portal->destinationTileIndex;
    Direction_t arrivalDirection = portal->arrivalDirection;
 
    TileMap_Load( &( game->tileMap ), portal->destinationTileMapIndex );
 
    game->player.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x );
-   game->player.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesY ) ) - game->player.spriteOffset.y );
+   game->player.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y );
 
    Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
 }
