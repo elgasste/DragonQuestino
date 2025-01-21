@@ -6,10 +6,12 @@
 #define ACTIVE_SPRITE_FRAME_SECONDS     0.3f
 
 #include "sprite_texture.h"
+#include "vector.h"
 
 typedef struct ActiveSprite_t
 {
    SpriteTexture_t textures[ACTIVE_SPRITE_TEXTURES];
+   Vector2f_t position;
    Direction_t direction;
    uint32_t currentFrame;
    float elapsedFrameSeconds;

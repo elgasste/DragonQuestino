@@ -2,18 +2,15 @@
 #define PLAYER_H
 
 #include "common.h"
-#include "vector.h"
 #include "active_sprite.h"
 
 typedef struct Player_t
 {
-   Vector2f_t position;
+   ActiveSprite_t sprite;
+   Vector2i32_t spriteOffset;
    Vector2f_t velocity;
    float maxVelocity;
    Vector2u32_t hitBoxSize;
-
-   ActiveSprite_t sprite;
-   Vector2i32_t spriteOffset;
 
    uint32_t tileIndex;
 }

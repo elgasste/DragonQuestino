@@ -27,8 +27,8 @@ void Game_Init( Game_t* game )
    game->tileMapViewport.w = SCREEN_BUFFER_WIDTH;
    game->tileMapViewport.h = SCREEN_BUFFER_HEIGHT;
 
-   game->player.position.x = (float)( TILE_SIZE * 12 );
-   game->player.position.y = (float)( TILE_SIZE * 8 );
+   game->player.sprite.position.x = (float)( TILE_SIZE * 12 );
+   game->player.sprite.position.y = (float)( TILE_SIZE * 8 );
    game->player.velocity.x = 0.0f;
    game->player.velocity.y = 0.0f;
    game->player.maxVelocity = TILE_WALKSPEED_NORMAL;
@@ -173,8 +173,8 @@ internal void Game_UpdateTileMapViewport( Game_t* game )
 {
    Vector4i32_t* viewport = &( game->tileMapViewport );
 
-   viewport->x = (int32_t)( game->player.position.x ) - ( viewport->w / 2 ) + ( game->player.hitBoxSize.x / 2 );
-   viewport->y = (int32_t)( game->player.position.y ) - ( viewport->h / 2 ) + ( game->player.hitBoxSize.y / 2 );
+   viewport->x = (int32_t)( game->player.sprite.position.x ) - ( viewport->w / 2 ) + ( game->player.hitBoxSize.x / 2 );
+   viewport->y = (int32_t)( game->player.sprite.position.y ) - ( viewport->h / 2 ) + ( game->player.hitBoxSize.y / 2 );
 
    if ( viewport->x < 0 )
    {
@@ -203,9 +203,9 @@ internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
 
    TileMap_Load( &( game->tileMap ), portal->destinationTileMapIndex );
 
-   game->player.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x );
+   game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x );
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
-   game->player.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
+   game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
 
    ActiveSprite_SetDirection( &( game->player.sprite ), arrivalDirection );
 
@@ -253,8 +253,8 @@ internal void Game_DrawTileMap( Game_t* game )
 internal void Game_DrawSprites( Game_t* game )
 {
    ActiveSprite_t* sprite = &( game->player.sprite );
-   int32_t wx = (int32_t)( game->player.position.x ) + game->player.spriteOffset.x;
-   int32_t wy = (int32_t)( game->player.position.y ) + game->player.spriteOffset.y;
+   int32_t wx = (int32_t)( game->player.sprite.position.x ) + game->player.spriteOffset.x;
+   int32_t wy = (int32_t)( game->player.sprite.position.y ) + game->player.spriteOffset.y;
    int32_t sx = wx - game->tileMapViewport.x;
    int32_t sy = wy - game->tileMapViewport.y;
    uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
