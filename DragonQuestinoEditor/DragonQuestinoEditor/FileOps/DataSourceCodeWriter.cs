@@ -9,12 +9,12 @@ namespace DragonQuestinoEditor.FileOps
    public class DataSourceCodeWriter( Palette palette,
                                       TileSet tileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
-                                      SpriteSheet spriteSheet )
+                                      ActiveSpriteSheet activeSpriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
-      private readonly SpriteSheet _spriteSheet = spriteSheet;
+      private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
 
       public void WriteFile( string filePath )
       {
@@ -195,7 +195,7 @@ namespace DragonQuestinoEditor.FileOps
          {
             for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
             {
-               var pixelIndexes = _spriteSheet.FramePaletteIndexes[i][j];
+               var pixelIndexes = _activeSpriteSheet.FramePaletteIndexes[i][j];
 
                for ( int k = 0; k < Constants.SpriteFramePixels; k += 4 )
                {
@@ -239,7 +239,7 @@ namespace DragonQuestinoEditor.FileOps
             {
                WriteText( fs, string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j ) );
 
-               var pixelIndexes = _spriteSheet.FramePaletteIndexes[i][j];
+               var pixelIndexes = _activeSpriteSheet.FramePaletteIndexes[i][j];
 
                for ( int k = 0, memoryIndex = 0; k < Constants.SpriteFramePixels; k += 4, memoryIndex++, packedIndex++ )
                {

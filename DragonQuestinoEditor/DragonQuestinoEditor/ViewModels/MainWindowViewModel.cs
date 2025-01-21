@@ -13,7 +13,7 @@ namespace DragonQuestinoEditor.ViewModels
    {
       private readonly Palette _palette;
       private readonly TileSet _tileSet;
-      private readonly SpriteSheet _playerSpriteSheet;
+      private readonly ActiveSpriteSheet _playerSpriteSheet;
 
       public ObservableCollection<TileMapViewModel> TileMaps { get; } = [];
 
@@ -155,7 +155,7 @@ namespace DragonQuestinoEditor.ViewModels
       {
          _palette = new Palette();
          _tileSet = new TileSet( Constants.TileTexturesFilePath, _palette );
-         _playerSpriteSheet = new SpriteSheet( Constants.PlayerSpriteFilePath, _palette );
+         _playerSpriteSheet = new ActiveSpriteSheet( Constants.PlayerSpriteFilePath, _palette );
 
          for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {

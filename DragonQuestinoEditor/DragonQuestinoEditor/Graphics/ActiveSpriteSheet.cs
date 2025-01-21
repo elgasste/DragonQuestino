@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.Graphics
 {
-   public class SpriteSheet
+   public class ActiveSpriteSheet
    {
       private readonly Palette _palette;
       private readonly List<List<WriteableBitmap>> _frameBitmaps = new( Constants.SpriteFrameCount );
@@ -13,7 +13,7 @@ namespace DragonQuestinoEditor.Graphics
       public List<List<WriteableBitmap>> FrameBitmaps => _frameBitmaps;
       public List<List<List<int>>> FramePaletteIndexes = new( Constants.SpritePositionCount );
 
-      public SpriteSheet( string imagePath, Palette palette )
+      public ActiveSpriteSheet( string imagePath, Palette palette )
       {
          _palette = palette;
 
