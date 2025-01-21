@@ -2,7 +2,7 @@
 #define TILE_MAP_H
 
 #include "common.h"
-#include "sprite.h"
+#include "active_sprite.h"
 
 #define TILE_SIZE                      16
 #define TILE_TEXTURE_BYTES             256   // 8 bpp
@@ -63,7 +63,7 @@ typedef struct TileMap_t
    TilePortal_t portals[TILEMAP_MAX_PORTALS];
    uint32_t portalCount;
 
-   Sprite_t sprites[TILEMAP_MAX_SPRITES];
+   ActiveSprite_t activeSprites[TILEMAP_MAX_SPRITES];
    uint32_t spriteCount;
 }
 TileMap_t;

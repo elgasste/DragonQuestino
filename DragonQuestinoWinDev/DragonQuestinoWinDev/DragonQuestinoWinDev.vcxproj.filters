@@ -51,6 +51,9 @@
     <ClInclude Include="..\..\DragonQuestino\physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\DragonQuestino\active_sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="win_clock.c">
@@ -83,7 +86,7 @@
     <ClCompile Include="win_input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\DragonQuestino\sprite.c">
+    <ClCompile Include="..\..\DragonQuestino\active_sprite.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\DragonQuestino\player.c">

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\DragonQuestino\active_sprite.h" />
     <ClInclude Include="..\..\DragonQuestino\clock.h" />
     <ClInclude Include="..\..\DragonQuestino\common.h" />
     <ClInclude Include="..\..\DragonQuestino\game.h" />
@@ -39,7 +40,7 @@
     <ClCompile Include="..\..\DragonQuestino\physics.c" />
     <ClCompile Include="..\..\DragonQuestino\player.c" />
     <ClCompile Include="..\..\DragonQuestino\screen.c" />
-    <ClCompile Include="..\..\DragonQuestino\sprite.c" />
+    <ClCompile Include="..\..\DragonQuestino\active_sprite.c" />
     <ClCompile Include="..\..\DragonQuestino\tile_map.c" />
     <ClCompile Include="win_clock.c" />
     <ClCompile Include="win_input.c" />

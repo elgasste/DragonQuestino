@@ -13510,12 +13510,12 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
    }
 }
 
-void Sprite_LoadPlayer( Sprite_t* sprite )
+void ActiveSprite_LoadPlayer( ActiveSprite_t* sprite )
 {
    int32_t i;
    uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );
 
-   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0A0A0A0A; }
+   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0A0A0A0A; }
    mem32 = (uint32_t*)( sprite->textures[0].memory );
    mem32[1] = 0x0B0B0B0A;
    mem32[2] = 0x090B0B09;
@@ -13905,7 +13905,7 @@ void Sprite_LoadPlayer( Sprite_t* sprite )
 }
 
 
-void Sprite_LoadGeneric( Sprite_t* sprite, uint32_t index )
+void ActiveSprite_LoadGeneric( ActiveSprite_t* sprite, uint32_t index )
 {
    UNUSED_PARAM( sprite );
    UNUSED_PARAM( index );

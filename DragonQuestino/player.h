@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "vector.h"
-#include "sprite.h"
+#include "active_sprite.h"
 
 typedef struct Player_t
 {
@@ -12,7 +12,7 @@ typedef struct Player_t
    float maxVelocity;
    Vector2u32_t hitBoxSize;
 
-   Sprite_t sprite;
+   ActiveSprite_t sprite;
    Vector2i32_t spriteOffset;
 
    uint32_t tileIndex;

@@ -23,7 +23,7 @@ namespace DragonQuestinoEditor.FileOps
          WritePaletteFunction( fs );
          WriteTileTexturesFunction( fs );
          WriteTileMapFunction( fs );
-         WriteSpriteFunctions( fs );
+         WriteActiveSpriteFunctions( fs );
       }
 
       private static void WriteHeaderSection( FileStream fs )
@@ -180,9 +180,9 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "}\n" );
       }
 
-      private void WriteSpriteFunctions( FileStream fs )
+      private void WriteActiveSpriteFunctions( FileStream fs )
       {
-         WriteText( fs, "\nvoid Sprite_LoadPlayer( Sprite_t* sprite )\n" );
+         WriteText( fs, "\nvoid ActiveSprite_LoadPlayer( ActiveSprite_t* sprite )\n" );
          WriteText( fs, "{\n" );
          WriteText( fs, "   int32_t i;\n" );
          WriteText( fs, "   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );\n\n" );
@@ -230,7 +230,7 @@ namespace DragonQuestinoEditor.FileOps
             }
          }
 
-         WriteText( fs, string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
+         WriteText( fs, string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
 
          for ( int i = 0, packedIndex = 0; i < Constants.SpritePositionCount; i++ )
          {
@@ -253,7 +253,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "}\n\n" );
 
          // TODO
-         WriteText( fs, "\nvoid Sprite_LoadGeneric( Sprite_t* sprite, uint32_t index )\n" );
+         WriteText( fs, "\nvoid ActiveSprite_LoadGeneric( ActiveSprite_t* sprite, uint32_t index )\n" );
          WriteText( fs, "{\n" );
          WriteText( fs, "   UNUSED_PARAM( sprite );\n" );
          WriteText( fs, "   UNUSED_PARAM( index );\n" );
