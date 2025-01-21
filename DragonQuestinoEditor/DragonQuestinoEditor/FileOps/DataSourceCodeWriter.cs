@@ -31,7 +31,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
          WriteText( fs, "#include \"screen.h\"\n" );
          WriteText( fs, "#include \"tile_map.h\"\n" );
-         WriteText( fs, "#include \"sprite.h\"\n" );
+         WriteText( fs, "#include \"sprite_texture.h\"\n" );
       }
 
       private void WritePaletteFunction( FileStream fs )

@@ -42,7 +42,7 @@
     <ClInclude Include="..\..\DragonQuestino\vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\DragonQuestino\sprite.h">
+    <ClInclude Include="..\..\DragonQuestino\sprite_texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\DragonQuestino\player.h">

@@ -1,5 +1,5 @@
-#if !defined( SPRITE_H )
-#define SPRITE_H
+#if !defined( SPRITE_TEXTURE_H )
+#define SPRITE_TEXTURE_H
 
 #include "common.h"
 
@@ -12,4 +12,4 @@ typedef struct SpriteTexture_t
 }
 SpriteTexture_t;
 
-#endif // SPRITE_H
+#endif // SPRITE_TEXTURE_H

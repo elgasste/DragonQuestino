@@ -2,7 +2,7 @@
 
 #include "screen.h"
 #include "tile_map.h"
-#include "sprite.h"
+#include "sprite_texture.h"
 
 void Screen_LoadPalette( Screen_t* screen )
 {

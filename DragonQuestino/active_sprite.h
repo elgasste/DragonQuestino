@@ -5,7 +5,7 @@
 #define ACTIVE_SPRITE_FRAMES            2
 #define ACTIVE_SPRITE_FRAME_SECONDS     0.3f
 
-#include "sprite.h"
+#include "sprite_texture.h"
 
 typedef struct ActiveSprite_t
 {
