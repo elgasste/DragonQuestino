@@ -107,7 +107,8 @@ namespace DragonQuestinoEditor.FileOps
                }
             }
 
-            WriteText( fs, "         tileMap->spriteCount = 0;\n" );
+            WriteText( fs, "         tileMap->activeSpriteCount = 0;\n" );
+            WriteText( fs, "         tileMap->staticSpriteCount = 0;\n" );
 
             var packedTiles = new List<UInt32>( ( tileMap.TilesX * tileMap.TilesY ) / 2 );
             var indexCounts = new Dictionary<UInt32, int>();
