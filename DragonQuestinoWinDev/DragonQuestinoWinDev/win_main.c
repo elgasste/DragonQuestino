@@ -308,7 +308,7 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "   Player Pos: %u, %u", (uint32_t)( g_globals.game.player.position.x ), (uint32_t)( g_globals.game.player.position.y ) );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "   Player Pos: %u, %u", (uint32_t)( g_globals.game.player.sprite.position.x ), (uint32_t)( g_globals.game.player.sprite.position.y ) );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 

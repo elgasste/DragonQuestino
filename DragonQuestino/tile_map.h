@@ -2,7 +2,8 @@
 #define TILE_MAP_H
 
 #include "common.h"
-#include "sprite.h"
+#include "active_sprite.h"
+#include "static_sprite.h"
 
 #define TILE_SIZE                      16
 #define TILE_TEXTURE_BYTES             256   // 8 bpp
@@ -19,7 +20,8 @@
 #define TILE_WALKSPEED_CRAWL           36.0f
 
 #define TILEMAP_MAX_PORTALS            256
-#define TILEMAP_MAX_SPRITES            12
+#define TILEMAP_MAX_ACTIVESPRITES      16
+#define TILEMAP_MAX_STATICSPRITES      16
 
 #define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
 #define GET_TILEPASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
@@ -63,8 +65,11 @@ typedef struct TileMap_t
    TilePortal_t portals[TILEMAP_MAX_PORTALS];
    uint32_t portalCount;
 
-   Sprite_t sprites[TILEMAP_MAX_SPRITES];
-   uint32_t spriteCount;
+   ActiveSprite_t activeSprites[TILEMAP_MAX_ACTIVESPRITES];
+   uint32_t activeSpriteCount;
+
+   StaticSprite_t staticSprites[TILEMAP_MAX_STATICSPRITES];
+   uint32_t staticSpriteCount;
 }
 TileMap_t;
 

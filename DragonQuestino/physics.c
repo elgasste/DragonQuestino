@@ -14,8 +14,8 @@ void Physics_Tic( Game_t* game )
       return;
    }
 
-   newPos.x = player->position.x + ( player->velocity.x * CLOCK_FRAME_SECONDS );
-   newPos.y = player->position.y + ( player->velocity.y * CLOCK_FRAME_SECONDS );
+   newPos.x = player->sprite.position.x + ( player->velocity.x * CLOCK_FRAME_SECONDS );
+   newPos.y = player->sprite.position.y + ( player->velocity.y * CLOCK_FRAME_SECONDS );
 
    if ( newPos.x < 0 )
    {
@@ -40,12 +40,12 @@ void Physics_Tic( Game_t* game )
 #endif
 
    // clip to unpassable horizontal tiles
-   if ( newPos.x != player->position.x )
+   if ( newPos.x != player->sprite.position.x )
    {
-      tileRowStartIndex = (uint32_t)( player->position.y / TILE_SIZE );
-      tileRowEndIndex = (uint32_t)( ( player->position.y + player->hitBoxSize.y ) / TILE_SIZE );
+      tileRowStartIndex = (uint32_t)( player->sprite.position.y / TILE_SIZE );
+      tileRowEndIndex = (uint32_t)( ( player->sprite.position.y + player->hitBoxSize.y ) / TILE_SIZE );
 
-      if ( newPos.x < player->position.x )
+      if ( newPos.x < player->sprite.position.x )
       {
          // moving left, check leftward tiles
          col = (uint32_t)( newPos.x / TILE_SIZE );
@@ -82,12 +82,12 @@ void Physics_Tic( Game_t* game )
    }
 
    // clip to unpassable vertical tiles
-   if ( newPos.y != player->position.y )
+   if ( newPos.y != player->sprite.position.y )
    {
-      tileColStartIndex = ( uint32_t )( player->position.x / TILE_SIZE );
-      tileColEndIndex = (uint32_t)( ( player->position.x + player->hitBoxSize.x ) / TILE_SIZE );
+      tileColStartIndex = ( uint32_t )( player->sprite.position.x / TILE_SIZE );
+      tileColEndIndex = (uint32_t)( ( player->sprite.position.x + player->hitBoxSize.x ) / TILE_SIZE );
 
-      if ( newPos.y < player->position.y )
+      if ( newPos.y < player->sprite.position.y )
       {
          // moving up, check upward tiles
          row = (uint32_t)( newPos.y / TILE_SIZE );
@@ -127,7 +127,7 @@ void Physics_Tic( Game_t* game )
    }
 #endif
 
-   player->position = newPos;
+   player->sprite.position = newPos;
    player->velocity.x = 0;
    player->velocity.y = 0;
 
@@ -136,8 +136,8 @@ void Physics_Tic( Game_t* game )
 
 internal void Physics_UpdatePlayerTileIndex( Game_t* game )
 {
-   uint32_t centerX = (uint32_t)( game->player.position.x + ( game->player.hitBoxSize.x / 2 ) );
-   uint32_t centerY = (uint32_t)( game->player.position.y + ( game->player.hitBoxSize.y / 2 ) );
+   uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.hitBoxSize.x / 2 ) );
+   uint32_t centerY = (uint32_t)( game->player.sprite.position.y + ( game->player.hitBoxSize.y / 2 ) );
    uint32_t newTileIndex = ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
 
    if ( newTileIndex != game->player.tileIndex )
