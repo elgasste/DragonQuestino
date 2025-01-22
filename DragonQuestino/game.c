@@ -197,6 +197,8 @@ internal void Game_UpdateTileMapViewport( Game_t* game )
 
 internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
 {
+   // TODO: instead of immediately loaing, we should wipe the screen and
+   // load the new tile map data while the swap animation counts down.
    uint32_t destinationTileIndex = portal->destinationTileIndex;
    Direction_t arrivalDirection = portal->arrivalDirection;
    uint8_t  wipePaletteIndex;
