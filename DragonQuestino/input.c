@@ -1,5 +1,7 @@
 #include "input.h"
 
+internal void Input_UpdateButtonState( ButtonState_t* buttonState, Bool_t down );
+
 void Input_Init( Input_t* input )
 {
    uint32_t i;
@@ -23,15 +25,16 @@ void Input_Read( Input_t* input )
 #if defined( VISUAL_STUDIO_DEV )
    UNUSED_PARAM( input );
 #else
-   // TODO: figure this out for the Giga R1
-   // int16_t xValue = analogRead( PIN_ANALOG_X );
-   // int16_t yValue = analogRead( PIN_ANALOG_Y );
+   int32_t xValue = analogRead( PIN_ANALOG_X );
+   int32_t yValue = analogRead( PIN_ANALOG_Y );
 
-   // Input_UpdateButtonState( &( input->buttonStates[BUTTON_LEFT] ), xValue > ANALOG_THRESHOLD_HIGH );
-   // Input_UpdateButtonState( &( input->buttonStates[BUTTON_UP] ), yValue < ANALOG_THRESHOLD_LOW );
-   // Input_UpdateButtonState( &( input->buttonStates[BUTTON_RIGHT] ), xValue < ANALOG_THRESHOLD_LOW );
-   // Input_UpdateButtonState( &( input->buttonStates[BUTTON_DOWN] ), yValue > ANALOG_THRESHOLD_HIGH );
+   // our analog stick is rotated, so our values are reversed
+   Input_UpdateButtonState( &( input->buttonStates[Button_Left] ), xValue > ANALOG_THRESHOLD_HIGH );
+   Input_UpdateButtonState( &( input->buttonStates[Button_Up] ), yValue < ANALOG_THRESHOLD_LOW );
+   Input_UpdateButtonState( &( input->buttonStates[Button_Right] ), xValue < ANALOG_THRESHOLD_LOW );
+   Input_UpdateButtonState( &( input->buttonStates[Button_Down] ), yValue > ANALOG_THRESHOLD_HIGH );
 
+   // TODO: implement these
    // Input_UpdateButtonState( &( input->buttonStates[BUTTON_A] ), digitalRead( PIN_A_BUTTON ) == LOW );
    // Input_UpdateButtonState( &( input->buttonStates[BUTTON_B] ), digitalRead( PIN_B_BUTTON ) == LOW );
 #endif
@@ -50,4 +53,20 @@ Bool_t Input_AnyButtonPressed( Input_t* input )
    }
 
    return False;
+}
+
+internal void Input_UpdateButtonState( ButtonState_t* buttonState, Bool_t down )
+{
+   if ( down )
+   {
+      buttonState->released = False;
+      buttonState->pressed = buttonState->down ? False : True;
+   }
+   else
+   {
+      buttonState->pressed = False;
+      buttonState->released = buttonState->down ? True : False;
+   }
+
+   buttonState->down = down;
 }

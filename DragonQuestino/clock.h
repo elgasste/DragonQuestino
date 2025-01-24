@@ -8,7 +8,7 @@
 #define CLOCK_FRAME_MICROSECONDS  16666
 #define CLOCK_FRAME_SECONDS       0.01666666f
 #else
-#define CLOCK_FRAME_FPS           30
+#define CLOCK_FPS                 30
 #define CLOCK_FRAME_MICROSECONDS  33333
 #define CLOCK_FRAME_SECONDS       0.03333333f
 #endif
