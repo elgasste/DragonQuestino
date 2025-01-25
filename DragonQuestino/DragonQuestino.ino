@@ -17,8 +17,8 @@ void setup()
    Serial.begin( SERIAL_BAUD );
 #endif
 
-   g_gigaShield.begin();
    Game_Init( &g_game );
+   g_gigaShield.begin( &( g_game.screen ) );
 }
 
 void loop()
@@ -30,5 +30,5 @@ void loop()
 
 void Screen_RenderBuffer( Screen_t* screen )
 {
-   g_gigaShield.drawScreen( screen );
+   g_gigaShield.drawScreen();
 }
