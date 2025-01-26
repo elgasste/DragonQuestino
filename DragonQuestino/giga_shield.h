@@ -2,9 +2,6 @@
 #if !defined( GIGA_SHIELD_H )
 #define GIGA_SHIELD_H
 
-#define GIGA_SHIELD_WIDTH  480
-#define GIGA_SHIELD_HEIGHT 800
-
 #include "Adafruit_GFX.h"
 #include "Arduino_H7_Video.h"
 

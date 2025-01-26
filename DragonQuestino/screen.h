@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+#define SCREEN_BUFFER_WIDTH        480
+#define SCREEN_BUFFER_HEIGHT       800
+#define SCREEN_BUFFER_PIXELS       384000
 #define VIEWPORT_BUFFER_WIDTH      256
 #define VIEWPORT_BUFFER_HEIGHT     240
 #define VIEWPORT_BUFFER_PIXELS     61440
