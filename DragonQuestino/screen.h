@@ -3,9 +3,9 @@
 
 #include "common.h"
 
-#define SCREEN_BUFFER_WIDTH      256
-#define SCREEN_BUFFER_HEIGHT     240
-#define SCREEN_BUFFER_PIXELS     61440    // 8 bpp
+#define VIEWPORT_BUFFER_WIDTH      256
+#define VIEWPORT_BUFFER_HEIGHT     240
+#define VIEWPORT_BUFFER_PIXELS     61440
 
 #define PALETTE_COLORS           256
 
@@ -13,7 +13,7 @@
 
 typedef struct Screen_t
 {
-   uint8_t buffer[SCREEN_BUFFER_PIXELS];
+   uint8_t buffer[VIEWPORT_BUFFER_PIXELS];
    uint16_t palette[PALETTE_COLORS];
 }
 Screen_t;

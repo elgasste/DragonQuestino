@@ -4,7 +4,7 @@ void Screen_Init( Screen_t* screen )
 {
    uint32_t i;
 
-   for ( i = 0; i < SCREEN_BUFFER_PIXELS; i++ )
+   for ( i = 0; i < VIEWPORT_BUFFER_PIXELS; i++ )
    {
       screen->buffer[i] = 0;
    }
@@ -32,7 +32,7 @@ void Screen_Wipe( Screen_t* screen, uint8_t paletteIndex )
 {
    uint32_t i;
 
-   for ( i = 0; i < SCREEN_BUFFER_PIXELS; i++ )
+   for ( i = 0; i < VIEWPORT_BUFFER_PIXELS; i++ )
    {
       screen->buffer[i] = paletteIndex;
    }

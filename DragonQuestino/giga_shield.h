@@ -19,6 +19,7 @@ class GigaShield : public Adafruit_GFX {
       // we have to implement this, even if it does nothing
       void drawPixel( int16_t x, int16_t y, uint16_t color ) { }
       void drawScreen();
+      uint16_t* getBuffer() { return _buffer; }
 
    private:
       void refreshThreadWorker();
