@@ -26,7 +26,7 @@ void Screen_RenderBuffer( Screen_t* screen )
    uint32_t i, color32;
    uint32_t* winBufferPos = g_globals.screenBuffer.memory;
 
-   for ( i = 0; i < VIEWPORT_BUFFER_PIXELS; i++ )
+   for ( i = 0; i < VIEWPORT_PIXELS; i++ )
    {
       color16 = screen->palette[*bufferPos];
       color32 = Convert565To32( color16 );

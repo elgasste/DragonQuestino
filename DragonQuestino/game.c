@@ -24,8 +24,8 @@ void Game_Init( Game_t* game )
 
    game->tileMapViewport.x = 0;
    game->tileMapViewport.y = 0;
-   game->tileMapViewport.w = VIEWPORT_BUFFER_WIDTH;
-   game->tileMapViewport.h = VIEWPORT_BUFFER_HEIGHT;
+   game->tileMapViewport.w = VIEWPORT_WIDTH;
+   game->tileMapViewport.h = VIEWPORT_HEIGHT;
 
    game->player.sprite.position.x = (float)( TILE_SIZE * 12 );
    game->player.sprite.position.y = (float)( TILE_SIZE * 8 );
@@ -226,19 +226,19 @@ internal void Game_DrawTileMap( Game_t* game )
 
    firstTileX = game->tileMapViewport.x / TILE_SIZE;
    firstTileY = game->tileMapViewport.y / TILE_SIZE;
-   lastTileX = ( game->tileMapViewport.x + VIEWPORT_BUFFER_WIDTH ) / TILE_SIZE;
-   lastTileY = ( game->tileMapViewport.y + VIEWPORT_BUFFER_HEIGHT ) / TILE_SIZE;
+   lastTileX = ( game->tileMapViewport.x + VIEWPORT_WIDTH ) / TILE_SIZE;
+   lastTileY = ( game->tileMapViewport.y + VIEWPORT_HEIGHT ) / TILE_SIZE;
    tileOffsetX = game->tileMapViewport.x % TILE_SIZE;
    tileOffsetY = game->tileMapViewport.y % TILE_SIZE;
 
    for ( tileY = firstTileY, screenY = 0; tileY <= lastTileY; tileY++ )
    {
-      tileHeight = ( tileY == firstTileY ) ? TILE_SIZE - tileOffsetY : ( tileY == lastTileY ) ? ( game->tileMapViewport.y + VIEWPORT_BUFFER_HEIGHT ) % TILE_SIZE : TILE_SIZE;
+      tileHeight = ( tileY == firstTileY ) ? TILE_SIZE - tileOffsetY : ( tileY == lastTileY ) ? ( game->tileMapViewport.y + VIEWPORT_HEIGHT ) % TILE_SIZE : TILE_SIZE;
 
       for ( tileX = firstTileX, screenX = 0; tileX <= lastTileX; tileX++ )
       {
          textureIndex = GET_TILETEXTUREINDEX( game->tileMap.tiles[( tileY * TILE_COUNT_X ) + tileX] );
-         tileWidth = ( tileX == firstTileX ) ? TILE_SIZE - tileOffsetX : ( tileX == lastTileX ) ? ( game->tileMapViewport.x + VIEWPORT_BUFFER_WIDTH ) % TILE_SIZE : TILE_SIZE;
+         tileWidth = ( tileX == firstTileX ) ? TILE_SIZE - tileOffsetX : ( tileX == lastTileX ) ? ( game->tileMapViewport.x + VIEWPORT_WIDTH ) % TILE_SIZE : TILE_SIZE;
 
          Game_DrawTextureSection( game, game->tileMap.textures[textureIndex].memory, TILE_SIZE,
                                   tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
@@ -262,8 +262,8 @@ internal void Game_DrawSprites( Game_t* game )
    uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
    uint32_t tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
    uint32_t ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
-   uint32_t tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > VIEWPORT_BUFFER_WIDTH ) ? ( VIEWPORT_BUFFER_WIDTH - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
-   uint32_t th = ( ( sy + SPRITE_TEXTURE_SIZE ) > VIEWPORT_BUFFER_HEIGHT ) ? ( VIEWPORT_BUFFER_HEIGHT - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
+   uint32_t tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > VIEWPORT_WIDTH ) ? ( VIEWPORT_WIDTH - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
+   uint32_t th = ( ( sy + SPRITE_TEXTURE_SIZE ) > VIEWPORT_HEIGHT ) ? ( VIEWPORT_HEIGHT - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
    uint32_t sxu = ( sx < 0 ) ? 0 : sx;
    uint32_t syu = ( sy < 0 ) ? 0 : sy;
 
@@ -276,7 +276,7 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
 {
    uint32_t x, y;
    uint8_t* textureBufferPos = memory + ( ty * stride ) + tx;
-   uint8_t* screenBufferPos = game->screen.buffer + ( sy * VIEWPORT_BUFFER_WIDTH ) + sx;
+   uint8_t* screenBufferPos = game->screen.buffer + ( sy * VIEWPORT_WIDTH ) + sx;
 
    for ( y = 0; y < th; y++ )
    {
@@ -294,13 +294,13 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
          }
 
          textureBufferPos += tx + ( stride - ( tx + tw ) );
-         screenBufferPos += ( VIEWPORT_BUFFER_WIDTH - tw );
+         screenBufferPos += ( VIEWPORT_WIDTH - tw );
       }
       else
       {
          memcpy( screenBufferPos, textureBufferPos, tw );
          textureBufferPos += tw + tx + ( stride - ( tx + tw ) );
-         screenBufferPos += VIEWPORT_BUFFER_WIDTH;
+         screenBufferPos += VIEWPORT_WIDTH;
       }
    }
 }

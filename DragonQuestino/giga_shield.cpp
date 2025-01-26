@@ -37,21 +37,21 @@ void GigaShield::refreshThreadWorker()
    {
       rtos::ThisThread::flags_wait_any( 0x1 );
 
-      int shieldXPadding = ( SCREEN_BUFFER_WIDTH - VIEWPORT_BUFFER_WIDTH ) / 2;
-      int shieldYPadding = ( SCREEN_BUFFER_HEIGHT - VIEWPORT_BUFFER_HEIGHT ) / 2;
+      int shieldXPadding = ( SCREEN_BUFFER_WIDTH - VIEWPORT_WIDTH ) / 2;
+      int shieldYPadding = ( SCREEN_BUFFER_HEIGHT - VIEWPORT_HEIGHT ) / 2;
       uint8_t* screenBufferPos = _screen->buffer;
       uint16_t* shieldBufferPos = _buffer + ( ( shieldYPadding * SCREEN_BUFFER_WIDTH ) + shieldXPadding );
 
-      for ( int i = 0, col = 0; i < VIEWPORT_BUFFER_PIXELS; i++ )
+      for ( int i = 0, col = 0; i < VIEWPORT_PIXELS; i++ )
       {
          *shieldBufferPos = _screen->palette[*screenBufferPos];
          screenBufferPos++;
          shieldBufferPos++;
          col++;
 
-         if ( col == VIEWPORT_BUFFER_WIDTH )
+         if ( col == VIEWPORT_WIDTH )
          {
-            shieldBufferPos += ( SCREEN_BUFFER_WIDTH - VIEWPORT_BUFFER_WIDTH );
+            shieldBufferPos += ( SCREEN_BUFFER_WIDTH - VIEWPORT_WIDTH );
             col = 0;
          }
       }
