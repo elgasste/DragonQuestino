@@ -3,9 +3,9 @@
 
 #include "common.h"
 
-#define SCREEN_BUFFER_WIDTH      320
+#define SCREEN_BUFFER_WIDTH      256
 #define SCREEN_BUFFER_HEIGHT     240
-#define SCREEN_BUFFER_PIXELS     76800    // 8 bpp
+#define SCREEN_BUFFER_PIXELS     61440    // 8 bpp
 
 #define PALETTE_COLORS           256
 
