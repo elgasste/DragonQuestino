@@ -48,16 +48,16 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
       FatalError( "failed to register window class." );
    }
 
-   expectedWindowRect.right = VIEWPORT_WIDTH;
-   expectedWindowRect.bottom = VIEWPORT_HEIGHT;
+   expectedWindowRect.right = PLAY_AREA_WIDTH;
+   expectedWindowRect.bottom = PLAY_AREA_HEIGHT;
 
    if ( !AdjustWindowRect( &expectedWindowRect, windowStyle, 0 ) )
    {
       FatalError( "failed to adjust window rect." );
    }
 
-   clientPaddingRight = ( expectedWindowRect.right - expectedWindowRect.left ) - VIEWPORT_WIDTH;
-   clientPaddingTop = ( expectedWindowRect.bottom - expectedWindowRect.top ) - VIEWPORT_HEIGHT;
+   clientPaddingRight = ( expectedWindowRect.right - expectedWindowRect.left ) - PLAY_AREA_WIDTH;
+   clientPaddingTop = ( expectedWindowRect.bottom - expectedWindowRect.top ) - PLAY_AREA_HEIGHT;
 
    g_globals.hWndMain = CreateWindowExA( 0,
                                          mainWindowClass.lpszClassName,
@@ -65,8 +65,8 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
                                          windowStyle,
                                          CW_USEDEFAULT,
                                          CW_USEDEFAULT,
-                                         (int)( VIEWPORT_WIDTH * GRAPHICS_SCALE ) + clientPaddingRight,
-                                         (int)( VIEWPORT_HEIGHT * GRAPHICS_SCALE ) + clientPaddingTop,
+                                         (int)( PLAY_AREA_WIDTH * GRAPHICS_SCALE ) + clientPaddingRight,
+                                         (int)( PLAY_AREA_HEIGHT * GRAPHICS_SCALE ) + clientPaddingTop,
                                          0,
                                          0,
                                          hInstance,
@@ -85,7 +85,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
                                   DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS,
                                   "Consolas" );
 
-   WinPixelBuffer_Init( &( g_globals.screenBuffer ), VIEWPORT_WIDTH, VIEWPORT_HEIGHT );
+   WinPixelBuffer_Init( &( g_globals.screenBuffer ), PLAY_AREA_WIDTH, PLAY_AREA_HEIGHT );
    g_globals.bmpInfo.bmiHeader.biSize = sizeof( BITMAPINFOHEADER );
    g_globals.bmpInfo.bmiHeader.biWidth = g_globals.screenBuffer.w;
    g_globals.bmpInfo.bmiHeader.biHeight = -(LONG)( g_globals.screenBuffer.h );
@@ -238,8 +238,8 @@ internal void RenderScreen()
    HBITMAP bmMem;
    HANDLE hOld;
    PAINTSTRUCT ps;
-   int winWidth = (int)( VIEWPORT_WIDTH * GRAPHICS_SCALE );
-   int winHeight = (int)( VIEWPORT_HEIGHT * GRAPHICS_SCALE );
+   int winWidth = (int)( PLAY_AREA_WIDTH * GRAPHICS_SCALE );
+   int winHeight = (int)( PLAY_AREA_HEIGHT * GRAPHICS_SCALE );
 
    dc = BeginPaint( g_globals.hWndMain, &ps );
 
@@ -251,7 +251,7 @@ internal void RenderScreen()
    // actually draw everything
    StretchDIBits(
       dcMem,
-      0, 0, (int)( VIEWPORT_WIDTH * GRAPHICS_SCALE ), (int)( VIEWPORT_HEIGHT * GRAPHICS_SCALE ), // dest
+      0, 0, (int)( PLAY_AREA_WIDTH * GRAPHICS_SCALE ), (int)( PLAY_AREA_HEIGHT * GRAPHICS_SCALE ), // dest
       0, 0, g_globals.screenBuffer.w, g_globals.screenBuffer.h, // src
       g_globals.screenBuffer.memory,
       &( g_globals.bmpInfo ),
