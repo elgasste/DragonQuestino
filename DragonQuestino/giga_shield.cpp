@@ -17,14 +17,13 @@ GigaShield::~GigaShield()
    }
 }
 
-void GigaShield::begin( Screen_t* screen )
+void GigaShield::begin()
 {
-   _screen = screen;
    _display = new Arduino_H7_Video( SCREEN_WIDTH, SCREEN_HEIGHT, GigaDisplayShield );
    _display->begin();
    _buffer = (uint16_t*)ea_malloc( SCREEN_WIDTH * SCREEN_HEIGHT * 2 );
 
-   // TODO: add some kind of cool border, like a TV screen or something
+   // TODO: add some kind of cool border around the play area, like a big CRT TV or something
    memset( (void*)_buffer, 0, SCREEN_PIXELS * 2 );
 
    _refreshThread = new rtos::Thread( osPriorityHigh );
@@ -36,26 +35,6 @@ void GigaShield::refreshThreadWorker()
    while ( 1 )
    {
       rtos::ThisThread::flags_wait_any( 0x1 );
-
-      int shieldXPadding = ( SCREEN_WIDTH - VIEWPORT_WIDTH ) / 2;
-      int shieldYPadding = ( SCREEN_HEIGHT - VIEWPORT_HEIGHT ) / 2;
-      uint8_t* screenBufferPos = _screen->buffer;
-      uint16_t* shieldBufferPos = _buffer + ( ( shieldYPadding * SCREEN_WIDTH ) + shieldXPadding );
-
-      for ( int i = 0, col = 0; i < VIEWPORT_PIXELS; i++ )
-      {
-         *shieldBufferPos = _screen->palette[*screenBufferPos];
-         screenBufferPos++;
-         shieldBufferPos++;
-         col++;
-
-         if ( col == VIEWPORT_WIDTH )
-         {
-            shieldBufferPos += ( SCREEN_WIDTH - VIEWPORT_WIDTH );
-            col = 0;
-         }
-      }
-
       dsi_lcdDrawImage( (void *)_buffer, (void *)( dsi_getActiveFrameBuffer() ), SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
    }
 }

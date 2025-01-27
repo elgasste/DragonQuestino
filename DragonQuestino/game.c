@@ -12,9 +12,9 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
                                        uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
                                        uint32_t sx, uint32_t sy, Bool_t transparency );
 
-void Game_Init( Game_t* game )
+void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
-   Screen_Init( &( game->screen ) );
+   Screen_Init( &( game->screen ), screenBuffer );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 0 );
    ActiveSprite_LoadPlayer( &( game->player.sprite ) );
@@ -276,17 +276,17 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
 {
    uint32_t x, y;
    uint8_t* textureBufferPos = memory + ( ty * stride ) + tx;
-   uint8_t* screenBufferPos = game->screen.buffer + ( sy * PLAY_AREA_WIDTH ) + sx;
+   uint16_t* screenBufferPos = game->screen.playAreaBufferPos + ( sy * SCREEN_WIDTH ) + sx;
 
-   for ( y = 0; y < th; y++ )
+   if ( transparency )
    {
-      if ( transparency )
+      for ( y = 0; y < th; y++ )
       {
          for ( x = 0; x < tw; x++ )
          {
             if ( *textureBufferPos != TRANSPARENT_COLOR_INDEX )
             {
-               *screenBufferPos = *textureBufferPos;
+               *screenBufferPos = game->screen.palette[*textureBufferPos];
             }
 
             textureBufferPos++;
@@ -294,13 +294,22 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
          }
 
          textureBufferPos += tx + ( stride - ( tx + tw ) );
-         screenBufferPos += ( PLAY_AREA_WIDTH - tw );
+         screenBufferPos += ( SCREEN_WIDTH - tw );
       }
-      else
+   }
+   else
+   {
+      for ( y = 0; y < th; y++ )
       {
-         memcpy( screenBufferPos, textureBufferPos, tw );
-         textureBufferPos += tw + tx + ( stride - ( tx + tw ) );
-         screenBufferPos += PLAY_AREA_WIDTH;
+         for ( x = 0; x < tw; x++ )
+         {
+            *screenBufferPos = game->screen.palette[*textureBufferPos];
+            textureBufferPos++;
+            screenBufferPos++;
+         }
+
+         textureBufferPos += tx + ( stride - ( tx + tw ) );
+         screenBufferPos += ( SCREEN_WIDTH - tw );
       }
    }
 }

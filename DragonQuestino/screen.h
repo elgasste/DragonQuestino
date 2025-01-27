@@ -16,7 +16,8 @@
 
 typedef struct Screen_t
 {
-   uint8_t buffer[PLAY_AREA_PIXELS];
+   uint16_t* screenBuffer;
+   uint16_t* playAreaBufferPos;
    uint16_t palette[PALETTE_COLORS];
 }
 Screen_t;
@@ -25,7 +26,7 @@ Screen_t;
 extern "C" {
 #endif
 
-void Screen_Init( Screen_t* screen );
+void Screen_Init( Screen_t* screen, uint16_t* screenBuffer );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint8_t* paletteIndex );
 void Screen_Wipe( Screen_t* screen, uint8_t paletteIndex );
 
