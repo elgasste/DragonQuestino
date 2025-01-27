@@ -30,7 +30,7 @@ Game_t;
 extern "C" {
 #endif
 
-void Game_Init( Game_t* game );
+void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 

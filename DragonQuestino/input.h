@@ -3,11 +3,10 @@
 
 #include "common.h"
 
-// TODO: these aren't defined for the Giga R1, figure that out
-// #define PIN_ANALOG_X          A15
-// #define PIN_ANALOG_Y          A14
-#define PIN_A_BUTTON          50
-#define PIN_B_BUTTON          52
+#define PIN_ANALOG_X          A7
+#define PIN_ANALOG_Y          A6
+#define PIN_A_BUTTON          51
+#define PIN_B_BUTTON          53
 
 // the analog stick ranges from 0 to 1024
 #define ANALOG_THRESHOLD_LOW  200
