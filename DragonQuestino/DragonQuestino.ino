@@ -17,6 +17,9 @@ void setup()
    Serial.begin( SERIAL_BAUD );
 #endif
 
+   pinMode( PIN_A_BUTTON, INPUT_PULLUP );
+   pinMode( PIN_B_BUTTON, INPUT_PULLUP );
+
    g_gigaShield.begin();
    Game_Init( &g_game, g_gigaShield.getBuffer() );
    g_gigaShield.setScreen( &( g_game.screen ) );
