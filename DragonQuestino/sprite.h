@@ -20,7 +20,7 @@ SpriteTexture_t;
 typedef struct StaticSprite_t
 {
    SpriteTexture_t texture;
-   Vector2f_t position;
+   Vector2u32_t position;
 }
 StaticSprite_t;
 

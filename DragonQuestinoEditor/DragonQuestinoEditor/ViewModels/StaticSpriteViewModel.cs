@@ -15,6 +15,13 @@ namespace DragonQuestinoEditor.ViewModels
          private set => SetProperty( ref _textureIndex, value );
       }
 
+      private int _tileIndex;
+      public int TileIndex
+      {
+         get => _tileIndex;
+         private set => SetProperty( ref _tileIndex, value );
+      }
+
       public BitmapSource? Image => _textureProvider?.GetImageFromIndex( TextureIndex );
 
       private bool _isPassable;
@@ -33,6 +40,7 @@ namespace DragonQuestinoEditor.ViewModels
       public StaticSpriteViewModel( StaticSpriteSaveData saveData )
       {
          SetTextureIndex( saveData.TextureIndex );
+         _tileIndex = saveData.TileIndex;
          _isPassable = saveData.IsPassable;
       }
 

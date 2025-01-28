@@ -110,7 +110,18 @@ namespace DragonQuestinoEditor.FileOps
             }
 
             WriteText( fs, "         tileMap->activeSpriteCount = 0;\n" );
-            WriteText( fs, "         tileMap->staticSpriteCount = 0;\n" );
+            WriteText( fs, string.Format( "         tileMap->staticSpriteCount = {0};\n", tileMap.StaticSprites.Count ) );
+
+            for ( int i = 0; i < tileMap.StaticSprites.Count; i++ )
+            {
+               var sprite = tileMap.StaticSprites[i];
+               int xPos = ( sprite.TileIndex % tileMap.TilesX ) * Constants.SpriteFrameSize;
+               int yPos = ( sprite.TileIndex / tileMap.TilesX ) * Constants.SpriteFrameSize;
+
+               WriteText( fs, string.Format( "         Sprite_LoadStatic( &( tileMap->staticSprites[{0}] ), {1} );\n", i, sprite.TextureIndex ) );
+               WriteText( fs, string.Format( "         tileMap->staticSprites[{0}].position.x = {1};\n", i, xPos ) );
+               WriteText( fs, string.Format( "         tileMap->staticSprites[{0}].position.y = {1};\n", i, yPos ) );
+            }
 
             var packedTiles = new List<UInt32>( ( tileMap.TilesX * tileMap.TilesY ) / 2 );
             var indexCounts = new Dictionary<UInt32, int>();

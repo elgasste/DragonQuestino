@@ -1,5 +1,6 @@
 #include "game.h"
 #include "physics.h"
+#include "math.h"
 
 #define DIAGONAL_SCALAR    0.707f
 
@@ -7,7 +8,8 @@ internal void Game_HandleInput( Game_t* game );
 internal void Game_UpdateTileMapViewport( Game_t* game );
 internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal );
 internal void Game_DrawTileMap( Game_t* game );
-internal void Game_DrawSprites( Game_t* game );
+internal void Game_DrawStaticSprites( Game_t* game );
+internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t stride,
                                        uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
                                        uint32_t sx, uint32_t sy, Bool_t transparency );
@@ -63,7 +65,8 @@ void Game_Tic( Game_t* game )
          Sprite_Tic( &( game->player.sprite ) );
          Game_UpdateTileMapViewport( game );
          Game_DrawTileMap( game );
-         Game_DrawSprites( game );
+         Game_DrawStaticSprites( game );
+         Game_DrawPlayer( game );
       }
    }
    
@@ -252,11 +255,38 @@ internal void Game_DrawTileMap( Game_t* game )
    }
 }
 
-internal void Game_DrawSprites( Game_t* game )
+internal void Game_DrawStaticSprites( Game_t* game )
+{
+   uint32_t i, tx, ty, tw, th, sxu, syu;
+   int32_t sx, sy;
+   StaticSprite_t* sprite;
+
+   for ( i = 0; i < game->tileMap.staticSpriteCount; i++ )
+   {
+      sprite = &( game->tileMap.staticSprites[i] );
+      sx = sprite->position.x - game->tileMapViewport.x;
+      sy = sprite->position.y - game->tileMapViewport.y;
+
+      if ( Math_RectsIntersect32( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
+                                  game->tileMapViewport.x, game->tileMapViewport.y, game->tileMapViewport.w, game->tileMapViewport.h ) )
+      {
+         tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
+         ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
+         tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > TILEMAP_VIEWPORT_WIDTH ) ? ( TILEMAP_VIEWPORT_WIDTH - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
+         th = ( ( sy + SPRITE_TEXTURE_SIZE ) > TILEMAP_VIEWPORT_HEIGHT ) ? ( TILEMAP_VIEWPORT_HEIGHT - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
+         sxu = ( sx < 0 ) ? 0 : sx;
+         syu = ( sy < 0 ) ? 0 : sy;
+
+         Game_DrawTextureSection( game, sprite->texture.memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
+      }
+   }
+}
+
+internal void Game_DrawPlayer( Game_t* game )
 {
    ActiveSprite_t* sprite = &( game->player.sprite );
-   int32_t wx = (int32_t)( game->player.sprite.position.x ) + game->player.spriteOffset.x;
-   int32_t wy = (int32_t)( game->player.sprite.position.y ) + game->player.spriteOffset.y;
+   int32_t wx = (int32_t)( sprite->position.x ) + game->player.spriteOffset.x;
+   int32_t wy = (int32_t)( sprite->position.y ) + game->player.spriteOffset.y;
    int32_t sx = wx - game->tileMapViewport.x;
    int32_t sy = wy - game->tileMapViewport.y;
    uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;

@@ -23,6 +23,7 @@
     <ClInclude Include="..\..\DragonQuestino\common.h" />
     <ClInclude Include="..\..\DragonQuestino\game.h" />
     <ClInclude Include="..\..\DragonQuestino\input.h" />
+    <ClInclude Include="..\..\DragonQuestino\math.h" />
     <ClInclude Include="..\..\DragonQuestino\physics.h" />
     <ClInclude Include="..\..\DragonQuestino\player.h" />
     <ClInclude Include="..\..\DragonQuestino\screen.h" />
@@ -36,6 +37,7 @@
     <ClCompile Include="..\..\DragonQuestino\game.c" />
     <ClCompile Include="..\..\DragonQuestino\game_data.c" />
     <ClCompile Include="..\..\DragonQuestino\input.c" />
+    <ClCompile Include="..\..\DragonQuestino\math.c" />
     <ClCompile Include="..\..\DragonQuestino\physics.c" />
     <ClCompile Include="..\..\DragonQuestino\player.c" />
     <ClCompile Include="..\..\DragonQuestino\screen.c" />

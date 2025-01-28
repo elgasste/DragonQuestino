@@ -2130,7 +2130,10 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[1].destinationTileIndex = 481;
          tileMap->portals[1].arrivalDirection = (Direction_t)2;
          tileMap->activeSpriteCount = 0;
-         tileMap->staticSpriteCount = 0;
+         tileMap->staticSpriteCount = 1;
+         Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 0 );
+         tileMap->staticSprites[0].position.x = 192;
+         tileMap->staticSprites[0].position.y = 144;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x010C010C; }
          tiles32[426] = 0x01110111;
          tiles32[427] = 0x01110111;
