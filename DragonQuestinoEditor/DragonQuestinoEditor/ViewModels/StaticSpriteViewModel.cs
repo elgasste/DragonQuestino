@@ -24,24 +24,15 @@ namespace DragonQuestinoEditor.ViewModels
 
       public BitmapSource? Image => _textureProvider?.GetImageFromIndex( TextureIndex );
 
-      private bool _isPassable;
-      public bool IsPassable
-      {
-         get => _isPassable;
-         private set => SetProperty( ref _isPassable, value );
-      }
-
       public StaticSpriteViewModel( int index )
       {
          SetTextureIndex( index );
-         _isPassable = true;
       }
 
       public StaticSpriteViewModel( StaticSpriteSaveData saveData )
       {
          SetTextureIndex( saveData.TextureIndex );
          _tileIndex = saveData.TileIndex;
-         _isPassable = saveData.IsPassable;
       }
 
       public void SetTextureProvider( IStaticSpriteTextureProvider? provider ) => _textureProvider = provider;
@@ -49,7 +40,6 @@ namespace DragonQuestinoEditor.ViewModels
       public void SetTextureIndex( int index )
       {
          TextureIndex = index;
-         IsPassable = true;
          OnPropertyChanged( nameof( Image ) );
       }
    }

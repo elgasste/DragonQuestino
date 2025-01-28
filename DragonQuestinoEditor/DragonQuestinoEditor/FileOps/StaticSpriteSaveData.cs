@@ -6,7 +6,6 @@ namespace DragonQuestinoEditor.FileOps
    {
       public int TextureIndex { get; set; }
       public int TileIndex { get; set; }
-      public bool IsPassable { get; set; }
 
       public StaticSpriteSaveData() { }
 
@@ -14,7 +13,6 @@ namespace DragonQuestinoEditor.FileOps
       {
          TextureIndex = sprite.TextureIndex;
          TileIndex = sprite.TileIndex;
-         IsPassable = sprite.IsPassable;
       }
    }
 }
