@@ -6,7 +6,7 @@ namespace DragonQuestinoEditor.ViewModels
 {
    public class TileViewModel : ViewModelBase
    {
-      private ITileTextureProvider? _tileTextureProvider = null;
+      private ITileTextureProvider? _textureProvider = null;
 
       // TODO: allow updating this with the tile editor
       private readonly int[] _passableTextureIndexes = [
@@ -27,7 +27,7 @@ namespace DragonQuestinoEditor.ViewModels
          private set => SetProperty( ref _textureIndex, value );
       }
 
-      public BitmapSource? Image => _tileTextureProvider?.GetImageFromIndex( TextureIndex );
+      public BitmapSource? Image => _textureProvider?.GetImageFromIndex( TextureIndex );
 
       private bool _isPassable;
       public bool IsPassable
@@ -82,7 +82,7 @@ namespace DragonQuestinoEditor.ViewModels
          _isPassable = saveData.IsPassable;
       }
 
-      public void SetTileTextureProvider( ITileTextureProvider? provider ) => _tileTextureProvider = provider;
+      public void SetTextureProvider( ITileTextureProvider? provider ) => _textureProvider = provider;
 
       public void SetTextureIndex( int index )
       {

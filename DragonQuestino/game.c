@@ -1,5 +1,6 @@
 #include "game.h"
 #include "physics.h"
+#include "math.h"
 
 #define DIAGONAL_SCALAR    0.707f
 
@@ -7,7 +8,8 @@ internal void Game_HandleInput( Game_t* game );
 internal void Game_UpdateTileMapViewport( Game_t* game );
 internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal );
 internal void Game_DrawTileMap( Game_t* game );
-internal void Game_DrawSprites( Game_t* game );
+internal void Game_DrawStaticSprites( Game_t* game );
+internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t stride,
                                        uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
                                        uint32_t sx, uint32_t sy, Bool_t transparency );
@@ -17,7 +19,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 0 );
-   ActiveSprite_LoadPlayer( &( game->player.sprite ) );
+   Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
@@ -60,10 +62,11 @@ void Game_Tic( Game_t* game )
 
       if ( game->isSwappingTileMap == False )
       {
-         ActiveSprite_Tic( &( game->player.sprite ) );
+         Sprite_Tic( &( game->player.sprite ) );
          Game_UpdateTileMapViewport( game );
          Game_DrawTileMap( game );
-         Game_DrawSprites( game );
+         Game_DrawStaticSprites( game );
+         Game_DrawPlayer( game );
       }
    }
    
@@ -112,7 +115,7 @@ internal void Game_HandleInput( Game_t* game )
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
          {
-            ActiveSprite_SetDirection( playerSprite, Direction_Left );
+            Sprite_SetDirection( playerSprite, Direction_Left );
          }
 
          if ( upIsDown || downIsDown )
@@ -127,7 +130,7 @@ internal void Game_HandleInput( Game_t* game )
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
          {
-            ActiveSprite_SetDirection( playerSprite, Direction_Right );
+            Sprite_SetDirection( playerSprite, Direction_Right );
          }
 
          if ( upIsDown || downIsDown )
@@ -143,7 +146,7 @@ internal void Game_HandleInput( Game_t* game )
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
          {
-            ActiveSprite_SetDirection( playerSprite, Direction_Up );
+            Sprite_SetDirection( playerSprite, Direction_Up );
          }
 
          if ( leftIsDown || rightIsDown )
@@ -158,7 +161,7 @@ internal void Game_HandleInput( Game_t* game )
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
          {
-            ActiveSprite_SetDirection( playerSprite, Direction_Down );
+            Sprite_SetDirection( playerSprite, Direction_Down );
          }
 
          if ( leftIsDown || rightIsDown )
@@ -209,7 +212,7 @@ internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
    game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
 
-   ActiveSprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+   Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
 
    if ( Screen_GetPaletteIndexForColor( &( game->screen ), 0, &wipePaletteIndex ) )
    {
@@ -252,11 +255,38 @@ internal void Game_DrawTileMap( Game_t* game )
    }
 }
 
-internal void Game_DrawSprites( Game_t* game )
+internal void Game_DrawStaticSprites( Game_t* game )
+{
+   uint32_t i, tx, ty, tw, th, sxu, syu;
+   int32_t sx, sy;
+   StaticSprite_t* sprite;
+
+   for ( i = 0; i < game->tileMap.staticSpriteCount; i++ )
+   {
+      sprite = &( game->tileMap.staticSprites[i] );
+      sx = sprite->position.x - game->tileMapViewport.x;
+      sy = sprite->position.y - game->tileMapViewport.y;
+
+      if ( Math_RectsIntersect32( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
+                                  game->tileMapViewport.x, game->tileMapViewport.y, game->tileMapViewport.w, game->tileMapViewport.h ) )
+      {
+         tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
+         ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
+         tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > TILEMAP_VIEWPORT_WIDTH ) ? ( TILEMAP_VIEWPORT_WIDTH - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
+         th = ( ( sy + SPRITE_TEXTURE_SIZE ) > TILEMAP_VIEWPORT_HEIGHT ) ? ( TILEMAP_VIEWPORT_HEIGHT - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
+         sxu = ( sx < 0 ) ? 0 : sx;
+         syu = ( sy < 0 ) ? 0 : sy;
+
+         Game_DrawTextureSection( game, sprite->texture.memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
+      }
+   }
+}
+
+internal void Game_DrawPlayer( Game_t* game )
 {
    ActiveSprite_t* sprite = &( game->player.sprite );
-   int32_t wx = (int32_t)( game->player.sprite.position.x ) + game->player.spriteOffset.x;
-   int32_t wy = (int32_t)( game->player.sprite.position.y ) + game->player.spriteOffset.y;
+   int32_t wx = (int32_t)( sprite->position.x ) + game->player.spriteOffset.x;
+   int32_t wy = (int32_t)( sprite->position.y ) + game->player.spriteOffset.y;
    int32_t sx = wx - game->tileMapViewport.x;
    int32_t sy = wy - game->tileMapViewport.y;
    uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;

@@ -9,12 +9,14 @@ namespace DragonQuestinoEditor.FileOps
    public class DataSourceCodeWriter( Palette palette,
                                       TileSet tileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
-                                      ActiveSpriteSheet activeSpriteSheet )
+                                      ActiveSpriteSheet activeSpriteSheet,
+                                      StaticSpriteSheet staticSpriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
       private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
+      private readonly StaticSpriteSheet _staticSpriteSheet = staticSpriteSheet;
 
       public void WriteFile( string filePath )
       {
@@ -23,7 +25,8 @@ namespace DragonQuestinoEditor.FileOps
          WritePaletteFunction( fs );
          WriteTileTexturesFunction( fs );
          WriteTileMapFunction( fs );
-         WriteActiveSpriteFunctions( fs );
+         WriteActiveSpritesFunctions( fs );
+         WriteStaticSpritesFunction( fs );
       }
 
       private static void WriteHeaderSection( FileStream fs )
@@ -31,7 +34,6 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
          WriteText( fs, "#include \"screen.h\"\n" );
          WriteText( fs, "#include \"tile_map.h\"\n" );
-         WriteText( fs, "#include \"sprite_texture.h\"\n" );
       }
 
       private void WritePaletteFunction( FileStream fs )
@@ -108,7 +110,18 @@ namespace DragonQuestinoEditor.FileOps
             }
 
             WriteText( fs, "         tileMap->activeSpriteCount = 0;\n" );
-            WriteText( fs, "         tileMap->staticSpriteCount = 0;\n" );
+            WriteText( fs, string.Format( "         tileMap->staticSpriteCount = {0};\n", tileMap.StaticSprites.Count ) );
+
+            for ( int i = 0; i < tileMap.StaticSprites.Count; i++ )
+            {
+               var sprite = tileMap.StaticSprites[i];
+               int xPos = ( sprite.TileIndex % tileMap.TilesX ) * Constants.SpriteFrameSize;
+               int yPos = ( sprite.TileIndex / tileMap.TilesX ) * Constants.SpriteFrameSize;
+
+               WriteText( fs, string.Format( "         Sprite_LoadStatic( &( tileMap->staticSprites[{0}] ), {1} );\n", i, sprite.TextureIndex ) );
+               WriteText( fs, string.Format( "         tileMap->staticSprites[{0}].position.x = {1};\n", i, xPos ) );
+               WriteText( fs, string.Format( "         tileMap->staticSprites[{0}].position.y = {1};\n", i, yPos ) );
+            }
 
             var packedTiles = new List<UInt32>( ( tileMap.TilesX * tileMap.TilesY ) / 2 );
             var indexCounts = new Dictionary<UInt32, int>();
@@ -181,9 +194,9 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "}\n" );
       }
 
-      private void WriteActiveSpriteFunctions( FileStream fs )
+      private void WriteActiveSpritesFunctions( FileStream fs )
       {
-         WriteText( fs, "\nvoid ActiveSprite_LoadPlayer( ActiveSprite_t* sprite )\n" );
+         WriteText( fs, "\nvoid Sprite_LoadPlayer( ActiveSprite_t* sprite )\n" );
          WriteText( fs, "{\n" );
          WriteText( fs, "   int32_t i;\n" );
          WriteText( fs, "   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );\n\n" );
@@ -191,9 +204,9 @@ namespace DragonQuestinoEditor.FileOps
          var indexCounts = new Dictionary<UInt32, int>();
          var packedIndexes = new List<UInt32>();
 
-         for ( int i = 0; i < Constants.SpritePositionCount; i++ )
+         for ( int i = 0; i < Constants.ActiveSpritePositionCount; i++ )
          {
-            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
+            for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
                var pixelIndexes = _activeSpriteSheet.FramePaletteIndexes[i][j];
 
@@ -233,13 +246,11 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteText( fs, string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
 
-         for ( int i = 0, packedIndex = 0; i < Constants.SpritePositionCount; i++ )
+         for ( int i = 0, packedIndex = 0; i < Constants.ActiveSpritePositionCount; i++ )
          {
-            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
+            for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
-               WriteText( fs, string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j ) );
-
-               var pixelIndexes = _activeSpriteSheet.FramePaletteIndexes[i][j];
+               WriteText( fs, string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.ActiveSpriteFrameCount ) + j ) );
 
                for ( int k = 0, memoryIndex = 0; k < Constants.SpriteFramePixels; k += 4, memoryIndex++, packedIndex++ )
                {
@@ -251,13 +262,45 @@ namespace DragonQuestinoEditor.FileOps
             }
          }
 
-         WriteText( fs, "}\n\n" );
+         WriteText( fs, "}\n" );
 
          // TODO
-         WriteText( fs, "\nvoid ActiveSprite_LoadGeneric( ActiveSprite_t* sprite, uint32_t index )\n" );
+         WriteText( fs, "\nvoid Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )\n" );
          WriteText( fs, "{\n" );
          WriteText( fs, "   UNUSED_PARAM( sprite );\n" );
          WriteText( fs, "   UNUSED_PARAM( index );\n" );
+         WriteText( fs, "}\n" );
+      }
+
+      private void WriteStaticSpritesFunction( FileStream fs )
+      {
+         WriteText( fs, "\nvoid Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   uint32_t* mem32 = (uint32_t*)( sprite->texture.memory );\n\n" );
+         WriteText( fs, "   switch( index )\n" );
+         WriteText( fs, "   {\n" );
+
+         for ( int i = 0; i < _staticSpriteSheet.Bitmaps.Count; i++ )
+         {
+            WriteText( fs, string.Format( "      case {0}:\n", i ) );
+            
+            var pixelIndexes = _staticSpriteSheet.PaletteIndexes[i];
+
+            for ( int k = 0, memoryIndex = 0; k < Constants.SpriteFramePixels; k += 4, memoryIndex++ )
+            {
+               var index0 = (UInt32)( pixelIndexes[k + 0] );
+               var index1 = (UInt32)( pixelIndexes[k + 1] );
+               var index2 = (UInt32)( pixelIndexes[k + 2] );
+               var index3 = (UInt32)( pixelIndexes[k + 3] );
+               var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
+
+               WriteText( fs, string.Format( "         mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) ) );
+            }
+
+            WriteText( fs, "         break;\n" );
+         }
+
+         WriteText( fs, "   }\n" );
          WriteText( fs, "}\n" );
       }
 

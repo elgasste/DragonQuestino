@@ -14,6 +14,7 @@ namespace DragonQuestinoEditor.ViewModels
       private readonly Palette _palette;
       private readonly TileSet _tileSet;
       private readonly ActiveSpriteSheet _playerSpriteSheet;
+      private readonly StaticSpriteSheet _staticSpriteSheet;
 
       public ObservableCollection<TileMapViewModel> TileMaps { get; } = [];
 
@@ -156,6 +157,7 @@ namespace DragonQuestinoEditor.ViewModels
          _palette = new Palette();
          _tileSet = new TileSet( Constants.TileTexturesFilePath, _palette );
          _playerSpriteSheet = new ActiveSpriteSheet( Constants.PlayerSpriteFilePath, _palette );
+         _staticSpriteSheet = new StaticSpriteSheet( Constants.StaticSpriteSheetFilePath, _palette );
 
          for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
@@ -185,7 +187,7 @@ namespace DragonQuestinoEditor.ViewModels
          {
             foreach( var tile in tileMap.Tiles )
             {
-               tile.SetTileTextureProvider( _tileSet );
+               tile.SetTextureProvider( _tileSet );
             }
          }
 
@@ -242,7 +244,7 @@ namespace DragonQuestinoEditor.ViewModels
 
             foreach ( var tile in newTileMap.Tiles )
             {
-               tile.SetTileTextureProvider( _tileSet );
+               tile.SetTextureProvider( _tileSet );
             }
 
             TileMaps.Add( newTileMap );
@@ -257,7 +259,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void WriteGameData()
       {
-         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileMaps, _playerSpriteSheet );
+         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileMaps, _playerSpriteSheet, _staticSpriteSheet );
          writer.WriteFile( Constants.DataSourceFilePath );
          MessageBox.Show( "Game data file has been written!" );
       }

@@ -5,6 +5,7 @@
       public const string TileTexturesFilePath = "..\\..\\..\\..\\..\\Assets\\tile_textures.png";
       public const string EditorSaveDataFilePath = "..\\..\\..\\..\\..\\Assets\\editor_save.json";
       public const string PlayerSpriteFilePath = "..\\..\\..\\..\\..\\Assets\\player_sprite.png";
+      public const string StaticSpriteSheetFilePath = "..\\..\\..\\..\\..\\Assets\\static_sprites.png";
       public const string DataSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\game_data.c";
 
       public const int PaletteSize = 256;
@@ -27,8 +28,8 @@
 
       public const int SpriteFrameSize = 16;
       public const int SpriteFramePixels = 256;
-      public const int SpriteFrameCount = 2;
-      public const int SpritePositionCount = 4;
+      public const int ActiveSpriteFrameCount = 2;
+      public const int ActiveSpritePositionCount = 4;
 
       // bits 7-8
       public static readonly UInt32[] TileSetIndexWalkSpeeds = [

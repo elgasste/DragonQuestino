@@ -97,7 +97,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
    Game_Init( &( g_globals.game ), g_globals.screenBuffer.memory16 );
    g_globals.shutdown = False;
-   g_debugFlags.showDiagnostics = False;
+   g_debugFlags.showDiagnostics = True;
    g_debugFlags.noClip = False;
    g_debugFlags.fastWalk = False;
 

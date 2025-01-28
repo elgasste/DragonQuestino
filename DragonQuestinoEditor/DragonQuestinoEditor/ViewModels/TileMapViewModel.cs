@@ -6,6 +6,7 @@ namespace DragonQuestinoEditor.ViewModels
    public class TileMapViewModel : ViewModelBase
    {
       public ObservableCollection<TileViewModel> Tiles { get; } = [];
+      public ObservableCollection<StaticSpriteViewModel> StaticSprites { get; } = [];
 
       public ObservableCollection<TilePortalViewModel> Portals { get; } = [];
 
@@ -67,6 +68,11 @@ namespace DragonQuestinoEditor.ViewModels
             TilePortalViewModel p = new( portal );
             Tiles[portal.SourceTileIndex].Portal = p;
             Portals.Add( p );
+         }
+
+         foreach ( var staticSprite in saveData.StaticSprites )
+         {
+            StaticSprites.Add( new( staticSprite ) );
          }
       }
    }

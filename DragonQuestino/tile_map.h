@@ -2,8 +2,7 @@
 #define TILE_MAP_H
 
 #include "common.h"
-#include "active_sprite.h"
-#include "static_sprite.h"
+#include "sprite.h"
 
 #define TILE_SIZE                      16
 #define TILE_TEXTURE_BYTES             256   // 8 bpp
