@@ -10,6 +10,7 @@ namespace DragonQuestinoEditor.FileOps
       public int TilesX { get; set; }
       public int TilesY { get; set; }
       public List<TilePortalSaveData> Portals { get; set; } = [];
+      public List<StaticSpriteSaveData> StaticSprites { get; set; } = [];
 
       public TileMapSaveData() { }
 
@@ -28,6 +29,11 @@ namespace DragonQuestinoEditor.FileOps
          foreach ( var portal in tileMap.Portals )
          {
             Portals.Add( new( portal ) );
+         }
+
+         foreach ( var staticSprite in tileMap.StaticSprites )
+         {
+            StaticSprites.Add( new( staticSprite ) );
          }
       }
    }

@@ -187,7 +187,7 @@ namespace DragonQuestinoEditor.ViewModels
          {
             foreach( var tile in tileMap.Tiles )
             {
-               tile.SetTileTextureProvider( _tileSet );
+               tile.SetTextureProvider( _tileSet );
             }
          }
 
@@ -244,7 +244,7 @@ namespace DragonQuestinoEditor.ViewModels
 
             foreach ( var tile in newTileMap.Tiles )
             {
-               tile.SetTileTextureProvider( _tileSet );
+               tile.SetTextureProvider( _tileSet );
             }
 
             TileMaps.Add( newTileMap );

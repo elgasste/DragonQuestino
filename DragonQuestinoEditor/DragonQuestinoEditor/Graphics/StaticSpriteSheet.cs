@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.Graphics
 {
-   public class StaticSpriteSheet
+   public class StaticSpriteSheet : IStaticSpriteTextureProvider
    {
       private readonly Palette _palette;
       private readonly List<WriteableBitmap> _bitmaps = [];
@@ -70,5 +70,7 @@ namespace DragonQuestinoEditor.Graphics
             }
          }
       }
+
+      public BitmapSource GetImageFromIndex( int index ) => _bitmaps[index];
    }
 }
