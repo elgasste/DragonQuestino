@@ -11,4 +11,15 @@ typedef struct StaticSprite_t
 }
 StaticSprite_t;
 
+#if defined( __cplusplus )
+extern "C" {
+#endif
+
+// game_data.c
+void StaticSprite_Load( StaticSprite_t* sprite, uint32_t index );
+
+#if defined( __cplusplus )
+}
+#endif
+
 #endif // STATIC_SPRITE_H

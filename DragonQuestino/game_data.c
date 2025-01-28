@@ -13938,8 +13938,13 @@ void ActiveSprite_LoadPlayer( ActiveSprite_t* sprite )
    mem32[61] = 0x0B0B0B0B;
 }
 
-
 void ActiveSprite_LoadGeneric( ActiveSprite_t* sprite, uint32_t index )
+{
+   UNUSED_PARAM( sprite );
+   UNUSED_PARAM( index );
+}
+
+void StaticSprite_Load( StaticSprite_t* sprite, uint32_t index )
 {
    UNUSED_PARAM( sprite );
    UNUSED_PARAM( index );

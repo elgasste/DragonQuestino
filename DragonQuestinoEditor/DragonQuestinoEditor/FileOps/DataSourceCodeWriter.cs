@@ -24,6 +24,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteTileTexturesFunction( fs );
          WriteTileMapFunction( fs );
          WriteActiveSpriteFunctions( fs );
+         WriteStaticSpriteFunctions( fs );
       }
 
       private static void WriteHeaderSection( FileStream fs )
@@ -251,10 +252,19 @@ namespace DragonQuestinoEditor.FileOps
             }
          }
 
-         WriteText( fs, "}\n\n" );
+         WriteText( fs, "}\n" );
 
          // TODO
          WriteText( fs, "\nvoid ActiveSprite_LoadGeneric( ActiveSprite_t* sprite, uint32_t index )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   UNUSED_PARAM( sprite );\n" );
+         WriteText( fs, "   UNUSED_PARAM( index );\n" );
+         WriteText( fs, "}\n" );
+      }
+
+      private void WriteStaticSpriteFunctions( FileStream fs )
+      {
+         WriteText( fs, "\nvoid StaticSprite_Load( StaticSprite_t* sprite, uint32_t index )\n" );
          WriteText( fs, "{\n" );
          WriteText( fs, "   UNUSED_PARAM( sprite );\n" );
          WriteText( fs, "   UNUSED_PARAM( index );\n" );
