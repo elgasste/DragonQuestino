@@ -24,7 +24,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteTileTexturesFunction( fs );
          WriteTileMapFunction( fs );
          WriteActiveSpriteFunctions( fs );
-         WriteStaticSpriteFunctions( fs );
+         WriteStaticSpriteFunction( fs );
       }
 
       private static void WriteHeaderSection( FileStream fs )
@@ -32,7 +32,6 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
          WriteText( fs, "#include \"screen.h\"\n" );
          WriteText( fs, "#include \"tile_map.h\"\n" );
-         WriteText( fs, "#include \"sprite_texture.h\"\n" );
       }
 
       private void WritePaletteFunction( FileStream fs )
@@ -184,7 +183,7 @@ namespace DragonQuestinoEditor.FileOps
 
       private void WriteActiveSpriteFunctions( FileStream fs )
       {
-         WriteText( fs, "\nvoid ActiveSprite_LoadPlayer( ActiveSprite_t* sprite )\n" );
+         WriteText( fs, "\nvoid Sprite_LoadPlayer( ActiveSprite_t* sprite )\n" );
          WriteText( fs, "{\n" );
          WriteText( fs, "   int32_t i;\n" );
          WriteText( fs, "   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );\n\n" );
@@ -255,17 +254,18 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "}\n" );
 
          // TODO
-         WriteText( fs, "\nvoid ActiveSprite_LoadGeneric( ActiveSprite_t* sprite, uint32_t index )\n" );
+         WriteText( fs, "\nvoid Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )\n" );
          WriteText( fs, "{\n" );
          WriteText( fs, "   UNUSED_PARAM( sprite );\n" );
          WriteText( fs, "   UNUSED_PARAM( index );\n" );
          WriteText( fs, "}\n" );
       }
 
-      private void WriteStaticSpriteFunctions( FileStream fs )
+      private void WriteStaticSpriteFunction( FileStream fs )
       {
-         WriteText( fs, "\nvoid StaticSprite_Load( StaticSprite_t* sprite, uint32_t index )\n" );
+         WriteText( fs, "\nvoid Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index )\n" );
          WriteText( fs, "{\n" );
+         // TODO
          WriteText( fs, "   UNUSED_PARAM( sprite );\n" );
          WriteText( fs, "   UNUSED_PARAM( index );\n" );
          WriteText( fs, "}\n" );

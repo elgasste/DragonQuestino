@@ -17,7 +17,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 0 );
-   ActiveSprite_LoadPlayer( &( game->player.sprite ) );
+   Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
@@ -60,7 +60,7 @@ void Game_Tic( Game_t* game )
 
       if ( game->isSwappingTileMap == False )
       {
-         ActiveSprite_Tic( &( game->player.sprite ) );
+         Sprite_Tic( &( game->player.sprite ) );
          Game_UpdateTileMapViewport( game );
          Game_DrawTileMap( game );
          Game_DrawSprites( game );
@@ -112,7 +112,7 @@ internal void Game_HandleInput( Game_t* game )
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
          {
-            ActiveSprite_SetDirection( playerSprite, Direction_Left );
+            Sprite_SetDirection( playerSprite, Direction_Left );
          }
 
          if ( upIsDown || downIsDown )
@@ -127,7 +127,7 @@ internal void Game_HandleInput( Game_t* game )
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
          {
-            ActiveSprite_SetDirection( playerSprite, Direction_Right );
+            Sprite_SetDirection( playerSprite, Direction_Right );
          }
 
          if ( upIsDown || downIsDown )
@@ -143,7 +143,7 @@ internal void Game_HandleInput( Game_t* game )
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
          {
-            ActiveSprite_SetDirection( playerSprite, Direction_Up );
+            Sprite_SetDirection( playerSprite, Direction_Up );
          }
 
          if ( leftIsDown || rightIsDown )
@@ -158,7 +158,7 @@ internal void Game_HandleInput( Game_t* game )
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
          {
-            ActiveSprite_SetDirection( playerSprite, Direction_Down );
+            Sprite_SetDirection( playerSprite, Direction_Down );
          }
 
          if ( leftIsDown || rightIsDown )
@@ -209,7 +209,7 @@ internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
    game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
 
-   ActiveSprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+   Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
 
    if ( Screen_GetPaletteIndexForColor( &( game->screen ), 0, &wipePaletteIndex ) )
    {

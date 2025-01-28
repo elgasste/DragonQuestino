@@ -2,7 +2,6 @@
 
 #include "screen.h"
 #include "tile_map.h"
-#include "sprite_texture.h"
 
 void Screen_LoadPalette( Screen_t* screen )
 {
@@ -13544,7 +13543,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
    }
 }
 
-void ActiveSprite_LoadPlayer( ActiveSprite_t* sprite )
+void Sprite_LoadPlayer( ActiveSprite_t* sprite )
 {
    int32_t i;
    uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );
@@ -13938,13 +13937,13 @@ void ActiveSprite_LoadPlayer( ActiveSprite_t* sprite )
    mem32[61] = 0x0B0B0B0B;
 }
 
-void ActiveSprite_LoadGeneric( ActiveSprite_t* sprite, uint32_t index )
+void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
 {
    UNUSED_PARAM( sprite );
    UNUSED_PARAM( index );
 }
 
-void StaticSprite_Load( StaticSprite_t* sprite, uint32_t index )
+void Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index )
 {
    UNUSED_PARAM( sprite );
    UNUSED_PARAM( index );

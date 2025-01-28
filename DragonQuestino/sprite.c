@@ -1,7 +1,7 @@
-#include "active_sprite.h"
+#include "sprite.h"
 #include "clock.h"
 
-void ActiveSprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction )
+void Sprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction )
 {
    if ( direction != sprite->direction )
    {
@@ -11,7 +11,7 @@ void ActiveSprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction )
    }
 }
 
-void ActiveSprite_Tic( ActiveSprite_t* sprite )
+void Sprite_Tic( ActiveSprite_t* sprite )
 {
    sprite->elapsedFrameSeconds += CLOCK_FRAME_SECONDS;
 
