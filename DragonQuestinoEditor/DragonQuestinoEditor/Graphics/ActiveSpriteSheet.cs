@@ -8,10 +8,10 @@ namespace DragonQuestinoEditor.Graphics
    public class ActiveSpriteSheet
    {
       private readonly Palette _palette;
-      private readonly List<List<WriteableBitmap>> _frameBitmaps = new( Constants.SpriteFrameCount );
+      private readonly List<List<WriteableBitmap>> _frameBitmaps = new( Constants.ActiveSpriteFrameCount );
 
       public List<List<WriteableBitmap>> FrameBitmaps => _frameBitmaps;
-      public List<List<List<int>>> FramePaletteIndexes = new( Constants.SpritePositionCount );
+      public List<List<List<int>>> FramePaletteIndexes = new( Constants.ActiveSpritePositionCount );
 
       public ActiveSpriteSheet( string imagePath, Palette palette )
       {
@@ -20,27 +20,27 @@ namespace DragonQuestinoEditor.Graphics
          var textFileStream = new FileStream( imagePath, FileMode.Open, FileAccess.Read, FileShare.Read );
          var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
          var bitmapSource = textDecoder.Frames[0];
-         BitmapUtils.CheckSpriteSheetBitmapFormat( bitmapSource );
+         BitmapUtils.CheckActiveSpriteSheetBitmapFormat( bitmapSource );
          ReadFrameBitmaps( bitmapSource );
          UpdatePalette();
       }
 
       private void ReadFrameBitmaps( BitmapSource bitmapSource )
       {
-         for ( int i = 0; i < Constants.SpritePositionCount; i++ )
+         for ( int i = 0; i < Constants.ActiveSpritePositionCount; i++ )
          {
-            _frameBitmaps.Add( new( Constants.SpriteFrameCount ) );
+            _frameBitmaps.Add( new( Constants.ActiveSpriteFrameCount ) );
 
             int stride = bitmapSource.PixelWidth * ( bitmapSource.Format.BitsPerPixel / 8 );
             var data = new byte[stride * bitmapSource.PixelHeight];
             bitmapSource.CopyPixels( data, stride, 0 );
 
-            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
+            for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
                _frameBitmaps[i].Add( new WriteableBitmap( Constants.SpriteFrameSize, Constants.SpriteFrameSize,
                                                           bitmapSource.DpiX, bitmapSource.DpiY,
                                                           bitmapSource.Format, bitmapSource.Palette ) );
-               int offset = ( Constants.SpriteFrameCount * Constants.SpriteFrameSize * i * Constants.SpriteFrameSize ) +
+               int offset = ( Constants.ActiveSpriteFrameCount * Constants.SpriteFrameSize * i * Constants.SpriteFrameSize ) +
                             ( j * Constants.SpriteFrameSize );
                _frameBitmaps[i][j].WritePixels( new Int32Rect( 0, 0, Constants.SpriteFrameSize, Constants.SpriteFrameSize ),
                                                 data, stride, offset );
@@ -50,11 +50,11 @@ namespace DragonQuestinoEditor.Graphics
 
       private void UpdatePalette()
       {
-         for ( int i = 0; i < Constants.SpritePositionCount; i++ )
+         for ( int i = 0; i < Constants.ActiveSpritePositionCount; i++ )
          {
-            FramePaletteIndexes.Add( new( Constants.SpriteFrameCount ) );
+            FramePaletteIndexes.Add( new( Constants.ActiveSpriteFrameCount ) );
 
-            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
+            for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
                FramePaletteIndexes[i].Add( new( Constants.SpriteFramePixels ) );
 
@@ -64,7 +64,7 @@ namespace DragonQuestinoEditor.Graphics
                }
             }
 
-            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
+            for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
                var frameBitmap = _frameBitmaps[i][j];
 

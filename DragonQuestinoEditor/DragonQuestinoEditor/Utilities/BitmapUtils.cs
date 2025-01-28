@@ -21,19 +21,35 @@ namespace DragonQuestinoEditor.Utilities
          }
       }
 
-      public static void CheckSpriteSheetBitmapFormat( BitmapSource bitmapSource )
+      public static void CheckActiveSpriteSheetBitmapFormat( BitmapSource bitmapSource )
       {
          if ( bitmapSource.Format != PixelFormats.Indexed8 )
          {
             throw new Exception( "Sprite image pixel format should be Indexed8" );
          }
-         else if ( bitmapSource.PixelWidth != ( Constants.SpriteFrameSize * Constants.SpriteFrameCount ) )
+         else if ( bitmapSource.PixelWidth != ( Constants.SpriteFrameSize * Constants.ActiveSpriteFrameCount ) )
          {
-            throw new Exception( string.Format( "Sprite image width should be {0}", Constants.SpriteFrameSize * Constants.SpriteFrameCount ) );
+            throw new Exception( string.Format( "Active sprite image width should be {0}", Constants.SpriteFrameSize * Constants.ActiveSpriteFrameCount ) );
          }
-         else if ( bitmapSource.PixelHeight != Constants.SpriteFrameSize * Constants.SpritePositionCount )
+         else if ( bitmapSource.PixelHeight != Constants.SpriteFrameSize * Constants.ActiveSpritePositionCount )
          {
-            throw new Exception( string.Format( "Sprite image height should be {0}", Constants.SpriteFrameSize * Constants.SpritePositionCount ) );
+            throw new Exception( string.Format( "Active sprite image height should be {0}", Constants.SpriteFrameSize * Constants.ActiveSpritePositionCount ) );
+         }
+      }
+
+      public static void CheckStaticSpriteSheetBitmapFormat( BitmapSource bitmapSource )
+      {
+         if ( bitmapSource.Format != PixelFormats.Indexed8 )
+         {
+            throw new Exception( "Sprite image pixel format should be Indexed8" );
+         }
+         else if ( bitmapSource.PixelWidth % Constants.SpriteFrameSize != 0 )
+         {
+            throw new Exception( string.Format( "Static sprite image width should be a multiple of {0}", Constants.SpriteFrameSize ) );
+         }
+         else if ( bitmapSource.PixelHeight != Constants.SpriteFrameSize )
+         {
+            throw new Exception( string.Format( "Sprite image height should be {0}", Constants.SpriteFrameSize ) );
          }
       }
    }

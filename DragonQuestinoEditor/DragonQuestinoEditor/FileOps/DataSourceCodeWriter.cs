@@ -191,9 +191,9 @@ namespace DragonQuestinoEditor.FileOps
          var indexCounts = new Dictionary<UInt32, int>();
          var packedIndexes = new List<UInt32>();
 
-         for ( int i = 0; i < Constants.SpritePositionCount; i++ )
+         for ( int i = 0; i < Constants.ActiveSpritePositionCount; i++ )
          {
-            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
+            for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
                var pixelIndexes = _activeSpriteSheet.FramePaletteIndexes[i][j];
 
@@ -233,11 +233,11 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteText( fs, string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
 
-         for ( int i = 0, packedIndex = 0; i < Constants.SpritePositionCount; i++ )
+         for ( int i = 0, packedIndex = 0; i < Constants.ActiveSpritePositionCount; i++ )
          {
-            for ( int j = 0; j < Constants.SpriteFrameCount; j++ )
+            for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
-               WriteText( fs, string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.SpriteFrameCount ) + j ) );
+               WriteText( fs, string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.ActiveSpriteFrameCount ) + j ) );
 
                var pixelIndexes = _activeSpriteSheet.FramePaletteIndexes[i][j];
 
