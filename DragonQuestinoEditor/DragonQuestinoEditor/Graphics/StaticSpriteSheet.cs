@@ -30,7 +30,7 @@ namespace DragonQuestinoEditor.Graphics
          int stride = bitmapSource.PixelWidth * ( bitmapSource.Format.BitsPerPixel / 8 );
          var data = new byte[stride * bitmapSource.PixelHeight];
          bitmapSource.CopyPixels( data, stride, 0 );
-         int spriteCount = bitmapSource.PixelWidth % Constants.SpriteFrameSize;
+         int spriteCount = bitmapSource.PixelWidth / Constants.SpriteFrameSize;
 
          for ( int i = 0; i < spriteCount; i++ )
          {
