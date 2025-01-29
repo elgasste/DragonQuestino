@@ -23,7 +23,12 @@ void GigaShield::begin()
    _display->begin();
    _buffer = (uint16_t*)ea_malloc( SCREEN_PIXELS * sizeof( uint16_t ) );
    memset( (void*)_buffer, 0, SCREEN_PIXELS * sizeof( uint16_t ) );
-   memset( (void*)( dsi_getActiveFrameBuffer() ), 0, GIGA_SHIELD_WIDTH * GIGA_SHIELD_HEIGHT * sizeof( uint16_t ) );
+   
+   uint16_t* b = (uint16_t*)( dsi_getActiveFrameBuffer() );
+   for ( int i = 0; i < GIGA_SHIELD_PIXELS; i++ )
+   {
+      b[i] = 0x4208; // dark grey-ish
+   }
 
    _refreshThread = new rtos::Thread( osPriorityHigh );
    _refreshThread->start( mbed::callback( this, &GigaShield::refreshThreadWorker ) );
@@ -38,7 +43,7 @@ void GigaShield::refreshThreadWorker()
       uint16_t* shieldBuffer = (uint16_t*)( dsi_getActiveFrameBuffer() );
       shieldBuffer += ( GIGA_SHIELD_WIDTH * ( ( GIGA_SHIELD_HEIGHT - SCREEN_HEIGHT ) / 2 ) ) + ( ( GIGA_SHIELD_WIDTH - SCREEN_WIDTH ) / 2 );
 
-      dsi_lcdDrawImage( (void *)_buffer, (void *)shieldBuffer, SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
+      dsi_lcdDrawImage( (void*)_buffer, (void*)shieldBuffer, SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
    }
 }
 

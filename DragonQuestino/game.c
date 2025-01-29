@@ -308,7 +308,6 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
    uint8_t* textureBufferPos = memory + ( ty * stride ) + tx;
    uint16_t* screenBufferPos = game->screen.buffer + ( sy * SCREEN_WIDTH ) + sx;
 
-   // MUFFINS: something's wrong in here, figure that out (look at older code?)
    if ( transparency )
    {
       for ( y = 0; y < th; y++ )
