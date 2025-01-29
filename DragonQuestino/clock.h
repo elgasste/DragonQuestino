@@ -10,6 +10,7 @@
 typedef struct Clock_t
 {
    uint32_t frameStartMicro;
+   uint32_t lagFrameCount;
 
 #if defined( VISUAL_STUDIO_DEV )
    uint32_t absoluteStartMicro;
