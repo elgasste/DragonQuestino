@@ -267,8 +267,8 @@ internal void Game_DrawStaticSprites( Game_t* game )
       sx = sprite->position.x - game->tileMapViewport.x;
       sy = sprite->position.y - game->tileMapViewport.y;
 
-      if ( Math_RectsIntersect32( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
-                                  game->tileMapViewport.x, game->tileMapViewport.y, game->tileMapViewport.w, game->tileMapViewport.h ) )
+      if ( Math_RectsIntersect32i( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
+                                   game->tileMapViewport.x, game->tileMapViewport.y, game->tileMapViewport.w, game->tileMapViewport.h ) )
       {
          tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
          ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
