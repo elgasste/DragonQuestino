@@ -3,7 +3,6 @@
 #include "Adafruit_SPITFT.h"
 #include "dsi.h"
 #include "SDRAM.h"
-#include "screen.h"
 
 GigaShield::GigaShield() : Adafruit_GFX( GIGA_SHIELD_WIDTH, GIGA_SHIELD_HEIGHT )
 {

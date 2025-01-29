@@ -1,7 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using DragonQuestinoEditor.Graphics;
+using DragonQuestinoEditor.Utilities;
 using DragonQuestinoEditor.ViewModels;
 
 namespace DragonQuestinoEditor.FileOps
@@ -27,6 +31,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteTileMapFunction( fs );
          WriteActiveSpritesFunctions( fs );
          WriteStaticSpritesFunction( fs );
+         WriteBackgroundFunction( fs );
       }
 
       private static void WriteHeaderSection( FileStream fs )
@@ -304,10 +309,88 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "}\n" );
       }
 
+      private void WriteBackgroundFunction( FileStream fs )
+      {
+         WriteText( fs, "\nvoid Screen_LoadShieldBackground( uint32_t* buffer )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   uint32_t i;\n\n" );
+
+         var textFileStream = new FileStream( Constants.BackgroundFilePath, FileMode.Open, FileAccess.Read, FileShare.Read );
+         var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
+         var bitmapSource = textDecoder.Frames[0];
+         BitmapUtils.CheckBackgroundBitmapFormat( bitmapSource );
+
+         int stride = bitmapSource.PixelWidth * ( bitmapSource.Format.BitsPerPixel / 8 );
+         var data = new byte[stride * bitmapSource.PixelHeight];
+         bitmapSource.CopyPixels( data, stride, 0 );
+
+         var packedPixelCounts = new Dictionary<UInt32, int>();
+         List<UInt32> packedPixels = new( ( Constants.GigaShieldWidth / 2 ) * Constants.GigaShieldHeight );
+
+         for ( int i = 0, j = 0, dataIndex = 0; i < Constants.GigaShieldWidth * Constants.GigaShieldHeight; i += 2, j++ )
+         {
+
+            var b = (int)data[dataIndex];
+            var g = (int)data[dataIndex + 1];
+            var r = (int)data[dataIndex + 2];
+            dataIndex += 3;
+
+            var color16 = ( ( r & 0xF8 ) << 8 ) | ( ( g & 0xFC ) << 3 ) | ( b >> 3 );
+            var packedPixel = (UInt32)color16 << 16;
+
+            b = (int)data[dataIndex];
+            g = (int)data[dataIndex + 1];
+            r = (int)data[dataIndex + 2];
+            dataIndex += 3;
+
+            color16 = ( ( r & 0xF8 ) << 8 ) | ( ( g & 0xFC ) << 3 ) | ( b >> 3 );
+            packedPixel |= (UInt32)color16;
+
+            packedPixels.Add( packedPixel );
+
+            if ( packedPixelCounts.TryGetValue( packedPixel, out int value ) )
+            {
+               packedPixelCounts[packedPixel] = ++value;
+            }
+            else
+            {
+               packedPixelCounts[packedPixel] = 1;
+            }
+         }
+
+         int highestCount = 0;
+         UInt32 mostCommonValue = 0;
+
+         foreach ( var c in packedPixelCounts )
+         {
+            if ( c.Value > highestCount )
+            {
+               highestCount = c.Value;
+               mostCommonValue = c.Key;
+            }
+         }
+
+         WriteText( fs, "   for ( i = 0; i < ( GIGA_SHIELD_WIDTH / 2 ) * GIGA_SHIELD_HEIGHT; i++ )\n" );
+         WriteText( fs, "   {\n" );
+         WriteText( fs, string.Format( "      buffer[i] = 0x{0};\n", mostCommonValue.ToString( "X8" ) ) );
+         WriteText( fs, "   }\n\n" );
+
+         for ( int i = 0; i < packedPixels.Count; i++ )
+         {
+            if ( packedPixels[i] != mostCommonValue )
+            {
+               WriteText( fs, string.Format( "   buffer[{0}] = 0x{1};\n", i, packedPixels[i].ToString( "X8" ) ) );
+            }
+         }
+
+         WriteText( fs, "}\n" );
+      }
+
       private static void WriteText( FileStream fs, string value )
       {
          byte[] info = new UTF8Encoding( true ).GetBytes( value );
          fs.Write( info, 0, info.Length );
       }
+
    }
 }
