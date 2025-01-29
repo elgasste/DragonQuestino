@@ -3,12 +3,9 @@
 
 #include "common.h"
 
-#define SCREEN_WIDTH        480
-#define SCREEN_HEIGHT       800
-#define SCREEN_PIXELS       384000
-#define PLAY_AREA_WIDTH      256
-#define PLAY_AREA_HEIGHT     240
-#define PLAY_AREA_PIXELS     61440
+#define SCREEN_WIDTH        256
+#define SCREEN_HEIGHT       240
+#define SCREEN_PIXELS       61440
 
 #define PALETTE_COLORS           256
 
@@ -16,8 +13,7 @@
 
 typedef struct Screen_t
 {
-   uint16_t* screenBuffer;
-   uint16_t* playAreaBufferPos;
+   uint16_t* buffer;
    uint16_t palette[PALETTE_COLORS];
 }
 Screen_t;
@@ -26,7 +22,7 @@ Screen_t;
 extern "C" {
 #endif
 
-void Screen_Init( Screen_t* screen, uint16_t* screenBuffer );
+void Screen_Init( Screen_t* screen, uint16_t* buffer );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint8_t* paletteIndex );
 void Screen_Wipe( Screen_t* screen, uint8_t paletteIndex );
 

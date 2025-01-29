@@ -7,11 +7,6 @@ void WinPixelBuffer_Init( WinPixelBuffer_t* buffer, uint32_t w, uint32_t h )
    buffer->h = h;
    buffer->memory16 = (uint16_t*)calloc( w * h, sizeof( uint16_t ) );
    buffer->memory32 = (uint32_t*)calloc( w * h, sizeof( uint32_t ) );
-   buffer->playAreaMemoryPos32 = buffer->memory32 +
-      (
-         ( ( ( SCREEN_HEIGHT - PLAY_AREA_HEIGHT ) / 2 ) * SCREEN_WIDTH ) +
-         ( ( SCREEN_WIDTH - PLAY_AREA_WIDTH ) / 2 )
-      );
 }
 
 void WinPixelBuffer_CleanUp( WinPixelBuffer_t* buffer )

@@ -5,6 +5,9 @@
 #include "Adafruit_GFX.h"
 #include "Arduino_H7_Video.h"
 
+#define GIGA_SHIELD_WIDTH     480
+#define GIGA_SHIELD_HEIGHT    800
+
 typedef struct Screen_t Screen_t;
 
 class GigaShield : public Adafruit_GFX {

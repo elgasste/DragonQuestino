@@ -5,7 +5,7 @@
 #include "SDRAM.h"
 #include "screen.h"
 
-GigaShield::GigaShield() : Adafruit_GFX( SCREEN_WIDTH, SCREEN_HEIGHT )
+GigaShield::GigaShield() : Adafruit_GFX( GIGA_SHIELD_WIDTH, GIGA_SHIELD_HEIGHT )
 {
 }
 
@@ -19,12 +19,11 @@ GigaShield::~GigaShield()
 
 void GigaShield::begin()
 {
-   _display = new Arduino_H7_Video( SCREEN_WIDTH, SCREEN_HEIGHT, GigaDisplayShield );
+   _display = new Arduino_H7_Video( GIGA_SHIELD_WIDTH, GIGA_SHIELD_HEIGHT, GigaDisplayShield );
    _display->begin();
-   _buffer = (uint16_t*)ea_malloc( SCREEN_WIDTH * SCREEN_HEIGHT * 2 );
-
-   // TODO: add some kind of cool border around the play area, like a big CRT TV or something
-   memset( (void*)_buffer, 0, SCREEN_PIXELS * 2 );
+   _buffer = (uint16_t*)ea_malloc( SCREEN_PIXELS * sizeof( uint16_t ) );
+   memset( (void*)_buffer, 0, SCREEN_PIXELS * sizeof( uint16_t ) );
+   memset( (void*)( dsi_getActiveFrameBuffer() ), 0, GIGA_SHIELD_WIDTH * GIGA_SHIELD_HEIGHT * sizeof( uint16_t ) );
 
    _refreshThread = new rtos::Thread( osPriorityHigh );
    _refreshThread->start( mbed::callback( this, &GigaShield::refreshThreadWorker ) );
@@ -35,7 +34,11 @@ void GigaShield::refreshThreadWorker()
    while ( 1 )
    {
       rtos::ThisThread::flags_wait_any( 0x1 );
-      dsi_lcdDrawImage( (void *)_buffer, (void *)( dsi_getActiveFrameBuffer() ), SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
+      
+      uint16_t* shieldBuffer = (uint16_t*)( dsi_getActiveFrameBuffer() );
+      shieldBuffer += ( GIGA_SHIELD_WIDTH * ( ( GIGA_SHIELD_HEIGHT - SCREEN_HEIGHT ) / 2 ) ) + ( ( GIGA_SHIELD_WIDTH - SCREEN_WIDTH ) / 2 );
+
+      dsi_lcdDrawImage( (void *)_buffer, (void *)shieldBuffer, SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
    }
 }
 
