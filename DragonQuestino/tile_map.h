@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "sprite.h"
+#include "screen.h"
 
 #define TILE_SIZE                      16
 #define TILE_TEXTURE_BYTES             256   // 8 bpp
@@ -18,9 +19,9 @@
 #define TILE_WALKSPEED_VERYSLOW        48.0f
 #define TILE_WALKSPEED_CRAWL           36.0f
 
-#define TILEMAP_VIEWPORT_WIDTH         256
-#define TILEMAP_VIEWPORT_HEIGHT        240
-#define TILEMAP_VIEWPORT_PIXELS        61440
+#define TILEMAP_VIEWPORT_WIDTH         SCREEN_WIDTH
+#define TILEMAP_VIEWPORT_HEIGHT        SCREEN_HEIGHT
+#define TILEMAP_VIEWPORT_PIXELS        SCREEN_PIXELS
 
 #define TILEMAP_MAX_PORTALS            256
 #define TILEMAP_MAX_ACTIVESPRITES      16
