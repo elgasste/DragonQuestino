@@ -19,6 +19,8 @@
 #include <memory.h>
 #include <limits.h>
 
+#include "enums.h"
+
 #define internal static
 #define global static
 #define local_persist static
@@ -49,17 +51,6 @@ DebugFlags_t;
 DebugFlags_t g_debugFlags;
 
 #endif // VISUAL_STUDIO_DEV
-
-typedef enum Direction_t
-{
-   Direction_Left = 0,
-   Direction_Up,
-   Direction_Right,
-   Direction_Down,
-
-   Direction_Count
-}
-Direction_t;
 
 #if defined( __cplusplus )
 extern "C" {

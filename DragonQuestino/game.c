@@ -4,9 +4,10 @@
 
 #define DIAGONAL_SCALAR    0.707f
 
+internal void Game_TicOverworld( Game_t* game );
+internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleInput( Game_t* game );
 internal void Game_UpdateTileMapViewport( Game_t* game );
-internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal );
 internal void Game_DrawTileMap( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
@@ -40,42 +41,81 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->player.spriteOffset.y = -4;
    game->player.sprite.direction = Direction_Down;
 
+   game->state = GameState_Overworld;
    game->isSwappingTileMap = False;
 }
 
 void Game_Tic( Game_t* game )
 {
-   if ( game->isSwappingTileMap )
+   switch ( game->state )
+   {
+      case GameState_Overworld:
+         Game_TicOverworld( game );
+         break;
+      case GameState_TileMapTransition:
+         Game_TicTileMapTransition( game );
+         break;
+   }
+
+   Screen_RenderBuffer( &( game->screen ) );
+}
+
+internal void Game_TicOverworld( Game_t* game )
+{
+   Input_Read( &( game->input ) );
+   Game_HandleInput( game );
+   Physics_Tic( game );
+
+   // TODO: there's probably a better way to do this. by the time we get here,
+   // the state may have changed (if the player stepped on a portal, for instance).
+   // I don't like having to check for that in here though, so maybe refactor?
+   if ( game->state == GameState_Overworld )
+   {
+      Sprite_Tic( &( game->player.sprite ) );
+      Game_UpdateTileMapViewport( game );
+      Game_DrawTileMap( game );
+      Game_DrawStaticSprites( game );
+      Game_DrawPlayer( game );
+   }
+}
+
+internal void Game_TicTileMapTransition( Game_t* game )
+{
+   uint32_t destinationTileIndex;
+   Direction_t arrivalDirection;
+
+   if ( !game->isSwappingTileMap )
+   {
+      game->isSwappingTileMap = True;
+      game->tileMapSwapSecondsElapsed = 0.0f;
+
+      destinationTileIndex = game->swapPortal->destinationTileIndex;
+      arrivalDirection = game->swapPortal->arrivalDirection;
+
+      TileMap_Load( &( game->tileMap ), game->swapPortal->destinationTileMapIndex );
+
+      game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x ) + COLLISION_THETA;
+      // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
+      game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
+
+      Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+   }
+   else
    {
       game->tileMapSwapSecondsElapsed += CLOCK_FRAME_SECONDS;
 
       if ( game->tileMapSwapSecondsElapsed > TILEMAP_SWAP_SECONDS )
       {
          game->isSwappingTileMap = False;
+         game->state = GameState_Overworld;
       }
    }
-   else
-   {
-      Input_Read( &( game->input ) );
-      Game_HandleInput( game );
-      Physics_Tic( game );
-
-      if ( game->isSwappingTileMap == False )
-      {
-         Sprite_Tic( &( game->player.sprite ) );
-         Game_UpdateTileMapViewport( game );
-         Game_DrawTileMap( game );
-         Game_DrawStaticSprites( game );
-         Game_DrawPlayer( game );
-      }
-   }
-   
-   Screen_RenderBuffer( &( game->screen ) );
 }
 
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 {
    TilePortal_t* portal;
+   uint8_t wipePaletteIndex;
 
 #if defined( VISUAL_STUDIO_DEV )
    if ( g_debugFlags.fastWalk == False )
@@ -93,7 +133,14 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 
    if ( portal )
    {
-      Game_EnterTilePortal( game, portal );
+      game->swapPortal = portal;
+
+      if ( Screen_GetPaletteIndexForColor( &( game->screen ), 0, &wipePaletteIndex ) )
+      {
+         Screen_Wipe( &( game->screen ), wipePaletteIndex );
+      }
+
+      game->state = GameState_TileMapTransition;
    }
 }
 
@@ -196,31 +243,6 @@ internal void Game_UpdateTileMapViewport( Game_t* game )
    {
       viewport->y = ( game->tileMap.tilesY * TILE_SIZE ) - viewport->h;
    }
-}
-
-internal void Game_EnterTilePortal( Game_t* game, TilePortal_t* portal )
-{
-   // TODO: instead of immediately loaing, we should wipe the screen and
-   // load the new tile map data while the swap animation counts down.
-   uint32_t destinationTileIndex = portal->destinationTileIndex;
-   Direction_t arrivalDirection = portal->arrivalDirection;
-   uint8_t  wipePaletteIndex;
-
-   TileMap_Load( &( game->tileMap ), portal->destinationTileMapIndex );
-
-   game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x );
-   // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
-   game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
-
-   Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
-
-   if ( Screen_GetPaletteIndexForColor( &( game->screen ), 0, &wipePaletteIndex ) )
-   {
-      Screen_Wipe( &( game->screen ), wipePaletteIndex );
-   }
-
-   game->isSwappingTileMap = True;
-   game->tileMapSwapSecondsElapsed = 0.0f;
 }
 
 internal void Game_DrawTileMap( Game_t* game )

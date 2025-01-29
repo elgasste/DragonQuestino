@@ -17,11 +17,13 @@ typedef struct Game_t
    TileMap_t tileMap;
    Clock_t clock;
    Input_t input;
+   GameState_t state;
    Player_t player;
 
    Vector4i32_t tileMapViewport;
 
    Bool_t isSwappingTileMap;
+   TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;
 }
 Game_t;
