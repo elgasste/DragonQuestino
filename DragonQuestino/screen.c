@@ -1,14 +1,8 @@
 #include "screen.h"
 
-void Screen_Init( Screen_t* screen, uint16_t* screenBuffer )
+void Screen_Init( Screen_t* screen, uint16_t* buffer )
 {
-   screen->screenBuffer = screenBuffer;
-   screen->playAreaBufferPos = screenBuffer +
-      (
-         ( ( ( SCREEN_HEIGHT - PLAY_AREA_HEIGHT ) / 2 ) * SCREEN_WIDTH ) +
-         ( ( SCREEN_WIDTH - PLAY_AREA_WIDTH ) / 2 )
-      );
-
+   screen->buffer = buffer;
    Screen_LoadPalette( screen );
 }
 
@@ -30,17 +24,12 @@ Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint8_t
 
 void Screen_Wipe( Screen_t* screen, uint8_t paletteIndex )
 {
-   uint32_t i, j;
-   uint16_t* bufferPos = screen->playAreaBufferPos;
+   uint32_t i;
+   uint16_t* bufferPos = screen->buffer;
 
-   for ( i = 0; i < PLAY_AREA_HEIGHT; i++ )
+   for ( i = 0; i < SCREEN_PIXELS; i++ )
    {
-      for ( j = 0; j < PLAY_AREA_WIDTH; j++ )
-      {
-         *bufferPos = screen->palette[paletteIndex];
-         bufferPos++;
-      }
-
-      bufferPos += ( SCREEN_WIDTH - PLAY_AREA_WIDTH );
+      *bufferPos = screen->palette[paletteIndex];
+      bufferPos++;
    }
 }

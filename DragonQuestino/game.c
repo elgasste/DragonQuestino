@@ -267,8 +267,8 @@ internal void Game_DrawStaticSprites( Game_t* game )
       sx = sprite->position.x - game->tileMapViewport.x;
       sy = sprite->position.y - game->tileMapViewport.y;
 
-      if ( Math_RectsIntersect32( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
-                                  game->tileMapViewport.x, game->tileMapViewport.y, game->tileMapViewport.w, game->tileMapViewport.h ) )
+      if ( Math_RectsIntersect32i( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
+                                   game->tileMapViewport.x, game->tileMapViewport.y, game->tileMapViewport.w, game->tileMapViewport.h ) )
       {
          tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
          ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
@@ -306,7 +306,7 @@ internal void Game_DrawTextureSection( Game_t* game, uint8_t* memory, uint32_t s
 {
    uint32_t x, y;
    uint8_t* textureBufferPos = memory + ( ty * stride ) + tx;
-   uint16_t* screenBufferPos = game->screen.playAreaBufferPos + ( sy * SCREEN_WIDTH ) + sx;
+   uint16_t* screenBufferPos = game->screen.buffer + ( sy * SCREEN_WIDTH ) + sx;
 
    if ( transparency )
    {

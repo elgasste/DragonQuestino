@@ -9,7 +9,6 @@ typedef struct WinPixelBuffer_t
    uint32_t h;
    uint16_t* memory16;
    uint32_t* memory32;
-   uint32_t* playAreaMemoryPos32;
 }
 WinPixelBuffer_t;
 
