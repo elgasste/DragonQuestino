@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Windows;
 using System.Windows.Media.Imaging;
 using DragonQuestinoEditor.Graphics;
 using DragonQuestinoEditor.Utilities;
@@ -22,17 +20,29 @@ namespace DragonQuestinoEditor.FileOps
       private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
       private readonly StaticSpriteSheet _staticSpriteSheet = staticSpriteSheet;
 
-      public void WriteFile( string filePath )
+      public void WriteFiles()
       {
-         using FileStream fs = File.Create( filePath );
+         WriteGameDataFile();
+         WriteShieldBackgroundDataFile();
+      }
+
+      private void WriteGameDataFile()
+      {
+         using FileStream fs = File.Create( Constants.GameDataSourceFilePath );
          WriteHeaderSection( fs );
          WritePaletteFunction( fs );
          WriteTileTexturesFunction( fs );
          WriteTileMapFunction( fs );
          WriteActiveSpritesFunctions( fs );
          WriteStaticSpritesFunction( fs );
-         WriteBackgroundFunction( fs );
       }
+
+      private void WriteShieldBackgroundDataFile()
+      {
+         using FileStream fs = File.Create( Constants.ShieldBackgroundSourceFilePath );
+         WriteShieldBackgroundFunction( fs );
+      }
+
 
       private static void WriteHeaderSection( FileStream fs )
       {
@@ -309,13 +319,15 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, "}\n" );
       }
 
-      private void WriteBackgroundFunction( FileStream fs )
+      private void WriteShieldBackgroundFunction( FileStream fs )
       {
-         WriteText( fs, "\nvoid Screen_LoadShieldBackground( uint32_t* buffer )\n" );
+         WriteText( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
+         WriteText( fs, "#include \"giga_shield_background_data.h\"\n\n" );
+         WriteText( fs, "void Giga_LoadShieldBackground( uint32_t* buffer )\n" );
          WriteText( fs, "{\n" );
          WriteText( fs, "   uint32_t i;\n\n" );
 
-         var textFileStream = new FileStream( Constants.BackgroundFilePath, FileMode.Open, FileAccess.Read, FileShare.Read );
+         var textFileStream = new FileStream( Constants.ShieldBackgroundFilePath, FileMode.Open, FileAccess.Read, FileShare.Read );
          var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
          var bitmapSource = textDecoder.Frames[0];
          BitmapUtils.CheckBackgroundBitmapFormat( bitmapSource );
@@ -407,6 +419,5 @@ namespace DragonQuestinoEditor.FileOps
          byte[] info = new UTF8Encoding( true ).GetBytes( value );
          fs.Write( info, 0, info.Length );
       }
-
    }
 }

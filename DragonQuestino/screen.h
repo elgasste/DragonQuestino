@@ -7,10 +7,6 @@
 #define SCREEN_HEIGHT            224
 #define SCREEN_PIXELS            57344
 
-#define GIGA_SHIELD_WIDTH        480
-#define GIGA_SHIELD_HEIGHT       800
-#define GIGA_SHIELD_PIXELS       384000
-
 #define PALETTE_COLORS           256
 
 #define TRANSPARENT_COLOR_INDEX  0x0A
@@ -35,7 +31,6 @@ void Screen_RenderBuffer( Screen_t* screen );
 
 // game_data.c
 void Screen_LoadPalette( Screen_t* screen );
-void Screen_LoadShieldBackground( uint32_t* buffer );
 
 #if defined( __cplusplus )
 }

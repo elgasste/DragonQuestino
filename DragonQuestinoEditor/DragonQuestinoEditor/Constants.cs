@@ -2,12 +2,14 @@
 {
    public static class Constants
    {
-      public const string BackgroundFilePath = "..\\..\\..\\..\\..\\Assets\\cabinet_background.png";
+      public const string ShieldBackgroundFilePath = "..\\..\\..\\..\\..\\Assets\\shield_background.png";
       public const string TileTexturesFilePath = "..\\..\\..\\..\\..\\Assets\\tile_textures.png";
       public const string EditorSaveDataFilePath = "..\\..\\..\\..\\..\\Assets\\editor_save.json";
       public const string PlayerSpriteFilePath = "..\\..\\..\\..\\..\\Assets\\player_sprite.png";
       public const string StaticSpriteSheetFilePath = "..\\..\\..\\..\\..\\Assets\\static_sprites.png";
-      public const string DataSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\game_data.c";
+
+      public const string GameDataSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\game_data.c";
+      public const string ShieldBackgroundSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\giga_shield_background_data.c";
 
       public const int GigaShieldWidth = 480;
       public const int GigaShieldHeight = 800;

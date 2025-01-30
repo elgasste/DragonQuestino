@@ -3,6 +3,7 @@
 #include "Adafruit_SPITFT.h"
 #include "dsi.h"
 #include "SDRAM.h"
+#include "giga_shield_background_data.h"
 
 #define PLAY_AREA_OFFSET_X    112
 #define PLAY_AREA_OFFSET_Y    203
@@ -27,7 +28,7 @@ void GigaShield::begin()
    memset( (void*)_buffer, 0, SCREEN_PIXELS * sizeof( uint16_t ) );
    
    uint32_t* b = (uint32_t*)( dsi_getActiveFrameBuffer() );
-   Screen_LoadShieldBackground( b );
+   Giga_LoadShieldBackground( b );
 
    _refreshThread = new rtos::Thread( osPriorityHigh );
    _refreshThread->start( mbed::callback( this, &GigaShield::refreshThreadWorker ) );
