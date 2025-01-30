@@ -59,7 +59,7 @@ namespace DragonQuestinoEditor.Graphics
                for ( int x = 0; x < tileBitmap.PixelWidth; x++ )
                {
                   var pixelColor = ColorUtils.GetPixelColor( tileBitmap, x, y );
-                  var pixelColor16 = ColorUtils.ColortoUInt16( pixelColor );
+                  var pixelColor16 = ColorUtils.ColorToUInt16( pixelColor );
                   _palette.AddColor( pixelColor16 );
                   TilePaletteIndexes[i][( y * Constants.TileSize ) + x] = _palette.GetIndexForColor( pixelColor16 );
                }

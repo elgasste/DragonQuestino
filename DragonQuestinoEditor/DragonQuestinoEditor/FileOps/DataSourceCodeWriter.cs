@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
+using System.Windows.Media.Imaging;
 using DragonQuestinoEditor.Graphics;
+using DragonQuestinoEditor.Utilities;
 using DragonQuestinoEditor.ViewModels;
 
 namespace DragonQuestinoEditor.FileOps
@@ -18,9 +20,15 @@ namespace DragonQuestinoEditor.FileOps
       private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
       private readonly StaticSpriteSheet _staticSpriteSheet = staticSpriteSheet;
 
-      public void WriteFile( string filePath )
+      public void WriteFiles()
       {
-         using FileStream fs = File.Create( filePath );
+         WriteGameDataFile();
+         WriteShieldBackgroundDataFile();
+      }
+
+      private void WriteGameDataFile()
+      {
+         using FileStream fs = File.Create( Constants.GameDataSourceFilePath );
          WriteHeaderSection( fs );
          WritePaletteFunction( fs );
          WriteTileTexturesFunction( fs );
@@ -28,6 +36,13 @@ namespace DragonQuestinoEditor.FileOps
          WriteActiveSpritesFunctions( fs );
          WriteStaticSpritesFunction( fs );
       }
+
+      private void WriteShieldBackgroundDataFile()
+      {
+         using FileStream fs = File.Create( Constants.ShieldBackgroundSourceFilePath );
+         WriteShieldBackgroundFunction( fs );
+      }
+
 
       private static void WriteHeaderSection( FileStream fs )
       {
@@ -301,6 +316,101 @@ namespace DragonQuestinoEditor.FileOps
          }
 
          WriteText( fs, "   }\n" );
+         WriteText( fs, "}\n" );
+      }
+
+      private void WriteShieldBackgroundFunction( FileStream fs )
+      {
+         WriteText( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
+         WriteText( fs, "#include \"giga_shield_background_data.h\"\n\n" );
+         WriteText( fs, "void Giga_LoadShieldBackground( uint32_t* buffer )\n" );
+         WriteText( fs, "{\n" );
+         WriteText( fs, "   uint32_t i;\n\n" );
+
+         var textFileStream = new FileStream( Constants.ShieldBackgroundFilePath, FileMode.Open, FileAccess.Read, FileShare.Read );
+         var textDecoder = new PngBitmapDecoder( textFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
+         var bitmapSource = textDecoder.Frames[0];
+         BitmapUtils.CheckBackgroundBitmapFormat( bitmapSource );
+
+         int stride = bitmapSource.PixelWidth * ( bitmapSource.Format.BitsPerPixel / 8 );
+         var data = new byte[stride * bitmapSource.PixelHeight];
+         bitmapSource.CopyPixels( data, stride, 0 );
+
+         var packedPixelCounts = new Dictionary<UInt32, int>();
+         List<UInt32> packedPixels = new( ( Constants.GigaShieldWidth / 2 ) * Constants.GigaShieldHeight );
+
+         for ( int i = 0, j = 0, dataIndex = 0; i < Constants.GigaShieldWidth * Constants.GigaShieldHeight; i += 2, j++ )
+         {
+            var color16 = ColorUtils.BytesToRgb565( data[dataIndex + 2], data[dataIndex + 1], data[dataIndex + 1] );
+            dataIndex += 3;
+            var packedPixel = (UInt32)color16 << 16;
+
+            color16 = ColorUtils.BytesToRgb565( data[dataIndex + 2], data[dataIndex + 1], data[dataIndex + 1] );
+            dataIndex += 3;
+            packedPixel |= (UInt32)color16;
+
+            packedPixels.Add( packedPixel );
+
+            if ( packedPixelCounts.TryGetValue( packedPixel, out int value ) )
+            {
+               packedPixelCounts[packedPixel] = ++value;
+            }
+            else
+            {
+               packedPixelCounts[packedPixel] = 1;
+            }
+         }
+
+         int highestCount = 0;
+         UInt32 mostCommonValue = 0;
+
+         foreach ( var c in packedPixelCounts )
+         {
+            if ( c.Value > highestCount )
+            {
+               highestCount = c.Value;
+               mostCommonValue = c.Key;
+            }
+         }
+
+         WriteText( fs, "   for ( i = 0; i < ( GIGA_SHIELD_WIDTH / 2 ) * GIGA_SHIELD_HEIGHT; i++ )\n" );
+         WriteText( fs, "   {\n" );
+         WriteText( fs, string.Format( "      buffer[i] = 0x{0};\n", mostCommonValue.ToString( "X8" ) ) );
+         WriteText( fs, "   }\n\n" );
+
+         for ( int i = 0; i < packedPixels.Count; )
+         {
+            int firstIndex = i;
+            int lastIndex = i;
+            var currentPixel = packedPixels[i];
+            i++;
+
+            if ( currentPixel != mostCommonValue )
+            {
+               while ( i < packedPixels.Count )
+               {
+                  var nextPixel = packedPixels[i];
+                  lastIndex = i;
+                  i++;
+
+                  if ( nextPixel != currentPixel )
+                  {
+                     break;
+                  }
+               }
+
+               if ( ( lastIndex - firstIndex ) > 1 )
+               {
+                  WriteText( fs, string.Format( "   for ( i = {0}; i <= {1}; i++ ) buffer[i] = 0x{2};\n", firstIndex, lastIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+               }
+               else
+               {
+                  WriteText( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                  i--;
+               }
+            }
+         }
+
          WriteText( fs, "}\n" );
       }
 

@@ -52,5 +52,17 @@ namespace DragonQuestinoEditor.Utilities
             throw new Exception( string.Format( "Sprite image height should be {0}", Constants.SpriteFrameSize ) );
          }
       }
+
+      public static void CheckBackgroundBitmapFormat( BitmapSource bitmapSource )
+      {
+         if ( bitmapSource.Format != PixelFormats.Bgr24 )
+         {
+            throw new Exception( "Background image pixel format should be Bgr24" );
+         }
+         else if ( bitmapSource.PixelWidth != Constants.GigaShieldWidth || bitmapSource.PixelHeight != Constants.GigaShieldHeight )
+         {
+            throw new Exception( string.Format( "Background image dimensions should be {0}x{1}", Constants.GigaShieldWidth, Constants.GigaShieldHeight ) );
+         }
+      }
    }
 }

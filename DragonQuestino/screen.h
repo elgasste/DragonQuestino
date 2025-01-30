@@ -3,9 +3,9 @@
 
 #include "common.h"
 
-#define SCREEN_WIDTH        256
-#define SCREEN_HEIGHT       224
-#define SCREEN_PIXELS       57344
+#define SCREEN_WIDTH             256
+#define SCREEN_HEIGHT            224
+#define SCREEN_PIXELS            57344
 
 #define PALETTE_COLORS           256
 

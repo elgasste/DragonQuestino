@@ -63,7 +63,7 @@ namespace DragonQuestinoEditor.Graphics
                for ( int x = 0; x < bitmap.PixelWidth; x++ )
                {
                   var pixelColor = ColorUtils.GetPixelColor( bitmap, x, y );
-                  var pixelColor16 = ColorUtils.ColortoUInt16( pixelColor );
+                  var pixelColor16 = ColorUtils.ColorToUInt16( pixelColor );
                   _palette.AddColor( pixelColor16 );
                   PaletteIndexes[i][( y * Constants.SpriteFrameSize ) + x] = _palette.GetIndexForColor( pixelColor16 );
                }
