@@ -406,7 +406,11 @@ namespace DragonQuestinoEditor.FileOps
                else
                {
                   WriteText( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
-                  i--;
+
+                  if ( lastIndex - firstIndex > 0 )
+                  {
+                     i--;
+                  }
                }
             }
          }
