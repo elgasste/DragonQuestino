@@ -6,7 +6,7 @@ namespace DragonQuestinoEditor.Utilities
 {
    public static class ColorUtils
    {
-      public static UInt16 ColortoUInt16( Color color )
+      public static UInt16 ColorToUInt16( Color color )
       {
          var r16 = (UInt16)( ( color.R / 255.0 ) * 31 );
          var g16 = (UInt16)( ( color.G / 255.0 ) * 63 );
@@ -24,6 +24,19 @@ namespace DragonQuestinoEditor.Utilities
 
          bitmap.CopyPixels( rect, pixel, stride, 0 );
          return bitmap.Palette.Colors[pixel[0]];
+      }
+
+      public static UInt16 BytesToRgb565( byte r, byte g, byte b )
+      {
+         var ri = (float)r / 0xFF;
+         var gi = (float)g / 0xFF;
+         var bi = (float)b / 0xFF;
+
+         var r5 = (UInt16)( 0x1F * ri );
+         var g6 = (UInt16)( 0x3F * gi );
+         var b5 = (UInt16)( 0x1F * bi );
+
+         return (UInt16)( ( r5 << 11 ) | ( g6 << 5 ) | b5 );
       }
    }
 }

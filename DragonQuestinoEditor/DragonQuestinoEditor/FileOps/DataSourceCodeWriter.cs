@@ -329,21 +329,12 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int i = 0, j = 0, dataIndex = 0; i < Constants.GigaShieldWidth * Constants.GigaShieldHeight; i += 2, j++ )
          {
-
-            var b = (int)data[dataIndex];
-            var g = (int)data[dataIndex + 1];
-            var r = (int)data[dataIndex + 2];
+            var color16 = ColorUtils.BytesToRgb565( data[dataIndex + 2], data[dataIndex + 1], data[dataIndex + 1] );
             dataIndex += 3;
-
-            var color16 = ( ( r & 0xF8 ) << 8 ) | ( ( g & 0xFC ) << 3 ) | ( b >> 3 );
             var packedPixel = (UInt32)color16 << 16;
 
-            b = (int)data[dataIndex];
-            g = (int)data[dataIndex + 1];
-            r = (int)data[dataIndex + 2];
+            color16 = ColorUtils.BytesToRgb565( data[dataIndex + 2], data[dataIndex + 1], data[dataIndex + 1] );
             dataIndex += 3;
-
-            color16 = ( ( r & 0xF8 ) << 8 ) | ( ( g & 0xFC ) << 3 ) | ( b >> 3 );
             packedPixel |= (UInt32)color16;
 
             packedPixels.Add( packedPixel );
@@ -403,6 +394,7 @@ namespace DragonQuestinoEditor.FileOps
                else
                {
                   WriteText( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                  i--;
                }
             }
          }
