@@ -97,6 +97,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x ) + COLLISION_THETA;
       // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
       game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
+      game->player.tileIndex = destinationTileIndex;
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
    }
