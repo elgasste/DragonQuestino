@@ -30,8 +30,8 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->tileMapViewport.w = TILEMAP_VIEWPORT_WIDTH;
    game->tileMapViewport.h = TILEMAP_VIEWPORT_HEIGHT;
 
-   game->player.sprite.position.x = (float)( TILE_SIZE * 12 );
-   game->player.sprite.position.y = (float)( TILE_SIZE * 8 );
+   game->player.sprite.position.x = (float)( TILE_SIZE * 55 );
+   game->player.sprite.position.y = (float)( TILE_SIZE * 49 );
    game->player.velocity.x = 0.0f;
    game->player.velocity.y = 0.0f;
    game->player.maxVelocity = TILE_WALKSPEED_NORMAL;

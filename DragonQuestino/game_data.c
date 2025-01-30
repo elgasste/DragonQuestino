@@ -13648,7 +13648,15 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
       case 25:
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
-         tileMap->portalCount = 0;
+         tileMap->portalCount = 2;
+         tileMap->portals[0].sourceTileIndex = 472;
+         tileMap->portals[0].destinationTileMapIndex = 0;
+         tileMap->portals[0].destinationTileIndex = 7898;
+         tileMap->portals[0].arrivalDirection = (Direction_t)3;
+         tileMap->portals[1].sourceTileIndex = 473;
+         tileMap->portals[1].destinationTileMapIndex = 0;
+         tileMap->portals[1].destinationTileIndex = 7898;
+         tileMap->portals[1].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x0DE40DE4; }
