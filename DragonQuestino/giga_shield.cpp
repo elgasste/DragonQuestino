@@ -4,6 +4,9 @@
 #include "dsi.h"
 #include "SDRAM.h"
 
+#define PLAY_AREA_OFFSET_X    112
+#define PLAY_AREA_OFFSET_Y    203
+
 GigaShield::GigaShield() : Adafruit_GFX( GIGA_SHIELD_WIDTH, GIGA_SHIELD_HEIGHT )
 {
 }
@@ -23,11 +26,8 @@ void GigaShield::begin()
    _buffer = (uint16_t*)ea_malloc( SCREEN_PIXELS * sizeof( uint16_t ) );
    memset( (void*)_buffer, 0, SCREEN_PIXELS * sizeof( uint16_t ) );
    
-   uint16_t* b = (uint16_t*)( dsi_getActiveFrameBuffer() );
-   for ( int i = 0; i < GIGA_SHIELD_PIXELS; i++ )
-   {
-      b[i] = 0x4208; // dark grey-ish
-   }
+   uint32_t* b = (uint32_t*)( dsi_getActiveFrameBuffer() );
+   Screen_LoadShieldBackground( b );
 
    _refreshThread = new rtos::Thread( osPriorityHigh );
    _refreshThread->start( mbed::callback( this, &GigaShield::refreshThreadWorker ) );
@@ -40,7 +40,7 @@ void GigaShield::refreshThreadWorker()
       rtos::ThisThread::flags_wait_any( 0x1 );
       
       uint16_t* shieldBuffer = (uint16_t*)( dsi_getActiveFrameBuffer() );
-      shieldBuffer += ( GIGA_SHIELD_WIDTH * ( ( GIGA_SHIELD_HEIGHT - SCREEN_HEIGHT ) / 2 ) ) + ( ( GIGA_SHIELD_WIDTH - SCREEN_WIDTH ) / 2 );
+      shieldBuffer += ( ( GIGA_SHIELD_WIDTH * PLAY_AREA_OFFSET_Y ) + PLAY_AREA_OFFSET_X );
 
       dsi_lcdDrawImage( (void*)_buffer, (void*)shieldBuffer, SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
    }

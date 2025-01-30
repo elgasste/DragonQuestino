@@ -375,11 +375,35 @@ namespace DragonQuestinoEditor.FileOps
          WriteText( fs, string.Format( "      buffer[i] = 0x{0};\n", mostCommonValue.ToString( "X8" ) ) );
          WriteText( fs, "   }\n\n" );
 
-         for ( int i = 0; i < packedPixels.Count; i++ )
+         for ( int i = 0; i < packedPixels.Count; )
          {
-            if ( packedPixels[i] != mostCommonValue )
+            int firstIndex = i;
+            int lastIndex = i;
+            var currentPixel = packedPixels[i];
+            i++;
+
+            if ( currentPixel != mostCommonValue )
             {
-               WriteText( fs, string.Format( "   buffer[{0}] = 0x{1};\n", i, packedPixels[i].ToString( "X8" ) ) );
+               while ( i < packedPixels.Count )
+               {
+                  var nextPixel = packedPixels[i];
+                  lastIndex = i;
+                  i++;
+
+                  if ( nextPixel != currentPixel )
+                  {
+                     break;
+                  }
+               }
+
+               if ( ( lastIndex - firstIndex ) > 1 )
+               {
+                  WriteText( fs, string.Format( "   for ( i = {0}; i <= {1}; i++ ) buffer[i] = 0x{2};\n", firstIndex, lastIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+               }
+               else
+               {
+                  WriteText( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+               }
             }
          }
 
