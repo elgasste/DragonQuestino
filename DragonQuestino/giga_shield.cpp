@@ -5,8 +5,8 @@
 #include "SDRAM.h"
 #include "giga_shield_background_data.h"
 
-#define PLAY_AREA_OFFSET_X    112
-#define PLAY_AREA_OFFSET_Y    203
+#define PLAY_AREA_OFFSET_X    110
+#define PLAY_AREA_OFFSET_Y    140
 
 GigaShield::GigaShield() : Adafruit_GFX( GIGA_SHIELD_WIDTH, GIGA_SHIELD_HEIGHT )
 {
