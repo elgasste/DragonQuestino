@@ -11738,7 +11738,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
       case 13:
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
-         tileMap->portalCount = 98;
+         tileMap->portalCount = 103;
          tileMap->portals[0].sourceTileIndex = 32;
          tileMap->portals[0].destinationTileMapIndex = 0;
          tileMap->portals[0].destinationTileIndex = 11171;
@@ -12131,6 +12131,26 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[97].destinationTileMapIndex = 0;
          tileMap->portals[97].destinationTileIndex = 11312;
          tileMap->portals[97].arrivalDirection = (Direction_t)3;
+         tileMap->portals[98].sourceTileIndex = 133;
+         tileMap->portals[98].destinationTileMapIndex = 14;
+         tileMap->portals[98].destinationTileIndex = 111;
+         tileMap->portals[98].arrivalDirection = (Direction_t)2;
+         tileMap->portals[99].sourceTileIndex = 165;
+         tileMap->portals[99].destinationTileMapIndex = 14;
+         tileMap->portals[99].destinationTileIndex = 130;
+         tileMap->portals[99].arrivalDirection = (Direction_t)2;
+         tileMap->portals[100].sourceTileIndex = 196;
+         tileMap->portals[100].destinationTileMapIndex = 14;
+         tileMap->portals[100].destinationTileIndex = 149;
+         tileMap->portals[100].arrivalDirection = (Direction_t)3;
+         tileMap->portals[101].sourceTileIndex = 651;
+         tileMap->portals[101].destinationTileMapIndex = 15;
+         tileMap->portals[101].destinationTileIndex = 92;
+         tileMap->portals[101].arrivalDirection = (Direction_t)3;
+         tileMap->portals[102].sourceTileIndex = 652;
+         tileMap->portals[102].destinationTileMapIndex = 15;
+         tileMap->portals[102].destinationTileIndex = 93;
+         tileMap->portals[102].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01200120; }
@@ -12159,7 +12179,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[292] = 0x0120010C;
          tiles32[350] = 0x010C0120;
          tiles32[351] = 0x0120010C;
-         tiles32[352] = 0x010B0120;
+         tiles32[352] = 0x012B0120;
          tiles32[353] = 0x010B010B;
          tiles32[356] = 0x01270127;
          tiles32[357] = 0x01270127;
@@ -12170,7 +12190,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[363] = 0x010C010C;
          tiles32[420] = 0x010C0120;
          tiles32[421] = 0x010B0361;
-         tiles32[422] = 0x010B010B;
+         tiles32[422] = 0x010B012B;
          tiles32[423] = 0x010B010B;
          tiles32[424] = 0x03610120;
          tiles32[426] = 0x01200127;
@@ -12480,14 +12500,23 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
       case 14:
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
-         tileMap->portalCount = 0;
+         tileMap->portalCount = 2;
+         tileMap->portals[0].sourceTileIndex = 110;
+         tileMap->portals[0].destinationTileMapIndex = 13;
+         tileMap->portals[0].destinationTileIndex = 132;
+         tileMap->portals[0].arrivalDirection = (Direction_t)0;
+         tileMap->portals[1].sourceTileIndex = 129;
+         tileMap->portals[1].destinationTileMapIndex = 13;
+         tileMap->portals[1].destinationTileIndex = 164;
+         tileMap->portals[1].arrivalDirection = (Direction_t)1;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
          tiles32[285] = 0x01060106;
          tiles32[286] = 0x01080106;
-         tiles32[355] = 0x01270108;
+         tiles32[355] = 0x01270128;
          tiles32[356] = 0x01080106;
+         tiles32[424] = 0x01280108;
          tiles32[425] = 0x01270127;
          tiles32[426] = 0x01080106;
          tiles32[494] = 0x01270106;
@@ -12506,7 +12535,15 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
       case 15:
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
-         tileMap->portalCount = 0;
+         tileMap->portalCount = 2;
+         tileMap->portals[0].sourceTileIndex = 72;
+         tileMap->portals[0].destinationTileMapIndex = 13;
+         tileMap->portals[0].destinationTileIndex = 619;
+         tileMap->portals[0].arrivalDirection = (Direction_t)1;
+         tileMap->portals[1].sourceTileIndex = 73;
+         tileMap->portals[1].destinationTileMapIndex = 13;
+         tileMap->portals[1].destinationTileIndex = 620;
+         tileMap->portals[1].arrivalDirection = (Direction_t)1;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
@@ -12514,6 +12551,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[213] = 0x01060106;
          tiles32[214] = 0x01060106;
          tiles32[215] = 0x01060106;
+         tiles32[216] = 0x01280128;
          tiles32[217] = 0x01080106;
          tiles32[282] = 0x01270106;
          tiles32[283] = 0x01270127;
