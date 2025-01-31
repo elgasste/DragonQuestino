@@ -4,6 +4,15 @@ float TileMap_GetWalkSpeedForTile( uint16_t tile )
 {
    uint16_t walkSpeed = GET_TILEWALKSPEED( tile );
 
+#if defined( VISUAL_STUDIO_DEV )
+
+   if ( g_debugFlags.fastWalk )
+   {
+      return TILE_WALKSPEED_FAST;
+   }
+
+#endif
+
    switch ( walkSpeed )
    {
       case 0: return TILE_WALKSPEED_NORMAL;

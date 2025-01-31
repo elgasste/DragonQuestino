@@ -98,18 +98,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
       // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
       game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
       game->player.tileIndex = destinationTileIndex;
-
-
-#if defined( VISUAL_STUDIO_DEV )
-      if ( g_debugFlags.fastWalk == False )
-      {
-#endif
-
       game->player.maxVelocity = TileMap_GetWalkSpeedForTile( game->tileMap.tiles[destinationTileIndex] );
-
-#if defined( VISUAL_STUDIO_DEV )
-      }
-#endif
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
    }
@@ -130,17 +119,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    TilePortal_t* portal;
    uint8_t wipePaletteIndex;
 
-#if defined( VISUAL_STUDIO_DEV )
-   if ( g_debugFlags.fastWalk == False )
-   {
-#endif
-
    game->player.maxVelocity = TileMap_GetWalkSpeedForTile( game->tileMap.tiles[tileIndex] );
-
-#if defined( VISUAL_STUDIO_DEV )
-   }
-#endif
-
    game->player.tileIndex = tileIndex;
    portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
 
