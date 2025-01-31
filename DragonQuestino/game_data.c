@@ -12263,16 +12263,23 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
       case 16:
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
-         tileMap->portalCount = 1;
+         tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 299;
          tileMap->portals[0].destinationTileMapIndex = 0;
          tileMap->portals[0].destinationTileIndex = 2698;
          tileMap->portals[0].arrivalDirection = (Direction_t)0;
+         tileMap->portals[1].sourceTileIndex = 596;
+         tileMap->portals[1].destinationTileMapIndex = 17;
+         tileMap->portals[1].destinationTileIndex = 595;
+         tileMap->portals[1].arrivalDirection = (Direction_t)2;
          tileMap->activeSpriteCount = 0;
-         tileMap->staticSpriteCount = 1;
+         tileMap->staticSpriteCount = 2;
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 176;
          tileMap->staticSprites[0].position.y = 144;
+         Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 3 );
+         tileMap->staticSprites[1].position.x = 320;
+         tileMap->staticSprites[1].position.y = 288;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
@@ -12350,9 +12357,16 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
       case 17:
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
-         tileMap->portalCount = 0;
+         tileMap->portalCount = 1;
+         tileMap->portals[0].sourceTileIndex = 595;
+         tileMap->portals[0].destinationTileMapIndex = 16;
+         tileMap->portals[0].destinationTileIndex = 596;
+         tileMap->portals[0].arrivalDirection = (Direction_t)0;
          tileMap->activeSpriteCount = 0;
-         tileMap->staticSpriteCount = 0;
+         tileMap->staticSpriteCount = 1;
+         Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
+         tileMap->staticSprites[0].position.x = 304;
+         tileMap->staticSprites[0].position.y = 288;
          for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
