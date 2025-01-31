@@ -30,8 +30,8 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->tileMapViewport.w = TILEMAP_VIEWPORT_WIDTH;
    game->tileMapViewport.h = TILEMAP_VIEWPORT_HEIGHT;
 
-   game->player.sprite.position.x = (float)( TILE_SIZE * 12 );
-   game->player.sprite.position.y = (float)( TILE_SIZE * 8 );
+   game->player.sprite.position.x = (float)( TILE_SIZE * 55 );
+   game->player.sprite.position.y = (float)( TILE_SIZE * 49 );
    game->player.velocity.x = 0.0f;
    game->player.velocity.y = 0.0f;
    game->player.maxVelocity = TILE_WALKSPEED_NORMAL;
@@ -97,6 +97,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x ) + COLLISION_THETA;
       // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
       game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
+      game->player.tileIndex = destinationTileIndex;
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
    }
