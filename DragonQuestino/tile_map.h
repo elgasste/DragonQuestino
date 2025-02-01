@@ -81,7 +81,7 @@ TileMap_t;
 extern "C" {
 #endif
 
-float TileMap_GetWalkSpeedForTile( uint16_t tile );
+float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
 
 // game_data.c

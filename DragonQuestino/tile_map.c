@@ -1,8 +1,18 @@
 #include "tile_map.h"
 
-float TileMap_GetWalkSpeedForTile( uint16_t tile )
+float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex )
 {
+   uint16_t tile = tileMap->tiles[( ( tileIndex / tileMap->tilesX ) * TILE_COUNT_X ) + ( tileIndex % tileMap->tilesX )];
    uint16_t walkSpeed = GET_TILEWALKSPEED( tile );
+
+#if defined( VISUAL_STUDIO_DEV )
+
+   if ( g_debugFlags.fastWalk )
+   {
+      return TILE_WALKSPEED_FAST;
+   }
+
+#endif
 
    switch ( walkSpeed )
    {
