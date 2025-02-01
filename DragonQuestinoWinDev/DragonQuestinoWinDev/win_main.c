@@ -361,7 +361,6 @@ internal void ToggleFastWalk()
    }
    else
    {
-      uint16_t tile = g_globals.game.tileMap.tiles[g_globals.game.player.tileIndex];
-      g_globals.game.player.maxVelocity = TileMap_GetWalkSpeedForTile( tile );
+      g_globals.game.player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( g_globals.game.tileMap ), g_globals.game.player.tileIndex );
    }
 }
