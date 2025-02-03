@@ -9,15 +9,15 @@
         Title="Dragon Questino Editor"
         Height="848"
         Width="1320"
-		ResizeMode="NoResize"
+		  ResizeMode="NoResize"
         FocusManager.FocusedElement="{Binding ElementName=MapPanel}">
    <Window.Resources>
       <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
-                                                                  TrueValue="Visible"
-                                                                  FalseValue="Collapsed" />
+                                                                TrueValue="Visible"
+                                                                FalseValue="Collapsed" />
       <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"
-                                                                  TrueValue="Collapsed"
-                                                                  FalseValue="Visible" />
+                                                                TrueValue="Collapsed"
+                                                                FalseValue="Visible" />
    </Window.Resources>
    
    <!-- Window Contents -->
@@ -42,23 +42,24 @@
       <TabControl>
 
          <!-- Tile Map Texture Editor -->
-         <TabItem Header="Textures">
+         <TabItem Header="Textures"
+                  IsSelected="True">
             <StackPanel Orientation="Horizontal">
 
                <!-- Tile Map Texture Editor Tiles -->
                <local:MapPanel x:Name="MapPanel"
                                TileMap="{Binding SelectedTileMap.Tiles}"
-                               SelectedPaintingIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
+                               SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
 
                <!-- Tile Map Texture Editor Control Panel -->
                <StackPanel Orientation="Vertical">
 
                   <!-- Tile Map Texture Editor Texture Picker -->
                   <ListBox x:Name="tileSelectionListView"
-                           ItemsSource="{Binding TileSelectionViewModels}"
+                           ItemsSource="{Binding TileTextureViewModels}"
                            VerticalAlignment="Top"
                            HorizontalAlignment="Left"
-                           MouseMove="TileSelectionListView_OnMouseMove">
+                           MouseMove="TileTextureListView_OnMouseMove">
                      <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                            <UniformGrid Columns="4" />
@@ -80,15 +81,14 @@
          </TabItem> <!-- Tile Map Texture Editor -->
 
          <!-- Tile Map Portal Editor -->
-         <TabItem Header="Portals"
-                  IsSelected="True">
+         <TabItem Header="Portals">
             <StackPanel Orientation="Horizontal">
                   
                <!-- Source Portal Tiles -->
                <StackPanel Orientation="Vertical">
 
-                  <local:MapPanel TileMap="{Binding TileMapViewModels}"
-                                  SelectedPaintingIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
+                  <local:MapPanel TileMap="{Binding SelectedTileMap.Tiles}"
+                                  SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
 
                </StackPanel> <!-- Source Portal Tiles -->
                   
@@ -118,32 +118,10 @@
                <!-- Destination Portal Tiles -->
                <StackPanel Orientation="Vertical"
                            Visibility="{Binding PortalIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
-                  <ListView ItemsSource="{Binding PortalDestinationTileMap.Tiles}"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"
-                            Width="{Binding TileMapPortalDestinationListViewWidth}"
-                            Height="{Binding TileMapPortalDestinationListViewHeight}"
-                            ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                            SelectionChanged="TileMapPortalDestinationListView_OnSelectionChanged">
-                     <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                           <UniformGrid Columns="{Binding PortalDestinationTileMap.TilesX}" />
-                        </ItemsPanelTemplate>
-                     </ItemsControl.ItemsPanel>
-                     <ListView.ItemTemplate>
-                        <DataTemplate>
-                           <Grid>
-                              <Image Source="{Binding Image}"
-                                     Width="32"
-                                     Height="32" />
-                              <Rectangle Width="32"
-                                         Height="32"
-                                         Fill="#66FF00FF"
-                                         Visibility="{Binding IsPortalDestination, Converter={StaticResource BoolToVisibilityConverter}}" />
-                           </Grid>
-                        </DataTemplate>
-                     </ListView.ItemTemplate>
-                  </ListView>
+
+                  <local:MapPanel TileMap="{Binding PortalDestinationTileMap.Tiles}"
+                                  SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
+
                </StackPanel>
 
             </StackPanel>

@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace DragonQuestinoEditor.Graphics
 {
-   internal class Sprite
+   public class Sprite
    {
       private readonly Color[,] _pixels;
 

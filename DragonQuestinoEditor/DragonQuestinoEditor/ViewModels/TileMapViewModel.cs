@@ -1,4 +1,5 @@
 ﻿using DragonQuestinoEditor.FileOps;
+using DragonQuestinoEditor.Graphics;
 using System.Collections.ObjectModel;
 
 namespace DragonQuestinoEditor.ViewModels
@@ -38,7 +39,7 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _name, value );
       }
 
-      public TileMapViewModel( int id, string? name, int tilesX, int tilesY, int defaultTileTextureIndex )
+      public TileMapViewModel( TileSet tileSet, int id, string? name, int tilesX, int tilesY, int defaultTileTextureIndex )
       {
          _id = id;
          _name = name;
@@ -47,11 +48,11 @@ namespace DragonQuestinoEditor.ViewModels
 
          for( int i = 0; i < tilesX * tilesY; i++ )
          {
-            Tiles.Add( new TileViewModel( defaultTileTextureIndex ) );
+            Tiles.Add( new TileViewModel( tileSet, defaultTileTextureIndex ) );
          }
       }
 
-      public TileMapViewModel( TileMapSaveData saveData )
+      public TileMapViewModel( TileSet tileSet, TileMapSaveData saveData )
       {
          _id = saveData.Id;
          _name = saveData.Name;
@@ -60,7 +61,7 @@ namespace DragonQuestinoEditor.ViewModels
 
          foreach ( var tileSaveData in saveData.Tiles )
          {
-            Tiles.Add( new( tileSaveData ) );
+            Tiles.Add( new( tileSet, tileSaveData ) );
          }
 
          foreach ( var portal in saveData.Portals )

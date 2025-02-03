@@ -36,7 +36,12 @@ namespace DragonQuestinoEditor.ViewModels
          }
       }
 
-      public BitmapSource? Image => _textureProvider?.GetImageFromIndex( TextureIndex );
+      private BitmapSource? _image;
+      public BitmapSource? Image
+      {
+         get => _image;
+         private set => SetProperty( ref _image, value );
+      }
 
       private bool _isPassable;
       public bool IsPassable
@@ -55,10 +60,8 @@ namespace DragonQuestinoEditor.ViewModels
       private bool _isSelected = false;
       public bool IsSelected
       {
-         TileSet = tileSet;
-         Index = index;
-
-         _isPassable = _passableIndexes.Contains( index );
+         get => _isSelected;
+         set => SetProperty( ref _isSelected, value );
       }
 
       private bool _isPortalDestination = false;
@@ -81,15 +84,17 @@ namespace DragonQuestinoEditor.ViewModels
 
       public bool HasPortal => _portal is not null;
 
-      public TileViewModel( int textureIndex )
+      public TileViewModel( TileSet tileSet, int textureIndex )
       {
+         TileSet = tileSet;
          TextureIndex = textureIndex;
          _isPassable = _passableTextureIndexes.Contains( textureIndex );
       }
 
-      public TileViewModel( TileSaveData saveData )
+      public TileViewModel( TileSet tileSet, TileSaveData saveData )
       {
-         SetTextureIndex( saveData.TextureIndex );
+         TileSet = tileSet;
+         TextureIndex = saveData.TextureIndex;
          _isPassable = saveData.IsPassable;
       }
 

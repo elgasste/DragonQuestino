@@ -9,12 +9,12 @@ namespace DragonQuestinoEditor.Graphics
    {
       private readonly List<WriteableBitmap> _tileBitmaps = new( Constants.TileTextureCount );
       private readonly Palette _palette;
-      private readonly Sprite[] _tiles = new Sprite[Constants.TileCount];
+      private readonly Sprite[] _tileTextures = new Sprite[Constants.TileTextureCount];
 
       public List<List<int>> TilePaletteIndexes = new ( Constants.TileTextureCount );
 
       public List<WriteableBitmap> TileBitmaps => _tileBitmaps;
-      public Sprite[] Tiles => _tiles;
+      public Sprite[] TileTextures => _tileTextures;
 
       public TileSet( string imagePath, Palette palette )
       {
@@ -33,13 +33,13 @@ namespace DragonQuestinoEditor.Graphics
          var tileSheet = Sprite.LoadFromFile( imagePath );
          int tileCount = tileSheet.Width / Constants.TileSize;
 
-         for (int tileIndex = 0; tileIndex < tileCount; tileIndex++)
+         for (int textureIndex = 0; textureIndex < tileCount; textureIndex++)
          {
-            int srcX = tileIndex * Constants.TileSize;
+            int srcX = textureIndex * Constants.TileSize;
             int srcY = 0;
 
             var tileSprite = tileSheet.Extract( srcX, srcY, Constants.TileSize, Constants.TileSize );
-            _tiles[tileIndex] = tileSprite;
+            _tileTextures[textureIndex] = tileSprite;
          }
       }
 

@@ -8,7 +8,7 @@ using DragonQuestinoEditor.ViewModels;
 
 namespace DragonQuestinoEditor
 {
-   internal class MapPanel : FrameworkElement
+   public class MapPanel : FrameworkElement
    {
       private const int _tilesPerRow = 140;
       private const int _defaultTileSize = 16;
@@ -93,15 +93,15 @@ namespace DragonQuestinoEditor
          set => SetValue( TileMapProperty, value );
       }
 
-      public static readonly DependencyProperty SelectedPaintingIndexProperty = DependencyProperty.Register(
-         nameof( SelectedPaintingIndex ),
+      public static readonly DependencyProperty SelectedTextureIndexProperty = DependencyProperty.Register(
+         nameof( SelectedTextureIndex ),
          typeof( int ),
          typeof( MapPanel ) );
 
-      public int SelectedPaintingIndex
+      public int SelectedTextureIndex
       {
-         get => (int)GetValue( SelectedPaintingIndexProperty );
-         set => SetValue( SelectedPaintingIndexProperty, value );
+         get => (int)GetValue( SelectedTextureIndexProperty );
+         set => SetValue( SelectedTextureIndexProperty, value );
       }
 
       public MapPanel()
@@ -138,13 +138,17 @@ namespace DragonQuestinoEditor
             int destX = cellX * _defaultTileSize * bytesPerPixel;
             int destY = cellY * _defaultTileSize;
 
-            int tileIndex = TileMap[i].Index;
-            var tile = TileMap[i].TileSet.Tiles[tileIndex];
+            int textureIndex = TileMap[i].TextureIndex;
+            var tile = TileMap[i].TileSet.TileTextures[textureIndex];
 
             tile.DrawToBuffer( _rawBuffer, width, destX, destY );
          }
 
          // I don't know why I have to divide by 4 on the width, height
+         // Steve note: it's probably something to do with the "stride" value, you're
+         // sending in the width, but I think they want the actual number of bytes per line.
+         // that would be width * (bpp / 8), so width * 4, although if you change that you'd
+         // also need to update other stuff in here, like the size of _rawBuffer.
          _bitmap.WritePixels( new Int32Rect( 0, 0, _bitmap.PixelWidth / 4, _bitmap.PixelHeight / 4 ), _rawBuffer, _bitmap.PixelWidth, 0 );
       }
 
@@ -174,7 +178,7 @@ namespace DragonQuestinoEditor
 
       private void ChangeTile()
       {
-         if (_bitmap is null)
+         if ( _bitmap is null )
          {
             return;
          }
@@ -182,16 +186,16 @@ namespace DragonQuestinoEditor
          int offset = _cellY * _tilesPerRow + _cellX;
          var tileViewModel = TileMap[offset];
 
-         if (tileViewModel.Index == SelectedPaintingIndex)
+         if ( tileViewModel.TextureIndex == SelectedTextureIndex )
          {
             // No need to redraw the tile if it's the same
             return;
          }
 
-         tileViewModel.Index = SelectedPaintingIndex;
+         tileViewModel.TextureIndex = SelectedTextureIndex;
 
          var byteBuffer = new byte[_defaultTileSize * _defaultTileSize * 4];
-         var tileSprite = TileMap[tileViewModel.Index].TileSet.Tiles[tileViewModel.Index];
+         var tileSprite = TileMap[tileViewModel.TextureIndex].TileSet.TileTextures[tileViewModel.TextureIndex];
          tileSprite.DrawToBuffer( byteBuffer, _defaultTileSize * 4, 0, 0 );
 
          int destX = _cellX * 16;
@@ -203,7 +207,7 @@ namespace DragonQuestinoEditor
 
       protected override void OnPreviewKeyDown( KeyEventArgs e )
       {
-         if (e.Key == Key.Space)
+         if ( e.Key == Key.Space )
          {
             _inputMode = InputMode.Pan;
             Cursor = Cursors.ScrollAll;
@@ -240,7 +244,7 @@ namespace DragonQuestinoEditor
 
          _isLeftButtonDown = true;
 
-         switch (_inputMode)
+         switch ( _inputMode )
          {
             case InputMode.Draw:
             {
