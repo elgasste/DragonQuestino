@@ -20,14 +20,28 @@ namespace DragonQuestinoEditor.ViewModels
          13    // bridge
       ];
 
-      private int _textureIndex;
+      public TileSet TileSet { get; }
+
+      private int _textureIndex = -1;
       public int TextureIndex
       {
          get => _textureIndex;
-         private set => SetProperty( ref _textureIndex, value );
+         set
+         {
+            if ( SetProperty( ref _textureIndex, value ) )
+            {
+               Image = TileSet.TileBitmaps[value];
+               IsPassable = _passableTextureIndexes.Contains( value );
+            }
+         }
       }
 
-      public BitmapSource? Image => _textureProvider?.GetImageFromIndex( TextureIndex );
+      private BitmapSource? _image;
+      public BitmapSource? Image
+      {
+         get => _image;
+         private set => SetProperty( ref _image, value );
+      }
 
       private bool _isPassable;
       public bool IsPassable
@@ -70,25 +84,20 @@ namespace DragonQuestinoEditor.ViewModels
 
       public bool HasPortal => _portal is not null;
 
-      public TileViewModel( int index )
+      public TileViewModel( TileSet tileSet, int textureIndex )
       {
-         SetTextureIndex( index );
-         _isPassable = _passableTextureIndexes.Contains( index );
+         TileSet = tileSet;
+         TextureIndex = textureIndex;
+         _isPassable = _passableTextureIndexes.Contains( textureIndex );
       }
 
-      public TileViewModel( TileSaveData saveData )
+      public TileViewModel( TileSet tileSet, TileSaveData saveData )
       {
-         SetTextureIndex( saveData.TextureIndex );
+         TileSet = tileSet;
+         TextureIndex = saveData.TextureIndex;
          _isPassable = saveData.IsPassable;
       }
 
       public void SetTextureProvider( ITileTextureProvider? provider ) => _textureProvider = provider;
-
-      public void SetTextureIndex( int index )
-      {
-         TextureIndex = index;
-         IsPassable = _passableTextureIndexes.Contains( index );
-         OnPropertyChanged( nameof( Image ) );
-      }
    }
 }

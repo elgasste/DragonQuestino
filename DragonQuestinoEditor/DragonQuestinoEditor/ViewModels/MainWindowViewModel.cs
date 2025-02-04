@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using DragonQuestinoEditor.Commands;
 using DragonQuestinoEditor.FileOps;
 using DragonQuestinoEditor.Graphics;
@@ -161,24 +159,10 @@ namespace DragonQuestinoEditor.ViewModels
 
          for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
-            var image = new BitmapImage();
-
-            using var stream = new MemoryStream();
-            {
-               var encoder = new PngBitmapEncoder();
-               encoder.Frames.Add( BitmapFrame.Create( _tileSet.TileBitmaps[i] ) );
-               encoder.Save( stream );
-               image.BeginInit();
-               image.CacheOption = BitmapCacheOption.OnLoad;
-               image.StreamSource = stream;
-               image.EndInit();
-               image.Freeze();
-            }
-
             TileTextureViewModels.Add( new( _tileSet, i ) );
          }
 
-         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, TileMaps ) )
+         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileSet, TileMaps ) )
          {
             MessageBox.Show( "Could not load editor save file!" );
          }
@@ -240,7 +224,7 @@ namespace DragonQuestinoEditor.ViewModels
          if ( result.HasValue && result.Value )
          {
             int id = TileMaps[^1].Id + 1;
-            var newTileMap = new TileMapViewModel( id, window.NewTileMapName, window.NewTilesX, window.NewTilesY, Constants.TileTextureDefaultIndex );
+            var newTileMap = new TileMapViewModel( _tileSet, id, window.NewTileMapName, window.NewTilesX, window.NewTilesY, Constants.TileTextureDefaultIndex );
 
             foreach ( var tile in newTileMap.Tiles )
             {

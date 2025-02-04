@@ -9,217 +9,136 @@
         Title="Dragon Questino Editor"
         Height="848"
         Width="1320"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        FocusManager.FocusedElement="{Binding ElementName=MapPanel}">
    <Window.Resources>
-      <ResourceDictionary>
-         <Style x:Key="TileListItemContainerStyle"
-                TargetType="{x:Type ListViewItem}">
-            <Setter Property="Background"
-                    Value="Transparent" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Template">
-               <Setter.Value>
-                  <ControlTemplate TargetType="{x:Type ListViewItem}">
-                     <ContentPresenter />
-                  </ControlTemplate>
-               </Setter.Value>
-            </Setter>
-         </Style>
-         <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
-                                                                   TrueValue="Visible"
-                                                                   FalseValue="Collapsed" />
-         <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"
-                                                                   TrueValue="Collapsed"
-                                                                   FalseValue="Visible" />
-      </ResourceDictionary>
+      <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
+                                                                TrueValue="Visible"
+                                                                FalseValue="Collapsed" />
+      <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"
+                                                                TrueValue="Collapsed"
+                                                                FalseValue="Visible" />
    </Window.Resources>
+
+   <!-- Window Contents -->
    <Grid>
-      <!-- Window Contents -->
-      <StackPanel Orientation="Vertical">
+      <Grid.RowDefinitions>
+         <RowDefinition Height="30" />
+         <RowDefinition />
+      </Grid.RowDefinitions>
 
-         <!-- Tile Map Operations -->
-         <StackPanel Orientation="Horizontal">
-            <ComboBox ItemsSource="{Binding TileMaps}"
-                      SelectedItem="{Binding SelectedTileMap}"
-                      DisplayMemberPath="Name"/>
-            <Button Content="New Tile Map"
-                    Command="{Binding NewTileMapCommand, Mode=OneTime}"/>
-            <Button Content="Delete Tile Map"
-                    Command="{Binding DeleteTileMapCommand, Mode=OneTime}"/>
-            <Button Content="Save Tile Maps"
-                    Command="{Binding SaveTileMapsCommand, Mode=OneTime}"/>
-            <Button Content="Write Game Data"
-                    Command="{Binding WriteGameDataCommand, Mode=OneTime}"/>
-         </StackPanel>
+      <!-- Tile Map Operations -->
+      <StackPanel Orientation="Horizontal">
+         <ComboBox ItemsSource="{Binding TileMaps}"
+                   SelectedItem="{Binding SelectedTileMap}"
+                   DisplayMemberPath="Name" />
+         <Button Content="New Tile Map"
+                 Command="{Binding NewTileMapCommand, Mode=OneTime}" />
+         <Button Content="Delete Tile Map"
+                 Command="{Binding DeleteTileMapCommand, Mode=OneTime}" />
+         <Button Content="Save Tile Maps"
+                 Command="{Binding SaveTileMapsCommand, Mode=OneTime}" />
+         <Button Content="Write Game Data"
+                 Command="{Binding WriteGameDataCommand, Mode=OneTime}" />
+      </StackPanel>
 
-         <!-- Tile Map Tabs -->
-         <TabControl>
+      <!-- Tile Map Tabs -->
+      <TabControl Grid.Row="1">
 
-            <!-- Tile Map Texture Editor -->
-            <TabItem Header="Textures">
-               <StackPanel Orientation="Horizontal">
+         <!-- Tile Map Texture Editor -->
+         <TabItem Header="Textures"
+                  IsSelected="True">
+            <Grid>
+               <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition Width="Auto" />
+               </Grid.ColumnDefinitions>
 
-                  <!-- Tile Map Texture Editor Tiles -->
-                  <ListView ItemsSource="{Binding SelectedTileMap.Tiles}"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"
-                            Width="{Binding TileMapTextureListViewWidth}"
-                            Height="{Binding TileMapTextureListViewHeight}"
-                            ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                            AllowDrop="True"
-                            PreviewMouseDown="TileMapTextureListView_OnPreviewMouseDown"
-                            MouseMove="TileMapTextureListView_OnMouseMove"
-                            Drop="TileMapTextureListView_OnDrop">
-                     <ItemsControl.ItemsPanel>
+               <!-- Tile Map Texture Editor Tiles -->
+               <local:MapPanel x:Name="MapPanel"
+                               TileMap="{Binding SelectedTileMap.Tiles}"
+                               SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
+
+               <!-- Tile Map Texture Editor Control Panel -->
+               <StackPanel Grid.Column="1"
+                           Orientation="Vertical">
+
+                  <!-- Tile Map Texture Editor Texture Picker -->
+                  <ListBox x:Name="tileSelectionListView"
+                           ItemsSource="{Binding TileTextureViewModels}"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           MouseMove="TileTextureListView_OnMouseMove">
+                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                           <UniformGrid Columns="{Binding SelectedTileMap.TilesX}"/>
+                           <UniformGrid Columns="4" />
                         </ItemsPanelTemplate>
-                     </ItemsControl.ItemsPanel>
-                     <ListView.ItemTemplate>
+                     </ListBox.ItemsPanel>
+
+                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                           <Grid DragEnter="TileMapTextureListViewImage_OnDragEnter"
-                                 DragLeave="TileMapTextureListViewImage_OnDragLeave">
-                              <Image Source="{Binding Image}"
-                                     Width="32"
-                                     Height="32"/>
-                              <Rectangle Width="32"
-                                         Height="32"
-                                         Fill="#660000FF"
-                                         Visibility="{Binding IsDraggingTextureOver, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                           </Grid>
+                           <Image Source="{Binding Image}"
+                                  Width="32"
+                                  Height="32" />
                         </DataTemplate>
-                     </ListView.ItemTemplate>
-                  </ListView>
+                     </ListBox.ItemTemplate>
+                  </ListBox>
 
-                  <!-- Tile Map Texture Editor Control Panel -->
-                  <StackPanel Orientation="Vertical">
-
-                     <!-- Tile Map Texture Editor Texture Picker -->
-                     <ListView x:Name="tileTextureListView"
-                               ItemsSource="{Binding TileTextureViewModels}"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Left"
-                               ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                               MouseMove="TileTextureListView_OnMouseMove">
-                        <ItemsControl.ItemsPanel>
-                           <ItemsPanelTemplate>
-                              <UniformGrid Columns="4"/>
-                           </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ListView.ItemTemplate>
-                           <DataTemplate>
-                              <Image Source="{Binding Image}"
-                                     Width="32"
-                                     Height="32"/>
-                           </DataTemplate>
-                        </ListView.ItemTemplate>
-                     </ListView>
-
-                  </StackPanel> <!-- Tile Map Texture Editor Control Panel -->
-                  
                </StackPanel>
-            </TabItem> <!-- Tile Map Texture Editor -->
+               <!-- Tile Map Texture Editor Control Panel -->
+            </Grid>
+         </TabItem>
+         <!-- Tile Map Texture Editor -->
 
-            <!-- Tile Map Portal Editor -->
-            <TabItem Header="Portals"
-                     IsSelected="True">
-               <StackPanel Orientation="Horizontal">
-                  
-                  <!-- Source Portal Tiles -->
-                  <StackPanel Orientation="Vertical">
+         <!-- Tile Map Portal Editor -->
+         <TabItem Header="Portals">
+            <Grid>
+               <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition />
+               </Grid.ColumnDefinitions>
 
-                     <ListView ItemsSource="{Binding SelectedTileMap.Tiles}"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Left"
-                               Width="{Binding TileMapPortalListViewWidth}"
-                               Height="{Binding TileMapPortalListViewHeight}"
-                               ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                               SelectionChanged="TileMapPortalSourceListView_OnSelectionChanged">
-                        <ItemsControl.ItemsPanel>
-                           <ItemsPanelTemplate>
-                              <UniformGrid Columns="{Binding SelectedTileMap.TilesX}"/>
-                           </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ListView.ItemTemplate>
-                           <DataTemplate>
-                              <Grid>
-                                 <Image Source="{Binding Image}"
-                                        Width="32"
-                                        Height="32"/>
-                                 <Rectangle Width="32"
-                                            Height="32"
-                                            Fill="#66FF00FF"
-                                            Visibility="{Binding HasPortal, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                 <Rectangle Width="32"
-                                            Height="32"
-                                            Fill="#660000FF"
-                                            Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                              </Grid>
-                           </DataTemplate>
-                        </ListView.ItemTemplate>
-                     </ListView>
+               <!-- Source Portal Tiles -->
 
-                  </StackPanel> <!-- Source Portal Tiles -->
-                  
-                  <!-- Source Portal Properties -->
+               <local:MapPanel TileMap="{Binding SelectedTileMap.Tiles}"
+                               SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
+
+               <!-- Source Portal Tiles -->
+
+               <!-- Source Portal Properties -->
+               <StackPanel Grid.Column="1"
+                           Orientation="Vertical"
+                           Visibility="{Binding TileIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+
                   <StackPanel Orientation="Vertical"
-                              Visibility="{Binding TileIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
-                     
-                     <StackPanel Orientation="Vertical"
-                                 Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        <Button Content="Add Portal"
-                                Command="{Binding AddPortalCommand, Mode=OneTime}"/>
-                     </StackPanel>
+                              Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                     <Button Content="Add Portal"
+                             Command="{Binding AddPortalCommand, Mode=OneTime}" />
+                  </StackPanel>
 
-                     <StackPanel Orientation="Vertical"
-                                 Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <StackPanel Orientation="Horizontal">
-                           <TextBlock Text="Facing: "/>
-                           <ComboBox ItemsSource="{Binding PortalArrivalDirections}"
-                                  SelectedItem="{Binding SelectedPortalArrivalDirection}"/>
-                        </StackPanel>
-                        <Button Content="Delete This Portal"
-                                Command="{Binding DeleteSelectedPortalCommand, Mode=OneTime}"/>
-                     </StackPanel>
-
-                  </StackPanel> <!-- Source Portal Properties -->
-
-                  <!-- Destination Portal Tiles -->
                   <StackPanel Orientation="Vertical"
-                              Visibility="{Binding PortalIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
-                     <ListView ItemsSource="{Binding PortalDestinationTileMap.Tiles}"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Left"
-                               Width="{Binding TileMapPortalDestinationListViewWidth}"
-                               Height="{Binding TileMapPortalDestinationListViewHeight}"
-                               ItemContainerStyle="{StaticResource TileListItemContainerStyle}"
-                               SelectionChanged="TileMapPortalDestinationListView_OnSelectionChanged">
-                        <ItemsControl.ItemsPanel>
-                           <ItemsPanelTemplate>
-                              <UniformGrid Columns="{Binding PortalDestinationTileMap.TilesX}"/>
-                           </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ListView.ItemTemplate>
-                           <DataTemplate>
-                              <Grid>
-                                 <Image Source="{Binding Image}"
-                                        Width="32"
-                                        Height="32"/>
-                                 <Rectangle Width="32"
-                                            Height="32"
-                                            Fill="#66FF00FF"
-                                            Visibility="{Binding IsPortalDestination, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                              </Grid>
-                           </DataTemplate>
-                        </ListView.ItemTemplate>
-                     </ListView>
+                              Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource BoolToVisibilityConverter}}">
+                     <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Facing: " />
+                        <ComboBox ItemsSource="{Binding PortalArrivalDirections}"
+                                  SelectedItem="{Binding SelectedPortalArrivalDirection}" />
+                     </StackPanel>
+                     <Button Content="Delete This Portal"
+                             Command="{Binding DeleteSelectedPortalCommand, Mode=OneTime}" />
                   </StackPanel>
 
                </StackPanel>
-            </TabItem> <!-- Tile Map Portal Editor -->
-            
-         </TabControl>
+               <!-- Source Portal Properties -->
 
-      </StackPanel> <!-- Window Contents -->
+               <!-- Destination Portal Tiles -->
+               <local:MapPanel Grid.Column="2"
+                               TileMap="{Binding PortalDestinationTileMap.Tiles}"
+                               SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
+            </Grid>
+         </TabItem>
+         <!-- Tile Map Portal Editor -->
+      </TabControl>
    </Grid>
+   <!-- Window Contents -->
 </Window>
