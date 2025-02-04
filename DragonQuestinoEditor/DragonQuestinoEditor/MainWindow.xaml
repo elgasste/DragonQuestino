@@ -92,19 +92,23 @@
 
          <!-- Tile Map Portal Editor -->
          <TabItem Header="Portals">
-            <StackPanel Orientation="Horizontal">
+            <Grid>
+               <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition />
+               </Grid.ColumnDefinitions>
 
                <!-- Source Portal Tiles -->
-               <StackPanel Orientation="Vertical">
 
-                  <local:MapPanel TileMap="{Binding SelectedTileMap.Tiles}"
-                                  SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
+               <local:MapPanel TileMap="{Binding SelectedTileMap.Tiles}"
+                               SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
 
-               </StackPanel>
                <!-- Source Portal Tiles -->
 
                <!-- Source Portal Properties -->
-               <StackPanel Orientation="Vertical"
+               <StackPanel Grid.Column="1"
+                           Orientation="Vertical"
                            Visibility="{Binding TileIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
 
                   <StackPanel Orientation="Vertical"
@@ -128,21 +132,13 @@
                <!-- Source Portal Properties -->
 
                <!-- Destination Portal Tiles -->
-               <StackPanel Orientation="Vertical"
-                           Visibility="{Binding PortalIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
-
-                  <local:MapPanel TileMap="{Binding PortalDestinationTileMap.Tiles}"
-                                  SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
-
-               </StackPanel>
-
-            </StackPanel>
+               <local:MapPanel Grid.Column="2"
+                               TileMap="{Binding PortalDestinationTileMap.Tiles}"
+                               SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
+            </Grid>
          </TabItem>
          <!-- Tile Map Portal Editor -->
-
       </TabControl>
-
-
    </Grid>
    <!-- Window Contents -->
 </Window>
