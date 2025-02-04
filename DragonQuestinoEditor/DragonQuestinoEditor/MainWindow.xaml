@@ -9,7 +9,7 @@
         Title="Dragon Questino Editor"
         Height="848"
         Width="1320"
-		  ResizeMode="NoResize"
+        ResizeMode="NoResize"
         FocusManager.FocusedElement="{Binding ElementName=MapPanel}">
    <Window.Resources>
       <DragonQuestinoEditorConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
@@ -19,9 +19,13 @@
                                                                 TrueValue="Collapsed"
                                                                 FalseValue="Visible" />
    </Window.Resources>
-   
+
    <!-- Window Contents -->
-   <StackPanel Orientation="Vertical">
+   <Grid>
+      <Grid.RowDefinitions>
+         <RowDefinition Height="30" />
+         <RowDefinition />
+      </Grid.RowDefinitions>
 
       <!-- Tile Map Operations -->
       <StackPanel Orientation="Horizontal">
@@ -39,12 +43,16 @@
       </StackPanel>
 
       <!-- Tile Map Tabs -->
-      <TabControl>
+      <TabControl Grid.Row="1">
 
          <!-- Tile Map Texture Editor -->
          <TabItem Header="Textures"
                   IsSelected="True">
-            <StackPanel Orientation="Horizontal">
+            <Grid>
+               <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition Width="Auto" />
+               </Grid.ColumnDefinitions>
 
                <!-- Tile Map Texture Editor Tiles -->
                <local:MapPanel x:Name="MapPanel"
@@ -52,7 +60,8 @@
                                SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
 
                <!-- Tile Map Texture Editor Control Panel -->
-               <StackPanel Orientation="Vertical">
+               <StackPanel Grid.Column="1"
+                           Orientation="Vertical">
 
                   <!-- Tile Map Texture Editor Texture Picker -->
                   <ListBox x:Name="tileSelectionListView"
@@ -75,27 +84,29 @@
                      </ListBox.ItemTemplate>
                   </ListBox>
 
-               </StackPanel> <!-- Tile Map Texture Editor Control Panel -->
-                  
-            </StackPanel>
-         </TabItem> <!-- Tile Map Texture Editor -->
+               </StackPanel>
+               <!-- Tile Map Texture Editor Control Panel -->
+            </Grid>
+         </TabItem>
+         <!-- Tile Map Texture Editor -->
 
          <!-- Tile Map Portal Editor -->
          <TabItem Header="Portals">
             <StackPanel Orientation="Horizontal">
-                  
+
                <!-- Source Portal Tiles -->
                <StackPanel Orientation="Vertical">
 
                   <local:MapPanel TileMap="{Binding SelectedTileMap.Tiles}"
                                   SelectedTextureIndex="{Binding SelectedItem.TextureIndex, ElementName=tileSelectionListView, Mode=TwoWay}" />
 
-               </StackPanel> <!-- Source Portal Tiles -->
-                  
+               </StackPanel>
+               <!-- Source Portal Tiles -->
+
                <!-- Source Portal Properties -->
                <StackPanel Orientation="Vertical"
                            Visibility="{Binding TileIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
-                     
+
                   <StackPanel Orientation="Vertical"
                               Visibility="{Binding SelectedTile.HasPortal, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                      <Button Content="Add Portal"
@@ -113,7 +124,8 @@
                              Command="{Binding DeleteSelectedPortalCommand, Mode=OneTime}" />
                   </StackPanel>
 
-               </StackPanel> <!-- Source Portal Properties -->
+               </StackPanel>
+               <!-- Source Portal Properties -->
 
                <!-- Destination Portal Tiles -->
                <StackPanel Orientation="Vertical"
@@ -125,9 +137,12 @@
                </StackPanel>
 
             </StackPanel>
-         </TabItem> <!-- Tile Map Portal Editor -->
-            
+         </TabItem>
+         <!-- Tile Map Portal Editor -->
+
       </TabControl>
 
-   </StackPanel> <!-- Window Contents -->
+
+   </Grid>
+   <!-- Window Contents -->
 </Window>
