@@ -4,11 +4,12 @@ void Screen_Init( Screen_t* screen, uint16_t* buffer )
 {
    screen->buffer = buffer;
    Screen_LoadPalette( screen );
+   Screen_LoadTextBitFields( screen );
 }
 
-Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint8_t* paletteIndex )
+Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex )
 {
-   uint8_t i;
+   uint32_t i;
 
    for ( i = 0; i < PALETTE_COLORS; i++ )
    {
@@ -22,7 +23,7 @@ Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint8_t
    return False;
 }
 
-void Screen_Wipe( Screen_t* screen, uint8_t paletteIndex )
+void Screen_Wipe( Screen_t* screen, uint32_t paletteIndex )
 {
    uint32_t i;
    uint16_t* bufferPos = screen->buffer;

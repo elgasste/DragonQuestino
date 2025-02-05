@@ -117,7 +117,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 {
    TilePortal_t* portal;
-   uint8_t wipePaletteIndex;
+   uint32_t wipePaletteIndex;
 
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
    game->player.tileIndex = tileIndex;

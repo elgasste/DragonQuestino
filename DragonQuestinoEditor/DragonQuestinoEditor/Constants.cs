@@ -7,6 +7,7 @@
       public const string EditorSaveDataFilePath = "..\\..\\..\\..\\..\\Assets\\editor_save.json";
       public const string PlayerSpriteFilePath = "..\\..\\..\\..\\..\\Assets\\player_sprite.png";
       public const string StaticSpriteSheetFilePath = "..\\..\\..\\..\\..\\Assets\\static_sprites.png";
+      public const string TextTileSetFilePath = "..\\..\\..\\..\\..\\Assets\\text_tileset.png";
 
       public const string GameDataSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\game_data.c";
       public const string ShieldBackgroundSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\giga_shield_background_data.c";
@@ -36,6 +37,9 @@
       public const int SpriteFramePixels = 256;
       public const int ActiveSpriteFrameCount = 2;
       public const int ActiveSpritePositionCount = 4;
+
+      public const int TextTileSize = 8;
+      public const int TextTileCount = 75;  // keep this in parity with TEXT_TILE_COUNT
 
       // bits 7-8
       public static readonly UInt32[] TileSetIndexWalkSpeeds = [
