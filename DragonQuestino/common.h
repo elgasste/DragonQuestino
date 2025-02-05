@@ -18,6 +18,7 @@
 #include <stdint.h>
 #include <memory.h>
 #include <limits.h>
+#include <string.h>
 
 #include "enums.h"
 

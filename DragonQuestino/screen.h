@@ -14,6 +14,15 @@
 
 #define TRANSPARENT_COLOR_INDEX  0x0A
 
+#define MENU_BORDER_CHAR_TOPLEFT       0
+#define MENU_BORDER_CHAR_TOPRIGHT      1
+#define MENU_BORDER_CHAR_BOTTOMLEFT    2
+#define MENU_BORDER_CHAR_BOTTOMRIGHT   3
+#define MENU_BORDER_CHAR_LEFT          4
+#define MENU_BORDER_CHAR_TOP           5
+#define MENU_BORDER_CHAR_RIGHT         6
+#define MENU_BORDER_CHAR_BOTTOM        7
+
 typedef struct Screen_t
 {
    uint16_t* buffer;
@@ -29,6 +38,7 @@ extern "C" {
 void Screen_Init( Screen_t* screen, uint16_t* buffer );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex );
 void Screen_Wipe( Screen_t* screen, uint32_t paletteIndex );
+void Screen_DrawText( Screen_t* screen, const char* text, uint16_t x, uint16_t y, uint16_t color );
 
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );
