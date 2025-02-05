@@ -125,8 +125,8 @@ void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y
 
 void Screen_DrawWrappedText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint32_t lineChars, uint16_t color )
 {
-   uint8_t textIndex, lineIndex, lastSpaceIndex, currentLine;
-   uint16_t strLen = (uint16_t)strlen( text );
+   uint32_t textIndex, lineIndex, lastSpaceIndex, currentLine;
+   uint32_t strLen = (uint16_t)strlen( text );
    Bool_t endOfLine, endOfText;
    char line[32];
    char curChar;
