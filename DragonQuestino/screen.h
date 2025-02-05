@@ -9,7 +9,7 @@
 
 #define PALETTE_COLORS           256
 
-#define TEXT_TILE_COUNT          75
+#define TEXT_TILE_COUNT          83
 #define TEXT_TILE_SIZE           8
 
 #define TRANSPARENT_COLOR_INDEX  0x0A
