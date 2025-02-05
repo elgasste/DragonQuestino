@@ -38,8 +38,9 @@ extern "C" {
 void Screen_Init( Screen_t* screen, uint16_t* buffer );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex );
 void Screen_Wipe( Screen_t* screen, uint32_t paletteIndex );
-void Screen_DrawChar( Screen_t* screen, char c, uint16_t x, uint16_t y, uint16_t color );
-void Screen_DrawText( Screen_t* screen, const char* text, uint16_t x, uint16_t y, uint16_t color );
+void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t color );
+void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint16_t color );
+void Screen_DrawWrappedText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint32_t lineChars, uint16_t color );
 
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );
