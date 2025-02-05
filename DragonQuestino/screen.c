@@ -37,53 +37,56 @@ void Screen_Wipe( Screen_t* screen, uint32_t paletteIndex )
    }
 }
 
+void Screen_DrawChar( Screen_t* screen, char c, uint16_t x, uint16_t y, uint16_t color )
+{
+   int32_t i;
+   uint32_t j, row;
+   uint8_t* bitField;
+   int8_t charIndex = Screen_GetCharIndexFromChar( c );
+   uint16_t* bufferPos = screen->buffer + ( y * SCREEN_WIDTH ) + x;
+
+   if ( charIndex < 0 )
+   {
+      for ( i = 0, j = 0; i < TEXT_TILE_SIZE * TEXT_TILE_SIZE; i++ )
+      {
+         *bufferPos = 0;
+         bufferPos++;
+         j++;
+
+         if ( j == TEXT_TILE_SIZE )
+         {
+            bufferPos += ( SCREEN_WIDTH - TEXT_TILE_SIZE );
+            j = 0;
+         }
+      }
+   }
+   else
+   {
+#pragma warning( disable: 4047 )
+      bitField = &( screen->textBitFields[charIndex] );
+#pragma warning( default: 4047 )
+
+      for ( row = 0; row < TEXT_TILE_SIZE; row++ )
+      {
+         for ( i = ( TEXT_TILE_SIZE - 1 ); i >= 0; i-- )
+         {
+            *bufferPos = ( bitField[row] & ( 0x01 << i ) ) ? color : 0;
+            bufferPos++;
+         }
+
+         bufferPos += ( SCREEN_WIDTH - TEXT_TILE_SIZE );
+      }
+   }
+}
+
 void Screen_DrawText( Screen_t* screen, const char* text, uint16_t x, uint16_t y, uint16_t color )
 {
-   uint16_t ch, j;
-   int8_t charIndex, i;
-   uint8_t row;
-   uint8_t* bitField;
-   uint16_t* bufferPos;
+   uint32_t ch;
 
    for ( ch = 0; ch < strlen( text ); ch++ )
    {
-      bufferPos = screen->buffer + ( y * SCREEN_WIDTH ) + x;
-      charIndex = Screen_GetCharIndexFromChar( text[ch] );
-
-      if ( charIndex < 0 )
-      {
-         for ( i = 0, j = 0; i < TEXT_TILE_SIZE * TEXT_TILE_SIZE; i++ )
-         {
-            *bufferPos = 0;
-            bufferPos++;
-            j++;
-
-            if ( j == TEXT_TILE_SIZE )
-            {
-               bufferPos += ( SCREEN_WIDTH - TEXT_TILE_SIZE );
-               j = 0;
-            }
-         }
-      }
-      else
-      {
-#pragma warning( disable: 4047 )
-         bitField = &( screen->textBitFields[charIndex] );
-#pragma warning( default: 4047 )
-
-         for ( row = 0; row < TEXT_TILE_SIZE; row++ )
-         {
-            for ( i = ( TEXT_TILE_SIZE - 1 ); i >= 0; i-- )
-            {
-               *bufferPos = ( bitField[row] & ( 0x01 << i ) ) ? color : 0;
-               bufferPos++;
-            }
-
-            bufferPos += ( SCREEN_WIDTH - TEXT_TILE_SIZE );
-         }
-      }
-
-      x += 8;
+      Screen_DrawChar( screen, text[ch], x, y, color );
+      x += TEXT_TILE_SIZE;
    }
 }
 
