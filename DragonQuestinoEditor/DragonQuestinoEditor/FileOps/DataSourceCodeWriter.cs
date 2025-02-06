@@ -140,7 +140,7 @@ namespace DragonQuestinoEditor.FileOps
                WriteToFileStream( fs, string.Format( "         tileMap->staticSprites[{0}].position.y = {1};\n", i, yPos ) );
             }
 
-            var packedTiles = new List<UInt32>( ( tileMap.TilesX * tileMap.TilesY ) / 2 );
+            var packedTiles = new List<UInt32>( ( tileMap.TilesX / 2 ) * tileMap.TilesY );
             var indexCounts = new Dictionary<UInt32, int>();
 
             for ( int row = 0; row < tileMap.TilesY; row++ )
@@ -191,16 +191,15 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, string.Format( "         for ( i = 0; i < {0}; i++ ) for ( j = 0; j < {1}; j++ ) tiles32[(i * {2}) + j] = 0x{3};\n",
                tileMap.TilesY, tileMap.TilesX / 2, Constants.TileMapMaxTilesX / 2, mostCommonValue.ToString( "X8" ) ) );
 
-            for ( int row = 0, packedTileIndex = 0; row < tileMap.TilesY; row++ )
+            for ( int i = 0; i < packedTiles.Count; i++ )
             {
-               for ( int col = 0; col < tileMap.TilesX; packedTileIndex++, col += 2 )
+               if ( packedTiles[i] != mostCommonValue )
                {
-                  var tileIndex = ( row * Constants.TileMapMaxTilesX ) + col;
+                  int row = i / ( tileMap.TilesX / 2 );
+                  int col = i % ( tileMap.TilesX / 2 );
+                  int tileIndex32 = ( row * ( Constants.TileMapMaxTilesX / 2 ) ) + col;
 
-                  if ( packedTiles[packedTileIndex] != mostCommonValue )
-                  {
-                     WriteToFileStream( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex / 2, packedTiles[packedTileIndex].ToString( "X8" ) ) );
-                  }
+                  WriteToFileStream( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex32, packedTiles[i].ToString( "X8" ) ) );
                }
             }
 
