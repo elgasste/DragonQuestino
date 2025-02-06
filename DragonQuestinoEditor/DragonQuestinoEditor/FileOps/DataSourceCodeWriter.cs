@@ -191,15 +191,52 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, string.Format( "         for ( i = 0; i < {0}; i++ ) for ( j = 0; j < {1}; j++ ) tiles32[(i * {2}) + j] = 0x{3};\n",
                tileMap.TilesY, tileMap.TilesX / 2, Constants.TileMapMaxTilesX / 2, mostCommonValue.ToString( "X8" ) ) );
 
-            for ( int i = 0; i < packedTiles.Count; i++ )
+            for ( int i = 0; i < packedTiles.Count; )
             {
-               if ( packedTiles[i] != mostCommonValue )
-               {
-                  int row = i / ( tileMap.TilesX / 2 );
-                  int col = i % ( tileMap.TilesX / 2 );
-                  int tileIndex32 = ( row * ( Constants.TileMapMaxTilesX / 2 ) ) + col;
+               int firstIndex = i;
+               int lastIndex = i;
+               var currentTile = packedTiles[i];
+               i++;
 
-                  WriteToFileStream( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex32, packedTiles[i].ToString( "X8" ) ) );
+               if ( currentTile != mostCommonValue )
+               {
+                  while ( i < packedTiles.Count )
+                  {
+                     var nextTile = packedTiles[i];
+                     lastIndex = i;
+                     i++;
+
+                     if ( nextTile != currentTile )
+                     {
+                        break;
+                     }
+                  }
+
+                  int row = firstIndex / ( tileMap.TilesX / 2 );
+                  int col = firstIndex % ( tileMap.TilesX / 2 );
+                  int firstTileIndex32 = ( row * ( Constants.TileMapMaxTilesX / 2 ) ) + col;
+
+                  row = lastIndex / ( tileMap.TilesX / 2 );
+                  col = lastIndex % ( tileMap.TilesX / 2 );
+                  int lastTileIndex32 = ( row * ( Constants.TileMapMaxTilesX / 2 ) ) + col;
+
+                  if ( lastIndex == firstIndex )
+                  {
+                     WriteToFileStream( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", firstTileIndex32, packedTiles[firstIndex].ToString( "X8" ) ) );
+                  }
+                  else
+                  {
+                     if ( ( lastIndex - firstIndex ) > 1 )
+                     {
+                        WriteToFileStream( fs, string.Format( "         for ( i = {0}; i < {1}; i++ ) tiles32[i] = 0x{2};\n", firstTileIndex32, lastTileIndex32, packedTiles[firstIndex].ToString( "X8" ) ) );
+                     }
+                     else
+                     {
+                        WriteToFileStream( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", firstTileIndex32, packedTiles[firstIndex].ToString( "X8" ) ) );  
+                     }
+
+                     i--;
+                  }
                }
             }
 
@@ -400,18 +437,22 @@ namespace DragonQuestinoEditor.FileOps
                   }
                }
 
-               if ( ( lastIndex - firstIndex ) > 1 )
+               if ( lastIndex == firstIndex )
                {
-                  WriteToFileStream( fs, string.Format( "   for ( i = {0}; i <= {1}; i++ ) buffer[i] = 0x{2};\n", firstIndex, lastIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                  WriteToFileStream( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
                }
                else
                {
-                  WriteToFileStream( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
-
-                  if ( lastIndex - firstIndex > 0 )
+                  if ( ( lastIndex - firstIndex ) > 1 )
                   {
-                     i--;
+                     WriteToFileStream( fs, string.Format( "   for ( i = {0}; i <= {1}; i++ ) buffer[i] = 0x{2};\n", firstIndex, lastIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
                   }
+                  else
+                  {
+                     WriteToFileStream( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                  }
+
+                  i--;
                }
             }
          }
