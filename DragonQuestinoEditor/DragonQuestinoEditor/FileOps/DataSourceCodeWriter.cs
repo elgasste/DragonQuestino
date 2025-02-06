@@ -101,7 +101,7 @@ namespace DragonQuestinoEditor.FileOps
       {
          WriteToFileStream( fs, "\nvoid TileMap_Load( TileMap_t* tileMap, uint32_t index )\n" );
          WriteToFileStream( fs, "{\n" );
-         WriteToFileStream( fs, "   int32_t i;\n" );
+         WriteToFileStream( fs, "   int32_t i, j;\n" );
          WriteToFileStream( fs, "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n" );
          WriteToFileStream( fs, "   switch( index )\n" );
          WriteToFileStream( fs, "   {\n" );
@@ -188,8 +188,8 @@ namespace DragonQuestinoEditor.FileOps
                }
             }
 
-            // TODO: this can be optimized, we should only fill in the area of TilesX and TilesY
-            WriteToFileStream( fs, string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
+            WriteToFileStream( fs, string.Format( "         for ( i = 0; i < {0}; i++ ) for ( j = 0; j < {1}; j++ ) tiles32[(i * {2}) + j] = 0x{3};\n",
+               tileMap.TilesY, tileMap.TilesX / 2, Constants.TileMapMaxTilesX / 2, mostCommonValue.ToString( "X8" ) ) );
 
             for ( int row = 0, packedTileIndex = 0; row < tileMap.TilesY; row++ )
             {

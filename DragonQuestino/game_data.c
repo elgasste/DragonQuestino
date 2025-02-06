@@ -2646,7 +2646,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap )
 
 void TileMap_Load( TileMap_t* tileMap, uint32_t index )
 {
-   int32_t i;
+   int32_t i, j;
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
 
    switch( index )
@@ -2755,7 +2755,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[13] ), 3 );
          tileMap->staticSprites[13].position.x = 1888;
          tileMap->staticSprites[13].position.y = 1856;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x010C010C; }
+         for ( i = 0; i < 135; i++ ) for ( j = 0; j < 70; j++ ) tiles32[(i * 70) + j] = 0x010C010C;
          tiles32[426] = 0x01110111;
          tiles32[427] = 0x01110111;
          tiles32[428] = 0x01110111;
@@ -8965,7 +8965,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 3 );
          tileMap->staticSprites[0].position.x = 208;
          tileMap->staticSprites[0].position.y = 160;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[72] = 0x010B010B;
          tiles32[73] = 0x010B010B;
          tiles32[74] = 0x010B010B;
@@ -9052,7 +9052,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 80;
          tileMap->staticSprites[0].position.y = 96;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[72] = 0x01060106;
          tiles32[73] = 0x01060106;
          tiles32[74] = 0x01060106;
@@ -9394,7 +9394,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 3 );
          tileMap->staticSprites[1].position.x = 480;
          tileMap->staticSprites[1].position.y = 480;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01270127; }
+         for ( i = 0; i < 32; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01270127;
          tiles32[0] = 0x01200120;
          tiles32[1] = 0x01200120;
          tiles32[2] = 0x01200120;
@@ -9818,7 +9818,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[14].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01200120; }
+         for ( i = 0; i < 32; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01200120;
          tiles32[70] = 0x01060120;
          tiles32[71] = 0x01060106;
          tiles32[72] = 0x01060106;
@@ -10231,7 +10231,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[0].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[353] = 0x01060106;
          tiles32[354] = 0x01060106;
          tiles32[355] = 0x01060106;
@@ -10263,7 +10263,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[0].arrivalDirection = (Direction_t)1;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[353] = 0x01060108;
          tiles32[354] = 0x01060128;
          tiles32[355] = 0x01060106;
@@ -10402,7 +10402,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 3 );
          tileMap->staticSprites[0].position.x = 320;
          tileMap->staticSprites[0].position.y = 16;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x010B010B; }
+         for ( i = 0; i < 22; i++ ) for ( j = 0; j < 11; j++ ) tiles32[(i * 70) + j] = 0x010B010B;
          tiles32[0] = 0x01200120;
          tiles32[1] = 0x01200120;
          tiles32[2] = 0x01200120;
@@ -10596,7 +10596,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[1].arrivalDirection = (Direction_t)1;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[141] = 0x01280108;
          tiles32[210] = 0x01270106;
          tiles32[211] = 0x01270127;
@@ -10822,7 +10822,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[35].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x03630363; }
+         for ( i = 0; i < 22; i++ ) for ( j = 0; j < 11; j++ ) tiles32[(i * 70) + j] = 0x03630363;
          tiles32[70] = 0x01060363;
          tiles32[71] = 0x03630106;
          tiles32[72] = 0x01200363;
@@ -11317,7 +11317,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[71].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01270127; }
+         for ( i = 0; i < 31; i++ ) for ( j = 0; j < 15; j++ ) tiles32[(i * 70) + j] = 0x01270127;
          tiles32[70] = 0x010B0127;
          tiles32[71] = 0x010B010B;
          tiles32[73] = 0x01060106;
@@ -11753,7 +11753,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[29].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[3] = 0x01080128;
          tiles32[5] = 0x01280128;
          tiles32[6] = 0x01280128;
@@ -12029,7 +12029,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[46].arrivalDirection = (Direction_t)2;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x03610361; }
+         for ( i = 0; i < 26; i++ ) for ( j = 0; j < 13; j++ ) tiles32[(i * 70) + j] = 0x03610361;
          tiles32[70] = 0x01060361;
          tiles32[71] = 0x01060106;
          tiles32[72] = 0x03610120;
@@ -12687,7 +12687,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[102].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01200120; }
+         for ( i = 0; i < 32; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01200120;
          tiles32[142] = 0x010C010C;
          tiles32[143] = 0x010C010C;
          tiles32[144] = 0x010C010C;
@@ -13045,7 +13045,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[1].arrivalDirection = (Direction_t)1;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[285] = 0x01060106;
          tiles32[286] = 0x01080106;
          tiles32[355] = 0x01270128;
@@ -13080,7 +13080,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[1].arrivalDirection = (Direction_t)1;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[212] = 0x01060106;
          tiles32[213] = 0x01060106;
          tiles32[214] = 0x01060106;
@@ -13156,7 +13156,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 3 );
          tileMap->staticSprites[1].position.x = 320;
          tileMap->staticSprites[1].position.y = 288;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 28; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -13243,7 +13243,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 304;
          tileMap->staticSprites[0].position.y = 288;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 28; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -13351,7 +13351,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[3] ), 3 );
          tileMap->staticSprites[3].position.x = 368;
          tileMap->staticSprites[3].position.y = 336;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 32; i++ ) for ( j = 0; j < 18; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -13508,7 +13508,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[2] ), 2 );
          tileMap->staticSprites[2].position.x = 368;
          tileMap->staticSprites[2].position.y = 336;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 32; i++ ) for ( j = 0; j < 18; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -13658,7 +13658,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 2 );
          tileMap->staticSprites[1].position.x = 176;
          tileMap->staticSprites[1].position.y = 624;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 49; i++ ) for ( j = 0; j < 14; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -13812,7 +13812,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 3 );
          tileMap->staticSprites[1].position.x = 192;
          tileMap->staticSprites[1].position.y = 432;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 38; i++ ) for ( j = 0; j < 21; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -14104,7 +14104,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[5] ), 3 );
          tileMap->staticSprites[5].position.x = 368;
          tileMap->staticSprites[5].position.y = 304;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 30; i++ ) for ( j = 0; j < 18; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -14273,7 +14273,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[6] ), 2 );
          tileMap->staticSprites[6].position.x = 208;
          tileMap->staticSprites[6].position.y = 416;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 38; i++ ) for ( j = 0; j < 21; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -14537,7 +14537,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 2 );
          tileMap->staticSprites[1].position.x = 256;
          tileMap->staticSprites[1].position.y = 208;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 27; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -14640,7 +14640,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[2] ), 3 );
          tileMap->staticSprites[2].position.x = 256;
          tileMap->staticSprites[2].position.y = 240;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x0DE40DE4; }
+         for ( i = 0; i < 22; i++ ) for ( j = 0; j < 11; j++ ) tiles32[(i * 70) + j] = 0x0DE40DE4;
          tiles32[71] = 0x01060DE4;
          tiles32[72] = 0x01060106;
          tiles32[74] = 0x01060106;
@@ -14921,7 +14921,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[9] ), 3 );
          tileMap->staticSprites[9].position.x = 304;
          tileMap->staticSprites[9].position.y = 448;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 38; i++ ) for ( j = 0; j < 21; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -15199,7 +15199,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[3] ), 2 );
          tileMap->staticSprites[3].position.x = 176;
          tileMap->staticSprites[3].position.y = 288;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 28; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -15321,7 +15321,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[5] ), 2 );
          tileMap->staticSprites[5].position.x = 176;
          tileMap->staticSprites[5].position.y = 288;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 28; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -15478,7 +15478,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[10] ), 2 );
          tileMap->staticSprites[10].position.x = 304;
          tileMap->staticSprites[10].position.y = 288;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 28; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -15586,7 +15586,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[3] ), 3 );
          tileMap->staticSprites[3].position.x = 256;
          tileMap->staticSprites[3].position.y = 224;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 28; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -15680,7 +15680,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 3 );
          tileMap->staticSprites[1].position.x = 320;
          tileMap->staticSprites[1].position.y = 176;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 23; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -15744,7 +15744,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 3 );
          tileMap->staticSprites[1].position.x = 320;
          tileMap->staticSprites[1].position.y = 176;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 23; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[565] = 0x01060106;
          tiles32[566] = 0x01060106;
          tiles32[567] = 0x01060106;
@@ -15801,7 +15801,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 176;
          tileMap->staticSprites[0].position.y = 480;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x010C010C; }
+         for ( i = 0; i < 32; i++ ) for ( j = 0; j < 16; j++ ) tiles32[(i * 70) + j] = 0x010C010C;
          tiles32[72] = 0x01060106;
          tiles32[73] = 0x01060106;
          tiles32[77] = 0x0106010C;
@@ -16177,7 +16177,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 0 );
          tileMap->staticSprites[1].position.x = 128;
          tileMap->staticSprites[1].position.y = 112;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01060106; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01060106;
          tiles32[213] = 0x01270127;
          tiles32[214] = 0x01270127;
          tiles32[215] = 0x01270127;
@@ -16243,7 +16243,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 0 );
          tileMap->staticSprites[1].position.x = 144;
          tileMap->staticSprites[1].position.y = 112;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01060106; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01060106;
          tiles32[142] = 0x01270106;
          tiles32[143] = 0x01270127;
          tiles32[144] = 0x01270127;
@@ -16301,7 +16301,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[0].arrivalDirection = (Direction_t)2;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[353] = 0x01060108;
          tiles32[354] = 0x01060106;
          tiles32[423] = 0x01060108;
@@ -16319,7 +16319,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tileMap->portals[0].arrivalDirection = (Direction_t)3;
          tileMap->activeSpriteCount = 0;
          tileMap->staticSpriteCount = 0;
-         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) { tiles32[i] = 0x01080108; }
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
          tiles32[353] = 0x01060108;
          tiles32[354] = 0x01060106;
          tiles32[423] = 0x01060108;
