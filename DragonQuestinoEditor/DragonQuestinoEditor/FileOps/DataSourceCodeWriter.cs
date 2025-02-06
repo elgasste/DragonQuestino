@@ -101,7 +101,7 @@ namespace DragonQuestinoEditor.FileOps
       {
          WriteToFileStream( fs, "\nvoid TileMap_Load( TileMap_t* tileMap, uint32_t index )\n" );
          WriteToFileStream( fs, "{\n" );
-         WriteToFileStream( fs, "   int32_t i;\n" );
+         WriteToFileStream( fs, "   int32_t i, j;\n" );
          WriteToFileStream( fs, "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n" );
          WriteToFileStream( fs, "   switch( index )\n" );
          WriteToFileStream( fs, "   {\n" );
@@ -140,7 +140,7 @@ namespace DragonQuestinoEditor.FileOps
                WriteToFileStream( fs, string.Format( "         tileMap->staticSprites[{0}].position.y = {1};\n", i, yPos ) );
             }
 
-            var packedTiles = new List<UInt32>( ( tileMap.TilesX * tileMap.TilesY ) / 2 );
+            var packedTiles = new List<UInt32>( ( tileMap.TilesX / 2 ) * tileMap.TilesY );
             var indexCounts = new Dictionary<UInt32, int>();
 
             for ( int row = 0; row < tileMap.TilesY; row++ )
@@ -188,18 +188,54 @@ namespace DragonQuestinoEditor.FileOps
                }
             }
 
-            // TODO: this can be optimized, we should only fill in the area of TilesX and TilesY
-            WriteToFileStream( fs, string.Format( "         for ( i = 0; i < ( TILE_COUNT / 2 ); i++ ) {{ tiles32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
+            WriteToFileStream( fs, string.Format( "         for ( i = 0; i < {0}; i++ ) for ( j = 0; j < {1}; j++ ) tiles32[(i * {2}) + j] = 0x{3};\n",
+               tileMap.TilesY, tileMap.TilesX / 2, Constants.TileMapMaxTilesX / 2, mostCommonValue.ToString( "X8" ) ) );
 
-            for ( int row = 0, packedTileIndex = 0; row < tileMap.TilesY; row++ )
+            for ( int i = 0; i < packedTiles.Count; )
             {
-               for ( int col = 0; col < tileMap.TilesX; packedTileIndex++, col += 2 )
-               {
-                  var tileIndex = ( row * Constants.TileMapMaxTilesX ) + col;
+               int firstIndex = i;
+               int lastIndex = i;
+               var currentTile = packedTiles[i];
+               i++;
 
-                  if ( packedTiles[packedTileIndex] != mostCommonValue )
+               if ( currentTile != mostCommonValue )
+               {
+                  while ( i < packedTiles.Count )
                   {
-                     WriteToFileStream( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", tileIndex / 2, packedTiles[packedTileIndex].ToString( "X8" ) ) );
+                     var nextTile = packedTiles[i];
+                     lastIndex = i;
+                     i++;
+
+                     if ( nextTile != currentTile )
+                     {
+                        break;
+                     }
+                  }
+
+                  int row = firstIndex / ( tileMap.TilesX / 2 );
+                  int col = firstIndex % ( tileMap.TilesX / 2 );
+                  int firstTileIndex32 = ( row * ( Constants.TileMapMaxTilesX / 2 ) ) + col;
+
+                  row = lastIndex / ( tileMap.TilesX / 2 );
+                  col = lastIndex % ( tileMap.TilesX / 2 );
+                  int lastTileIndex32 = ( row * ( Constants.TileMapMaxTilesX / 2 ) ) + col;
+
+                  if ( lastIndex == firstIndex )
+                  {
+                     WriteToFileStream( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", firstTileIndex32, packedTiles[firstIndex].ToString( "X8" ) ) );
+                  }
+                  else
+                  {
+                     if ( ( lastIndex - firstIndex ) > 1 )
+                     {
+                        WriteToFileStream( fs, string.Format( "         for ( i = {0}; i < {1}; i++ ) tiles32[i] = 0x{2};\n", firstTileIndex32, lastTileIndex32, packedTiles[firstIndex].ToString( "X8" ) ) );
+                     }
+                     else
+                     {
+                        WriteToFileStream( fs, string.Format( "         tiles32[{0}] = 0x{1};\n", firstTileIndex32, packedTiles[firstIndex].ToString( "X8" ) ) );  
+                     }
+
+                     i--;
                   }
                }
             }
@@ -401,18 +437,22 @@ namespace DragonQuestinoEditor.FileOps
                   }
                }
 
-               if ( ( lastIndex - firstIndex ) > 1 )
+               if ( lastIndex == firstIndex )
                {
-                  WriteToFileStream( fs, string.Format( "   for ( i = {0}; i <= {1}; i++ ) buffer[i] = 0x{2};\n", firstIndex, lastIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                  WriteToFileStream( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
                }
                else
                {
-                  WriteToFileStream( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
-
-                  if ( lastIndex - firstIndex > 0 )
+                  if ( ( lastIndex - firstIndex ) > 1 )
                   {
-                     i--;
+                     WriteToFileStream( fs, string.Format( "   for ( i = {0}; i <= {1}; i++ ) buffer[i] = 0x{2};\n", firstIndex, lastIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
                   }
+                  else
+                  {
+                     WriteToFileStream( fs, string.Format( "   buffer[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                  }
+
+                  i--;
                }
             }
          }
@@ -449,13 +489,53 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, "\nvoid Screen_LoadTextBitFields( Screen_t* screen )\n" );
          WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   uint32_t i, j;\n\n" );
+
+         var byteCounts = new Dictionary<byte, int>();
 
          for ( int i = 0; i < Constants.TextTileCount; i++ )
          {
             for ( int j = 0; j < Constants.TextTileSize; j++ )
             {
                byte b = textTextureMap[i + ( j * Constants.TextTileCount )];
-               WriteToFileStream( fs, string.Format( "   screen->textBitFields[{0}][{1}] = 0x{2};\n", i, j, b.ToString( "X2" ) ) );
+
+               if ( byteCounts.TryGetValue( b, out int value ) )
+               {
+                  byteCounts[b] = ++value;
+               }
+               else
+               {
+                  byteCounts[b] = 1;
+               }
+            }
+         }
+
+         int highestCount = 0;
+         byte mostCommonValue = 0;
+
+         foreach ( var pair in byteCounts )
+         {
+            if ( pair.Value > highestCount )
+            {
+               highestCount = pair.Value;
+               mostCommonValue = pair.Key;
+            }
+         }
+
+         WriteToFileStream( fs, string.Format(
+            "   for ( i = 0; i < TEXT_TILE_COUNT; i++ ) for ( j = 0; j < TEXT_TILE_SIZE; j++ ) screen->textBitFields[i][j] = 0x{0};\n",
+            mostCommonValue.ToString( "X2" ) ) );
+
+         for ( int i = 0; i < Constants.TextTileCount; i++ )
+         {
+            for ( int j = 0; j < Constants.TextTileSize; j++ )
+            {
+               byte b = textTextureMap[i + ( j * Constants.TextTileCount )];
+
+               if ( b != mostCommonValue )
+               {
+                  WriteToFileStream( fs, string.Format( "   screen->textBitFields[{0}][{1}] = 0x{2};\n", i, j, b.ToString( "X2" ) ) );
+               }
             }
          }
 
