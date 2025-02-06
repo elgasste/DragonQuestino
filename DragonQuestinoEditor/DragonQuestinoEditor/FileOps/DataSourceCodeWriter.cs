@@ -449,13 +449,53 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, "\nvoid Screen_LoadTextBitFields( Screen_t* screen )\n" );
          WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   uint32_t i, j;\n\n" );
+
+         var byteCounts = new Dictionary<byte, int>();
 
          for ( int i = 0; i < Constants.TextTileCount; i++ )
          {
             for ( int j = 0; j < Constants.TextTileSize; j++ )
             {
                byte b = textTextureMap[i + ( j * Constants.TextTileCount )];
-               WriteToFileStream( fs, string.Format( "   screen->textBitFields[{0}][{1}] = 0x{2};\n", i, j, b.ToString( "X2" ) ) );
+
+               if ( byteCounts.TryGetValue( b, out int value ) )
+               {
+                  byteCounts[b] = ++value;
+               }
+               else
+               {
+                  byteCounts[b] = 1;
+               }
+            }
+         }
+
+         int highestCount = 0;
+         byte mostCommonValue = 0;
+
+         foreach ( var pair in byteCounts )
+         {
+            if ( pair.Value > highestCount )
+            {
+               highestCount = pair.Value;
+               mostCommonValue = pair.Key;
+            }
+         }
+
+         WriteToFileStream( fs, string.Format(
+            "   for ( i = 0; i < TEXT_TILE_COUNT; i++ ) for ( j = 0; j < TEXT_TILE_SIZE; j++ ) screen->textBitFields[i][j] = 0x{0};\n",
+            mostCommonValue.ToString( "X2" ) ) );
+
+         for ( int i = 0; i < Constants.TextTileCount; i++ )
+         {
+            for ( int j = 0; j < Constants.TextTileSize; j++ )
+            {
+               byte b = textTextureMap[i + ( j * Constants.TextTileCount )];
+
+               if ( b != mostCommonValue )
+               {
+                  WriteToFileStream( fs, string.Format( "   screen->textBitFields[{0}][{1}] = 0x{2};\n", i, j, b.ToString( "X2" ) ) );
+               }
             }
          }
 
