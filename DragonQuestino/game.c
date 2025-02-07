@@ -6,7 +6,7 @@
 
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
-internal void Game_HandleInput( Game_t* game );
+internal void Game_HandleOverworldInput( Game_t* game );
 internal void Game_UpdateTileMapViewport( Game_t* game );
 internal void Game_Draw( Game_t* game );
 internal void Game_DrawTileMap( Game_t* game );
@@ -48,6 +48,8 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
 void Game_Tic( Game_t* game )
 {
+   Input_Read( &( game->input ) );
+
    switch ( game->state )
    {
       case GameState_Overworld:
@@ -79,8 +81,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 
 internal void Game_TicOverworld( Game_t* game )
 {
-   Input_Read( &( game->input ) );
-   Game_HandleInput( game );
+   Game_HandleOverworldInput( game );
    Physics_Tic( game );
    Sprite_Tic( &( game->player.sprite ) );
    Game_UpdateTileMapViewport( game );
@@ -93,8 +94,6 @@ internal void Game_TicTileMapTransition( Game_t* game )
 
    if ( game->swapPortal )
    {
-      game->tileMapSwapSecondsElapsed = 0.0f;
-
       destinationTileIndex = game->swapPortal->destinationTileIndex;
       arrivalDirection = game->swapPortal->arrivalDirection;
 
@@ -105,6 +104,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
       game->player.tileIndex = destinationTileIndex;
       game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
+      game->tileMapSwapSecondsElapsed = 0.0f;
       game->swapPortal = 0;
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
@@ -121,7 +121,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
    }
 }
 
-internal void Game_HandleInput( Game_t* game )
+internal void Game_HandleOverworldInput( Game_t* game )
 {
    Player_t* player = &( game->player );
    ActiveSprite_t* playerSprite = &( game->player.sprite );
