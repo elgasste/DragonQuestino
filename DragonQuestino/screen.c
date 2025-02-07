@@ -96,10 +96,12 @@ void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y
    uint8_t row;
    uint8_t* bitField;
    uint16_t* bufferPos;
+
    for ( ch = 0; ch < strlen( text ); ch++ )
    {
       bufferPos = screen->buffer + ( y * SCREEN_WIDTH ) + x;
       charIndex = Screen_GetCharIndexFromChar( text[ch] );
+
       if ( charIndex < 0 )
       {
          for ( i = 0, j = 0; i < TEXT_TILE_SIZE * TEXT_TILE_SIZE; i++ )
@@ -107,6 +109,7 @@ void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y
             *bufferPos = 0;
             bufferPos++;
             j++;
+
             if ( j == TEXT_TILE_SIZE )
             {
                bufferPos += ( SCREEN_WIDTH - TEXT_TILE_SIZE );
@@ -119,6 +122,7 @@ void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y
 #pragma warning( disable: 4047 )
          bitField = &( screen->textBitFields[charIndex] );
 #pragma warning( default: 4047 )
+
          for ( row = 0; row < TEXT_TILE_SIZE; row++ )
          {
             for ( i = ( TEXT_TILE_SIZE - 1 ); i >= 0; i-- )
@@ -126,9 +130,11 @@ void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y
                *bufferPos = ( bitField[row] & ( 0x01 << i ) ) ? color : 0;
                bufferPos++;
             }
+
             bufferPos += ( SCREEN_WIDTH - TEXT_TILE_SIZE );
          }
       }
+
       x += 8;
    }
 }
