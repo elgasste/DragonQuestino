@@ -8,6 +8,7 @@ internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleInput( Game_t* game );
 internal void Game_UpdateTileMapViewport( Game_t* game );
+internal void Game_Draw( Game_t* game );
 internal void Game_DrawTileMap( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
@@ -57,6 +58,7 @@ void Game_Tic( Game_t* game )
          break;
    }
 
+   Game_Draw( game );
    Screen_RenderBuffer( &( game->screen ) );
 }
 
@@ -65,18 +67,8 @@ internal void Game_TicOverworld( Game_t* game )
    Input_Read( &( game->input ) );
    Game_HandleInput( game );
    Physics_Tic( game );
-
-   // TODO: there's probably a better way to do this. by the time we get here,
-   // the state may have changed (if the player stepped on a portal, for instance).
-   // I don't like having to check for that in here though, so maybe refactor?
-   if ( game->state == GameState_Overworld )
-   {
-      Sprite_Tic( &( game->player.sprite ) );
-      Game_UpdateTileMapViewport( game );
-      Game_DrawTileMap( game );
-      Game_DrawStaticSprites( game );
-      Game_DrawPlayer( game );
-   }
+   Sprite_Tic( &( game->player.sprite ) );
+   Game_UpdateTileMapViewport( game );
 }
 
 internal void Game_TicTileMapTransition( Game_t* game )
@@ -101,6 +93,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+      Game_UpdateTileMapViewport( game );
    }
    else
    {
@@ -234,6 +227,26 @@ internal void Game_UpdateTileMapViewport( Game_t* game )
    else if ( ( viewport->y + viewport->h ) > (int32_t)( game->tileMap.tilesY * TILE_SIZE ) )
    {
       viewport->y = ( game->tileMap.tilesY * TILE_SIZE ) - viewport->h;
+   }
+}
+
+internal void Game_Draw( Game_t* game )
+{
+   uint32_t wipePaletteIndex;
+
+   switch ( game->state )
+   {
+      case GameState_Overworld:
+         Game_DrawTileMap( game );
+         Game_DrawStaticSprites( game );
+         Game_DrawPlayer( game );
+         break;
+      case GameState_TileMapTransition:
+         if ( Screen_GetPaletteIndexForColor( &( game->screen ), 0, &wipePaletteIndex ) )
+         {
+            Screen_Wipe( &( game->screen ), wipePaletteIndex );
+         }
+         break;
    }
 }
 
