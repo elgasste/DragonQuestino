@@ -22,17 +22,6 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
 
-   game->player.sprite.position.x = (float)( TILE_SIZE * 55 );
-   game->player.sprite.position.y = (float)( TILE_SIZE * 49 );
-   game->player.velocity.x = 0.0f;
-   game->player.velocity.y = 0.0f;
-   game->player.maxVelocity = TILE_WALKSPEED_NORMAL;
-   game->player.hitBoxSize.x = TILE_SIZE - 4;
-   game->player.hitBoxSize.y = TILE_SIZE - 4;
-   game->player.spriteOffset.x = -2;
-   game->player.spriteOffset.y = -4;
-   game->player.sprite.direction = Direction_Down;
-
    game->state = GameState_Overworld;
    game->swapPortal = 0;
 }
