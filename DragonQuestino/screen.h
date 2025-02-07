@@ -9,6 +9,12 @@
 
 #define PALETTE_COLORS           256
 
+#define COLOR_BLACK              0x0000
+#define COLOR_WHITE              0xFFFF
+#define COLOR_RED                0xF800
+#define COLOR_GREEN              0x07E0
+#define COLOR_BLUE               0x001F
+
 #define TEXT_TILE_COUNT          83
 #define TEXT_TILE_SIZE           8
 
@@ -37,10 +43,14 @@ extern "C" {
 
 void Screen_Init( Screen_t* screen, uint16_t* buffer );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex );
-void Screen_Wipe( Screen_t* screen, uint32_t paletteIndex );
+void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex );
+void Screen_WipeColor( Screen_t* screen, uint16_t color );
 void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t color );
 void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint16_t color );
 void Screen_DrawWrappedText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint32_t lineChars, uint16_t color );
+void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t stride,
+                               uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
+                               uint32_t sx, uint32_t sy, Bool_t transparency );
 
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );

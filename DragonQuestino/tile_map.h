@@ -65,6 +65,7 @@ typedef struct TileMap_t
    uint16_t tiles[TILE_COUNT];
    uint32_t tilesX;
    uint32_t tilesY;
+   Vector4i32_t viewport;
 
    TileTexture_t textures[TILE_TEXTURE_COUNT];
 
@@ -83,8 +84,11 @@ TileMap_t;
 extern "C" {
 #endif
 
+void TileMap_Init( TileMap_t* tileMap );
+void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
+void TileMap_Draw( TileMap_t* tileMap, Screen_t* screen );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );

@@ -9,7 +9,6 @@
 #include "clock.h"
 #include "input.h"
 #include "player.h"
-#include "vector.h"
 
 typedef struct Game_t
 {
@@ -20,9 +19,6 @@ typedef struct Game_t
    GameState_t state;
    Player_t player;
 
-   Vector4i32_t tileMapViewport;
-
-   Bool_t isSwappingTileMap;
    TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;
 }

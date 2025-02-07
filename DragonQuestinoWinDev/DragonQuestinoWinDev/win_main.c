@@ -304,7 +304,7 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, " Map Viewport: %i, %i", g_globals.game.tileMapViewport.x, g_globals.game.tileMapViewport.y );
+   sprintf_s( str, STRING_SIZE_DEFAULT, " Map Viewport: %i, %i", g_globals.game.tileMap.viewport.x, g_globals.game.tileMap.viewport.y );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
