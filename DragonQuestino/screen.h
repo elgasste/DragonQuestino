@@ -41,6 +41,9 @@ void Screen_Wipe( Screen_t* screen, uint32_t paletteIndex );
 void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t color );
 void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint16_t color );
 void Screen_DrawWrappedText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint32_t lineChars, uint16_t color );
+void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t stride,
+                               uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
+                               uint32_t sx, uint32_t sy, Bool_t transparency );
 
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );

@@ -234,3 +234,46 @@ internal int8_t Screen_GetCharIndexFromChar( const char c )
    }
 }
 
+void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t stride,
+                               uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
+                               uint32_t sx, uint32_t sy, Bool_t transparency )
+{
+   uint32_t x, y;
+   uint8_t* textureBufferPos = memory + ( ty * stride ) + tx;
+   uint16_t* screenBufferPos = screen->buffer + ( sy * SCREEN_WIDTH ) + sx;
+
+   if ( transparency )
+   {
+      for ( y = 0; y < th; y++ )
+      {
+         for ( x = 0; x < tw; x++ )
+         {
+            if ( *textureBufferPos != TRANSPARENT_COLOR_INDEX )
+            {
+               *screenBufferPos = screen->palette[*textureBufferPos];
+            }
+
+            textureBufferPos++;
+            screenBufferPos++;
+         }
+
+         textureBufferPos += tx + ( stride - ( tx + tw ) );
+         screenBufferPos += ( SCREEN_WIDTH - tw );
+      }
+   }
+   else
+   {
+      for ( y = 0; y < th; y++ )
+      {
+         for ( x = 0; x < tw; x++ )
+         {
+            *screenBufferPos = screen->palette[*textureBufferPos];
+            textureBufferPos++;
+            screenBufferPos++;
+         }
+
+         textureBufferPos += tx + ( stride - ( tx + tw ) );
+         screenBufferPos += ( SCREEN_WIDTH - tw );
+      }
+   }
+}
