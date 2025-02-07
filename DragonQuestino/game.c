@@ -193,8 +193,6 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
 internal void Game_Draw( Game_t* game )
 {
-   uint32_t wipePaletteIndex;
-
    switch ( game->state )
    {
       case GameState_Overworld:
@@ -203,10 +201,7 @@ internal void Game_Draw( Game_t* game )
          Game_DrawPlayer( game );
          break;
       case GameState_TileMapTransition:
-         if ( Screen_GetPaletteIndexForColor( &( game->screen ), 0, &wipePaletteIndex ) )
-         {
-            Screen_Wipe( &( game->screen ), wipePaletteIndex );
-         }
+         Screen_WipeColor( &( game->screen ), COLOR_BLACK );
          break;
    }
 }

@@ -25,7 +25,7 @@ Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_
    return False;
 }
 
-void Screen_Wipe( Screen_t* screen, uint32_t paletteIndex )
+void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex )
 {
    uint32_t i;
    uint16_t* bufferPos = screen->buffer;
@@ -34,6 +34,16 @@ void Screen_Wipe( Screen_t* screen, uint32_t paletteIndex )
    {
       *bufferPos = screen->palette[paletteIndex];
       bufferPos++;
+   }
+}
+
+void Screen_WipeColor( Screen_t* screen, uint16_t color )
+{
+   uint32_t paletteIndex;
+
+   if ( Screen_GetPaletteIndexForColor( screen, color, &paletteIndex ) )
+   {
+      Screen_WipeFromPalette( screen, paletteIndex );
    }
 }
 
