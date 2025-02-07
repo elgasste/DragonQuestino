@@ -43,7 +43,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->player.sprite.direction = Direction_Down;
 
    game->state = GameState_Overworld;
-   game->isSwappingTileMap = False;
+   game->swapPortal = 0;
 }
 
 void Game_Tic( Game_t* game )
@@ -62,6 +62,21 @@ void Game_Tic( Game_t* game )
    Screen_RenderBuffer( &( game->screen ) );
 }
 
+void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
+{
+   TilePortal_t* portal;
+
+   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
+   game->player.tileIndex = tileIndex;
+   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
+
+   if ( portal )
+   {
+      game->swapPortal = portal;
+      game->state = GameState_TileMapTransition;
+   }
+}
+
 internal void Game_TicOverworld( Game_t* game )
 {
    Input_Read( &( game->input ) );
@@ -76,9 +91,8 @@ internal void Game_TicTileMapTransition( Game_t* game )
    uint32_t destinationTileIndex;
    Direction_t arrivalDirection;
 
-   if ( !game->isSwappingTileMap )
+   if ( game->swapPortal )
    {
-      game->isSwappingTileMap = True;
       game->tileMapSwapSecondsElapsed = 0.0f;
 
       destinationTileIndex = game->swapPortal->destinationTileIndex;
@@ -91,6 +105,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
       game->player.tileIndex = destinationTileIndex;
       game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
+      game->swapPortal = 0;
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
       Game_UpdateTileMapViewport( game );
@@ -101,31 +116,8 @@ internal void Game_TicTileMapTransition( Game_t* game )
 
       if ( game->tileMapSwapSecondsElapsed > TILEMAP_SWAP_SECONDS )
       {
-         game->isSwappingTileMap = False;
          game->state = GameState_Overworld;
       }
-   }
-}
-
-void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
-{
-   TilePortal_t* portal;
-   uint32_t wipePaletteIndex;
-
-   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
-   game->player.tileIndex = tileIndex;
-   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
-
-   if ( portal )
-   {
-      game->swapPortal = portal;
-
-      if ( Screen_GetPaletteIndexForColor( &( game->screen ), 0, &wipePaletteIndex ) )
-      {
-         Screen_Wipe( &( game->screen ), wipePaletteIndex );
-      }
-
-      game->state = GameState_TileMapTransition;
    }
 }
 

@@ -22,7 +22,6 @@ typedef struct Game_t
 
    Vector4i32_t tileMapViewport;
 
-   Bool_t isSwappingTileMap;
    TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;
 }
