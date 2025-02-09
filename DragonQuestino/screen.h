@@ -45,6 +45,8 @@ void Screen_Init( Screen_t* screen, uint16_t* buffer );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex );
 void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex );
 void Screen_WipeColor( Screen_t* screen, uint16_t color );
+void Screen_DrawRectFromPalette( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t paletteIndex );
+void Screen_DrawRectColor( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color );
 void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t color );
 void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint16_t color );
 void Screen_DrawWrappedText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint32_t lineChars, uint16_t color );

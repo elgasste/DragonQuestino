@@ -39,11 +39,48 @@ void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex )
 
 void Screen_WipeColor( Screen_t* screen, uint16_t color )
 {
-   uint32_t paletteIndex;
+   uint32_t i;
+   uint16_t* bufferPos = screen->buffer;
 
-   if ( Screen_GetPaletteIndexForColor( screen, color, &paletteIndex ) )
+   for ( i = 0; i < SCREEN_PIXELS; i++ )
    {
-      Screen_WipeFromPalette( screen, paletteIndex );
+      *bufferPos = color;
+      bufferPos++;
+   }
+}
+
+void Screen_DrawRectFromPalette( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t paletteIndex )
+{
+   // MUFFINS: test
+   uint32_t i, j;
+   uint16_t* bufferPos = screen->buffer + ( y * SCREEN_WIDTH ) + x;
+
+   for ( i = 0; i < h; i++ )
+   {
+      for ( j = 0; j < w; j++ )
+      {
+         *bufferPos = screen->palette[paletteIndex];
+         bufferPos++;
+      }
+
+      bufferPos += SCREEN_WIDTH - w;
+   }
+}
+
+void Screen_DrawRectColor( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color )
+{
+   uint32_t i, j;
+   uint16_t* bufferPos = screen->buffer + ( y * SCREEN_WIDTH ) + x;
+
+   for ( i = 0; i < h; i++ )
+   {
+      for ( j = 0; j < w; j++ )
+      {
+         *bufferPos = color;
+         bufferPos++;
+      }
+
+      bufferPos += SCREEN_WIDTH - w;
    }
 }
 

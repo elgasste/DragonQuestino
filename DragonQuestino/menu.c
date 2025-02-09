@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "screen.h"
 
 internal void Menu_LoadOverworld( Menu_t* menu );
 
@@ -10,6 +11,12 @@ void Menu_Load( Menu_t* menu, MenuId_t id )
          Menu_LoadOverworld( menu );
          break;
    }
+}
+
+void Menu_Draw( Menu_t* menu, Screen_t* screen )
+{
+   // TODO: actually draw the menu border, title, and items
+   Screen_DrawRectColor( screen, menu->position.x, menu->position.y, menu->borderSize.x * 8, menu->borderSize.y * 8, COLOR_BLACK );
 }
 
 internal void Menu_LoadOverworld( Menu_t* menu )

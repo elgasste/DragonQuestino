@@ -7,6 +7,8 @@
 #define MENU_MAX_ITEMS        16
 #define MENU_TEXT_LENGTH      32
 
+typedef struct Screen_t Screen_t;
+
 typedef struct MenuItem_t
 {
    char text[MENU_TEXT_LENGTH];
@@ -33,6 +35,7 @@ extern "C" {
 #endif
 
 void Menu_Load( Menu_t* menu, MenuId_t id );
+void Menu_Draw( Menu_t* menu, Screen_t* screen );
 
 #if defined( __cplusplus )
 }

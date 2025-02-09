@@ -129,7 +129,12 @@ internal void Game_HandleOverworldInput( Game_t* game )
    Bool_t rightIsDown = game->input.buttonStates[Button_Right].down;
    Bool_t downIsDown = game->input.buttonStates[Button_Down].down;
 
-   if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
+   if ( game->input.buttonStates[Button_A].pressed )
+   {
+      Menu_Load( &( game->menu ), MenuId_Overworld );
+      game->state = GameState_OverworldMenu;
+   }
+   else if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
    {
       if ( leftIsDown && !rightIsDown )
       {
@@ -193,10 +198,6 @@ internal void Game_HandleOverworldInput( Game_t* game )
          }
       }
    }
-   else if ( game->input.buttonStates[Button_A].pressed )
-   {
-      game->state = GameState_OverworldMenu;
-   }
 }
 
 internal void Game_HandleMenuInput( Game_t* game )
@@ -215,6 +216,12 @@ internal void Game_Draw( Game_t* game )
          TileMap_Draw( &( game->tileMap ), &( game->screen ) );
          Game_DrawStaticSprites( game );
          Game_DrawPlayer( game );
+         break;
+      case GameState_OverworldMenu:
+         TileMap_Draw( &( game->tileMap ), &( game->screen ) );
+         Game_DrawStaticSprites( game );
+         Game_DrawPlayer( game );
+         Menu_Draw( &( game->menu ), &( game->screen ) );
          break;
       case GameState_TileMapTransition:
          Screen_WipeColor( &( game->screen ), COLOR_BLACK );

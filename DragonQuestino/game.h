@@ -19,6 +19,7 @@ typedef struct Game_t
    Input_t input;
    GameState_t state;
    Player_t player;
+   Menu_t menu;
 
    TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;
