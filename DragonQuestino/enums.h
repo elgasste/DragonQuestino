@@ -17,7 +17,10 @@ Direction_t;
 typedef enum GameState_t
 {
    GameState_Overworld = 0,
-   GameState_TileMapTransition
+   GameState_OverworldMenu,
+   GameState_TileMapTransition,
+
+   GameState_Count
 }
 GameState_t;
 

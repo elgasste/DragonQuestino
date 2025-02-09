@@ -4,9 +4,11 @@
 
 #define DIAGONAL_SCALAR    0.707f
 
+internal void Game_HandleInput( Game_t* game );
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
+internal void Game_HandleMenuInput( Game_t* game );
 internal void Game_Draw( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
@@ -29,6 +31,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 void Game_Tic( Game_t* game )
 {
    Input_Read( &( game->input ) );
+   Game_HandleInput( game );
 
    switch ( game->state )
    {
@@ -59,9 +62,21 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    }
 }
 
+internal void Game_HandleInput( Game_t* game )
+{
+   switch ( game->state )
+   {
+      case GameState_Overworld:
+         Game_HandleOverworldInput( game );
+         break;
+      case GameState_OverworldMenu:
+         Game_HandleMenuInput( game );
+         break;
+   }
+}
+
 internal void Game_TicOverworld( Game_t* game )
 {
-   Game_HandleOverworldInput( game );
    Physics_Tic( game );
    Sprite_Tic( &( game->player.sprite ) );
    TileMap_UpdateViewport( &( game->tileMap ),
@@ -177,6 +192,18 @@ internal void Game_HandleOverworldInput( Game_t* game )
             player->velocity.y *= DIAGONAL_SCALAR;
          }
       }
+   }
+   else if ( game->input.buttonStates[Button_A].pressed )
+   {
+      game->state = GameState_OverworldMenu;
+   }
+}
+
+internal void Game_HandleMenuInput( Game_t* game )
+{
+   if ( game->input.buttonStates[Button_B].pressed )
+   {
+      game->state = GameState_Overworld;
    }
 }
 
