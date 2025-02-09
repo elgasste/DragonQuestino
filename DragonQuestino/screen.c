@@ -51,7 +51,6 @@ void Screen_WipeColor( Screen_t* screen, uint16_t color )
 
 void Screen_DrawRectFromPalette( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t paletteIndex )
 {
-   // MUFFINS: test
    uint32_t i, j;
    uint16_t* bufferPos = screen->buffer + ( y * SCREEN_WIDTH ) + x;
 
