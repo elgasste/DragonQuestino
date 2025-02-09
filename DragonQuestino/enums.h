@@ -24,4 +24,12 @@ typedef enum GameState_t
 }
 GameState_t;
 
+typedef enum MenuId_t
+{
+   MenuId_Overworld = 0,
+
+   MenuId_Count
+}
+MenuId_t;
+
 #endif // ENUMS_H

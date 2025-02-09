@@ -19,7 +19,9 @@
 #include <memory.h>
 #include <limits.h>
 #include <string.h>
+#include <stdio.h>
 
+#include "strings.h"
 #include "enums.h"
 
 #define internal static
@@ -35,6 +37,8 @@
 
 #if defined( VISUAL_STUDIO_DEV )
 #define DELAY_MS( x )                  Sleep( x )
+// this will try to make us use sprintf_s
+#pragma warning( disable: 4996 )
 #else
 #define DELAY_MS( x )                  delay( x )
 #endif

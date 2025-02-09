@@ -9,6 +9,7 @@
 #include "clock.h"
 #include "input.h"
 #include "player.h"
+#include "menu.h"
 
 typedef struct Game_t
 {

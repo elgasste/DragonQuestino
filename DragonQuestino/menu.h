@@ -1,0 +1,41 @@
+#if !defined( MENU_H )
+#define MENU_H
+
+#include "common.h"
+#include "vector.h"
+
+#define MENU_MAX_ITEMS        16
+#define MENU_TEXT_LENGTH      32
+
+typedef struct MenuItem_t
+{
+   char text[MENU_TEXT_LENGTH];
+}
+MenuItem_t;
+
+typedef struct Menu_t
+{
+   char title[MENU_TEXT_LENGTH];
+   MenuItem_t items[MENU_MAX_ITEMS];
+   uint32_t itemCount;
+   uint32_t columnCount;
+   uint32_t selectedIndex;
+
+   Vector2u32_t position;        // position on the screen, in pixels
+   Vector2u16_t borderSize;      // overall border size, in characters
+   Vector2u16_t borderPadding;   // left and top padding of menu item list, in characters
+   uint32_t itemPadding;         // individual menu item top padding, in characters
+}
+Menu_t;
+
+#if defined( __cplusplus )
+extern "C" {
+#endif
+
+void Menu_Load( Menu_t* menu, MenuId_t id );
+
+#if defined( __cplusplus )
+}
+#endif
+
+#endif // MENU_H
