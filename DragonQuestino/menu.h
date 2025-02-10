@@ -14,6 +14,7 @@ typedef struct Screen_t Screen_t;
 typedef struct MenuItem_t
 {
    char text[MENU_TEXT_LENGTH];
+   MenuCommand_t command;
 }
 MenuItem_t;
 

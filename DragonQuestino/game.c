@@ -207,8 +207,23 @@ internal void Game_HandleMenuInput( Game_t* game )
 {
    uint32_t i;
 
-   if ( game->input.buttonStates[Button_B].pressed )
+   if ( game->input.buttonStates[Button_A].pressed )
    {
+      switch ( game->menu.items[game->menu.selectedIndex].command )
+      {
+         case MenuCommand_Overworld_Talk:
+         case MenuCommand_Overworld_Status:
+         case MenuCommand_Overworld_Search:
+         case MenuCommand_Overworld_Spell:
+         case MenuCommand_Overworld_Item:
+         case MenuCommand_Overworld_Door:
+            game->state = GameState_Overworld;
+            break;
+      }
+   }
+   else if ( game->input.buttonStates[Button_B].pressed )
+   {
+      // TODO: this will depend entirely on which menu is currently open
       game->state = GameState_Overworld;
    }
    else

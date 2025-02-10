@@ -32,4 +32,17 @@ typedef enum MenuId_t
 }
 MenuId_t;
 
+typedef enum MenuCommand_t
+{
+   MenuCommand_Overworld_Talk = 0,
+   MenuCommand_Overworld_Status,
+   MenuCommand_Overworld_Search,
+   MenuCommand_Overworld_Spell,
+   MenuCommand_Overworld_Item,
+   MenuCommand_Overworld_Door,
+
+   MenuCommand_Count
+}
+MenuCommand_t;
+
 #endif // ENUMS_H

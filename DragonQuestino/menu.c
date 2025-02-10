@@ -146,6 +146,12 @@ internal void Menu_LoadOverworld( Menu_t* menu )
    sprintf( menu->items[3].text, STRING_OVERWORLD_MENU_SPELL );
    sprintf( menu->items[4].text, STRING_OVERWORLD_MENU_ITEM );
    sprintf( menu->items[5].text, STRING_OVERWORLD_MENU_DOOR );
+   menu->items[0].command = MenuCommand_Overworld_Talk;
+   menu->items[1].command = MenuCommand_Overworld_Status;
+   menu->items[2].command = MenuCommand_Overworld_Search;
+   menu->items[3].command = MenuCommand_Overworld_Spell;
+   menu->items[4].command = MenuCommand_Overworld_Item;
+   menu->items[5].command = MenuCommand_Overworld_Door;
    menu->itemCount = 6;
    menu->itemsPerColumn = 3;
    menu->selectedIndex = 0;
