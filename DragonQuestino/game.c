@@ -205,9 +205,21 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
 internal void Game_HandleMenuInput( Game_t* game )
 {
+   uint32_t i;
+
    if ( game->input.buttonStates[Button_B].pressed )
    {
       game->state = GameState_Overworld;
+   }
+   else
+   {
+      for ( i = 0; i < Direction_Count; i++ )
+      {
+         if ( game->input.buttonStates[i].pressed )
+         {
+            Menu_MoveSelection( &( game->menu ), (Direction_t)i );
+         }
+      }
    }
 }
 

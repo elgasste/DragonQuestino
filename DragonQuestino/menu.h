@@ -44,6 +44,7 @@ extern "C" {
 void Menu_Load( Menu_t* menu, MenuId_t id );
 void Menu_Draw( Menu_t* menu, Screen_t* screen );
 void Menu_ResetCursor( Menu_t* menu );
+void Menu_MoveSelection( Menu_t* menu, Direction_t direction );
 void Menu_Tic( Menu_t* menu );
 
 #if defined( __cplusplus )

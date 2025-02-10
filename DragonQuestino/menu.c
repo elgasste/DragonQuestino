@@ -69,6 +69,63 @@ void Menu_ResetCursor( Menu_t* menu )
    menu->blinkSeconds = 0.0f;
 }
 
+void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
+{
+   int32_t newIndex = 0;
+   uint32_t column;
+
+   switch ( direction )
+   {
+      case Direction_Left:
+         newIndex = (int32_t)menu->selectedIndex - menu->itemsPerColumn;
+         if ( newIndex < 0 )
+         {
+            newIndex = menu->itemCount + newIndex;
+         }
+         break;
+      case Direction_Right:
+         newIndex = (int32_t)menu->selectedIndex + menu->itemsPerColumn;
+         if ( newIndex >= (int32_t)( menu->itemCount ) )
+         {
+            newIndex = menu->itemCount - newIndex;
+         }
+         break;
+      case Direction_Up:
+         column = menu->selectedIndex / menu->itemsPerColumn;
+         newIndex = (int32_t)( menu->selectedIndex ) - 1;
+         if ( newIndex < 0 )
+         {
+            newIndex = menu->itemsPerColumn - 1;
+         }
+         else
+         {
+            if ( ( newIndex / menu->itemsPerColumn ) != column )
+            {
+               newIndex += menu->itemsPerColumn;
+            }
+         }
+         break;
+      case Direction_Down:
+         column = menu->selectedIndex / menu->itemsPerColumn;
+         newIndex = (int32_t)( menu->selectedIndex ) + 1;
+         if ( newIndex >= (int32_t)( menu->itemCount ) )
+         {
+            newIndex = menu->itemCount - menu->itemsPerColumn;
+         }
+         else
+         {
+            if ( ( newIndex / menu->itemsPerColumn ) != column )
+            {
+               newIndex -= menu->itemsPerColumn;
+            }
+         }
+         break;
+   }
+
+   menu->selectedIndex = (uint32_t)newIndex;
+   Menu_ResetCursor( menu );
+}
+
 void Menu_Tic( Menu_t* menu )
 {
    menu->blinkSeconds += CLOCK_FRAME_SECONDS;
