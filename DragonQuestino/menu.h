@@ -20,12 +20,13 @@ typedef struct Menu_t
    char title[MENU_TEXT_LENGTH];
    MenuItem_t items[MENU_MAX_ITEMS];
    uint32_t itemCount;
-   uint32_t columnCount;
+   uint32_t itemsPerColumn;
    uint32_t selectedIndex;
 
    Vector2u32_t position;        // position on the screen, in pixels
    Vector2u16_t borderSize;      // overall border size, in characters
    Vector2u16_t borderPadding;   // left and top padding of menu item list, in characters
+   uint32_t columnWidth;         // in characters
    uint32_t itemPadding;         // individual menu item top padding, in characters
 }
 Menu_t;

@@ -16,10 +16,9 @@ void Menu_Load( Menu_t* menu, MenuId_t id )
 void Menu_Draw( Menu_t* menu, Screen_t* screen )
 {
    uint16_t i, j;
+   uint32_t x, y, startX, startY;
    char line[32];
    memset( line, 0, sizeof( char ) * 32 );
-
-   // TODO: how is the performance here on the Arduino? can we speed this up at all?
 
    // top border
    line[0] = MENU_BORDER_CHAR_TOPLEFT;
@@ -43,6 +42,17 @@ void Menu_Draw( Menu_t* menu, Screen_t* screen )
 
    // inner section
    Screen_DrawRectColor( screen, menu->position.x + TEXT_TILE_SIZE, menu->position.y + TEXT_TILE_SIZE, ( menu->borderSize.x - 2 ) * TEXT_TILE_SIZE, ( menu->borderSize.y - 2 ) * TEXT_TILE_SIZE, COLOR_BLACK );
+
+   startX = menu->position.x + ( ( menu->borderPadding.x + 1 ) * ( TEXT_TILE_SIZE ) );
+   startY = menu->position.y + ( ( menu->borderPadding.y + 1 ) * ( TEXT_TILE_SIZE ) );
+
+   for ( i = 0; i < menu->itemCount; i++ )
+   {
+      x = startX + ( ( i / menu->itemsPerColumn ) * ( menu->columnWidth * TEXT_TILE_SIZE ) );
+      y = startY + ( ( i % menu->itemsPerColumn ) * ( TEXT_TILE_SIZE * ( menu->itemPadding + 1 ) ) );
+      sprintf( line, menu->items[i].text );
+      Screen_DrawText( screen, menu->items[i].text, x, y, COLOR_WHITE );
+   }
 }
 
 internal void Menu_LoadOverworld( Menu_t* menu )
@@ -55,14 +65,15 @@ internal void Menu_LoadOverworld( Menu_t* menu )
    sprintf( menu->items[4].text, STRING_OVERWORLD_MENU_ITEM );
    sprintf( menu->items[5].text, STRING_OVERWORLD_MENU_DOOR );
    menu->itemCount = 6;
-   menu->columnCount = 2;
+   menu->itemsPerColumn = 3;
    menu->selectedIndex = 0;
 
    menu->position.x = 96;
    menu->position.y = 16;
    menu->borderSize.x = 16;
-   menu->borderSize.y = 10;
+   menu->borderSize.y = 8;
    menu->borderPadding.x = 1;
    menu->borderPadding.y = 1;
+   menu->columnWidth = 8;
    menu->itemPadding = 1;
 }

@@ -211,9 +211,9 @@ void Screen_LoadTextBitFields( Screen_t* screen )
    screen->textBitFields[27][6] = 0xFC;
    screen->textBitFields[28][0] = 0x3C;
    screen->textBitFields[28][1] = 0x66;
-   screen->textBitFields[28][2] = 0xC0;
-   screen->textBitFields[28][3] = 0xC0;
-   screen->textBitFields[28][4] = 0xC0;
+   screen->textBitFields[28][2] = 0x60;
+   screen->textBitFields[28][3] = 0x60;
+   screen->textBitFields[28][4] = 0x60;
    screen->textBitFields[28][5] = 0x66;
    screen->textBitFields[28][6] = 0x3C;
    screen->textBitFields[29][0] = 0xF8;
