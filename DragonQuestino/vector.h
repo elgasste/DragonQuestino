@@ -3,6 +3,13 @@
 
 #include "common.h"
 
+typedef struct Vector2u16_t
+{
+   uint16_t x;
+   uint16_t y;
+}
+Vector2u16_t;
+
 typedef struct Vector2i32_t
 {
    int32_t x;

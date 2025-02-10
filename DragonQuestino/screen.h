@@ -20,14 +20,14 @@
 
 #define TRANSPARENT_COLOR_INDEX  0x0A
 
-#define MENU_BORDER_CHAR_TOPLEFT       0
-#define MENU_BORDER_CHAR_TOPRIGHT      1
-#define MENU_BORDER_CHAR_BOTTOMLEFT    2
-#define MENU_BORDER_CHAR_BOTTOMRIGHT   3
-#define MENU_BORDER_CHAR_LEFT          4
-#define MENU_BORDER_CHAR_TOP           5
-#define MENU_BORDER_CHAR_RIGHT         6
-#define MENU_BORDER_CHAR_BOTTOM        7
+#define MENU_BORDER_CHAR_TOPLEFT       1
+#define MENU_BORDER_CHAR_TOPRIGHT      2
+#define MENU_BORDER_CHAR_BOTTOMLEFT    3
+#define MENU_BORDER_CHAR_BOTTOMRIGHT   4
+#define MENU_BORDER_CHAR_LEFT          5
+#define MENU_BORDER_CHAR_TOP           6
+#define MENU_BORDER_CHAR_RIGHT         7
+#define MENU_BORDER_CHAR_BOTTOM        8
 
 typedef struct Screen_t
 {
@@ -45,6 +45,8 @@ void Screen_Init( Screen_t* screen, uint16_t* buffer );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex );
 void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex );
 void Screen_WipeColor( Screen_t* screen, uint16_t color );
+void Screen_DrawRectFromPalette( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t paletteIndex );
+void Screen_DrawRectColor( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color );
 void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t color );
 void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint16_t color );
 void Screen_DrawWrappedText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint32_t lineChars, uint16_t color );
