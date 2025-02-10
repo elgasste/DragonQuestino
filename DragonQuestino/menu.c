@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "screen.h"
+#include "clock.h"
 
 internal void Menu_LoadOverworld( Menu_t* menu );
 
@@ -11,6 +12,8 @@ void Menu_Load( Menu_t* menu, MenuId_t id )
          Menu_LoadOverworld( menu );
          break;
    }
+
+   Menu_ResetCursor( menu );
 }
 
 void Menu_Draw( Menu_t* menu, Screen_t* screen )
@@ -46,12 +49,34 @@ void Menu_Draw( Menu_t* menu, Screen_t* screen )
    startX = menu->position.x + ( ( menu->borderPadding.x + 1 ) * ( TEXT_TILE_SIZE ) );
    startY = menu->position.y + ( ( menu->borderPadding.y + 1 ) * ( TEXT_TILE_SIZE ) );
 
+   // menu items
    for ( i = 0; i < menu->itemCount; i++ )
    {
       x = startX + ( ( i / menu->itemsPerColumn ) * ( menu->columnWidth * TEXT_TILE_SIZE ) );
       y = startY + ( ( i % menu->itemsPerColumn ) * ( TEXT_TILE_SIZE * ( menu->itemPadding + 1 ) ) );
-      sprintf( line, menu->items[i].text );
       Screen_DrawText( screen, menu->items[i].text, x, y, COLOR_WHITE );
+
+      if ( i == menu->selectedIndex && menu->showCursor )
+      {
+         Screen_DrawChar( screen, '>', x - ( TEXT_TILE_SIZE * menu->cursorOffset ), y, COLOR_WHITE );
+      }
+   }
+}
+
+void Menu_ResetCursor( Menu_t* menu )
+{
+   menu->showCursor = True;
+   menu->blinkSeconds = 0.0f;
+}
+
+void Menu_Tic( Menu_t* menu )
+{
+   menu->blinkSeconds += CLOCK_FRAME_SECONDS;
+
+   while ( menu->blinkSeconds > MENU_BLINK_RATE_SECONDS )
+   {
+      menu->blinkSeconds -= MENU_BLINK_RATE_SECONDS;
+      TOGGLE_BOOL( menu->showCursor );
    }
 }
 
@@ -76,4 +101,5 @@ internal void Menu_LoadOverworld( Menu_t* menu )
    menu->borderPadding.y = 1;
    menu->columnWidth = 8;
    menu->itemPadding = 1;
+   menu->cursorOffset = 1;
 }

@@ -38,6 +38,9 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld:
          Game_TicOverworld( game );
          break;
+      case GameState_OverworldMenu:
+         Menu_Tic( &( game->menu ) );
+         break;
       case GameState_TileMapTransition:
          Game_TicTileMapTransition( game );
          break;
