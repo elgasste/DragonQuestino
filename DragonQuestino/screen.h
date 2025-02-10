@@ -53,6 +53,8 @@ void Screen_DrawWrappedText( Screen_t* screen, const char* text, uint32_t x, uin
 void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t stride,
                                uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
                                uint32_t sx, uint32_t sy, Bool_t transparency );
+void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color );
+void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title, uint16_t color );
 
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );
