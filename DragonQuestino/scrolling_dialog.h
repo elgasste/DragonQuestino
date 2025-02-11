@@ -4,8 +4,9 @@
 #include "common.h"
 #include "vector.h"
 
-#define DIALOG_MAX_LINE_CHARS    32
-#define DIALOG_MAX_LINES         8
+#define DIALOG_MAX_LINE_CHARS          32
+#define DIALOG_MAX_LINES               8
+#define DIALOG_SCROLL_CHAR_SECONDS     0.02f
 
 typedef struct Screen_t Screen_t;
 
@@ -17,6 +18,11 @@ typedef struct ScrollingDialog_t
 
    char lines[DIALOG_MAX_LINES][DIALOG_MAX_LINE_CHARS];
    uint32_t lineCount;
+   uint32_t charCount;
+
+   Bool_t isScrolling;
+   float scrollSeconds;
+   float scrollTotalSeconds;
 }
 ScrollingDialog_t;
 

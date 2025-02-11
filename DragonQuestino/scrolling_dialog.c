@@ -1,5 +1,6 @@
 #include "scrolling_dialog.h"
 #include "screen.h"
+#include "clock.h"
 
 internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* text );
 internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog );
@@ -16,25 +17,56 @@ void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id )
 
 void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
 {
-   uint32_t i, x, y;
+   uint32_t i, x, y, stopCharIndex, len;
+   char substr[DIALOG_MAX_LINE_CHARS];
 
    Screen_DrawTextWindow( screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y, COLOR_WHITE );
 
    x = dialog->position.x + ( TEXT_TILE_SIZE * 2 );
    y = dialog->position.y + TEXT_TILE_SIZE;
 
-   // TODO: actually scroll the text
-   for ( i = 0; i < dialog->lineCount; i++ )
+   if ( dialog->isScrolling )
    {
-      Screen_DrawText( screen, dialog->lines[i], x, y, COLOR_WHITE );
-      y += TEXT_TILE_SIZE;
+      stopCharIndex = (uint32_t)( dialog->scrollSeconds / DIALOG_SCROLL_CHAR_SECONDS );
+
+      for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
+      {
+         len = (uint32_t)( strlen( dialog->lines[i] ) );
+
+         if ( len < stopCharIndex )
+         {
+            Screen_DrawText( screen, dialog->lines[i], x, y, COLOR_WHITE );
+            stopCharIndex -= len;
+         }
+         else
+         {
+            strcpy( substr, dialog->lines[i] );
+            substr[stopCharIndex] = '\0';
+            Screen_DrawText( screen, substr, x, y, COLOR_WHITE );
+            break;
+         }
+      }
+   }
+   else
+   {
+      for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
+      {
+         Screen_DrawText( screen, dialog->lines[i], x, y, COLOR_WHITE );
+      }
    }
 }
 
 void ScrollingDialog_Tic( ScrollingDialog_t* dialog )
 {
-   // TODO: tic the scrolling
-   UNUSED_PARAM( dialog );
+   if ( dialog->isScrolling )
+   {
+      dialog->scrollSeconds += CLOCK_FRAME_SECONDS;
+
+      if ( dialog->scrollSeconds > dialog->scrollTotalSeconds )
+      {
+         dialog->isScrolling = False;
+      }
+   }
 }
 
 internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* text )
@@ -43,6 +75,9 @@ internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* t
    uint32_t strLen = (uint16_t)strlen( text );
    Bool_t endOfLine, endOfText;
    char curChar;
+
+   dialog->lineCount = 0;
+   dialog->charCount = 0;
 
    for ( textIndex = 0, lineIndex = 0, lastSpaceIndex = 0, currentLine = 0; textIndex < strLen; textIndex++ )
    {
@@ -82,6 +117,7 @@ internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* t
          lineIndex = 0;
          lastSpaceIndex = 0;
          dialog->lineCount++;
+         dialog->charCount += (uint32_t)( strlen( dialog->lines[currentLine] ) );
          currentLine++;
       }
       else if ( curChar != ' ' )
@@ -105,4 +141,8 @@ internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog )
    dialog->lineWidth = 20;
 
    ScrollingDialog_LoadText( dialog, STRING_OVERWORLD_DIALOG_NOBODY_THERE );
+
+   dialog->isScrolling = True;
+   dialog->scrollSeconds = 0.0f;
+   dialog->scrollTotalSeconds = dialog->charCount * DIALOG_SCROLL_CHAR_SECONDS;
 }
