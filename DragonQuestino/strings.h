@@ -9,4 +9,6 @@
 #define STRING_OVERWORLD_MENU_ITEM     "ITEM"
 #define STRING_OVERWORLD_MENU_DOOR     "DOOR"
 
+#define STRING_OVERWORLD_DIALOG_NOBODY_THERE    "Nobody is there, ya big goofball. Try aiming at someone first, not that anyone else exists in this world to point to yet."
+
 #endif // STRINGS_H

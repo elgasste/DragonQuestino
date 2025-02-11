@@ -15,7 +15,7 @@ typedef struct ScrollingDialog_t
    Vector2u16_t size;      // in characters
    uint32_t lineWidth;     // in characters
 
-   char lines[DIALOG_MAX_LINE_CHARS][DIALOG_MAX_LINES];
+   char lines[DIALOG_MAX_LINES][DIALOG_MAX_LINE_CHARS];
    uint32_t lineCount;
 }
 ScrollingDialog_t;
