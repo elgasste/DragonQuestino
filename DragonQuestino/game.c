@@ -26,8 +26,20 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
 
+   game->overworldInactivitySeconds = 0.0f;
+
    game->state = GameState_Overworld;
    game->swapPortal = 0;
+}
+
+void Game_ChangeState( Game_t* game, GameState_t newState )
+{
+   game->state = newState;
+
+   if ( newState == GameState_Overworld )
+   {
+      game->overworldInactivitySeconds = 0.0f;
+   }
 }
 
 void Game_Tic( Game_t* game )
@@ -66,7 +78,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    if ( portal )
    {
       game->swapPortal = portal;
-      game->state = GameState_TileMapTransition;
+      Game_ChangeState( game, GameState_TileMapTransition );
    }
 }
 
@@ -126,7 +138,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
 
       if ( game->tileMapSwapSecondsElapsed > TILEMAP_SWAP_SECONDS )
       {
-         game->state = GameState_Overworld;
+         Game_ChangeState( game, GameState_Overworld );
       }
    }
 }
@@ -143,7 +155,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
    if ( game->input.buttonStates[Button_A].pressed )
    {
       Menu_Load( &( game->menu ), MenuId_Overworld );
-      game->state = GameState_Overworld_MainMenu;
+      Game_ChangeState( game, GameState_Overworld_MainMenu );
    }
    else if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
    {
@@ -209,6 +221,10 @@ internal void Game_HandleOverworldInput( Game_t* game )
          }
       }
    }
+   else if ( !game->input.buttonStates[Button_A].down && !game->input.buttonStates[Button_B].down )
+   {
+      game->overworldInactivitySeconds += CLOCK_FRAME_SECONDS;
+   }
 }
 
 internal void Game_HandleOverworldTalkInput( Game_t* game )
@@ -221,7 +237,7 @@ internal void Game_HandleOverworldTalkInput( Game_t* game )
       }
       else
       {
-         game->state = GameState_Overworld;
+         Game_ChangeState( game, GameState_Overworld );
       }
    }
 }
@@ -237,7 +253,7 @@ internal void Game_HandleMenuInput( Game_t* game )
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
          case MenuCommand_Overworld_Talk:
-            game->state = GameState_Overworld_Talk;
+            Game_ChangeState( game, GameState_Overworld_Talk );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld );
             break;
          case MenuCommand_Overworld_Status:
@@ -245,14 +261,14 @@ internal void Game_HandleMenuInput( Game_t* game )
          case MenuCommand_Overworld_Spell:
          case MenuCommand_Overworld_Item:
          case MenuCommand_Overworld_Door:
-            game->state = GameState_Overworld;
+            Game_ChangeState( game, GameState_Overworld );
             break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
       // TODO: this will depend entirely on which menu is currently open
-      game->state = GameState_Overworld;
+      Game_ChangeState( game, GameState_Overworld );
    }
    else
    {
