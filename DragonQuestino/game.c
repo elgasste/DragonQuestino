@@ -8,8 +8,10 @@ internal void Game_HandleInput( Game_t* game );
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
+internal void Game_HandleOverworldTalkInput( Game_t* game );
 internal void Game_HandleMenuInput( Game_t* game );
 internal void Game_Draw( Game_t* game );
+internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
 
@@ -38,7 +40,10 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld:
          Game_TicOverworld( game );
          break;
-      case GameState_OverworldMenu:
+      case GameState_Overworld_Talk:
+         ScrollingDialog_Tic( &( game->scrollingDialog ) );
+         break;
+      case GameState_Overworld_MainMenu:
          Menu_Tic( &( game->menu ) );
          break;
       case GameState_TileMapTransition:
@@ -72,8 +77,11 @@ internal void Game_HandleInput( Game_t* game )
       case GameState_Overworld:
          Game_HandleOverworldInput( game );
          break;
-      case GameState_OverworldMenu:
+      case GameState_Overworld_MainMenu:
          Game_HandleMenuInput( game );
+         break;
+      case GameState_Overworld_Talk:
+         Game_HandleOverworldTalkInput( game );
          break;
    }
 }
@@ -135,7 +143,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
    if ( game->input.buttonStates[Button_A].pressed )
    {
       Menu_Load( &( game->menu ), MenuId_Overworld );
-      game->state = GameState_OverworldMenu;
+      game->state = GameState_Overworld_MainMenu;
    }
    else if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
    {
@@ -203,15 +211,28 @@ internal void Game_HandleOverworldInput( Game_t* game )
    }
 }
 
+internal void Game_HandleOverworldTalkInput( Game_t* game )
+{
+   if ( Input_AnyButtonPressed( &( game->input ) ) )
+   {
+      game->state = GameState_Overworld;
+   }
+}
+
 internal void Game_HandleMenuInput( Game_t* game )
 {
    uint32_t i;
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
+      Menu_ResetCursor( &( game->menu ) );
+
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
          case MenuCommand_Overworld_Talk:
+            game->state = GameState_Overworld_Talk;
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld );
+            break;
          case MenuCommand_Overworld_Status:
          case MenuCommand_Overworld_Search:
          case MenuCommand_Overworld_Spell:
@@ -243,20 +264,28 @@ internal void Game_Draw( Game_t* game )
    switch ( game->state )
    {
       case GameState_Overworld:
-         TileMap_Draw( &( game->tileMap ), &( game->screen ) );
-         Game_DrawStaticSprites( game );
-         Game_DrawPlayer( game );
+         Game_DrawOverworld( game );
          break;
-      case GameState_OverworldMenu:
-         TileMap_Draw( &( game->tileMap ), &( game->screen ) );
-         Game_DrawStaticSprites( game );
-         Game_DrawPlayer( game );
+      case GameState_Overworld_MainMenu:
+         Game_DrawOverworld( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
+         break;
+      case GameState_Overworld_Talk:
+         Game_DrawOverworld( game );
+         Menu_Draw( &( game->menu ), &( game->screen ) );
+         ScrollingDialog_Draw( &( game->scrollingDialog ), &( game->screen ) );
          break;
       case GameState_TileMapTransition:
          Screen_WipeColor( &( game->screen ), COLOR_BLACK );
          break;
    }
+}
+
+internal void Game_DrawOverworld( Game_t* game )
+{
+   TileMap_Draw( &( game->tileMap ), &( game->screen ) );
+   Game_DrawStaticSprites( game );
+   Game_DrawPlayer( game );
 }
 
 internal void Game_DrawStaticSprites( Game_t* game )
