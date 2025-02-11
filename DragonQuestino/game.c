@@ -14,6 +14,7 @@ internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
+internal void Game_DrawOverworldStatus( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -154,11 +155,14 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
+      game->overworldInactivitySeconds = 0.0f;
       Menu_Load( &( game->menu ), MenuId_Overworld );
       Game_ChangeState( game, GameState_Overworld_MainMenu );
    }
    else if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
    {
+      game->overworldInactivitySeconds = 0.0f;
+
       if ( leftIsDown && !rightIsDown )
       {
          player->velocity.x = -( player->maxVelocity );
@@ -267,8 +271,12 @@ internal void Game_HandleMenuInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
-      // TODO: this will depend entirely on which menu is currently open
-      Game_ChangeState( game, GameState_Overworld );
+      switch ( game->state )
+      {
+         case GameState_Overworld_MainMenu:
+            Game_ChangeState( game, GameState_Overworld );
+            break;
+      }
    }
    else
    {
@@ -291,10 +299,12 @@ internal void Game_Draw( Game_t* game )
          break;
       case GameState_Overworld_MainMenu:
          Game_DrawOverworld( game );
+         Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          break;
       case GameState_Overworld_Talk:
          Game_DrawOverworld( game );
+         Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          ScrollingDialog_Draw( &( game->scrollingDialog ), &( game->screen ) );
          break;
@@ -309,6 +319,11 @@ internal void Game_DrawOverworld( Game_t* game )
    TileMap_Draw( &( game->tileMap ), &( game->screen ) );
    Game_DrawStaticSprites( game );
    Game_DrawPlayer( game );
+
+   if ( game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
+   {
+      Game_DrawOverworldStatus( game );
+   }
 }
 
 internal void Game_DrawStaticSprites( Game_t* game )
@@ -355,4 +370,10 @@ internal void Game_DrawPlayer( Game_t* game )
    uint32_t syu = ( sy < 0 ) ? 0 : sy;
 
    Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
+}
+
+internal void Game_DrawOverworldStatus( Game_t* game )
+{
+   // TODO: draw actual stats
+   Screen_DrawTextWindow( &( game->screen ), 16, 16, 8, 12, COLOR_WHITE );
 }

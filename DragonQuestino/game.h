@@ -1,7 +1,8 @@
 #if !defined( GAME_H )
 #define GAME_H
 
-#define TILEMAP_SWAP_SECONDS 0.4f
+#define TILEMAP_SWAP_SECONDS                 0.4f
+#define OVERWORLD_INACTIVE_STATUS_SECONDS    1.0f
 
 #include "common.h"
 #include "screen.h"
