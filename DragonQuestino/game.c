@@ -215,7 +215,14 @@ internal void Game_HandleOverworldTalkInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      game->state = GameState_Overworld;
+      if ( game->scrollingDialog.isScrolling )
+      {
+         ScrollingDialog_SkipScroll( &( game->scrollingDialog ) );
+      }
+      else
+      {
+         game->state = GameState_Overworld;
+      }
    }
 }
 

@@ -6,7 +6,7 @@
 
 #define DIALOG_MAX_LINE_CHARS          32
 #define DIALOG_MAX_LINES               8
-#define DIALOG_SCROLL_CHAR_SECONDS     0.02f
+#define DIALOG_SCROLL_CHAR_SECONDS     0.015f
 
 typedef struct Screen_t Screen_t;
 
@@ -32,6 +32,7 @@ extern "C" {
 
 void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id );
 void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen );
+void ScrollingDialog_SkipScroll( ScrollingDialog_t* dialog );
 void ScrollingDialog_Tic( ScrollingDialog_t* dialog );
 
 #if defined( __cplusplus )

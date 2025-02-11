@@ -56,6 +56,11 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
    }
 }
 
+void ScrollingDialog_SkipScroll( ScrollingDialog_t* dialog )
+{
+   dialog->isScrolling = False;
+}
+
 void ScrollingDialog_Tic( ScrollingDialog_t* dialog )
 {
    if ( dialog->isScrolling )
