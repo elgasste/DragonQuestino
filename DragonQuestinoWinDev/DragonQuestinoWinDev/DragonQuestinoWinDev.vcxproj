@@ -29,6 +29,7 @@
     <ClInclude Include="..\..\DragonQuestino\physics.h" />
     <ClInclude Include="..\..\DragonQuestino\player.h" />
     <ClInclude Include="..\..\DragonQuestino\screen.h" />
+    <ClInclude Include="..\..\DragonQuestino\scrolling_dialog.h" />
     <ClInclude Include="..\..\DragonQuestino\sprite.h" />
     <ClInclude Include="..\..\DragonQuestino\strings.h" />
     <ClInclude Include="..\..\DragonQuestino\tile_map.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="..\..\DragonQuestino\physics.c" />
     <ClCompile Include="..\..\DragonQuestino\player.c" />
     <ClCompile Include="..\..\DragonQuestino\screen.c" />
+    <ClCompile Include="..\..\DragonQuestino\scrolling_dialog.c" />
     <ClCompile Include="..\..\DragonQuestino\sprite.c" />
     <ClCompile Include="..\..\DragonQuestino\tile_map.c" />
     <ClCompile Include="win_clock.c" />

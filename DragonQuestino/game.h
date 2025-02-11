@@ -10,6 +10,7 @@
 #include "input.h"
 #include "player.h"
 #include "menu.h"
+#include "scrolling_dialog.h"
 
 typedef struct Game_t
 {
@@ -20,6 +21,7 @@ typedef struct Game_t
    GameState_t state;
    Player_t player;
    Menu_t menu;
+   ScrollingDialog_t scrollingDialog;
 
    TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;

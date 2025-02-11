@@ -63,6 +63,9 @@
     <ClInclude Include="..\..\DragonQuestino\strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\DragonQuestino\scrolling_dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="win_clock.c">
@@ -108,6 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\DragonQuestino\menu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\scrolling_dialog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

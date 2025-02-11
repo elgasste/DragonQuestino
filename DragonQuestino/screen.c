@@ -175,66 +175,6 @@ void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y
    }
 }
 
-void Screen_DrawWrappedText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint32_t lineChars, uint16_t color )
-{
-   uint32_t textIndex, lineIndex, lastSpaceIndex, currentLine;
-   uint32_t strLen = (uint16_t)strlen( text );
-   Bool_t endOfLine, endOfText;
-   char line[32];
-   char curChar;
-
-   for ( textIndex = 0, lineIndex = 0, lastSpaceIndex = 0, currentLine = 0; textIndex < strLen; textIndex++ )
-   {
-      curChar = text[textIndex];
-      endOfLine = ( lineIndex == ( lineChars - 1 ) );
-      endOfText = ( textIndex == ( strLen - 1 ) ) ? True : False;
-
-      if ( endOfLine || endOfText )
-      {
-         if ( ( lastSpaceIndex > 0 ) && !endOfText )
-         {
-            if ( curChar == ' ' )
-            {
-               line[lineIndex] = '\0';
-            }
-            else if ( text[textIndex + 1] == ' ' )
-            {
-               line[lineIndex] = curChar;
-               line[lineIndex + 1] = '\0';
-            }
-            else
-            {
-               line[lastSpaceIndex - 1] = '\0';
-               textIndex -= ( ( lineIndex - lastSpaceIndex ) + 1 );
-            }
-         }
-         else if ( curChar == ' ' )
-         {
-            line[lineIndex] = '\0';
-         }
-         else
-         {
-            line[lineIndex] = curChar;
-            line[lineIndex + 1] = '\0';
-         }
-
-         Screen_DrawText( screen, line, x, y + ( currentLine * TEXT_TILE_SIZE ), color );
-         lineIndex = 0;
-         lastSpaceIndex = 0;
-         currentLine++;
-      }
-      else if ( curChar != ' ' )
-      {
-         line[lineIndex++] = curChar;
-      }
-      else if ( lineIndex > 0 && lastSpaceIndex != lineIndex )
-      {
-         line[lineIndex++] = curChar;
-         lastSpaceIndex = lineIndex;
-      }
-   }
-}
-
 internal int8_t Screen_GetCharIndexFromChar( const char c )
 {
    if ( c >= 97 && c <= 122 )
@@ -328,4 +268,39 @@ void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t strid
          screenBufferPos += ( SCREEN_WIDTH - tw );
       }
    }
+}
+
+void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color )
+{
+   uint16_t i;
+   char line[32];
+   memset( line, 0, sizeof( char ) * 32 );
+
+   // top border
+   line[0] = MENU_BORDER_CHAR_TOPLEFT;
+   for ( i = 1; i < w - 1; i++ ) line[i] = MENU_BORDER_CHAR_TOP;
+   line[w - 1] = MENU_BORDER_CHAR_TOPRIGHT;
+   Screen_DrawText( screen, line, x, y, color );
+
+   // side borders
+   for ( i = 1; i < h - 1; i++ )
+   {
+      Screen_DrawChar( screen, MENU_BORDER_CHAR_LEFT, x, y + ( i * TEXT_TILE_SIZE ), color );
+      Screen_DrawChar( screen, MENU_BORDER_CHAR_RIGHT, x + ( ( w - 1 ) * TEXT_TILE_SIZE ), y + ( i * TEXT_TILE_SIZE ), color );
+   }
+
+   // bottom border
+   line[0] = MENU_BORDER_CHAR_BOTTOMLEFT;
+   for ( i = 1; i < w - 1; i++ ) line[i] = MENU_BORDER_CHAR_BOTTOM;
+   line[w - 1] = MENU_BORDER_CHAR_BOTTOMRIGHT;
+   Screen_DrawText( screen, line, x, y + ( ( h - 1 ) * TEXT_TILE_SIZE ), color );
+
+   // inner section
+   Screen_DrawRectColor( screen, x + TEXT_TILE_SIZE, y + TEXT_TILE_SIZE, ( w - 2 ) * TEXT_TILE_SIZE, ( h - 2 ) * TEXT_TILE_SIZE, COLOR_BLACK );
+}
+
+void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title, uint16_t color )
+{
+   Screen_DrawTextWindow( screen, x, y, w, h, color );
+   Screen_DrawText( screen, title, x + ( ( w / 2 ) + ( (uint32_t)( strlen( title ) ) / 2 ) * TEXT_TILE_SIZE ), y, color );
 }
