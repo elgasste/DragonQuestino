@@ -8,7 +8,7 @@ internal void Game_HandleInput( Game_t* game );
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
-internal void Game_HandleOverworldTalkInput( Game_t* game );
+internal void Game_HandleOverworldScrollingDialogInput( Game_t* game );
 internal void Game_HandleMenuInput( Game_t* game );
 internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
@@ -54,6 +54,10 @@ void Game_Tic( Game_t* game )
          Game_TicOverworld( game );
          break;
       case GameState_Overworld_Talk:
+      case GameState_Overworld_Search:
+      case GameState_Overworld_Spell:
+      case GameState_Overworld_Item:
+      case GameState_Overworld_Door:
          ScrollingDialog_Tic( &( game->scrollingDialog ) );
          break;
       case GameState_Overworld_MainMenu:
@@ -94,7 +98,11 @@ internal void Game_HandleInput( Game_t* game )
          Game_HandleMenuInput( game );
          break;
       case GameState_Overworld_Talk:
-         Game_HandleOverworldTalkInput( game );
+      case GameState_Overworld_Search:
+      case GameState_Overworld_Spell:
+      case GameState_Overworld_Item:
+      case GameState_Overworld_Door:
+         Game_HandleOverworldScrollingDialogInput( game );
          break;
    }
 }
@@ -231,7 +239,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
    }
 }
 
-internal void Game_HandleOverworldTalkInput( Game_t* game )
+internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
@@ -258,14 +266,25 @@ internal void Game_HandleMenuInput( Game_t* game )
       {
          case MenuCommand_Overworld_Talk:
             Game_ChangeState( game, GameState_Overworld_Talk );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_NOBODY_THERE );
             break;
          case MenuCommand_Overworld_Status:
+            break;
          case MenuCommand_Overworld_Search:
+            Game_ChangeState( game, GameState_Overworld_Search );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND );
+            break;
          case MenuCommand_Overworld_Spell:
+            Game_ChangeState( game, GameState_Overworld_Spell );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_NO_SPELLS );
+            break;
          case MenuCommand_Overworld_Item:
+            Game_ChangeState( game, GameState_Overworld_Item );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_NO_ITEMS );
+            break;
          case MenuCommand_Overworld_Door:
-            Game_ChangeState( game, GameState_Overworld );
+            Game_ChangeState( game, GameState_Overworld_Door );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_NO_DOOR );
             break;
       }
    }
@@ -303,6 +322,10 @@ internal void Game_Draw( Game_t* game )
          Menu_Draw( &( game->menu ), &( game->screen ) );
          break;
       case GameState_Overworld_Talk:
+      case GameState_Overworld_Search:
+      case GameState_Overworld_Spell:
+      case GameState_Overworld_Item:
+      case GameState_Overworld_Door:
          Game_DrawOverworld( game );
          Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );

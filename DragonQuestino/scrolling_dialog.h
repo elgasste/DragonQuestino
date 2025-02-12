@@ -30,7 +30,7 @@ ScrollingDialog_t;
 extern "C" {
 #endif
 
-void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id );
+void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id, const char* text );
 void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen );
 void ScrollingDialog_SkipScroll( ScrollingDialog_t* dialog );
 void ScrollingDialog_Tic( ScrollingDialog_t* dialog );

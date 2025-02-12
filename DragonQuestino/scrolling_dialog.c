@@ -3,14 +3,14 @@
 #include "clock.h"
 
 internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* text );
-internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog );
+internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog, const char* text );
 
-void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id )
+void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id, const char* text )
 {
    switch ( id )
    {
       case ScrollingDialogId_Overworld:
-         ScrollingDialog_LoadOverworld( dialog );
+         ScrollingDialog_LoadOverworld( dialog, text );
          break;
    }
 }
@@ -137,7 +137,7 @@ internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* t
    }
 }
 
-internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog )
+internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog, const char* text )
 {
    dialog->position.x = 32;
    dialog->position.y = 128;
@@ -145,7 +145,7 @@ internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog )
    dialog->size.y = 10;
    dialog->lineWidth = 20;
 
-   ScrollingDialog_LoadText( dialog, STRING_OVERWORLD_DIALOG_NOBODY_THERE );
+   ScrollingDialog_LoadText( dialog, text );
 
    dialog->isScrolling = True;
    dialog->scrollSeconds = 0.0f;
