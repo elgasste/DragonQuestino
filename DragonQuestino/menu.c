@@ -135,7 +135,7 @@ internal void Menu_LoadOverworld( Menu_t* menu )
    menu->itemsPerColumn = 3;
    menu->selectedIndex = 0;
 
-   menu->position.x = 96;
+   menu->position.x = 112;
    menu->position.y = 16;
    menu->borderSize.x = 16;
    menu->borderSize.y = 8;

@@ -375,22 +375,22 @@ internal void Game_DrawPlayer( Game_t* game )
 internal void Game_DrawOverworldStatus( Game_t* game )
 {
    uint8_t lvl = Player_GetLevel( &( game->player ) );
-   char line[8];
+   char line[9];
 
-   Screen_DrawTextWindow( &( game->screen ), 16, 16, 9, 11, COLOR_WHITE );
+   Screen_DrawTextWindowWithTitle( &( game->screen ), 16, 16, 10, 12, game->player.name, COLOR_WHITE );
 
-   sprintf( line, lvl < 10 ? "LV    %u" : "LV   %u", lvl);   
-   Screen_DrawText( &( game->screen ), line, 24, 24, COLOR_WHITE );
+   sprintf( line, lvl < 10 ? "LV     %u" : "LV    %u", lvl);
+   Screen_DrawText( &( game->screen ), line, 24, 32, COLOR_WHITE );
 
-   sprintf( line, game->player.stats.hitPoints < 10 ? "HP    %u" : game->player.stats.hitPoints < 100 ? "HP   %u" : "HP  %u", game->player.stats.hitPoints );
-   Screen_DrawText( &( game->screen ), line, 24, 40, COLOR_WHITE );
+   sprintf( line, game->player.stats.hitPoints < 10 ? "HP     %u" : game->player.stats.hitPoints < 100 ? "HP    %u" : "HP   %u", game->player.stats.hitPoints );
+   Screen_DrawText( &( game->screen ), line, 24, 48, COLOR_WHITE );
 
-   sprintf( line, game->player.stats.magicPoints < 10 ? "MP    %u" : game->player.stats.magicPoints < 100 ? "MP   %u" : "MP  %u", game->player.stats.magicPoints );
-   Screen_DrawText( &( game->screen ), line, 24, 56, COLOR_WHITE );
+   sprintf( line, game->player.stats.magicPoints < 10 ? "MP     %u" : game->player.stats.magicPoints < 100 ? "MP    %u" : "MP   %u", game->player.stats.magicPoints );
+   Screen_DrawText( &( game->screen ), line, 24, 64, COLOR_WHITE );
 
-   sprintf( line, game->player.gold < 10 ? "G     %u" : game->player.gold < 100 ? "G    %u" : game->player.gold < 1000 ? "G   %u" : game->player.gold < 10000 ? "G  %u" : "G %u", game->player.gold );
-   Screen_DrawText( &( game->screen ), line, 24, 72, COLOR_WHITE );
+   sprintf( line, game->player.gold < 10 ? "G      %u" : game->player.gold < 100 ? "G     %u" : game->player.gold < 1000 ? "G    %u" : game->player.gold < 10000 ? "G   %u" : "G  %u", game->player.gold );
+   Screen_DrawText( &( game->screen ), line, 24, 80, COLOR_WHITE );
 
-   sprintf( line, game->player.experience < 10 ? "E     %u" : game->player.experience < 100 ? "G    %u" : game->player.experience < 1000 ? "G   %u" : game->player.experience < 10000 ? "G  %u" : "G %u", game->player.experience );
-   Screen_DrawText( &( game->screen ), line, 24, 88, COLOR_WHITE );
+   sprintf( line, game->player.experience < 10 ? "E      %u" : game->player.experience < 100 ? "G     %u" : game->player.experience < 1000 ? "G    %u" : game->player.experience < 10000 ? "G   %u" : "G  %u", game->player.experience );
+   Screen_DrawText( &( game->screen ), line, 24, 96, COLOR_WHITE );
 }

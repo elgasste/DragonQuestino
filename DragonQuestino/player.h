@@ -15,6 +15,7 @@ typedef struct Player_t
 
    uint32_t tileIndex;
 
+   char name[9];
    BattleStats_t stats;
    uint16_t experience;
    uint16_t gold;

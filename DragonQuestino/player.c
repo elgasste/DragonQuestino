@@ -15,6 +15,8 @@ void Player_Init( Player_t* player )
    player->spriteOffset.y = -4;
    player->sprite.direction = Direction_Down;
 
+   strcpy( player->name, "TestMan" );
+
    player->stats.hitPoints = 12;
    player->stats.maxHitPoints = 12;
    player->stats.magicPoints = 0;
