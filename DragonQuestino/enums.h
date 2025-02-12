@@ -46,11 +46,11 @@ typedef enum MenuCommand_t
 }
 MenuCommand_t;
 
-typedef enum ScrollingDialogId_t
+typedef enum ScrollingDialogType_t
 {
-   ScrollingDialogId_Overworld = 0,
+   ScrollingDialogType_Overworld = 0,
 
-   ScrollingDialogId_Count
+   ScrollingDialogType_Count
 }
 ScrollingDialogId_t;
 

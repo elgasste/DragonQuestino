@@ -9,7 +9,7 @@ void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id, co
 {
    switch ( id )
    {
-      case ScrollingDialogId_Overworld:
+      case ScrollingDialogType_Overworld:
          ScrollingDialog_LoadOverworld( dialog, text );
          break;
    }
