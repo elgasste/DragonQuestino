@@ -27,6 +27,8 @@ typedef struct ScrollingDialog_t
    Bool_t isScrolling;
    float scrollSeconds;
    float scrollTotalSeconds;
+
+   char playerName[9];
 }
 ScrollingDialog_t;
 
@@ -34,6 +36,7 @@ ScrollingDialog_t;
 extern "C" {
 #endif
 
+void ScrollingDialog_Init( ScrollingDialog_t* dialog, const char* playerName );
 void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId );
 void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen );
 void ScrollingDialog_Next( ScrollingDialog_t* dialog );

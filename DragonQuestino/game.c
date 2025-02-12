@@ -26,6 +26,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
+   ScrollingDialog_Init( &( game->scrollingDialog ), game->player.name );
 
    game->overworldInactivitySeconds = 0.0f;
 

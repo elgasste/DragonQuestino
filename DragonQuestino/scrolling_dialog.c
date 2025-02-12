@@ -8,9 +8,15 @@ internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog );
 internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog );
 internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* text );
 
+void ScrollingDialog_Init( ScrollingDialog_t* dialog, const char* playerName )
+{
+   strcpy( dialog->playerName, playerName );
+}
+
 void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId )
 {
    dialog->messageId = messageId;
+   dialog->section = 0;
    ScrollingDialog_LoadMessageSectionCount( dialog );
 
    switch ( type )
@@ -186,7 +192,7 @@ internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog
    switch ( dialog->messageId )
    {
       case DialogMessageId_Talk_NobodyThere: dialog->sectionCount = 1; break;
-      case DialogMessageId_Search_NothingFound: dialog->sectionCount = 1; break;
+      case DialogMessageId_Search_NothingFound: dialog->sectionCount = 2; break;
       case DialogMessageId_Spell_None: dialog->sectionCount = 1; break;
       case DialogMessageId_Item_None: dialog->sectionCount = 1; break;
       case DialogMessageId_Door_None: dialog->sectionCount = 1; break;
@@ -197,20 +203,15 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
 {
    switch ( dialog->messageId )
    {
-      case DialogMessageId_Talk_NobodyThere:
-         strcpy( text, STRING_OVERWORLD_DIALOG_NOBODY_THERE );
-         return;
+      case DialogMessageId_Talk_NobodyThere: strcpy( text, STRING_OVERWORLD_DIALOG_NOBODY_THERE ); return;
       case DialogMessageId_Search_NothingFound:
-         strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND );
-         return;
-      case DialogMessageId_Spell_None:
-         strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS );
-         return;
-      case DialogMessageId_Item_None:
-         strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS );
-         return;
-      case DialogMessageId_Door_None:
-         strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR );
-         return;
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH, dialog->playerName ); return;
+            case 1: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND ); return;
+         }
+      case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
+      case DialogMessageId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
+      case DialogMessageId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;
    }
 }
