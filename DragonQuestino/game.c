@@ -53,11 +53,7 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld:
          Game_TicOverworld( game );
          break;
-      case GameState_Overworld_Talk:
-      case GameState_Overworld_Search:
-      case GameState_Overworld_Spell:
-      case GameState_Overworld_Item:
-      case GameState_Overworld_Door:
+      case GameState_Overworld_ScrollingDialog:
          ScrollingDialog_Tic( &( game->scrollingDialog ) );
          break;
       case GameState_Overworld_MainMenu:
@@ -97,11 +93,7 @@ internal void Game_HandleInput( Game_t* game )
       case GameState_Overworld_MainMenu:
          Game_HandleMenuInput( game );
          break;
-      case GameState_Overworld_Talk:
-      case GameState_Overworld_Search:
-      case GameState_Overworld_Spell:
-      case GameState_Overworld_Item:
-      case GameState_Overworld_Door:
+      case GameState_Overworld_ScrollingDialog:
          Game_HandleOverworldScrollingDialogInput( game );
          break;
    }
@@ -265,25 +257,25 @@ internal void Game_HandleMenuInput( Game_t* game )
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
          case MenuCommand_Overworld_Talk:
-            Game_ChangeState( game, GameState_Overworld_Talk );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_NOBODY_THERE );
             break;
          case MenuCommand_Overworld_Status:
             break;
          case MenuCommand_Overworld_Search:
-            Game_ChangeState( game, GameState_Overworld_Search );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND );
             break;
          case MenuCommand_Overworld_Spell:
-            Game_ChangeState( game, GameState_Overworld_Spell );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_NO_SPELLS );
             break;
          case MenuCommand_Overworld_Item:
-            Game_ChangeState( game, GameState_Overworld_Item );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_NO_ITEMS );
             break;
          case MenuCommand_Overworld_Door:
-            Game_ChangeState( game, GameState_Overworld_Door );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld, STRING_OVERWORLD_DIALOG_NO_DOOR );
             break;
       }
@@ -321,11 +313,7 @@ internal void Game_Draw( Game_t* game )
          Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          break;
-      case GameState_Overworld_Talk:
-      case GameState_Overworld_Search:
-      case GameState_Overworld_Spell:
-      case GameState_Overworld_Item:
-      case GameState_Overworld_Door:
+      case GameState_Overworld_ScrollingDialog:
          Game_DrawOverworld( game );
          Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );

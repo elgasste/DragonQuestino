@@ -18,11 +18,7 @@ typedef enum GameState_t
 {
    GameState_Overworld = 0,
    GameState_Overworld_MainMenu,
-   GameState_Overworld_Talk,
-   GameState_Overworld_Search,
-   GameState_Overworld_Spell,
-   GameState_Overworld_Item,
-   GameState_Overworld_Door,
+   GameState_Overworld_ScrollingDialog,
    GameState_TileMapTransition,
 
    GameState_Count
