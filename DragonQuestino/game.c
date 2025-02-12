@@ -14,6 +14,7 @@ internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
+internal void Game_DrawOverworldStatus( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -26,8 +27,20 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
 
+   game->overworldInactivitySeconds = 0.0f;
+
    game->state = GameState_Overworld;
    game->swapPortal = 0;
+}
+
+void Game_ChangeState( Game_t* game, GameState_t newState )
+{
+   game->state = newState;
+
+   if ( newState == GameState_Overworld )
+   {
+      game->overworldInactivitySeconds = 0.0f;
+   }
 }
 
 void Game_Tic( Game_t* game )
@@ -66,7 +79,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    if ( portal )
    {
       game->swapPortal = portal;
-      game->state = GameState_TileMapTransition;
+      Game_ChangeState( game, GameState_TileMapTransition );
    }
 }
 
@@ -126,7 +139,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
 
       if ( game->tileMapSwapSecondsElapsed > TILEMAP_SWAP_SECONDS )
       {
-         game->state = GameState_Overworld;
+         Game_ChangeState( game, GameState_Overworld );
       }
    }
 }
@@ -142,11 +155,14 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
+      game->overworldInactivitySeconds = 0.0f;
       Menu_Load( &( game->menu ), MenuId_Overworld );
-      game->state = GameState_Overworld_MainMenu;
+      Game_ChangeState( game, GameState_Overworld_MainMenu );
    }
    else if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
    {
+      game->overworldInactivitySeconds = 0.0f;
+
       if ( leftIsDown && !rightIsDown )
       {
          player->velocity.x = -( player->maxVelocity );
@@ -209,6 +225,10 @@ internal void Game_HandleOverworldInput( Game_t* game )
          }
       }
    }
+   else if ( !game->input.buttonStates[Button_A].down && !game->input.buttonStates[Button_B].down )
+   {
+      game->overworldInactivitySeconds += CLOCK_FRAME_SECONDS;
+   }
 }
 
 internal void Game_HandleOverworldTalkInput( Game_t* game )
@@ -221,7 +241,7 @@ internal void Game_HandleOverworldTalkInput( Game_t* game )
       }
       else
       {
-         game->state = GameState_Overworld;
+         Game_ChangeState( game, GameState_Overworld );
       }
    }
 }
@@ -237,7 +257,7 @@ internal void Game_HandleMenuInput( Game_t* game )
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
          case MenuCommand_Overworld_Talk:
-            game->state = GameState_Overworld_Talk;
+            Game_ChangeState( game, GameState_Overworld_Talk );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld );
             break;
          case MenuCommand_Overworld_Status:
@@ -245,14 +265,18 @@ internal void Game_HandleMenuInput( Game_t* game )
          case MenuCommand_Overworld_Spell:
          case MenuCommand_Overworld_Item:
          case MenuCommand_Overworld_Door:
-            game->state = GameState_Overworld;
+            Game_ChangeState( game, GameState_Overworld );
             break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
-      // TODO: this will depend entirely on which menu is currently open
-      game->state = GameState_Overworld;
+      switch ( game->state )
+      {
+         case GameState_Overworld_MainMenu:
+            Game_ChangeState( game, GameState_Overworld );
+            break;
+      }
    }
    else
    {
@@ -275,10 +299,12 @@ internal void Game_Draw( Game_t* game )
          break;
       case GameState_Overworld_MainMenu:
          Game_DrawOverworld( game );
+         Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          break;
       case GameState_Overworld_Talk:
          Game_DrawOverworld( game );
+         Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          ScrollingDialog_Draw( &( game->scrollingDialog ), &( game->screen ) );
          break;
@@ -293,6 +319,11 @@ internal void Game_DrawOverworld( Game_t* game )
    TileMap_Draw( &( game->tileMap ), &( game->screen ) );
    Game_DrawStaticSprites( game );
    Game_DrawPlayer( game );
+
+   if ( game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
+   {
+      Game_DrawOverworldStatus( game );
+   }
 }
 
 internal void Game_DrawStaticSprites( Game_t* game )
@@ -339,4 +370,31 @@ internal void Game_DrawPlayer( Game_t* game )
    uint32_t syu = ( sy < 0 ) ? 0 : sy;
 
    Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
+}
+
+internal void Game_DrawOverworldStatus( Game_t* game )
+{
+   uint8_t lvl = Player_GetLevel( &( game->player ) );
+   uint32_t memSize;
+   char line[9];
+
+   memSize = MATH_MINU32( (uint32_t)( strlen( game->player.name ) ), 4 );
+   memcpy( line, game->player.name, sizeof( char ) * memSize );
+   line[memSize] = '\0';
+   Screen_DrawTextWindowWithTitle( &( game->screen ), 16, 16, 8, 12, line, COLOR_WHITE );
+
+   sprintf( line, lvl < 10 ? "LV   %u" : "LV  %u", lvl);
+   Screen_DrawText( &( game->screen ), line, 24, 32, COLOR_WHITE );
+
+   sprintf( line, game->player.stats.hitPoints < 10 ? "HP   %u" : game->player.stats.hitPoints < 100 ? "HP  %u" : "HP %u", game->player.stats.hitPoints );
+   Screen_DrawText( &( game->screen ), line, 24, 48, COLOR_WHITE );
+
+   sprintf( line, game->player.stats.magicPoints < 10 ? "MP   %u" : game->player.stats.magicPoints < 100 ? "MP  %u" : "MP %u", game->player.stats.magicPoints );
+   Screen_DrawText( &( game->screen ), line, 24, 64, COLOR_WHITE );
+
+   sprintf( line, game->player.gold < 10 ? "G    %u" : game->player.gold < 100 ? "G   %u" : game->player.gold < 1000 ? "G  %u" : game->player.gold < 10000 ? "G %u" : "G%u", game->player.gold );
+   Screen_DrawText( &( game->screen ), line, 24, 80, COLOR_WHITE );
+
+   sprintf( line, game->player.experience < 10 ? "E    %u" : game->player.experience < 100 ? "E   %u" : game->player.experience < 1000 ? "E  %u" : game->player.experience < 10000 ? "E %u" : "E%u", game->player.experience );
+   Screen_DrawText( &( game->screen ), line, 24, 96, COLOR_WHITE );
 }

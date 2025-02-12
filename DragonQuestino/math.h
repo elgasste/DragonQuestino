@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+#define MATH_MINU32( l, r ) ( ( l ) < ( r ) ? ( l ) : ( r ) )
+#define MATH_MAXU32( l, r ) ( ( l ) > ( r ) ? ( l ) : ( r ) )
+
 #if defined( __cplusplus )
 extern "C" {
 #endif

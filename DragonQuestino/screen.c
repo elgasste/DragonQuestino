@@ -302,5 +302,5 @@ void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w
 void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title, uint16_t color )
 {
    Screen_DrawTextWindow( screen, x, y, w, h, color );
-   Screen_DrawText( screen, title, x + ( ( w / 2 ) + ( (uint32_t)( strlen( title ) ) / 2 ) * TEXT_TILE_SIZE ), y, color );
+   Screen_DrawText( screen, title, x + ( ( ( w - (uint32_t)( strlen( title ) ) ) / 2 ) * TEXT_TILE_SIZE ), y, color );
 }
