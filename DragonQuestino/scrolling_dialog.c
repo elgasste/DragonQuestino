@@ -61,11 +61,14 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
    }
    else
    {
-      // TODO: if we've made it to this point and there are more sections to go,
-      // show the blinking carat (need to add that to the text table I guess)
       for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
       {
          Screen_DrawText( screen, dialog->lines[i], x, y, COLOR_WHITE );
+      }
+
+      if ( dialog->showCarat && !ScrollingDialog_IsDone( dialog ) )
+      {
+         Screen_DrawChar( screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y, COLOR_WHITE );
       }
    }
 }
@@ -95,6 +98,16 @@ void ScrollingDialog_Tic( ScrollingDialog_t* dialog )
          dialog->isScrolling = False;
       }
    }
+   else if ( !ScrollingDialog_IsDone( dialog ) )
+   {
+      dialog->blinkSeconds += CLOCK_FRAME_SECONDS;
+
+      while ( dialog->blinkSeconds > CARAT_BLINK_RATE_SECONDS )
+      {
+         TOGGLE_BOOL( dialog->showCarat );
+         dialog->blinkSeconds -= CARAT_BLINK_RATE_SECONDS;
+      }
+   }
 }
 
 Bool_t ScrollingDialog_IsDone( ScrollingDialog_t* dialog )
@@ -107,6 +120,8 @@ internal void ScrollingDialog_ResetScroll( ScrollingDialog_t* dialog )
    dialog->isScrolling = True;
    dialog->scrollSeconds = 0.0f;
    dialog->scrollTotalSeconds = dialog->charCount * DIALOG_SCROLL_CHAR_SECONDS;
+   dialog->showCarat = True;
+   dialog->blinkSeconds = 0.0f;
 }
 
 internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog )

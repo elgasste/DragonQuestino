@@ -234,7 +234,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
 {
-   if ( Input_AnyButtonPressed( &( game->input ) ) )
+   if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
       if ( !ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
       {
@@ -253,7 +253,7 @@ internal void Game_HandleMenuInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
-      Menu_ResetCursor( &( game->menu ) );
+      Menu_ResetCarat( &( game->menu ) );
 
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {

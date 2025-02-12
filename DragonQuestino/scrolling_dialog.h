@@ -5,8 +5,8 @@
 #include "vector.h"
 
 #define DIALOG_MAX_LINE_CHARS          32
-#define DIALOG_MAX_LINES               8
-#define DIALOG_MAX_MESSAGE_CHARS       256
+#define DIALOG_MAX_LINES               7
+#define DIALOG_MAX_MESSAGE_CHARS       224
 #define DIALOG_SCROLL_CHAR_SECONDS     0.015f
 
 typedef struct Screen_t Screen_t;
@@ -27,6 +27,9 @@ typedef struct ScrollingDialog_t
    Bool_t isScrolling;
    float scrollSeconds;
    float scrollTotalSeconds;
+
+   Bool_t showCarat;
+   float blinkSeconds;
 
    char playerName[9];
 }

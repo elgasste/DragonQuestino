@@ -30,6 +30,8 @@
 #define MENU_BORDER_CHAR_BOTTOM        8
 #define DOWNWARD_CARAT                 9
 
+#define CARAT_BLINK_RATE_SECONDS       0.3f
+
 typedef struct Screen_t
 {
    uint16_t* buffer;

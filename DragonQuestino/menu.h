@@ -7,8 +7,6 @@
 #define MENU_MAX_ITEMS              16
 #define MENU_TEXT_LENGTH            32
 
-#define MENU_BLINK_RATE_SECONDS     0.25f
-
 typedef struct Screen_t Screen_t;
 
 typedef struct MenuItem_t
@@ -31,9 +29,9 @@ typedef struct Menu_t
    Vector2u16_t borderPadding;   // left and top padding of menu item list, in characters
    uint32_t columnWidth;         // in characters
    uint32_t itemPadding;         // individual menu item top padding, in characters
-   uint32_t cursorOffset;        // how far to the left to draw the cursor, in characters
+   uint32_t caratOffset;         // how far to the left to draw the carat, in characters
 
-   Bool_t showCursor;
+   Bool_t showCarat;
    float blinkSeconds;
 }
 Menu_t;
@@ -44,7 +42,7 @@ extern "C" {
 
 void Menu_Load( Menu_t* menu, MenuId_t id );
 void Menu_Draw( Menu_t* menu, Screen_t* screen );
-void Menu_ResetCursor( Menu_t* menu );
+void Menu_ResetCarat( Menu_t* menu );
 void Menu_MoveSelection( Menu_t* menu, Direction_t direction );
 void Menu_Tic( Menu_t* menu );
 
