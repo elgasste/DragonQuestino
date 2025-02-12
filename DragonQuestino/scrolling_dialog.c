@@ -34,7 +34,7 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
 
    Screen_DrawTextWindow( screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y, COLOR_WHITE );
 
-   x = dialog->position.x + ( TEXT_TILE_SIZE * 2 );
+   x = dialog->position.x + TEXT_TILE_SIZE;
    y = dialog->position.y + TEXT_TILE_SIZE;
 
    if ( dialog->isScrolling )
@@ -181,7 +181,7 @@ internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog )
    dialog->position.y = 128;
    dialog->size.x = 24;
    dialog->size.y = 10;
-   dialog->lineWidth = 20;
+   dialog->lineWidth = 22;
 
    ScrollingDialog_LoadMessage( dialog );
    ScrollingDialog_ResetScroll( dialog );
