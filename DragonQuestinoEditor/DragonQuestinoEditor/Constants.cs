@@ -39,7 +39,7 @@
       public const int ActiveSpritePositionCount = 4;
 
       public const int TextTileSize = 8;
-      public const int TextTileCount = 83;  // keep this in parity with TEXT_TILE_COUNT
+      public const int TextTileCount = 84;  // keep this in parity with TEXT_TILE_COUNT
 
       // bits 7-8
       public static readonly UInt32[] TileSetIndexWalkSpeeds = [
