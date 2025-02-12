@@ -2,15 +2,21 @@
 #include "screen.h"
 #include "clock.h"
 
-internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* text );
-internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog, const char* text );
+internal void ScrollingDialog_ResetScroll( ScrollingDialog_t* dialog );
+internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog );
+internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog );
+internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog );
+internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* text );
 
-void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id, const char* text )
+void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId )
 {
-   switch ( id )
+   dialog->messageId = messageId;
+   ScrollingDialog_LoadMessageSectionCount( dialog );
+
+   switch ( type )
    {
       case ScrollingDialogType_Overworld:
-         ScrollingDialog_LoadOverworld( dialog, text );
+         ScrollingDialog_LoadOverworldType( dialog );
          break;
    }
 }
@@ -49,6 +55,8 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
    }
    else
    {
+      // TODO: if we've made it to this point and there are more sections to go,
+      // show the blinking carat (need to add that to the text table I guess)
       for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
       {
          Screen_DrawText( screen, dialog->lines[i], x, y, COLOR_WHITE );
@@ -56,9 +64,18 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
    }
 }
 
-void ScrollingDialog_SkipScroll( ScrollingDialog_t* dialog )
+void ScrollingDialog_Next( ScrollingDialog_t* dialog )
 {
-   dialog->isScrolling = False;
+   if ( dialog->isScrolling )
+   {
+      dialog->isScrolling = False;
+   }
+   else if ( dialog->section < ( dialog->sectionCount - 1 ) )
+   {
+      dialog->section++;
+      ScrollingDialog_LoadMessage( dialog );
+      ScrollingDialog_ResetScroll( dialog );
+   }
 }
 
 void ScrollingDialog_Tic( ScrollingDialog_t* dialog )
@@ -74,19 +91,34 @@ void ScrollingDialog_Tic( ScrollingDialog_t* dialog )
    }
 }
 
-internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* text )
+Bool_t ScrollingDialog_IsDone( ScrollingDialog_t* dialog )
+{
+   return ( !dialog->isScrolling && ( dialog->section >= ( dialog->sectionCount - 1 ) ) ) ? True : False;
+}
+
+internal void ScrollingDialog_ResetScroll( ScrollingDialog_t* dialog )
+{
+   dialog->isScrolling = True;
+   dialog->scrollSeconds = 0.0f;
+   dialog->scrollTotalSeconds = dialog->charCount * DIALOG_SCROLL_CHAR_SECONDS;
+}
+
+internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog )
 {
    uint32_t textIndex, lineIndex, lastSpaceIndex, currentLine;
-   uint32_t strLen = (uint16_t)strlen( text );
+   uint32_t strLen;
    Bool_t endOfLine, endOfText;
-   char curChar;
+   char curChar, message[DIALOG_MAX_MESSAGE_CHARS];
 
    dialog->lineCount = 0;
    dialog->charCount = 0;
 
+   ScrollingDialog_GetMessageText( dialog, message );
+   strLen = (uint16_t)strlen( message );
+
    for ( textIndex = 0, lineIndex = 0, lastSpaceIndex = 0, currentLine = 0; textIndex < strLen; textIndex++ )
    {
-      curChar = text[textIndex];
+      curChar = message[textIndex];
       endOfLine = ( lineIndex == ( dialog->lineWidth - 1 ) );
       endOfText = ( textIndex == ( strLen - 1 ) ) ? True : False;
 
@@ -98,7 +130,7 @@ internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* t
             {
                dialog->lines[currentLine][lineIndex] = '\0';
             }
-            else if ( text[textIndex + 1] == ' ' )
+            else if ( message[textIndex + 1] == ' ' )
             {
                dialog->lines[currentLine][lineIndex] = curChar;
                dialog->lines[currentLine][lineIndex + 1] = '\0';
@@ -137,7 +169,7 @@ internal void ScrollingDialog_LoadText( ScrollingDialog_t* dialog, const char* t
    }
 }
 
-internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog, const char* text )
+internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog )
 {
    dialog->position.x = 32;
    dialog->position.y = 128;
@@ -145,9 +177,40 @@ internal void ScrollingDialog_LoadOverworld( ScrollingDialog_t* dialog, const ch
    dialog->size.y = 10;
    dialog->lineWidth = 20;
 
-   ScrollingDialog_LoadText( dialog, text );
+   ScrollingDialog_LoadMessage( dialog );
+   ScrollingDialog_ResetScroll( dialog );
+}
 
-   dialog->isScrolling = True;
-   dialog->scrollSeconds = 0.0f;
-   dialog->scrollTotalSeconds = dialog->charCount * DIALOG_SCROLL_CHAR_SECONDS;
+internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog )
+{
+   switch ( dialog->messageId )
+   {
+      case DialogMessageId_Talk_NobodyThere: dialog->sectionCount = 1; break;
+      case DialogMessageId_Search_NothingFound: dialog->sectionCount = 1; break;
+      case DialogMessageId_Spell_None: dialog->sectionCount = 1; break;
+      case DialogMessageId_Item_None: dialog->sectionCount = 1; break;
+      case DialogMessageId_Door_None: dialog->sectionCount = 1; break;
+   }
+}
+
+internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* text )
+{
+   switch ( dialog->messageId )
+   {
+      case DialogMessageId_Talk_NobodyThere:
+         strcpy( text, STRING_OVERWORLD_DIALOG_NOBODY_THERE );
+         return;
+      case DialogMessageId_Search_NothingFound:
+         strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND );
+         return;
+      case DialogMessageId_Spell_None:
+         strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS );
+         return;
+      case DialogMessageId_Item_None:
+         strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS );
+         return;
+      case DialogMessageId_Door_None:
+         strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR );
+         return;
+   }
 }

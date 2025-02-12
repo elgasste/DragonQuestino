@@ -52,6 +52,18 @@ typedef enum ScrollingDialogType_t
 
    ScrollingDialogType_Count
 }
-ScrollingDialogId_t;
+ScrollingDialogType_t;
+
+typedef enum DialogMessageId_t
+{
+   DialogMessageId_Talk_NobodyThere = 0,
+   DialogMessageId_Search_NothingFound,
+   DialogMessageId_Spell_None,
+   DialogMessageId_Item_None,
+   DialogMessageId_Door_None,
+
+   DialogMessageId_Count
+}
+DialogMessageId_t;
 
 #endif // ENUMS_H

@@ -6,12 +6,14 @@
 
 #define DIALOG_MAX_LINE_CHARS          32
 #define DIALOG_MAX_LINES               8
+#define DIALOG_MAX_MESSAGE_CHARS       256
 #define DIALOG_SCROLL_CHAR_SECONDS     0.015f
 
 typedef struct Screen_t Screen_t;
 
 typedef struct ScrollingDialog_t
 {
+   DialogMessageId_t messageId;
    Vector2u16_t position;  // in pixels
    Vector2u16_t size;      // in characters
    uint32_t lineWidth;     // in characters
@@ -19,6 +21,8 @@ typedef struct ScrollingDialog_t
    char lines[DIALOG_MAX_LINES][DIALOG_MAX_LINE_CHARS];
    uint32_t lineCount;
    uint32_t charCount;
+   uint32_t section;
+   uint32_t sectionCount;
 
    Bool_t isScrolling;
    float scrollSeconds;
@@ -30,10 +34,11 @@ ScrollingDialog_t;
 extern "C" {
 #endif
 
-void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogId_t id, const char* text );
+void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId );
 void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen );
-void ScrollingDialog_SkipScroll( ScrollingDialog_t* dialog );
+void ScrollingDialog_Next( ScrollingDialog_t* dialog );
 void ScrollingDialog_Tic( ScrollingDialog_t* dialog );
+Bool_t ScrollingDialog_IsDone( ScrollingDialog_t* dialog );
 
 #if defined( __cplusplus )
 }

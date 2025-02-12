@@ -235,9 +235,9 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      if ( game->scrollingDialog.isScrolling )
+      if ( !ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
       {
-         ScrollingDialog_SkipScroll( &( game->scrollingDialog ) );
+         ScrollingDialog_Next( &( game->scrollingDialog ) );
       }
       else
       {
@@ -258,25 +258,25 @@ internal void Game_HandleMenuInput( Game_t* game )
       {
          case MenuCommand_Overworld_Talk:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, STRING_OVERWORLD_DIALOG_NOBODY_THERE );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere );
             break;
          case MenuCommand_Overworld_Status:
             break;
          case MenuCommand_Overworld_Search:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
             break;
          case MenuCommand_Overworld_Spell:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, STRING_OVERWORLD_DIALOG_NO_SPELLS );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
             break;
          case MenuCommand_Overworld_Item:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, STRING_OVERWORLD_DIALOG_NO_ITEMS );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Item_None );
             break;
          case MenuCommand_Overworld_Door:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, STRING_OVERWORLD_DIALOG_NO_DOOR );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
             break;
       }
    }
