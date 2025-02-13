@@ -15,7 +15,7 @@
 #define COLOR_GREEN                    0x07E0
 #define COLOR_BLUE                     0x001F
 
-#define TEXT_TILE_COUNT                84
+#define TEXT_TILE_COUNT                85
 #define TEXT_TILE_SIZE                 8
 
 #define TRANSPARENT_COLOR_INDEX        0x0A
