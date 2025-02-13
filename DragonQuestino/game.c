@@ -15,8 +15,8 @@ internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
-internal void Game_DrawOverworldStatus( Game_t* game );
-internal void Game_DrawPlayerStatus( Game_t* game );
+internal void Game_DrawOverworldQuickStatus( Game_t* game );
+internal void Game_DrawOverworldDeepStatus( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -324,18 +324,18 @@ internal void Game_Draw( Game_t* game )
          break;
       case GameState_Overworld_MainMenu:
          Game_DrawOverworld( game );
-         Game_DrawOverworldStatus( game );
+         Game_DrawOverworldQuickStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          break;
       case GameState_Overworld_PlayerStatus:
          Game_DrawOverworld( game );
-         Game_DrawOverworldStatus( game );
+         Game_DrawOverworldQuickStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
-         Game_DrawPlayerStatus( game );
+         Game_DrawOverworldDeepStatus( game );
          break;
       case GameState_Overworld_ScrollingDialog:
          Game_DrawOverworld( game );
-         Game_DrawOverworldStatus( game );
+         Game_DrawOverworldQuickStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          ScrollingDialog_Draw( &( game->scrollingDialog ), &( game->screen ) );
          break;
@@ -353,7 +353,7 @@ internal void Game_DrawOverworld( Game_t* game )
 
    if ( game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
    {
-      Game_DrawOverworldStatus( game );
+      Game_DrawOverworldQuickStatus( game );
    }
 }
 
@@ -403,7 +403,7 @@ internal void Game_DrawPlayer( Game_t* game )
    Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
 }
 
-internal void Game_DrawOverworldStatus( Game_t* game )
+internal void Game_DrawOverworldQuickStatus( Game_t* game )
 {
    uint8_t lvl = Player_GetLevel( &( game->player ) );
    uint32_t memSize;
@@ -414,6 +414,7 @@ internal void Game_DrawOverworldStatus( Game_t* game )
    line[memSize] = '\0';
    Screen_DrawTextWindowWithTitle( &( game->screen ), 16, 16, 8, 12, line, COLOR_WHITE );
 
+   // TODO: move all these strings to strings.h
    sprintf( line, lvl < 10 ? "LV   %u" : "LV  %u", lvl);
    Screen_DrawText( &( game->screen ), line, 24, 32, COLOR_WHITE );
 
@@ -430,11 +431,12 @@ internal void Game_DrawOverworldStatus( Game_t* game )
    Screen_DrawText( &( game->screen ), line, 24, 96, COLOR_WHITE );
 }
 
-internal void Game_DrawPlayerStatus( Game_t* game )
+internal void Game_DrawOverworldDeepStatus( Game_t* game )
 {
    Screen_DrawTextWindow( &( game->screen ), 80, 32, 20, 22, COLOR_WHITE );
    char line[18];
 
+   // TODO: move all these strings to strings.h
    sprintf( line, "NAME: %s", game->player.name );
    Screen_DrawText( &( game->screen ), line, 104 + ( ( 4 - ( (uint32_t)( ( strlen( game->player.name ) + 1 ) / 2 ) ) ) * TEXT_TILE_SIZE ), 40, COLOR_WHITE);
 
