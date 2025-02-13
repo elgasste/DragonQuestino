@@ -210,6 +210,7 @@ internal int8_t Screen_GetCharIndexFromChar( const char c )
          case 47: return 72;     // forward slash
          case 40: return 73;     // left parenthesis
          case 41: return 74;     // right parenthesis
+         case 42: return 84;     // asterisk
 
          case MENU_BORDER_CHAR_TOPLEFT: return 75;
          case MENU_BORDER_CHAR_TOPRIGHT: return 76;
