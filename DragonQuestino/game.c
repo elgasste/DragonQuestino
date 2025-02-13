@@ -8,13 +8,15 @@ internal void Game_HandleInput( Game_t* game );
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
+internal void Game_HandleOverworldPlayerStatusInput( Game_t* game );
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game );
 internal void Game_HandleMenuInput( Game_t* game );
 internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
-internal void Game_DrawOverworldStatus( Game_t* game );
+internal void Game_DrawOverworldQuickStatus( Game_t* game );
+internal void Game_DrawOverworldDeepStatus( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -94,6 +96,8 @@ internal void Game_HandleInput( Game_t* game )
       case GameState_Overworld_MainMenu:
          Game_HandleMenuInput( game );
          break;
+      case GameState_Overworld_PlayerStatus:
+         Game_HandleOverworldPlayerStatusInput( game );
       case GameState_Overworld_ScrollingDialog:
          Game_HandleOverworldScrollingDialogInput( game );
          break;
@@ -232,6 +236,14 @@ internal void Game_HandleOverworldInput( Game_t* game )
    }
 }
 
+internal void Game_HandleOverworldPlayerStatusInput( Game_t* game )
+{
+   if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
+   {
+      Game_ChangeState( game, GameState_Overworld );
+   }
+}
+
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
 {
    if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
@@ -262,6 +274,7 @@ internal void Game_HandleMenuInput( Game_t* game )
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere );
             break;
          case MenuCommand_Overworld_Status:
+            Game_ChangeState( game, GameState_Overworld_PlayerStatus );
             break;
          case MenuCommand_Overworld_Search:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
@@ -311,12 +324,18 @@ internal void Game_Draw( Game_t* game )
          break;
       case GameState_Overworld_MainMenu:
          Game_DrawOverworld( game );
-         Game_DrawOverworldStatus( game );
+         Game_DrawOverworldQuickStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
+         break;
+      case GameState_Overworld_PlayerStatus:
+         Game_DrawOverworld( game );
+         Game_DrawOverworldQuickStatus( game );
+         Menu_Draw( &( game->menu ), &( game->screen ) );
+         Game_DrawOverworldDeepStatus( game );
          break;
       case GameState_Overworld_ScrollingDialog:
          Game_DrawOverworld( game );
-         Game_DrawOverworldStatus( game );
+         Game_DrawOverworldQuickStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          ScrollingDialog_Draw( &( game->scrollingDialog ), &( game->screen ) );
          break;
@@ -334,7 +353,7 @@ internal void Game_DrawOverworld( Game_t* game )
 
    if ( game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
    {
-      Game_DrawOverworldStatus( game );
+      Game_DrawOverworldQuickStatus( game );
    }
 }
 
@@ -384,7 +403,7 @@ internal void Game_DrawPlayer( Game_t* game )
    Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
 }
 
-internal void Game_DrawOverworldStatus( Game_t* game )
+internal void Game_DrawOverworldQuickStatus( Game_t* game )
 {
    uint8_t lvl = Player_GetLevel( &( game->player ) );
    uint32_t memSize;
@@ -395,18 +414,54 @@ internal void Game_DrawOverworldStatus( Game_t* game )
    line[memSize] = '\0';
    Screen_DrawTextWindowWithTitle( &( game->screen ), 16, 16, 8, 12, line, COLOR_WHITE );
 
-   sprintf( line, lvl < 10 ? "LV   %u" : "LV  %u", lvl);
+   sprintf( line, lvl < 10 ? "%s   %u" : "%s  %u", STRING_OVERWORLD_QUICKSTATS_LEVEL, lvl);
    Screen_DrawText( &( game->screen ), line, 24, 32, COLOR_WHITE );
 
-   sprintf( line, game->player.stats.hitPoints < 10 ? "HP   %u" : game->player.stats.hitPoints < 100 ? "HP  %u" : "HP %u", game->player.stats.hitPoints );
+   sprintf( line, game->player.stats.hitPoints < 10 ? "%s   %u" : game->player.stats.hitPoints < 100 ? "%s  %u" : "%s %u", STRING_OVERWORLD_QUICKSTATS_HP, game->player.stats.hitPoints );
    Screen_DrawText( &( game->screen ), line, 24, 48, COLOR_WHITE );
 
-   sprintf( line, game->player.stats.magicPoints < 10 ? "MP   %u" : game->player.stats.magicPoints < 100 ? "MP  %u" : "MP %u", game->player.stats.magicPoints );
+   sprintf( line, game->player.stats.magicPoints < 10 ? "%s   %u" : game->player.stats.magicPoints < 100 ? "%s  %u" : "%s %u", STRING_OVERWORLD_QUICKSTATS_MP, game->player.stats.magicPoints );
    Screen_DrawText( &( game->screen ), line, 24, 64, COLOR_WHITE );
 
-   sprintf( line, game->player.gold < 10 ? "G    %u" : game->player.gold < 100 ? "G   %u" : game->player.gold < 1000 ? "G  %u" : game->player.gold < 10000 ? "G %u" : "G%u", game->player.gold );
+   sprintf( line, game->player.gold < 10 ? "%s    %u" : game->player.gold < 100 ? "%s   %u" : game->player.gold < 1000 ? "%s  %u" : game->player.gold < 10000 ? "%s %u" : "%s%u", STRING_OVERWORLD_QUICKSTATS_GOLD, game->player.gold );
    Screen_DrawText( &( game->screen ), line, 24, 80, COLOR_WHITE );
 
-   sprintf( line, game->player.experience < 10 ? "E    %u" : game->player.experience < 100 ? "E   %u" : game->player.experience < 1000 ? "E  %u" : game->player.experience < 10000 ? "E %u" : "E%u", game->player.experience );
+   sprintf( line, game->player.experience < 10 ? "%s    %u" : game->player.experience < 100 ? "%s   %u" : game->player.experience < 1000 ? "%s  %u" : game->player.experience < 10000 ? "%s %u" : "%s%u", STRING_OVERWORLD_QUICKSTATS_EXP, game->player.experience );
    Screen_DrawText( &( game->screen ), line, 24, 96, COLOR_WHITE );
+}
+
+internal void Game_DrawOverworldDeepStatus( Game_t* game )
+{
+   Screen_DrawTextWindow( &( game->screen ), 80, 32, 20, 22, COLOR_WHITE );
+   char line[18];
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_NAME, game->player.name );
+   Screen_DrawText( &( game->screen ), line, 104 + ( ( 4 - ( (uint32_t)( ( strlen( game->player.name ) + 1 ) / 2 ) ) ) * TEXT_TILE_SIZE ), 40, COLOR_WHITE);
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_STRENGTH, game->player.stats.strength );
+   Screen_DrawText( &( game->screen ), line, 96, 56, COLOR_WHITE );
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_AGILITY, game->player.stats.agility );
+   Screen_DrawText( &( game->screen ), line, 104, 72, COLOR_WHITE );
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXHP, game->player.stats.maxHitPoints );
+   Screen_DrawText( &( game->screen ), line, 112, 88, COLOR_WHITE );
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXHP, game->player.stats.maxMagicPoints );
+   Screen_DrawText( &( game->screen ), line, 112, 104, COLOR_WHITE );
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_ATTACK, game->player.stats.attackPower );
+   Screen_DrawText( &( game->screen ), line, 112, 120, COLOR_WHITE );
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_DEFENSE, game->player.stats.defensePower );
+   Screen_DrawText( &( game->screen ), line, 104, 136, COLOR_WHITE );
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_WEAPON, STRING_OVERWORLD_DEEPSTATS_NONE );
+   Screen_DrawText( &( game->screen ), line, 96, 152, COLOR_WHITE );
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_ARMOR, STRING_OVERWORLD_DEEPSTATS_NONE );
+   Screen_DrawText( &( game->screen ), line, 104, 168, COLOR_WHITE );
+
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_SHIELD, STRING_OVERWORLD_DEEPSTATS_NONE );
+   Screen_DrawText( &( game->screen ), line, 96, 184, COLOR_WHITE );
 }
