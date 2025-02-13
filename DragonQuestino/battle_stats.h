@@ -11,8 +11,8 @@ typedef struct BattleStats_t
    uint8_t maxMagicPoints;
    uint8_t attackPower;
    uint8_t defensePower;
+   uint8_t strength;
    uint8_t agility;
-   uint8_t luck;
 }
 BattleStats_t;
 
