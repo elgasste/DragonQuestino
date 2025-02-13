@@ -8,7 +8,7 @@ internal void Game_HandleInput( Game_t* game );
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
-internal void Game_HandleOverworldTalkInput( Game_t* game );
+internal void Game_HandleOverworldScrollingDialogInput( Game_t* game );
 internal void Game_HandleMenuInput( Game_t* game );
 internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
@@ -26,6 +26,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
+   ScrollingDialog_Init( &( game->scrollingDialog ), game->player.name );
 
    game->overworldInactivitySeconds = 0.0f;
 
@@ -53,7 +54,7 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld:
          Game_TicOverworld( game );
          break;
-      case GameState_Overworld_Talk:
+      case GameState_Overworld_ScrollingDialog:
          ScrollingDialog_Tic( &( game->scrollingDialog ) );
          break;
       case GameState_Overworld_MainMenu:
@@ -93,8 +94,8 @@ internal void Game_HandleInput( Game_t* game )
       case GameState_Overworld_MainMenu:
          Game_HandleMenuInput( game );
          break;
-      case GameState_Overworld_Talk:
-         Game_HandleOverworldTalkInput( game );
+      case GameState_Overworld_ScrollingDialog:
+         Game_HandleOverworldScrollingDialogInput( game );
          break;
    }
 }
@@ -231,13 +232,13 @@ internal void Game_HandleOverworldInput( Game_t* game )
    }
 }
 
-internal void Game_HandleOverworldTalkInput( Game_t* game )
+internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
 {
-   if ( Input_AnyButtonPressed( &( game->input ) ) )
+   if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      if ( game->scrollingDialog.isScrolling )
+      if ( !ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
       {
-         ScrollingDialog_SkipScroll( &( game->scrollingDialog ) );
+         ScrollingDialog_Next( &( game->scrollingDialog ) );
       }
       else
       {
@@ -252,20 +253,31 @@ internal void Game_HandleMenuInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
-      Menu_ResetCursor( &( game->menu ) );
+      Menu_ResetCarat( &( game->menu ) );
 
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
          case MenuCommand_Overworld_Talk:
-            Game_ChangeState( game, GameState_Overworld_Talk );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogId_Overworld );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere );
             break;
          case MenuCommand_Overworld_Status:
+            break;
          case MenuCommand_Overworld_Search:
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+            break;
          case MenuCommand_Overworld_Spell:
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
+            break;
          case MenuCommand_Overworld_Item:
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Item_None );
+            break;
          case MenuCommand_Overworld_Door:
-            Game_ChangeState( game, GameState_Overworld );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
             break;
       }
    }
@@ -302,7 +314,7 @@ internal void Game_Draw( Game_t* game )
          Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );
          break;
-      case GameState_Overworld_Talk:
+      case GameState_Overworld_ScrollingDialog:
          Game_DrawOverworld( game );
          Game_DrawOverworldStatus( game );
          Menu_Draw( &( game->menu ), &( game->screen ) );

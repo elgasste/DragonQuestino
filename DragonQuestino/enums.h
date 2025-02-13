@@ -18,7 +18,7 @@ typedef enum GameState_t
 {
    GameState_Overworld = 0,
    GameState_Overworld_MainMenu,
-   GameState_Overworld_Talk,
+   GameState_Overworld_ScrollingDialog,
    GameState_TileMapTransition,
 
    GameState_Count
@@ -46,12 +46,24 @@ typedef enum MenuCommand_t
 }
 MenuCommand_t;
 
-typedef enum ScrollingDialogId_t
+typedef enum ScrollingDialogType_t
 {
-   ScrollingDialogId_Overworld = 0,
+   ScrollingDialogType_Overworld = 0,
 
-   ScrollingDialogId_Count
+   ScrollingDialogType_Count
 }
-ScrollingDialogId_t;
+ScrollingDialogType_t;
+
+typedef enum DialogMessageId_t
+{
+   DialogMessageId_Talk_NobodyThere = 0,
+   DialogMessageId_Search_NothingFound,
+   DialogMessageId_Spell_None,
+   DialogMessageId_Item_None,
+   DialogMessageId_Door_None,
+
+   DialogMessageId_Count
+}
+DialogMessageId_t;
 
 #endif // ENUMS_H

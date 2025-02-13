@@ -211,7 +211,6 @@ internal int8_t Screen_GetCharIndexFromChar( const char c )
          case 40: return 73;     // left parenthesis
          case 41: return 74;     // right parenthesis
 
-         // menu borders
          case MENU_BORDER_CHAR_TOPLEFT: return 75;
          case MENU_BORDER_CHAR_TOPRIGHT: return 76;
          case MENU_BORDER_CHAR_BOTTOMLEFT: return 77;
@@ -220,6 +219,8 @@ internal int8_t Screen_GetCharIndexFromChar( const char c )
          case MENU_BORDER_CHAR_TOP: return 80;
          case MENU_BORDER_CHAR_RIGHT: return 81;
          case MENU_BORDER_CHAR_BOTTOM: return 82;
+
+         case DOWNWARD_CARAT: return 83;
 
          default: return -1;
       }

@@ -13,7 +13,7 @@ void Menu_Load( Menu_t* menu, MenuId_t id )
          break;
    }
 
-   Menu_ResetCursor( menu );
+   Menu_ResetCarat( menu );
 }
 
 void Menu_Draw( Menu_t* menu, Screen_t* screen )
@@ -35,16 +35,16 @@ void Menu_Draw( Menu_t* menu, Screen_t* screen )
       y = startY + ( ( i % menu->itemsPerColumn ) * ( TEXT_TILE_SIZE * ( menu->itemPadding + 1 ) ) );
       Screen_DrawText( screen, menu->items[i].text, x, y, COLOR_WHITE );
 
-      if ( i == menu->selectedIndex && menu->showCursor )
+      if ( i == menu->selectedIndex && menu->showCarat )
       {
-         Screen_DrawChar( screen, '>', x - ( TEXT_TILE_SIZE * menu->cursorOffset ), y, COLOR_WHITE );
+         Screen_DrawChar( screen, '>', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y, COLOR_WHITE );
       }
    }
 }
 
-void Menu_ResetCursor( Menu_t* menu )
+void Menu_ResetCarat( Menu_t* menu )
 {
-   menu->showCursor = True;
+   menu->showCarat = True;
    menu->blinkSeconds = 0.0f;
 }
 
@@ -102,17 +102,17 @@ void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
    }
 
    menu->selectedIndex = (uint32_t)newIndex;
-   Menu_ResetCursor( menu );
+   Menu_ResetCarat( menu );
 }
 
 void Menu_Tic( Menu_t* menu )
 {
    menu->blinkSeconds += CLOCK_FRAME_SECONDS;
 
-   while ( menu->blinkSeconds > MENU_BLINK_RATE_SECONDS )
+   while ( menu->blinkSeconds > CARAT_BLINK_RATE_SECONDS )
    {
-      menu->blinkSeconds -= MENU_BLINK_RATE_SECONDS;
-      TOGGLE_BOOL( menu->showCursor );
+      menu->blinkSeconds -= CARAT_BLINK_RATE_SECONDS;
+      TOGGLE_BOOL( menu->showCarat );
    }
 }
 
@@ -143,5 +143,5 @@ internal void Menu_LoadOverworld( Menu_t* menu )
    menu->borderPadding.y = 1;
    menu->columnWidth = 8;
    menu->itemPadding = 1;
-   menu->cursorOffset = 1;
+   menu->caratOffset = 1;
 }

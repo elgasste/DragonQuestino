@@ -3,22 +3,22 @@
 
 #include "common.h"
 
-#define SCREEN_WIDTH             256
-#define SCREEN_HEIGHT            224
-#define SCREEN_PIXELS            57344
+#define SCREEN_WIDTH                   256
+#define SCREEN_HEIGHT                  224
+#define SCREEN_PIXELS                  57344
 
-#define PALETTE_COLORS           256
+#define PALETTE_COLORS                 256
 
-#define COLOR_BLACK              0x0000
-#define COLOR_WHITE              0xFFFF
-#define COLOR_RED                0xF800
-#define COLOR_GREEN              0x07E0
-#define COLOR_BLUE               0x001F
+#define COLOR_BLACK                    0x0000
+#define COLOR_WHITE                    0xFFFF
+#define COLOR_RED                      0xF800
+#define COLOR_GREEN                    0x07E0
+#define COLOR_BLUE                     0x001F
 
-#define TEXT_TILE_COUNT          83
-#define TEXT_TILE_SIZE           8
+#define TEXT_TILE_COUNT                84
+#define TEXT_TILE_SIZE                 8
 
-#define TRANSPARENT_COLOR_INDEX  0x0A
+#define TRANSPARENT_COLOR_INDEX        0x0A
 
 #define MENU_BORDER_CHAR_TOPLEFT       1
 #define MENU_BORDER_CHAR_TOPRIGHT      2
@@ -28,6 +28,9 @@
 #define MENU_BORDER_CHAR_TOP           6
 #define MENU_BORDER_CHAR_RIGHT         7
 #define MENU_BORDER_CHAR_BOTTOM        8
+#define DOWNWARD_CARAT                 9
+
+#define CARAT_BLINK_RATE_SECONDS       0.3f
 
 typedef struct Screen_t
 {

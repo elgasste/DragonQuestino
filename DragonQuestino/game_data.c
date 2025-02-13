@@ -556,6 +556,10 @@ void Screen_LoadTextBitFields( Screen_t* screen )
    screen->textBitFields[81][7] = 0x06;
    screen->textBitFields[82][5] = 0xFF;
    screen->textBitFields[82][6] = 0xFF;
+   screen->textBitFields[83][2] = 0xFE;
+   screen->textBitFields[83][3] = 0x7C;
+   screen->textBitFields[83][4] = 0x38;
+   screen->textBitFields[83][5] = 0x10;
 }
 
 void TileMap_LoadTextures( TileMap_t* tileMap )
