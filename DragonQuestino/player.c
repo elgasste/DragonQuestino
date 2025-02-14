@@ -1,5 +1,6 @@
 #include "player.h"
 #include "tile_map.h"
+#include "math.h"
 
 void Player_Init( Player_t* player )
 {
@@ -67,30 +68,12 @@ uint8_t Player_GetLevel( Player_t* player )
 
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold )
 {
-   if ( gold < ( UINT16_MAX - player->gold ) )
-   {
-      player->gold += gold;
-      return gold;
-   }
-   else
-   {
-      player->gold = UINT16_MAX;
-      return UINT16_MAX - player->gold;
-   }
+   return Math_CollectAmount16u( &( player->gold ), gold );
 }
 
 uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
 {
-   if ( experience < ( UINT16_MAX - player->experience ) )
-   {
-      player->experience += experience;
-      return experience;
-   }
-   else
-   {
-      player->experience = UINT16_MAX;
-      return UINT16_MAX - player->experience;
-   }
+   return Math_CollectAmount16u( &( player->experience ), experience );
 }
 
 Bool_t Player_CollectItem( Player_t* player, Item_t item )
