@@ -98,6 +98,7 @@ internal void Game_HandleInput( Game_t* game )
          break;
       case GameState_Overworld_PlayerStatus:
          Game_HandleOverworldPlayerStatusInput( game );
+         break;
       case GameState_Overworld_ScrollingDialog:
          Game_HandleOverworldScrollingDialogInput( game );
          break;
