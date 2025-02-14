@@ -26,6 +26,26 @@ typedef enum GameState_t
 }
 GameState_t;
 
+typedef enum Item_t
+{
+   Item_Key = 0,
+   Item_Herb,
+   Item_Wing,
+   Item_FairyWater,
+   Item_Tablet,
+   Item_StoneOfSunlight,
+   Item_StaffOfRain,
+   Item_RainbowDrop,
+   Item_SilverHarp,
+   Item_FairyFlute,
+   Item_GwaelynsLove,
+   Item_Token,
+   Item_SphereOfLight,
+
+   Item_Count
+}
+Item_t;
+
 typedef enum MenuId_t
 {
    MenuId_Overworld = 0,
