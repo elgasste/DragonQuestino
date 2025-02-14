@@ -61,6 +61,90 @@ uint8_t Player_GetLevel( Player_t* player )
    else if ( player->experience < 54000 ) { return 26; }
    else if ( player->experience < 58000 ) { return 27; }
    else if ( player->experience < 62000 ) { return 28; }
-   else if ( player->experience < 65535 ) { return 29; }
+   else if ( player->experience < UINT16_MAX ) { return 29; }
    else { return 30; }
+}
+
+uint16_t Player_CollectGold( Player_t* player, uint16_t gold )
+{
+   if ( gold < ( UINT16_MAX - player->gold ) )
+   {
+      player->gold += gold;
+      return gold;
+   }
+   else
+   {
+      player->gold = UINT16_MAX;
+      return UINT16_MAX - player->gold;
+   }
+}
+
+uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
+{
+   if ( experience < ( UINT16_MAX - player->experience ) )
+   {
+      player->experience += experience;
+      return experience;
+   }
+   else
+   {
+      player->experience = UINT16_MAX;
+      return UINT16_MAX - player->experience;
+   }
+}
+
+Bool_t Player_CollectItem( Player_t* player, Item_t item )
+{
+   Bool_t collected = False;
+   int8_t count;
+
+   switch ( item )
+   {
+      case Item_Key:
+         count = PLAYER_GET_KEYCOUNT( player->items );
+         if ( count < PLAYER_MAXKEYS )
+         {
+            count++;
+            PLAYER_SET_KEYCOUNT( player->items, count );
+            collected = True;
+         }
+         break;
+      case Item_Herb:
+         count = PLAYER_GET_HERBCOUNT( player->items );
+         if ( count < PLAYER_MAXHERBS )
+         {
+            count++;
+            PLAYER_SET_HERBCOUNT( player->items, count );
+            collected = True;
+         }
+         break;
+      case Item_Wing:
+         count = PLAYER_GET_WINGCOUNT( player->items );
+         if ( count < PLAYER_MAXWINGS )
+         {
+            count++;
+            PLAYER_SET_WINGCOUNT( player->items, count );
+            collected = True;
+         }
+         break;
+      case Item_FairyWater:
+         count = PLAYER_GET_FAIRYWATERCOUNT( player->items );
+         if ( count < PLAYER_MAXFAIRYWATERS )
+         {
+            count++;
+            PLAYER_SET_FAIRYWATERCOUNT( player->items, count );
+            collected = True;
+         }
+         break;
+      default:
+         if ( item < Item_Count )
+         {
+            // single items start at 4 (Item_Tablet), and shifting starts at 12, hence "item + 8"
+            player->items |= ( ( uint32_t )( True ) << ( ( uint32_t )( item ) + 8 ) );
+            collected = True;
+         }
+         break;
+   }
+
+   return collected;
 }
