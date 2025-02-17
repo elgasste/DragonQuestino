@@ -17,8 +17,9 @@ Direction_t;
 typedef enum GameState_t
 {
    GameState_Overworld = 0,
+   GameState_Overworld_Waiting,
    GameState_Overworld_MainMenu,
-   GameState_Overworld_PlayerStatus,
+   GameState_Overworld_ItemMenu,
    GameState_Overworld_ScrollingDialog,
    GameState_TileMapTransition,
 
@@ -49,6 +50,7 @@ Item_t;
 typedef enum MenuId_t
 {
    MenuId_Overworld = 0,
+   MenuId_OverworldItem,
 
    MenuId_Count
 }
@@ -56,12 +58,20 @@ MenuId_t;
 
 typedef enum MenuCommand_t
 {
-   MenuCommand_Overworld_Talk = 0,
-   MenuCommand_Overworld_Status,
-   MenuCommand_Overworld_Search,
-   MenuCommand_Overworld_Spell,
-   MenuCommand_Overworld_Item,
-   MenuCommand_Overworld_Door,
+   MenuCommand_OverworldMain_Talk = 0,
+   MenuCommand_OverworldMain_Status,
+   MenuCommand_OverworldMain_Search,
+   MenuCommand_OverworldMain_Spell,
+   MenuCommand_OverworldMain_Item,
+   MenuCommand_OverworldMain_Door,
+
+   MenuCommand_OverworldItem_Herb,
+   MenuCommand_OverworldItem_Wing,
+   MenuCommand_OverworldItem_FairyWater,
+   MenuCommand_OverworldItem_RainbowDrop,
+   MenuCommand_OverworldItem_SilverHarp,
+   MenuCommand_OverworldItem_FairyFlute,
+   MenuCommand_OverworldItem_GwaelynsLove,
 
    MenuCommand_Count
 }

@@ -14,31 +14,31 @@
 #define PLAYER_GET_HERBCOUNT( x )              ( ( ( x ) >> 3 ) & 0x7 )
 #define PLAYER_GET_WINGCOUNT( x )              ( ( ( x ) >> 6 ) & 0x7 )
 #define PLAYER_GET_FAIRYWATERCOUNT( x )        ( ( ( x ) >> 9 ) & 0x7 )
-#define PLAYER_GET_HASTABLET( x )              ( ( x ) >> 12 & 0x1 )
-#define PLAYER_GET_HASSTONEOFSUNLIGHT( x )     ( ( x ) >> 13 & 0x1 )
-#define PLAYER_GET_HASSTAFFOFRAIN( x )         ( ( x ) >> 14 & 0x1 )
-#define PLAYER_GET_HASRAINBOWDROP( x )         ( ( x ) >> 15 & 0x1 )
-#define PLAYER_GET_HASSILVERHARP( x )          ( ( x ) >> 16 & 0x1 )
-#define PLAYER_GET_HASFAIRYFLUTE( x )          ( ( x ) >> 17 & 0x1 )
-#define PLAYER_GET_HASGWAELYNSLOVE( x )        ( ( x ) >> 18 & 0x1 )
-#define PLAYER_GET_HASTOKEN( x )               ( ( x ) >> 19 & 0x1 )
-#define PLAYER_GET_HASSPHEREOFLIGHT( x )       ( ( x ) >> 20 & 0x1 )
+#define PLAYER_HAS_TABLET( x )                 ( ( x ) >> 12 & 0x1 )
+#define PLAYER_HAS_STONEOFSUNLIGHT( x )        ( ( x ) >> 13 & 0x1 )
+#define PLAYER_HAS_STAFFOFRAIN( x )            ( ( x ) >> 14 & 0x1 )
+#define PLAYER_HAS_RAINBOWDROP( x )            ( ( x ) >> 15 & 0x1 )
+#define PLAYER_HAS_SILVERHARP( x )             ( ( x ) >> 16 & 0x1 )
+#define PLAYER_HAS_FAIRYFLUTE( x )             ( ( x ) >> 17 & 0x1 )
+#define PLAYER_HAS_GWAELYNSLOVE( x )           ( ( x ) >> 18 & 0x1 )
+#define PLAYER_HAS_TOKEN( x )                  ( ( x ) >> 19 & 0x1 )
+#define PLAYER_HAS_SPHEREOFLIGHT( x )          ( ( x ) >> 20 & 0x1 )
 
 #define PLAYER_GET_MAPUSEABLEITEMCOUNT( x )    ( 0 + \
-                                               ( GET_ITEM_KEYCOUNT( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_HERBCOUNT( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_WINGCOUNT( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_FAIRYWATERCOUNT( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_HASRAINBOWDROP( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_HASSILVERHARP( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_HASFAIRYFLUTE( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_HASGWAELYNSLOVE( x ) ? 1 : 0 ) )
+                                               ( PLAYER_GET_HERBCOUNT( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_GET_WINGCOUNT( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_GET_FAIRYWATERCOUNT( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_HAS_RAINBOWDROP( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_HAS_SILVERHARP( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_HAS_FAIRYFLUTE( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_HAS_GWAELYNSLOVE( x ) ? 1 : 0 ) )
 
 #define PLAYER_GET_MAPNONUSEABLEITEMCOUNT( x ) ( 0 + \
-                                               ( GET_ITEM_HASSTONEOFSUNLIGHT( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_HASSTAFFOFRAIN( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_HASTOKEN( x ) ? 1 : 0 ) + \
-                                               ( GET_ITEM_HASSPHEREOFLIGHT( x ) ? 1 : 0 ) )
+                                               ( PLAYER_GET_KEYCOUNT( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_HAS_STONEOFSUNLIGHT( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_HAS_STAFFOFRAIN( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_HAS_TOKEN( x ) ? 1 : 0 ) + \
+                                               ( PLAYER_HAS_SPHEREOFLIGHT( x ) ? 1 : 0 ) )
 
 #define PLAYER_SET_KEYCOUNT( x, c )            ( x ) = ( ( ( x ) & 0xFFFFFFF8 ) | ( ( c ) & 0x7 ) )
 #define PLAYER_SET_HERBCOUNT( x, c )           ( x ) = ( ( ( x ) & 0xFFFFFFC7 ) | ( (uint32_t)( c ) & 0x7 ) << 3 )
