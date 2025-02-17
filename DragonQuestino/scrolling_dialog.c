@@ -193,9 +193,9 @@ internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog )
 internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog )
 {
    dialog->position.x = 32;
-   dialog->position.y = 128;
+   dialog->position.y = 152;
    dialog->size.x = 24;
-   dialog->size.y = 10;
+   dialog->size.y = 7;
    dialog->lineWidth = 22;
 
    ScrollingDialog_LoadMessage( dialog );
@@ -211,6 +211,13 @@ internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog
       case DialogMessageId_Spell_None: dialog->sectionCount = 1; break;
       case DialogMessageId_Item_None: dialog->sectionCount = 1; break;
       case DialogMessageId_Door_None: dialog->sectionCount = 1; break;
+      case DialogMessageId_Use_Herb: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_Wing: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_FairyWater: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_SilverHarp: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_FairyFlute: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_GwaelynsLove: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_RainbowDrop: dialog->sectionCount = 1; break;
    }
 }
 
@@ -228,5 +235,46 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
       case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
       case DialogMessageId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
       case DialogMessageId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;
+      case DialogMessageId_Use_Herb:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s grinds up an herb and eats it.", dialog->playerName ); return;
+            case 1: strcpy( text, "But nothing happens." ); return;
+         }
+      case DialogMessageId_Use_Wing:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s throws a wing into the air!", dialog->playerName ); return;
+            case 1: strcpy( text, "But nothing happens." ); return;
+         }
+      case DialogMessageId_Use_FairyWater:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s drinks a vial of fairy water.", dialog->playerName ); return;
+            case 1: strcpy( text, "But nothing happens." ); return;
+         }
+      case DialogMessageId_Use_SilverHarp:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s plays the Silver Harp.", dialog->playerName ); return;
+            case 1: strcpy( text, "Beautiful music flows from its glistening strings." ); return;
+         }
+      case DialogMessageId_Use_FairyFlute:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s plays the Fairy Flute.", dialog->playerName ); return;
+            case 1: strcpy( text, "A mysterious melody fills the air." ); return;
+         }
+      case DialogMessageId_Use_GwaelynsLove:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s clutches Gwaelyn's love ever closer.", dialog->playerName ); return;
+            case 1: strcpy( text, "She's probably not gonna text back." ); return;
+         }
+      case DialogMessageId_Use_RainbowDrop:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, "The Rainbow Drop cannot be used here." ); return;
+         }
    }
 }

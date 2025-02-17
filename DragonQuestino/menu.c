@@ -209,7 +209,7 @@ internal void Menu_LoadOverworldItem( Game_t* game )
    {
       menu->items[curItem].twoLineText = False;
       sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_WING, PLAYER_GET_WINGCOUNT(items));
-      menu->items[curItem].command = MenuCommand_OverworldItem_Herb;
+      menu->items[curItem].command = MenuCommand_OverworldItem_Wing;
       curItem++;
    }
    if ( PLAYER_GET_FAIRYWATERCOUNT( items ) )

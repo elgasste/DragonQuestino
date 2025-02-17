@@ -12,6 +12,13 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game );
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game );
 internal void Game_HandleMenuInput( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
+internal void Game_UseHerb( Game_t* game );
+internal void Game_UseWing( Game_t* game );
+internal void Game_UseFairyWater( Game_t* game );
+internal void Game_UseSilverHarp( Game_t* game );
+internal void Game_UseFairyFlute( Game_t* game );
+internal void Game_UseGwaelynsLove( Game_t* game );
+internal void Game_UseRainbowDrop( Game_t* game );
 internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawStaticSprites( Game_t* game );
@@ -298,6 +305,28 @@ internal void Game_HandleMenuInput( Game_t* game )
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
             break;
+
+         case MenuCommand_OverworldItem_Herb:
+            Game_UseHerb( game );
+            break;
+         case MenuCommand_OverworldItem_Wing:
+            Game_UseWing( game );
+            break;
+         case MenuCommand_OverworldItem_FairyWater:
+            Game_UseFairyWater( game );
+            break;
+         case MenuCommand_OverworldItem_SilverHarp:
+            Game_UseSilverHarp( game );
+            break;
+         case MenuCommand_OverworldItem_FairyFlute:
+            Game_UseFairyFlute( game );
+            break;
+         case MenuCommand_OverworldItem_GwaelynsLove:
+            Game_UseGwaelynsLove( game );
+            break;
+         case MenuCommand_OverworldItem_RainbowDrop:
+            Game_UseRainbowDrop( game );
+            break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
@@ -346,6 +375,48 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
          Game_DrawNonUseableItems( game );
       }
    }
+}
+
+internal void Game_UseHerb( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Herb );
+}
+
+internal void Game_UseWing( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Wing );
+}
+
+internal void Game_UseFairyWater( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWater );
+}
+
+internal void Game_UseSilverHarp( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_SilverHarp );
+}
+
+internal void Game_UseFairyFlute( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_FairyFlute );
+}
+
+internal void Game_UseGwaelynsLove( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_GwaelynsLove );
+}
+
+internal void Game_UseRainbowDrop( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_RainbowDrop );
 }
 
 internal void Game_Draw( Game_t* game )

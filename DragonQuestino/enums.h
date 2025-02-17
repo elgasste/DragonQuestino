@@ -93,6 +93,14 @@ typedef enum DialogMessageId_t
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
 
+   DialogMessageId_Use_Herb,
+   DialogMessageId_Use_Wing,
+   DialogMessageId_Use_FairyWater,
+   DialogMessageId_Use_SilverHarp,
+   DialogMessageId_Use_FairyFlute,
+   DialogMessageId_Use_GwaelynsLove,
+   DialogMessageId_Use_RainbowDrop,
+
    DialogMessageId_Count
 }
 DialogMessageId_t;
