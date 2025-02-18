@@ -22,7 +22,6 @@ internal void Game_UseGwaelynsLove( Game_t* game );
 internal void Game_UseRainbowDrop( Game_t* game );
 internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
-internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawOverworldQuickStatus( Game_t* game );
 internal void Game_DrawOverworldDeepStatus( Game_t* game );
@@ -31,7 +30,7 @@ internal void Game_DrawNonUseableItems( Game_t* game );
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
    Screen_Init( &( game->screen ), screenBuffer );
-   TileMap_Init( &( game->tileMap ) );
+   TileMap_Init( &( game->tileMap ), &( game->screen ) );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 0 );
    Sprite_LoadPlayer( &( game->player.sprite ) );
@@ -128,7 +127,6 @@ internal void Game_TicOverworld( Game_t* game )
 
 internal void Game_TicPhysics( Game_t* game )
 {
-   // MUFFINS
    Vector2f_t newPos;
    uint32_t tileRowStartIndex, tileRowEndIndex, tileColStartIndex, tileColEndIndex, row, col, tile, tileIndex;
    Player_t* player = &( game->player );
@@ -572,41 +570,12 @@ internal void Game_Draw( Game_t* game )
 
 internal void Game_DrawOverworld( Game_t* game )
 {
-   TileMap_Draw( &( game->tileMap ), &( game->screen ) );
-   Game_DrawStaticSprites( game );
+   TileMap_Draw( &( game->tileMap ) );
    Game_DrawPlayer( game );
 
    if ( game->state == GameState_Overworld && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
    {
       Game_DrawOverworldQuickStatus( game );
-   }
-}
-
-internal void Game_DrawStaticSprites( Game_t* game )
-{
-   uint32_t i, tx, ty, tw, th, sxu, syu;
-   int32_t sx, sy;
-   StaticSprite_t* sprite;
-   Vector4i32_t* viewport = &( game->tileMap.viewport );
-
-   for ( i = 0; i < game->tileMap.staticSpriteCount; i++ )
-   {
-      sprite = &( game->tileMap.staticSprites[i] );
-      sx = sprite->position.x - viewport->x;
-      sy = sprite->position.y - viewport->y;
-
-      if ( Math_RectsIntersect32i( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
-                                   viewport->x, viewport->y, viewport->w, viewport->h ) )
-      {
-         tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
-         ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
-         tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > TILEMAP_VIEWPORT_WIDTH ) ? ( TILEMAP_VIEWPORT_WIDTH - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
-         th = ( ( sy + SPRITE_TEXTURE_SIZE ) > TILEMAP_VIEWPORT_HEIGHT ) ? ( TILEMAP_VIEWPORT_HEIGHT - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
-         sxu = ( sx < 0 ) ? 0 : sx;
-         syu = ( sy < 0 ) ? 0 : sy;
-
-         Screen_DrawMemorySection( &( game->screen ), sprite->texture.memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
-      }
    }
 }
 
