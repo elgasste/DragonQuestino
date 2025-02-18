@@ -1,48 +1,63 @@
 #include "game.h"
-#include "physics.h"
 #include "math.h"
 
 #define DIAGONAL_SCALAR    0.707f
 
 internal void Game_HandleInput( Game_t* game );
 internal void Game_TicOverworld( Game_t* game );
+internal void Game_TicOverworldWashing( Game_t* game );
+internal void Game_TicPhysics( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
-internal void Game_HandleOverworldPlayerStatusInput( Game_t* game );
+internal void Game_HandleOverworldWaitingInput( Game_t* game );
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game );
 internal void Game_HandleMenuInput( Game_t* game );
+internal void Game_UpdatePlayerTileIndex( Game_t* game );
+internal void Game_OpenOverworldItemMenu( Game_t* game );
+internal void Game_UseHerb( Game_t* game );
+internal void Game_UseWing( Game_t* game );
+internal void Game_UseFairyWater( Game_t* game );
+internal void Game_UseSilverHarp( Game_t* game );
+internal void Game_UseFairyFlute( Game_t* game );
+internal void Game_UseGwaelynsLove( Game_t* game );
+internal void Game_UseRainbowDrop( Game_t* game );
 internal void Game_Draw( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
-internal void Game_DrawStaticSprites( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawOverworldQuickStatus( Game_t* game );
 internal void Game_DrawOverworldDeepStatus( Game_t* game );
+internal void Game_DrawNonUseableItems( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
    Screen_Init( &( game->screen ), screenBuffer );
-   TileMap_Init( &( game->tileMap ) );
+   TileMap_Init( &( game->tileMap ), &( game->screen ) );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 0 );
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
-   ScrollingDialog_Init( &( game->scrollingDialog ), game->player.name );
-
-   game->overworldInactivitySeconds = 0.0f;
+   Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
+   ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
    game->state = GameState_Overworld;
    game->swapPortal = 0;
+   game->overworldInactivitySeconds = 0.0f;
 }
 
 void Game_ChangeState( Game_t* game, GameState_t newState )
 {
    game->state = newState;
 
-   if ( newState == GameState_Overworld )
+   switch ( newState )
    {
-      game->overworldInactivitySeconds = 0.0f;
+      case GameState_Overworld:
+         game->overworldInactivitySeconds = 0.0f;
+         break;
+      case GameState_Overworld_Washing:
+         game->overworldWashSeconds = 0.0f;
+         break;
    }
 }
 
@@ -56,10 +71,14 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld:
          Game_TicOverworld( game );
          break;
+      case GameState_Overworld_Washing:
+         Game_TicOverworldWashing( game );
+         break;
       case GameState_Overworld_ScrollingDialog:
          ScrollingDialog_Tic( &( game->scrollingDialog ) );
          break;
       case GameState_Overworld_MainMenu:
+      case GameState_Overworld_ItemMenu:
          Menu_Tic( &( game->menu ) );
          break;
       case GameState_TileMapTransition:
@@ -93,11 +112,12 @@ internal void Game_HandleInput( Game_t* game )
       case GameState_Overworld:
          Game_HandleOverworldInput( game );
          break;
-      case GameState_Overworld_MainMenu:
-         Game_HandleMenuInput( game );
+      case GameState_Overworld_Waiting:
+         Game_HandleOverworldWaitingInput( game );
          break;
-      case GameState_Overworld_PlayerStatus:
-         Game_HandleOverworldPlayerStatusInput( game );
+      case GameState_Overworld_MainMenu:
+      case GameState_Overworld_ItemMenu:
+         Game_HandleMenuInput( game );
          break;
       case GameState_Overworld_ScrollingDialog:
          Game_HandleOverworldScrollingDialogInput( game );
@@ -107,11 +127,152 @@ internal void Game_HandleInput( Game_t* game )
 
 internal void Game_TicOverworld( Game_t* game )
 {
-   Physics_Tic( game );
+   Game_TicPhysics( game );
    Sprite_Tic( &( game->player.sprite ) );
    TileMap_UpdateViewport( &( game->tileMap ),
                            (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
                            game->player.hitBoxSize.x, game->player.hitBoxSize.y );
+}
+
+internal void Game_TicOverworldWashing( Game_t* game )
+{
+   game->overworldWashSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( game->overworldWashSeconds > OVERWORLD_WASH_TOTAL_SECONDS )
+   {
+      Game_ChangeState( game, GameState_Overworld );
+   }
+}
+
+internal void Game_TicPhysics( Game_t* game )
+{
+   Vector2f_t newPos;
+   uint32_t tileRowStartIndex, tileRowEndIndex, tileColStartIndex, tileColEndIndex, row, col, tile, tileIndex;
+   Player_t* player = &( game->player );
+
+   if ( player->velocity.x == 0.0f && player->velocity.y == 0.0f )
+   {
+      return;
+   }
+
+   newPos.x = player->sprite.position.x + ( player->velocity.x * CLOCK_FRAME_SECONDS );
+   newPos.y = player->sprite.position.y + ( player->velocity.y * CLOCK_FRAME_SECONDS );
+
+   if ( newPos.x < 0 )
+   {
+      newPos.x = COLLISION_THETA;
+   }
+   else if ( ( newPos.x + player->hitBoxSize.x ) >= ( game->tileMap.tilesX * TILE_SIZE ) )
+   {
+      newPos.x = ( game->tileMap.tilesX * TILE_SIZE ) - player->hitBoxSize.x - COLLISION_THETA;
+   }
+
+   if ( newPos.y < 0 )
+   {
+      newPos.y = COLLISION_THETA;
+   }
+   else if ( ( newPos.y + player->hitBoxSize.y ) >= ( game->tileMap.tilesY * TILE_SIZE ) )
+   {
+      newPos.y = ( game->tileMap.tilesY * TILE_SIZE ) - player->hitBoxSize.y - COLLISION_THETA;
+   }
+
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.noClip == False ) {
+#endif
+
+      // clip to unpassable horizontal tiles
+      if ( newPos.x != player->sprite.position.x )
+      {
+         tileRowStartIndex = (uint32_t)( player->sprite.position.y / TILE_SIZE );
+         tileRowEndIndex = (uint32_t)( ( player->sprite.position.y + player->hitBoxSize.y ) / TILE_SIZE );
+
+         if ( newPos.x < player->sprite.position.x )
+         {
+            // moving left, check leftward tiles
+            col = (uint32_t)( newPos.x / TILE_SIZE );
+
+            for ( row = tileRowStartIndex; row <= tileRowEndIndex; row++ )
+            {
+               tileIndex = col + ( row * TILE_COUNT_X );
+               tile = game->tileMap.tiles[tileIndex];
+
+               if ( !GET_TILEPASSABLE( tile ) )
+               {
+                  newPos.x = (float)( ( ( col + 1 ) * TILE_SIZE ) );
+                  break;
+               }
+            }
+         }
+         else
+         {
+            // moving right, check rightward tiles
+            col = (uint32_t )( ( newPos.x + player->hitBoxSize.x ) / TILE_SIZE );
+
+            for ( row = tileRowStartIndex; row <= tileRowEndIndex; row++ )
+            {
+               tileIndex = col + ( row * TILE_COUNT_X );
+               tile = game->tileMap.tiles[tileIndex];
+
+               if ( !GET_TILEPASSABLE( tile ) )
+               {
+                  newPos.x = ( col * TILE_SIZE ) - player->hitBoxSize.x - COLLISION_THETA;
+                  break;
+               }
+            }
+         }
+      }
+
+      // clip to unpassable vertical tiles
+      if ( newPos.y != player->sprite.position.y )
+      {
+         tileColStartIndex = ( uint32_t )( player->sprite.position.x / TILE_SIZE );
+         tileColEndIndex = (uint32_t)( ( player->sprite.position.x + player->hitBoxSize.x ) / TILE_SIZE );
+
+         if ( newPos.y < player->sprite.position.y )
+         {
+            // moving up, check upward tiles
+            row = (uint32_t)( newPos.y / TILE_SIZE );
+
+            for ( col = tileColStartIndex; col <= tileColEndIndex; col++ )
+            {
+               tileIndex = col + ( row * TILE_COUNT_X );
+               tile = game->tileMap.tiles[tileIndex];
+
+               if ( !GET_TILEPASSABLE( tile ) )
+               {
+                  newPos.y = (float)( ( ( row + 1 ) * TILE_SIZE ) );
+                  break;
+               }
+            }
+         }
+         else
+         {
+            // moving down, check downward tiles
+            row = (uint32_t)( ( newPos.y + player->hitBoxSize.y ) / TILE_SIZE );
+
+            for ( col = tileColStartIndex; col <= tileColEndIndex; col++ )
+            {
+               tileIndex = col + ( row * TILE_COUNT_X );
+               tile = game->tileMap.tiles[tileIndex];
+
+               if ( !GET_TILEPASSABLE( tile ) )
+               {
+                  newPos.y = ( row * TILE_SIZE ) - player->hitBoxSize.y - COLLISION_THETA;
+                  break;
+               }
+            }
+         }
+      }
+
+#if defined( VISUAL_STUDIO_DEV )
+   }
+#endif
+
+   player->sprite.position = newPos;
+   player->velocity.x = 0;
+   player->velocity.y = 0;
+
+   Game_UpdatePlayerTileIndex( game );
 }
 
 internal void Game_TicTileMapTransition( Game_t* game )
@@ -161,9 +322,9 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
-      game->overworldInactivitySeconds = 0.0f;
-      Menu_Load( &( game->menu ), MenuId_Overworld );
+      Menu_Load( &( game->menu ), MenuId_Overworld);
       Game_ChangeState( game, GameState_Overworld_MainMenu );
+      Game_DrawOverworldQuickStatus( game );
    }
    else if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
    {
@@ -231,32 +392,32 @@ internal void Game_HandleOverworldInput( Game_t* game )
          }
       }
    }
-   else if ( !game->input.buttonStates[Button_A].down && !game->input.buttonStates[Button_B].down )
+   else
    {
       game->overworldInactivitySeconds += CLOCK_FRAME_SECONDS;
    }
 }
 
-internal void Game_HandleOverworldPlayerStatusInput( Game_t* game )
+internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
-   if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
+   if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Game_ChangeState( game, GameState_Overworld );
+      Game_ChangeState( game, GameState_Overworld_Washing );
    }
 }
 
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
 {
-   if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
+   if ( ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
    {
-      if ( !ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
+      if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         ScrollingDialog_Next( &( game->scrollingDialog ) );
+         Game_ChangeState( game, GameState_Overworld_Washing );
       }
-      else
-      {
-         Game_ChangeState( game, GameState_Overworld );
-      }
+   }
+   else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
+   {
+      ScrollingDialog_Next( &( game->scrollingDialog ) );
    }
 }
 
@@ -270,29 +431,37 @@ internal void Game_HandleMenuInput( Game_t* game )
 
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
-         case MenuCommand_Overworld_Talk:
+         case MenuCommand_OverworldMain_Talk:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere );
             break;
-         case MenuCommand_Overworld_Status:
-            Game_ChangeState( game, GameState_Overworld_PlayerStatus );
+         case MenuCommand_OverworldMain_Status:
+            Game_DrawOverworldDeepStatus( game );
+            Game_ChangeState( game, GameState_Overworld_Waiting );
             break;
-         case MenuCommand_Overworld_Search:
+         case MenuCommand_OverworldMain_Search:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
             break;
-         case MenuCommand_Overworld_Spell:
+         case MenuCommand_OverworldMain_Spell:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
             break;
-         case MenuCommand_Overworld_Item:
-            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Item_None );
+         case MenuCommand_OverworldMain_Item:
+            Game_OpenOverworldItemMenu( game );
             break;
-         case MenuCommand_Overworld_Door:
+         case MenuCommand_OverworldMain_Door:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
             break;
+
+         case MenuCommand_OverworldItem_Herb: Game_UseHerb( game ); break;
+         case MenuCommand_OverworldItem_Wing: Game_UseWing( game ); break;
+         case MenuCommand_OverworldItem_FairyWater: Game_UseFairyWater( game ); break;
+         case MenuCommand_OverworldItem_SilverHarp: Game_UseSilverHarp( game ); break;
+         case MenuCommand_OverworldItem_FairyFlute: Game_UseFairyFlute( game ); break;
+         case MenuCommand_OverworldItem_GwaelynsLove: Game_UseGwaelynsLove( game ); break;
+         case MenuCommand_OverworldItem_RainbowDrop: Game_UseRainbowDrop( game ); break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
@@ -300,6 +469,7 @@ internal void Game_HandleMenuInput( Game_t* game )
       switch ( game->state )
       {
          case GameState_Overworld_MainMenu:
+         case GameState_Overworld_ItemMenu:
             Game_ChangeState( game, GameState_Overworld );
             break;
       }
@@ -316,29 +486,101 @@ internal void Game_HandleMenuInput( Game_t* game )
    }
 }
 
+internal void Game_OpenOverworldItemMenu( Game_t* game )
+{
+   uint32_t useableCount = PLAYER_GET_MAPUSEABLEITEMCOUNT( game->player.items );
+   uint32_t nonUseableCount = PLAYER_GET_MAPNONUSEABLEITEMCOUNT( game->player.items );
+
+   if ( useableCount == 0 && nonUseableCount == 0 )
+   {
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Item_None );
+   }
+   else
+   {
+      Game_ChangeState( game, ( useableCount > 0 ) ? GameState_Overworld_ItemMenu : GameState_Overworld_Waiting );
+
+      if ( useableCount > 0 )
+      {
+         Menu_Load( &( game->menu ), MenuId_OverworldItem );
+      }
+
+      if ( nonUseableCount > 0 )
+      {
+         Game_DrawNonUseableItems( game );
+      }
+   }
+}
+
+internal void Game_UpdatePlayerTileIndex( Game_t* game )
+{
+   uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.hitBoxSize.x / 2 ) );
+   uint32_t centerY = (uint32_t)( game->player.sprite.position.y + ( game->player.hitBoxSize.y / 2 ) );
+   uint32_t newTileIndex = ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
+
+   if ( newTileIndex != game->player.tileIndex )
+   {
+      game->player.tileIndex = newTileIndex;
+      Game_PlayerSteppedOnTile( game, newTileIndex );
+   }
+}
+
+internal void Game_UseHerb( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Herb );
+}
+
+internal void Game_UseWing( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Wing );
+}
+
+internal void Game_UseFairyWater( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWater );
+}
+
+internal void Game_UseSilverHarp( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_SilverHarp );
+}
+
+internal void Game_UseFairyFlute( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_FairyFlute );
+}
+
+internal void Game_UseGwaelynsLove( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_GwaelynsLove );
+}
+
+internal void Game_UseRainbowDrop( Game_t* game )
+{
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_RainbowDrop );
+}
+
 internal void Game_Draw( Game_t* game )
 {
    switch ( game->state )
    {
       case GameState_Overworld:
+      case GameState_Overworld_Washing:
          Game_DrawOverworld( game );
          break;
       case GameState_Overworld_MainMenu:
-         Game_DrawOverworld( game );
-         Game_DrawOverworldQuickStatus( game );
-         Menu_Draw( &( game->menu ), &( game->screen ) );
-         break;
-      case GameState_Overworld_PlayerStatus:
-         Game_DrawOverworld( game );
-         Game_DrawOverworldQuickStatus( game );
-         Menu_Draw( &( game->menu ), &( game->screen ) );
-         Game_DrawOverworldDeepStatus( game );
+      case GameState_Overworld_ItemMenu:
+         Menu_Draw( &( game->menu ) );
          break;
       case GameState_Overworld_ScrollingDialog:
-         Game_DrawOverworld( game );
-         Game_DrawOverworldQuickStatus( game );
-         Menu_Draw( &( game->menu ), &( game->screen ) );
-         ScrollingDialog_Draw( &( game->scrollingDialog ), &( game->screen ) );
+         ScrollingDialog_Draw( &( game->scrollingDialog ) );
          break;
       case GameState_TileMapTransition:
          Screen_WipeColor( &( game->screen ), COLOR_BLACK );
@@ -348,41 +590,12 @@ internal void Game_Draw( Game_t* game )
 
 internal void Game_DrawOverworld( Game_t* game )
 {
-   TileMap_Draw( &( game->tileMap ), &( game->screen ) );
-   Game_DrawStaticSprites( game );
+   TileMap_Draw( &( game->tileMap ) );
    Game_DrawPlayer( game );
 
-   if ( game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
+   if ( game->state == GameState_Overworld && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
    {
       Game_DrawOverworldQuickStatus( game );
-   }
-}
-
-internal void Game_DrawStaticSprites( Game_t* game )
-{
-   uint32_t i, tx, ty, tw, th, sxu, syu;
-   int32_t sx, sy;
-   StaticSprite_t* sprite;
-   Vector4i32_t* viewport = &( game->tileMap.viewport );
-
-   for ( i = 0; i < game->tileMap.staticSpriteCount; i++ )
-   {
-      sprite = &( game->tileMap.staticSprites[i] );
-      sx = sprite->position.x - viewport->x;
-      sy = sprite->position.y - viewport->y;
-
-      if ( Math_RectsIntersect32i( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
-                                   viewport->x, viewport->y, viewport->w, viewport->h ) )
-      {
-         tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
-         ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
-         tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > TILEMAP_VIEWPORT_WIDTH ) ? ( TILEMAP_VIEWPORT_WIDTH - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
-         th = ( ( sy + SPRITE_TEXTURE_SIZE ) > TILEMAP_VIEWPORT_HEIGHT ) ? ( TILEMAP_VIEWPORT_HEIGHT - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
-         sxu = ( sx < 0 ) ? 0 : sx;
-         syu = ( sy < 0 ) ? 0 : sy;
-
-         Screen_DrawMemorySection( &( game->screen ), sprite->texture.memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
-      }
    }
 }
 
@@ -465,4 +678,57 @@ internal void Game_DrawOverworldDeepStatus( Game_t* game )
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_SHIELD, STRING_OVERWORLD_DEEPSTATS_NONE );
    Screen_DrawText( &( game->screen ), line, 96, 184, COLOR_WHITE );
+}
+
+internal void Game_DrawNonUseableItems( Game_t* game )
+{
+   uint32_t x, y;
+   Player_t* player = &( game->player );
+   uint32_t items = player->items;
+   uint32_t itemCount = PLAYER_GET_MAPNONUSEABLEITEMCOUNT( items );
+   char line[MENU_LINE_LENGTH];
+
+   if ( game->state == GameState_Overworld_ItemMenu )
+   {
+      Screen_DrawTextWindow( &( game->screen ), 16, 120, 11, ( itemCount * 2 ) + 2, COLOR_WHITE );
+      x = 24;
+      y = 128;
+   }
+   else
+   {
+      Screen_DrawTextWindowWithTitle( &( game->screen ), 152, 48, 11, ( itemCount * 2 ) + 3, STRING_OVERWORLD_MENU_ITEM, COLOR_WHITE );
+      x = 160;
+      y = 64;
+   }
+
+   if ( PLAYER_GET_KEYCOUNT( items ) )
+   {
+      sprintf( line, STRING_OVERWORLD_ITEMMENU_KEY, PLAYER_GET_KEYCOUNT( items ) );
+      Screen_DrawText( &( game->screen ), line, x, y, COLOR_WHITE );
+      y += ( TEXT_TILE_SIZE * 2 );
+   }
+   if ( PLAYER_HAS_TOKEN( items ) )
+   {
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_TOKEN_1, x, y, COLOR_WHITE );
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_TOKEN_2, x, y + 8, COLOR_WHITE );
+      y += ( TEXT_TILE_SIZE * 2 );
+   }
+   if ( PLAYER_HAS_STONEOFSUNLIGHT( items ) )
+   {
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_STONEOFSUNLIGHT_1, x, y, COLOR_WHITE );
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_STONEOFSUNLIGHT_2, x, y + TEXT_TILE_SIZE, COLOR_WHITE );
+      y += ( TEXT_TILE_SIZE * 2 );
+   }
+   if ( PLAYER_HAS_STAFFOFRAIN( items ) )
+   {
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_STAFFOFRAIN_1, x, y, COLOR_WHITE );
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_STAFFOFRAIN_2, x, y + TEXT_TILE_SIZE, COLOR_WHITE );
+      y += ( TEXT_TILE_SIZE * 2 );
+   }
+   if ( PLAYER_HAS_SPHEREOFLIGHT( items ) )
+   {
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_1, x, y, COLOR_WHITE );
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_2, x, y + TEXT_TILE_SIZE, COLOR_WHITE );
+      y += ( TEXT_TILE_SIZE * 2 );
+   }
 }

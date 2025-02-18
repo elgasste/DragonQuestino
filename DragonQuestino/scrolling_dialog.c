@@ -1,5 +1,6 @@
 #include "scrolling_dialog.h"
 #include "screen.h"
+#include "player.h"
 #include "clock.h"
 
 internal void ScrollingDialog_ResetScroll( ScrollingDialog_t* dialog );
@@ -8,9 +9,10 @@ internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog );
 internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog );
 internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* text );
 
-void ScrollingDialog_Init( ScrollingDialog_t* dialog, const char* playerName )
+void ScrollingDialog_Init( ScrollingDialog_t* dialog, Screen_t* screen, Player_t* player )
 {
-   strcpy( dialog->playerName, playerName );
+   dialog->screen = screen;
+   dialog->player = player;
 }
 
 void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId )
@@ -27,12 +29,12 @@ void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type
    }
 }
 
-void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
+void ScrollingDialog_Draw( ScrollingDialog_t* dialog )
 {
    uint32_t i, x, y, stopCharIndex, len;
    char substr[DIALOG_MAX_LINE_CHARS];
 
-   Screen_DrawTextWindow( screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y, COLOR_WHITE );
+   Screen_DrawTextWindow( dialog->screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y, COLOR_WHITE );
 
    x = dialog->position.x + TEXT_TILE_SIZE;
    y = dialog->position.y + TEXT_TILE_SIZE;
@@ -47,14 +49,14 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
 
          if ( len < stopCharIndex )
          {
-            Screen_DrawText( screen, dialog->lines[i], x, y, COLOR_WHITE );
+            Screen_DrawText( dialog->screen, dialog->lines[i], x, y, COLOR_WHITE );
             stopCharIndex -= len;
          }
          else
          {
             strcpy( substr, dialog->lines[i] );
             substr[stopCharIndex] = '\0';
-            Screen_DrawText( screen, substr, x, y, COLOR_WHITE );
+            Screen_DrawText( dialog->screen, substr, x, y, COLOR_WHITE );
             break;
          }
       }
@@ -63,12 +65,12 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen )
    {
       for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
       {
-         Screen_DrawText( screen, dialog->lines[i], x, y, COLOR_WHITE );
+         Screen_DrawText( dialog->screen, dialog->lines[i], x, y, COLOR_WHITE );
       }
 
       if ( dialog->showCarat && !ScrollingDialog_IsDone( dialog ) )
       {
-         Screen_DrawChar( screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y, COLOR_WHITE );
+         Screen_DrawChar( dialog->screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y, COLOR_WHITE );
       }
    }
 }
@@ -193,9 +195,9 @@ internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog )
 internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog )
 {
    dialog->position.x = 32;
-   dialog->position.y = 128;
+   dialog->position.y = 152;
    dialog->size.x = 24;
-   dialog->size.y = 10;
+   dialog->size.y = 7;
    dialog->lineWidth = 22;
 
    ScrollingDialog_LoadMessage( dialog );
@@ -211,22 +213,72 @@ internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog
       case DialogMessageId_Spell_None: dialog->sectionCount = 1; break;
       case DialogMessageId_Item_None: dialog->sectionCount = 1; break;
       case DialogMessageId_Door_None: dialog->sectionCount = 1; break;
+      case DialogMessageId_Use_Herb: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_Wing: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_FairyWater: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_SilverHarp: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_FairyFlute: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_GwaelynsLove: dialog->sectionCount = 2; break;
+      case DialogMessageId_Use_RainbowDrop: dialog->sectionCount = 1; break;
    }
 }
 
 internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* text )
 {
+   Player_t* player = dialog->player;
+
    switch ( dialog->messageId )
    {
       case DialogMessageId_Talk_NobodyThere: strcpy( text, STRING_OVERWORLD_DIALOG_NOBODY_THERE ); return;
       case DialogMessageId_Search_NothingFound:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH, dialog->playerName ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH, player->name ); return;
             case 1: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND ); return;
          }
       case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
       case DialogMessageId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
       case DialogMessageId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;
+      case DialogMessageId_Use_Herb:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s grinds up an herb and eats it.", player->name ); return;
+            case 1: strcpy( text, "But nothing happens." ); return;
+         }
+      case DialogMessageId_Use_Wing:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s throws a wing into the air!", player->name ); return;
+            case 1: strcpy( text, "But nothing happens." ); return;
+         }
+      case DialogMessageId_Use_FairyWater:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s drinks a vial of fairy water.", player->name ); return;
+            case 1: strcpy( text, "But nothing happens." ); return;
+         }
+      case DialogMessageId_Use_SilverHarp:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s plays the Silver Harp.", player->name ); return;
+            case 1: strcpy( text, "Beautiful music flows from its glistening strings." ); return;
+         }
+      case DialogMessageId_Use_FairyFlute:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s plays the Fairy Flute.", player->name ); return;
+            case 1: strcpy( text, "A mysterious melody fills the air." ); return;
+         }
+      case DialogMessageId_Use_GwaelynsLove:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, "%s clutches Gwaelyn's love ever closer.", player->name ); return;
+            case 1: strcpy( text, "She's probably not gonna text back." ); return;
+         }
+      case DialogMessageId_Use_RainbowDrop:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, "The Rainbow Drop cannot be used here." ); return;
+         }
    }
 }

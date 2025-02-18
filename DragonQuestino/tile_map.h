@@ -3,7 +3,6 @@
 
 #include "common.h"
 #include "sprite.h"
-#include "screen.h"
 
 #define TILE_SIZE                      16
 #define TILE_TEXTURE_BYTES             256   // 8 bpp
@@ -55,6 +54,8 @@ TilePortal_t;
 
 typedef struct TileMap_t
 {
+   Screen_t* screen;
+
    // bits 1-5: texture index (max 32 textures)
    // bit 6: is-passable flag
    // bits 7-8: walk speed (0 = normal, 3 = crawl)
@@ -84,11 +85,11 @@ TileMap_t;
 extern "C" {
 #endif
 
-void TileMap_Init( TileMap_t* tileMap );
+void TileMap_Init( TileMap_t* tileMap, Screen_t* screen );
 void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
-void TileMap_Draw( TileMap_t* tileMap, Screen_t* screen );
+void TileMap_Draw( TileMap_t* tileMap );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );

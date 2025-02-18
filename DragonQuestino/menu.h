@@ -5,20 +5,26 @@
 #include "vector.h"
 
 #define MENU_MAX_ITEMS              16
-#define MENU_TEXT_LENGTH            32
+#define MENU_LINE_LENGTH            16
+#define MENU_TEXT_SIZE              32 // account for 2 lines
 
 typedef struct Screen_t Screen_t;
+typedef struct Player_t Player_t;
 
 typedef struct MenuItem_t
 {
-   char text[MENU_TEXT_LENGTH];
+   char text[MENU_TEXT_SIZE];
+   Bool_t twoLineText;
    MenuCommand_t command;
 }
 MenuItem_t;
 
 typedef struct Menu_t
 {
-   char title[MENU_TEXT_LENGTH];
+   Screen_t* screen;
+   Player_t* player;
+
+   char title[MENU_LINE_LENGTH];
    MenuItem_t items[MENU_MAX_ITEMS];
    uint32_t itemCount;
    uint32_t itemsPerColumn;
@@ -31,6 +37,7 @@ typedef struct Menu_t
    uint32_t itemPadding;         // individual menu item top padding, in characters
    uint32_t caratOffset;         // how far to the left to draw the carat, in characters
 
+   Bool_t hasDrawn;
    Bool_t showCarat;
    float blinkSeconds;
 }
@@ -40,8 +47,9 @@ Menu_t;
 extern "C" {
 #endif
 
+void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player );
 void Menu_Load( Menu_t* menu, MenuId_t id );
-void Menu_Draw( Menu_t* menu, Screen_t* screen );
+void Menu_Draw( Menu_t* menu );
 void Menu_ResetCarat( Menu_t* menu );
 void Menu_MoveSelection( Menu_t* menu, Direction_t direction );
 void Menu_Tic( Menu_t* menu );

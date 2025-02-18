@@ -3,6 +3,8 @@
 
 #define TILEMAP_SWAP_SECONDS                 0.4f
 #define OVERWORLD_INACTIVE_STATUS_SECONDS    1.0f
+#define OVERWORLD_WASH_TOTAL_SECONDS         0.2f
+#define COLLISION_THETA                      0.001f
 
 #include "common.h"
 #include "screen.h"
@@ -25,6 +27,7 @@ typedef struct Game_t
    ScrollingDialog_t scrollingDialog;
 
    float overworldInactivitySeconds;
+   float overworldWashSeconds;
 
    TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;

@@ -1,5 +1,6 @@
 #include "player.h"
 #include "tile_map.h"
+#include "math.h"
 
 void Player_Init( Player_t* player )
 {
@@ -28,6 +29,21 @@ void Player_Init( Player_t* player )
 
    player->experience = 0;
    player->gold = 0;
+   player->items = 0;
+
+   // uncomment for testing
+   //PLAYER_SET_KEYCOUNT( player->items, 2 );
+   //PLAYER_SET_HASSTONEOFSUNLIGHT( player->items, True );
+   //PLAYER_SET_HASSTAFFOFRAIN( player->items, True );
+   //PLAYER_SET_HASTOKEN( player->items, True );
+   //PLAYER_SET_HASSPHEREOFLIGHT( player->items, True );
+   //PLAYER_SET_HERBCOUNT( player->items, 7 );
+   //PLAYER_SET_WINGCOUNT( player->items, 1 );
+   //PLAYER_SET_FAIRYWATERCOUNT( player->items, 4 );
+   //PLAYER_SET_HASSILVERHARP( player->items, True );
+   //PLAYER_SET_HASFAIRYFLUTE( player->items, True );
+   //PLAYER_SET_HASGWAELYNSLOVE( player->items, True );
+   //PLAYER_SET_HASRAINBOWDROP( player->items, True );
 }
 
 uint8_t Player_GetLevel( Player_t* player )
@@ -60,6 +76,72 @@ uint8_t Player_GetLevel( Player_t* player )
    else if ( player->experience < 54000 ) { return 26; }
    else if ( player->experience < 58000 ) { return 27; }
    else if ( player->experience < 62000 ) { return 28; }
-   else if ( player->experience < 65535 ) { return 29; }
+   else if ( player->experience < UINT16_MAX ) { return 29; }
    else { return 30; }
+}
+
+uint16_t Player_CollectGold( Player_t* player, uint16_t gold )
+{
+   return Math_CollectAmount16u( &( player->gold ), gold );
+}
+
+uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
+{
+   return Math_CollectAmount16u( &( player->experience ), experience );
+}
+
+Bool_t Player_CollectItem( Player_t* player, Item_t item )
+{
+   Bool_t collected = False;
+   int8_t count;
+
+   switch ( item )
+   {
+      case Item_Key:
+         count = PLAYER_GET_KEYCOUNT( player->items );
+         if ( count < PLAYER_MAXKEYS )
+         {
+            count++;
+            PLAYER_SET_KEYCOUNT( player->items, count );
+            collected = True;
+         }
+         break;
+      case Item_Herb:
+         count = PLAYER_GET_HERBCOUNT( player->items );
+         if ( count < PLAYER_MAXHERBS )
+         {
+            count++;
+            PLAYER_SET_HERBCOUNT( player->items, count );
+            collected = True;
+         }
+         break;
+      case Item_Wing:
+         count = PLAYER_GET_WINGCOUNT( player->items );
+         if ( count < PLAYER_MAXWINGS )
+         {
+            count++;
+            PLAYER_SET_WINGCOUNT( player->items, count );
+            collected = True;
+         }
+         break;
+      case Item_FairyWater:
+         count = PLAYER_GET_FAIRYWATERCOUNT( player->items );
+         if ( count < PLAYER_MAXFAIRYWATERS )
+         {
+            count++;
+            PLAYER_SET_FAIRYWATERCOUNT( player->items, count );
+            collected = True;
+         }
+         break;
+      default:
+         if ( item < Item_Count )
+         {
+            // single items start at 4 (Item_Tablet), and shifting starts at 12, hence "item + 8"
+            player->items |= ( ( uint32_t )( True ) << ( ( uint32_t )( item ) + 8 ) );
+            collected = True;
+         }
+         break;
+   }
+
+   return collected;
 }

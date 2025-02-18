@@ -10,9 +10,13 @@
 #define DIALOG_SCROLL_CHAR_SECONDS     0.015f
 
 typedef struct Screen_t Screen_t;
+typedef struct Player_t Player_t;
 
 typedef struct ScrollingDialog_t
 {
+   Screen_t* screen;
+   Player_t* player;
+
    DialogMessageId_t messageId;
    Vector2u16_t position;  // in pixels
    Vector2u16_t size;      // in characters
@@ -30,8 +34,6 @@ typedef struct ScrollingDialog_t
 
    Bool_t showCarat;
    float blinkSeconds;
-
-   char playerName[9];
 }
 ScrollingDialog_t;
 
@@ -39,9 +41,9 @@ ScrollingDialog_t;
 extern "C" {
 #endif
 
-void ScrollingDialog_Init( ScrollingDialog_t* dialog, const char* playerName );
+void ScrollingDialog_Init( ScrollingDialog_t* dialog, Screen_t* screen, Player_t* player );
 void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId );
-void ScrollingDialog_Draw( ScrollingDialog_t* dialog, Screen_t* screen );
+void ScrollingDialog_Draw( ScrollingDialog_t* dialog );
 void ScrollingDialog_Next( ScrollingDialog_t* dialog );
 void ScrollingDialog_Tic( ScrollingDialog_t* dialog );
 Bool_t ScrollingDialog_IsDone( ScrollingDialog_t* dialog );
