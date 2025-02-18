@@ -44,6 +44,12 @@ void Game_ChangeState( Game_t* game, GameState_t newState );
 void Game_Tic( Game_t* game );
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 
+// game_draw.c
+void Game_Draw( Game_t* game );
+void Game_DrawOverworldQuickStatus( Game_t* game );
+void Game_DrawOverworldDeepStatus( Game_t* game );
+void Game_DrawNonUseableItems( Game_t* game );
+
 // game_items.c
 void Game_UseHerb( Game_t* game );
 void Game_UseWing( Game_t* game );
