@@ -22,21 +22,6 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->overworldInactivitySeconds = 0.0f;
 }
 
-void Game_ChangeState( Game_t* game, GameState_t newState )
-{
-   game->state = newState;
-
-   switch ( newState )
-   {
-      case GameState_Overworld:
-         game->overworldInactivitySeconds = 0.0f;
-         break;
-      case GameState_Overworld_Washing:
-         game->overworldWashSeconds = 0.0f;
-         break;
-   }
-}
-
 void Game_Tic( Game_t* game )
 {
    Input_Read( &( game->input ) );
@@ -66,18 +51,18 @@ void Game_Tic( Game_t* game )
    Screen_RenderBuffer( &( game->screen ) );
 }
 
-void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
+void Game_ChangeState( Game_t* game, GameState_t newState )
 {
-   TilePortal_t* portal;
+   game->state = newState;
 
-   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
-   game->player.tileIndex = tileIndex;
-   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
-
-   if ( portal )
+   switch ( newState )
    {
-      game->swapPortal = portal;
-      Game_ChangeState( game, GameState_TileMapTransition );
+      case GameState_Overworld:
+         game->overworldInactivitySeconds = 0.0f;
+         break;
+      case GameState_Overworld_Washing:
+         game->overworldWashSeconds = 0.0f;
+         break;
    }
 }
 
