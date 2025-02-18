@@ -5,6 +5,7 @@
 
 internal void Game_HandleInput( Game_t* game );
 internal void Game_TicOverworld( Game_t* game );
+internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicPhysics( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
@@ -49,9 +50,14 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
 {
    game->state = newState;
 
-   if ( newState == GameState_Overworld )
+   switch ( newState )
    {
-      game->overworldInactivitySeconds = 0.0f;
+      case GameState_Overworld:
+         game->overworldInactivitySeconds = 0.0f;
+         break;
+      case GameState_Overworld_Washing:
+         game->overworldWashSeconds = 0.0f;
+         break;
    }
 }
 
@@ -64,6 +70,9 @@ void Game_Tic( Game_t* game )
    {
       case GameState_Overworld:
          Game_TicOverworld( game );
+         break;
+      case GameState_Overworld_Washing:
+         Game_TicOverworldWashing( game );
          break;
       case GameState_Overworld_ScrollingDialog:
          ScrollingDialog_Tic( &( game->scrollingDialog ) );
@@ -123,6 +132,16 @@ internal void Game_TicOverworld( Game_t* game )
    TileMap_UpdateViewport( &( game->tileMap ),
                            (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
                            game->player.hitBoxSize.x, game->player.hitBoxSize.y );
+}
+
+internal void Game_TicOverworldWashing( Game_t* game )
+{
+   game->overworldWashSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( game->overworldWashSeconds > OVERWORLD_WASH_TOTAL_SECONDS )
+   {
+      Game_ChangeState( game, GameState_Overworld );
+   }
 }
 
 internal void Game_TicPhysics( Game_t* game )
@@ -381,24 +400,24 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
 internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
-   if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
+   if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Game_ChangeState( game, GameState_Overworld );
+      Game_ChangeState( game, GameState_Overworld_Washing );
    }
 }
 
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
 {
-   if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
+   if ( ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
    {
-      if ( !ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
+      if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         ScrollingDialog_Next( &( game->scrollingDialog ) );
+         Game_ChangeState( game, GameState_Overworld_Washing );
       }
-      else
-      {
-         Game_ChangeState( game, GameState_Overworld );
-      }
+   }
+   else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
+   {
+      ScrollingDialog_Next( &( game->scrollingDialog ) );
    }
 }
 
@@ -553,6 +572,7 @@ internal void Game_Draw( Game_t* game )
    switch ( game->state )
    {
       case GameState_Overworld:
+      case GameState_Overworld_Washing:
          Game_DrawOverworld( game );
          break;
       case GameState_Overworld_MainMenu:
