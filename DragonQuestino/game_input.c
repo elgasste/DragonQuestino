@@ -157,8 +157,7 @@ internal void Game_HandleMenuInput( Game_t* game )
             Game_ChangeState( game, GameState_Overworld_Waiting );
             break;
          case MenuCommand_OverworldMain_Search:
-            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+            Game_Search( game );
             break;
          case MenuCommand_OverworldMain_Spell:
             Game_ChangeState( game, GameState_Overworld_ScrollingDialog );

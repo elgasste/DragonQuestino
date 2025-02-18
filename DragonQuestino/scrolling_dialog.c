@@ -210,6 +210,7 @@ internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog
    {
       case DialogMessageId_Talk_NobodyThere: dialog->sectionCount = 1; break;
       case DialogMessageId_Search_NothingFound: dialog->sectionCount = 2; break;
+      case DialogMessageId_Search_TreasureFound: dialog->sectionCount = 1; break;
       case DialogMessageId_Spell_None: dialog->sectionCount = 1; break;
       case DialogMessageId_Item_None: dialog->sectionCount = 1; break;
       case DialogMessageId_Door_None: dialog->sectionCount = 1; break;
@@ -236,6 +237,7 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH, player->name ); return;
             case 1: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND ); return;
          }
+      case DialogMessageId_Search_TreasureFound: strcpy( text, "You found a treasure!" ); return;
       case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
       case DialogMessageId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
       case DialogMessageId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;

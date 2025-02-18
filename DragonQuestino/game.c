@@ -9,7 +9,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_Init( &( game->tileMap ), &( game->screen ) );
    TileMap_LoadTextures( &( game->tileMap ) );
-   TileMap_Load( &( game->tileMap ), 0 );
+   TileMap_Load( &( game->tileMap ), 1 );
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
@@ -118,5 +118,19 @@ internal void Game_TicTileMapTransition( Game_t* game )
       {
          Game_ChangeState( game, GameState_Overworld );
       }
+   }
+}
+
+void Game_Search( Game_t* game )
+{
+   if ( TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex ) > 0 )
+   {
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_TreasureFound );
+   }
+   else
+   {
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
    }
 }

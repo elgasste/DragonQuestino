@@ -2669,6 +2669,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
    switch( index )
    {
       case 0:
+         tileMap->id = 0;
          tileMap->tilesX = 140;
          tileMap->tilesY = 135;
          tileMap->portalCount = 14;
@@ -6107,6 +6108,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[8948] = 0x010C010F;
          break;
       case 1:
+         tileMap->id = 1;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 1;
@@ -6159,6 +6161,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 842; i < 848; i++ ) tiles32[i] = 0x010B010B;
          break;
       case 2:
+         tileMap->id = 2;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 1;
@@ -6217,6 +6220,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 842; i < 848; i++ ) tiles32[i] = 0x01060106;
          break;
       case 3:
+         tileMap->id = 3;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
          tileMap->portalCount = 64;
@@ -6733,6 +6737,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[2185] = 0x01200120;
          break;
       case 4:
+         tileMap->id = 4;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
          tileMap->portalCount = 15;
@@ -7097,6 +7102,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[2115] = 0x0120010C;
          break;
       case 5:
+         tileMap->id = 5;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 1;
@@ -7124,6 +7130,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 634; i < 637; i++ ) tiles32[i] = 0x01060106;
          break;
       case 6:
+         tileMap->id = 6;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 1;
@@ -7155,6 +7162,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[636] = 0x01080106;
          break;
       case 7:
+         tileMap->id = 7;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
          tileMap->portalCount = 27;
@@ -7399,6 +7407,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[1480] = 0x01200120;
          break;
       case 8:
+         tileMap->id = 8;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 2;
@@ -7456,6 +7465,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[709] = 0x01060106;
          break;
       case 9:
+         tileMap->id = 9;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
          tileMap->portalCount = 36;
@@ -7795,6 +7805,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[1410] = 0x03630106;
          break;
       case 10:
+         tileMap->id = 10;
          tileMap->tilesX = 30;
          tileMap->tilesY = 31;
          tileMap->portalCount = 72;
@@ -8322,6 +8333,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 2035; i < 2040; i++ ) tiles32[i] = 0x01060106;
          break;
       case 11:
+         tileMap->id = 11;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 30;
@@ -8518,6 +8530,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 985; i < 987; i++ ) tiles32[i] = 0x01280108;
          break;
       case 12:
+         tileMap->id = 12;
          tileMap->tilesX = 26;
          tileMap->tilesY = 26;
          tileMap->portalCount = 47;
@@ -8907,6 +8920,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[1690] = 0x03610363;
          break;
       case 13:
+         tileMap->id = 13;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
          tileMap->portalCount = 103;
@@ -9583,6 +9597,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[2039] = 0x0120010C;
          break;
       case 14:
+         tileMap->id = 14;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 2;
@@ -9617,6 +9632,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[706] = 0x01080106;
          break;
       case 15:
+         tileMap->id = 15;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 2;
@@ -9670,6 +9686,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[777] = 0x01080106;
          break;
       case 16:
+         tileMap->id = 16;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
          tileMap->portalCount = 2;
@@ -9740,6 +9757,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1335; i < 1341; i++ ) tiles32[i] = 0x01060106;
          break;
       case 17:
+         tileMap->id = 17;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
          tileMap->portalCount = 1;
@@ -9804,6 +9822,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1335; i < 1341; i++ ) tiles32[i] = 0x01060106;
          break;
       case 18:
+         tileMap->id = 18;
          tileMap->tilesX = 36;
          tileMap->tilesY = 32;
          tileMap->portalCount = 4;
@@ -9918,6 +9937,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1615; i < 1623; i++ ) tiles32[i] = 0x01060106;
          break;
       case 19:
+         tileMap->id = 19;
          tileMap->tilesX = 36;
          tileMap->tilesY = 32;
          tileMap->portalCount = 3;
@@ -10032,6 +10052,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1615; i < 1623; i++ ) tiles32[i] = 0x01060106;
          break;
       case 20:
+         tileMap->id = 20;
          tileMap->tilesX = 28;
          tileMap->tilesY = 49;
          tileMap->portalCount = 2;
@@ -10148,6 +10169,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 2805; i < 2809; i++ ) tiles32[i] = 0x01060106;
          break;
       case 21:
+         tileMap->id = 21;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
          tileMap->portalCount = 2;
@@ -10309,6 +10331,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 2035; i < 2046; i++ ) tiles32[i] = 0x01060106;
          break;
       case 22:
+         tileMap->id = 22;
          tileMap->tilesX = 36;
          tileMap->tilesY = 30;
          tileMap->portalCount = 6;
@@ -10412,6 +10435,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1475; i < 1483; i++ ) tiles32[i] = 0x01060106;
          break;
       case 23:
+         tileMap->id = 23;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
          tileMap->portalCount = 7;
@@ -10606,6 +10630,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 2035; i < 2046; i++ ) tiles32[i] = 0x01060106;
          break;
       case 24:
+         tileMap->id = 24;
          tileMap->tilesX = 32;
          tileMap->tilesY = 27;
          tileMap->portalCount = 2;
@@ -10671,6 +10696,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1265; i < 1271; i++ ) tiles32[i] = 0x01060106;
          break;
       case 25:
+         tileMap->id = 25;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
          tileMap->portalCount = 5;
@@ -10880,6 +10906,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[1406] = 0x0DE40106;
          break;
       case 26:
+         tileMap->id = 26;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
          tileMap->portalCount = 10;
@@ -11123,6 +11150,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 2035; i < 2046; i++ ) tiles32[i] = 0x01060106;
          break;
       case 27:
+         tileMap->id = 27;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
          tileMap->portalCount = 4;
@@ -11203,6 +11231,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1335; i < 1341; i++ ) tiles32[i] = 0x01060106;
          break;
       case 28:
+         tileMap->id = 28;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
          tileMap->portalCount = 6;
@@ -11301,6 +11330,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1335; i < 1341; i++ ) tiles32[i] = 0x01060106;
          break;
       case 29:
+         tileMap->id = 29;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
          tileMap->portalCount = 11;
@@ -11440,6 +11470,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1335; i < 1341; i++ ) tiles32[i] = 0x01060106;
          break;
       case 30:
+         tileMap->id = 30;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
          tileMap->portalCount = 4;
@@ -11506,6 +11537,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 1335; i < 1341; i++ ) tiles32[i] = 0x01060106;
          break;
       case 31:
+         tileMap->id = 31;
          tileMap->tilesX = 32;
          tileMap->tilesY = 23;
          tileMap->portalCount = 2;
@@ -11537,6 +11569,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 985; i < 991; i++ ) tiles32[i] = 0x01060106;
          break;
       case 32:
+         tileMap->id = 32;
          tileMap->tilesX = 32;
          tileMap->tilesY = 23;
          tileMap->portalCount = 2;
@@ -11576,6 +11609,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 985; i < 991; i++ ) tiles32[i] = 0x01060106;
          break;
       case 33:
+         tileMap->id = 33;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
          tileMap->portalCount = 1;
@@ -11874,6 +11908,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[2107] = 0x010C0DE4;
          break;
       case 34:
+         tileMap->id = 34;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 1;
@@ -11924,6 +11959,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[845] = 0x01060127;
          break;
       case 35:
+         tileMap->id = 35;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 1;
@@ -11974,6 +12010,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          for ( i = 773; i < 777; i++ ) tiles32[i] = 0x01270127;
          break;
       case 36:
+         tileMap->id = 36;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 1;
@@ -11992,6 +12029,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[494] = 0x01060106;
          break;
       case 37:
+         tileMap->id = 37;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 1;
@@ -13013,4 +13051,16 @@ void Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index )
          mem32[63] = 0x02020202;
          break;
    }
+}
+
+uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
+{
+   switch( tileMapId )
+   {
+      case 1:
+         if ( tileIndex == 71 ) return 1;
+         break;
+   }
+
+   return 0;
 }

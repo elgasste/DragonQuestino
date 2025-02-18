@@ -55,6 +55,7 @@ TilePortal_t;
 typedef struct TileMap_t
 {
    Screen_t* screen;
+   uint32_t id;
 
    // bits 1-5: texture index (max 32 textures)
    // bit 6: is-passable flag
@@ -94,6 +95,7 @@ void TileMap_Draw( TileMap_t* tileMap );
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
 void TileMap_Load( TileMap_t* tileMap, uint32_t index );
+uint32_t TileMap_GetTreasureFlag( uint32_t tileMapIndex, uint32_t tileIndex );
 
 #if defined( __cplusplus )
 }

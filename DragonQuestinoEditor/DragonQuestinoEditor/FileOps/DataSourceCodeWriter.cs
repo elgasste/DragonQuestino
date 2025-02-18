@@ -37,6 +37,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteTileMapFunction( fs );
          WriteActiveSpritesFunctions( fs );
          WriteStaticSpritesFunction( fs );
+         WriteTreasureFlagsFunction( fs );
       }
 
       private void WriteShieldBackgroundDataFile()
@@ -106,11 +107,14 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   switch( index )\n" );
          WriteToFileStream( fs, "   {\n" );
 
-         foreach ( var tileMap in _tileMaps )
+         for ( int tm = 0; tm < _tileMaps.Count; tm++ )
          {
+            var tileMap = _tileMaps[ tm ];
+
             var tiles = tileMap.Tiles;
 
             WriteToFileStream( fs, string.Format( "      case {0}:\n", tileMap.Id ) );
+            WriteToFileStream( fs, string.Format( "         tileMap->id = {0};\n", tm ) );
             WriteToFileStream( fs, string.Format( "         tileMap->tilesX = {0};\n", tileMap.TilesX ) );
             WriteToFileStream( fs, string.Format( "         tileMap->tilesY = {0};\n", tileMap.TilesY ) );
             WriteToFileStream( fs, string.Format( "         tileMap->portalCount = {0};\n", tileMap.Portals.Count ) );
@@ -354,6 +358,45 @@ namespace DragonQuestinoEditor.FileOps
          }
 
          WriteToFileStream( fs, "   }\n" );
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteTreasureFlagsFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nuint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )\n" );
+         WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   switch( tileMapId )\n" );
+         WriteToFileStream( fs, "   {\n" );
+
+         bool hasTreasure = false;
+
+         for ( int i = 0; i < _tileMaps.Count; i++ )
+         {
+            for ( int j = 0; j < _tileMaps[i].Tiles.Count; j++ )
+            {
+               var tile = _tileMaps[i].Tiles[j];
+               
+               if ( tile.TreasureFlag != 0 )
+               {
+                  if ( !hasTreasure )
+                  {
+                     WriteToFileStream( fs, string.Format( "      case {0}:\n", i ) );
+                     hasTreasure = true;
+                  }
+
+                  WriteToFileStream( fs, string.Format( "         if ( tileIndex == {0} ) return {1};\n", j, tile.TreasureFlag ) );
+               }
+            }
+
+            if ( hasTreasure )
+            {
+               WriteToFileStream( fs, "         break;\n" );
+               hasTreasure = false;
+            }
+         }
+
+         WriteToFileStream( fs, "   }\n\n" );
+         WriteToFileStream( fs, "   return 0;\n" );
          WriteToFileStream( fs, "}\n" );
       }
 

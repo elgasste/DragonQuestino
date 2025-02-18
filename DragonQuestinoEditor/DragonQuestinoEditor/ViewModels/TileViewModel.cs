@@ -36,6 +36,13 @@ namespace DragonQuestinoEditor.ViewModels
          }
       }
 
+      private int _treasureFlag = 0;
+      public int TreasureFlag
+      {
+         get => _treasureFlag;
+         set => SetProperty( ref _treasureFlag, value );
+      }
+
       private BitmapSource? _image;
       public BitmapSource? Image
       {
@@ -95,6 +102,7 @@ namespace DragonQuestinoEditor.ViewModels
       {
          TileSet = tileSet;
          TextureIndex = saveData.TextureIndex;
+         TreasureFlag = saveData.TreasureFlag;
          _isPassable = saveData.IsPassable;
       }
 
