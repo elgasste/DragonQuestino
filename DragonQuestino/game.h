@@ -38,10 +38,31 @@ Game_t;
 extern "C" {
 #endif
 
+// game.c
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
-void Game_ChangeState( Game_t* game, GameState_t newState );
 void Game_Tic( Game_t* game );
-void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
+void Game_ChangeState( Game_t* game, GameState_t newState );
+
+// game_input.c
+void Game_HandleInput( Game_t* game );
+
+// game_physics.c
+void Game_TicPhysics( Game_t* game );
+
+// game_render.c
+void Game_Draw( Game_t* game );
+void Game_DrawOverworldQuickStatus( Game_t* game );
+void Game_DrawOverworldDeepStatus( Game_t* game );
+void Game_DrawNonUseableItems( Game_t* game );
+
+// game_items.c
+void Game_UseHerb( Game_t* game );
+void Game_UseWing( Game_t* game );
+void Game_UseFairyWater( Game_t* game );
+void Game_UseSilverHarp( Game_t* game );
+void Game_UseFairyFlute( Game_t* game );
+void Game_UseGwaelynsLove( Game_t* game );
+void Game_UseRainbowDrop( Game_t* game );
 
 #if defined( __cplusplus )
 }
