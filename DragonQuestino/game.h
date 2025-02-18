@@ -3,6 +3,7 @@
 
 #define TILEMAP_SWAP_SECONDS                 0.4f
 #define OVERWORLD_INACTIVE_STATUS_SECONDS    1.0f
+#define COLLISION_THETA                      0.001f
 
 #include "common.h"
 #include "screen.h"
