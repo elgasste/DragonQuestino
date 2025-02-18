@@ -49,7 +49,7 @@ void Game_HandleInput( Game_t* game );
 // game_physics.c
 void Game_TicPhysics( Game_t* game );
 
-// game_draw.c
+// game_render.c
 void Game_Draw( Game_t* game );
 void Game_DrawOverworldQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
