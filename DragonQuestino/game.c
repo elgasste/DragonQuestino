@@ -40,10 +40,9 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
-   game->overworldInactivitySeconds = 0.0f;
-
    game->state = GameState_Overworld;
    game->swapPortal = 0;
+   game->overworldInactivitySeconds = 0.0f;
 }
 
 void Game_ChangeState( Game_t* game, GameState_t newState )
@@ -173,7 +172,6 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
-      game->overworldInactivitySeconds = 0.0f;
       Menu_Load( &( game->menu ), MenuId_Overworld);
       Game_ChangeState( game, GameState_Overworld_MainMenu );
       Game_DrawOverworldQuickStatus( game );
@@ -244,7 +242,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
          }
       }
    }
-   else if ( !game->input.buttonStates[Button_A].down && !game->input.buttonStates[Button_B].down )
+   else
    {
       game->overworldInactivitySeconds += CLOCK_FRAME_SECONDS;
    }
