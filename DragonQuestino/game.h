@@ -47,6 +47,9 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 // game_input.c
 void Game_HandleInput( Game_t* game );
 
+// game_physics.c
+void Game_TicPhysics( Game_t* game );
+
 // game_draw.c
 void Game_Draw( Game_t* game );
 void Game_DrawOverworldQuickStatus( Game_t* game );
