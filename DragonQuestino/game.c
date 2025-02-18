@@ -38,7 +38,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
    Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
-   ScrollingDialog_Init( &( game->scrollingDialog ), game->player.name );
+   ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
    game->overworldInactivitySeconds = 0.0f;
 
@@ -418,7 +418,7 @@ internal void Game_Draw( Game_t* game )
          Menu_Draw( &( game->menu ) );
          break;
       case GameState_Overworld_ScrollingDialog:
-         ScrollingDialog_Draw( &( game->scrollingDialog ), &( game->screen ) );
+         ScrollingDialog_Draw( &( game->scrollingDialog ) );
          break;
       case GameState_TileMapTransition:
          Screen_WipeColor( &( game->screen ), COLOR_BLACK );
