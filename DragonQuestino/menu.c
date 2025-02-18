@@ -1,22 +1,31 @@
-#include "game.h"
+#include "menu.h"
+#include "screen.h"
+#include "player.h"
+#include "clock.h"
 
-internal void Menu_DrawCarat( Menu_t* menu, Screen_t* screen );
+internal void Menu_DrawCarat( Menu_t* menu );
 internal void Menu_LoadOverworld( Menu_t* menu );
-internal void Menu_LoadOverworldItem( Game_t* game );
+internal void Menu_LoadOverworldItem( Menu_t* menu );
 
-void Menu_Load( Game_t* game, MenuId_t id )
+void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player )
+{
+   menu->screen = screen;
+   menu->player = player;
+}
+
+void Menu_Load( Menu_t* menu, MenuId_t id )
 {
    switch ( id )
    {
-      case MenuId_Overworld: Menu_LoadOverworld( &( game->menu ) ); break;
-      case MenuId_OverworldItem: Menu_LoadOverworldItem( game ); break;
+      case MenuId_Overworld: Menu_LoadOverworld( menu ); break;
+      case MenuId_OverworldItem: Menu_LoadOverworldItem( menu ); break;
    }
 
-   game->menu.hasDrawn = False;
-   Menu_ResetCarat( &( game->menu ), &( game->screen ) );
+   menu->hasDrawn = False;
+   Menu_ResetCarat( menu );
 }
 
-void Menu_Draw( Menu_t* menu, Screen_t* screen )
+void Menu_Draw( Menu_t* menu )
 {
    uint16_t i;
    uint32_t x, y;
@@ -25,35 +34,35 @@ void Menu_Draw( Menu_t* menu, Screen_t* screen )
 
    if ( !menu->hasDrawn )
    {
-      Screen_DrawTextWindowWithTitle( screen, menu->position.x, menu->position.y, menu->borderSize.x, menu->borderSize.y, menu->title, COLOR_WHITE );
+      Screen_DrawTextWindowWithTitle( menu->screen, menu->position.x, menu->position.y, menu->borderSize.x, menu->borderSize.y, menu->title, COLOR_WHITE );
 
       for ( i = 0; i < menu->itemCount; i++ )
       {
          x = startX + ( ( i / menu->itemsPerColumn ) * ( menu->columnWidth * TEXT_TILE_SIZE ) );
          y = startY + ( ( i % menu->itemsPerColumn ) * ( TEXT_TILE_SIZE * ( menu->itemPadding + 1 ) ) );
 
-         Screen_DrawText( screen, menu->items[i].text, x, y, COLOR_WHITE );
+         Screen_DrawText( menu->screen, menu->items[i].text, x, y, COLOR_WHITE );
 
          if ( menu->items[i].twoLineText )
          {
-            Screen_DrawText( screen, menu->items[i].text + MENU_LINE_LENGTH, x, y + TEXT_TILE_SIZE, COLOR_WHITE );
+            Screen_DrawText( menu->screen, menu->items[i].text + MENU_LINE_LENGTH, x, y + TEXT_TILE_SIZE, COLOR_WHITE );
          }
       }
 
       menu->hasDrawn = True;
    }
 
-   Menu_DrawCarat( menu, screen );
+   Menu_DrawCarat( menu );
 }
 
-void Menu_ResetCarat( Menu_t* menu, Screen_t* screen )
+void Menu_ResetCarat( Menu_t* menu )
 {
    menu->showCarat = True;
    menu->blinkSeconds = 0.0f;
-   Menu_DrawCarat( menu, screen );
+   Menu_DrawCarat( menu );
 }
 
-void Menu_MoveSelection( Menu_t* menu, Direction_t direction, Screen_t* screen )
+void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
 {
    int32_t newIndex = 0;
    uint32_t column;
@@ -107,7 +116,7 @@ void Menu_MoveSelection( Menu_t* menu, Direction_t direction, Screen_t* screen )
    }
 
    menu->selectedIndex = (uint32_t)newIndex;
-   Menu_ResetCarat( menu, screen );
+   Menu_ResetCarat( menu );
 }
 
 void Menu_Tic( Menu_t* menu )
@@ -121,7 +130,7 @@ void Menu_Tic( Menu_t* menu )
    }
 }
 
-internal void Menu_DrawCarat( Menu_t* menu, Screen_t* screen )
+internal void Menu_DrawCarat( Menu_t* menu )
 {
    uint32_t i;
    uint32_t x, y;
@@ -135,11 +144,11 @@ internal void Menu_DrawCarat( Menu_t* menu, Screen_t* screen )
 
       if ( i == menu->selectedIndex && menu->showCarat )
       {
-         Screen_DrawChar( screen, '>', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y, COLOR_WHITE );
+         Screen_DrawChar( menu->screen, '>', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y, COLOR_WHITE );
       }
       else
       {
-         Screen_DrawChar( screen, ' ', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y, COLOR_WHITE );
+         Screen_DrawChar( menu->screen, ' ', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y, COLOR_WHITE );
       }
    }
 }
@@ -177,11 +186,10 @@ internal void Menu_LoadOverworld( Menu_t* menu )
    menu->caratOffset = 1;
 }
 
-internal void Menu_LoadOverworldItem( Game_t* game )
+internal void Menu_LoadOverworldItem( Menu_t* menu )
 {
    uint32_t curItem = 0;
-   Menu_t* menu = &( game->menu );
-   uint32_t items = game->player.items;
+   uint32_t items = menu->player->items;
 
    sprintf( menu->title, STRING_OVERWORLD_MENU_ITEM );
 

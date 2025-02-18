@@ -8,8 +8,8 @@
 #define MENU_LINE_LENGTH            16
 #define MENU_TEXT_SIZE              32 // account for 2 lines
 
-typedef struct Game_t Game_t;
 typedef struct Screen_t Screen_t;
+typedef struct Player_t Player_t;
 
 typedef struct MenuItem_t
 {
@@ -21,6 +21,9 @@ MenuItem_t;
 
 typedef struct Menu_t
 {
+   Screen_t* screen;
+   Player_t* player;
+
    char title[MENU_LINE_LENGTH];
    MenuItem_t items[MENU_MAX_ITEMS];
    uint32_t itemCount;
@@ -44,10 +47,11 @@ Menu_t;
 extern "C" {
 #endif
 
-void Menu_Load( Game_t* game, MenuId_t id );
-void Menu_Draw( Menu_t* menu, Screen_t* screen );
-void Menu_ResetCarat( Menu_t* menu, Screen_t* screen );
-void Menu_MoveSelection( Menu_t* menu, Direction_t direction, Screen_t* screen );
+void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player );
+void Menu_Load( Menu_t* menu, MenuId_t id );
+void Menu_Draw( Menu_t* menu );
+void Menu_ResetCarat( Menu_t* menu );
+void Menu_MoveSelection( Menu_t* menu, Direction_t direction );
 void Menu_Tic( Menu_t* menu );
 
 #if defined( __cplusplus )

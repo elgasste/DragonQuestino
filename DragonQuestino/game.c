@@ -37,6 +37,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ) );
+   Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), game->player.name );
 
    game->overworldInactivitySeconds = 0.0f;
@@ -173,7 +174,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
    if ( game->input.buttonStates[Button_A].pressed )
    {
       game->overworldInactivitySeconds = 0.0f;
-      Menu_Load( game, MenuId_Overworld );
+      Menu_Load( &( game->menu ), MenuId_Overworld);
       Game_ChangeState( game, GameState_Overworld_MainMenu );
       Game_DrawOverworldQuickStatus( game );
    }
@@ -278,7 +279,7 @@ internal void Game_HandleMenuInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
-      Menu_ResetCarat( &( game->menu ), &( game->screen ) );
+      Menu_ResetCarat( &( game->menu ) );
 
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
@@ -306,27 +307,13 @@ internal void Game_HandleMenuInput( Game_t* game )
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
             break;
 
-         case MenuCommand_OverworldItem_Herb:
-            Game_UseHerb( game );
-            break;
-         case MenuCommand_OverworldItem_Wing:
-            Game_UseWing( game );
-            break;
-         case MenuCommand_OverworldItem_FairyWater:
-            Game_UseFairyWater( game );
-            break;
-         case MenuCommand_OverworldItem_SilverHarp:
-            Game_UseSilverHarp( game );
-            break;
-         case MenuCommand_OverworldItem_FairyFlute:
-            Game_UseFairyFlute( game );
-            break;
-         case MenuCommand_OverworldItem_GwaelynsLove:
-            Game_UseGwaelynsLove( game );
-            break;
-         case MenuCommand_OverworldItem_RainbowDrop:
-            Game_UseRainbowDrop( game );
-            break;
+         case MenuCommand_OverworldItem_Herb: Game_UseHerb( game ); break;
+         case MenuCommand_OverworldItem_Wing: Game_UseWing( game ); break;
+         case MenuCommand_OverworldItem_FairyWater: Game_UseFairyWater( game ); break;
+         case MenuCommand_OverworldItem_SilverHarp: Game_UseSilverHarp( game ); break;
+         case MenuCommand_OverworldItem_FairyFlute: Game_UseFairyFlute( game ); break;
+         case MenuCommand_OverworldItem_GwaelynsLove: Game_UseGwaelynsLove( game ); break;
+         case MenuCommand_OverworldItem_RainbowDrop: Game_UseRainbowDrop( game ); break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
@@ -345,7 +332,7 @@ internal void Game_HandleMenuInput( Game_t* game )
       {
          if ( game->input.buttonStates[i].pressed )
          {
-            Menu_MoveSelection( &( game->menu ), (Direction_t)i, &( game->screen ) );
+            Menu_MoveSelection( &( game->menu ), (Direction_t)i );
          }
       }
    }
@@ -367,7 +354,7 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 
       if ( useableCount > 0 )
       {
-         Menu_Load( game, MenuId_OverworldItem );
+         Menu_Load( &( game->menu ), MenuId_OverworldItem );
       }
 
       if ( nonUseableCount > 0 )
@@ -428,7 +415,7 @@ internal void Game_Draw( Game_t* game )
          break;
       case GameState_Overworld_MainMenu:
       case GameState_Overworld_ItemMenu:
-         Menu_Draw( &( game->menu ), &( game->screen ) );
+         Menu_Draw( &( game->menu ) );
          break;
       case GameState_Overworld_ScrollingDialog:
          ScrollingDialog_Draw( &( game->scrollingDialog ), &( game->screen ) );
