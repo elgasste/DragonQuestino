@@ -44,6 +44,9 @@ void Game_ChangeState( Game_t* game, GameState_t newState );
 void Game_Tic( Game_t* game );
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 
+// game_input.c
+void Game_HandleInput( Game_t* game );
+
 // game_draw.c
 void Game_Draw( Game_t* game );
 void Game_DrawOverworldQuickStatus( Game_t* game );
