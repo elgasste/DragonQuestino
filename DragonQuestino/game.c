@@ -182,6 +182,11 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_Tablet );
          game->tileMap.treasureFlags ^= treasureFlag;
          return;
+      case 0x200:    // Rimuldar Inn
+         isGold = False;
+         collected = Player_CollectItem( &( game->player ), Item_Wing );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_WING );
+         break;
    }
 
    if ( gold > 0 )
