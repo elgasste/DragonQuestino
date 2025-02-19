@@ -106,6 +106,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Chest_ItemNoSpace,
    DialogMessageId_Chest_GoldCollected,
    DialogMessageId_Chest_GoldNoSpace,
+   DialogMessageId_Chest_Tablet,
 
    DialogMessageId_Count
 }

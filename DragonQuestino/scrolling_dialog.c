@@ -208,9 +208,9 @@ internal void ScrollingDialog_LoadType( ScrollingDialog_t* dialog, ScrollingDial
 internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog )
 {
    dialog->position.x = 32;
-   dialog->position.y = 152;
+   dialog->position.y = 144;
    dialog->size.x = 24;
-   dialog->size.y = 7;
+   dialog->size.y = 8;
    dialog->lineWidth = 22;
 }
 
@@ -234,6 +234,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Chest_ItemNoSpace: return 2;
       case DialogMessageId_Chest_GoldCollected: return 1;
       case DialogMessageId_Chest_GoldNoSpace: return 2;
+      case DialogMessageId_Chest_Tablet: return 8;
    }
 
    return 0;
@@ -309,6 +310,18 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
          {
             case 0: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
             case 1: sprintf( text, STRING_CHEST_GOLDNOSPACE, dialog->player->name ); return;
+         }
+      case DialogMessageId_Chest_Tablet:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_CHEST_ITEMFOUND, STRING_ITEMCOLLECT_TABLET ); return;
+            case 1: strcpy( text, STRING_CHEST_TABLET_1 ); return;
+            case 2: strcpy( text, STRING_CHEST_TABLET_2 ); return;
+            case 3: strcpy( text, STRING_CHEST_TABLET_3 ); return;
+            case 4: strcpy( text, STRING_CHEST_TABLET_4 ); return;
+            case 5: strcpy( text, STRING_CHEST_TABLET_5 ); return;
+            case 6: strcpy( text, STRING_CHEST_TABLET_6 ); return;
+            case 7: strcpy( text, STRING_CHEST_TABLET_7 ); return;
          }
    }
 }

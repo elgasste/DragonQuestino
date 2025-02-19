@@ -143,6 +143,8 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
    Bool_t isGold = True, collected = False;
    char msg[4];
 
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+
    switch ( treasureFlag )
    {
       case 0x1:      // Tantegel throne room, upper-right chest
@@ -176,6 +178,10 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          collected = Player_CollectItem( &( game->player ), Item_StoneOfSunlight );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_STONEOFSUNLIGHT );
          break;
+      case 0x100:    // Erdrick's Cave, the tablet. this is not an item that can be collected.
+         ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_Tablet );
+         game->tileMap.treasureFlags ^= treasureFlag;
+         return;
    }
 
    if ( gold > 0 )
@@ -184,8 +190,6 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       sprintf( msg, "%u", gold );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), msg );
    }
-
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 
    if ( collected )
    {

@@ -60,6 +60,7 @@
 
 #define STRING_ITEMCOLLECT_KEY                        "a key"
 #define STRING_ITEMCOLLECT_HERB                       "an herb"
+#define STRING_ITEMCOLLECT_TABLET                     "Erdrick's Tablet"
 #define STRING_ITEMCOLLECT_STONEOFSUNLIGHT            "the Stone of Sunlight"
 
 #define STRING_ITEMUSE_HERB                           "%s grinds up an herb and eats it."
@@ -77,5 +78,12 @@
 #define STRING_CHEST_ITEMNOSPACE                      "But %s can't carry any more of these."
 #define STRING_CHEST_GOLDFOUND                        "The chest contains %s gold pieces!"
 #define STRING_CHEST_GOLDNOSPACE                      "But %s can't carry any more gold."
+#define STRING_CHEST_TABLET_1                         "The tablet reads as follows..."
+#define STRING_CHEST_TABLET_2                         "\"I am Erdrick, and thou art my descendant."
+#define STRING_CHEST_TABLET_3                         "Three items are needed to reach the Isle of Dragons, which is south of Brecconary."
+#define STRING_CHEST_TABLET_4                         "I gathered these items, reached the Isle, and there defeated a creature of great evil."
+#define STRING_CHEST_TABLET_5                         "Now I have entrusted the three items to three worthy keepers."
+#define STRING_CHEST_TABLET_6                         "Their descendants will protect the items until thy quest leads thee to seek them out."
+#define STRING_CHEST_TABLET_7                         "When a new evil arises, find the three items, then fight!\""
 
 #endif // STRINGS_H
