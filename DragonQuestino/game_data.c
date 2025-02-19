@@ -13059,6 +13059,8 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
    {
       case 1:
          if ( tileIndex == 71 ) return 0x00000001;
+         if ( tileIndex == 129 ) return 0x00000002;
+         if ( tileIndex == 130 ) return 0x00000004;
          break;
    }
 
