@@ -140,22 +140,36 @@ void Game_Search( Game_t* game )
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 {
    uint16_t gold = 0;
-   Bool_t isGold = False, collected = False;
+   Bool_t isGold = True, collected = False;
    char msg[4];
 
    switch ( treasureFlag )
    {
-      case 0x1:  // Tantegel throne room, upper-right chest
+      case 0x1:      // Tantegel throne room, upper-right chest
+         isGold = False;
          collected = Player_CollectItem( &( game->player ), Item_Key );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_KEY );
          break;
-      case 0x2:  // Tantegel throne room, lower-left chest
+      case 0x2:      // Tantegel throne room, lower-left chest
          isGold = True;
          gold = 120;
          break;
-      case 0x4:  // tantegel throne room, lower-right chest
+      case 0x4:      // Tantegel throne room, lower-right chest
+         isGold = False;
          collected = Player_CollectItem( &( game->player ), Item_Herb );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_HERB );
+         break;
+      case 0x8:      // Tantegel ground floor, left room, upper-left chest
+         gold = 13;
+         break;
+      case 0x10:     // Tantegel ground floor, left room, middle chest
+         gold = 11;
+         break;
+      case 0x20:     // Tantegel ground floor, left room, bottom-left chest
+         gold = 7;
+         break;
+      case 0x40:     // Tantegel ground floor, left room, bottom-right chest
+         gold = 13;
          break;
    }
 
