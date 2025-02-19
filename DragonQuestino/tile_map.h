@@ -79,6 +79,9 @@ typedef struct TileMap_t
 
    StaticSprite_t staticSprites[TILEMAP_MAX_STATICSPRITES];
    uint32_t staticSpriteCount;
+
+   StaticSprite_t chestSprite;
+   uint32_t treasureFlags;
 }
 TileMap_t;
 

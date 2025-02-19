@@ -26,8 +26,6 @@ typedef struct Game_t
    Menu_t menu;
    ScrollingDialog_t scrollingDialog;
 
-   uint32_t treasureFlags;
-
    float overworldInactivitySeconds;
    float overworldWashSeconds;
 

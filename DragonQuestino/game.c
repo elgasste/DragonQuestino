@@ -18,7 +18,6 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
-   game->treasureFlags = 0xFFFFFFFF;
    game->state = GameState_Overworld;
    game->swapPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
@@ -127,7 +126,7 @@ void Game_Search( Game_t* game )
 {
    uint32_t treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
 
-   if ( treasureFlag && ( game->treasureFlags & treasureFlag ) )
+   if ( treasureFlag && ( game->tileMap.treasureFlags & treasureFlag ) )
    {
       Game_CollectTreasure( game, treasureFlag );
    }
@@ -171,7 +170,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 
    if ( collected )
    {
-      game->treasureFlags ^= treasureFlag;
+      game->tileMap.treasureFlags ^= treasureFlag;
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, isGold ? DialogMessageId_Chest_GoldCollected : DialogMessageId_Chest_ItemCollected );
    }
    else
