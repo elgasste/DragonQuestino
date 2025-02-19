@@ -3,6 +3,7 @@
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
+internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -17,6 +18,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
+   game->treasureFlags = 0xFFFFFFFF;
    game->state = GameState_Overworld;
    game->swapPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
@@ -123,14 +125,57 @@ internal void Game_TicTileMapTransition( Game_t* game )
 
 void Game_Search( Game_t* game )
 {
-   if ( TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex ) > 0 )
+   uint32_t treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
+
+   if ( treasureFlag && ( game->treasureFlags & treasureFlag ) )
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_TreasureFound );
+      Game_CollectTreasure( game, treasureFlag );
    }
    else
    {
       Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+   }
+}
+
+internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
+{
+   uint16_t gold = 0;
+   Bool_t isGold = False, collected = False;
+   char msg[4];
+
+   switch ( treasureFlag )
+   {
+      case 0x1:  // Tantegel throne room, upper-right chest
+         collected = Player_CollectItem( &( game->player ), Item_Key );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_KEY );
+         break;
+      case 0x2:  // Tantegel throne room, lower-left chest
+         isGold = True;
+         gold = 120;
+         break;
+      case 0x4:  // tantegel throne room, lower-right chest
+         collected = Player_CollectItem( &( game->player ), Item_Herb );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_HERB );
+         break;
+   }
+
+   if ( gold > 0 )
+   {
+      collected = ( Player_CollectGold( &( game->player ), gold ) > 0 ) ? True : False;
+      sprintf( msg, "%u", gold );
+      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), msg );
+   }
+
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+
+   if ( collected )
+   {
+      game->treasureFlags ^= treasureFlag;
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, isGold ? DialogMessageId_Chest_GoldCollected : DialogMessageId_Chest_ItemCollected );
+   }
+   else
+   {
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, isGold ? DialogMessageId_Chest_GoldNoSpace : DialogMessageId_Chest_ItemNoSpace );
    }
 }

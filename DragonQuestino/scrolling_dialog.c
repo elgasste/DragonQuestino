@@ -5,8 +5,9 @@
 
 internal void ScrollingDialog_ResetScroll( ScrollingDialog_t* dialog );
 internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog );
+internal void ScrollingDialog_LoadType( ScrollingDialog_t* dialog, ScrollingDialogType_t type );
 internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog );
-internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog );
+internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t messageId );
 internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* text );
 
 void ScrollingDialog_Init( ScrollingDialog_t* dialog, Screen_t* screen, Player_t* player )
@@ -19,14 +20,15 @@ void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type
 {
    dialog->messageId = messageId;
    dialog->section = 0;
-   ScrollingDialog_LoadMessageSectionCount( dialog );
 
-   switch ( type )
-   {
-      case ScrollingDialogType_Overworld:
-         ScrollingDialog_LoadOverworldType( dialog );
-         break;
-   }
+   ScrollingDialog_LoadType( dialog, type );
+   ScrollingDialog_LoadMessage( dialog );
+   ScrollingDialog_ResetScroll( dialog );
+}
+
+void ScrollingDialog_SetInsertionText( ScrollingDialog_t* dialog, const char* text )
+{
+   strcpy( dialog->insertionText, text );
 }
 
 void ScrollingDialog_Draw( ScrollingDialog_t* dialog )
@@ -135,6 +137,7 @@ internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog )
 
    dialog->lineCount = 0;
    dialog->charCount = 0;
+   dialog->sectionCount = ScrollingDialog_GetMessageSectionCount( dialog->messageId );
 
    ScrollingDialog_GetMessageText( dialog, message );
    strLen = (uint16_t)strlen( message );
@@ -192,6 +195,16 @@ internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog )
    }
 }
 
+internal void ScrollingDialog_LoadType( ScrollingDialog_t* dialog, ScrollingDialogType_t type )
+{
+   switch ( type )
+   {
+      case ScrollingDialogType_Overworld:
+         ScrollingDialog_LoadOverworldType( dialog );
+         break;
+   }
+}
+
 internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog )
 {
    dialog->position.x = 32;
@@ -199,29 +212,31 @@ internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog )
    dialog->size.x = 24;
    dialog->size.y = 7;
    dialog->lineWidth = 22;
-
-   ScrollingDialog_LoadMessage( dialog );
-   ScrollingDialog_ResetScroll( dialog );
 }
 
-internal void ScrollingDialog_LoadMessageSectionCount( ScrollingDialog_t* dialog )
+internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t messageId )
 {
-   switch ( dialog->messageId )
+   switch ( messageId )
    {
-      case DialogMessageId_Talk_NobodyThere: dialog->sectionCount = 1; break;
-      case DialogMessageId_Search_NothingFound: dialog->sectionCount = 2; break;
-      case DialogMessageId_Search_TreasureFound: dialog->sectionCount = 1; break;
-      case DialogMessageId_Spell_None: dialog->sectionCount = 1; break;
-      case DialogMessageId_Item_None: dialog->sectionCount = 1; break;
-      case DialogMessageId_Door_None: dialog->sectionCount = 1; break;
-      case DialogMessageId_Use_Herb: dialog->sectionCount = 2; break;
-      case DialogMessageId_Use_Wing: dialog->sectionCount = 2; break;
-      case DialogMessageId_Use_FairyWater: dialog->sectionCount = 2; break;
-      case DialogMessageId_Use_SilverHarp: dialog->sectionCount = 2; break;
-      case DialogMessageId_Use_FairyFlute: dialog->sectionCount = 2; break;
-      case DialogMessageId_Use_GwaelynsLove: dialog->sectionCount = 2; break;
-      case DialogMessageId_Use_RainbowDrop: dialog->sectionCount = 1; break;
+      case DialogMessageId_Talk_NobodyThere: return 1;
+      case DialogMessageId_Search_NothingFound: return 2;
+      case DialogMessageId_Spell_None: return 1;
+      case DialogMessageId_Item_None: return 1;
+      case DialogMessageId_Door_None: return 1;
+      case DialogMessageId_Use_Herb: return 2;
+      case DialogMessageId_Use_Wing: return 2;
+      case DialogMessageId_Use_FairyWater: return 2;
+      case DialogMessageId_Use_SilverHarp: return 2;
+      case DialogMessageId_Use_FairyFlute: return 2;
+      case DialogMessageId_Use_GwaelynsLove: return 2;
+      case DialogMessageId_Use_RainbowDrop: return 1;
+      case DialogMessageId_Chest_ItemCollected: return 1;
+      case DialogMessageId_Chest_ItemNoSpace: return 2;
+      case DialogMessageId_Chest_GoldCollected: return 1;
+      case DialogMessageId_Chest_GoldNoSpace: return 2;
    }
+
+   return 0;
 }
 
 internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* text )
@@ -237,50 +252,63 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH, player->name ); return;
             case 1: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND ); return;
          }
-      case DialogMessageId_Search_TreasureFound: strcpy( text, "You found a treasure!" ); return;
       case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
       case DialogMessageId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
       case DialogMessageId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;
       case DialogMessageId_Use_Herb:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, "%s grinds up an herb and eats it.", player->name ); return;
-            case 1: strcpy( text, "But nothing happens." ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_HERB, player->name ); return;
+            case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
       case DialogMessageId_Use_Wing:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, "%s throws a wing into the air!", player->name ); return;
-            case 1: strcpy( text, "But nothing happens." ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_WING, player->name ); return;
+            case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
       case DialogMessageId_Use_FairyWater:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, "%s drinks a vial of fairy water.", player->name ); return;
-            case 1: strcpy( text, "But nothing happens." ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_FAIRYWATER, player->name ); return;
+            case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
       case DialogMessageId_Use_SilverHarp:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, "%s plays the Silver Harp.", player->name ); return;
-            case 1: strcpy( text, "Beautiful music flows from its glistening strings." ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_SILVERHARP_1, player->name ); return;
+            case 1: strcpy( text, STRING_ITEMUSE_SILVERHARP_2 ); return;
          }
       case DialogMessageId_Use_FairyFlute:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, "%s plays the Fairy Flute.", player->name ); return;
-            case 1: strcpy( text, "A mysterious melody fills the air." ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_FAIRYFLUTE_1, player->name ); return;
+            case 1: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_2 ); return;
          }
       case DialogMessageId_Use_GwaelynsLove:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, "%s clutches Gwaelyn's love ever closer.", player->name ); return;
-            case 1: strcpy( text, "She's probably not gonna text back." ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_GWAELYNSLOVE_1, player->name ); return;
+            case 1: strcpy( text, STRING_ITEMUSE_GWAELYNSLOVE_2 ); return;
          }
       case DialogMessageId_Use_RainbowDrop:
          switch ( dialog->section )
          {
-            case 0: strcpy( text, "The Rainbow Drop cannot be used here." ); return;
+            case 0: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
+         }
+      case DialogMessageId_Chest_ItemCollected: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
+      case DialogMessageId_Chest_ItemNoSpace:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
+            case 1: sprintf( text, STRING_CHEST_ITEMNOSPACE, dialog->player->name ); return;
+         }
+      case DialogMessageId_Chest_GoldCollected: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
+      case DialogMessageId_Chest_GoldNoSpace:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
+            case 1: sprintf( text, STRING_CHEST_GOLDNOSPACE, dialog->player->name ); return;
          }
    }
 }

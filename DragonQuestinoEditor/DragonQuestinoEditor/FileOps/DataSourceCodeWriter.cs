@@ -384,7 +384,7 @@ namespace DragonQuestinoEditor.FileOps
                      hasTreasure = true;
                   }
 
-                  WriteToFileStream( fs, string.Format( "         if ( tileIndex == {0} ) return {1};\n", j, tile.TreasureFlag ) );
+                  WriteToFileStream( fs, string.Format( "         if ( tileIndex == {0} ) return 0x{1};\n", j, tile.TreasureFlag.ToString( "X8" ) ) );
                }
             }
 

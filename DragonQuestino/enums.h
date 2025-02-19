@@ -90,7 +90,6 @@ typedef enum DialogMessageId_t
 {
    DialogMessageId_Talk_NobodyThere = 0,
    DialogMessageId_Search_NothingFound,
-   DialogMessageId_Search_TreasureFound,
    DialogMessageId_Spell_None,
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
@@ -102,6 +101,11 @@ typedef enum DialogMessageId_t
    DialogMessageId_Use_FairyFlute,
    DialogMessageId_Use_GwaelynsLove,
    DialogMessageId_Use_RainbowDrop,
+
+   DialogMessageId_Chest_ItemCollected,
+   DialogMessageId_Chest_ItemNoSpace,
+   DialogMessageId_Chest_GoldCollected,
+   DialogMessageId_Chest_GoldNoSpace,
 
    DialogMessageId_Count
 }
