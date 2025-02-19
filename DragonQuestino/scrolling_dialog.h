@@ -23,6 +23,7 @@ typedef struct ScrollingDialog_t
    uint32_t lineWidth;     // in characters
 
    char lines[DIALOG_MAX_LINES][DIALOG_MAX_LINE_CHARS];
+   char insertionText[DIALOG_MAX_LINE_CHARS];
    uint32_t lineCount;
    uint32_t charCount;
    uint32_t section;
@@ -43,6 +44,7 @@ extern "C" {
 
 void ScrollingDialog_Init( ScrollingDialog_t* dialog, Screen_t* screen, Player_t* player );
 void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId );
+void ScrollingDialog_SetInsertionText( ScrollingDialog_t* dialog, const char* text );
 void ScrollingDialog_Draw( ScrollingDialog_t* dialog );
 void ScrollingDialog_Next( ScrollingDialog_t* dialog );
 void ScrollingDialog_Tic( ScrollingDialog_t* dialog );

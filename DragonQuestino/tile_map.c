@@ -2,6 +2,8 @@
 #include "screen.h"
 #include "math.h"
 
+#define SPRITE_CHEST_INDEX  0
+
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
 
 void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
@@ -11,6 +13,8 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
    tileMap->viewport.y = 0;
    tileMap->viewport.w = TILEMAP_VIEWPORT_WIDTH;
    tileMap->viewport.h = TILEMAP_VIEWPORT_HEIGHT;
+   Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
+   tileMap->treasureFlags = 0xFFFFFFFF;
 }
 
 void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH )
@@ -81,7 +85,7 @@ TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index 
 
 void TileMap_Draw( TileMap_t* tileMap )
 {
-   uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY;
+   uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, treasureFlag;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
    firstTileX = viewport->x / TILE_SIZE;
@@ -104,6 +108,16 @@ void TileMap_Draw( TileMap_t* tileMap )
                                    tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
                                    tileWidth, tileHeight,
                                    screenX, screenY, False );
+
+         treasureFlag = TileMap_GetTreasureFlag( tileMap->id, ( tileY * tileMap->tilesX ) + tileX );
+
+         if ( treasureFlag && ( tileMap->treasureFlags & treasureFlag ) )
+         {
+            Screen_DrawMemorySection( tileMap->screen, tileMap->chestSprite.texture.memory, SPRITE_TEXTURE_SIZE,
+                                      tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
+                                      tileWidth, tileHeight,
+                                      screenX, screenY, True );
+         }
 
          screenX += tileWidth;
       }

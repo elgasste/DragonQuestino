@@ -5,8 +5,8 @@
 void Player_Init( Player_t* player )
 {
    player->tileIndex = TILE_COUNT_X * TILE_COUNT_Y; // off the map
-   player->sprite.position.x = (float)( TILE_SIZE * 55 );
-   player->sprite.position.y = (float)( TILE_SIZE * 49 );
+   player->sprite.position.x = (float)( TILE_SIZE * 8 );
+   player->sprite.position.y = (float)( TILE_SIZE * 7 );
    player->velocity.x = 0.0f;
    player->velocity.y = 0.0f;
    player->maxVelocity = TILE_WALKSPEED_NORMAL;

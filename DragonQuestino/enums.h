@@ -102,6 +102,12 @@ typedef enum DialogMessageId_t
    DialogMessageId_Use_GwaelynsLove,
    DialogMessageId_Use_RainbowDrop,
 
+   DialogMessageId_Chest_ItemCollected,
+   DialogMessageId_Chest_ItemNoSpace,
+   DialogMessageId_Chest_GoldCollected,
+   DialogMessageId_Chest_GoldNoSpace,
+   DialogMessageId_Chest_Tablet,
+
    DialogMessageId_Count
 }
 DialogMessageId_t;
