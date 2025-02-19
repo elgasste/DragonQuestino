@@ -189,6 +189,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       collected = ( Player_CollectGold( &( game->player ), gold ) > 0 ) ? True : False;
       sprintf( msg, "%u", gold );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), msg );
+      Game_DrawOverworldQuickStatus( game );
    }
 
    if ( collected )
