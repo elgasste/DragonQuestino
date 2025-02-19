@@ -60,6 +60,7 @@
 
 #define STRING_ITEMCOLLECT_KEY                        "a key"
 #define STRING_ITEMCOLLECT_HERB                       "an herb"
+#define STRING_ITEMCOLLECT_STONEOFSUNLIGHT            "the Stone of Sunlight"
 
 #define STRING_ITEMUSE_HERB                           "%s grinds up an herb and eats it."
 #define STRING_ITEMUSE_WING                           "%s throws a wing into the air!"

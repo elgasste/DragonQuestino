@@ -171,6 +171,11 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       case 0x40:     // Tantegel ground floor, left room, bottom-right chest
          gold = 13;
          break;
+      case 0x80:     // Tantegel basement
+         isGold = False;
+         collected = Player_CollectItem( &( game->player ), Item_StoneOfSunlight );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_STONEOFSUNLIGHT );
+         break;
    }
 
    if ( gold > 0 )
