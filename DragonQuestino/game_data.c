@@ -13101,6 +13101,17 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 432 ) return 0x00200000;
          if ( tileIndex == 654 ) return 0x00400000;
          break;
+      case 29:
+         if ( tileIndex == 464 ) return 0x00800000;
+         break;
+      case 33:
+         if ( tileIndex == 364 ) return 0x01000000;
+         if ( tileIndex == 396 ) return 0x02000000;
+         if ( tileIndex == 397 ) return 0x04000000;
+         if ( tileIndex == 428 ) return 0x08000000;
+         if ( tileIndex == 429 ) return 0x10000000;
+         if ( tileIndex == 430 ) return 0x20000000;
+         break;
    }
 
    return 0;

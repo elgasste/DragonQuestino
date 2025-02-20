@@ -58,12 +58,12 @@
 
 #define STRING_BUTNOTHINGHAPPENS                      "But nothing happens."
 
-#define STRING_ITEMCOLLECT_KEY                        "a key"
-#define STRING_ITEMCOLLECT_HERB                       "an herb"
-#define STRING_ITEMCOLLECT_WING                       "a Chimaera wing"
-#define STRING_ITEMCOLLECT_SILVERHARP                 "the Silver Harp"
-#define STRING_ITEMCOLLECT_TABLET                     "Erdrick's Tablet"
-#define STRING_ITEMCOLLECT_STONEOFSUNLIGHT            "the Stone of Sunlight"
+#define STRING_CHESTCOLLECT_KEY                        "a key"
+#define STRING_CHESTCOLLECT_HERB                       "an herb"
+#define STRING_CHESTCOLLECT_WING                       "a Chimaera wing"
+#define STRING_CHESTCOLLECT_SILVERHARP                 "the Silver Harp"
+#define STRING_CHESTCOLLECT_TABLET                     "Erdrick's Tablet"
+#define STRING_CHESTCOLLECT_STONEOFSUNLIGHT            "the Stone of Sunlight"
 
 #define STRING_ITEMUSE_HERB                           "%s grinds up an herb and eats it."
 #define STRING_ITEMUSE_WING                           "%s throws a Chimaera wing into the air!"
