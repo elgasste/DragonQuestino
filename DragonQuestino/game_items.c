@@ -25,8 +25,8 @@ void Game_UseFairyWater( Game_t* game )
 void Game_UseTorch( Game_t* game )
 {
    PLAYER_SET_TORCHCOUNT( game->player.items, PLAYER_GET_TORCHCOUNT( game->player.items ) - 1 );
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Torch );
+   TileMap_SetLightDiameter( &( game->tileMap ), TORCH_DIAMETER );
+   Game_ChangeState( game, GameState_Overworld );
 }
 
 void Game_UseSilverHarp( Game_t* game )

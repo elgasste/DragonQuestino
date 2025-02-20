@@ -149,6 +149,11 @@ void Game_DrawNonUseableItems( Game_t* game )
 
 internal void Game_DrawOverworld( Game_t* game )
 {
+   if ( game->tileMap.viewportScreenPos.x != 0 || game->tileMap.viewportScreenPos.y != 0 )
+   {
+      Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+   }
+
    TileMap_Draw( &( game->tileMap ) );
    Game_DrawPlayer( game );
 

@@ -226,6 +226,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Use_Herb: return 2;
       case DialogMessageId_Use_Wing: return 2;
       case DialogMessageId_Use_FairyWater: return 2;
+      case DialogMessageId_Use_TorchCantUse: return 1;
       case DialogMessageId_Use_Torch: return 1;
       case DialogMessageId_Use_FairyFlute: return 2;
       case DialogMessageId_Use_SilverHarp: return 2;
@@ -276,7 +277,9 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 0: sprintf( text, STRING_ITEMUSE_FAIRYWATER, player->name ); return;
             case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
-      case DialogMessageId_Use_Torch: sprintf( text, STRING_ITEMUSE_TORCH_CANTUSE, player->name ); return;
+
+      case DialogMessageId_Use_TorchCantUse: strcpy( text, STRING_ITEMUSE_TORCH_CANTUSE ); return;
+      case DialogMessageId_Use_Torch: sprintf( text, STRING_ITEMUSE_TORCH, player->name ); return;
       case DialogMessageId_Use_FairyFlute:
          switch ( dialog->section )
          {

@@ -14,7 +14,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
    Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
    tileMap->treasureFlags = 0xFFFFFFFF;
    tileMap->isDark = False;
-   tileMap->lightRadius = 0;
+   tileMap->lightDiameter = 0;
 }
 
 void TileMap_ResetViewport( TileMap_t* tileMap )
@@ -59,6 +59,12 @@ void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h )
    tileMap->viewport.h = h;
    tileMap->viewportScreenPos.x = ( SCREEN_WIDTH - w ) / 2;
    tileMap->viewportScreenPos.y = ( SCREEN_HEIGHT - h ) / 2;
+}
+
+void TileMap_SetLightDiameter( TileMap_t* tileMap, uint32_t diameter )
+{
+   tileMap->lightDiameter = diameter;
+   TileMap_ChangeViewportSize( tileMap, (uint16_t)( diameter * TILE_SIZE ), (uint16_t)diameter * TILE_SIZE );
 }
 
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex )

@@ -174,7 +174,17 @@ internal void Game_HandleMenuInput( Game_t* game )
          case MenuCommand_OverworldItem_Herb: Game_UseHerb( game ); break;
          case MenuCommand_OverworldItem_Wing: Game_UseWing( game ); break;
          case MenuCommand_OverworldItem_FairyWater: Game_UseFairyWater( game ); break;
-         case MenuCommand_OverworldItem_Torch: Game_UseTorch( game ); break;
+         case MenuCommand_OverworldItem_Torch:
+            if ( game->tileMap.isDark )
+            {
+               Game_UseTorch( game ); break;
+            }
+            else
+            {
+               Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+               ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_TorchCantUse );
+            }
+            break;
          case MenuCommand_OverworldItem_SilverHarp: Game_UseSilverHarp( game ); break;
          case MenuCommand_OverworldItem_FairyFlute: Game_UseFairyFlute( game ); break;
          case MenuCommand_OverworldItem_GwaelynsLove: Game_UseGwaelynsLove( game ); break;

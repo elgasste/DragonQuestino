@@ -34,6 +34,8 @@
 #define GET_TILEENCOUNTERRATE( t )     ( ( ( t ) & 0x300 ) >> 9 )
 #define GET_TILEDAMAGERATE( t )        ( ( ( t ) & 0x1800 ) >> 11 )
 
+#define TORCH_DIAMETER                 3
+
 typedef struct Screen_t Screen_t;
 
 typedef struct TileTexture_t
@@ -57,7 +59,7 @@ typedef struct TileMap_t
    uint32_t id;
 
    Bool_t isDark;
-   uint32_t lightRadius;
+   uint32_t lightDiameter;
 
    // bits 1-5: texture index (max 32 textures)
    // bit 6: is-passable flag
@@ -96,6 +98,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen );
 void TileMap_ResetViewport( TileMap_t* tileMap );
 void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH );
 void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );
+void TileMap_SetLightDiameter( TileMap_t* tileMap, uint32_t diameter );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
 void TileMap_Draw( TileMap_t* tileMap );

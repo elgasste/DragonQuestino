@@ -36,7 +36,7 @@ void Player_Init( Player_t* player )
    //PLAYER_SET_HERBCOUNT( player->items, 3 );
    //PLAYER_SET_WINGCOUNT( player->items, 4 );
    //PLAYER_SET_FAIRYWATERCOUNT( player->items, 1 );
-   //PLAYER_SET_TORCHCOUNT( player->items, 7 );
+   PLAYER_SET_TORCHCOUNT( player->items, 7 );
    //PLAYER_TOGGLE_HASFAIRYFLUTE( player->items );
    //PLAYER_TOGGLE_HASSILVERHARP( player->items );
    //PLAYER_TOGGLE_HASGWAELYNSLOVE( player->items );

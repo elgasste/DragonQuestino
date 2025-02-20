@@ -113,8 +113,8 @@ internal void Game_TicTileMapTransition( Game_t* game )
       if ( game->tileMap.isDark )
       {
          TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     TILE_SIZE + (uint16_t)( game->tileMap.lightRadius * TILE_SIZE * 2 ),
-                                     TILE_SIZE + (uint16_t)( game->tileMap.lightRadius * TILE_SIZE * 2 ) );
+                                     TILE_SIZE + (uint16_t)( game->tileMap.lightDiameter * TILE_SIZE * 2 ),
+                                     TILE_SIZE + (uint16_t)( game->tileMap.lightDiameter * TILE_SIZE * 2 ) );
       }
       else
       {
