@@ -18,9 +18,8 @@
 #define TILE_WALKSPEED_VERYSLOW        48.0f
 #define TILE_WALKSPEED_CRAWL           36.0f
 
-#define TILEMAP_VIEWPORT_WIDTH         SCREEN_WIDTH
-#define TILEMAP_VIEWPORT_HEIGHT        SCREEN_HEIGHT
-#define TILEMAP_VIEWPORT_PIXELS        SCREEN_PIXELS
+#define TILEMAP_MAX_VIEWPORT_WIDTH     SCREEN_WIDTH
+#define TILEMAP_MAX_VIEWPORT_HEIGHT    SCREEN_HEIGHT
 #define TILEMAP_VIEWPORT_TILES_X       16
 #define TILEMAP_VIEWPORT_TILES_Y       14
 
@@ -58,6 +57,7 @@ typedef struct TileMap_t
    uint32_t id;
 
    Bool_t isDark;
+   uint32_t lightRadius;
 
    // bits 1-5: texture index (max 32 textures)
    // bit 6: is-passable flag
