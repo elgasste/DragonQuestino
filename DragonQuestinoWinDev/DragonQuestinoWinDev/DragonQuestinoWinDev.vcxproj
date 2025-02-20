@@ -28,6 +28,7 @@
     <ClInclude Include="..\..\DragonQuestino\math.h" />
     <ClInclude Include="..\..\DragonQuestino\menu.h" />
     <ClInclude Include="..\..\DragonQuestino\player.h" />
+    <ClInclude Include="..\..\DragonQuestino\random.h" />
     <ClInclude Include="..\..\DragonQuestino\screen.h" />
     <ClInclude Include="..\..\DragonQuestino\scrolling_dialog.h" />
     <ClInclude Include="..\..\DragonQuestino\sprite.h" />
@@ -48,6 +49,7 @@
     <ClCompile Include="..\..\DragonQuestino\math.c" />
     <ClCompile Include="..\..\DragonQuestino\menu.c" />
     <ClCompile Include="..\..\DragonQuestino\player.c" />
+    <ClCompile Include="..\..\DragonQuestino\random.c" />
     <ClCompile Include="..\..\DragonQuestino\screen.c" />
     <ClCompile Include="..\..\DragonQuestino\scrolling_dialog.c" />
     <ClCompile Include="..\..\DragonQuestino\sprite.c" />
@@ -56,6 +58,7 @@
     <ClCompile Include="win_input.c" />
     <ClCompile Include="win_main.c" />
     <ClCompile Include="win_pixel_buffer.c" />
+    <ClCompile Include="win_random.c" />
     <ClCompile Include="win_screen.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

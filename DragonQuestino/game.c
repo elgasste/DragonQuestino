@@ -1,4 +1,5 @@
 #include "game.h"
+#include "random.h"
 
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicOverworldWashing( Game_t* game );
@@ -7,6 +8,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
+   Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_Init( &( game->tileMap ), &( game->screen ) );
    TileMap_LoadTextures( &( game->tileMap ) );
@@ -162,20 +164,16 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_HERB );
          break;
       case 0x8:      // Tantegel ground floor, left room, upper-left chest
-         // TODO: should be variable up to 13
-         gold = 6;
+         gold = Random_U16( 6, 13 );
          break;
       case 0x10:     // Tantegel ground floor, left room, middle chest
-         // TODO: should be variable up to 13
-         gold = 6;
+         gold = Random_U16( 6, 13 );
          break;
       case 0x20:     // Tantegel ground floor, left room, bottom-left chest
-         // TODO: should be variable up to 13
-         gold = 6;
+         gold = Random_U16( 6, 13 );
          break;
       case 0x40:     // Tantegel ground floor, left room, bottom-right chest
-         // TODO: should be variable up to 13
-         gold = 6;
+         gold = Random_U16( 6, 13 );
          break;
       case 0x80:     // Tantegel basement
          isGold = False;
@@ -205,12 +203,11 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          gold = 110;
          break;
       case 0x2000:   // Rocky Mountain Cave B2, center-left chest
-         // TODO: should be 1/32 chance of a death necklace. also, gold should be variable up to 131.
-         gold = 100;
+         // TODO: should be 1/32 chance of a death necklace
+         gold = Random_U16( 100, 131 );
          break;
       case 0x4000:   // Rocky Mountain Cave B2, center-right chest (16384)
-         // TODO: should be variable up to 17.
-         gold = 10;
+         gold = Random_U16( 10, 17 );
          break;
    }
 
