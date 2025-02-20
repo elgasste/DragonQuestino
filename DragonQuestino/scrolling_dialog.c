@@ -226,10 +226,12 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Use_Herb: return 2;
       case DialogMessageId_Use_Wing: return 2;
       case DialogMessageId_Use_FairyWater: return 2;
-      case DialogMessageId_Use_SilverHarp: return 2;
+      case DialogMessageId_Use_Torch: return 1;
       case DialogMessageId_Use_FairyFlute: return 2;
+      case DialogMessageId_Use_SilverHarp: return 2;
       case DialogMessageId_Use_GwaelynsLove: return 2;
       case DialogMessageId_Use_RainbowDrop: return 1;
+      case DialogMessageId_Use_CursedBelt: return 2;
       case DialogMessageId_Chest_ItemCollected: return 1;
       case DialogMessageId_Chest_ItemNoSpace: return 2;
       case DialogMessageId_Chest_GoldCollected: return 1;
@@ -274,17 +276,18 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 0: sprintf( text, STRING_ITEMUSE_FAIRYWATER, player->name ); return;
             case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
-      case DialogMessageId_Use_SilverHarp:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_ITEMUSE_SILVERHARP_1, player->name ); return;
-            case 1: strcpy( text, STRING_ITEMUSE_SILVERHARP_2 ); return;
-         }
+      case DialogMessageId_Use_Torch: sprintf( text, STRING_ITEMUSE_TORCH_CANTUSE, player->name ); return;
       case DialogMessageId_Use_FairyFlute:
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_ITEMUSE_FAIRYFLUTE_1, player->name ); return;
             case 1: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_2 ); return;
+         }
+      case DialogMessageId_Use_SilverHarp:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_ITEMUSE_SILVERHARP_1, player->name ); return;
+            case 1: strcpy( text, STRING_ITEMUSE_SILVERHARP_2 ); return;
          }
       case DialogMessageId_Use_GwaelynsLove:
          switch ( dialog->section )
@@ -292,10 +295,12 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 0: sprintf( text, STRING_ITEMUSE_GWAELYNSLOVE_1, player->name ); return;
             case 1: strcpy( text, STRING_ITEMUSE_GWAELYNSLOVE_2 ); return;
          }
-      case DialogMessageId_Use_RainbowDrop:
+      case DialogMessageId_Use_RainbowDrop: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
+      case DialogMessageId_Use_CursedBelt:
          switch ( dialog->section )
          {
-            case 0: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_CURSEDBELT_1, player->name ); return;
+            case 1: strcpy( text, STRING_ITEMUSE_CURSEDBELT_2 ); return;
          }
       case DialogMessageId_Chest_ItemCollected: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
       case DialogMessageId_Chest_ItemNoSpace:

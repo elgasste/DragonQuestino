@@ -213,6 +213,13 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
       menu->items[curItem].command = MenuCommand_OverworldItem_Herb;
       curItem++;
    }
+   if ( PLAYER_GET_TORCHCOUNT( items ) )
+   {
+      menu->items[curItem].twoLineText = False;
+      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_TORCH, PLAYER_GET_TORCHCOUNT( items ) );
+      menu->items[curItem].command = MenuCommand_OverworldItem_Torch;
+      curItem++;
+   }
    if ( PLAYER_GET_WINGCOUNT( items ) )
    {
       menu->items[curItem].twoLineText = False;
@@ -228,20 +235,20 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
       menu->items[curItem].command = MenuCommand_OverworldItem_FairyWater;
       curItem++;
    }
-   if ( PLAYER_HAS_SILVERHARP( items ) )
-   {
-      menu->items[curItem].twoLineText = True;
-      strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_SILVERHARP_1 );
-      strcpy( menu->items[curItem].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_SILVERHARP_2 );
-      menu->items[curItem].command = MenuCommand_OverworldItem_SilverHarp;
-      curItem++;
-   }
    if ( PLAYER_HAS_FAIRYFLUTE( items ) )
    {
       menu->items[curItem].twoLineText = True;
       strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_FAIRYFLUTE_1 );
       strcpy( menu->items[curItem].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_FAIRYFLUTE_2 );
       menu->items[curItem].command = MenuCommand_OverworldItem_FairyFlute;
+      curItem++;
+   }
+   if ( PLAYER_HAS_SILVERHARP( items ) )
+   {
+      menu->items[curItem].twoLineText = True;
+      strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_SILVERHARP_1 );
+      strcpy( menu->items[curItem].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_SILVERHARP_2 );
+      menu->items[curItem].command = MenuCommand_OverworldItem_SilverHarp;
       curItem++;
    }
    if ( PLAYER_HAS_GWAELYNSLOVE( items ) )
@@ -258,6 +265,14 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
       strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_RAINBOWDROP_1 );
       strcpy( menu->items[curItem].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_RAINBOWDROP_2 );
       menu->items[curItem].command = MenuCommand_OverworldItem_RainbowDrop;
+      curItem++;
+   }
+   if ( PLAYER_HAS_CURSEDBELT( items ) )
+   {
+      menu->items[curItem].twoLineText = True;
+      strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_CURSEDBELT_1 );
+      strcpy( menu->items[curItem].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_CURSEDBELT_2 );
+      menu->items[curItem].command = MenuCommand_OverworldItem_CursedBelt;
       curItem++;
    }
 }

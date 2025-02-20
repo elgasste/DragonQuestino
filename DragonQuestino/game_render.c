@@ -98,9 +98,9 @@ void Game_DrawNonUseableItems( Game_t* game )
 
    if ( game->state == GameState_Overworld_ItemMenu )
    {
-      Screen_DrawTextWindow( &( game->screen ), 16, 120, 11, ( itemCount * 2 ) + 2, COLOR_WHITE );
-      x = 24;
-      y = 128;
+      Screen_DrawTextWindow( &( game->screen ), 56, 48, 11, ( itemCount * 2 ) + 2, COLOR_WHITE );
+      x = 64;
+      y = 56;
    }
    else
    {
@@ -113,6 +113,12 @@ void Game_DrawNonUseableItems( Game_t* game )
    {
       sprintf( line, STRING_OVERWORLD_ITEMMENU_KEY, PLAYER_GET_KEYCOUNT( items ) );
       Screen_DrawText( &( game->screen ), line, x, y, COLOR_WHITE );
+      y += ( TEXT_TILE_SIZE * 2 );
+   }
+   if ( PLAYER_HAS_DRAGONSCALE( items ) )
+   {
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_DRAGONSCALE_1, x, y, COLOR_WHITE );
+      Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_DRAGONSCALE_2, x, y + 8, COLOR_WHITE );
       y += ( TEXT_TILE_SIZE * 2 );
    }
    if ( PLAYER_HAS_TOKEN( items ) )

@@ -174,10 +174,12 @@ internal void Game_HandleMenuInput( Game_t* game )
          case MenuCommand_OverworldItem_Herb: Game_UseHerb( game ); break;
          case MenuCommand_OverworldItem_Wing: Game_UseWing( game ); break;
          case MenuCommand_OverworldItem_FairyWater: Game_UseFairyWater( game ); break;
+         case MenuCommand_OverworldItem_Torch: Game_UseTorch( game ); break;
          case MenuCommand_OverworldItem_SilverHarp: Game_UseSilverHarp( game ); break;
          case MenuCommand_OverworldItem_FairyFlute: Game_UseFairyFlute( game ); break;
          case MenuCommand_OverworldItem_GwaelynsLove: Game_UseGwaelynsLove( game ); break;
          case MenuCommand_OverworldItem_RainbowDrop: Game_UseRainbowDrop( game ); break;
+         case MenuCommand_OverworldItem_CursedBelt: Game_UseCursedBelt( game ); break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )

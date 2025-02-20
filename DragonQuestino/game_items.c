@@ -22,6 +22,13 @@ void Game_UseFairyWater( Game_t* game )
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWater );
 }
 
+void Game_UseTorch( Game_t* game )
+{
+   PLAYER_SET_TORCHCOUNT( game->player.items, PLAYER_GET_TORCHCOUNT( game->player.items ) - 1 );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Torch );
+}
+
 void Game_UseSilverHarp( Game_t* game )
 {
    Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
@@ -44,4 +51,11 @@ void Game_UseRainbowDrop( Game_t* game )
 {
    Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_RainbowDrop );
+}
+
+void Game_UseCursedBelt( Game_t* game )
+{
+   PLAYER_TOGGLE_HASCURSEDBELT( game->player.items );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_CursedBelt );
 }

@@ -32,18 +32,22 @@ void Player_Init( Player_t* player )
    player->items = 0;
 
    // uncomment for testing
-   //PLAYER_SET_KEYCOUNT( player->items, 2 );
-   //PLAYER_SET_HASSTONEOFSUNLIGHT( player->items, True );
-   //PLAYER_SET_HASSTAFFOFRAIN( player->items, True );
-   //PLAYER_SET_HASTOKEN( player->items, True );
-   //PLAYER_SET_HASSPHEREOFLIGHT( player->items, True );
-   //PLAYER_SET_HERBCOUNT( player->items, 7 );
-   //PLAYER_SET_WINGCOUNT( player->items, 1 );
-   //PLAYER_SET_FAIRYWATERCOUNT( player->items, 4 );
-   //PLAYER_SET_HASSILVERHARP( player->items, True );
-   //PLAYER_SET_HASFAIRYFLUTE( player->items, True );
-   //PLAYER_SET_HASGWAELYNSLOVE( player->items, True );
-   //PLAYER_SET_HASRAINBOWDROP( player->items, True );
+   PLAYER_SET_KEYCOUNT( player->items, 2 );
+   PLAYER_SET_HERBCOUNT( player->items, 3 );
+   PLAYER_SET_WINGCOUNT( player->items, 4 );
+   PLAYER_SET_FAIRYWATERCOUNT( player->items, 1 );
+   PLAYER_SET_TORCHCOUNT( player->items, 7 );
+
+   PLAYER_TOGGLE_HASFAIRYFLUTE( player->items );
+   PLAYER_TOGGLE_HASSILVERHARP( player->items );
+   PLAYER_TOGGLE_HASGWAELYNSLOVE( player->items );
+   PLAYER_TOGGLE_HASSTONEOFSUNLIGHT( player->items );
+   PLAYER_TOGGLE_HASSTAFFOFRAIN( player->items );
+   PLAYER_TOGGLE_HASTOKEN( player->items );
+   PLAYER_TOGGLE_HASRAINBOWDROP( player->items );
+   PLAYER_TOGGLE_HASSPHEREOFLIGHT( player->items );
+   PLAYER_TOGGLE_HASDRAGONSCALE( player->items );
+   PLAYER_TOGGLE_HASCURSEDBELT( player->items );
 }
 
 uint8_t Player_GetLevel( Player_t* player )
@@ -133,11 +137,19 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
             collected = True;
          }
          break;
+      case Item_Torch:
+         count = PLAYER_GET_TORCHCOUNT( player->items );
+         if ( count < PLAYER_MAXTORCHES )
+         {
+            count++;
+            PLAYER_SET_TORCHCOUNT( player->items, count );
+            collected = True;
+         }
       default:
          if ( item < Item_Count )
          {
-            // single items start at 4 (Item_Tablet), and shifting starts at 12, hence "item + 8"
-            player->items |= ( ( uint32_t )( True ) << ( ( uint32_t )( item ) + 8 ) );
+            // single items start at 5 (Item_FairyFlute), and shifting starts at 15, hence "item + 10"
+            player->items |= ( ( uint32_t )( True ) << ( ( uint32_t )( item ) + 10 ) );
             collected = True;
          }
          break;
