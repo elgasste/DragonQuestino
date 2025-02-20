@@ -9,14 +9,22 @@ internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
 void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
 {
    tileMap->screen = screen;
-   tileMap->viewport.x = 0;
-   tileMap->viewport.y = 0;
-   tileMap->viewport.w = TILEMAP_MAX_VIEWPORT_WIDTH;
-   tileMap->viewport.h = TILEMAP_MAX_VIEWPORT_HEIGHT;
+   TileMap_ResetViewport( tileMap );
+
    Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
    tileMap->treasureFlags = 0xFFFFFFFF;
    tileMap->isDark = False;
    tileMap->lightRadius = 0;
+}
+
+void TileMap_ResetViewport( TileMap_t* tileMap )
+{
+   tileMap->viewport.x = 0;
+   tileMap->viewport.y = 0;
+   tileMap->viewport.w = SCREEN_WIDTH;
+   tileMap->viewport.h = SCREEN_HEIGHT;
+   tileMap->viewportScreenPos.x = 0;
+   tileMap->viewportScreenPos.y = 0;
 }
 
 void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH )
@@ -43,6 +51,14 @@ void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchor
    {
       viewport->y = ( tileMap->tilesY * TILE_SIZE ) - viewport->h;
    }
+}
+
+void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h )
+{
+   tileMap->viewport.w = w;
+   tileMap->viewport.h = h;
+   tileMap->viewportScreenPos.x = ( SCREEN_WIDTH - w ) / 2;
+   tileMap->viewportScreenPos.y = ( SCREEN_HEIGHT - h ) / 2;
 }
 
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex )
@@ -90,8 +106,6 @@ void TileMap_Draw( TileMap_t* tileMap )
    uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, treasureFlag;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
-   // MUFFINS: let's try changing the viewport first, this might end up being SUPER easy...
-
    firstTileX = viewport->x / TILE_SIZE;
    firstTileY = viewport->y / TILE_SIZE;
    lastTileX = ( viewport->x + viewport->w ) / TILE_SIZE;
@@ -111,7 +125,7 @@ void TileMap_Draw( TileMap_t* tileMap )
          Screen_DrawMemorySection( tileMap->screen, tileMap->textures[textureIndex].memory, TILE_SIZE,
                                    tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
                                    tileWidth, tileHeight,
-                                   screenX, screenY, False );
+                                   screenX + tileMap->viewportScreenPos.x, screenY + tileMap->viewportScreenPos.y, False );
 
          treasureFlag = TileMap_GetTreasureFlag( tileMap->id, ( tileY * tileMap->tilesX ) + tileX );
 
@@ -120,7 +134,7 @@ void TileMap_Draw( TileMap_t* tileMap )
             Screen_DrawMemorySection( tileMap->screen, tileMap->chestSprite.texture.memory, SPRITE_TEXTURE_SIZE,
                                       tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
                                       tileWidth, tileHeight,
-                                      screenX, screenY, True );
+                                      screenX + tileMap->viewportScreenPos.x, screenY + tileMap->viewportScreenPos.y, True );
          }
 
          screenX += tileWidth;
@@ -155,7 +169,8 @@ internal void TileMap_DrawStaticSprites( TileMap_t* tileMap )
          sxu = ( sx < 0 ) ? 0 : sx;
          syu = ( sy < 0 ) ? 0 : sy;
 
-         Screen_DrawMemorySection( tileMap->screen, sprite->texture.memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
+         Screen_DrawMemorySection( tileMap->screen, sprite->texture.memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
+                                   sxu + tileMap->viewportScreenPos.x, syu + tileMap->viewportScreenPos.y, True );
       }
    }
 }

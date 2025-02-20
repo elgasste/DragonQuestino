@@ -173,5 +173,6 @@ internal void Game_DrawPlayer( Game_t* game )
    uint32_t sxu = ( sx < 0 ) ? 0 : sx;
    uint32_t syu = ( sy < 0 ) ? 0 : sy;
 
-   Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th, sxu, syu, True );
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
+                             sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
 }
