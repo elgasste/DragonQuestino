@@ -6172,7 +6172,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 80;
          tileMap->staticSprites[0].position.y = 96;
-         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x01080108;
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x010B010B;
          for ( i = 72; i < 78; i++ ) tiles32[i] = 0x01060106;
          tiles32[142] = 0x01060106;
          for ( i = 143; i < 147; i++ ) tiles32[i] = 0x01270127;
