@@ -187,6 +187,11 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          collected = Player_CollectItem( &( game->player ), Item_Wing );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_WING );
          break;
+      case 0x400:    // Rocky Mountain Cave B1
+         isGold = False;
+         collected = Player_CollectItem( &( game->player ), Item_Herb );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_HERB );
+         break;
    }
 
    if ( gold > 0 )
