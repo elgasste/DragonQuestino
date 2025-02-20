@@ -57,6 +57,8 @@ typedef struct TileMap_t
    Screen_t* screen;
    uint32_t id;
 
+   Bool_t isDark;
+
    // bits 1-5: texture index (max 32 textures)
    // bit 6: is-passable flag
    // bits 7-8: walk speed (0 = normal, 3 = crawl)

@@ -39,14 +39,22 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _name, value );
       }
 
-      public TileMapViewModel( TileSet tileSet, int id, string? name, int tilesX, int tilesY, int defaultTileTextureIndex )
+      private bool _isDark;
+      public bool IsDark
+      {
+         get => _isDark;
+         set => SetProperty( ref _isDark, value );
+      }
+
+      public TileMapViewModel( TileSet tileSet, int id, string? name, bool isDark, int tilesX, int tilesY, int defaultTileTextureIndex )
       {
          _id = id;
          _name = name;
+         _isDark = isDark;
          _tilesX = tilesX;
          _tilesY = tilesY;
 
-         for( int i = 0; i < tilesX * tilesY; i++ )
+         for ( int i = 0; i < tilesX * tilesY; i++ )
          {
             Tiles.Add( new TileViewModel( tileSet, defaultTileTextureIndex ) );
          }
@@ -56,6 +64,7 @@ namespace DragonQuestinoEditor.ViewModels
       {
          _id = saveData.Id;
          _name = saveData.Name;
+         _isDark = saveData.IsDark;
          _tilesX = saveData.TilesX;
          _tilesY = saveData.TilesY;
 
