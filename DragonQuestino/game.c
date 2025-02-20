@@ -149,65 +149,97 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 
    switch ( treasureFlag )
    {
-      case 0x1:      // Tantegel throne room, upper-right chest
+      case 0x1:         // Tantegel throne room, upper-right chest
          isGold = False;
          collected = Player_CollectItem( &( game->player ), Item_Key );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_KEY );
          break;
-      case 0x2:      // Tantegel throne room, lower-left chest
+      case 0x2:         // Tantegel throne room, lower-left chest
          isGold = True;
          gold = 120;
          break;
-      case 0x4:      // Tantegel throne room, lower-right chest
+      case 0x4:         // Tantegel throne room, lower-right chest
          isGold = False;
          collected = Player_CollectItem( &( game->player ), Item_Herb );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_HERB );
          break;
-      case 0x8:      // Tantegel ground floor, left room, upper-left chest
+      case 0x8:         // Tantegel ground floor, left room, upper-left chest
          gold = Random_U16( 6, 13 );
          break;
-      case 0x10:     // Tantegel ground floor, left room, middle chest
+      case 0x10:        // Tantegel ground floor, left room, middle chest
          gold = Random_U16( 6, 13 );
          break;
-      case 0x20:     // Tantegel ground floor, left room, bottom-left chest
+      case 0x20:        // Tantegel ground floor, left room, bottom-left chest
          gold = Random_U16( 6, 13 );
          break;
-      case 0x40:     // Tantegel ground floor, left room, bottom-right chest
+      case 0x40:        // Tantegel ground floor, left room, bottom-right chest
          gold = Random_U16( 6, 13 );
          break;
-      case 0x80:     // Tantegel basement
+      case 0x80:        // Tantegel basement
          isGold = False;
          collected = Player_CollectItem( &( game->player ), Item_StoneOfSunlight );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_STONEOFSUNLIGHT );
          break;
-      case 0x100:    // Erdrick's Cave, the tablet. this is not an item that can be collected.
+      case 0x100:       // Erdrick's Cave, the tablet. this is not an item that can be collected.
          ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_Tablet );
          game->tileMap.treasureFlags ^= treasureFlag;
          return;
-      case 0x200:    // Rimuldar Inn
+      case 0x200:       // Rimuldar Inn
          isGold = False;
          collected = Player_CollectItem( &( game->player ), Item_Wing );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_WING );
          break;
-      case 0x400:    // Rocky Mountain Cave B1
+      case 0x400:       // Rocky Mountain Cave B1
          isGold = False;
          collected = Player_CollectItem( &( game->player ), Item_Herb );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_HERB );
          break;
-      case 0x800:    // Rocky Mountain Cave B2, upper-left area, left chest
-         // TODO: should be a fighter's ring
+      case 0x800:       // Rocky Mountain Cave B2, upper-left area, left chest
+         // TODO: should be a fighter's ring (do we even want those? what do they do?)
          gold = 100;
          break;
-      case 0x1000:   // Rocky Mountain Cave B2, upper-left area, right chest
+      case 0x1000:      // Rocky Mountain Cave B2, upper-left area, right chest
          // TODO: should be a torch
          gold = 110;
          break;
-      case 0x2000:   // Rocky Mountain Cave B2, center-left chest
+      case 0x2000:      // Rocky Mountain Cave B2, center-left chest
          // TODO: should be 1/32 chance of a death necklace
          gold = Random_U16( 100, 131 );
          break;
-      case 0x4000:   // Rocky Mountain Cave B2, center-right chest (16384)
+      case 0x4000:      // Rocky Mountain Cave B2, center-right chest
          gold = Random_U16( 10, 17 );
+         break;
+      case 0x8000:      // Garinham, top-left chest
+         gold = Random_U16( 10, 17 );
+         break;
+      case 0x10000:     // Garinham, top-right chest
+         // TODO: should be a torch
+         gold = 20;
+         break;
+      case 0x20000:     // Garinham, bottom-left chest
+         isGold = False;
+         collected = Player_CollectItem( &( game->player ), Item_Herb );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_HERB );
+         break;
+      case 0x40000:     // Garin's Grave B1, left chest
+         isGold = False;
+         collected = Player_CollectItem( &( game->player ), Item_Herb );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_HERB );
+         break;
+      case 0x80000:     // Garin's Grave B1, center chest
+         gold = Random_U16( 5, 20 );
+         break;
+      case 0x100000:    // Garin's Grave B1, right chest
+         gold = Random_U16( 6, 13 );
+         break;
+      case 0x200000:    // Garin's Grave B3, upper-left chest
+         // TODO: should be cursed belt
+         gold = 50;
+         break;
+      case 0x400000:    // Garin's Grave B3, right chest
+         isGold = False;
+         collected = Player_CollectItem( &( game->player ), Item_SilverHarp );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_ITEMCOLLECT_SILVERHARP );
          break;
    }
 

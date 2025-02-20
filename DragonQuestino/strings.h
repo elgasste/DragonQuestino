@@ -61,6 +61,7 @@
 #define STRING_ITEMCOLLECT_KEY                        "a key"
 #define STRING_ITEMCOLLECT_HERB                       "an herb"
 #define STRING_ITEMCOLLECT_WING                       "a Chimaera wing"
+#define STRING_ITEMCOLLECT_SILVERHARP                 "the Silver Harp"
 #define STRING_ITEMCOLLECT_TABLET                     "Erdrick's Tablet"
 #define STRING_ITEMCOLLECT_STONEOFSUNLIGHT            "the Stone of Sunlight"
 
