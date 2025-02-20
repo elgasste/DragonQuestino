@@ -109,6 +109,18 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->swapPortal = 0;
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+
+      if ( game->tileMap.isDark )
+      {
+         TileMap_ChangeViewportSize( &( game->tileMap ),
+                                     TILE_SIZE + (uint16_t)( game->tileMap.lightRadius * TILE_SIZE * 2 ),
+                                     TILE_SIZE + (uint16_t)( game->tileMap.lightRadius * TILE_SIZE * 2 ) );
+      }
+      else
+      {
+         TileMap_ResetViewport( &( game->tileMap ) );
+      }
+
       TileMap_UpdateViewport( &( game->tileMap ),
                               (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
                               game->player.hitBoxSize.x, game->player.hitBoxSize.y );
