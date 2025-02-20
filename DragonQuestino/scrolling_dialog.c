@@ -314,7 +314,7 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
       case DialogMessageId_Chest_Tablet:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_CHEST_ITEMFOUND, STRING_ITEMCOLLECT_TABLET ); return;
+            case 0: sprintf( text, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_TABLET ); return;
             case 1: strcpy( text, STRING_CHEST_TABLET_1 ); return;
             case 2: strcpy( text, STRING_CHEST_TABLET_2 ); return;
             case 3: strcpy( text, STRING_CHEST_TABLET_3 ); return;

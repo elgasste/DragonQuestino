@@ -1,4 +1,5 @@
 #include "game.h"
+#include "random.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
@@ -159,5 +160,6 @@ internal void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    {
       game->swapPortal = portal;
       Game_ChangeState( game, GameState_TileMapTransition );
+      Random_Seed();
    }
 }
