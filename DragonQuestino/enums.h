@@ -34,15 +34,17 @@ typedef enum Item_t
    Item_Herb,
    Item_Wing,
    Item_FairyWater,
-   Item_Tablet,
+   Item_Torch,
+   Item_FairyFlute,
+   Item_SilverHarp,
+   Item_GwaelynsLove,
    Item_StoneOfSunlight,
    Item_StaffOfRain,
-   Item_RainbowDrop,
-   Item_SilverHarp,
-   Item_FairyFlute,
-   Item_GwaelynsLove,
    Item_Token,
+   Item_RainbowDrop,
    Item_SphereOfLight,
+   Item_DragonScale,
+   Item_CursedBelt,
 
    Item_Count
 }
@@ -69,10 +71,12 @@ typedef enum MenuCommand_t
    MenuCommand_OverworldItem_Herb,
    MenuCommand_OverworldItem_Wing,
    MenuCommand_OverworldItem_FairyWater,
-   MenuCommand_OverworldItem_RainbowDrop,
-   MenuCommand_OverworldItem_SilverHarp,
+   MenuCommand_OverworldItem_Torch,
    MenuCommand_OverworldItem_FairyFlute,
+   MenuCommand_OverworldItem_SilverHarp,
    MenuCommand_OverworldItem_GwaelynsLove,
+   MenuCommand_OverworldItem_RainbowDrop,
+   MenuCommand_OverworldItem_CursedBelt,
 
    MenuCommand_Count
 }
@@ -97,10 +101,12 @@ typedef enum DialogMessageId_t
    DialogMessageId_Use_Herb,
    DialogMessageId_Use_Wing,
    DialogMessageId_Use_FairyWater,
-   DialogMessageId_Use_SilverHarp,
+   DialogMessageId_Use_Torch,
    DialogMessageId_Use_FairyFlute,
+   DialogMessageId_Use_SilverHarp,
    DialogMessageId_Use_GwaelynsLove,
    DialogMessageId_Use_RainbowDrop,
+   DialogMessageId_Use_CursedBelt,
 
    DialogMessageId_Chest_ItemCollected,
    DialogMessageId_Chest_ItemNoSpace,

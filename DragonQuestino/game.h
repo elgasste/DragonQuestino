@@ -60,10 +60,12 @@ void Game_DrawNonUseableItems( Game_t* game );
 void Game_UseHerb( Game_t* game );
 void Game_UseWing( Game_t* game );
 void Game_UseFairyWater( Game_t* game );
-void Game_UseSilverHarp( Game_t* game );
+void Game_UseTorch( Game_t* game );
 void Game_UseFairyFlute( Game_t* game );
+void Game_UseSilverHarp( Game_t* game );
 void Game_UseGwaelynsLove( Game_t* game );
 void Game_UseRainbowDrop( Game_t* game );
+void Game_UseCursedBelt( Game_t* game );
 
 #if defined( __cplusplus )
 }
