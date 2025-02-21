@@ -18,7 +18,8 @@
 
 #define VK_NOCLIP                   49    // 1
 #define VK_FASTWALK                 50    // 2
-#define VK_ALLITEMS                 51    // 3
+#define VK_NODARK                   51    // 3
+#define VK_ALLITEMS                 52    // 4
 
 typedef struct GlobalObjects_t
 {

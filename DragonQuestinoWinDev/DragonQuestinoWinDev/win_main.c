@@ -10,6 +10,7 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags );
 internal void RenderScreen();
 internal void DrawDiagnostics( HDC* dcMem );
 internal void ToggleFastWalk();
+internal void ToggleNoDark();
 internal void GetAllItems();
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
@@ -101,6 +102,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_debugFlags.showDiagnostics = False;
    g_debugFlags.noClip = False;
    g_debugFlags.fastWalk = False;
+   g_debugFlags.noDark = False;
 
    while ( 1 )
    {
@@ -216,6 +218,9 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
                break;
             case VK_FASTWALK:
                ToggleFastWalk();
+               break;
+            case VK_NODARK:
+               ToggleNoDark();
                break;
             case VK_ALLITEMS:
                GetAllItems();
@@ -354,8 +359,13 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
+   SetTextColor( *dcMem, g_debugFlags.noDark ? 0x00FFFFFF : 0x00333333 );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "3: No dark" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
    SetTextColor( *dcMem, 0x00FFFFFF );
-   sprintf_s( str, STRING_SIZE_DEFAULT, "3: Get all items" );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "4: Get all items" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
@@ -373,6 +383,11 @@ internal void ToggleFastWalk()
    {
       g_globals.game.player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( g_globals.game.tileMap ), g_globals.game.player.tileIndex );
    }
+}
+
+internal void ToggleNoDark()
+{
+   TOGGLE_BOOL( g_debugFlags.noDark );
 }
 
 internal void GetAllItems()

@@ -51,6 +51,7 @@ typedef struct DebugFlags_t
    Bool_t showDiagnostics;
    Bool_t noClip;
    Bool_t fastWalk;
+   Bool_t noDark;
 }
 DebugFlags_t;
 

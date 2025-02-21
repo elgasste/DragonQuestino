@@ -74,6 +74,22 @@ internal void Game_TicOverworld( Game_t* game )
    Game_TicPhysics( game );
    Sprite_Tic( &( game->player.sprite ) );
 
+#if defined( VISUAL_STUDIO_DEV )
+   if ( game->tileMap.isDark )
+   {
+      if ( g_debugFlags.noDark )
+      {
+         TileMap_ChangeViewportSize( &( game->tileMap ), SCREEN_WIDTH, SCREEN_HEIGHT );
+      }
+      else
+      {
+         TileMap_ChangeViewportSize( &( game->tileMap ),
+                                     TILE_SIZE * (uint16_t)( game->tileMap.lightDiameter ),
+                                     TILE_SIZE * (uint16_t)( game->tileMap.lightDiameter ) );
+      }
+   }
+#endif
+
    if ( game->tileMap.isDark && game->tileMap.lightDiameter < game->tileMap.targetLightDiameter )
    {
       // TODO: animate the light diameter increasing
