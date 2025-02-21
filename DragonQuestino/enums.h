@@ -101,6 +101,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Use_Herb,
    DialogMessageId_Use_Wing,
    DialogMessageId_Use_FairyWater,
+   DialogMessageId_Use_TorchCantUse,
    DialogMessageId_Use_Torch,
    DialogMessageId_Use_FairyFlute,
    DialogMessageId_Use_SilverHarp,

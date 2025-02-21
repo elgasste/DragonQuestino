@@ -10,6 +10,8 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags );
 internal void RenderScreen();
 internal void DrawDiagnostics( HDC* dcMem );
 internal void ToggleFastWalk();
+internal void ToggleNoDark();
+internal void GetAllItems();
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -100,6 +102,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_debugFlags.showDiagnostics = False;
    g_debugFlags.noClip = False;
    g_debugFlags.fastWalk = False;
+   g_debugFlags.noDark = False;
 
    while ( 1 )
    {
@@ -215,6 +218,12 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
                break;
             case VK_FASTWALK:
                ToggleFastWalk();
+               break;
+            case VK_NODARK:
+               ToggleNoDark();
+               break;
+            case VK_ALLITEMS:
+               GetAllItems();
                break;
          }
       }
@@ -348,6 +357,16 @@ internal void DrawDiagnostics( HDC* dcMem )
    SetTextColor( *dcMem, g_debugFlags.fastWalk ? 0x00FFFFFF : 0x00333333 );
    sprintf_s( str, STRING_SIZE_DEFAULT, "2: Fast walk" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   SetTextColor( *dcMem, g_debugFlags.noDark ? 0x00FFFFFF : 0x00333333 );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "3: No dark" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   SetTextColor( *dcMem, 0x00FFFFFF );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "4: Get all items" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
 }
@@ -363,5 +382,60 @@ internal void ToggleFastWalk()
    else
    {
       g_globals.game.player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( g_globals.game.tileMap ), g_globals.game.player.tileIndex );
+   }
+}
+
+internal void ToggleNoDark()
+{
+   TOGGLE_BOOL( g_debugFlags.noDark );
+}
+
+internal void GetAllItems()
+{
+   PLAYER_SET_KEYCOUNT( g_globals.game.player.items, PLAYER_MAXKEYS );
+   PLAYER_SET_HERBCOUNT( g_globals.game.player.items, PLAYER_MAXHERBS );
+   PLAYER_SET_WINGCOUNT( g_globals.game.player.items, PLAYER_MAXWINGS );
+   PLAYER_SET_FAIRYWATERCOUNT( g_globals.game.player.items, PLAYER_MAXFAIRYWATERS );
+   PLAYER_SET_TORCHCOUNT( g_globals.game.player.items, PLAYER_MAXTORCHES );
+
+   if ( !PLAYER_HAS_FAIRYFLUTE( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASFAIRYFLUTE( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_SILVERHARP( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASSILVERHARP( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_GWAELYNSLOVE( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASGWAELYNSLOVE( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_STONEOFSUNLIGHT( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASSTONEOFSUNLIGHT( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_STAFFOFRAIN( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASSTAFFOFRAIN( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_TOKEN( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASTOKEN( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_RAINBOWDROP( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASRAINBOWDROP( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_SPHEREOFLIGHT( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASSPHEREOFLIGHT( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_DRAGONSCALE( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASDRAGONSCALE( g_globals.game.player.items );
+   }
+   if ( !PLAYER_HAS_CURSEDBELT( g_globals.game.player.items ) )
+   {
+      PLAYER_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
    }
 }

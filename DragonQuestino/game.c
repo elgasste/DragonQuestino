@@ -73,6 +73,29 @@ internal void Game_TicOverworld( Game_t* game )
 {
    Game_TicPhysics( game );
    Sprite_Tic( &( game->player.sprite ) );
+
+#if defined( VISUAL_STUDIO_DEV )
+   if ( game->tileMap.isDark )
+   {
+      if ( g_debugFlags.noDark )
+      {
+         TileMap_ChangeViewportSize( &( game->tileMap ), SCREEN_WIDTH, SCREEN_HEIGHT );
+      }
+      else
+      {
+         TileMap_ChangeViewportSize( &( game->tileMap ),
+                                     TILE_SIZE * (uint16_t)( game->tileMap.lightDiameter ),
+                                     TILE_SIZE * (uint16_t)( game->tileMap.lightDiameter ) );
+      }
+   }
+#endif
+
+   if ( game->tileMap.isDark && game->tileMap.lightDiameter < game->tileMap.targetLightDiameter )
+   {
+      // TODO: animate the light diameter increasing
+      TileMap_IncreaseLightDiameter( &( game->tileMap ) );
+   }
+
    TileMap_UpdateViewport( &( game->tileMap ),
                            (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
                            game->player.hitBoxSize.x, game->player.hitBoxSize.y );
@@ -109,6 +132,18 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->swapPortal = 0;
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+
+      if ( game->tileMap.isDark )
+      {
+         TileMap_ChangeViewportSize( &( game->tileMap ),
+                                     (uint16_t)( game->tileMap.lightDiameter * TILE_SIZE ),
+                                     (uint16_t)( game->tileMap.lightDiameter * TILE_SIZE ) );
+      }
+      else
+      {
+         TileMap_ResetViewport( &( game->tileMap ) );
+      }
+
       TileMap_UpdateViewport( &( game->tileMap ),
                               (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
                               game->player.hitBoxSize.x, game->player.hitBoxSize.y );

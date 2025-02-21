@@ -30,23 +30,6 @@ void Player_Init( Player_t* player )
    player->experience = 0;
    player->gold = 0;
    player->items = 0;
-
-   // uncomment for testing
-   //PLAYER_SET_KEYCOUNT( player->items, 2 );
-   //PLAYER_SET_HERBCOUNT( player->items, 3 );
-   //PLAYER_SET_WINGCOUNT( player->items, 4 );
-   //PLAYER_SET_FAIRYWATERCOUNT( player->items, 1 );
-   //PLAYER_SET_TORCHCOUNT( player->items, 7 );
-   //PLAYER_TOGGLE_HASFAIRYFLUTE( player->items );
-   //PLAYER_TOGGLE_HASSILVERHARP( player->items );
-   //PLAYER_TOGGLE_HASGWAELYNSLOVE( player->items );
-   //PLAYER_TOGGLE_HASSTONEOFSUNLIGHT( player->items );
-   //PLAYER_TOGGLE_HASSTAFFOFRAIN( player->items );
-   //PLAYER_TOGGLE_HASTOKEN( player->items );
-   //PLAYER_TOGGLE_HASRAINBOWDROP( player->items );
-   //PLAYER_TOGGLE_HASSPHEREOFLIGHT( player->items );
-   //PLAYER_TOGGLE_HASDRAGONSCALE( player->items );
-   //PLAYER_TOGGLE_HASCURSEDBELT( player->items );
 }
 
 uint8_t Player_GetLevel( Player_t* player )

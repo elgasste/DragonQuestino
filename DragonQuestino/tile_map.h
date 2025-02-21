@@ -18,9 +18,8 @@
 #define TILE_WALKSPEED_VERYSLOW        48.0f
 #define TILE_WALKSPEED_CRAWL           36.0f
 
-#define TILEMAP_VIEWPORT_WIDTH         SCREEN_WIDTH
-#define TILEMAP_VIEWPORT_HEIGHT        SCREEN_HEIGHT
-#define TILEMAP_VIEWPORT_PIXELS        SCREEN_PIXELS
+#define TILEMAP_MAX_VIEWPORT_WIDTH     SCREEN_WIDTH
+#define TILEMAP_MAX_VIEWPORT_HEIGHT    SCREEN_HEIGHT
 #define TILEMAP_VIEWPORT_TILES_X       16
 #define TILEMAP_VIEWPORT_TILES_Y       14
 
@@ -34,6 +33,8 @@
 #define GET_TILEENCOUNTERABLE( t )     ( ( ( t ) & 0x100 ) >> 8 )
 #define GET_TILEENCOUNTERRATE( t )     ( ( ( t ) & 0x300 ) >> 9 )
 #define GET_TILEDAMAGERATE( t )        ( ( ( t ) & 0x1800 ) >> 11 )
+
+#define TORCH_DIAMETER                 3
 
 typedef struct Screen_t Screen_t;
 
@@ -57,6 +58,11 @@ typedef struct TileMap_t
    Screen_t* screen;
    uint32_t id;
 
+   Bool_t isDark;
+   uint32_t lightDiameter;
+   uint32_t targetLightDiameter;
+   uint32_t lightTileCount;
+
    // bits 1-5: texture index (max 32 textures)
    // bit 6: is-passable flag
    // bits 7-8: walk speed (0 = normal, 3 = crawl)
@@ -68,6 +74,7 @@ typedef struct TileMap_t
    uint32_t tilesX;
    uint32_t tilesY;
    Vector4i32_t viewport;
+   Vector2u16_t viewportScreenPos;
 
    TileTexture_t textures[TILE_TEXTURE_COUNT];
 
@@ -90,7 +97,12 @@ extern "C" {
 #endif
 
 void TileMap_Init( TileMap_t* tileMap, Screen_t* screen );
+void TileMap_ResetViewport( TileMap_t* tileMap );
 void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH );
+void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );
+void TileMap_SetTargetLightDiameter( TileMap_t* tileMap, uint32_t targetDiameter );
+void TileMap_ReduceLightDiameter( TileMap_t* tileMap );
+void TileMap_IncreaseLightDiameter( TileMap_t* tileMap );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
 void TileMap_Draw( TileMap_t* tileMap );
