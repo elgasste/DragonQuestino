@@ -14,7 +14,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
    Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
    tileMap->treasureFlags = 0xFFFFFFFF;
    tileMap->isDark = False;
-   tileMap->lightDiameter = 0;
+   tileMap->lightDiameter = 1;
 }
 
 void TileMap_ResetViewport( TileMap_t* tileMap )
