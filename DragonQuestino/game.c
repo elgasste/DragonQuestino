@@ -73,6 +73,13 @@ internal void Game_TicOverworld( Game_t* game )
 {
    Game_TicPhysics( game );
    Sprite_Tic( &( game->player.sprite ) );
+
+   if ( game->tileMap.isDark && game->tileMap.lightDiameter < game->tileMap.targetLightDiameter )
+   {
+      // TODO: animate the light diameter increasing
+      TileMap_IncreaseLightDiameter( &( game->tileMap ) );
+   }
+
    TileMap_UpdateViewport( &( game->tileMap ),
                            (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
                            game->player.hitBoxSize.x, game->player.hitBoxSize.y );

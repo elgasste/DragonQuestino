@@ -60,6 +60,8 @@ typedef struct TileMap_t
 
    Bool_t isDark;
    uint32_t lightDiameter;
+   uint32_t targetLightDiameter;
+   uint32_t lightTileCount;
 
    // bits 1-5: texture index (max 32 textures)
    // bit 6: is-passable flag
@@ -98,7 +100,9 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen );
 void TileMap_ResetViewport( TileMap_t* tileMap );
 void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH );
 void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );
-void TileMap_SetLightDiameter( TileMap_t* tileMap, uint32_t diameter );
+void TileMap_SetTargetLightDiameter( TileMap_t* tileMap, uint32_t targetDiameter );
+void TileMap_ReduceLightDiameter( TileMap_t* tileMap );
+void TileMap_IncreaseLightDiameter( TileMap_t* tileMap );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
 void TileMap_Draw( TileMap_t* tileMap );
