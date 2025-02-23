@@ -35,6 +35,8 @@
 #define GET_TILEDAMAGERATE( t )        ( ( ( t ) & 0x1800 ) >> 11 )
 
 #define TORCH_DIAMETER                 3
+#define RADIANT_DIAMETER               7
+#define LIGHT_MAX_TILES                200
 
 typedef struct Screen_t Screen_t;
 

@@ -78,6 +78,7 @@ void TileMap_ReduceLightDiameter( TileMap_t* tileMap )
    if ( tileMap->lightDiameter > 1 )
    {
       TileMap_SetLightDiameter( tileMap, tileMap->lightDiameter - 2 );
+      tileMap->targetLightDiameter = tileMap->lightDiameter;
    }
 }
 
@@ -178,11 +179,6 @@ void TileMap_SetLightDiameter( TileMap_t* tileMap, uint32_t diameter )
 {
    tileMap->lightDiameter = diameter;
    TileMap_ChangeViewportSize( tileMap, (uint16_t)( tileMap->lightDiameter * TILE_SIZE ), (uint16_t)tileMap->lightDiameter * TILE_SIZE );
-
-   if ( tileMap->targetLightDiameter > tileMap->lightDiameter )
-   {
-      tileMap->targetLightDiameter = tileMap->lightDiameter;
-   }
 }
 
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap )

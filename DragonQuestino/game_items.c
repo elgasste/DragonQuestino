@@ -24,10 +24,11 @@ void Game_UseFairyWater( Game_t* game )
 
 void Game_UseTorch( Game_t* game )
 {
-   if ( game->tileMap.lightDiameter <= TORCH_DIAMETER )
+   if ( game->tileMap.isDark && game->tileMap.lightDiameter <= TORCH_DIAMETER )
    {
       TileMap_SetTargetLightDiameter( &( game->tileMap ), TORCH_DIAMETER );
       game->tileMap.lightTileCount = 0;
+      game->lightingSecondsElapsed = OVERWORLD_LIGHTING_FRAME_SECONDS; // push one frame immediately
    }
 
    PLAYER_SET_TORCHCOUNT( game->player.items, PLAYER_GET_TORCHCOUNT( game->player.items ) - 1 );

@@ -92,8 +92,13 @@ internal void Game_TicOverworld( Game_t* game )
 
    if ( game->tileMap.isDark && game->tileMap.lightDiameter < game->tileMap.targetLightDiameter )
    {
-      // TODO: animate the light diameter increasing
-      TileMap_IncreaseLightDiameter( &( game->tileMap ) );
+      game->lightingSecondsElapsed += CLOCK_FRAME_SECONDS;
+
+      while ( game->lightingSecondsElapsed > OVERWORLD_LIGHTING_FRAME_SECONDS )
+      {
+         game->lightingSecondsElapsed -= OVERWORLD_LIGHTING_FRAME_SECONDS;
+         TileMap_IncreaseLightDiameter( &( game->tileMap ) );
+      }
    }
 
    TileMap_UpdateViewport( &( game->tileMap ),

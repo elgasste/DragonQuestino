@@ -3,9 +3,9 @@
 
 #define TILEMAP_SWAP_SECONDS                 0.4f
 #define OVERWORLD_INACTIVE_STATUS_SECONDS    1.0f
+#define OVERWORLD_LIGHTING_FRAME_SECONDS     0.1f
 #define OVERWORLD_WASH_TOTAL_SECONDS         0.2f
 #define COLLISION_THETA                      0.001f
-#define LIGHT_MAX_TILES                      200
 
 #include "common.h"
 #include "screen.h"
@@ -32,6 +32,8 @@ typedef struct Game_t
 
    TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;
+
+   float lightingSecondsElapsed;
 }
 Game_t;
 
