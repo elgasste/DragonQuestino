@@ -30,6 +30,7 @@ void Player_Init( Player_t* player )
    player->experience = 0;
    player->gold = 0;
    player->items = 0;
+   player->isCursed = False;
 }
 
 uint8_t Player_GetLevel( Player_t* player )

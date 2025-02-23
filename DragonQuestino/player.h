@@ -94,6 +94,8 @@ typedef struct Player_t
    // bit 24: cursed belt
    // bits 25-31: reserved
    uint32_t items;
+
+   Bool_t isCursed;
 }
 Player_t;
 
