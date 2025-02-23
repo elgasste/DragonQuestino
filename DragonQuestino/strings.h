@@ -68,6 +68,7 @@
 #define STRING_CHESTCOLLECT_HERB                      "an herb"
 #define STRING_CHESTCOLLECT_WING                      "a Chimaera wing"
 #define STRING_CHESTCOLLECT_TORCH                     "a torch"
+#define STRING_CHESTCOLLECT_DRAGONSCALE               "a Dragon's scale"
 #define STRING_CHESTCOLLECT_TABLET                    "Erdrick's Tablet"
 #define STRING_CHESTCOLLECT_SILVERHARP                "the Silver Harp"
 #define STRING_CHESTCOLLECT_STONEOFSUNLIGHT           "the Stone of Sunlight"

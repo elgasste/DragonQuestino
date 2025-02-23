@@ -137,7 +137,7 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
          {
             // single items start at 5 (Item_FairyFlute), and shifting starts at 15, hence "item + 10"
             uint32_t shiftedFlag = ( 0x1 << ( ( uint32_t )( item ) + 10 ) );
-            if ( player->items ^ shiftedFlag )
+            if ( !( player->items & shiftedFlag ) )
             {
                player->items |= shiftedFlag;
                collected = True;

@@ -224,8 +224,9 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;
       case 0x800:       // Rocky Mountain Cave B2, upper-left area, left chest
-         // TODO: should be a fighter's ring (do we even want those? what do they do?)
-         gold = 100; break;
+         collected = Player_CollectItem( &( game->player ), Item_DragonScale );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_DRAGONSCALE );
+         break;
       case 0x1000:      // Rocky Mountain Cave B2, upper-left area, right chest
          collected = Player_CollectItem( &( game->player ), Item_Torch );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_TORCH );
