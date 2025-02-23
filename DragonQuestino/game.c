@@ -16,7 +16,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
-   Player_Init( &( game->player ) );
+   Player_Init( &( game->player ), &( game->screen ) );
    Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
@@ -224,15 +224,25 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;
       case 0x800:       // Rocky Mountain Cave B2, upper-left area, left chest
-         // TODO: should be a fighter's ring (do we even want those? what do they do?)
-         gold = 100; break;
+         collected = Player_CollectItem( &( game->player ), Item_DragonScale );
+         ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_DRAGONSCALE );
+         break;
       case 0x1000:      // Rocky Mountain Cave B2, upper-left area, right chest
          collected = Player_CollectItem( &( game->player ), Item_Torch );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_TORCH );
          break;
       case 0x2000:      // Rocky Mountain Cave B2, center-left chest
-         // TODO: should be 1/32 chance of a death necklace
-         gold = Random_U16( 100, 131 ); break;
+         if ( Random_Percent() <= 5 )
+         {
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_DeathNecklace );
+            game->tileMap.treasureFlags ^= treasureFlag;
+            return;
+         }
+         else
+         {
+            gold = Random_U16( 100, 131 ); break;
+         }
+         break;
       case 0x4000:      // Rocky Mountain Cave B2, center-right chest
          gold = Random_U16( 10, 17 ); break;
       case 0x8000:      // Garinham, top-left chest

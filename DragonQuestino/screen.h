@@ -14,6 +14,7 @@
 #define COLOR_RED                      0xF800
 #define COLOR_GREEN                    0x07E0
 #define COLOR_BLUE                     0x001F
+#define COLOR_GROSSYELLOW              0x7BA1
 
 #define TEXT_TILE_COUNT                85
 #define TEXT_TILE_SIZE                 8
@@ -37,6 +38,7 @@ typedef struct Screen_t
    uint16_t* buffer;
    uint16_t palette[PALETTE_COLORS];
    uint8_t textBitFields[TEXT_TILE_COUNT][TEXT_TILE_SIZE];
+   uint16_t textColor;
 }
 Screen_t;
 
@@ -50,13 +52,13 @@ void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex );
 void Screen_WipeColor( Screen_t* screen, uint16_t color );
 void Screen_DrawRectFromPalette( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t paletteIndex );
 void Screen_DrawRectColor( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color );
-void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t color );
-void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint16_t color );
+void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y );
+void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y );
 void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t stride,
                                uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
                                uint32_t sx, uint32_t sy, Bool_t transparency );
-void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color );
-void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title, uint16_t color );
+void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h );
+void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title );
 
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );

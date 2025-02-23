@@ -1,9 +1,12 @@
 #include "player.h"
 #include "tile_map.h"
+#include "screen.h"
 #include "math.h"
 
-void Player_Init( Player_t* player )
+void Player_Init( Player_t* player, Screen_t* screen )
 {
+   player->screen = screen;
+
    player->tileIndex = TILE_COUNT_X * TILE_COUNT_Y; // off the map
    player->sprite.position.x = (float)( TILE_SIZE * 8 );
    player->sprite.position.y = (float)( TILE_SIZE * 7 );
@@ -30,6 +33,7 @@ void Player_Init( Player_t* player )
    player->experience = 0;
    player->gold = 0;
    player->items = 0;
+   player->isCursed = False;
 }
 
 uint8_t Player_GetLevel( Player_t* player )
@@ -133,7 +137,7 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
          {
             // single items start at 5 (Item_FairyFlute), and shifting starts at 15, hence "item + 10"
             uint32_t shiftedFlag = ( 0x1 << ( ( uint32_t )( item ) + 10 ) );
-            if ( player->items ^ shiftedFlag )
+            if ( !( player->items & shiftedFlag ) )
             {
                player->items |= shiftedFlag;
                collected = True;
@@ -143,4 +147,10 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
    }
 
    return collected;
+}
+
+void Player_SetCursed( Player_t* player, Bool_t cursed )
+{
+   player->isCursed = cursed;
+   player->screen->textColor = cursed ? COLOR_GROSSYELLOW : COLOR_WHITE;
 }

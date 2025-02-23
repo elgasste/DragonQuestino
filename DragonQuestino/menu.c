@@ -34,18 +34,18 @@ void Menu_Draw( Menu_t* menu )
 
    if ( !menu->hasDrawn )
    {
-      Screen_DrawTextWindowWithTitle( menu->screen, menu->position.x, menu->position.y, menu->borderSize.x, menu->borderSize.y, menu->title, COLOR_WHITE );
+      Screen_DrawTextWindowWithTitle( menu->screen, menu->position.x, menu->position.y, menu->borderSize.x, menu->borderSize.y, menu->title );
 
       for ( i = 0; i < menu->itemCount; i++ )
       {
          x = startX + ( ( i / menu->itemsPerColumn ) * ( menu->columnWidth * TEXT_TILE_SIZE ) );
          y = startY + ( ( i % menu->itemsPerColumn ) * ( TEXT_TILE_SIZE * ( menu->itemPadding + 1 ) ) );
 
-         Screen_DrawText( menu->screen, menu->items[i].text, x, y, COLOR_WHITE );
+         Screen_DrawText( menu->screen, menu->items[i].text, x, y );
 
          if ( menu->items[i].twoLineText )
          {
-            Screen_DrawText( menu->screen, menu->items[i].text + MENU_LINE_LENGTH, x, y + TEXT_TILE_SIZE, COLOR_WHITE );
+            Screen_DrawText( menu->screen, menu->items[i].text + MENU_LINE_LENGTH, x, y + TEXT_TILE_SIZE );
          }
       }
 
@@ -144,11 +144,11 @@ internal void Menu_DrawCarat( Menu_t* menu )
 
       if ( i == menu->selectedIndex && menu->showCarat )
       {
-         Screen_DrawChar( menu->screen, '>', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y, COLOR_WHITE );
+         Screen_DrawChar( menu->screen, '>', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y );
       }
       else
       {
-         Screen_DrawChar( menu->screen, ' ', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y, COLOR_WHITE );
+         Screen_DrawChar( menu->screen, ' ', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y );
       }
    }
 }
