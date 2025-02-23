@@ -36,7 +36,7 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog )
    uint32_t i, x, y, stopCharIndex, len;
    char substr[DIALOG_MAX_LINE_CHARS];
 
-   Screen_DrawTextWindow( dialog->screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y, COLOR_WHITE );
+   Screen_DrawTextWindow( dialog->screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y );
 
    x = dialog->position.x + TEXT_TILE_SIZE;
    y = dialog->position.y + TEXT_TILE_SIZE;
@@ -51,14 +51,14 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog )
 
          if ( len < stopCharIndex )
          {
-            Screen_DrawText( dialog->screen, dialog->lines[i], x, y, COLOR_WHITE );
+            Screen_DrawText( dialog->screen, dialog->lines[i], x, y );
             stopCharIndex -= len;
          }
          else
          {
             strcpy( substr, dialog->lines[i] );
             substr[stopCharIndex] = '\0';
-            Screen_DrawText( dialog->screen, substr, x, y, COLOR_WHITE );
+            Screen_DrawText( dialog->screen, substr, x, y );
             break;
          }
       }
@@ -67,12 +67,12 @@ void ScrollingDialog_Draw( ScrollingDialog_t* dialog )
    {
       for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
       {
-         Screen_DrawText( dialog->screen, dialog->lines[i], x, y, COLOR_WHITE );
+         Screen_DrawText( dialog->screen, dialog->lines[i], x, y );
       }
 
       if ( dialog->showCarat && !ScrollingDialog_IsDone( dialog ) )
       {
-         Screen_DrawChar( dialog->screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y, COLOR_WHITE );
+         Screen_DrawChar( dialog->screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y );
       }
    }
 }
@@ -303,7 +303,10 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_ITEMUSE_CURSEDBELT_1, player->name ); return;
-            case 1: strcpy( text, STRING_ITEMUSE_CURSEDBELT_2 ); return;
+            case 1:
+               dialog->screen->textColor = COLOR_GROSSYELLOW;
+               strcpy( text, STRING_ITEMUSE_CURSEDBELT_2 );
+               return;
          }
       case DialogMessageId_Chest_ItemCollected: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
       case DialogMessageId_Chest_ItemNoSpace:

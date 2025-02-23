@@ -7,6 +7,7 @@ void Screen_Init( Screen_t* screen, uint16_t* buffer )
    screen->buffer = buffer;
    Screen_LoadPalette( screen );
    Screen_LoadTextBitFields( screen );
+   screen->textColor = COLOR_WHITE;
 }
 
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex )
@@ -83,7 +84,7 @@ void Screen_DrawRectColor( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w,
    }
 }
 
-void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t color )
+void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y )
 {
    int32_t i;
    uint32_t j, row;
@@ -116,7 +117,7 @@ void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t
       {
          for ( i = ( TEXT_TILE_SIZE - 1 ); i >= 0; i-- )
          {
-            *bufferPos = ( bitField[row] & ( 0x01 << i ) ) ? color : 0;
+            *bufferPos = ( bitField[row] & ( 0x01 << i ) ) ? screen->textColor : 0;
             bufferPos++;
          }
 
@@ -125,7 +126,7 @@ void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y, uint16_t
    }
 }
 
-void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y, uint16_t color )
+void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y )
 {
    uint16_t ch, j;
    int8_t charIndex, i;
@@ -163,7 +164,7 @@ void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y
          {
             for ( i = ( TEXT_TILE_SIZE - 1 ); i >= 0; i-- )
             {
-               *bufferPos = ( bitField[row] & ( 0x01 << i ) ) ? color : 0;
+               *bufferPos = ( bitField[row] & ( 0x01 << i ) ) ? screen->textColor : 0;
                bufferPos++;
             }
 
@@ -272,7 +273,7 @@ void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t strid
    }
 }
 
-void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color )
+void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h )
 {
    uint16_t i;
    char line[32];
@@ -282,27 +283,27 @@ void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w
    line[0] = MENU_BORDER_CHAR_TOPLEFT;
    for ( i = 1; i < w - 1; i++ ) line[i] = MENU_BORDER_CHAR_TOP;
    line[w - 1] = MENU_BORDER_CHAR_TOPRIGHT;
-   Screen_DrawText( screen, line, x, y, color );
+   Screen_DrawText( screen, line, x, y );
 
    // side borders
    for ( i = 1; i < h - 1; i++ )
    {
-      Screen_DrawChar( screen, MENU_BORDER_CHAR_LEFT, x, y + ( i * TEXT_TILE_SIZE ), color );
-      Screen_DrawChar( screen, MENU_BORDER_CHAR_RIGHT, x + ( ( w - 1 ) * TEXT_TILE_SIZE ), y + ( i * TEXT_TILE_SIZE ), color );
+      Screen_DrawChar( screen, MENU_BORDER_CHAR_LEFT, x, y + ( i * TEXT_TILE_SIZE ) );
+      Screen_DrawChar( screen, MENU_BORDER_CHAR_RIGHT, x + ( ( w - 1 ) * TEXT_TILE_SIZE ), y + ( i * TEXT_TILE_SIZE ) );
    }
 
    // bottom border
    line[0] = MENU_BORDER_CHAR_BOTTOMLEFT;
    for ( i = 1; i < w - 1; i++ ) line[i] = MENU_BORDER_CHAR_BOTTOM;
    line[w - 1] = MENU_BORDER_CHAR_BOTTOMRIGHT;
-   Screen_DrawText( screen, line, x, y + ( ( h - 1 ) * TEXT_TILE_SIZE ), color );
+   Screen_DrawText( screen, line, x, y + ( ( h - 1 ) * TEXT_TILE_SIZE ) );
 
    // inner section
    Screen_DrawRectColor( screen, x + TEXT_TILE_SIZE, y + TEXT_TILE_SIZE, ( w - 2 ) * TEXT_TILE_SIZE, ( h - 2 ) * TEXT_TILE_SIZE, COLOR_BLACK );
 }
 
-void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title, uint16_t color )
+void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title )
 {
-   Screen_DrawTextWindow( screen, x, y, w, h, color );
-   Screen_DrawText( screen, title, x + ( ( ( w - (uint32_t)( strlen( title ) ) ) / 2 ) * TEXT_TILE_SIZE ), y, color );
+   Screen_DrawTextWindow( screen, x, y, w, h );
+   Screen_DrawText( screen, title, x + ( ( ( w - (uint32_t)( strlen( title ) ) ) / 2 ) * TEXT_TILE_SIZE ), y );
 }
