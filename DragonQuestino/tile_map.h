@@ -38,6 +38,9 @@
 #define RADIANT_DIAMETER               7
 #define LIGHT_MAX_TILES                200
 
+#define TILEMAP_OVERWORLD_ID           0
+#define TILEMAP_TANTEGEL_INDEX         7053
+
 typedef struct Screen_t Screen_t;
 
 typedef struct TileTexture_t
