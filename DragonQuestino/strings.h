@@ -57,6 +57,7 @@
 #define STRING_OVERWORLD_DIALOG_NOBODY_THERE          "Nobody is there."
 #define STRING_OVERWORLD_DIALOG_SEARCH                "%s searched the ground all about."
 #define STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND      "But there found nothing."
+#define STRING_OVERWORLD_DIALOG_SEARCH_FOUND          "%s found %s!"
 #define STRING_OVERWORLD_DIALOG_NO_SPELLS             "You do not know any spells."
 #define STRING_OVERWORLD_DIALOG_NO_ITEMS              "You do not have any items."
 #define STRING_OVERWORLD_DIALOG_NO_DOOR               "There is no door here."
@@ -110,5 +111,8 @@
 #define STRING_CHEST_TABLET_5                         "Now I have entrusted the three items to three worthy keepers."
 #define STRING_CHEST_TABLET_6                         "Their descendants will protect the items until thy quest leads thee to seek them out."
 #define STRING_CHEST_TABLET_7                         "When a new evil arises, find the three items, then fight!\""
+
+#define STRING_FOUNDITEM_TOKEN                        "Erdrick's Token"
+#define STRING_FOUNDITEM_FAIRYFLUTE                   "the Fairy Flute"
 
 #endif // STRINGS_H

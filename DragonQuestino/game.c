@@ -166,16 +166,35 @@ internal void Game_TicTileMapTransition( Game_t* game )
 
 void Game_Search( Game_t* game )
 {
-   uint32_t treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
+   uint32_t treasureFlag;
 
-   if ( treasureFlag && ( game->tileMap.treasureFlags & treasureFlag ) )
+   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !PLAYER_HAS_TOKEN( game->player.items ) )
    {
-      Game_CollectTreasure( game, treasureFlag );
+      Player_CollectItem( &( game->player ), Item_Token );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_TOKEN );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+   }
+   else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !PLAYER_HAS_FAIRYFLUTE( game->player.items ) )
+   {
+      Player_CollectItem( &( game->player ), Item_FairyFlute );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
    }
    else
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+      treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
+
+      if ( treasureFlag && ( game->tileMap.treasureFlags & treasureFlag ) )
+      {
+         Game_CollectTreasure( game, treasureFlag );
+      }
+      else
+      {
+         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+         ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+      }
    }
 }
 

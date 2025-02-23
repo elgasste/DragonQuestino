@@ -58,9 +58,9 @@ void Game_UseGwaelynsLove( Game_t* game )
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
    {
       px = game->player.tileIndex % game->tileMap.tilesX;
-      py = game->player.tileIndex / game->tileMap.tilesY;
+      py = game->player.tileIndex / game->tileMap.tilesX;
       tx = TILEMAP_TANTEGEL_INDEX % game->tileMap.tilesX;
-      ty = TILEMAP_TANTEGEL_INDEX / game->tileMap.tilesY;
+      ty = TILEMAP_TANTEGEL_INDEX / game->tileMap.tilesX;
 
       if ( px == tx && py == ty )
       {
