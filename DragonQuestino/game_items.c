@@ -62,7 +62,6 @@ void Game_UseRainbowDrop( Game_t* game )
 
 void Game_UseCursedBelt( Game_t* game )
 {
-   game->player.isCursed = True;
    PLAYER_TOGGLE_HASCURSEDBELT( game->player.items );
    Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_CursedBelt );

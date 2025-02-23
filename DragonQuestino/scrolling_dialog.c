@@ -304,7 +304,7 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
          {
             case 0: sprintf( text, STRING_ITEMUSE_CURSEDBELT_1, player->name ); return;
             case 1:
-               dialog->screen->textColor = COLOR_GROSSYELLOW;
+               Player_SetCursed( dialog->player, True );
                strcpy( text, STRING_ITEMUSE_CURSEDBELT_2 );
                return;
          }

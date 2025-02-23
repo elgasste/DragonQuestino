@@ -225,6 +225,9 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
             case VK_ALLITEMS:
                GetAllItems();
                break;
+            case VK_TOGGLECURSED:
+               Player_SetCursed( &( g_globals.game.player ), g_globals.game.player.isCursed ? False : True );
+               break;
          }
       }
       else
@@ -366,6 +369,10 @@ internal void DrawDiagnostics( HDC* dcMem )
 
    SetTextColor( *dcMem, 0x00FFFFFF );
    sprintf_s( str, STRING_SIZE_DEFAULT, "4: Get all items" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "5: Toggle cursed" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );

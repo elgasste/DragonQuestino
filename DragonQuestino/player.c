@@ -1,9 +1,12 @@
 #include "player.h"
 #include "tile_map.h"
+#include "screen.h"
 #include "math.h"
 
-void Player_Init( Player_t* player )
+void Player_Init( Player_t* player, Screen_t* screen )
 {
+   player->screen = screen;
+
    player->tileIndex = TILE_COUNT_X * TILE_COUNT_Y; // off the map
    player->sprite.position.x = (float)( TILE_SIZE * 8 );
    player->sprite.position.y = (float)( TILE_SIZE * 7 );
@@ -144,4 +147,10 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
    }
 
    return collected;
+}
+
+void Player_SetCursed( Player_t* player, Bool_t cursed )
+{
+   player->isCursed = cursed;
+   player->screen->textColor = cursed ? COLOR_GROSSYELLOW : COLOR_WHITE;
 }

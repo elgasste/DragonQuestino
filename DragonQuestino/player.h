@@ -5,6 +5,8 @@
 #include "sprite.h"
 #include "battle_stats.h"
 
+typedef struct Screen_t Screen_t;
+
 #define PLAYER_MAXKEYS                         6
 #define PLAYER_MAXHERBS                        7
 #define PLAYER_MAXWINGS                        4
@@ -64,6 +66,8 @@
 
 typedef struct Player_t
 {
+   Screen_t* screen;
+
    ActiveSprite_t sprite;
    Vector2i32_t spriteOffset;
    Vector2f_t velocity;
@@ -103,11 +107,12 @@ Player_t;
 extern "C" {
 #endif
 
-void Player_Init( Player_t* player );
+void Player_Init( Player_t* player, Screen_t* screen );
 uint8_t Player_GetLevel( Player_t* player );
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold );
 uint16_t Player_CollectExperience( Player_t* player, uint16_t experience );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
+void Player_SetCursed( Player_t* player, Bool_t cursed );
 
 #if defined( __cplusplus )
 }
