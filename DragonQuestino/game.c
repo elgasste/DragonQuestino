@@ -231,8 +231,17 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_TORCH );
          break;
       case 0x2000:      // Rocky Mountain Cave B2, center-left chest
-         // TODO: should be 1/32 chance of a death necklace
-         gold = Random_U16( 100, 131 ); break;
+         if ( Random_Percent() <= 5 )
+         {
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_DeathNecklace );
+            game->tileMap.treasureFlags ^= treasureFlag;
+            return;
+         }
+         else
+         {
+            gold = Random_U16( 100, 131 ); break;
+         }
+         break;
       case 0x4000:      // Rocky Mountain Cave B2, center-right chest
          gold = Random_U16( 10, 17 ); break;
       case 0x8000:      // Garinham, top-left chest

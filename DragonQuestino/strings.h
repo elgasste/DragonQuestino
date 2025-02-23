@@ -62,6 +62,7 @@
 #define STRING_OVERWORLD_DIALOG_NO_DOOR               "There is no door here."
 
 #define STRING_BUTNOTHINGHAPPENS                      "But nothing happens."
+#define STRING_ITEMUSE_CURSED                         "Thou art cursed!"
 
 #define STRING_CHESTCOLLECT_KEY                       "a key"
 #define STRING_CHESTCOLLECT_HERB                      "an herb"
@@ -71,6 +72,7 @@
 #define STRING_CHESTCOLLECT_SILVERHARP                "the Silver Harp"
 #define STRING_CHESTCOLLECT_STONEOFSUNLIGHT           "the Stone of Sunlight"
 #define STRING_CHESTCOLLECT_CURSEDBELT                "a Cursed Belt"
+#define STRING_CHESTCOLLECT_DEATHNECKLACE             "the Death Necklace"
 
 #define STRING_ITEMUSE_HERB                           "%s grinds up an herb and eats it."
 #define STRING_ITEMUSE_WING                           "%s throws a Chimaera wing into the air!"
@@ -84,8 +86,7 @@
 #define STRING_ITEMUSE_GWAELYNSLOVE_1                 "%s clutches Gwaelyn's love ever closer."
 #define STRING_ITEMUSE_GWAELYNSLOVE_2                 "No response. Ghosted?"
 #define STRING_ITEMUSE_RAINBOWDROP_CANTUSE            "The Rainbow Drop cannot be used here."
-#define STRING_ITEMUSE_CURSEDBELT_1                   "%s puts on the Cursed Belt."
-#define STRING_ITEMUSE_CURSEDBELT_2                   "Thou art cursed!"
+#define STRING_ITEMUSE_CURSEDBELT                     "%s puts on the Cursed Belt."
 
 #define STRING_CHEST_ITEMFOUND                        "The chest contains %s!"
 #define STRING_CHEST_ITEMNOSPACE                      "But %s can't carry any more of these."

@@ -238,6 +238,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Chest_GoldCollected: return 1;
       case DialogMessageId_Chest_GoldNoSpace: return 2;
       case DialogMessageId_Chest_Tablet: return 8;
+      case DialogMessageId_Chest_DeathNecklace: return 2;
    }
 
    return 0;
@@ -302,10 +303,10 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
       case DialogMessageId_Use_CursedBelt:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_CURSEDBELT_1, player->name ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_CURSEDBELT, player->name ); return;
             case 1:
                Player_SetCursed( dialog->player, True );
-               strcpy( text, STRING_ITEMUSE_CURSEDBELT_2 );
+               strcpy( text, STRING_ITEMUSE_CURSED );
                return;
          }
       case DialogMessageId_Chest_ItemCollected: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
@@ -333,6 +334,15 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 5: strcpy( text, STRING_CHEST_TABLET_5 ); return;
             case 6: strcpy( text, STRING_CHEST_TABLET_6 ); return;
             case 7: strcpy( text, STRING_CHEST_TABLET_7 ); return;
+         }
+      case DialogMessageId_Chest_DeathNecklace:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_DEATHNECKLACE ); return;
+            case 1:
+               Player_SetCursed( dialog->player, True );
+               strcpy( text, STRING_ITEMUSE_CURSED );
+               return;
          }
    }
 }
