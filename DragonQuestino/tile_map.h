@@ -40,6 +40,7 @@
 
 #define TILEMAP_OVERWORLD_ID           0
 #define TILEMAP_TANTEGEL_INDEX         7053
+#define TILEMAP_TOKEN_INDEX            16893
 
 typedef struct Screen_t Screen_t;
 
