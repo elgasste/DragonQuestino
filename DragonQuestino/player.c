@@ -70,6 +70,45 @@ uint8_t Player_GetLevel( Player_t* player )
    else { return 30; }
 }
 
+uint16_t Player_GetExperienceRemaining( Player_t* player )
+{
+   uint8_t level = Player_GetLevel( player );
+
+   switch ( level )
+   {
+      case 1: return 7 - player->experience;
+      case 2: return 23 - player->experience;
+      case 3: return 47 - player->experience;
+      case 4: return 110 - player->experience;
+      case 5: return 220 - player->experience;
+      case 6: return 450 - player->experience;
+      case 7: return 800 - player->experience;
+      case 8: return 1300 - player->experience;
+      case 9: return 2000 - player->experience;
+      case 10: return 2900 - player->experience;
+      case 11: return 4000 - player->experience;
+      case 12: return 5500 - player->experience;
+      case 13: return 7500 - player->experience;
+      case 14: return 10000 - player->experience;
+      case 15: return 13000 - player->experience;
+      case 16: return 16000 - player->experience;
+      case 17: return 19000 - player->experience;
+      case 18: return 22000 - player->experience;
+      case 19: return 26000 - player->experience;
+      case 20: return 30000 - player->experience;
+      case 21: return 34000 - player->experience;
+      case 22: return 38000 - player->experience;
+      case 23: return 42000 - player->experience;
+      case 24: return 46000 - player->experience;
+      case 25: return 50000 - player->experience;
+      case 26: return 54000 - player->experience;
+      case 27: return 58000 - player->experience;
+      case 28: return 62000 - player->experience;
+      case 29: return UINT16_MAX - player->experience;
+      default: return 0;
+   }
+}
+
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold )
 {
    return Math_CollectAmount16u( &( player->gold ), gold );

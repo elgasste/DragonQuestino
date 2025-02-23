@@ -50,8 +50,42 @@ void Game_UseFairyFlute( Game_t* game )
 
 void Game_UseGwaelynsLove( Game_t* game )
 {
+   uint32_t px, py, tx, ty;
+   char msg[64];
+
    Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_GwaelynsLove );
+
+   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
+   {
+      px = game->player.tileIndex % game->tileMap.tilesX;
+      py = game->player.tileIndex / game->tileMap.tilesY;
+      tx = TILEMAP_TANTEGEL_INDEX % game->tileMap.tilesX;
+      ty = TILEMAP_TANTEGEL_INDEX / game->tileMap.tilesY;
+
+      if ( px == tx && py == ty )
+      {
+         sprintf( msg, STRING_ITEMUSE_GWAELYNSLOVE_3_HOME );
+      }
+      else if ( px == tx || py == ty )
+      {
+         sprintf( msg, STRING_ITEMUSE_GWAELYNSLOVE_3_SINGLE,
+                  ( py == ty ) ? ( ( px > tx ) ? ( px - tx ) : ( tx - px ) ) : ( ( py > ty ) ? ( py - ty ) : ( ty - py ) ),
+                  ( py == ty ) ? ( ( px > tx ) ? STRING_WEST : STRING_EAST ) : ( ( py > ty ) ? STRING_NORTH : STRING_SOUTH ) );
+      }
+      else
+      {
+         sprintf( msg, STRING_ITEMUSE_GWAELYNSLOVE_3_DOUBLE,
+                  ( py > ty ) ? ( py - ty ) : ( ty - py ), ( py > ty ) ? STRING_NORTH : STRING_SOUTH,
+                  ( px > tx ) ? ( px - tx ) : ( tx - px ), ( px > tx ) ? STRING_WEST : STRING_EAST );
+      }
+
+      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), msg );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_GwaelynsLove );
+   }
+   else
+   {
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_GwaelynsLoveCantUse );
+   }
 }
 
 void Game_UseRainbowDrop( Game_t* game )

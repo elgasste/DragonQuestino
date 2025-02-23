@@ -109,6 +109,7 @@ extern "C" {
 
 void Player_Init( Player_t* player, Screen_t* screen );
 uint8_t Player_GetLevel( Player_t* player );
+uint16_t Player_GetExperienceRemaining( Player_t* player );
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold );
 uint16_t Player_CollectExperience( Player_t* player, uint16_t experience );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
