@@ -175,6 +175,13 @@ void Game_Search( Game_t* game )
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_TOKEN );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
    }
+   else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !PLAYER_HAS_FAIRYFLUTE( game->player.items ) )
+   {
+      Player_CollectItem( &( game->player ), Item_FairyFlute );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+   }
    else
    {
       treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );

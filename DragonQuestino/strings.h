@@ -113,5 +113,6 @@
 #define STRING_CHEST_TABLET_7                         "When a new evil arises, find the three items, then fight!\""
 
 #define STRING_FOUNDITEM_TOKEN                        "Erdrick's Token"
+#define STRING_FOUNDITEM_FAIRYFLUTE                   "the Fairy Flute"
 
 #endif // STRINGS_H

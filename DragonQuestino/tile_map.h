@@ -39,8 +39,10 @@
 #define LIGHT_MAX_TILES                200
 
 #define TILEMAP_OVERWORLD_ID           0
+#define TILEMAP_KOL_ID                 12
 #define TILEMAP_TANTEGEL_INDEX         7053
 #define TILEMAP_TOKEN_INDEX            16893
+#define TILEMAP_FAIRYFLUTE_INDEX       192
 
 typedef struct Screen_t Screen_t;
 
