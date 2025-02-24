@@ -24,6 +24,7 @@
     <ClInclude Include="..\..\DragonQuestino\common.h" />
     <ClInclude Include="..\..\DragonQuestino\enums.h" />
     <ClInclude Include="..\..\DragonQuestino\game.h" />
+    <ClInclude Include="..\..\DragonQuestino\generated_defines.h" />
     <ClInclude Include="..\..\DragonQuestino\input.h" />
     <ClInclude Include="..\..\DragonQuestino\math.h" />
     <ClInclude Include="..\..\DragonQuestino\menu.h" />

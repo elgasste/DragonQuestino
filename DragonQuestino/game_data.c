@@ -5,12 +5,6 @@
 
 void Screen_LoadPalette( Screen_t* screen )
 {
-   uint16_t i;
-
-   screen->paletteColorCount = 13;
-
-   for ( i = 0; i < 256; i++ ) { screen->palette[i] = 0; }
-
    screen->palette[0] = 0x9720;
    screen->palette[1] = 0x4521;
    screen->palette[2] = 0x0000;

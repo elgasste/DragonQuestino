@@ -224,7 +224,7 @@ internal void Game_TicRainbowBridgeAnimation( Game_t* game )
    }
    else
    {
-      for ( i = 0; i < game->screen.paletteColorCount; i++ )
+      for ( i = 0; i < PALETTE_COLORS; i++ )
       {
          rangeR = UINT8_MAX - ( game->screen.backupPalette[i] >> 11 );
          rangeG = UINT8_MAX - ( ( game->screen.backupPalette[i] & 0x7E0 ) >> 5 );

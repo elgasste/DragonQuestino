@@ -11,11 +11,12 @@
 
       public const string GameDataSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\game_data.c";
       public const string ShieldBackgroundSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\giga_shield_background_data.c";
+      public const string GeneratedDefinesSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\generated_defines.h";
 
       public const int GigaShieldWidth = 480;
       public const int GigaShieldHeight = 800;
 
-      public const int PaletteSize = 256;
+      public const int PaletteMaxSize = 256;
 
       public const int TileSize = 16;
       public const int TilePixels = 256;
