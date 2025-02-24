@@ -59,6 +59,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "\nvoid Screen_LoadPalette( Screen_t* screen )\n" );
          WriteToFileStream( fs, "{\n" );
          WriteToFileStream( fs, "   uint16_t i;\n\n" );
+         WriteToFileStream( fs, string.Format( "   screen->paletteColorCount = {0};\n\n", _palette.ColorCount ) );
          WriteToFileStream( fs, string.Format( "   for ( i = 0; i < {0}; i++ ) {{ screen->palette[i] = 0; }}\n\n", Constants.PaletteSize ) );
 
          for ( int i = 0; i < _palette.ColorCount; i++ )

@@ -4,6 +4,7 @@
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
+internal void Game_TicRainbowBridgeAnimation( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
@@ -45,6 +46,9 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld_ItemMenu:
          Menu_Tic( &( game->menu ) );
          break;
+      case GameState_Overworld_RainbowBridgeAnimation:
+         Game_TicRainbowBridgeAnimation( game );
+         break;
       case GameState_TileMapTransition:
          Game_TicTileMapTransition( game );
          break;
@@ -66,6 +70,43 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
       case GameState_Overworld_Washing:
          game->overworldWashSeconds = 0.0f;
          break;
+      case GameState_Overworld_RainbowBridgeAnimation:
+         game->rainbowBridgeSecondsElapsed = 0.0f;
+         break;
+   }
+}
+
+void Game_Search( Game_t* game )
+{
+   uint32_t treasureFlag;
+
+   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !PLAYER_HAS_TOKEN( game->player.items ) )
+   {
+      Player_CollectItem( &( game->player ), Item_Token );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_TOKEN );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+   }
+   else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !PLAYER_HAS_FAIRYFLUTE( game->player.items ) )
+   {
+      Player_CollectItem( &( game->player ), Item_FairyFlute );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+   }
+   else
+   {
+      treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
+
+      if ( treasureFlag && ( game->tileMap.treasureFlags & treasureFlag ) )
+      {
+         Game_CollectTreasure( game, treasureFlag );
+      }
+      else
+      {
+         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+         ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+      }
    }
 }
 
@@ -164,36 +205,33 @@ internal void Game_TicTileMapTransition( Game_t* game )
    }
 }
 
-void Game_Search( Game_t* game )
+internal void Game_TicRainbowBridgeAnimation( Game_t* game )
 {
-   uint32_t treasureFlag;
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG, increment;
+   float p;
 
-   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !PLAYER_HAS_TOKEN( game->player.items ) )
+   game->rainbowBridgeSecondsElapsed += CLOCK_FRAME_SECONDS;
+
+   if ( game->rainbowBridgeSecondsElapsed > RAINBOW_BRIDGE_TOTAL_SECONDS )
    {
-      Player_CollectItem( &( game->player ), Item_Token );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_TOKEN );
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
-   }
-   else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !PLAYER_HAS_FAIRYFLUTE( game->player.items ) )
-   {
-      Player_CollectItem( &( game->player ), Item_FairyFlute );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+      Screen_RestorePalette( &(game->screen ) );
+      PLAYER_TOGGLE_HASRAINBOWDROP( game->player.items );
+      game->tileMap.usedRainbowDrop = True;
+      TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
+      TILE_SET_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
+      Game_ChangeState( game, GameState_Overworld_Washing );
    }
    else
    {
-      treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
-
-      if ( treasureFlag && ( game->tileMap.treasureFlags & treasureFlag ) )
+      for ( i = 0; i < game->screen.paletteColorCount; i++ )
       {
-         Game_CollectTreasure( game, treasureFlag );
-      }
-      else
-      {
-         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-         ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+         rangeR = UINT8_MAX - ( game->screen.backupPalette[i] >> 11 );
+         rangeG = UINT8_MAX - ( ( game->screen.backupPalette[i] & 0x7E0 ) >> 5 );
+         rangeB = UINT8_MAX - ( game->screen.backupPalette[i] & 0x1F );
+         p = game->rainbowBridgeSecondsElapsed / RAINBOW_BRIDGE_TOTAL_SECONDS;
+         increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+         game->screen.palette[i] = game->screen.backupPalette[i] + increment;
       }
    }
 }

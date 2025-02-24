@@ -10,11 +10,31 @@ void Screen_Init( Screen_t* screen, uint16_t* buffer )
    screen->textColor = COLOR_WHITE;
 }
 
+void Screen_BackupPalette( Screen_t* screen )
+{
+   uint32_t i;
+
+   for ( i = 0; i < PALETTE_MAX_COLORS; i++ )
+   {
+      screen->backupPalette[i] = screen->palette[i];
+   }
+}
+
+void Screen_RestorePalette( Screen_t* screen )
+{
+   uint32_t i;
+
+   for ( i = 0; i < PALETTE_MAX_COLORS; i++ )
+   {
+      screen->palette[i] = screen->backupPalette[i];
+   }
+}
+
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex )
 {
    uint32_t i;
 
-   for ( i = 0; i < PALETTE_COLORS; i++ )
+   for ( i = 0; i < screen->paletteColorCount; i++ )
    {
       if ( screen->palette[i] == color )
       {

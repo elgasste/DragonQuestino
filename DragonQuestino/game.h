@@ -14,6 +14,7 @@
 #define OVERWORLD_INACTIVE_STATUS_SECONDS    1.0f
 #define OVERWORLD_LIGHTING_FRAME_SECONDS     0.1f
 #define OVERWORLD_WASH_TOTAL_SECONDS         0.2f
+#define RAINBOW_BRIDGE_TOTAL_SECONDS         5.0f
 #define COLLISION_THETA                      0.001f
 
 typedef struct Game_t
@@ -34,6 +35,7 @@ typedef struct Game_t
    float tileMapSwapSecondsElapsed;
 
    float lightingSecondsElapsed;
+   float rainbowBridgeSecondsElapsed;
 }
 Game_t;
 

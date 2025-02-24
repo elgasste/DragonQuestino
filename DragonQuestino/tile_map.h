@@ -75,7 +75,6 @@ typedef struct TileMap_t
    uint32_t targetLightDiameter;
    uint32_t lightTileCount;
 
-   // MUFFINS: update the editor to check for this when loading the overworld
    Bool_t usedRainbowDrop;
 
    // bits 0-4: texture index (max 32 textures)

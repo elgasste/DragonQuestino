@@ -7,7 +7,7 @@
 #define SCREEN_HEIGHT                  224
 #define SCREEN_PIXELS                  57344
 
-#define PALETTE_COLORS                 256
+#define PALETTE_MAX_COLORS             256
 
 #define COLOR_BLACK                    0x0000
 #define COLOR_WHITE                    0xFFFF
@@ -36,7 +36,9 @@
 typedef struct Screen_t
 {
    uint16_t* buffer;
-   uint16_t palette[PALETTE_COLORS];
+   uint16_t palette[PALETTE_MAX_COLORS];
+   uint16_t backupPalette[PALETTE_MAX_COLORS];
+   uint32_t paletteColorCount;
    uint8_t textBitFields[TEXT_TILE_COUNT][TEXT_TILE_SIZE];
    uint16_t textColor;
 }
@@ -47,6 +49,8 @@ extern "C" {
 #endif
 
 void Screen_Init( Screen_t* screen, uint16_t* buffer );
+void Screen_BackupPalette( Screen_t* screen );
+void Screen_RestorePalette( Screen_t* screen );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex );
 void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex );
 void Screen_WipeColor( Screen_t* screen, uint16_t color );
