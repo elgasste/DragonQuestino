@@ -233,6 +233,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Use_SilverHarp: return 2;
       case DialogMessageId_Use_GwaelynsLoveCantUse: return 1;
       case DialogMessageId_Use_GwaelynsLove: return 4;
+      case DialogMessageId_Use_RainbowDropCantUse: return 1;
       case DialogMessageId_Use_RainbowDrop: return 1;
       case DialogMessageId_Use_CursedBelt: return 2;
       case DialogMessageId_Chest_ItemCollected: return 1;
@@ -321,7 +322,8 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 2: sprintf( text, STRING_ITEMUSE_GWAELYNSLOVE_3, dialog->insertionText ); return;
             case 3: sprintf( text, STRING_ITEMUSE_GWAELYNSLOVE_4, player->name ); return;
          }
-      case DialogMessageId_Use_RainbowDrop: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
+      case DialogMessageId_Use_RainbowDropCantUse: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
+      case DialogMessageId_Use_RainbowDrop: sprintf( text, STRING_ITEMUSE_RAINBOWDROP, player->name ); return;
       case DialogMessageId_Use_CursedBelt:
          switch ( dialog->section )
          {

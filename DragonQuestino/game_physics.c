@@ -56,7 +56,7 @@ void Game_TicPhysics( Game_t* game )
                tileIndex = col + ( row * TILE_COUNT_X );
                tile = game->tileMap.tiles[tileIndex];
 
-               if ( !GET_TILEPASSABLE( tile ) )
+               if ( !TILE_GET_PASSABLE( tile ) )
                {
                   newPos.x = (float)( ( ( col + 1 ) * TILE_SIZE ) );
                   break;
@@ -73,7 +73,7 @@ void Game_TicPhysics( Game_t* game )
                tileIndex = col + ( row * TILE_COUNT_X );
                tile = game->tileMap.tiles[tileIndex];
 
-               if ( !GET_TILEPASSABLE( tile ) )
+               if ( !TILE_GET_PASSABLE( tile ) )
                {
                   newPos.x = ( col * TILE_SIZE ) - player->hitBoxSize.x - COLLISION_THETA;
                   break;
@@ -98,7 +98,7 @@ void Game_TicPhysics( Game_t* game )
                tileIndex = col + ( row * TILE_COUNT_X );
                tile = game->tileMap.tiles[tileIndex];
 
-               if ( !GET_TILEPASSABLE( tile ) )
+               if ( !TILE_GET_PASSABLE( tile ) )
                {
                   newPos.y = (float)( ( ( row + 1 ) * TILE_SIZE ) );
                   break;
@@ -115,7 +115,7 @@ void Game_TicPhysics( Game_t* game )
                tileIndex = col + ( row * TILE_COUNT_X );
                tile = game->tileMap.tiles[tileIndex];
 
-               if ( !GET_TILEPASSABLE( tile ) )
+               if ( !TILE_GET_PASSABLE( tile ) )
                {
                   newPos.y = ( row * TILE_SIZE ) - player->hitBoxSize.y - COLLISION_THETA;
                   break;

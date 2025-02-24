@@ -248,7 +248,14 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, "         break;\n" );
          }
 
+         WriteToFileStream( fs, "   }\n\n" );
+
+         WriteToFileStream( fs, "   if ( index == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )\n" );
+         WriteToFileStream( fs, "   {\n" );
+         WriteToFileStream( fs, "      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );\n" );
+         WriteToFileStream( fs, "      TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );\n" );
          WriteToFileStream( fs, "   }\n" );
+
          WriteToFileStream( fs, "}\n" );
       }
 

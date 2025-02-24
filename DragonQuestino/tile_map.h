@@ -27,12 +27,15 @@
 #define TILEMAP_MAX_ACTIVESPRITES      16
 #define TILEMAP_MAX_STATICSPRITES      16
 
-#define GET_TILETEXTUREINDEX( t )      ( ( t ) & 0x1F )
-#define GET_TILEPASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
-#define GET_TILEWALKSPEED( t )         ( ( ( t ) & 0xC0 ) >> 6 )
-#define GET_TILEENCOUNTERABLE( t )     ( ( ( t ) & 0x100 ) >> 8 )
-#define GET_TILEENCOUNTERRATE( t )     ( ( ( t ) & 0x300 ) >> 9 )
-#define GET_TILEDAMAGERATE( t )        ( ( ( t ) & 0x1800 ) >> 11 )
+#define TILE_GET_TEXTUREINDEX( t )      ( ( t ) & 0x1F )
+#define TILE_GET_PASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
+#define TILE_GET_WALKSPEED( t )         ( ( ( t ) & 0xC0 ) >> 6 )
+#define TILE_GET_ENCOUNTERABLE( t )     ( ( ( t ) & 0x100 ) >> 8 )
+#define TILE_GET_ENCOUNTERRATE( t )     ( ( ( t ) & 0x300 ) >> 9 )
+#define TILE_GET_DAMAGERATE( t )        ( ( ( t ) & 0x1800 ) >> 11 )
+
+#define TILE_SET_TEXTUREINDEX( t, i )   ( t ) = ( ( t ) & 0xFFE0 ) | i
+#define TILE_SET_PASSABLE( t, b )       ( t ) = ( ( t ) & 0xFFDF ) | ( b << 5 )
 
 #define TORCH_DIAMETER                 3
 #define RADIANT_DIAMETER               7
@@ -43,6 +46,7 @@
 #define TILEMAP_TANTEGEL_INDEX         7053
 #define TILEMAP_TOKEN_INDEX            16893
 #define TILEMAP_FAIRYFLUTE_INDEX       192
+#define TILEMAP_RAINBOWBRIDGE_INDEX    7914
 
 typedef struct Screen_t Screen_t;
 
@@ -71,13 +75,16 @@ typedef struct TileMap_t
    uint32_t targetLightDiameter;
    uint32_t lightTileCount;
 
-   // bits 1-5: texture index (max 32 textures)
-   // bit 6: is-passable flag
-   // bits 7-8: walk speed (0 = normal, 3 = crawl)
-   // bit 9: is-encounterable flag
-   // bits 10-11: encounter rate
-   // bits 12-13: damage rate
-   // bits 14-16: reserved
+   // MUFFINS: update the editor to check for this when loading the overworld
+   Bool_t usedRainbowDrop;
+
+   // bits 0-4: texture index (max 32 textures)
+   // bit 5: is-passable flag
+   // bits 6-7: walk speed (0 = normal, 3 = crawl)
+   // bit 8: is-encounterable flag
+   // bits 9-10: encounter rate
+   // bits 11-12: damage rate
+   // bits 13-15: reserved
    uint16_t tiles[TILE_COUNT];
    uint32_t tilesX;
    uint32_t tilesY;

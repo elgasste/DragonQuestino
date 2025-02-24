@@ -129,6 +129,15 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
+         if ( game->scrollingDialog.messageId == DialogMessageId_Use_RainbowDrop )
+         {
+            // TODO: change the state to rainbow bridge animation, then do this after the animation is done
+            PLAYER_TOGGLE_HASRAINBOWDROP( game->player.items );
+            game->tileMap.usedRainbowDrop = True;
+            TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
+            TILE_SET_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
+         }
+
          Game_ChangeState( game, GameState_Overworld_Washing );
       }
    }

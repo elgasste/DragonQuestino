@@ -11836,6 +11836,12 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[494] = 0x01060128;
          break;
    }
+
+   if ( index == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )
+   {
+      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
+      TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
+   }
 }
 
 void Sprite_LoadPlayer( ActiveSprite_t* sprite )
