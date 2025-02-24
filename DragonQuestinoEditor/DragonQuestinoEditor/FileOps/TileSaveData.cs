@@ -6,6 +6,7 @@ namespace DragonQuestinoEditor.FileOps
    {
       public int TextureIndex { get; set; }
       public int TreasureFlag { get; set; }
+      public int PermadoorFlag { get; set; }
       public bool IsPassable { get; set; }
 
       public TileSaveData() { }
@@ -14,6 +15,7 @@ namespace DragonQuestinoEditor.FileOps
       {
          TextureIndex = tile.TextureIndex;
          TreasureFlag = tile.TreasureFlag;
+         PermadoorFlag = tile.PermadoorFlag;
          IsPassable = tile.IsPassable;
       }
    }

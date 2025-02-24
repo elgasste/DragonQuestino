@@ -103,6 +103,9 @@ typedef struct TileMap_t
 
    StaticSprite_t chestSprite;
    uint32_t treasureFlags;
+
+   StaticSprite_t doorSprite;
+   uint32_t permadoorFlags;
 }
 TileMap_t;
 
@@ -123,8 +126,9 @@ void TileMap_Draw( TileMap_t* tileMap );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
-void TileMap_Load( TileMap_t* tileMap, uint32_t index );
-uint32_t TileMap_GetTreasureFlag( uint32_t tileMapIndex, uint32_t tileIndex );
+void TileMap_Load( TileMap_t* tileMap, uint32_t id );
+uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex );
+uint32_t TileMap_GetPermadoorFlag( uint32_t tileMapId, uint32_t tileIndex );
 
 #if defined( __cplusplus )
 }

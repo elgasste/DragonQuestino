@@ -2657,12 +2657,12 @@ void TileMap_LoadTextures( TileMap_t* tileMap )
    mem32[63] = 0x02020202;
 }
 
-void TileMap_Load( TileMap_t* tileMap, uint32_t index )
+void TileMap_Load( TileMap_t* tileMap, uint32_t id )
 {
    int32_t i, j;
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
 
-   switch( index )
+   switch( id )
    {
       case 0:
          tileMap->id = 0;
@@ -11833,7 +11833,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          break;
    }
 
-   if ( index == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )
+   if ( id == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )
    {
       TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
       TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
@@ -12901,6 +12901,18 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 428 ) return 0x08000000;
          if ( tileIndex == 429 ) return 0x10000000;
          if ( tileIndex == 430 ) return 0x20000000;
+         break;
+   }
+
+   return 0;
+}
+
+uint32_t TileMap_GetPermadoorFlag( uint32_t tileMapId, uint32_t tileIndex )
+{
+   switch( tileMapId )
+   {
+      case 1:
+         if ( tileIndex == 189 ) return 0x00000001;
          break;
    }
 
