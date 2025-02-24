@@ -122,6 +122,7 @@ void TileMap_ReduceLightDiameter( TileMap_t* tileMap );
 void TileMap_IncreaseLightDiameter( TileMap_t* tileMap );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
+uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction );
 void TileMap_Draw( TileMap_t* tileMap );
 
 // game_data.c

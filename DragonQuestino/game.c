@@ -110,6 +110,32 @@ void Game_Search( Game_t* game )
    }
 }
 
+void Game_OpenDoor( Game_t* game )
+{
+   uint32_t doorTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
+   uint32_t permadoorFlag = TileMap_GetPermadoorFlag( game->tileMap.id, doorTileIndex );
+
+   if ( permadoorFlag && ( game->tileMap.permadoorFlags & permadoorFlag ) )
+   {
+      if ( !PLAYER_GET_KEYCOUNT( game->player.items ) )
+      {
+         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+         ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_NoKeys );
+      }
+      else
+      {
+         PLAYER_SET_KEYCOUNT( game->player.items, PLAYER_GET_KEYCOUNT( game->player.items ) - 1 );
+         game->tileMap.permadoorFlags ^= permadoorFlag;
+         Game_ChangeState( game, GameState_Overworld );
+      }
+   }
+   else
+   {
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
+   }
+}
+
 internal void Game_TicOverworld( Game_t* game )
 {
    Game_TicPhysics( game );

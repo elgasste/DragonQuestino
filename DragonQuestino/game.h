@@ -48,6 +48,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
 void Game_ChangeState( Game_t* game, GameState_t newState );
 void Game_Search( Game_t* game );
+void Game_OpenDoor( Game_t* game );
 
 // game_input.c
 void Game_HandleInput( Game_t* game );

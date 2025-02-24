@@ -136,6 +136,19 @@ TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index 
    return 0;
 }
 
+uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction )
+{
+   switch ( direction )
+   {
+      case Direction_Left: return sourceTileIndex - 1;
+      case Direction_Right: return sourceTileIndex + 1;
+      case Direction_Up: return sourceTileIndex - tileMap->tilesX;
+      case Direction_Down: return sourceTileIndex + tileMap->tilesX;
+   }
+
+   return 0;
+}
+
 void TileMap_Draw( TileMap_t* tileMap )
 {
    uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, tileIndex, treasureFlag, permadoorFlag;
