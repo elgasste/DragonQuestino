@@ -3,6 +3,19 @@
 
 #include "common.h"
 
+typedef enum Button_t
+{
+   Button_Left = 0,
+   Button_Up,
+   Button_Right,
+   Button_Down,
+   Button_A,
+   Button_B,
+
+   Button_Count
+}
+Button_t;
+
 typedef enum Direction_t
 {
    Direction_Left = 0,

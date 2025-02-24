@@ -32,7 +32,7 @@ void Game_DrawOverworldQuickStatus( Game_t* game )
    uint32_t memSize;
    char line[9];
 
-   memSize = MATH_MINU32( (uint32_t)( strlen( game->player.name ) ), 4 );
+   memSize = MATH_MIN( (uint32_t)( strlen( game->player.name ) ), 4 );
    memcpy( line, game->player.name, sizeof( char ) * memSize );
    line[memSize] = '\0';
    Screen_DrawTextWindowWithTitle( &( game->screen ), 16, 16, 8, 12, line );

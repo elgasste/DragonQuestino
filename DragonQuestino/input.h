@@ -12,19 +12,6 @@
 #define ANALOG_THRESHOLD_LOW  200
 #define ANALOG_THRESHOLD_HIGH 824
 
-typedef enum
-{
-   Button_Left = 0,
-   Button_Up,
-   Button_Right,
-   Button_Down,
-   Button_A,
-   Button_B,
-
-   Button_Count
-}
-Button_t;
-
 typedef struct ButtonState_t
 {
    Bool_t pressed;
