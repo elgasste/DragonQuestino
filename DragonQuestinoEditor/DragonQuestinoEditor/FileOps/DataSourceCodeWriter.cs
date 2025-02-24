@@ -23,8 +23,20 @@ namespace DragonQuestinoEditor.FileOps
 
       public void WriteFiles()
       {
+         WriteGeneratedHeaderFile();
          WriteGameDataFile();
          WriteShieldBackgroundDataFile();
+      }
+
+      private void WriteGeneratedHeaderFile()
+      {
+         using FileStream fs = File.Create( Constants.GeneratedDefinesSourceFilePath );
+
+         WriteToFileStream( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
+         WriteToFileStream( fs, "#if !defined( GENERATED_DEFINES_H )\n" );
+         WriteToFileStream( fs, "#define GENERATED_DEFINES_H\n\n" );
+         WriteToFileStream( fs, string.Format( "#define PALETTE_COLORS {0}\n\n", _palette.ColorCount ) );
+         WriteToFileStream( fs, "#endif // GENERATED_DEFINES_H\n" );
       }
 
       private void WriteGameDataFile()
@@ -58,9 +70,6 @@ namespace DragonQuestinoEditor.FileOps
       {
          WriteToFileStream( fs, "\nvoid Screen_LoadPalette( Screen_t* screen )\n" );
          WriteToFileStream( fs, "{\n" );
-         WriteToFileStream( fs, "   uint16_t i;\n\n" );
-         WriteToFileStream( fs, string.Format( "   screen->paletteColorCount = {0};\n\n", _palette.ColorCount ) );
-         WriteToFileStream( fs, string.Format( "   for ( i = 0; i < {0}; i++ ) {{ screen->palette[i] = 0; }}\n\n", Constants.PaletteSize ) );
 
          for ( int i = 0; i < _palette.ColorCount; i++ )
          {
