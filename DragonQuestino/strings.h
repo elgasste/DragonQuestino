@@ -98,6 +98,7 @@
 #define STRING_ITEMUSE_GWAELYNSLOVE_3_DOUBLE          "%u to the %s and %u to the %s"
 #define STRING_ITEMUSE_GWAELYNSLOVE_4                 "I love thee, %s!\""
 #define STRING_ITEMUSE_RAINBOWDROP_CANTUSE            "The Rainbow Drop cannot be used here."
+#define STRING_ITEMUSE_RAINBOWDROP                    "%s pours the Rainbow Drop into the water."
 #define STRING_ITEMUSE_CURSEDBELT                     "%s puts on the Cursed Belt."
 
 #define STRING_CHEST_ITEMFOUND                        "The chest contains %s!"

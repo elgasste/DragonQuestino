@@ -7,6 +7,8 @@ void Screen_LoadPalette( Screen_t* screen )
 {
    uint16_t i;
 
+   screen->paletteColorCount = 13;
+
    for ( i = 0; i < 256; i++ ) { screen->palette[i] = 0; }
 
    screen->palette[0] = 0x9720;
@@ -11835,6 +11837,12 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          tiles32[493] = 0x01060108;
          tiles32[494] = 0x01060128;
          break;
+   }
+
+   if ( index == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )
+   {
+      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
+      TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
    }
 }
 

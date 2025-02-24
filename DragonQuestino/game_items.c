@@ -90,8 +90,18 @@ void Game_UseGwaelynsLove( Game_t* game )
 
 void Game_UseRainbowDrop( Game_t* game )
 {
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-   ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_RainbowDrop );
+   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID &&
+        game->player.tileIndex == ( TILEMAP_RAINBOWBRIDGE_INDEX + 1 ) &&
+        game->player.sprite.direction == Direction_Left )
+   {
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_RainbowDrop );
+   }
+   else
+   {
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_RainbowDropCantUse );
+   }
 }
 
 void Game_UseCursedBelt( Game_t* game )

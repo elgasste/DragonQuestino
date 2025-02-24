@@ -59,6 +59,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "\nvoid Screen_LoadPalette( Screen_t* screen )\n" );
          WriteToFileStream( fs, "{\n" );
          WriteToFileStream( fs, "   uint16_t i;\n\n" );
+         WriteToFileStream( fs, string.Format( "   screen->paletteColorCount = {0};\n\n", _palette.ColorCount ) );
          WriteToFileStream( fs, string.Format( "   for ( i = 0; i < {0}; i++ ) {{ screen->palette[i] = 0; }}\n\n", Constants.PaletteSize ) );
 
          for ( int i = 0; i < _palette.ColorCount; i++ )
@@ -248,7 +249,14 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, "         break;\n" );
          }
 
+         WriteToFileStream( fs, "   }\n\n" );
+
+         WriteToFileStream( fs, "   if ( index == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )\n" );
+         WriteToFileStream( fs, "   {\n" );
+         WriteToFileStream( fs, "      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );\n" );
+         WriteToFileStream( fs, "      TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );\n" );
          WriteToFileStream( fs, "   }\n" );
+
          WriteToFileStream( fs, "}\n" );
       }
 

@@ -129,7 +129,15 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         Game_ChangeState( game, GameState_Overworld_Washing );
+         if ( game->scrollingDialog.messageId == DialogMessageId_Use_RainbowDrop )
+         {
+            Screen_BackupPalette( &( game->screen ) );
+            Game_ChangeState( game, GameState_Overworld_RainbowBridgeAnimation );
+         }
+         else
+         {
+            Game_ChangeState( game, GameState_Overworld_Washing );
+         }
       }
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )

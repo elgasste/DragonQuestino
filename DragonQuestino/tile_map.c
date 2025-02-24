@@ -15,6 +15,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
    Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
    tileMap->treasureFlags = 0xFFFFFFFF;
    tileMap->isDark = False;
+   tileMap->usedRainbowDrop = False;
 }
 
 void TileMap_ResetViewport( TileMap_t* tileMap )
@@ -93,7 +94,7 @@ void TileMap_IncreaseLightDiameter( TileMap_t* tileMap )
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex )
 {
    uint16_t tile = tileMap->tiles[( ( tileIndex / tileMap->tilesX ) * TILE_COUNT_X ) + ( tileIndex % tileMap->tilesX )];
-   uint16_t walkSpeed = GET_TILEWALKSPEED( tile );
+   uint16_t walkSpeed = TILE_GET_WALKSPEED( tile );
 
 #if defined( VISUAL_STUDIO_DEV )
 
@@ -148,7 +149,7 @@ void TileMap_Draw( TileMap_t* tileMap )
 
       for ( tileX = firstTileX, screenX = 0; tileX <= lastTileX; tileX++ )
       {
-         textureIndex = GET_TILETEXTUREINDEX( tileMap->tiles[( tileY * TILE_COUNT_X ) + tileX] );
+         textureIndex = TILE_GET_TEXTUREINDEX( tileMap->tiles[( tileY * TILE_COUNT_X ) + tileX] );
          tileWidth = ( tileX == firstTileX ) ? TILE_SIZE - tileOffsetX : ( tileX == lastTileX ) ? ( viewport->x + viewport->w ) % TILE_SIZE : TILE_SIZE;
 
          Screen_DrawMemorySection( tileMap->screen, tileMap->textures[textureIndex].memory, TILE_SIZE,
