@@ -12914,6 +12914,20 @@ uint32_t TileMap_GetPermadoorFlag( uint32_t tileMapId, uint32_t tileIndex )
       case 1:
          if ( tileIndex == 189 ) return 0x00000001;
          break;
+      case 4:
+         if ( tileIndex == 774 ) return 0x00000002;
+         break;
+      case 10:
+         if ( tileIndex == 764 ) return 0x00000004;
+         if ( tileIndex == 765 ) return 0x00000008;
+         break;
+      case 12:
+         if ( tileIndex == 346 ) return 0x00000010;
+         if ( tileIndex == 392 ) return 0x00000020;
+         break;
+      case 13:
+         if ( tileIndex == 726 ) return 0x00000040;
+         break;
    }
 
    return 0;

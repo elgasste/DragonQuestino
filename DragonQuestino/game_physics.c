@@ -57,7 +57,7 @@ void Game_TicPhysics( Game_t* game )
                tile = game->tileMap.tiles[tileIndex];
 
                if ( !TILE_GET_PASSABLE( tile ) ||
-                    ( TileMap_GetPermadoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) & game->tileMap.permadoorFlags ) ) )
+                    ( TileMap_GetPermadoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->tileMap.permadoorFlags ) )
                {
                   newPos.x = (float)( ( ( col + 1 ) * TILE_SIZE ) );
                   break;
@@ -75,7 +75,7 @@ void Game_TicPhysics( Game_t* game )
                tile = game->tileMap.tiles[tileIndex];
 
                if ( !TILE_GET_PASSABLE( tile ) ||
-                    ( TileMap_GetPermadoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) & game->tileMap.permadoorFlags ) ) )
+                    ( TileMap_GetPermadoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->tileMap.permadoorFlags ) )
                {
                   newPos.x = ( col * TILE_SIZE ) - player->hitBoxSize.x - COLLISION_THETA;
                   break;
@@ -101,7 +101,7 @@ void Game_TicPhysics( Game_t* game )
                tile = game->tileMap.tiles[tileIndex];
 
                if ( !TILE_GET_PASSABLE( tile ) ||
-                    ( TileMap_GetPermadoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) & game->tileMap.permadoorFlags ) ) )
+                    ( TileMap_GetPermadoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->tileMap.permadoorFlags ) )
                {
                   newPos.y = (float)( ( ( row + 1 ) * TILE_SIZE ) );
                   break;
@@ -119,7 +119,7 @@ void Game_TicPhysics( Game_t* game )
                tile = game->tileMap.tiles[tileIndex];
 
                if ( !TILE_GET_PASSABLE( tile ) ||
-                    ( TileMap_GetPermadoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) & game->tileMap.permadoorFlags ) ) )
+                    ( TileMap_GetPermadoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->tileMap.permadoorFlags ) )
                {
                   newPos.y = ( row * TILE_SIZE ) - player->hitBoxSize.y - COLLISION_THETA;
                   break;
