@@ -5,7 +5,8 @@ internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game );
-internal void Game_TicRainbowBridgeFinalAnimation( Game_t* game );
+internal void Game_TicRainbowBridgeWhiteoutAnimation( Game_t* game );
+internal void Game_TicRainbowBridgePauseAnimation( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
@@ -50,8 +51,11 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld_RainbowBridgeTrippyAnimation:
          Game_TicRainbowBridgeTrippyAnimation( game );
          break;
-      case GameState_Overworld_RainbowBridgeFinalAnimation:
-         Game_TicRainbowBridgeFinalAnimation( game );
+      case GameState_Overworld_RainbowBridgeWhiteoutAnimation:
+         Game_TicRainbowBridgeWhiteoutAnimation( game );
+         break;
+      case GameState_Overworld_RainbowBridgePauseAnimation:
+         Game_TicRainbowBridgePauseAnimation( game );
          break;
       case GameState_TileMapTransition:
          Game_TicTileMapTransition( game );
@@ -77,8 +81,11 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
       case GameState_Overworld_RainbowBridgeTrippyAnimation:
          game->rainbowBridgeTrippySecondsElapsed = 0.0f;
          break;
-      case GameState_Overworld_RainbowBridgeFinalAnimation:
-         game->rainbowBridgeFinalSecondsElapsed = 0.0f;
+      case GameState_Overworld_RainbowBridgeWhiteoutAnimation:
+         game->rainbowBridgeWhiteoutSecondsElapsed = 0.0f;
+         break;
+      case GameState_Overworld_RainbowBridgePauseAnimation:
+         game->rainbowBridgePauseSecondsElapsed = 0.0f;
          break;
    }
 }
@@ -253,7 +260,7 @@ internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
       game->tileMap.usedRainbowDrop = True;
       TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
       TILE_SET_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
-      Game_ChangeState( game, GameState_Overworld_RainbowBridgeFinalAnimation );
+      Game_ChangeState( game, GameState_Overworld_RainbowBridgeWhiteoutAnimation );
    }
    else
    {
@@ -269,12 +276,22 @@ internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
    }
 }
 
-internal void Game_TicRainbowBridgeFinalAnimation( Game_t* game )
+internal void Game_TicRainbowBridgeWhiteoutAnimation( Game_t* game )
 {
    Screen_WipeColor( &( game->screen ), COLOR_WHITE );
-   game->rainbowBridgeFinalSecondsElapsed += CLOCK_FRAME_SECONDS;
+   game->rainbowBridgeWhiteoutSecondsElapsed += CLOCK_FRAME_SECONDS;
 
-   if ( game->rainbowBridgeFinalSecondsElapsed > RAINBOW_BRIDGE_FINAL_TOTAL_SECONDS )
+   if ( game->rainbowBridgeWhiteoutSecondsElapsed > RAINBOW_BRIDGE_WHITEOUT_TOTAL_SECONDS )
+   {
+      Game_ChangeState( game, GameState_Overworld_RainbowBridgePauseAnimation );
+   }
+}
+
+internal void Game_TicRainbowBridgePauseAnimation( Game_t* game )
+{
+   game->rainbowBridgePauseSecondsElapsed += CLOCK_FRAME_SECONDS;
+
+   if ( game->rainbowBridgePauseSecondsElapsed > RAINBOW_BRIDGE_PAUSE_TOTAL_SECONDS )
    {
       Game_ChangeState( game, GameState_Overworld );
    }

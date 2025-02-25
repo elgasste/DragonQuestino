@@ -10,13 +10,14 @@
 #include "menu.h"
 #include "scrolling_dialog.h"
 
-#define TILEMAP_SWAP_SECONDS                 0.4f
-#define OVERWORLD_INACTIVE_STATUS_SECONDS    1.0f
-#define OVERWORLD_LIGHTING_FRAME_SECONDS     0.1f
-#define OVERWORLD_WASH_TOTAL_SECONDS         0.2f
-#define RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS  5.0f
-#define RAINBOW_BRIDGE_FINAL_TOTAL_SECONDS   1.3f
-#define COLLISION_THETA                      0.001f
+#define TILEMAP_SWAP_SECONDS                    0.4f
+#define OVERWORLD_INACTIVE_STATUS_SECONDS       1.0f
+#define OVERWORLD_LIGHTING_FRAME_SECONDS        0.1f
+#define OVERWORLD_WASH_TOTAL_SECONDS            0.2f
+#define RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS     10.0f
+#define RAINBOW_BRIDGE_WHITEOUT_TOTAL_SECONDS   3.0f
+#define RAINBOW_BRIDGE_PAUSE_TOTAL_SECONDS      2.0f
+#define COLLISION_THETA                         0.001f
 
 typedef struct Game_t
 {
@@ -37,7 +38,8 @@ typedef struct Game_t
 
    float lightingSecondsElapsed;
    float rainbowBridgeTrippySecondsElapsed;
-   float rainbowBridgeFinalSecondsElapsed;
+   float rainbowBridgeWhiteoutSecondsElapsed;
+   float rainbowBridgePauseSecondsElapsed;
 }
 Game_t;
 
