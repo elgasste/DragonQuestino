@@ -76,6 +76,7 @@
 #define STRING_OVERWORLD_DIALOG_NO_KEYS                     "You do not have any keys."
 
 #define STRING_BUTNOTHINGHAPPENS                            "But nothing happens."
+#define STRING_NOTENOUGHMP                                  "Not enough MP!"
 #define STRING_CURSED                                       "Thou art cursed!"
 #define STRING_NORTH                                        "north"
 #define STRING_SOUTH                                        "south"

@@ -37,7 +37,7 @@ void Player_Init( Player_t* player, Screen_t* screen )
    player->spells = 0;
 
    // for testing
-   player->spells = 0x3FF;
+   //player->spells = 0x3FF;
    //SPELL_SET_HASSIZZ( player->spells );x
 }
 

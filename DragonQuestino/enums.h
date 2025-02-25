@@ -127,6 +127,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Search_FoundItem,
    DialogMessageId_Spell_None,
    DialogMessageId_Spell_OverworldCantCast,
+   DialogMessageId_Spell_NotEnoughMp,
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
    DialogMessageId_Door_NoKeys,
