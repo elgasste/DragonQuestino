@@ -2662,6 +2662,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
    int32_t i, j;
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
 
+   tileMap->doorFlags = ( 0xFFFF0000 | ( tileMap->doorFlags & 0xFFFF ) );
+
    switch( id )
    {
       case 0:
@@ -12856,7 +12858,6 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 149 ) return 0x00000080;
          break;
       case 3:
-         if ( tileIndex == 89 ) return 0x00000004;
          if ( tileIndex == 450 ) return 0x00000008;
          if ( tileIndex == 483 ) return 0x00000010;
          if ( tileIndex == 514 ) return 0x00000020;
@@ -12913,6 +12914,9 @@ uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
    {
       case 1:
          if ( tileIndex == 189 ) return 0x00000001;
+         break;
+      case 3:
+         if ( tileIndex == 453 ) return 0x00010000;
          break;
       case 4:
          if ( tileIndex == 774 ) return 0x00000002;

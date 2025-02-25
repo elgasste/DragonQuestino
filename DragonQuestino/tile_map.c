@@ -151,7 +151,7 @@ uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileInde
 
 void TileMap_Draw( TileMap_t* tileMap )
 {
-   uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, tileIndex, treasureFlag, permadoorFlag;
+   uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, tileIndex, treasureFlag, doorFlag;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
    firstTileX = viewport->x / TILE_SIZE;
@@ -177,7 +177,7 @@ void TileMap_Draw( TileMap_t* tileMap )
 
          tileIndex = ( tileY * tileMap->tilesX ) + tileX;
          treasureFlag = TileMap_GetTreasureFlag( tileMap->id, tileIndex );
-         permadoorFlag = TileMap_GetDoorFlag( tileMap->id, tileIndex );
+         doorFlag = TileMap_GetDoorFlag( tileMap->id, tileIndex );
 
          if ( treasureFlag && ( tileMap->treasureFlags & treasureFlag ) )
          {
@@ -186,7 +186,7 @@ void TileMap_Draw( TileMap_t* tileMap )
                                       tileWidth, tileHeight,
                                       screenX + tileMap->viewportScreenPos.x, screenY + tileMap->viewportScreenPos.y, True );
          }
-         else if ( permadoorFlag && ( tileMap->doorFlags & permadoorFlag ) )
+         else if ( doorFlag && ( tileMap->doorFlags & doorFlag ) )
          {
             Screen_DrawMemorySection( tileMap->screen, tileMap->doorSprite.texture.memory, SPRITE_TEXTURE_SIZE,
                                       tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,

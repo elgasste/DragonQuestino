@@ -105,7 +105,6 @@ typedef struct TileMap_t
    uint32_t treasureFlags;
 
    StaticSprite_t doorSprite;
-   // MUFFINS: make it so the high 16 bits are "temporary", and the low 16 bits are "permanent".
    uint32_t doorFlags;
 }
 TileMap_t;
