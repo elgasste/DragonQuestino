@@ -20,6 +20,7 @@ void Player_Init( Player_t* player, Screen_t* screen )
    player->sprite.direction = Direction_Down;
 
    strcpy( player->name, "TestMan1" );
+   player->isCursed = False;
 
    player->stats.hitPoints = 12;
    player->stats.maxHitPoints = 12;
@@ -33,7 +34,7 @@ void Player_Init( Player_t* player, Screen_t* screen )
    player->experience = 0;
    player->gold = 0;
    player->items = 0;
-   player->isCursed = False;
+   player->spells = 0;
 }
 
 uint8_t Player_GetLevel( Player_t* player )

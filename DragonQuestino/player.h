@@ -75,6 +75,7 @@ typedef struct Player_t
    Vector2u32_t hitBoxSize;
 
    uint32_t tileIndex;
+   Bool_t isCursed;
 
    char name[9];
    BattleStats_t stats;
@@ -99,7 +100,19 @@ typedef struct Player_t
    // bits 25-31: reserved
    uint32_t items;
 
-   Bool_t isCursed;
+   // MUFFINS
+   // bit 0: heal
+   // bit 1: sizz
+   // bit 2: sleep
+   // bit 3: glow
+   // bit 4: fizzle
+   // bit 5: evac
+   // bit 6: zoom
+   // bit 7: repel
+   // bit 8: midheal
+   // bit 9: sizzle
+   // bits 10-15: reserved
+   uint16_t spells;
 }
 Player_t;
 
