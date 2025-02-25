@@ -2,7 +2,8 @@
 #include "screen.h"
 #include "math.h"
 
-#define SPRITE_CHEST_INDEX  0
+#define SPRITE_CHEST_INDEX    0
+#define SPRITE_DOOR_INDEX     1
 
 internal void TileMap_SetLightDiameter( TileMap_t* tileMap, uint32_t diameter );
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
@@ -14,6 +15,10 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
 
    Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
    tileMap->treasureFlags = 0xFFFFFFFF;
+
+   Sprite_LoadStatic( &( tileMap->doorSprite ), SPRITE_DOOR_INDEX );
+   tileMap->doorFlags = 0xFFFFFFFF;
+
    tileMap->isDark = False;
    tileMap->usedRainbowDrop = False;
 }
@@ -131,9 +136,22 @@ TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index 
    return 0;
 }
 
+uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction )
+{
+   switch ( direction )
+   {
+      case Direction_Left: return sourceTileIndex - 1;
+      case Direction_Right: return sourceTileIndex + 1;
+      case Direction_Up: return sourceTileIndex - tileMap->tilesX;
+      case Direction_Down: return sourceTileIndex + tileMap->tilesX;
+   }
+
+   return 0;
+}
+
 void TileMap_Draw( TileMap_t* tileMap )
 {
-   uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, treasureFlag;
+   uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, tileIndex, treasureFlag, doorFlag;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
    firstTileX = viewport->x / TILE_SIZE;
@@ -157,11 +175,20 @@ void TileMap_Draw( TileMap_t* tileMap )
                                    tileWidth, tileHeight,
                                    screenX + tileMap->viewportScreenPos.x, screenY + tileMap->viewportScreenPos.y, False );
 
-         treasureFlag = TileMap_GetTreasureFlag( tileMap->id, ( tileY * tileMap->tilesX ) + tileX );
+         tileIndex = ( tileY * tileMap->tilesX ) + tileX;
+         treasureFlag = TileMap_GetTreasureFlag( tileMap->id, tileIndex );
+         doorFlag = TileMap_GetDoorFlag( tileMap->id, tileIndex );
 
          if ( treasureFlag && ( tileMap->treasureFlags & treasureFlag ) )
          {
             Screen_DrawMemorySection( tileMap->screen, tileMap->chestSprite.texture.memory, SPRITE_TEXTURE_SIZE,
+                                      tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
+                                      tileWidth, tileHeight,
+                                      screenX + tileMap->viewportScreenPos.x, screenY + tileMap->viewportScreenPos.y, True );
+         }
+         else if ( doorFlag && ( tileMap->doorFlags & doorFlag ) )
+         {
+            Screen_DrawMemorySection( tileMap->screen, tileMap->doorSprite.texture.memory, SPRITE_TEXTURE_SIZE,
                                       tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
                                       tileWidth, tileHeight,
                                       screenX + tileMap->viewportScreenPos.x, screenY + tileMap->viewportScreenPos.y, True );

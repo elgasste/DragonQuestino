@@ -7,7 +7,7 @@ void Player_Init( Player_t* player, Screen_t* screen )
 {
    player->screen = screen;
 
-   player->tileIndex = TILE_COUNT_X * TILE_COUNT_Y; // off the map
+   player->tileIndex = 148; // sort of in front of King Lorik
    player->sprite.position.x = (float)( TILE_SIZE * 8 );
    player->sprite.position.y = (float)( TILE_SIZE * 7 );
    player->velocity.x = 0.0f;

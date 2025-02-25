@@ -175,8 +175,7 @@ internal void Game_HandleMenuInput( Game_t* game )
             Game_OpenOverworldItemMenu( game );
             break;
          case MenuCommand_OverworldMain_Door:
-            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
+            Game_OpenDoor( game );
             break;
 
          case MenuCommand_OverworldItem_Herb: Game_UseHerb( game ); break;

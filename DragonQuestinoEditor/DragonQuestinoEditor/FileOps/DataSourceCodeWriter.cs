@@ -50,6 +50,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteActiveSpritesFunctions( fs );
          WriteStaticSpritesFunction( fs );
          WriteTreasureFlagsFunction( fs );
+         WriteDoorFlagsFunction( fs );
       }
 
       private void WriteShieldBackgroundDataFile()
@@ -110,11 +111,12 @@ namespace DragonQuestinoEditor.FileOps
 
       private void WriteTileMapFunction( FileStream fs )
       {
-         WriteToFileStream( fs, "\nvoid TileMap_Load( TileMap_t* tileMap, uint32_t index )\n" );
+         WriteToFileStream( fs, "\nvoid TileMap_Load( TileMap_t* tileMap, uint32_t id )\n" );
          WriteToFileStream( fs, "{\n" );
          WriteToFileStream( fs, "   int32_t i, j;\n" );
          WriteToFileStream( fs, "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n" );
-         WriteToFileStream( fs, "   switch( index )\n" );
+         WriteToFileStream( fs, "   tileMap->doorFlags = ( 0xFFFF0000 | ( tileMap->doorFlags & 0xFFFF ) );\n\n" );
+         WriteToFileStream( fs, "   switch( id )\n" );
          WriteToFileStream( fs, "   {\n" );
 
          for ( int tm = 0; tm < _tileMaps.Count; tm++ )
@@ -260,7 +262,7 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, "   }\n\n" );
 
-         WriteToFileStream( fs, "   if ( index == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )\n" );
+         WriteToFileStream( fs, "   if ( id == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )\n" );
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );\n" );
          WriteToFileStream( fs, "      TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );\n" );
@@ -410,6 +412,45 @@ namespace DragonQuestinoEditor.FileOps
             {
                WriteToFileStream( fs, "         break;\n" );
                hasTreasure = false;
+            }
+         }
+
+         WriteToFileStream( fs, "   }\n\n" );
+         WriteToFileStream( fs, "   return 0;\n" );
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteDoorFlagsFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nuint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )\n" );
+         WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   switch( tileMapId )\n" );
+         WriteToFileStream( fs, "   {\n" );
+
+         bool hasDoor = false;
+
+         for ( int i = 0; i < _tileMaps.Count; i++ )
+         {
+            for ( int j = 0; j < _tileMaps[i].Tiles.Count; j++ )
+            {
+               var tile = _tileMaps[i].Tiles[j];
+
+               if ( tile.DoorFlag != 0 )
+               {
+                  if ( !hasDoor )
+                  {
+                     WriteToFileStream( fs, string.Format( "      case {0}:\n", i ) );
+                     hasDoor = true;
+                  }
+
+                  WriteToFileStream( fs, string.Format( "         if ( tileIndex == {0} ) return 0x{1};\n", j, tile.DoorFlag.ToString( "X8" ) ) );
+               }
+            }
+
+            if ( hasDoor )
+            {
+               WriteToFileStream( fs, "         break;\n" );
+               hasDoor = false;
             }
          }
 

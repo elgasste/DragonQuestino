@@ -2657,12 +2657,14 @@ void TileMap_LoadTextures( TileMap_t* tileMap )
    mem32[63] = 0x02020202;
 }
 
-void TileMap_Load( TileMap_t* tileMap, uint32_t index )
+void TileMap_Load( TileMap_t* tileMap, uint32_t id )
 {
    int32_t i, j;
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
 
-   switch( index )
+   tileMap->doorFlags = ( 0xFFFF0000 | ( tileMap->doorFlags & 0xFFFF ) );
+
+   switch( id )
    {
       case 0:
          tileMap->id = 0;
@@ -11833,7 +11835,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t index )
          break;
    }
 
-   if ( index == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )
+   if ( id == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )
    {
       TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
       TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
@@ -12856,7 +12858,6 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 149 ) return 0x00000080;
          break;
       case 3:
-         if ( tileIndex == 89 ) return 0x00000004;
          if ( tileIndex == 450 ) return 0x00000008;
          if ( tileIndex == 483 ) return 0x00000010;
          if ( tileIndex == 514 ) return 0x00000020;
@@ -12901,6 +12902,59 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 428 ) return 0x08000000;
          if ( tileIndex == 429 ) return 0x10000000;
          if ( tileIndex == 430 ) return 0x20000000;
+         break;
+   }
+
+   return 0;
+}
+
+uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
+{
+   switch( tileMapId )
+   {
+      case 1:
+         if ( tileIndex == 189 ) return 0x00000001;
+         break;
+      case 3:
+         if ( tileIndex == 243 ) return 0x00010000;
+         if ( tileIndex == 453 ) return 0x00020000;
+         break;
+      case 4:
+         if ( tileIndex == 774 ) return 0x00000002;
+         break;
+      case 7:
+         if ( tileIndex == 260 ) return 0x00100000;
+         break;
+      case 8:
+         if ( tileIndex == 124 ) return 0x00000080;
+         break;
+      case 10:
+         if ( tileIndex == 296 ) return 0x00020000;
+         if ( tileIndex == 634 ) return 0x00040000;
+         if ( tileIndex == 758 ) return 0x00080000;
+         if ( tileIndex == 764 ) return 0x00000004;
+         if ( tileIndex == 765 ) return 0x00000008;
+         break;
+      case 12:
+         if ( tileIndex == 346 ) return 0x00000010;
+         if ( tileIndex == 392 ) return 0x00000020;
+         break;
+      case 13:
+         if ( tileIndex == 726 ) return 0x00000040;
+         if ( tileIndex == 791 ) return 0x00200000;
+         break;
+      case 20:
+         if ( tileIndex == 856 ) return 0x00000200;
+         break;
+      case 21:
+         if ( tileIndex == 1120 ) return 0x00000100;
+         break;
+      case 25:
+         if ( tileIndex == 203 ) return 0x00400000;
+         if ( tileIndex == 214 ) return 0x00800000;
+         break;
+      case 33:
+         if ( tileIndex == 402 ) return 0x01000000;
          break;
    }
 

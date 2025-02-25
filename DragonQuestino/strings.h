@@ -61,6 +61,7 @@
 #define STRING_OVERWORLD_DIALOG_NO_SPELLS             "You do not know any spells."
 #define STRING_OVERWORLD_DIALOG_NO_ITEMS              "You do not have any items."
 #define STRING_OVERWORLD_DIALOG_NO_DOOR               "There is no door here."
+#define STRING_OVERWORLD_DIALOG_NO_KEYS               "You do not have any keys."
 
 #define STRING_BUTNOTHINGHAPPENS                      "But nothing happens."
 #define STRING_CURSED                                 "Thou art cursed!"

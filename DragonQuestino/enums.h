@@ -112,6 +112,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Spell_None,
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
+   DialogMessageId_Door_NoKeys,
 
    DialogMessageId_Use_Herb,
    DialogMessageId_Use_Wing,

@@ -103,6 +103,11 @@ typedef struct TileMap_t
 
    StaticSprite_t chestSprite;
    uint32_t treasureFlags;
+
+   StaticSprite_t doorSprite;
+   // low 16 bits: permanent doors (they stay opened)
+   // high 16 bits: temporary doors (they close again when you leave the tile map)
+   uint32_t doorFlags;
 }
 TileMap_t;
 
@@ -119,12 +124,14 @@ void TileMap_ReduceLightDiameter( TileMap_t* tileMap );
 void TileMap_IncreaseLightDiameter( TileMap_t* tileMap );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
+uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction );
 void TileMap_Draw( TileMap_t* tileMap );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
-void TileMap_Load( TileMap_t* tileMap, uint32_t index );
-uint32_t TileMap_GetTreasureFlag( uint32_t tileMapIndex, uint32_t tileIndex );
+void TileMap_Load( TileMap_t* tileMap, uint32_t id );
+uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex );
+uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex );
 
 #if defined( __cplusplus )
 }
