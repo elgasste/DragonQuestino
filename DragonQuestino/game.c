@@ -101,14 +101,14 @@ void Game_Search( Game_t* game )
 {
    uint32_t treasureFlag;
 
-   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !PLAYER_HAS_TOKEN( game->player.items ) )
+   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !ITEM_HAS_TOKEN( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_Token );
       Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_TOKEN );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
    }
-   else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !PLAYER_HAS_FAIRYFLUTE( game->player.items ) )
+   else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !ITEM_HAS_FAIRYFLUTE( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_FairyFlute );
       Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
@@ -138,14 +138,14 @@ void Game_OpenDoor( Game_t* game )
 
    if ( doorFlag && ( game->tileMap.doorFlags & doorFlag ) )
    {
-      if ( !PLAYER_GET_KEYCOUNT( game->player.items ) )
+      if ( !ITEM_GET_KEYCOUNT( game->player.items ) )
       {
          Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
          ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_NoKeys );
       }
       else
       {
-         PLAYER_SET_KEYCOUNT( game->player.items, PLAYER_GET_KEYCOUNT( game->player.items ) - 1 );
+         ITEM_SET_KEYCOUNT( game->player.items, ITEM_GET_KEYCOUNT( game->player.items ) - 1 );
          game->tileMap.doorFlags ^= doorFlag;
          Game_ChangeState( game, GameState_Overworld );
       }
@@ -268,7 +268,7 @@ internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
       }
 
       Screen_WipeColor( &( game->screen ), COLOR_WHITE );
-      PLAYER_TOGGLE_HASRAINBOWDROP( game->player.items );
+      ITEM_TOGGLE_HASRAINBOWDROP( game->player.items );
       game->tileMap.usedRainbowDrop = True;
       TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
       TILE_SET_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );

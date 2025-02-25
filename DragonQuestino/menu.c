@@ -193,7 +193,7 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
 
    strcpy( menu->title, STRING_OVERWORLD_MENU_ITEM );
 
-   menu->itemCount = PLAYER_GET_MAPUSEABLEITEMCOUNT( items );
+   menu->itemCount = ITEM_GET_MAPUSEABLEITEMCOUNT( items );
    menu->itemsPerColumn = menu->itemCount;
    menu->selectedIndex = 0;
    menu->position.x = 144;
@@ -206,36 +206,36 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
    menu->itemPadding = 1;
    menu->caratOffset = 1;
 
-   if ( PLAYER_GET_HERBCOUNT( items ) )
+   if ( ITEM_GET_HERBCOUNT( items ) )
    {
       menu->items[curItem].twoLineText = False;
-      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_HERB, PLAYER_GET_HERBCOUNT( items ) );
+      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_HERB, ITEM_GET_HERBCOUNT( items ) );
       menu->items[curItem].command = MenuCommand_OverworldItem_Herb;
       curItem++;
    }
-   if ( PLAYER_GET_TORCHCOUNT( items ) )
+   if ( ITEM_GET_TORCHCOUNT( items ) )
    {
       menu->items[curItem].twoLineText = False;
-      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_TORCH, PLAYER_GET_TORCHCOUNT( items ) );
+      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_TORCH, ITEM_GET_TORCHCOUNT( items ) );
       menu->items[curItem].command = MenuCommand_OverworldItem_Torch;
       curItem++;
    }
-   if ( PLAYER_GET_WINGCOUNT( items ) )
+   if ( ITEM_GET_WINGCOUNT( items ) )
    {
       menu->items[curItem].twoLineText = False;
-      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_WING, PLAYER_GET_WINGCOUNT( items ) );
+      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_WING, ITEM_GET_WINGCOUNT( items ) );
       menu->items[curItem].command = MenuCommand_OverworldItem_Wing;
       curItem++;
    }
-   if ( PLAYER_GET_FAIRYWATERCOUNT( items ) )
+   if ( ITEM_GET_FAIRYWATERCOUNT( items ) )
    {
       menu->items[curItem].twoLineText = True;
-      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_FAIRYWATER_1, PLAYER_GET_FAIRYWATERCOUNT( items ) );
+      sprintf( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_FAIRYWATER_1, ITEM_GET_FAIRYWATERCOUNT( items ) );
       strcpy( menu->items[curItem].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_FAIRYWATER_2 );
       menu->items[curItem].command = MenuCommand_OverworldItem_FairyWater;
       curItem++;
    }
-   if ( PLAYER_HAS_FAIRYFLUTE( items ) )
+   if ( ITEM_HAS_FAIRYFLUTE( items ) )
    {
       menu->items[curItem].twoLineText = True;
       strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_FAIRYFLUTE_1 );
@@ -243,7 +243,7 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
       menu->items[curItem].command = MenuCommand_OverworldItem_FairyFlute;
       curItem++;
    }
-   if ( PLAYER_HAS_SILVERHARP( items ) )
+   if ( ITEM_HAS_SILVERHARP( items ) )
    {
       menu->items[curItem].twoLineText = True;
       strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_SILVERHARP_1 );
@@ -251,7 +251,7 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
       menu->items[curItem].command = MenuCommand_OverworldItem_SilverHarp;
       curItem++;
    }
-   if ( PLAYER_HAS_GWAELYNSLOVE( items ) )
+   if ( ITEM_HAS_GWAELYNSLOVE( items ) )
    {
       menu->items[curItem].twoLineText = True;
       strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_GWAELYNSLOVE_1 );
@@ -259,7 +259,7 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
       menu->items[curItem].command = MenuCommand_OverworldItem_GwaelynsLove;
       curItem++;
    }
-   if ( PLAYER_HAS_RAINBOWDROP( items ) )
+   if ( ITEM_HAS_RAINBOWDROP( items ) )
    {
       menu->items[curItem].twoLineText = True;
       strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_RAINBOWDROP_1 );
@@ -267,7 +267,7 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
       menu->items[curItem].command = MenuCommand_OverworldItem_RainbowDrop;
       curItem++;
    }
-   if ( PLAYER_HAS_CURSEDBELT( items ) )
+   if ( ITEM_HAS_CURSEDBELT( items ) )
    {
       menu->items[curItem].twoLineText = True;
       strcpy( menu->items[curItem].text, STRING_OVERWORLD_ITEMMENU_CURSEDBELT_1 );

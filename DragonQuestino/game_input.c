@@ -223,8 +223,8 @@ internal void Game_HandleMenuInput( Game_t* game )
 
 internal void Game_OpenOverworldItemMenu( Game_t* game )
 {
-   uint32_t useableCount = PLAYER_GET_MAPUSEABLEITEMCOUNT( game->player.items );
-   uint32_t nonUseableCount = PLAYER_GET_MAPNONUSEABLEITEMCOUNT( game->player.items );
+   uint32_t useableCount = ITEM_GET_MAPUSEABLEITEMCOUNT( game->player.items );
+   uint32_t nonUseableCount = ITEM_GET_MAPNONUSEABLEITEMCOUNT( game->player.items );
 
    if ( useableCount == 0 && nonUseableCount == 0 )
    {

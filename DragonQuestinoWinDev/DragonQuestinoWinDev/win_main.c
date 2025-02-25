@@ -399,50 +399,50 @@ internal void ToggleNoDark()
 
 internal void GetAllItems()
 {
-   PLAYER_SET_KEYCOUNT( g_globals.game.player.items, PLAYER_MAXKEYS );
-   PLAYER_SET_HERBCOUNT( g_globals.game.player.items, PLAYER_MAXHERBS );
-   PLAYER_SET_WINGCOUNT( g_globals.game.player.items, PLAYER_MAXWINGS );
-   PLAYER_SET_FAIRYWATERCOUNT( g_globals.game.player.items, PLAYER_MAXFAIRYWATERS );
-   PLAYER_SET_TORCHCOUNT( g_globals.game.player.items, PLAYER_MAXTORCHES );
+   ITEM_SET_KEYCOUNT( g_globals.game.player.items, ITEM_MAXKEYS );
+   ITEM_SET_HERBCOUNT( g_globals.game.player.items, ITEM_MAXHERBS );
+   ITEM_SET_WINGCOUNT( g_globals.game.player.items, ITEM_MAXWINGS );
+   ITEM_SET_FAIRYWATERCOUNT( g_globals.game.player.items, ITEM_MAXFAIRYWATERS );
+   ITEM_SET_TORCHCOUNT( g_globals.game.player.items, ITEM_MAXTORCHES );
 
-   if ( !PLAYER_HAS_FAIRYFLUTE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_FAIRYFLUTE( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASFAIRYFLUTE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASFAIRYFLUTE( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_SILVERHARP( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_SILVERHARP( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASSILVERHARP( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSILVERHARP( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_GWAELYNSLOVE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_GWAELYNSLOVE( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASGWAELYNSLOVE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASGWAELYNSLOVE( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_STONEOFSUNLIGHT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_STONEOFSUNLIGHT( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASSTONEOFSUNLIGHT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSTONEOFSUNLIGHT( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_STAFFOFRAIN( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_STAFFOFRAIN( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASSTAFFOFRAIN( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSTAFFOFRAIN( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_TOKEN( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_TOKEN( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASTOKEN( g_globals.game.player.items );
+      ITEM_TOGGLE_HASTOKEN( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_RAINBOWDROP( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_RAINBOWDROP( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASRAINBOWDROP( g_globals.game.player.items );
+      ITEM_TOGGLE_HASRAINBOWDROP( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_SPHEREOFLIGHT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_SPHEREOFLIGHT( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASSPHEREOFLIGHT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSPHEREOFLIGHT( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_DRAGONSCALE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_DRAGONSCALE( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASDRAGONSCALE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASDRAGONSCALE( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_CURSEDBELT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_CURSEDBELT( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
    }
 }

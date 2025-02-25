@@ -1,5 +1,5 @@
-#if !defined( PLAYER_H )
-#define PLAYER_H
+#if !defined( ITEM_H )
+#define ITEM_H
 
 #include "common.h"
 #include "sprite.h"
@@ -7,62 +7,62 @@
 
 typedef struct Screen_t Screen_t;
 
-#define PLAYER_MAXKEYS                         6
-#define PLAYER_MAXHERBS                        7
-#define PLAYER_MAXWINGS                        4
-#define PLAYER_MAXFAIRYWATERS                  4
-#define PLAYER_MAXTORCHES                      7
+#define ITEM_MAXKEYS                            6
+#define ITEM_MAXHERBS                           7
+#define ITEM_MAXWINGS                           4
+#define ITEM_MAXFAIRYWATERS                     4
+#define ITEM_MAXTORCHES                         7
 
-#define PLAYER_GET_KEYCOUNT( x )               ( ( x ) & 0x7 )
-#define PLAYER_GET_HERBCOUNT( x )              ( ( ( x ) >> 3 ) & 0x7 )
-#define PLAYER_GET_WINGCOUNT( x )              ( ( ( x ) >> 6 ) & 0x7 )
-#define PLAYER_GET_FAIRYWATERCOUNT( x )        ( ( ( x ) >> 9 ) & 0x7 )
-#define PLAYER_GET_TORCHCOUNT( x )             ( ( ( x ) >> 12 ) & 0x7 )
-#define PLAYER_HAS_FAIRYFLUTE( x )             ( ( ( x ) >> 15 ) & 0x1 )
-#define PLAYER_HAS_SILVERHARP( x )             ( ( ( x ) >> 16 ) & 0x1 )
-#define PLAYER_HAS_GWAELYNSLOVE( x )           ( ( ( x ) >> 17 ) & 0x1 )
-#define PLAYER_HAS_STONEOFSUNLIGHT( x )        ( ( ( x ) >> 18 ) & 0x1 )
-#define PLAYER_HAS_STAFFOFRAIN( x )            ( ( ( x ) >> 19 ) & 0x1 )
-#define PLAYER_HAS_TOKEN( x )                  ( ( ( x ) >> 20 ) & 0x1 )
-#define PLAYER_HAS_RAINBOWDROP( x )            ( ( ( x ) >> 21 ) & 0x1 )
-#define PLAYER_HAS_SPHEREOFLIGHT( x )          ( ( ( x ) >> 22 ) & 0x1 )
-#define PLAYER_HAS_DRAGONSCALE( x )            ( ( ( x ) >> 23 ) & 0x1 )
-#define PLAYER_HAS_CURSEDBELT( x )             ( ( ( x ) >> 24 ) & 0x1 )
+#define ITEM_GET_KEYCOUNT( x )                  ( ( x ) & 0x7 )
+#define ITEM_GET_HERBCOUNT( x )                 ( ( ( x ) >> 3 ) & 0x7 )
+#define ITEM_GET_WINGCOUNT( x )                 ( ( ( x ) >> 6 ) & 0x7 )
+#define ITEM_GET_FAIRYWATERCOUNT( x )           ( ( ( x ) >> 9 ) & 0x7 )
+#define ITEM_GET_TORCHCOUNT( x )                ( ( ( x ) >> 12 ) & 0x7 )
+#define ITEM_HAS_FAIRYFLUTE( x )                ( ( ( x ) >> 15 ) & 0x1 )
+#define ITEM_HAS_SILVERHARP( x )                ( ( ( x ) >> 16 ) & 0x1 )
+#define ITEM_HAS_GWAELYNSLOVE( x )              ( ( ( x ) >> 17 ) & 0x1 )
+#define ITEM_HAS_STONEOFSUNLIGHT( x )           ( ( ( x ) >> 18 ) & 0x1 )
+#define ITEM_HAS_STAFFOFRAIN( x )               ( ( ( x ) >> 19 ) & 0x1 )
+#define ITEM_HAS_TOKEN( x )                     ( ( ( x ) >> 20 ) & 0x1 )
+#define ITEM_HAS_RAINBOWDROP( x )               ( ( ( x ) >> 21 ) & 0x1 )
+#define ITEM_HAS_SPHEREOFLIGHT( x )             ( ( ( x ) >> 22 ) & 0x1 )
+#define ITEM_HAS_DRAGONSCALE( x )               ( ( ( x ) >> 23 ) & 0x1 )
+#define ITEM_HAS_CURSEDBELT( x )                ( ( ( x ) >> 24 ) & 0x1 )
 
-#define PLAYER_GET_MAPUSEABLEITEMCOUNT( x )    ( 0 + \
-                                               ( PLAYER_GET_HERBCOUNT( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_GET_WINGCOUNT( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_GET_FAIRYWATERCOUNT( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_GET_TORCHCOUNT( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_FAIRYFLUTE( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_SILVERHARP( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_GWAELYNSLOVE( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_RAINBOWDROP( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_CURSEDBELT( x ) ? 1 : 0 ) )
+#define ITEM_GET_MAPUSEABLEITEMCOUNT( x )       ( 0 + \
+                                                ( ITEM_GET_HERBCOUNT( x ) ? 1 : 0 ) + \
+                                                ( ITEM_GET_WINGCOUNT( x ) ? 1 : 0 ) + \
+                                                ( ITEM_GET_FAIRYWATERCOUNT( x ) ? 1 : 0 ) + \
+                                                ( ITEM_GET_TORCHCOUNT( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_FAIRYFLUTE( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_SILVERHARP( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_GWAELYNSLOVE( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_RAINBOWDROP( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_CURSEDBELT( x ) ? 1 : 0 ) )
 
-#define PLAYER_GET_MAPNONUSEABLEITEMCOUNT( x ) ( 0 + \
-                                               ( PLAYER_GET_KEYCOUNT( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_STONEOFSUNLIGHT( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_STAFFOFRAIN( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_TOKEN( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_SPHEREOFLIGHT( x ) ? 1 : 0 ) + \
-                                               ( PLAYER_HAS_DRAGONSCALE( x ) ? 1 : 0 ) )
+#define ITEM_GET_MAPNONUSEABLEITEMCOUNT( x )    ( 0 + \
+                                                ( ITEM_GET_KEYCOUNT( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_STONEOFSUNLIGHT( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_STAFFOFRAIN( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_TOKEN( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_SPHEREOFLIGHT( x ) ? 1 : 0 ) + \
+                                                ( ITEM_HAS_DRAGONSCALE( x ) ? 1 : 0 ) )
 
-#define PLAYER_SET_KEYCOUNT( x, c )            ( x ) = ( ( ( x ) & 0xFFFFFFF8 ) | ( ( c ) & 0x7 ) )
-#define PLAYER_SET_HERBCOUNT( x, c )           ( x ) = ( ( ( x ) & 0xFFFFFFC7 ) | ( (uint32_t)( c ) & 0x7 ) << 3 )
-#define PLAYER_SET_WINGCOUNT( x, c )           ( x ) = ( ( ( x ) & 0xFFFFFE3F ) | ( (uint32_t)( c ) & 0x7 ) << 6 )
-#define PLAYER_SET_FAIRYWATERCOUNT( x, c )     ( x ) = ( ( ( x ) & 0xFFFFF1FF ) | ( (uint32_t)( c ) & 0x7 ) << 9 )
-#define PLAYER_SET_TORCHCOUNT( x, c )          ( x ) = ( ( ( x ) & 0xFFFF8FFF ) | ( (uint32_t)( c ) & 0x7 ) << 12 )
-#define PLAYER_TOGGLE_HASFAIRYFLUTE( x )       ( x ) ^= ( 0x1 << 15 )
-#define PLAYER_TOGGLE_HASSILVERHARP( x )       ( x ) ^= ( 0x1 << 16 )
-#define PLAYER_TOGGLE_HASGWAELYNSLOVE( x )     ( x ) ^= ( 0x1 << 17 )
-#define PLAYER_TOGGLE_HASSTONEOFSUNLIGHT( x )  ( x ) ^= ( 0x1 << 18 )
-#define PLAYER_TOGGLE_HASSTAFFOFRAIN( x )      ( x ) ^= ( 0x1 << 19 )
-#define PLAYER_TOGGLE_HASTOKEN( x )            ( x ) ^= ( 0x1 << 20 )
-#define PLAYER_TOGGLE_HASRAINBOWDROP( x )      ( x ) ^= ( 0x1 << 21 )
-#define PLAYER_TOGGLE_HASSPHEREOFLIGHT( x )    ( x ) ^= ( 0x1 << 22 )
-#define PLAYER_TOGGLE_HASDRAGONSCALE( x )      ( x ) ^= ( 0x1 << 23 )
-#define PLAYER_TOGGLE_HASCURSEDBELT( x )       ( x ) ^= ( 0x1 << 24 )
+#define ITEM_SET_KEYCOUNT( x, c )               ( x ) = ( ( ( x ) & 0xFFFFFFF8 ) | ( ( c ) & 0x7 ) )
+#define ITEM_SET_HERBCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFFC7 ) | ( (uint32_t)( c ) & 0x7 ) << 3 )
+#define ITEM_SET_WINGCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFE3F ) | ( (uint32_t)( c ) & 0x7 ) << 6 )
+#define ITEM_SET_FAIRYWATERCOUNT( x, c )        ( x ) = ( ( ( x ) & 0xFFFFF1FF ) | ( (uint32_t)( c ) & 0x7 ) << 9 )
+#define ITEM_SET_TORCHCOUNT( x, c )             ( x ) = ( ( ( x ) & 0xFFFF8FFF ) | ( (uint32_t)( c ) & 0x7 ) << 12 )
+#define ITEM_TOGGLE_HASFAIRYFLUTE( x )          ( x ) ^= ( 0x1 << 15 )
+#define ITEM_TOGGLE_HASSILVERHARP( x )          ( x ) ^= ( 0x1 << 16 )
+#define ITEM_TOGGLE_HASGWAELYNSLOVE( x )        ( x ) ^= ( 0x1 << 17 )
+#define ITEM_TOGGLE_HASSTONEOFSUNLIGHT( x )     ( x ) ^= ( 0x1 << 18 )
+#define ITEM_TOGGLE_HASSTAFFOFRAIN( x )         ( x ) ^= ( 0x1 << 19 )
+#define ITEM_TOGGLE_HASTOKEN( x )               ( x ) ^= ( 0x1 << 20 )
+#define ITEM_TOGGLE_HASRAINBOWDROP( x )         ( x ) ^= ( 0x1 << 21 )
+#define ITEM_TOGGLE_HASSPHEREOFLIGHT( x )       ( x ) ^= ( 0x1 << 22 )
+#define ITEM_TOGGLE_HASDRAGONSCALE( x )         ( x ) ^= ( 0x1 << 23 )
+#define ITEM_TOGGLE_HASCURSEDBELT( x )          ( x ) ^= ( 0x1 << 24 )
 
 typedef struct Player_t
 {
@@ -119,4 +119,4 @@ void Player_SetCursed( Player_t* player, Bool_t cursed );
 }
 #endif
 
-#endif // PLAYER_H
+#endif // ITEM_H
