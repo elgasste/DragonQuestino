@@ -6,6 +6,7 @@ internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game );
 internal void Game_TicRainbowBridgeWhiteoutAnimation( Game_t* game );
+internal void Game_TicRainbowBridgeFadeInAnimation( Game_t* game );
 internal void Game_TicRainbowBridgePauseAnimation( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
@@ -57,6 +58,9 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld_RainbowBridgePauseAnimation:
          Game_TicRainbowBridgePauseAnimation( game );
          break;
+      case GameState_Overworld_RainbowBridgeFadeInAnimation:
+         Game_TicRainbowBridgeFadeInAnimation( game );
+         break;
       case GameState_TileMapTransition:
          Game_TicTileMapTransition( game );
          break;
@@ -83,6 +87,9 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
          break;
       case GameState_Overworld_RainbowBridgeWhiteoutAnimation:
          game->rainbowBridgeWhiteoutSecondsElapsed = 0.0f;
+         break;
+      case GameState_Overworld_RainbowBridgeFadeInAnimation:
+         game->rainbowBridgePauseSecondsElapsed = 0.0f;
          break;
       case GameState_Overworld_RainbowBridgePauseAnimation:
          game->rainbowBridgePauseSecondsElapsed = 0.0f;
@@ -255,7 +262,12 @@ internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
 
    if ( game->rainbowBridgeTrippySecondsElapsed > RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS )
    {
-      Screen_RestorePalette( &(game->screen ) );
+      for ( i = 0; i < PALETTE_COLORS; i++ )
+      {
+         game->screen.palette[i] = COLOR_WHITE;
+      }
+
+      Screen_WipeColor( &( game->screen ), COLOR_WHITE );
       PLAYER_TOGGLE_HASRAINBOWDROP( game->player.items );
       game->tileMap.usedRainbowDrop = True;
       TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
@@ -278,12 +290,38 @@ internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
 
 internal void Game_TicRainbowBridgeWhiteoutAnimation( Game_t* game )
 {
-   Screen_WipeColor( &( game->screen ), COLOR_WHITE );
    game->rainbowBridgeWhiteoutSecondsElapsed += CLOCK_FRAME_SECONDS;
 
    if ( game->rainbowBridgeWhiteoutSecondsElapsed > RAINBOW_BRIDGE_WHITEOUT_TOTAL_SECONDS )
    {
+      Game_ChangeState( game, GameState_Overworld_RainbowBridgeFadeInAnimation );
+   }
+}
+
+internal void Game_TicRainbowBridgeFadeInAnimation( Game_t* game )
+{
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG, increment;
+   float p;
+
+   game->rainbowBridgeFadeInSecondsElapsed += CLOCK_FRAME_SECONDS;
+
+   if ( game->rainbowBridgeFadeInSecondsElapsed > RAINBOW_BRIDGE_FADEIN_TOTAL_SECONDS )
+   {
+      Screen_RestorePalette( &( game->screen ) );
       Game_ChangeState( game, GameState_Overworld_RainbowBridgePauseAnimation );
+   }
+   else
+   {
+      for ( i = 0; i < PALETTE_COLORS; i++ )
+      {
+         rangeR = 0x1F - ( game->screen.backupPalette[i] >> 11 );
+         rangeG = 0x3F - ( ( game->screen.backupPalette[i] & 0x7E0 ) >> 5 );
+         rangeB = 0x1F - ( game->screen.backupPalette[i] & 0x1F );
+         p = 1.0f -  ( game->rainbowBridgeFadeInSecondsElapsed / RAINBOW_BRIDGE_FADEIN_TOTAL_SECONDS );
+         increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+         game->screen.palette[i] = game->screen.backupPalette[i] + increment;
+      }
    }
 }
 

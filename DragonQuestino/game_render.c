@@ -11,6 +11,7 @@ void Game_Draw( Game_t* game )
       case GameState_Overworld:
       case GameState_Overworld_Washing:
       case GameState_Overworld_RainbowBridgeTrippyAnimation:
+      case GameState_Overworld_RainbowBridgeFadeInAnimation:
       case GameState_Overworld_RainbowBridgePauseAnimation:
          Game_DrawOverworld( game );
          break;
