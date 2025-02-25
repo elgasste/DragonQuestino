@@ -5,6 +5,7 @@ internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game );
+internal void Game_TicRainbowBridgeFinalAnimation( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
@@ -49,6 +50,9 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld_RainbowBridgeTrippyAnimation:
          Game_TicRainbowBridgeTrippyAnimation( game );
          break;
+      case GameState_Overworld_RainbowBridgeFinalAnimation:
+         Game_TicRainbowBridgeFinalAnimation( game );
+         break;
       case GameState_TileMapTransition:
          Game_TicTileMapTransition( game );
          break;
@@ -72,6 +76,9 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
          break;
       case GameState_Overworld_RainbowBridgeTrippyAnimation:
          game->rainbowBridgeTrippySecondsElapsed = 0.0f;
+         break;
+      case GameState_Overworld_RainbowBridgeFinalAnimation:
+         game->rainbowBridgeFinalSecondsElapsed = 0.0f;
          break;
    }
 }
@@ -246,7 +253,7 @@ internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
       game->tileMap.usedRainbowDrop = True;
       TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
       TILE_SET_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
-      Game_ChangeState( game, GameState_Overworld_Washing );
+      Game_ChangeState( game, GameState_Overworld_RainbowBridgeFinalAnimation );
    }
    else
    {
@@ -259,6 +266,17 @@ internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
          increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
          game->screen.palette[i] = game->screen.backupPalette[i] + increment;
       }
+   }
+}
+
+internal void Game_TicRainbowBridgeFinalAnimation( Game_t* game )
+{
+   Screen_WipeColor( &( game->screen ), COLOR_WHITE );
+   game->rainbowBridgeFinalSecondsElapsed += CLOCK_FRAME_SECONDS;
+
+   if ( game->rainbowBridgeFinalSecondsElapsed > RAINBOW_BRIDGE_FINAL_TOTAL_SECONDS )
+   {
+      Game_ChangeState( game, GameState_Overworld );
    }
 }
 

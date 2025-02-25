@@ -36,6 +36,7 @@ typedef enum GameState_t
    GameState_Overworld_ItemMenu,
    GameState_Overworld_ScrollingDialog,
    GameState_Overworld_RainbowBridgeTrippyAnimation,
+   GameState_Overworld_RainbowBridgeFinalAnimation,
    GameState_TileMapTransition,
 
    GameState_Count
