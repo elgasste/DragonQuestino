@@ -68,6 +68,14 @@ void Game_DrawOverworldQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
 void Game_DrawNonUseableItems( Game_t* game );
 
+// game_spells.c
+void Game_CastHeal( Game_t* game );
+void Game_CastGlow( Game_t* game );
+void Game_CastEvac( Game_t* game );
+void Game_CastZoom( Game_t* game );
+void Game_CastRepel( Game_t* game );
+void Game_CastMidheal( Game_t* game );
+
 // game_items.c
 void Game_UseHerb( Game_t* game );
 void Game_UseWing( Game_t* game );

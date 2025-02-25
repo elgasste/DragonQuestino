@@ -46,6 +46,7 @@
     <ClCompile Include="..\..\DragonQuestino\game_items.c" />
     <ClCompile Include="..\..\DragonQuestino\game_physics.c" />
     <ClCompile Include="..\..\DragonQuestino\game_render.c" />
+    <ClCompile Include="..\..\DragonQuestino\game_spells.c" />
     <ClCompile Include="..\..\DragonQuestino\input.c" />
     <ClCompile Include="..\..\DragonQuestino\math.c" />
     <ClCompile Include="..\..\DragonQuestino\menu.c" />

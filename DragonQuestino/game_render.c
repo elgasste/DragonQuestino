@@ -96,7 +96,7 @@ void Game_DrawNonUseableItems( Game_t* game )
    uint32_t x, y;
    Player_t* player = &( game->player );
    uint32_t items = player->items;
-   uint32_t itemCount = ITEM_GET_MAPNONUSEABLEITEMCOUNT( items );
+   uint32_t itemCount = ITEM_GET_MAPNONUSEABLECOUNT( items );
    char line[MENU_LINE_LENGTH];
 
    if ( game->state == GameState_Overworld_ItemMenu )

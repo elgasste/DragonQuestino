@@ -6,6 +6,7 @@ internal void Game_HandleOverworldInput( Game_t* game );
 internal void Game_HandleOverworldWaitingInput( Game_t* game );
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game );
 internal void Game_HandleMenuInput( Game_t* game );
+internal void Game_OpenOverworldSpellMenu( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
@@ -19,6 +20,7 @@ void Game_HandleInput( Game_t* game )
          Game_HandleOverworldWaitingInput( game );
          break;
       case GameState_Overworld_MainMenu:
+      case GameState_Overworld_SpellMenu:
       case GameState_Overworld_ItemMenu:
          Game_HandleMenuInput( game );
          break;
@@ -168,8 +170,7 @@ internal void Game_HandleMenuInput( Game_t* game )
             Game_Search( game );
             break;
          case MenuCommand_OverworldMain_Spell:
-            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
+            Game_OpenOverworldSpellMenu( game );
             break;
          case MenuCommand_OverworldMain_Item:
             Game_OpenOverworldItemMenu( game );
@@ -178,10 +179,17 @@ internal void Game_HandleMenuInput( Game_t* game )
             Game_OpenDoor( game );
             break;
 
-         case MenuCommand_OverworldItem_Herb: Game_UseHerb( game ); break;
-         case MenuCommand_OverworldItem_Wing: Game_UseWing( game ); break;
-         case MenuCommand_OverworldItem_FairyWater: Game_UseFairyWater( game ); break;
-         case MenuCommand_OverworldItem_Torch:
+         case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
+         case MenuCommand_Spell_Glow: Game_CastGlow( game ); break;
+         case MenuCommand_Spell_Evac: Game_CastEvac( game ); break;
+         case MenuCommand_Spell_Zoom: Game_CastZoom( game ); break;
+         case MenuCommand_Spell_Repel: Game_CastRepel( game ); break;
+         case MenuCommand_Spell_Midheal: Game_CastMidheal( game ); break;
+
+         case MenuCommand_Item_Herb: Game_UseHerb( game ); break;
+         case MenuCommand_Item_Wing: Game_UseWing( game ); break;
+         case MenuCommand_Item_FairyWater: Game_UseFairyWater( game ); break;
+         case MenuCommand_Item_Torch:
             if ( game->tileMap.isDark )
             {
                Game_UseTorch( game ); break;
@@ -192,11 +200,11 @@ internal void Game_HandleMenuInput( Game_t* game )
                ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_TorchCantUse );
             }
             break;
-         case MenuCommand_OverworldItem_SilverHarp: Game_UseSilverHarp( game ); break;
-         case MenuCommand_OverworldItem_FairyFlute: Game_UseFairyFlute( game ); break;
-         case MenuCommand_OverworldItem_GwaelynsLove: Game_UseGwaelynsLove( game ); break;
-         case MenuCommand_OverworldItem_RainbowDrop: Game_UseRainbowDrop( game ); break;
-         case MenuCommand_OverworldItem_CursedBelt: Game_UseCursedBelt( game ); break;
+         case MenuCommand_Item_SilverHarp: Game_UseSilverHarp( game ); break;
+         case MenuCommand_Item_FairyFlute: Game_UseFairyFlute( game ); break;
+         case MenuCommand_Item_GwaelynsLove: Game_UseGwaelynsLove( game ); break;
+         case MenuCommand_Item_RainbowDrop: Game_UseRainbowDrop( game ); break;
+         case MenuCommand_Item_CursedBelt: Game_UseCursedBelt( game ); break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
@@ -221,10 +229,28 @@ internal void Game_HandleMenuInput( Game_t* game )
    }
 }
 
+internal void Game_OpenOverworldSpellMenu( Game_t* game )
+{
+   if ( !game->player.spells )
+   {
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
+   }
+   else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells ) )
+   {
+      Menu_Load( &( game->menu ), MenuId_OverworldSpell );
+   }
+   else
+   {
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCantCast );
+   }
+}
+
 internal void Game_OpenOverworldItemMenu( Game_t* game )
 {
-   uint32_t useableCount = ITEM_GET_MAPUSEABLEITEMCOUNT( game->player.items );
-   uint32_t nonUseableCount = ITEM_GET_MAPNONUSEABLEITEMCOUNT( game->player.items );
+   uint32_t useableCount = ITEM_GET_MAPUSEABLECOUNT( game->player.items );
+   uint32_t nonUseableCount = ITEM_GET_MAPNONUSEABLECOUNT( game->player.items );
 
    if ( useableCount == 0 && nonUseableCount == 0 )
    {

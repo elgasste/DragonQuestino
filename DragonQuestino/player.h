@@ -7,6 +7,36 @@
 
 typedef struct Screen_t Screen_t;
 
+#define SPELL_HAS_HEAL( x )                     ( ( x ) & 0x1 )
+#define SPELL_HAS_SIZZ( x )                     ( ( x ) & 0x2 )
+#define SPELL_HAS_SLEEP( x )                    ( ( x ) & 0x4 )
+#define SPELL_HAS_GLOW( x )                     ( ( x ) & 0x8 )
+#define SPELL_HAS_FIZZLE( x )                   ( ( x ) & 0x10 )
+#define SPELL_HAS_EVAC( x )                     ( ( x ) & 0x20 )
+#define SPELL_HAS_ZOOM( x )                     ( ( x ) & 0x40 )
+#define SPELL_HAS_REPEL( x )                    ( ( x ) & 0x80 )
+#define SPELL_HAS_MIDHEAL( x )                  ( ( x ) & 0x100 )
+#define SPELL_HAS_SIZZLE( x )                   ( ( x ) & 0x200 )
+
+#define SPELL_SET_HASHEAL( x )                  ( x ) |= 0x1
+#define SPELL_SET_HASSIZZ( x )                  ( x ) |= 0x2
+#define SPELL_SET_HASSLEEP( x )                 ( x ) |= 0x4
+#define SPELL_SET_HASGLOW( x )                  ( x ) |= 0x8
+#define SPELL_SET_HASFIZZLE( x )                ( x ) |= 0x10
+#define SPELL_SET_HASEVAC( x )                  ( x ) |= 0x20
+#define SPELL_SET_HASZOOM( x )                  ( x ) |= 0x40
+#define SPELL_SET_HASREPEL( x )                 ( x ) |= 0x80
+#define SPELL_SET_HASMIDHEAL( x )               ( x ) |= 0x100
+#define SPELL_SET_HASSIZZLE( x )                ( x ) |= 0x200
+
+#define SPELL_GET_MAPUSEABLECOUNT( x )          ( 0 + \
+                                                ( SPELL_HAS_HEAL( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_GLOW( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_EVAC( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_ZOOM( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_REPEL( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_MIDHEAL( x ) ? 1 : 0 ) )
+
 #define ITEM_MAXKEYS                            6
 #define ITEM_MAXHERBS                           7
 #define ITEM_MAXWINGS                           4
@@ -29,7 +59,7 @@ typedef struct Screen_t Screen_t;
 #define ITEM_HAS_DRAGONSCALE( x )               ( ( ( x ) >> 23 ) & 0x1 )
 #define ITEM_HAS_CURSEDBELT( x )                ( ( ( x ) >> 24 ) & 0x1 )
 
-#define ITEM_GET_MAPUSEABLEITEMCOUNT( x )       ( 0 + \
+#define ITEM_GET_MAPUSEABLECOUNT( x )           ( 0 + \
                                                 ( ITEM_GET_HERBCOUNT( x ) ? 1 : 0 ) + \
                                                 ( ITEM_GET_WINGCOUNT( x ) ? 1 : 0 ) + \
                                                 ( ITEM_GET_FAIRYWATERCOUNT( x ) ? 1 : 0 ) + \
@@ -40,7 +70,7 @@ typedef struct Screen_t Screen_t;
                                                 ( ITEM_HAS_RAINBOWDROP( x ) ? 1 : 0 ) + \
                                                 ( ITEM_HAS_CURSEDBELT( x ) ? 1 : 0 ) )
 
-#define ITEM_GET_MAPNONUSEABLEITEMCOUNT( x )    ( 0 + \
+#define ITEM_GET_MAPNONUSEABLECOUNT( x )        ( 0 + \
                                                 ( ITEM_GET_KEYCOUNT( x ) ? 1 : 0 ) + \
                                                 ( ITEM_HAS_STONEOFSUNLIGHT( x ) ? 1 : 0 ) + \
                                                 ( ITEM_HAS_STAFFOFRAIN( x ) ? 1 : 0 ) + \
@@ -100,7 +130,6 @@ typedef struct Player_t
    // bits 25-31: reserved
    uint32_t items;
 
-   // MUFFINS
    // bit 0: heal
    // bit 1: sizz
    // bit 2: sleep

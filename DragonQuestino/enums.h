@@ -33,6 +33,7 @@ typedef enum GameState_t
    GameState_Overworld_Waiting,
    GameState_Overworld_Washing,
    GameState_Overworld_MainMenu,
+   GameState_Overworld_SpellMenu,
    GameState_Overworld_ItemMenu,
    GameState_Overworld_ScrollingDialog,
    GameState_Overworld_RainbowBridgeTrippyAnimation,
@@ -70,6 +71,7 @@ Item_t;
 typedef enum MenuId_t
 {
    MenuId_Overworld = 0,
+   MenuId_OverworldSpell,
    MenuId_OverworldItem,
 
    MenuId_Count
@@ -85,15 +87,26 @@ typedef enum MenuCommand_t
    MenuCommand_OverworldMain_Item,
    MenuCommand_OverworldMain_Door,
 
-   MenuCommand_OverworldItem_Herb,
-   MenuCommand_OverworldItem_Wing,
-   MenuCommand_OverworldItem_FairyWater,
-   MenuCommand_OverworldItem_Torch,
-   MenuCommand_OverworldItem_FairyFlute,
-   MenuCommand_OverworldItem_SilverHarp,
-   MenuCommand_OverworldItem_GwaelynsLove,
-   MenuCommand_OverworldItem_RainbowDrop,
-   MenuCommand_OverworldItem_CursedBelt,
+   MenuCommand_Spell_Heal,
+   MenuCommand_Spell_Sizz,
+   MenuCommand_Spell_Sleep,
+   MenuCommand_Spell_Glow,
+   MenuCommand_Spell_Fizzle,
+   MenuCommand_Spell_Evac,
+   MenuCommand_Spell_Zoom,
+   MenuCommand_Spell_Repel,
+   MenuCommand_Spell_Midheal,
+   MenuCommand_Spell_Sizzle,
+
+   MenuCommand_Item_Herb,
+   MenuCommand_Item_Wing,
+   MenuCommand_Item_FairyWater,
+   MenuCommand_Item_Torch,
+   MenuCommand_Item_FairyFlute,
+   MenuCommand_Item_SilverHarp,
+   MenuCommand_Item_GwaelynsLove,
+   MenuCommand_Item_RainbowDrop,
+   MenuCommand_Item_CursedBelt,
 
    MenuCommand_Count
 }
@@ -113,6 +126,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Search_NothingFound,
    DialogMessageId_Search_FoundItem,
    DialogMessageId_Spell_None,
+   DialogMessageId_Spell_OverworldCantCast,
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
    DialogMessageId_Door_NoKeys,
