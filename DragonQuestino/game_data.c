@@ -12916,12 +12916,22 @@ uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 189 ) return 0x00000001;
          break;
       case 3:
-         if ( tileIndex == 453 ) return 0x00010000;
+         if ( tileIndex == 243 ) return 0x00010000;
+         if ( tileIndex == 453 ) return 0x00020000;
          break;
       case 4:
          if ( tileIndex == 774 ) return 0x00000002;
          break;
+      case 7:
+         if ( tileIndex == 260 ) return 0x00100000;
+         break;
+      case 8:
+         if ( tileIndex == 124 ) return 0x00000080;
+         break;
       case 10:
+         if ( tileIndex == 296 ) return 0x00020000;
+         if ( tileIndex == 634 ) return 0x00040000;
+         if ( tileIndex == 758 ) return 0x00080000;
          if ( tileIndex == 764 ) return 0x00000004;
          if ( tileIndex == 765 ) return 0x00000008;
          break;
@@ -12931,6 +12941,20 @@ uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
          break;
       case 13:
          if ( tileIndex == 726 ) return 0x00000040;
+         if ( tileIndex == 791 ) return 0x00200000;
+         break;
+      case 20:
+         if ( tileIndex == 856 ) return 0x00000200;
+         break;
+      case 21:
+         if ( tileIndex == 1120 ) return 0x00000100;
+         break;
+      case 25:
+         if ( tileIndex == 203 ) return 0x00400000;
+         if ( tileIndex == 214 ) return 0x00800000;
+         break;
+      case 33:
+         if ( tileIndex == 402 ) return 0x01000000;
          break;
    }
 

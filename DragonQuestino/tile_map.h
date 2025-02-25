@@ -105,6 +105,8 @@ typedef struct TileMap_t
    uint32_t treasureFlags;
 
    StaticSprite_t doorSprite;
+   // low 16 bits: permanent doors (they stay opened)
+   // high 16 bits: temporary doors (they close again when you leave the tile map)
    uint32_t doorFlags;
 }
 TileMap_t;
