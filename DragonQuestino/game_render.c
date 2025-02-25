@@ -10,7 +10,7 @@ void Game_Draw( Game_t* game )
    {
       case GameState_Overworld:
       case GameState_Overworld_Washing:
-      case GameState_Overworld_RainbowBridgeAnimation:
+      case GameState_Overworld_RainbowBridgeTrippyAnimation:
          Game_DrawOverworld( game );
          break;
       case GameState_Overworld_MainMenu:

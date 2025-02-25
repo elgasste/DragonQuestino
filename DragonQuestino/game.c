@@ -4,7 +4,7 @@
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
-internal void Game_TicRainbowBridgeAnimation( Game_t* game );
+internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
@@ -46,8 +46,8 @@ void Game_Tic( Game_t* game )
       case GameState_Overworld_ItemMenu:
          Menu_Tic( &( game->menu ) );
          break;
-      case GameState_Overworld_RainbowBridgeAnimation:
-         Game_TicRainbowBridgeAnimation( game );
+      case GameState_Overworld_RainbowBridgeTrippyAnimation:
+         Game_TicRainbowBridgeTrippyAnimation( game );
          break;
       case GameState_TileMapTransition:
          Game_TicTileMapTransition( game );
@@ -70,8 +70,8 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
       case GameState_Overworld_Washing:
          game->overworldWashSeconds = 0.0f;
          break;
-      case GameState_Overworld_RainbowBridgeAnimation:
-         game->rainbowBridgeSecondsElapsed = 0.0f;
+      case GameState_Overworld_RainbowBridgeTrippyAnimation:
+         game->rainbowBridgeTrippySecondsElapsed = 0.0f;
          break;
    }
 }
@@ -231,15 +231,15 @@ internal void Game_TicTileMapTransition( Game_t* game )
    }
 }
 
-internal void Game_TicRainbowBridgeAnimation( Game_t* game )
+internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
 {
    uint32_t i;
    uint16_t rangeR, rangeB, rangeG, increment;
    float p;
 
-   game->rainbowBridgeSecondsElapsed += CLOCK_FRAME_SECONDS;
+   game->rainbowBridgeTrippySecondsElapsed += CLOCK_FRAME_SECONDS;
 
-   if ( game->rainbowBridgeSecondsElapsed > RAINBOW_BRIDGE_TOTAL_SECONDS )
+   if ( game->rainbowBridgeTrippySecondsElapsed > RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS )
    {
       Screen_RestorePalette( &(game->screen ) );
       PLAYER_TOGGLE_HASRAINBOWDROP( game->player.items );
@@ -255,7 +255,7 @@ internal void Game_TicRainbowBridgeAnimation( Game_t* game )
          rangeR = UINT8_MAX - ( game->screen.backupPalette[i] >> 11 );
          rangeG = UINT8_MAX - ( ( game->screen.backupPalette[i] & 0x7E0 ) >> 5 );
          rangeB = UINT8_MAX - ( game->screen.backupPalette[i] & 0x1F );
-         p = game->rainbowBridgeSecondsElapsed / RAINBOW_BRIDGE_TOTAL_SECONDS;
+         p = game->rainbowBridgeTrippySecondsElapsed / RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS;
          increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
          game->screen.palette[i] = game->screen.backupPalette[i] + increment;
       }
