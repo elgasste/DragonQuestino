@@ -20,7 +20,8 @@
 #define VK_FASTWALK                 50    // 2
 #define VK_NODARK                   51    // 3
 #define VK_ALLITEMS                 52    // 4
-#define VK_TOGGLECURSED             53    // 5
+#define VK_MAXSTATS                 53    // 5
+#define VK_TOGGLECURSED             54    // 6
 
 typedef struct GlobalObjects_t
 {

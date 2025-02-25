@@ -12,6 +12,7 @@ internal void DrawDiagnostics( HDC* dcMem );
 internal void ToggleFastWalk();
 internal void ToggleNoDark();
 internal void GetAllItems();
+internal void MaxOutStats();
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -225,6 +226,9 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
             case VK_ALLITEMS:
                GetAllItems();
                break;
+            case VK_MAXSTATS:
+               MaxOutStats();
+               break;
             case VK_TOGGLECURSED:
                Player_SetCursed( &( g_globals.game.player ), g_globals.game.player.isCursed ? False : True );
                break;
@@ -372,7 +376,12 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "5: Toggle cursed" );
+   SetTextColor( *dcMem, 0x00FFFFFF );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "5: Max out stats" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "6: Toggle cursed" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
@@ -445,4 +454,21 @@ internal void GetAllItems()
    {
       ITEM_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
    }
+}
+
+internal void MaxOutStats()
+{
+   g_globals.game.player.experience = UINT16_MAX;
+   g_globals.game.player.gold = UINT16_MAX;
+
+   g_globals.game.player.stats.hitPoints = UINT8_MAX;
+   g_globals.game.player.stats.maxHitPoints = UINT8_MAX;
+   g_globals.game.player.stats.magicPoints = UINT8_MAX;
+   g_globals.game.player.stats.maxMagicPoints = UINT8_MAX;
+   g_globals.game.player.stats.attackPower = UINT8_MAX;
+   g_globals.game.player.stats.defensePower = UINT8_MAX;
+   g_globals.game.player.stats.strength = UINT8_MAX;
+   g_globals.game.player.stats.agility = UINT8_MAX;
+
+   g_globals.game.player.spells = 0x3FF;
 }
