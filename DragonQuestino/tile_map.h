@@ -105,7 +105,8 @@ typedef struct TileMap_t
    uint32_t treasureFlags;
 
    StaticSprite_t doorSprite;
-   uint32_t permadoorFlags;
+   // MUFFINS: make it so the high 16 bits are "temporary", and the low 16 bits are "permanent".
+   uint32_t doorFlags;
 }
 TileMap_t;
 
@@ -129,7 +130,7 @@ void TileMap_Draw( TileMap_t* tileMap );
 void TileMap_LoadTextures( TileMap_t* tileMap );
 void TileMap_Load( TileMap_t* tileMap, uint32_t id );
 uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex );
-uint32_t TileMap_GetPermadoorFlag( uint32_t tileMapId, uint32_t tileIndex );
+uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex );
 
 #if defined( __cplusplus )
 }

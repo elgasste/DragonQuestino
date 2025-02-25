@@ -12907,7 +12907,7 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
    return 0;
 }
 
-uint32_t TileMap_GetPermadoorFlag( uint32_t tileMapId, uint32_t tileIndex )
+uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
 {
    switch( tileMapId )
    {

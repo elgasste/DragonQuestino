@@ -113,9 +113,9 @@ void Game_Search( Game_t* game )
 void Game_OpenDoor( Game_t* game )
 {
    uint32_t doorTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
-   uint32_t permadoorFlag = TileMap_GetPermadoorFlag( game->tileMap.id, doorTileIndex );
+   uint32_t doorFlag = TileMap_GetDoorFlag( game->tileMap.id, doorTileIndex );
 
-   if ( permadoorFlag && ( game->tileMap.permadoorFlags & permadoorFlag ) )
+   if ( doorFlag && ( game->tileMap.doorFlags & doorFlag ) )
    {
       if ( !PLAYER_GET_KEYCOUNT( game->player.items ) )
       {
@@ -125,7 +125,7 @@ void Game_OpenDoor( Game_t* game )
       else
       {
          PLAYER_SET_KEYCOUNT( game->player.items, PLAYER_GET_KEYCOUNT( game->player.items ) - 1 );
-         game->tileMap.permadoorFlags ^= permadoorFlag;
+         game->tileMap.doorFlags ^= doorFlag;
          Game_ChangeState( game, GameState_Overworld );
       }
    }

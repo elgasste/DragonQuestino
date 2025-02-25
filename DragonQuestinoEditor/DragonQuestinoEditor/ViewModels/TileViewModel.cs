@@ -43,11 +43,11 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _treasureFlag, value );
       }
 
-      private int _permadoorFlag = 0;
-      public int PermadoorFlag
+      private int _doorFlag = 0;
+      public int DoorFlag
       {
-         get => _permadoorFlag;
-         set => SetProperty( ref _permadoorFlag, value );
+         get => _doorFlag;
+         set => SetProperty( ref _doorFlag, value );
       }
 
       private BitmapSource? _image;
@@ -110,7 +110,7 @@ namespace DragonQuestinoEditor.ViewModels
          TileSet = tileSet;
          TextureIndex = saveData.TextureIndex;
          TreasureFlag = saveData.TreasureFlag;
-         PermadoorFlag = saveData.PermadoorFlag;
+         DoorFlag = saveData.DoorFlag;
          _isPassable = saveData.IsPassable;
       }
 

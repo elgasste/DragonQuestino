@@ -17,7 +17,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
    tileMap->treasureFlags = 0xFFFFFFFF;
 
    Sprite_LoadStatic( &( tileMap->doorSprite ), SPRITE_DOOR_INDEX );
-   tileMap->permadoorFlags = 0xFFFFFFFF;
+   tileMap->doorFlags = 0xFFFFFFFF;
 
    tileMap->isDark = False;
    tileMap->usedRainbowDrop = False;
@@ -177,7 +177,7 @@ void TileMap_Draw( TileMap_t* tileMap )
 
          tileIndex = ( tileY * tileMap->tilesX ) + tileX;
          treasureFlag = TileMap_GetTreasureFlag( tileMap->id, tileIndex );
-         permadoorFlag = TileMap_GetPermadoorFlag( tileMap->id, tileIndex );
+         permadoorFlag = TileMap_GetDoorFlag( tileMap->id, tileIndex );
 
          if ( treasureFlag && ( tileMap->treasureFlags & treasureFlag ) )
          {
@@ -186,7 +186,7 @@ void TileMap_Draw( TileMap_t* tileMap )
                                       tileWidth, tileHeight,
                                       screenX + tileMap->viewportScreenPos.x, screenY + tileMap->viewportScreenPos.y, True );
          }
-         else if ( permadoorFlag && ( tileMap->permadoorFlags & permadoorFlag ) )
+         else if ( permadoorFlag && ( tileMap->doorFlags & permadoorFlag ) )
          {
             Screen_DrawMemorySection( tileMap->screen, tileMap->doorSprite.texture.memory, SPRITE_TEXTURE_SIZE,
                                       tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,

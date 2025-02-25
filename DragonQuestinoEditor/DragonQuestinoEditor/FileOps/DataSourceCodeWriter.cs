@@ -50,7 +50,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteActiveSpritesFunctions( fs );
          WriteStaticSpritesFunction( fs );
          WriteTreasureFlagsFunction( fs );
-         WritePermadoorFlagsFunction( fs );
+         WriteDoorFlagsFunction( fs );
       }
 
       private void WriteShieldBackgroundDataFile()
@@ -419,14 +419,14 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "}\n" );
       }
 
-      private void WritePermadoorFlagsFunction( FileStream fs )
+      private void WriteDoorFlagsFunction( FileStream fs )
       {
-         WriteToFileStream( fs, "\nuint32_t TileMap_GetPermadoorFlag( uint32_t tileMapId, uint32_t tileIndex )\n" );
+         WriteToFileStream( fs, "\nuint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )\n" );
          WriteToFileStream( fs, "{\n" );
          WriteToFileStream( fs, "   switch( tileMapId )\n" );
          WriteToFileStream( fs, "   {\n" );
 
-         bool hasPermadoor = false;
+         bool hasDoor = false;
 
          for ( int i = 0; i < _tileMaps.Count; i++ )
          {
@@ -434,22 +434,22 @@ namespace DragonQuestinoEditor.FileOps
             {
                var tile = _tileMaps[i].Tiles[j];
 
-               if ( tile.PermadoorFlag != 0 )
+               if ( tile.DoorFlag != 0 )
                {
-                  if ( !hasPermadoor )
+                  if ( !hasDoor )
                   {
                      WriteToFileStream( fs, string.Format( "      case {0}:\n", i ) );
-                     hasPermadoor = true;
+                     hasDoor = true;
                   }
 
-                  WriteToFileStream( fs, string.Format( "         if ( tileIndex == {0} ) return 0x{1};\n", j, tile.PermadoorFlag.ToString( "X8" ) ) );
+                  WriteToFileStream( fs, string.Format( "         if ( tileIndex == {0} ) return 0x{1};\n", j, tile.DoorFlag.ToString( "X8" ) ) );
                }
             }
 
-            if ( hasPermadoor )
+            if ( hasDoor )
             {
                WriteToFileStream( fs, "         break;\n" );
-               hasPermadoor = false;
+               hasDoor = false;
             }
          }
 
