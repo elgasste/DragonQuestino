@@ -31,7 +31,6 @@ typedef enum GameState_t
 {
    GameState_Overworld = 0,
    GameState_Overworld_Waiting,
-   GameState_Overworld_Washing,
    GameState_Overworld_MainMenu,
    GameState_Overworld_SpellMenu,
    GameState_Overworld_ItemMenu,
@@ -45,6 +44,19 @@ typedef enum GameState_t
    GameState_Count
 }
 GameState_t;
+
+// MUFFINS: implement ALL of these
+typedef enum Animation_t
+{
+   Animation_Overworld_Wash = 0,
+   Animation_RainbowBridge_Trippy,
+   Animation_RainbowBridge_Whiteout,
+   Animation_RainbowBridge_FadeIn,
+   Animation_RainbowBridge_Pause,
+
+   Animation_Count
+}
+Animation_t;
 
 typedef enum Item_t
 {

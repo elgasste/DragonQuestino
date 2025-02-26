@@ -120,7 +120,7 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Game_ChangeState( game, GameState_Overworld_Washing );
+      Game_StartAnimation( game, Animation_Overworld_Wash );
    }
 }
 
@@ -137,7 +137,7 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
          }
          else
          {
-            Game_ChangeState( game, GameState_Overworld_Washing );
+            Game_StartAnimation( game, Animation_Overworld_Wash );
          }
       }
    }

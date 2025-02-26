@@ -13,7 +13,9 @@
 #define TILEMAP_SWAP_SECONDS                    0.4f
 #define OVERWORLD_INACTIVE_STATUS_SECONDS       1.0f
 #define OVERWORLD_LIGHTING_FRAME_SECONDS        0.1f
-#define OVERWORLD_WASH_TOTAL_SECONDS            0.2f
+
+#define ANIMATION_OVERWORLD_WASH_DURATION       0.2f
+
 #define RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS     10.0f
 #define RAINBOW_BRIDGE_WHITEOUT_TOTAL_SECONDS   2.0f
 #define RAINBOW_BRIDGE_FADEIN_TOTAL_SECONDS     2.0f
@@ -32,7 +34,11 @@ typedef struct Game_t
    ScrollingDialog_t scrollingDialog;
 
    float overworldInactivitySeconds;
-   float overworldWashSeconds;
+
+   Bool_t isAnimating;
+   Animation_t animation;
+   float animationSeconds;
+   float animationDuration;
 
    TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;
@@ -60,6 +66,11 @@ void Game_OpenDoor( Game_t* game );
 
 // game_input.c
 void Game_HandleInput( Game_t* game );
+
+// game_animation.c
+void Game_StartAnimation( Game_t* game, Animation_t animation );
+void Game_StopAnimation( Game_t* game );
+void Game_TicAnimation( Game_t* game );
 
 // game_physics.c
 void Game_TicPhysics( Game_t* game );

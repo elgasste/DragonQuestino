@@ -2,7 +2,6 @@
 #include "random.h"
 
 internal void Game_TicOverworld( Game_t* game );
-internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game );
 internal void Game_TicRainbowBridgeWhiteoutAnimation( Game_t* game );
@@ -34,37 +33,41 @@ void Game_Tic( Game_t* game )
    Input_Read( &( game->input ) );
    Game_HandleInput( game );
 
-   switch ( game->state )
+   if ( game->isAnimating )
    {
-      case GameState_Overworld:
-         Game_TicOverworld( game );
-         break;
-      case GameState_Overworld_Washing:
-         Game_TicOverworldWashing( game );
-         break;
-      case GameState_Overworld_ScrollingDialog:
-         ScrollingDialog_Tic( &( game->scrollingDialog ) );
-         break;
-      case GameState_Overworld_MainMenu:
-      case GameState_Overworld_SpellMenu:
-      case GameState_Overworld_ItemMenu:
-         Menu_Tic( &( game->menu ) );
-         break;
-      case GameState_Overworld_RainbowBridgeTrippyAnimation:
-         Game_TicRainbowBridgeTrippyAnimation( game );
-         break;
-      case GameState_Overworld_RainbowBridgeWhiteoutAnimation:
-         Game_TicRainbowBridgeWhiteoutAnimation( game );
-         break;
-      case GameState_Overworld_RainbowBridgePauseAnimation:
-         Game_TicRainbowBridgePauseAnimation( game );
-         break;
-      case GameState_Overworld_RainbowBridgeFadeInAnimation:
-         Game_TicRainbowBridgeFadeInAnimation( game );
-         break;
-      case GameState_TileMapTransition:
-         Game_TicTileMapTransition( game );
-         break;
+      Game_TicAnimation( game );
+   }
+   else
+   {
+      switch ( game->state )
+      {
+         case GameState_Overworld:
+            Game_TicOverworld( game );
+            break;
+         case GameState_Overworld_ScrollingDialog:
+            ScrollingDialog_Tic( &( game->scrollingDialog ) );
+            break;
+         case GameState_Overworld_MainMenu:
+         case GameState_Overworld_SpellMenu:
+         case GameState_Overworld_ItemMenu:
+            Menu_Tic( &( game->menu ) );
+            break;
+         case GameState_Overworld_RainbowBridgeTrippyAnimation:
+            Game_TicRainbowBridgeTrippyAnimation( game );
+            break;
+         case GameState_Overworld_RainbowBridgeWhiteoutAnimation:
+            Game_TicRainbowBridgeWhiteoutAnimation( game );
+            break;
+         case GameState_Overworld_RainbowBridgePauseAnimation:
+            Game_TicRainbowBridgePauseAnimation( game );
+            break;
+         case GameState_Overworld_RainbowBridgeFadeInAnimation:
+            Game_TicRainbowBridgeFadeInAnimation( game );
+            break;
+         case GameState_TileMapTransition:
+            Game_TicTileMapTransition( game );
+            break;
+      }
    }
 
    Game_Draw( game );
@@ -79,9 +82,6 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
    {
       case GameState_Overworld:
          game->overworldInactivitySeconds = 0.0f;
-         break;
-      case GameState_Overworld_Washing:
-         game->overworldWashSeconds = 0.0f;
          break;
       case GameState_Overworld_RainbowBridgeTrippyAnimation:
          game->rainbowBridgeTrippySecondsElapsed = 0.0f;
@@ -212,16 +212,6 @@ internal void Game_TicOverworld( Game_t* game )
    TileMap_UpdateViewport( &( game->tileMap ),
                            (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
                            game->player.hitBoxSize.x, game->player.hitBoxSize.y );
-}
-
-internal void Game_TicOverworldWashing( Game_t* game )
-{
-   game->overworldWashSeconds += CLOCK_FRAME_SECONDS;
-
-   if ( game->overworldWashSeconds > OVERWORLD_WASH_TOTAL_SECONDS )
-   {
-      Game_ChangeState( game, GameState_Overworld );
-   }
 }
 
 internal void Game_TicTileMapTransition( Game_t* game )
