@@ -97,23 +97,33 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
    }
 }
 
+void Game_OpenScrollingDialog( Game_t* game, ScrollingDialogType_t type, DialogMessageId_t messageId )
+{
+   ScrollingDialog_Load( &( game->scrollingDialog ), type, messageId );
+
+   switch ( type )
+   {
+      case ScrollingDialogType_Overworld:
+         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+         break;
+   }
+}
+
 void Game_Search( Game_t* game )
 {
    uint32_t treasureFlag;
 
-   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !PLAYER_HAS_TOKEN( game->player.items ) )
+   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !ITEM_HAS_TOKEN( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_Token );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_TOKEN );
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
    }
-   else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !PLAYER_HAS_FAIRYFLUTE( game->player.items ) )
+   else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !ITEM_HAS_FAIRYFLUTE( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_FairyFlute );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
    }
    else
    {
@@ -125,8 +135,7 @@ void Game_Search( Game_t* game )
       }
       else
       {
-         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-         ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
       }
    }
 }
@@ -138,22 +147,20 @@ void Game_OpenDoor( Game_t* game )
 
    if ( doorFlag && ( game->tileMap.doorFlags & doorFlag ) )
    {
-      if ( !PLAYER_GET_KEYCOUNT( game->player.items ) )
+      if ( !ITEM_GET_KEYCOUNT( game->player.items ) )
       {
-         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-         ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_NoKeys );
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Door_NoKeys );
       }
       else
       {
-         PLAYER_SET_KEYCOUNT( game->player.items, PLAYER_GET_KEYCOUNT( game->player.items ) - 1 );
+         ITEM_SET_KEYCOUNT( game->player.items, ITEM_GET_KEYCOUNT( game->player.items ) - 1 );
          game->tileMap.doorFlags ^= doorFlag;
          Game_ChangeState( game, GameState_Overworld );
       }
    }
    else
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Door_None );
    }
 }
 
@@ -268,7 +275,7 @@ internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
       }
 
       Screen_WipeColor( &( game->screen ), COLOR_WHITE );
-      PLAYER_TOGGLE_HASRAINBOWDROP( game->player.items );
+      ITEM_TOGGLE_HASRAINBOWDROP( game->player.items );
       game->tileMap.usedRainbowDrop = True;
       TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
       TILE_SET_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
@@ -341,8 +348,6 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
    Bool_t collected = False;
    char msg[6];
 
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-
    switch ( treasureFlag )
    {
       case 0x1:         // Tantegel throne room, upper-right chest
@@ -368,7 +373,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_STONEOFSUNLIGHT );
          break;
       case 0x100:       // Erdrick's Cave, the tablet. this is not an item that can be collected.
-         ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_Tablet );
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Chest_Tablet );
          game->tileMap.treasureFlags ^= treasureFlag;
          return;
       case 0x200:       // Rimuldar Inn
@@ -390,8 +395,8 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       case 0x2000:      // Rocky Mountain Cave B2, center-left chest
          if ( Random_Percent() <= 5 )
          {
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_DeathNecklace );
             game->tileMap.treasureFlags ^= treasureFlag;
+            Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Chest_DeathNecklace );
             return;
          }
          else
@@ -465,12 +470,10 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
    if ( collected )
    {
       game->tileMap.treasureFlags ^= treasureFlag;
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld,
-                            ( gold > 0 ) ? DialogMessageId_Chest_GoldCollected : DialogMessageId_Chest_ItemCollected);
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, ( gold > 0 ) ? DialogMessageId_Chest_GoldCollected : DialogMessageId_Chest_ItemCollected );
    }
    else
    {
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld,
-                            ( gold > 0 ) ? DialogMessageId_Chest_GoldNoSpace : DialogMessageId_Chest_ItemNoSpace);
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, ( gold > 0 ) ? DialogMessageId_Chest_GoldNoSpace : DialogMessageId_Chest_ItemNoSpace );
    }
 }

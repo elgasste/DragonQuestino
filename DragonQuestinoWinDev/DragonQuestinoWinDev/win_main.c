@@ -12,6 +12,7 @@ internal void DrawDiagnostics( HDC* dcMem );
 internal void ToggleFastWalk();
 internal void ToggleNoDark();
 internal void GetAllItems();
+internal void MaxOutStats();
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -225,6 +226,9 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
             case VK_ALLITEMS:
                GetAllItems();
                break;
+            case VK_MAXSTATS:
+               MaxOutStats();
+               break;
             case VK_TOGGLECURSED:
                Player_SetCursed( &( g_globals.game.player ), g_globals.game.player.isCursed ? False : True );
                break;
@@ -372,7 +376,12 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "5: Toggle cursed" );
+   SetTextColor( *dcMem, 0x00FFFFFF );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "5: Max out stats" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   sprintf_s( str, STRING_SIZE_DEFAULT, "6: Toggle cursed" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
@@ -399,50 +408,67 @@ internal void ToggleNoDark()
 
 internal void GetAllItems()
 {
-   PLAYER_SET_KEYCOUNT( g_globals.game.player.items, PLAYER_MAXKEYS );
-   PLAYER_SET_HERBCOUNT( g_globals.game.player.items, PLAYER_MAXHERBS );
-   PLAYER_SET_WINGCOUNT( g_globals.game.player.items, PLAYER_MAXWINGS );
-   PLAYER_SET_FAIRYWATERCOUNT( g_globals.game.player.items, PLAYER_MAXFAIRYWATERS );
-   PLAYER_SET_TORCHCOUNT( g_globals.game.player.items, PLAYER_MAXTORCHES );
+   ITEM_SET_KEYCOUNT( g_globals.game.player.items, ITEM_MAXKEYS );
+   ITEM_SET_HERBCOUNT( g_globals.game.player.items, ITEM_MAXHERBS );
+   ITEM_SET_WINGCOUNT( g_globals.game.player.items, ITEM_MAXWINGS );
+   ITEM_SET_FAIRYWATERCOUNT( g_globals.game.player.items, ITEM_MAXFAIRYWATERS );
+   ITEM_SET_TORCHCOUNT( g_globals.game.player.items, ITEM_MAXTORCHES );
 
-   if ( !PLAYER_HAS_FAIRYFLUTE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_FAIRYFLUTE( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASFAIRYFLUTE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASFAIRYFLUTE( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_SILVERHARP( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_SILVERHARP( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASSILVERHARP( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSILVERHARP( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_GWAELYNSLOVE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_GWAELYNSLOVE( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASGWAELYNSLOVE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASGWAELYNSLOVE( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_STONEOFSUNLIGHT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_STONEOFSUNLIGHT( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASSTONEOFSUNLIGHT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSTONEOFSUNLIGHT( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_STAFFOFRAIN( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_STAFFOFRAIN( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASSTAFFOFRAIN( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSTAFFOFRAIN( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_TOKEN( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_TOKEN( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASTOKEN( g_globals.game.player.items );
+      ITEM_TOGGLE_HASTOKEN( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_RAINBOWDROP( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_RAINBOWDROP( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASRAINBOWDROP( g_globals.game.player.items );
+      ITEM_TOGGLE_HASRAINBOWDROP( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_SPHEREOFLIGHT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_SPHEREOFLIGHT( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASSPHEREOFLIGHT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSPHEREOFLIGHT( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_DRAGONSCALE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_DRAGONSCALE( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASDRAGONSCALE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASDRAGONSCALE( g_globals.game.player.items );
    }
-   if ( !PLAYER_HAS_CURSEDBELT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_CURSEDBELT( g_globals.game.player.items ) )
    {
-      PLAYER_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
    }
+}
+
+internal void MaxOutStats()
+{
+   g_globals.game.player.experience = UINT16_MAX;
+   g_globals.game.player.gold = UINT16_MAX;
+
+   g_globals.game.player.stats.hitPoints = UINT8_MAX;
+   g_globals.game.player.stats.maxHitPoints = UINT8_MAX;
+   g_globals.game.player.stats.magicPoints = UINT8_MAX;
+   g_globals.game.player.stats.maxMagicPoints = UINT8_MAX;
+   g_globals.game.player.stats.attackPower = UINT8_MAX;
+   g_globals.game.player.stats.defensePower = UINT8_MAX;
+   g_globals.game.player.stats.strength = UINT8_MAX;
+   g_globals.game.player.stats.agility = UINT8_MAX;
+
+   g_globals.game.player.spells = 0x3FF;
 }

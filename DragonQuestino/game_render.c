@@ -96,7 +96,7 @@ void Game_DrawNonUseableItems( Game_t* game )
    uint32_t x, y;
    Player_t* player = &( game->player );
    uint32_t items = player->items;
-   uint32_t itemCount = PLAYER_GET_MAPNONUSEABLEITEMCOUNT( items );
+   uint32_t itemCount = ITEM_GET_MAPNONUSEABLECOUNT( items );
    char line[MENU_LINE_LENGTH];
 
    if ( game->state == GameState_Overworld_ItemMenu )
@@ -112,37 +112,37 @@ void Game_DrawNonUseableItems( Game_t* game )
       y = 64;
    }
 
-   if ( PLAYER_GET_KEYCOUNT( items ) )
+   if ( ITEM_GET_KEYCOUNT( items ) )
    {
-      sprintf( line, STRING_OVERWORLD_ITEMMENU_KEY, PLAYER_GET_KEYCOUNT( items ) );
+      sprintf( line, STRING_OVERWORLD_ITEMMENU_KEY, ITEM_GET_KEYCOUNT( items ) );
       Screen_DrawText( &( game->screen ), line, x, y );
       y += ( TEXT_TILE_SIZE * 2 );
    }
-   if ( PLAYER_HAS_DRAGONSCALE( items ) )
+   if ( ITEM_HAS_DRAGONSCALE( items ) )
    {
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_DRAGONSCALE_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_DRAGONSCALE_2, x, y + 8 );
       y += ( TEXT_TILE_SIZE * 2 );
    }
-   if ( PLAYER_HAS_TOKEN( items ) )
+   if ( ITEM_HAS_TOKEN( items ) )
    {
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_TOKEN_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_TOKEN_2, x, y + 8 );
       y += ( TEXT_TILE_SIZE * 2 );
    }
-   if ( PLAYER_HAS_STONEOFSUNLIGHT( items ) )
+   if ( ITEM_HAS_STONEOFSUNLIGHT( items ) )
    {
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_STONEOFSUNLIGHT_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_STONEOFSUNLIGHT_2, x, y + TEXT_TILE_SIZE );
       y += ( TEXT_TILE_SIZE * 2 );
    }
-   if ( PLAYER_HAS_STAFFOFRAIN( items ) )
+   if ( ITEM_HAS_STAFFOFRAIN( items ) )
    {
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_STAFFOFRAIN_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_STAFFOFRAIN_2, x, y + TEXT_TILE_SIZE );
       y += ( TEXT_TILE_SIZE * 2 );
    }
-   if ( PLAYER_HAS_SPHEREOFLIGHT( items ) )
+   if ( ITEM_HAS_SPHEREOFLIGHT( items ) )
    {
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_2, x, y + TEXT_TILE_SIZE );

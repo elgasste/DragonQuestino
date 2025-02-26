@@ -20,6 +20,7 @@ void Player_Init( Player_t* player, Screen_t* screen )
    player->sprite.direction = Direction_Down;
 
    strcpy( player->name, "TestMan1" );
+   player->isCursed = False;
 
    player->stats.hitPoints = 12;
    player->stats.maxHitPoints = 12;
@@ -33,7 +34,11 @@ void Player_Init( Player_t* player, Screen_t* screen )
    player->experience = 0;
    player->gold = 0;
    player->items = 0;
-   player->isCursed = False;
+   player->spells = 0;
+
+   // uncomment for testing
+   //player->spells = 0x3FF;
+   //SPELL_SET_HASSIZZ( player->spells );x
 }
 
 uint8_t Player_GetLevel( Player_t* player )
@@ -127,47 +132,47 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
    switch ( item )
    {
       case Item_Key:
-         count = PLAYER_GET_KEYCOUNT( player->items );
-         if ( count < PLAYER_MAXKEYS )
+         count = ITEM_GET_KEYCOUNT( player->items );
+         if ( count < ITEM_MAXKEYS )
          {
             count++;
-            PLAYER_SET_KEYCOUNT( player->items, count );
+            ITEM_SET_KEYCOUNT( player->items, count );
             collected = True;
          }
          break;
       case Item_Herb:
-         count = PLAYER_GET_HERBCOUNT( player->items );
-         if ( count < PLAYER_MAXHERBS )
+         count = ITEM_GET_HERBCOUNT( player->items );
+         if ( count < ITEM_MAXHERBS )
          {
             count++;
-            PLAYER_SET_HERBCOUNT( player->items, count );
+            ITEM_SET_HERBCOUNT( player->items, count );
             collected = True;
          }
          break;
       case Item_Wing:
-         count = PLAYER_GET_WINGCOUNT( player->items );
-         if ( count < PLAYER_MAXWINGS )
+         count = ITEM_GET_WINGCOUNT( player->items );
+         if ( count < ITEM_MAXWINGS )
          {
             count++;
-            PLAYER_SET_WINGCOUNT( player->items, count );
+            ITEM_SET_WINGCOUNT( player->items, count );
             collected = True;
          }
          break;
       case Item_FairyWater:
-         count = PLAYER_GET_FAIRYWATERCOUNT( player->items );
-         if ( count < PLAYER_MAXFAIRYWATERS )
+         count = ITEM_GET_FAIRYWATERCOUNT( player->items );
+         if ( count < ITEM_MAXFAIRYWATERS )
          {
             count++;
-            PLAYER_SET_FAIRYWATERCOUNT( player->items, count );
+            ITEM_SET_FAIRYWATERCOUNT( player->items, count );
             collected = True;
          }
          break;
       case Item_Torch:
-         count = PLAYER_GET_TORCHCOUNT( player->items );
-         if ( count < PLAYER_MAXTORCHES )
+         count = ITEM_GET_TORCHCOUNT( player->items );
+         if ( count < ITEM_MAXTORCHES )
          {
             count++;
-            PLAYER_SET_TORCHCOUNT( player->items, count );
+            ITEM_SET_TORCHCOUNT( player->items, count );
             collected = True;
          }
          break;

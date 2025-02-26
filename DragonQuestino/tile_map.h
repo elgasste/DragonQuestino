@@ -38,7 +38,7 @@
 #define TILE_SET_PASSABLE( t, b )       ( t ) = ( ( t ) & 0xFFDF ) | ( b << 5 )
 
 #define TORCH_DIAMETER                 3
-#define RADIANT_DIAMETER               7
+#define GLOW_DIAMETER                  7
 #define LIGHT_MAX_TILES                200
 
 #define TILEMAP_OVERWORLD_ID           0

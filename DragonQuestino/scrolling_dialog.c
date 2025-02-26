@@ -222,6 +222,8 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Search_NothingFound: return 2;
       case DialogMessageId_Search_FoundItem: return 2;
       case DialogMessageId_Spell_None: return 1;
+      case DialogMessageId_Spell_OverworldCantCast: return 1;
+      case DialogMessageId_Spell_NotEnoughMp: return 1;
       case DialogMessageId_Item_None: return 1;
       case DialogMessageId_Door_None: return 1;
       case DialogMessageId_Door_NoKeys: return 1;
@@ -269,6 +271,8 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH_FOUND, player->name, dialog->insertionText ); return;
          }
       case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
+      case DialogMessageId_Spell_OverworldCantCast: strcpy( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CANT_CAST ); return;
+      case DialogMessageId_Spell_NotEnoughMp: strcpy( text, STRING_NOTENOUGHMP ); return;
       case DialogMessageId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
       case DialogMessageId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;
       case DialogMessageId_Door_NoKeys: strcpy( text, STRING_OVERWORLD_DIALOG_NO_KEYS ); return;
