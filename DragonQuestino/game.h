@@ -67,7 +67,7 @@ void Game_TicPhysics( Game_t* game );
 void Game_Draw( Game_t* game );
 void Game_DrawOverworldQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
-void Game_DrawNonUseableItems( Game_t* game );
+void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 
 // game_spells.c
 void Game_CastHeal( Game_t* game );

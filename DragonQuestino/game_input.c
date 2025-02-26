@@ -254,17 +254,17 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
    }
    else
    {
+      if ( nonUseableCount > 0 )
+      {
+         Game_DrawNonUseableItems( game, ( useableCount > 0 ) ? True : False );
+      }
+
       if ( useableCount > 0 )
       {
          Menu_Load( &( game->menu ), MenuId_OverworldItem );
-         Game_ChangeState( game, GameState_Overworld_ItemMenu );
       }
 
-      if ( nonUseableCount > 0 )
-      {
-         Game_DrawNonUseableItems( game );
-         Game_ChangeState( game, GameState_Overworld_Waiting );
-      }
+      Game_ChangeState( game, ( useableCount > 0 ) ? GameState_Overworld_ItemMenu : GameState_Overworld_Waiting );
    }
 }
 

@@ -91,7 +91,7 @@ void Game_DrawOverworldDeepStatus( Game_t* game )
    Screen_DrawText( &( game->screen ), line, 96, 184 );
 }
 
-void Game_DrawNonUseableItems( Game_t* game )
+void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
 {
    uint32_t x, y;
    Player_t* player = &( game->player );
@@ -99,7 +99,7 @@ void Game_DrawNonUseableItems( Game_t* game )
    uint32_t itemCount = ITEM_GET_MAPNONUSEABLECOUNT( items );
    char line[MENU_LINE_LENGTH];
 
-   if ( game->state == GameState_Overworld_ItemMenu )
+   if ( hasUseableItems )
    {
       Screen_DrawTextWindow( &( game->screen ), 56, 48, 11, ( itemCount * 2 ) + 2 );
       x = 64;
