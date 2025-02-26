@@ -159,8 +159,7 @@ internal void Game_HandleMenuInput( Game_t* game )
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
          case MenuCommand_OverworldMain_Talk:
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere );
-            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+            Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere );
             break;
          case MenuCommand_OverworldMain_Status:
             Game_DrawOverworldDeepStatus( game );
@@ -196,8 +195,7 @@ internal void Game_HandleMenuInput( Game_t* game )
             }
             else
             {
-               ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_TorchCantUse );
-               Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+               Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_TorchCantUse );
             }
             break;
          case MenuCommand_Item_SilverHarp: Game_UseSilverHarp( game ); break;
@@ -233,8 +231,7 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
    }
    else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells ) )
    {
@@ -242,8 +239,7 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    }
    else
    {
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCantCast );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCantCast );
    }
 }
 
@@ -254,8 +250,7 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 
    if ( useableCount == 0 && nonUseableCount == 0 )
    {
-      ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Item_None );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Item_None );
    }
    else
    {

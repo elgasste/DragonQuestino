@@ -36,7 +36,7 @@ void Player_Init( Player_t* player, Screen_t* screen )
    player->items = 0;
    player->spells = 0;
 
-   // MUFFINS: for testing
+   // uncomment for testing
    //player->spells = 0x3FF;
    //SPELL_SET_HASSIZZ( player->spells );x
 }
