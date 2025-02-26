@@ -4,22 +4,22 @@ void Game_UseHerb( Game_t* game )
 {
    ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
    Game_DrawOverworldQuickStatus( game );
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Herb );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
 
 void Game_UseWing( Game_t* game )
 {
    ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Wing );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
 
 void Game_UseFairyWater( Game_t* game )
 {
    ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 );
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWater );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
 
 void Game_UseTorch( Game_t* game )
@@ -32,28 +32,26 @@ void Game_UseTorch( Game_t* game )
    }
 
    ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_Torch );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
 
 void Game_UseSilverHarp( Game_t* game )
 {
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_SilverHarp );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
 
 void Game_UseFairyFlute( Game_t* game )
 {
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_FairyFlute );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
 
 void Game_UseGwaelynsLove( Game_t* game )
 {
    uint32_t px, py, tx, ty;
    char msg[64];
-
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
    {
@@ -86,6 +84,8 @@ void Game_UseGwaelynsLove( Game_t* game )
    {
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_GwaelynsLoveCantUse );
    }
+
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
 
 void Game_UseRainbowDrop( Game_t* game )
@@ -94,19 +94,19 @@ void Game_UseRainbowDrop( Game_t* game )
         game->player.tileIndex == ( TILEMAP_RAINBOWBRIDGE_INDEX + 1 ) &&
         game->player.sprite.direction == Direction_Left )
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_RainbowDrop );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    }
    else
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_RainbowDropCantUse );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    }
 }
 
 void Game_UseCursedBelt( Game_t* game )
 {
    ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_CursedBelt );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }

@@ -159,8 +159,8 @@ internal void Game_HandleMenuInput( Game_t* game )
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
          case MenuCommand_OverworldMain_Talk:
-            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             break;
          case MenuCommand_OverworldMain_Status:
             Game_DrawOverworldDeepStatus( game );
@@ -196,8 +196,8 @@ internal void Game_HandleMenuInput( Game_t* game )
             }
             else
             {
-               Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
                ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Use_TorchCantUse );
+               Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             }
             break;
          case MenuCommand_Item_SilverHarp: Game_UseSilverHarp( game ); break;
@@ -233,8 +233,8 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    }
    else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells ) )
    {
@@ -242,8 +242,8 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    }
    else
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCantCast );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    }
 }
 
@@ -254,21 +254,21 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 
    if ( useableCount == 0 && nonUseableCount == 0 )
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Item_None );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    }
    else
    {
-      Game_ChangeState( game, ( useableCount > 0 ) ? GameState_Overworld_ItemMenu : GameState_Overworld_Waiting );
-
       if ( useableCount > 0 )
       {
          Menu_Load( &( game->menu ), MenuId_OverworldItem );
+         Game_ChangeState( game, GameState_Overworld_ItemMenu );
       }
 
       if ( nonUseableCount > 0 )
       {
          Game_DrawNonUseableItems( game );
+         Game_ChangeState( game, GameState_Overworld_Waiting );
       }
    }
 }

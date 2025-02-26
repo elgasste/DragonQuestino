@@ -104,16 +104,16 @@ void Game_Search( Game_t* game )
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !ITEM_HAS_TOKEN( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_Token );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_TOKEN );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    }
    else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !ITEM_HAS_FAIRYFLUTE( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_FairyFlute );
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    }
    else
    {
@@ -125,8 +125,8 @@ void Game_Search( Game_t* game )
       }
       else
       {
-         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
          ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       }
    }
 }
@@ -140,8 +140,8 @@ void Game_OpenDoor( Game_t* game )
    {
       if ( !ITEM_GET_KEYCOUNT( game->player.items ) )
       {
-         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
          ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_NoKeys );
+         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       }
       else
       {
@@ -152,8 +152,8 @@ void Game_OpenDoor( Game_t* game )
    }
    else
    {
-      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Door_None );
+      Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
    }
 }
 
@@ -341,8 +341,6 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
    Bool_t collected = False;
    char msg[6];
 
-   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-
    switch ( treasureFlag )
    {
       case 0x1:         // Tantegel throne room, upper-right chest
@@ -390,8 +388,9 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       case 0x2000:      // Rocky Mountain Cave B2, center-left chest
          if ( Random_Percent() <= 5 )
          {
-            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_DeathNecklace );
             game->tileMap.treasureFlags ^= treasureFlag;
+            ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld, DialogMessageId_Chest_DeathNecklace );
+            Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
             return;
          }
          else
@@ -473,4 +472,6 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       ScrollingDialog_Load( &( game->scrollingDialog ), ScrollingDialogType_Overworld,
                             ( gold > 0 ) ? DialogMessageId_Chest_GoldNoSpace : DialogMessageId_Chest_ItemNoSpace);
    }
+
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
