@@ -46,6 +46,7 @@ void Game_Tic( Game_t* game )
          ScrollingDialog_Tic( &( game->scrollingDialog ) );
          break;
       case GameState_Overworld_MainMenu:
+      case GameState_Overworld_SpellMenu:
       case GameState_Overworld_ItemMenu:
          Menu_Tic( &( game->menu ) );
          break;
@@ -94,6 +95,18 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
       case GameState_Overworld_RainbowBridgePauseAnimation:
          game->rainbowBridgePauseSecondsElapsed = 0.0f;
          break;
+   }
+}
+
+void Game_OpenMenu( Game_t* game, MenuId_t id )
+{
+   Menu_Load( &( game->menu ), id );
+
+   switch ( id )
+   {
+      case MenuId_Overworld: Game_ChangeState( game, GameState_Overworld_MainMenu ); break;
+      case MenuId_OverworldSpell: Game_ChangeState( game, GameState_Overworld_SpellMenu ); break;
+      case MenuId_OverworldItem: Game_ChangeState( game, GameState_Overworld_ItemMenu ); break;
    }
 }
 

@@ -16,6 +16,7 @@ void Game_Draw( Game_t* game )
          Game_DrawOverworld( game );
          break;
       case GameState_Overworld_MainMenu:
+      case GameState_Overworld_SpellMenu:
       case GameState_Overworld_ItemMenu:
          Menu_Draw( &( game->menu ) );
          break;

@@ -41,9 +41,8 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
-      Menu_Load( &( game->menu ), MenuId_Overworld);
-      Game_ChangeState( game, GameState_Overworld_MainMenu );
       Game_DrawOverworldQuickStatus( game );
+      Game_OpenMenu( game, MenuId_Overworld );
    }
    else if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
    {
@@ -210,6 +209,7 @@ internal void Game_HandleMenuInput( Game_t* game )
       switch ( game->state )
       {
          case GameState_Overworld_MainMenu:
+         case GameState_Overworld_SpellMenu:
          case GameState_Overworld_ItemMenu:
             Game_ChangeState( game, GameState_Overworld );
             break;
@@ -235,7 +235,7 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    }
    else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells ) )
    {
-      Menu_Load( &( game->menu ), MenuId_OverworldSpell );
+      Game_OpenMenu( game, MenuId_OverworldSpell );
    }
    else
    {
@@ -262,9 +262,12 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
       if ( useableCount > 0 )
       {
          Menu_Load( &( game->menu ), MenuId_OverworldItem );
+         Game_OpenMenu( game, MenuId_OverworldItem );
       }
-
-      Game_ChangeState( game, ( useableCount > 0 ) ? GameState_Overworld_ItemMenu : GameState_Overworld_Waiting );
+      else
+      {
+         Game_ChangeState( game, GameState_Overworld_Waiting );
+      }
    }
 }
 

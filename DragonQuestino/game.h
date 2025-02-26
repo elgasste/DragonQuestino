@@ -53,6 +53,7 @@ extern "C" {
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
 void Game_ChangeState( Game_t* game, GameState_t newState );
+void Game_OpenMenu( Game_t* game, MenuId_t id );
 void Game_OpenScrollingDialog( Game_t* game, ScrollingDialogType_t type, DialogMessageId_t messageId );
 void Game_Search( Game_t* game );
 void Game_OpenDoor( Game_t* game );
