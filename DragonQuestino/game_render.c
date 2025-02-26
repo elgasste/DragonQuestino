@@ -30,7 +30,7 @@ void Game_Draw( Game_t* game )
 
 void Game_DrawOverworldQuickStatus( Game_t* game )
 {
-   uint8_t lvl = Player_GetLevel( &( game->player ) );
+   uint16_t lvl = Player_GetLevel( &( game->player ) );
    uint32_t memSize;
    char line[9];
 

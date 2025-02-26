@@ -3,6 +3,40 @@
 #include "screen.h"
 #include "math.h"
 
+#define EXPERIENCE_TABLE_SIZE  29
+
+global uint16_t g_experienceTable[EXPERIENCE_TABLE_SIZE] = {
+   7,
+   23,
+   47,
+   110,
+   220,
+   450,
+   800,
+   1300,
+   2000,
+   2900,
+   4000,
+   5500,
+   7500,
+   10000,
+   13000,
+   16000,
+   19000,
+   22000,
+   26000,
+   30000,
+   34000,
+   38000,
+   42000,
+   46000,
+   50000,
+   54000,
+   58000,
+   62000,
+   UINT16_MAX
+};
+
 void Player_Init( Player_t* player, Screen_t* screen )
 {
    player->screen = screen;
@@ -41,77 +75,26 @@ void Player_Init( Player_t* player, Screen_t* screen )
    //SPELL_SET_HASSIZZ( player->spells );x
 }
 
-uint8_t Player_GetLevel( Player_t* player )
+uint16_t Player_GetLevel( Player_t* player )
 {
-   if ( player->experience < 7 ) { return 1; }
-   else if ( player->experience < 23 ) { return 2; }
-   else if ( player->experience < 47 ) { return 3; }
-   else if ( player->experience < 110 ) { return 4; }
-   else if ( player->experience < 220 ) { return 5; }
-   else if ( player->experience < 450 ) { return 6; }
-   else if ( player->experience < 800 ) { return 7; }
-   else if ( player->experience < 1300 ) { return 8; }
-   else if ( player->experience < 2000 ) { return 9; }
-   else if ( player->experience < 2900 ) { return 10; }
-   else if ( player->experience < 4000 ) { return 11; }
-   else if ( player->experience < 5500 ) { return 12; }
-   else if ( player->experience < 7500 ) { return 13; }
-   else if ( player->experience < 10000 ) { return 14; }
-   else if ( player->experience < 13000 ) { return 15; }
-   else if ( player->experience < 16000 ) { return 16; }
-   else if ( player->experience < 19000 ) { return 17; }
-   else if ( player->experience < 22000 ) { return 18; }
-   else if ( player->experience < 26000 ) { return 19; }
-   else if ( player->experience < 30000 ) { return 20; }
-   else if ( player->experience < 34000 ) { return 21; }
-   else if ( player->experience < 38000 ) { return 22; }
-   else if ( player->experience < 42000 ) { return 23; }
-   else if ( player->experience < 46000 ) { return 24; }
-   else if ( player->experience < 50000 ) { return 25; }
-   else if ( player->experience < 54000 ) { return 26; }
-   else if ( player->experience < 58000 ) { return 27; }
-   else if ( player->experience < 62000 ) { return 28; }
-   else if ( player->experience < UINT16_MAX ) { return 29; }
-   else { return 30; }
+   uint16_t i;
+
+   for ( i = 0; i < EXPERIENCE_TABLE_SIZE; i++ )
+   {
+      if ( player->experience < g_experienceTable[i] )
+      {
+         return i + 1;
+      }
+   }
+
+   return EXPERIENCE_TABLE_SIZE + 1;
 }
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
 {
-   uint8_t level = Player_GetLevel( player );
+   uint16_t level = Player_GetLevel( player );
 
-   switch ( level )
-   {
-      case 1: return 7 - player->experience;
-      case 2: return 23 - player->experience;
-      case 3: return 47 - player->experience;
-      case 4: return 110 - player->experience;
-      case 5: return 220 - player->experience;
-      case 6: return 450 - player->experience;
-      case 7: return 800 - player->experience;
-      case 8: return 1300 - player->experience;
-      case 9: return 2000 - player->experience;
-      case 10: return 2900 - player->experience;
-      case 11: return 4000 - player->experience;
-      case 12: return 5500 - player->experience;
-      case 13: return 7500 - player->experience;
-      case 14: return 10000 - player->experience;
-      case 15: return 13000 - player->experience;
-      case 16: return 16000 - player->experience;
-      case 17: return 19000 - player->experience;
-      case 18: return 22000 - player->experience;
-      case 19: return 26000 - player->experience;
-      case 20: return 30000 - player->experience;
-      case 21: return 34000 - player->experience;
-      case 22: return 38000 - player->experience;
-      case 23: return 42000 - player->experience;
-      case 24: return 46000 - player->experience;
-      case 25: return 50000 - player->experience;
-      case 26: return 54000 - player->experience;
-      case 27: return 58000 - player->experience;
-      case 28: return 62000 - player->experience;
-      case 29: return UINT16_MAX - player->experience;
-      default: return 0;
-   }
+   return ( level == ( EXPERIENCE_TABLE_SIZE + 1 ) ) ? 0 : ( g_experienceTable[level - 1] - player->experience );
 }
 
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold )
