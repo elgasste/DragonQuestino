@@ -10,15 +10,17 @@
 #include "menu.h"
 #include "scrolling_dialog.h"
 
-#define TILEMAP_SWAP_SECONDS                    0.4f
-#define OVERWORLD_INACTIVE_STATUS_SECONDS       1.0f
-#define OVERWORLD_LIGHTING_FRAME_SECONDS        0.1f
-#define OVERWORLD_WASH_TOTAL_SECONDS            0.2f
-#define RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS     10.0f
-#define RAINBOW_BRIDGE_WHITEOUT_TOTAL_SECONDS   2.0f
-#define RAINBOW_BRIDGE_FADEIN_TOTAL_SECONDS     2.0f
-#define RAINBOW_BRIDGE_PAUSE_TOTAL_SECONDS      2.0f
-#define COLLISION_THETA                         0.001f
+#define TILEMAP_SWAP_SECONDS                       0.4f
+#define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
+#define OVERWORLD_LIGHTING_FRAME_SECONDS           0.1f
+
+#define ANIMATION_OVERWORLD_WASH_DURATION          0.2f
+#define ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION    10.0f
+#define ANIMATION_RAINBOWBRIDGE_WHITEOUT_DURATION  2.0f
+#define ANIMATION_RAINBOWBRIDGE_FADEIN_DURATION    2.0f
+#define ANIMATION_RAINBOWBRIDGE_PAUSE_DURATION     2.0f
+
+#define COLLISION_THETA                            0.001f
 
 typedef struct Game_t
 {
@@ -32,16 +34,16 @@ typedef struct Game_t
    ScrollingDialog_t scrollingDialog;
 
    float overworldInactivitySeconds;
-   float overworldWashSeconds;
+
+   Bool_t isAnimating;
+   Animation_t animation;
+   float animationSeconds;
+   float animationDuration;
 
    TilePortal_t* swapPortal;
    float tileMapSwapSecondsElapsed;
 
    float lightingSecondsElapsed;
-   float rainbowBridgeTrippySecondsElapsed;
-   float rainbowBridgeWhiteoutSecondsElapsed;
-   float rainbowBridgeFadeInSecondsElapsed;
-   float rainbowBridgePauseSecondsElapsed;
 }
 Game_t;
 
@@ -53,12 +55,18 @@ extern "C" {
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
 void Game_ChangeState( Game_t* game, GameState_t newState );
+void Game_OpenMenu( Game_t* game, MenuId_t id );
 void Game_OpenScrollingDialog( Game_t* game, ScrollingDialogType_t type, DialogMessageId_t messageId );
 void Game_Search( Game_t* game );
 void Game_OpenDoor( Game_t* game );
 
 // game_input.c
 void Game_HandleInput( Game_t* game );
+
+// game_animation.c
+void Game_StartAnimation( Game_t* game, Animation_t animation );
+void Game_StopAnimation( Game_t* game );
+void Game_TicAnimation( Game_t* game );
 
 // game_physics.c
 void Game_TicPhysics( Game_t* game );
@@ -67,7 +75,7 @@ void Game_TicPhysics( Game_t* game );
 void Game_Draw( Game_t* game );
 void Game_DrawOverworldQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
-void Game_DrawNonUseableItems( Game_t* game );
+void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 
 // game_spells.c
 void Game_CastHeal( Game_t* game );

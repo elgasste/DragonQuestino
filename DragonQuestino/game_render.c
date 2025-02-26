@@ -6,31 +6,44 @@ internal void Game_DrawPlayer( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
-   switch ( game->state )
+   if ( game->isAnimating )
    {
-      case GameState_Overworld:
-      case GameState_Overworld_Washing:
-      case GameState_Overworld_RainbowBridgeTrippyAnimation:
-      case GameState_Overworld_RainbowBridgeFadeInAnimation:
-      case GameState_Overworld_RainbowBridgePauseAnimation:
-         Game_DrawOverworld( game );
-         break;
-      case GameState_Overworld_MainMenu:
-      case GameState_Overworld_ItemMenu:
-         Menu_Draw( &( game->menu ) );
-         break;
-      case GameState_Overworld_ScrollingDialog:
-         ScrollingDialog_Draw( &( game->scrollingDialog ) );
-         break;
-      case GameState_TileMapTransition:
-         Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-         break;
+      switch ( game->animation )
+      {
+         case Animation_Overworld_Wash:
+         case Animation_RainbowBridge_Trippy:
+         case Animation_RainbowBridge_Whiteout:
+         case Animation_RainbowBridge_FadeIn:
+         case Animation_RainbowBridge_Pause:
+            Game_DrawOverworld( game );
+            break;
+      }
+   }
+   else
+   {
+      switch ( game->state )
+      {
+         case GameState_Overworld:
+            Game_DrawOverworld( game );
+            break;
+         case GameState_Overworld_MainMenu:
+         case GameState_Overworld_SpellMenu:
+         case GameState_Overworld_ItemMenu:
+            Menu_Draw( &( game->menu ) );
+            break;
+         case GameState_Overworld_ScrollingDialog:
+            ScrollingDialog_Draw( &( game->scrollingDialog ) );
+            break;
+         case GameState_TileMapTransition:
+            Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+            break;
+      }
    }
 }
 
 void Game_DrawOverworldQuickStatus( Game_t* game )
 {
-   uint8_t lvl = Player_GetLevel( &( game->player ) );
+   uint16_t lvl = Player_GetLevel( &( game->player ) );
    uint32_t memSize;
    char line[9];
 
@@ -91,7 +104,7 @@ void Game_DrawOverworldDeepStatus( Game_t* game )
    Screen_DrawText( &( game->screen ), line, 96, 184 );
 }
 
-void Game_DrawNonUseableItems( Game_t* game )
+void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
 {
    uint32_t x, y;
    Player_t* player = &( game->player );
@@ -99,7 +112,7 @@ void Game_DrawNonUseableItems( Game_t* game )
    uint32_t itemCount = ITEM_GET_MAPNONUSEABLECOUNT( items );
    char line[MENU_LINE_LENGTH];
 
-   if ( game->state == GameState_Overworld_ItemMenu )
+   if ( hasUseableItems )
    {
       Screen_DrawTextWindow( &( game->screen ), 56, 48, 11, ( itemCount * 2 ) + 2 );
       x = 64;

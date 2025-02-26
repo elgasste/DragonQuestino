@@ -2,12 +2,7 @@
 #include "random.h"
 
 internal void Game_TicOverworld( Game_t* game );
-internal void Game_TicOverworldWashing( Game_t* game );
 internal void Game_TicTileMapTransition( Game_t* game );
-internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game );
-internal void Game_TicRainbowBridgeWhiteoutAnimation( Game_t* game );
-internal void Game_TicRainbowBridgeFadeInAnimation( Game_t* game );
-internal void Game_TicRainbowBridgePauseAnimation( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
@@ -34,36 +29,29 @@ void Game_Tic( Game_t* game )
    Input_Read( &( game->input ) );
    Game_HandleInput( game );
 
-   switch ( game->state )
+   if ( game->isAnimating )
    {
-      case GameState_Overworld:
-         Game_TicOverworld( game );
-         break;
-      case GameState_Overworld_Washing:
-         Game_TicOverworldWashing( game );
-         break;
-      case GameState_Overworld_ScrollingDialog:
-         ScrollingDialog_Tic( &( game->scrollingDialog ) );
-         break;
-      case GameState_Overworld_MainMenu:
-      case GameState_Overworld_ItemMenu:
-         Menu_Tic( &( game->menu ) );
-         break;
-      case GameState_Overworld_RainbowBridgeTrippyAnimation:
-         Game_TicRainbowBridgeTrippyAnimation( game );
-         break;
-      case GameState_Overworld_RainbowBridgeWhiteoutAnimation:
-         Game_TicRainbowBridgeWhiteoutAnimation( game );
-         break;
-      case GameState_Overworld_RainbowBridgePauseAnimation:
-         Game_TicRainbowBridgePauseAnimation( game );
-         break;
-      case GameState_Overworld_RainbowBridgeFadeInAnimation:
-         Game_TicRainbowBridgeFadeInAnimation( game );
-         break;
-      case GameState_TileMapTransition:
-         Game_TicTileMapTransition( game );
-         break;
+      Game_TicAnimation( game );
+   }
+   else
+   {
+      switch ( game->state )
+      {
+         case GameState_Overworld:
+            Game_TicOverworld( game );
+            break;
+         case GameState_Overworld_ScrollingDialog:
+            ScrollingDialog_Tic( &( game->scrollingDialog ) );
+            break;
+         case GameState_Overworld_MainMenu:
+         case GameState_Overworld_SpellMenu:
+         case GameState_Overworld_ItemMenu:
+            Menu_Tic( &( game->menu ) );
+            break;
+         case GameState_TileMapTransition:
+            Game_TicTileMapTransition( game );
+            break;
+      }
    }
 
    Game_Draw( game );
@@ -79,21 +67,18 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
       case GameState_Overworld:
          game->overworldInactivitySeconds = 0.0f;
          break;
-      case GameState_Overworld_Washing:
-         game->overworldWashSeconds = 0.0f;
-         break;
-      case GameState_Overworld_RainbowBridgeTrippyAnimation:
-         game->rainbowBridgeTrippySecondsElapsed = 0.0f;
-         break;
-      case GameState_Overworld_RainbowBridgeWhiteoutAnimation:
-         game->rainbowBridgeWhiteoutSecondsElapsed = 0.0f;
-         break;
-      case GameState_Overworld_RainbowBridgeFadeInAnimation:
-         game->rainbowBridgePauseSecondsElapsed = 0.0f;
-         break;
-      case GameState_Overworld_RainbowBridgePauseAnimation:
-         game->rainbowBridgePauseSecondsElapsed = 0.0f;
-         break;
+   }
+}
+
+void Game_OpenMenu( Game_t* game, MenuId_t id )
+{
+   Menu_Load( &( game->menu ), id );
+
+   switch ( id )
+   {
+      case MenuId_Overworld: Game_ChangeState( game, GameState_Overworld_MainMenu ); break;
+      case MenuId_OverworldSpell: Game_ChangeState( game, GameState_Overworld_SpellMenu ); break;
+      case MenuId_OverworldItem: Game_ChangeState( game, GameState_Overworld_ItemMenu ); break;
    }
 }
 
@@ -201,16 +186,6 @@ internal void Game_TicOverworld( Game_t* game )
                            game->player.hitBoxSize.x, game->player.hitBoxSize.y );
 }
 
-internal void Game_TicOverworldWashing( Game_t* game )
-{
-   game->overworldWashSeconds += CLOCK_FRAME_SECONDS;
-
-   if ( game->overworldWashSeconds > OVERWORLD_WASH_TOTAL_SECONDS )
-   {
-      Game_ChangeState( game, GameState_Overworld );
-   }
-}
-
 internal void Game_TicTileMapTransition( Game_t* game )
 {
    uint32_t destinationTileIndex;
@@ -256,89 +231,6 @@ internal void Game_TicTileMapTransition( Game_t* game )
       {
          Game_ChangeState( game, GameState_Overworld );
       }
-   }
-}
-
-internal void Game_TicRainbowBridgeTrippyAnimation( Game_t* game )
-{
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG, increment;
-   float p;
-
-   game->rainbowBridgeTrippySecondsElapsed += CLOCK_FRAME_SECONDS;
-
-   if ( game->rainbowBridgeTrippySecondsElapsed > RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS )
-   {
-      for ( i = 0; i < PALETTE_COLORS; i++ )
-      {
-         game->screen.palette[i] = COLOR_WHITE;
-      }
-
-      Screen_WipeColor( &( game->screen ), COLOR_WHITE );
-      ITEM_TOGGLE_HASRAINBOWDROP( game->player.items );
-      game->tileMap.usedRainbowDrop = True;
-      TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
-      TILE_SET_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
-      Game_ChangeState( game, GameState_Overworld_RainbowBridgeWhiteoutAnimation );
-   }
-   else
-   {
-      for ( i = 0; i < PALETTE_COLORS; i++ )
-      {
-         rangeR = UINT8_MAX - ( game->screen.backupPalette[i] >> 11 );
-         rangeG = UINT8_MAX - ( ( game->screen.backupPalette[i] & 0x7E0 ) >> 5 );
-         rangeB = UINT8_MAX - ( game->screen.backupPalette[i] & 0x1F );
-         p = game->rainbowBridgeTrippySecondsElapsed / RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS;
-         increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
-         game->screen.palette[i] = game->screen.backupPalette[i] + increment;
-      }
-   }
-}
-
-internal void Game_TicRainbowBridgeWhiteoutAnimation( Game_t* game )
-{
-   game->rainbowBridgeWhiteoutSecondsElapsed += CLOCK_FRAME_SECONDS;
-
-   if ( game->rainbowBridgeWhiteoutSecondsElapsed > RAINBOW_BRIDGE_WHITEOUT_TOTAL_SECONDS )
-   {
-      Game_ChangeState( game, GameState_Overworld_RainbowBridgeFadeInAnimation );
-   }
-}
-
-internal void Game_TicRainbowBridgeFadeInAnimation( Game_t* game )
-{
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG, increment;
-   float p;
-
-   game->rainbowBridgeFadeInSecondsElapsed += CLOCK_FRAME_SECONDS;
-
-   if ( game->rainbowBridgeFadeInSecondsElapsed > RAINBOW_BRIDGE_FADEIN_TOTAL_SECONDS )
-   {
-      Screen_RestorePalette( &( game->screen ) );
-      Game_ChangeState( game, GameState_Overworld_RainbowBridgePauseAnimation );
-   }
-   else
-   {
-      for ( i = 0; i < PALETTE_COLORS; i++ )
-      {
-         rangeR = 0x1F - ( game->screen.backupPalette[i] >> 11 );
-         rangeG = 0x3F - ( ( game->screen.backupPalette[i] & 0x7E0 ) >> 5 );
-         rangeB = 0x1F - ( game->screen.backupPalette[i] & 0x1F );
-         p = 1.0f -  ( game->rainbowBridgeFadeInSecondsElapsed / RAINBOW_BRIDGE_FADEIN_TOTAL_SECONDS );
-         increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
-         game->screen.palette[i] = game->screen.backupPalette[i] + increment;
-      }
-   }
-}
-
-internal void Game_TicRainbowBridgePauseAnimation( Game_t* game )
-{
-   game->rainbowBridgePauseSecondsElapsed += CLOCK_FRAME_SECONDS;
-
-   if ( game->rainbowBridgePauseSecondsElapsed > RAINBOW_BRIDGE_PAUSE_TOTAL_SECONDS )
-   {
-      Game_ChangeState( game, GameState_Overworld );
    }
 }
 
