@@ -29,8 +29,6 @@ void Game_StopAnimation( Game_t* game )
    switch ( game->animation )
    {
       case Animation_Overworld_Wash:
-         Game_ChangeState( game, GameState_Overworld );
-         break;
       case Animation_RainbowBridge_Pause:
          Game_ChangeState( game, GameState_Overworld );
          break;
@@ -41,21 +39,11 @@ void Game_TicAnimation( Game_t* game )
 {
    switch ( game->animation )
    {
-      case Animation_Overworld_Wash:
-         Game_TicAnimation_Overworld_Wash( game );
-         break;
-      case Animation_RainbowBridge_Trippy:
-         Game_TicAnimation_RainbowBridge_Trippy( game );
-         break;
-      case Animation_RainbowBridge_Whiteout:
-         Game_TicAnimation_RainbowBridge_Whiteout( game );
-         break;
-      case Animation_RainbowBridge_FadeIn:
-         Game_TicAnimation_RainbowBridge_FadeIn( game );
-         break;
-      case Animation_RainbowBridge_Pause:
-         Game_TicAnimation_RainbowBridge_Pause( game );
-         break;
+      case Animation_Overworld_Wash: Game_TicAnimation_Overworld_Wash( game ); break;
+      case Animation_RainbowBridge_Trippy: Game_TicAnimation_RainbowBridge_Trippy( game ); break;
+      case Animation_RainbowBridge_Whiteout: Game_TicAnimation_RainbowBridge_Whiteout( game ); break;
+      case Animation_RainbowBridge_FadeIn: Game_TicAnimation_RainbowBridge_FadeIn( game ); break;
+      case Animation_RainbowBridge_Pause: Game_TicAnimation_RainbowBridge_Pause( game ); break;
    }
 }
 

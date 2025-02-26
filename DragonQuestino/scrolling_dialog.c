@@ -218,33 +218,37 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
 {
    switch ( messageId )
    {
-      case DialogMessageId_Talk_NobodyThere: return 1;
-      case DialogMessageId_Search_NothingFound: return 2;
-      case DialogMessageId_Search_FoundItem: return 2;
-      case DialogMessageId_Spell_None: return 1;
-      case DialogMessageId_Spell_OverworldCantCast: return 1;
-      case DialogMessageId_Spell_NotEnoughMp: return 1;
-      case DialogMessageId_Item_None: return 1;
-      case DialogMessageId_Door_None: return 1;
-      case DialogMessageId_Door_NoKeys: return 1;
-      case DialogMessageId_Use_Herb: return 2;
-      case DialogMessageId_Use_Wing: return 2;
-      case DialogMessageId_Use_FairyWater: return 2;
-      case DialogMessageId_Use_TorchCantUse: return 1;
-      case DialogMessageId_Use_Torch: return 1;
-      case DialogMessageId_Use_FairyFlute: return 2;
-      case DialogMessageId_Use_SilverHarp: return 2;
-      case DialogMessageId_Use_GwaelynsLoveCantUse: return 1;
-      case DialogMessageId_Use_GwaelynsLove: return 4;
-      case DialogMessageId_Use_RainbowDropCantUse: return 1;
-      case DialogMessageId_Use_RainbowDrop: return 1;
-      case DialogMessageId_Use_CursedBelt: return 2;
-      case DialogMessageId_Chest_ItemCollected: return 1;
-      case DialogMessageId_Chest_ItemNoSpace: return 2;
-      case DialogMessageId_Chest_GoldCollected: return 1;
-      case DialogMessageId_Chest_GoldNoSpace: return 2;
-      case DialogMessageId_Chest_Tablet: return 8;
-      case DialogMessageId_Chest_DeathNecklace: return 2;
+      case DialogMessageId_Talk_NobodyThere:
+      case DialogMessageId_Spell_None:
+      case DialogMessageId_Spell_OverworldCantCast:
+      case DialogMessageId_Spell_NotEnoughMp:
+      case DialogMessageId_Item_None:
+      case DialogMessageId_Door_None:
+      case DialogMessageId_Door_NoKeys:
+      case DialogMessageId_Use_TorchCantUse:
+      case DialogMessageId_Use_Torch:
+      case DialogMessageId_Use_GwaelynsLoveCantUse:
+      case DialogMessageId_Use_RainbowDropCantUse:
+      case DialogMessageId_Use_RainbowDrop:
+      case DialogMessageId_Chest_ItemCollected:
+      case DialogMessageId_Chest_GoldCollected:
+         return 1;
+      case DialogMessageId_Search_NothingFound:
+      case DialogMessageId_Search_FoundItem:
+      case DialogMessageId_Use_Herb:
+      case DialogMessageId_Use_Wing:
+      case DialogMessageId_Use_FairyWater:
+      case DialogMessageId_Use_FairyFlute:
+      case DialogMessageId_Use_SilverHarp:
+      case DialogMessageId_Use_CursedBelt:
+      case DialogMessageId_Chest_ItemNoSpace:
+      case DialogMessageId_Chest_GoldNoSpace:
+      case DialogMessageId_Chest_DeathNecklace:
+         return 2;
+      case DialogMessageId_Use_GwaelynsLove:
+         return 4;
+      case DialogMessageId_Chest_Tablet:
+         return 8;
    }
 
    return 0;
