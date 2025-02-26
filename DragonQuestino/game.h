@@ -10,17 +10,17 @@
 #include "menu.h"
 #include "scrolling_dialog.h"
 
-#define TILEMAP_SWAP_SECONDS                    0.4f
-#define OVERWORLD_INACTIVE_STATUS_SECONDS       1.0f
-#define OVERWORLD_LIGHTING_FRAME_SECONDS        0.1f
+#define TILEMAP_SWAP_SECONDS                       0.4f
+#define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
+#define OVERWORLD_LIGHTING_FRAME_SECONDS           0.1f
 
-#define ANIMATION_OVERWORLD_WASH_DURATION       0.2f
+#define ANIMATION_OVERWORLD_WASH_DURATION          0.2f
+#define ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION    10.0f
+#define ANIMATION_RAINBOWBRIDGE_WHITEOUT_DURATION  2.0f
+#define ANIMATION_RAINBOWBRIDGE_FADEIN_DURATION    2.0f
+#define ANIMATION_RAINBOWBRIDGE_PAUSE_DURATION     2.0f
 
-#define RAINBOW_BRIDGE_TRIPPY_TOTAL_SECONDS     10.0f
-#define RAINBOW_BRIDGE_WHITEOUT_TOTAL_SECONDS   2.0f
-#define RAINBOW_BRIDGE_FADEIN_TOTAL_SECONDS     2.0f
-#define RAINBOW_BRIDGE_PAUSE_TOTAL_SECONDS      2.0f
-#define COLLISION_THETA                         0.001f
+#define COLLISION_THETA                            0.001f
 
 typedef struct Game_t
 {
@@ -44,10 +44,6 @@ typedef struct Game_t
    float tileMapSwapSecondsElapsed;
 
    float lightingSecondsElapsed;
-   float rainbowBridgeTrippySecondsElapsed;
-   float rainbowBridgeWhiteoutSecondsElapsed;
-   float rainbowBridgeFadeInSecondsElapsed;
-   float rainbowBridgePauseSecondsElapsed;
 }
 Game_t;
 

@@ -11,6 +11,10 @@ void Game_Draw( Game_t* game )
       switch ( game->animation )
       {
          case Animation_Overworld_Wash:
+         case Animation_RainbowBridge_Trippy:
+         case Animation_RainbowBridge_Whiteout:
+         case Animation_RainbowBridge_FadeIn:
+         case Animation_RainbowBridge_Pause:
             Game_DrawOverworld( game );
             break;
       }
@@ -20,9 +24,6 @@ void Game_Draw( Game_t* game )
       switch ( game->state )
       {
          case GameState_Overworld:
-         case GameState_Overworld_RainbowBridgeTrippyAnimation:
-         case GameState_Overworld_RainbowBridgeFadeInAnimation:
-         case GameState_Overworld_RainbowBridgePauseAnimation:
             Game_DrawOverworld( game );
             break;
          case GameState_Overworld_MainMenu:
