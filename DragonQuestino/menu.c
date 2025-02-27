@@ -321,8 +321,8 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
    if ( ITEM_HAS_GWAELYNSLOVE( items ) )
    {
       menu->items[i].twoLineText = True;
-      strcpy( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_GWAELYNSLOVE_1 );
-      strcpy( menu->items[i].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_GWAELYNSLOVE_2 );
+      strcpy( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_GWAELINSLOVE_1 );
+      strcpy( menu->items[i].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_GWAELINSLOVE_2 );
       menu->items[i].command = MenuCommand_Item_GwaelynsLove;
       i++;
    }

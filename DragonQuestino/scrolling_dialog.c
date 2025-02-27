@@ -265,14 +265,14 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
       case DialogMessageId_Search_NothingFound:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH, player->name ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH ); return;
             case 1: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND ); return;
          }
       case DialogMessageId_Search_FoundItem:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH, player->name ); return;
-            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH_FOUND, player->name, dialog->insertionText ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH ); return;
+            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH_FOUND, dialog->insertionText ); return;
          }
       case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
       case DialogMessageId_Spell_OverworldCantCast: strcpy( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CANT_CAST ); return;
@@ -283,61 +283,61 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
       case DialogMessageId_Use_Herb:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_HERB, player->name ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_HERB ); return;
             case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
       case DialogMessageId_Use_Wing:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_WING, player->name ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_WING ); return;
             case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
       case DialogMessageId_Use_FairyWater:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_FAIRYWATER, player->name ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_FAIRYWATER ); return;
             case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
 
       case DialogMessageId_Use_TorchCantUse: strcpy( text, STRING_ITEMUSE_TORCH_CANTUSE ); return;
-      case DialogMessageId_Use_Torch: sprintf( text, STRING_ITEMUSE_TORCH, player->name ); return;
+      case DialogMessageId_Use_Torch: sprintf( text, STRING_ITEMUSE_TORCH ); return;
       case DialogMessageId_Use_FairyFlute:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_FAIRYFLUTE_1, player->name ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_FAIRYFLUTE_1 ); return;
             case 1: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_2 ); return;
          }
       case DialogMessageId_Use_SilverHarp:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_SILVERHARP_1, player->name ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_SILVERHARP_1 ); return;
             case 1: strcpy( text, STRING_ITEMUSE_SILVERHARP_2 ); return;
          }
-      case DialogMessageId_Use_GwaelynsLoveCantUse: strcpy( text, STRING_ITEMUSE_GWAELYNSLOVE_CANTUSE ); return;
+      case DialogMessageId_Use_GwaelynsLoveCantUse: strcpy( text, STRING_ITEMUSE_GWAELINSLOVE_CANTUSE ); return;
       case DialogMessageId_Use_GwaelynsLove:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_GWAELYNSLOVE_1, player->name ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_1, player->name ); return;
             case 1:
                e = Player_GetExperienceRemaining( player );
                if ( e > 0 )
                {
-                  sprintf( text, STRING_ITEMUSE_GWAELYNSLOVE_2, e );
+                  sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_2, e );
                   return;
                }
                else
                {
                   dialog->section++;
                }
-            case 2: sprintf( text, STRING_ITEMUSE_GWAELYNSLOVE_3, dialog->insertionText ); return;
-            case 3: sprintf( text, STRING_ITEMUSE_GWAELYNSLOVE_4, player->name ); return;
+            case 2: sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_3, dialog->insertionText ); return;
+            case 3: sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_4, player->name ); return;
          }
       case DialogMessageId_Use_RainbowDropCantUse: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
-      case DialogMessageId_Use_RainbowDrop: sprintf( text, STRING_ITEMUSE_RAINBOWDROP, player->name ); return;
+      case DialogMessageId_Use_RainbowDrop: sprintf( text, STRING_ITEMUSE_RAINBOWDROP ); return;
       case DialogMessageId_Use_CursedBelt:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_CURSEDBELT, player->name ); return;
+            case 0: sprintf( text, STRING_ITEMUSE_CURSEDBELT ); return;
             case 1:
                Player_SetCursed( dialog->player, True );
                strcpy( text, STRING_CURSED );
@@ -348,14 +348,14 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
-            case 1: sprintf( text, STRING_CHEST_ITEMNOSPACE, dialog->player->name ); return;
+            case 1: sprintf( text, STRING_CHEST_ITEMNOSPACE ); return;
          }
       case DialogMessageId_Chest_GoldCollected: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
       case DialogMessageId_Chest_GoldNoSpace:
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
-            case 1: sprintf( text, STRING_CHEST_GOLDNOSPACE, dialog->player->name ); return;
+            case 1: sprintf( text, STRING_CHEST_GOLDNOSPACE ); return;
          }
       case DialogMessageId_Chest_Tablet:
          switch ( dialog->section )
