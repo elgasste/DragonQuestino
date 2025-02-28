@@ -164,20 +164,20 @@ internal void Game_TicOverworld( Game_t* game )
       else
       {
          TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.lightDiameter ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.lightDiameter ) );
+                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ),
+                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ) );
       }
    }
 #endif
 
-   if ( game->tileMap.isDark && game->tileMap.lightDiameter < game->tileMap.targetLightDiameter )
+   if ( game->tileMap.isDark && game->tileMap.glowDiameter < game->tileMap.targetGlowDiameter )
    {
-      game->lightingSecondsElapsed += CLOCK_FRAME_SECONDS;
+      game->glowExpandSeconds += CLOCK_FRAME_SECONDS;
 
-      while ( game->lightingSecondsElapsed > OVERWORLD_LIGHTING_FRAME_SECONDS )
+      while ( game->glowExpandSeconds > GLOW_EXPAND_FRAME_SECONDS )
       {
-         game->lightingSecondsElapsed -= OVERWORLD_LIGHTING_FRAME_SECONDS;
-         TileMap_IncreaseLightDiameter( &( game->tileMap ) );
+         game->glowExpandSeconds -= GLOW_EXPAND_FRAME_SECONDS;
+         TileMap_IncreaseGlowDiameter( &( game->tileMap ) );
       }
    }
 
@@ -203,7 +203,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
       game->player.tileIndex = destinationTileIndex;
       game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
-      game->tileMapSwapSecondsElapsed = 0.0f;
+      game->tileMapSwapSeconds = 0.0f;
       game->swapPortal = 0;
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
@@ -211,8 +211,8 @@ internal void Game_TicTileMapTransition( Game_t* game )
       if ( game->tileMap.isDark )
       {
          TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     (uint16_t)( game->tileMap.lightDiameter * TILE_SIZE ),
-                                     (uint16_t)( game->tileMap.lightDiameter * TILE_SIZE ) );
+                                     (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ),
+                                     (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ) );
       }
       else
       {
@@ -225,9 +225,9 @@ internal void Game_TicTileMapTransition( Game_t* game )
    }
    else
    {
-      game->tileMapSwapSecondsElapsed += CLOCK_FRAME_SECONDS;
+      game->tileMapSwapSeconds += CLOCK_FRAME_SECONDS;
 
-      if ( game->tileMapSwapSecondsElapsed > TILEMAP_SWAP_SECONDS )
+      if ( game->tileMapSwapSeconds > TILEMAP_SWAP_SECONDS )
       {
          Game_ChangeState( game, GameState_Overworld );
       }

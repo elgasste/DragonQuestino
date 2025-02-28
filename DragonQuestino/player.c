@@ -5,6 +5,7 @@
 
 #define EXPERIENCE_TABLE_SIZE  29
 
+// MUFFINS: move this to a header somewhere
 global uint16_t g_experienceTable[EXPERIENCE_TABLE_SIZE] = {
    7,
    23,
@@ -72,7 +73,10 @@ void Player_Init( Player_t* player, Screen_t* screen )
 
    // uncomment for testing
    //player->spells = 0x3FF;
-   //SPELL_SET_HASSIZZ( player->spells );x
+   //SPELL_SET_HASSIZZ( player->spells );
+
+   ITEM_SET_TORCHCOUNT( player->items, 2 );
+   ITEM_TOGGLE_HASRAINBOWDROP( player->items );
 }
 
 uint16_t Player_GetLevel( Player_t* player )

@@ -160,14 +160,14 @@ internal void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    game->player.tileIndex = tileIndex;
    portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
 
-   if ( game->tileMap.isDark && game->tileMap.lightDiameter > 1 )
+   if ( game->tileMap.isDark && game->tileMap.glowDiameter > 1 )
    {
-      game->tileMap.lightTileCount++;
+      game->tileMap.glowTileCount++;
 
-      if ( game->tileMap.lightTileCount > LIGHT_MAX_TILES )
+      if ( game->tileMap.glowTileCount > GLOW_MAX_TILES )
       {
-         game->tileMap.lightTileCount = 0;
-         TileMap_ReduceLightDiameter( &( game->tileMap ) );
+         game->tileMap.glowTileCount = 0;
+         TileMap_ReduceGlowDiameter( &( game->tileMap ) );
       }
    }
 

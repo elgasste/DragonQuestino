@@ -38,8 +38,8 @@
 #define TILE_SET_PASSABLE( t, b )       ( t ) = ( ( t ) & 0xFFDF ) | ( b << 5 )
 
 #define TORCH_DIAMETER                 3
-#define GLOW_DIAMETER                  7
-#define LIGHT_MAX_TILES                200
+#define GLOW_SPELL_DIAMETER            7
+#define GLOW_MAX_TILES                 200
 
 #define TILEMAP_OVERWORLD_ID           0
 #define TILEMAP_KOL_ID                 12
@@ -71,9 +71,9 @@ typedef struct TileMap_t
    uint32_t id;
 
    Bool_t isDark;
-   uint32_t lightDiameter;
-   uint32_t targetLightDiameter;
-   uint32_t lightTileCount;
+   uint32_t glowDiameter;
+   uint32_t targetGlowDiameter;
+   uint32_t glowTileCount;
 
    Bool_t usedRainbowDrop;
 
@@ -119,9 +119,9 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen );
 void TileMap_ResetViewport( TileMap_t* tileMap );
 void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH );
 void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );
-void TileMap_SetTargetLightDiameter( TileMap_t* tileMap, uint32_t targetDiameter );
-void TileMap_ReduceLightDiameter( TileMap_t* tileMap );
-void TileMap_IncreaseLightDiameter( TileMap_t* tileMap );
+void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, uint32_t targetDiameter );
+void TileMap_ReduceGlowDiameter( TileMap_t* tileMap );
+void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
 uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction );
