@@ -19,6 +19,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
    Sprite_LoadStatic( &( tileMap->doorSprite ), SPRITE_DOOR_INDEX );
    tileMap->doorFlags = 0xFFFFFFFF;
 
+   tileMap->isDungeon = False;
    tileMap->isDark = False;
    tileMap->usedRainbowDrop = False;
    tileMap->foundHiddenStairs = False;

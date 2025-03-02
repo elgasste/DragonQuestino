@@ -81,6 +81,7 @@ typedef struct TileMap_t
    Screen_t* screen;
    uint32_t id;
 
+   Bool_t isDungeon;
    Bool_t isDark;
    uint32_t glowDiameter;
    uint32_t targetGlowDiameter;

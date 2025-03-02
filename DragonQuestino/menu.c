@@ -2,6 +2,7 @@
 #include "screen.h"
 #include "player.h"
 #include "clock.h"
+#include "tile_map.h"
 
 internal void Menu_DrawCarat( Menu_t* menu );
 internal void Menu_LoadOverworld( Menu_t* menu );
@@ -195,7 +196,7 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
 
    strcpy( menu->title, STRING_OVERWORLD_MENU_SPELL );
 
-   menu->itemCount = SPELL_GET_MAPUSEABLECOUNT( spells );
+   menu->itemCount = SPELL_GET_MAPUSEABLECOUNT( spells, menu->player->tileMap->isDungeon );
    menu->itemsPerColumn = menu->itemCount;
    menu->selectedIndex = 0;
    menu->position.x = 152;
@@ -227,7 +228,7 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
       menu->items[i].command = MenuCommand_Spell_Glow;
       i++;
    }
-   if ( SPELL_HAS_EVAC( spells ) )
+   if ( menu->player->tileMap->isDungeon && SPELL_HAS_EVAC( spells ) )
    {
       sprintf( menu->items[i].text, STRING_SPELLMENU_EVAC );
       menu->items[i].command = MenuCommand_Spell_Evac;
