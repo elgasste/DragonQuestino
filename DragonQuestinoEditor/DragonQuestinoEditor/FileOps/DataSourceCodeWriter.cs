@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
+using System.Security.Policy;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -47,6 +48,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteTextTilesFunction( fs );
          WriteTileTexturesFunction( fs );
          WriteTileMapFunction( fs );
+         WriteTileMapHiddenStairsFunction( fs );
          WriteActiveSpritesFunctions( fs );
          WriteStaticSpritesFunction( fs );
          WriteTreasureFlagsFunction( fs );
@@ -266,8 +268,29 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );\n" );
          WriteToFileStream( fs, "      TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );\n" );
+         WriteToFileStream( fs, "   }\n\n" );
+
+         WriteToFileStream( fs, "   if ( id == TILEMAP_CHARLOCK_ID && tileMap->foundHiddenStairs )\n" );
+         WriteToFileStream( fs, "   {\n" );
+         WriteToFileStream( fs, "      TileMap_LoadHiddenStairs( tileMap );\n" );
          WriteToFileStream( fs, "   }\n" );
 
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteTileMapHiddenStairsFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nvoid TileMap_LoadHiddenStairs( TileMap_t* tileMap )\n" );
+         WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   Sprite_LoadStatic( &( tileMap->staticSprites[tileMap->staticSpriteCount] ), 3 );\n" );
+         WriteToFileStream( fs, "   tileMap->staticSprites[tileMap->staticSpriteCount].position.x = ( TILEMAP_HIDDENSTAIRS_INDEX % tileMap->tilesX ) * TILE_SIZE;\n" );
+         WriteToFileStream( fs, "   tileMap->staticSprites[tileMap->staticSpriteCount].position.y = ( TILEMAP_HIDDENSTAIRS_INDEX / tileMap->tilesX ) * TILE_SIZE;\n" );
+         WriteToFileStream( fs, "   tileMap->staticSpriteCount++;\n" );
+         WriteToFileStream( fs, "   tileMap->portals[tileMap->portalCount].sourceTileIndex = TILEMAP_HIDDENSTAIRS_INDEX;\n" );
+         WriteToFileStream( fs, "   tileMap->portals[tileMap->portalCount].destinationTileMapIndex = TILEMAP_HIDDENSTAIRS_DESTINATION_ID;\n" );
+         WriteToFileStream( fs, "   tileMap->portals[tileMap->portalCount].destinationTileIndex = TILEMAP_HIDDENSTAIRS_DESTINATION_INDEX;\n" );
+         WriteToFileStream( fs, "   tileMap->portals[tileMap->portalCount].arrivalDirection = TILEMAP_HIDDENSTAIRS_DESTINATION_DIR;\n" );
+         WriteToFileStream( fs, "   tileMap->portalCount++;\n" );
          WriteToFileStream( fs, "}\n" );
       }
 

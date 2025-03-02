@@ -34,6 +34,7 @@
     <ClInclude Include="..\..\DragonQuestino\scrolling_dialog.h" />
     <ClInclude Include="..\..\DragonQuestino\sprite.h" />
     <ClInclude Include="..\..\DragonQuestino\strings.h" />
+    <ClInclude Include="..\..\DragonQuestino\tables.h" />
     <ClInclude Include="..\..\DragonQuestino\tile_map.h" />
     <ClInclude Include="..\..\DragonQuestino\vector.h" />
     <ClInclude Include="win_common.h" />

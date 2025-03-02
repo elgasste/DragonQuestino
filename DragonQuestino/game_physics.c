@@ -2,7 +2,6 @@
 #include "random.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
-internal void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 
 void Game_TicPhysics( Game_t* game )
 {
@@ -139,20 +138,7 @@ void Game_TicPhysics( Game_t* game )
    Game_UpdatePlayerTileIndex( game );
 }
 
-internal void Game_UpdatePlayerTileIndex( Game_t* game )
-{
-   uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.hitBoxSize.x / 2 ) );
-   uint32_t centerY = (uint32_t)( game->player.sprite.position.y + ( game->player.hitBoxSize.y / 2 ) );
-   uint32_t newTileIndex = ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
-
-   if ( newTileIndex != game->player.tileIndex )
-   {
-      game->player.tileIndex = newTileIndex;
-      Game_PlayerSteppedOnTile( game, newTileIndex );
-   }
-}
-
-internal void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
+void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 {
    TilePortal_t* portal;
 
@@ -176,5 +162,18 @@ internal void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
       game->swapPortal = portal;
       Game_ChangeState( game, GameState_TileMapTransition );
       Random_Seed();
+   }
+}
+
+internal void Game_UpdatePlayerTileIndex( Game_t* game )
+{
+   uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.hitBoxSize.x / 2 ) );
+   uint32_t centerY = (uint32_t)( game->player.sprite.position.y + ( game->player.hitBoxSize.y / 2 ) );
+   uint32_t newTileIndex = ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
+
+   if ( newTileIndex != game->player.tileIndex )
+   {
+      game->player.tileIndex = newTileIndex;
+      Game_PlayerSteppedOnTile( game, newTileIndex );
    }
 }

@@ -21,6 +21,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
 
    tileMap->isDark = False;
    tileMap->usedRainbowDrop = False;
+   tileMap->foundHiddenStairs = False;
 }
 
 void TileMap_ResetViewport( TileMap_t* tileMap )

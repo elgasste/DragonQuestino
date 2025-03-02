@@ -4,49 +4,60 @@
 #include "common.h"
 #include "sprite.h"
 
-#define TILE_SIZE                      16
-#define TILE_TEXTURE_BYTES             256   // 8 bpp
-#define TILE_TEXTURE_COUNT             32
-#define TILE_COUNT_X                   140   // overworld size
-#define TILE_COUNT_Y                   135
-#define TILE_COUNT                     18900
+#define TILE_SIZE                               16
+#define TILE_TEXTURE_BYTES                      256   // 8 bpp
+#define TILE_TEXTURE_COUNT                      32
+#define TILE_COUNT_X                            140   // overworld size
+#define TILE_COUNT_Y                            135
+#define TILE_COUNT                              18900
 
 // pixels per second
-#define TILE_WALKSPEED_FAST            192.0f
-#define TILE_WALKSPEED_NORMAL          72.0f
-#define TILE_WALKSPEED_SLOW            60.0f
-#define TILE_WALKSPEED_VERYSLOW        48.0f
-#define TILE_WALKSPEED_CRAWL           36.0f
+#define TILE_WALKSPEED_FAST                     192.0f
+#define TILE_WALKSPEED_NORMAL                   72.0f
+#define TILE_WALKSPEED_SLOW                     60.0f
+#define TILE_WALKSPEED_VERYSLOW                 48.0f
+#define TILE_WALKSPEED_CRAWL                    36.0f
 
-#define TILEMAP_MAX_VIEWPORT_WIDTH     SCREEN_WIDTH
-#define TILEMAP_MAX_VIEWPORT_HEIGHT    SCREEN_HEIGHT
-#define TILEMAP_VIEWPORT_TILES_X       16
-#define TILEMAP_VIEWPORT_TILES_Y       14
+#define TILEMAP_MAX_VIEWPORT_WIDTH              SCREEN_WIDTH
+#define TILEMAP_MAX_VIEWPORT_HEIGHT             SCREEN_HEIGHT
+#define TILEMAP_VIEWPORT_TILES_X                16
+#define TILEMAP_VIEWPORT_TILES_Y                14
 
-#define TILEMAP_MAX_PORTALS            256
-#define TILEMAP_MAX_ACTIVESPRITES      16
-#define TILEMAP_MAX_STATICSPRITES      16
+#define TILEMAP_MAX_PORTALS                     256
+#define TILEMAP_MAX_ACTIVESPRITES               16
+#define TILEMAP_MAX_STATICSPRITES               16
 
-#define TILE_GET_TEXTUREINDEX( t )      ( ( t ) & 0x1F )
-#define TILE_GET_PASSABLE( t )          ( ( ( t ) & 0x20 ) >> 5 )
-#define TILE_GET_WALKSPEED( t )         ( ( ( t ) & 0xC0 ) >> 6 )
-#define TILE_GET_ENCOUNTERABLE( t )     ( ( ( t ) & 0x100 ) >> 8 )
-#define TILE_GET_ENCOUNTERRATE( t )     ( ( ( t ) & 0x300 ) >> 9 )
-#define TILE_GET_DAMAGERATE( t )        ( ( ( t ) & 0x1800 ) >> 11 )
+#define TILE_GET_TEXTUREINDEX( t )              ( ( t ) & 0x1F )
+#define TILE_GET_PASSABLE( t )                  ( ( ( t ) & 0x20 ) >> 5 )
+#define TILE_GET_WALKSPEED( t )                 ( ( ( t ) & 0xC0 ) >> 6 )
+#define TILE_GET_ENCOUNTERABLE( t )             ( ( ( t ) & 0x100 ) >> 8 )
+#define TILE_GET_ENCOUNTERRATE( t )             ( ( ( t ) & 0x300 ) >> 9 )
+#define TILE_GET_DAMAGERATE( t )                ( ( ( t ) & 0x1800 ) >> 11 )
 
-#define TILE_SET_TEXTUREINDEX( t, i )   ( t ) = ( ( t ) & 0xFFE0 ) | i
-#define TILE_SET_PASSABLE( t, b )       ( t ) = ( ( t ) & 0xFFDF ) | ( b << 5 )
+#define TILE_SET_TEXTUREINDEX( t, i )           ( t ) = ( ( t ) & 0xFFE0 ) | i
+#define TILE_SET_PASSABLE( t, b )               ( t ) = ( ( t ) & 0xFFDF ) | ( b << 5 )
 
-#define TORCH_DIAMETER                 3
-#define GLOW_SPELL_DIAMETER            7
-#define GLOW_MAX_TILES                 200
+#define TORCH_DIAMETER                          3
+#define GLOW_SPELL_DIAMETER                     7
+#define GLOW_MAX_TILES                          200
 
-#define TILEMAP_OVERWORLD_ID           0
-#define TILEMAP_KOL_ID                 12
-#define TILEMAP_TANTEGEL_INDEX         7053
-#define TILEMAP_TOKEN_INDEX            16893
-#define TILEMAP_FAIRYFLUTE_INDEX       192
-#define TILEMAP_RAINBOWBRIDGE_INDEX    7914
+#define TILEMAP_OVERWORLD_ID                    0
+#define TILEMAP_KOL_ID                          12
+#define TILEMAP_CHARLOCK_ID                     25
+#define TILEMAP_TANTEGEL_INDEX                  7053
+#define TILEMAP_TOKEN_INDEX                     16893
+#define TILEMAP_FAIRYFLUTE_INDEX                192
+#define TILEMAP_RAINBOWBRIDGE_INDEX             7914
+#define TILEMAP_HIDDENSTAIRS_INDEX              55
+#define TILEMAP_HIDDENSTAIRS_DESTINATION_ID     26
+#define TILEMAP_HIDDENSTAIRS_DESTINATION_INDEX  398
+#define TILEMAP_HIDDENSTAIRS_DESTINATION_DIR    Direction_Right
+
+
+//    - source tile index: 55
+//    - destination tile map id: 26
+//    - destination tile index: 398
+//    - arrival direction: 2
 
 typedef struct Screen_t Screen_t;
 
@@ -76,6 +87,7 @@ typedef struct TileMap_t
    uint32_t glowTileCount;
 
    Bool_t usedRainbowDrop;
+   Bool_t foundHiddenStairs;
 
    // bits 0-4: texture index (max 32 textures)
    // bit 5: is-passable flag
@@ -130,6 +142,7 @@ void TileMap_Draw( TileMap_t* tileMap );
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
 void TileMap_Load( TileMap_t* tileMap, uint32_t id );
+void TileMap_LoadHiddenStairs( TileMap_t* tileMap );
 uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex );
 uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex );
 

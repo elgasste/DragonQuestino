@@ -110,6 +110,12 @@ void Game_Search( Game_t* game )
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
    }
+   else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID && game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->tileMap.foundHiddenStairs )
+   {
+      game->tileMap.foundHiddenStairs = True;
+      TileMap_LoadHiddenStairs( &( game->tileMap ) );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundHiddenStairs );
+   }
    else
    {
       treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
@@ -324,28 +330,28 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          collected = Player_CollectItem( &( game->player ), Item_SilverHarp );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_SILVERHARP );
          break;
-      case 0x800000:    // Dragonlord's Castle B2
+      case 0x800000:    // Charlock B2
          // TODO: should be Erdrick's Sword
          gold = 1000; break;
-      case 0x1000000:   // Dragonlord's Castle B7, top chest
+      case 0x1000000:   // Charlock B7, top chest
          collected = Player_CollectItem( &( game->player ), Item_Herb );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;
-      case 0x2000000:   // Dragonlord's Castle B7, center-left chest
+      case 0x2000000:   // Charlock B7, center-left chest
          gold = Random_U16( 500, 755 ); break;
-      case 0x4000000:   // Dragonlord's Castle B7, center-right chest
+      case 0x4000000:   // Charlock B7, center-right chest
          collected = Player_CollectItem( &( game->player ), Item_Key );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_KEY );
          break;
-      case 0x8000000:   // Dragonlord's Castle B7, bottom-left chest
+      case 0x8000000:   // Charlock B7, bottom-left chest
          collected = Player_CollectItem( &( game->player ), Item_Wing );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_WING );
          break;
-      case 0x10000000:  // Dragonlord's Castle B7, bottom-center chest
+      case 0x10000000:  // Charlock B7, bottom-center chest
          collected = Player_CollectItem( &( game->player ), Item_CursedBelt );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_CURSEDBELT );
          break;
-      case 0x20000000:  // Dragonlord's Castle B7, bottom-right chest
+      case 0x20000000:  // Charlock B7, bottom-right chest
          collected = Player_CollectItem( &( game->player ), Item_Herb );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;

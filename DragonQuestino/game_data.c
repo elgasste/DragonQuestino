@@ -10566,7 +10566,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
-         tileMap->portalCount = 5;
+         tileMap->portalCount = 4;
          tileMap->portals[0].sourceTileIndex = 472;
          tileMap->portals[0].destinationTileMapIndex = 0;
          tileMap->portals[0].destinationTileIndex = 7898;
@@ -10575,29 +10575,22 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->portals[1].destinationTileMapIndex = 0;
          tileMap->portals[1].destinationTileIndex = 7898;
          tileMap->portals[1].arrivalDirection = (Direction_t)3;
-         tileMap->portals[2].sourceTileIndex = 55;
+         tileMap->portals[2].sourceTileIndex = 335;
          tileMap->portals[2].destinationTileMapIndex = 26;
-         tileMap->portals[2].destinationTileIndex = 398;
+         tileMap->portals[2].destinationTileIndex = 943;
          tileMap->portals[2].arrivalDirection = (Direction_t)2;
-         tileMap->portals[3].sourceTileIndex = 335;
+         tileMap->portals[3].sourceTileIndex = 346;
          tileMap->portals[3].destinationTileMapIndex = 26;
-         tileMap->portals[3].destinationTileIndex = 943;
+         tileMap->portals[3].destinationTileIndex = 1036;
          tileMap->portals[3].arrivalDirection = (Direction_t)2;
-         tileMap->portals[4].sourceTileIndex = 346;
-         tileMap->portals[4].destinationTileMapIndex = 26;
-         tileMap->portals[4].destinationTileIndex = 1036;
-         tileMap->portals[4].arrivalDirection = (Direction_t)2;
          tileMap->activeSpriteCount = 0;
-         tileMap->staticSpriteCount = 3;
+         tileMap->staticSpriteCount = 2;
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 3 );
-         tileMap->staticSprites[0].position.x = 176;
-         tileMap->staticSprites[0].position.y = 32;
+         tileMap->staticSprites[0].position.x = 80;
+         tileMap->staticSprites[0].position.y = 240;
          Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 3 );
-         tileMap->staticSprites[1].position.x = 80;
+         tileMap->staticSprites[1].position.x = 256;
          tileMap->staticSprites[1].position.y = 240;
-         Sprite_LoadStatic( &( tileMap->staticSprites[2] ), 3 );
-         tileMap->staticSprites[2].position.x = 256;
-         tileMap->staticSprites[2].position.y = 240;
          for ( i = 0; i < 22; i++ ) for ( j = 0; j < 11; j++ ) tiles32[(i * 70) + j] = 0x0DE40DE4;
          tiles32[71] = 0x01060DE4;
          tiles32[72] = 0x01060106;
@@ -11840,6 +11833,24 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
       TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
       TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
    }
+
+   if ( id == TILEMAP_CHARLOCK_ID && tileMap->foundHiddenStairs )
+   {
+      TileMap_LoadHiddenStairs( tileMap );
+   }
+}
+
+void TileMap_LoadHiddenStairs( TileMap_t* tileMap )
+{
+   Sprite_LoadStatic( &( tileMap->staticSprites[tileMap->staticSpriteCount] ), 3 );
+   tileMap->staticSprites[tileMap->staticSpriteCount].position.x = ( TILEMAP_HIDDENSTAIRS_INDEX % tileMap->tilesX ) * TILE_SIZE;
+   tileMap->staticSprites[tileMap->staticSpriteCount].position.y = ( TILEMAP_HIDDENSTAIRS_INDEX / tileMap->tilesX ) * TILE_SIZE;
+   tileMap->staticSpriteCount++;
+   tileMap->portals[tileMap->portalCount].sourceTileIndex = TILEMAP_HIDDENSTAIRS_INDEX;
+   tileMap->portals[tileMap->portalCount].destinationTileMapIndex = TILEMAP_HIDDENSTAIRS_DESTINATION_ID;
+   tileMap->portals[tileMap->portalCount].destinationTileIndex = TILEMAP_HIDDENSTAIRS_DESTINATION_INDEX;
+   tileMap->portals[tileMap->portalCount].arrivalDirection = TILEMAP_HIDDENSTAIRS_DESTINATION_DIR;
+   tileMap->portalCount++;
 }
 
 void Sprite_LoadPlayer( ActiveSprite_t* sprite )

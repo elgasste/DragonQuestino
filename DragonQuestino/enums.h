@@ -132,6 +132,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Talk_NobodyThere = 0,
    DialogMessageId_Search_NothingFound,
    DialogMessageId_Search_FoundItem,
+   DialogMessageId_Search_FoundHiddenStairs,
    DialogMessageId_Spell_None,
    DialogMessageId_Spell_OverworldCantCast,
    DialogMessageId_Spell_NotEnoughMp,
