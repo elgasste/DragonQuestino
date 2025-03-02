@@ -10,7 +10,9 @@ void Game_Draw( Game_t* game )
    {
       switch ( game->animation )
       {
-         case Animation_Overworld_Wash:
+         case Animation_Overworld_Pause:
+         case Animation_TileMap_FadeOut:
+         case Animation_TileMap_FadeIn:
          case Animation_RainbowBridge_Trippy:
          case Animation_RainbowBridge_Whiteout:
          case Animation_RainbowBridge_FadeIn:
@@ -33,9 +35,6 @@ void Game_Draw( Game_t* game )
             break;
          case GameState_Overworld_ScrollingDialog:
             ScrollingDialog_Draw( &( game->scrollingDialog ) );
-            break;
-         case GameState_TileMapTransition:
-            Screen_WipeColor( &( game->screen ), COLOR_BLACK );
             break;
       }
    }

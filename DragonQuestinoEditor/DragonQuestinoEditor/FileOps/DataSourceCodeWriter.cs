@@ -67,6 +67,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
          WriteToFileStream( fs, "#include \"screen.h\"\n" );
          WriteToFileStream( fs, "#include \"tile_map.h\"\n" );
+         WriteToFileStream( fs, "#include \"random.h\"\n" );
       }
 
       private void WritePaletteFunction( FileStream fs )
@@ -118,6 +119,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   int32_t i, j;\n" );
          WriteToFileStream( fs, "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n" );
          WriteToFileStream( fs, "   tileMap->doorFlags = ( 0xFFFF0000 | ( tileMap->doorFlags & 0xFFFF ) );\n\n" );
+         WriteToFileStream( fs, "   Random_Seed();\n\n" );
          WriteToFileStream( fs, "   switch( id )\n" );
          WriteToFileStream( fs, "   {\n" );
 

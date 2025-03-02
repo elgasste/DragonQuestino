@@ -10,11 +10,11 @@
 #include "menu.h"
 #include "scrolling_dialog.h"
 
-#define TILEMAP_SWAP_SECONDS                       0.4f
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
 #define GLOW_EXPAND_FRAME_SECONDS                  0.1f
 
-#define ANIMATION_OVERWORLD_WASH_DURATION          0.2f
+#define ANIMATION_OVERWORLD_PAUSE_DURATION         0.2f
+#define ANIMATION_TILEMAP_FADE_DURATION            0.2f
 #define ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION    6.0f
 #define ANIMATION_RAINBOWBRIDGE_WHITEOUT_DURATION  1.5f
 #define ANIMATION_RAINBOWBRIDGE_FADEIN_DURATION    1.5f
@@ -24,7 +24,7 @@
 
 typedef struct Game_t
 {
-   TilePortal_t* swapPortal;
+   TilePortal_t* targetPortal;
 
    Screen_t screen;
    TileMap_t tileMap;
@@ -36,7 +36,6 @@ typedef struct Game_t
    ScrollingDialog_t scrollingDialog;
 
    float overworldInactivitySeconds;
-   float tileMapSwapSeconds;
    float glowExpandSeconds;
 
    Bool_t isAnimating;
@@ -54,6 +53,7 @@ extern "C" {
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
 void Game_ChangeState( Game_t* game, GameState_t newState );
+void Game_EnterTargetPortal( Game_t* game );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
 void Game_OpenScrollingDialog( Game_t* game, ScrollingDialogType_t type, DialogMessageId_t messageId );
 void Game_Search( Game_t* game );
