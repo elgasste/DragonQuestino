@@ -6,6 +6,7 @@ namespace DragonQuestinoEditor.FileOps
    {
       public int Id { get; set; }
       public string? Name { get; set; }
+      public bool IsDungeon { get; set; }
       public bool IsDark { get; set; }
       public List<TileSaveData> Tiles { get; set; } = [];
       public int TilesX { get; set; }
@@ -19,6 +20,7 @@ namespace DragonQuestinoEditor.FileOps
       {
          Id = tileMap.Id;
          Name = tileMap.Name;
+         IsDungeon = tileMap.IsDungeon;
          IsDark = tileMap.IsDark;
          TilesX = tileMap.TilesX;
          TilesY = tileMap.TilesY;
