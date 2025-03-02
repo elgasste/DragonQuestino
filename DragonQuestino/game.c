@@ -110,6 +110,12 @@ void Game_Search( Game_t* game )
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
    }
+   else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID && game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->tileMap.foundHiddenStairs )
+   {
+      game->tileMap.foundHiddenStairs = True;
+      TileMap_LoadHiddenStairs( &( game->tileMap ) );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundHiddenStairs );
+   }
    else
    {
       treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
@@ -164,20 +170,20 @@ internal void Game_TicOverworld( Game_t* game )
       else
       {
          TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.lightDiameter ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.lightDiameter ) );
+                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ),
+                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ) );
       }
    }
 #endif
 
-   if ( game->tileMap.isDark && game->tileMap.lightDiameter < game->tileMap.targetLightDiameter )
+   if ( game->tileMap.isDark && game->tileMap.glowDiameter < game->tileMap.targetGlowDiameter )
    {
-      game->lightingSecondsElapsed += CLOCK_FRAME_SECONDS;
+      game->glowExpandSeconds += CLOCK_FRAME_SECONDS;
 
-      while ( game->lightingSecondsElapsed > OVERWORLD_LIGHTING_FRAME_SECONDS )
+      while ( game->glowExpandSeconds > GLOW_EXPAND_FRAME_SECONDS )
       {
-         game->lightingSecondsElapsed -= OVERWORLD_LIGHTING_FRAME_SECONDS;
-         TileMap_IncreaseLightDiameter( &( game->tileMap ) );
+         game->glowExpandSeconds -= GLOW_EXPAND_FRAME_SECONDS;
+         TileMap_IncreaseGlowDiameter( &( game->tileMap ) );
       }
    }
 
@@ -203,7 +209,7 @@ internal void Game_TicTileMapTransition( Game_t* game )
       game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
       game->player.tileIndex = destinationTileIndex;
       game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
-      game->tileMapSwapSecondsElapsed = 0.0f;
+      game->tileMapSwapSeconds = 0.0f;
       game->swapPortal = 0;
 
       Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
@@ -211,8 +217,8 @@ internal void Game_TicTileMapTransition( Game_t* game )
       if ( game->tileMap.isDark )
       {
          TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     (uint16_t)( game->tileMap.lightDiameter * TILE_SIZE ),
-                                     (uint16_t)( game->tileMap.lightDiameter * TILE_SIZE ) );
+                                     (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ),
+                                     (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ) );
       }
       else
       {
@@ -225,9 +231,9 @@ internal void Game_TicTileMapTransition( Game_t* game )
    }
    else
    {
-      game->tileMapSwapSecondsElapsed += CLOCK_FRAME_SECONDS;
+      game->tileMapSwapSeconds += CLOCK_FRAME_SECONDS;
 
-      if ( game->tileMapSwapSecondsElapsed > TILEMAP_SWAP_SECONDS )
+      if ( game->tileMapSwapSeconds > TILEMAP_SWAP_SECONDS )
       {
          Game_ChangeState( game, GameState_Overworld );
       }
@@ -324,28 +330,28 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          collected = Player_CollectItem( &( game->player ), Item_SilverHarp );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_SILVERHARP );
          break;
-      case 0x800000:    // Dragonlord's Castle B2
+      case 0x800000:    // Charlock B2
          // TODO: should be Erdrick's Sword
          gold = 1000; break;
-      case 0x1000000:   // Dragonlord's Castle B7, top chest
+      case 0x1000000:   // Charlock B7, top chest
          collected = Player_CollectItem( &( game->player ), Item_Herb );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;
-      case 0x2000000:   // Dragonlord's Castle B7, center-left chest
+      case 0x2000000:   // Charlock B7, center-left chest
          gold = Random_U16( 500, 755 ); break;
-      case 0x4000000:   // Dragonlord's Castle B7, center-right chest
+      case 0x4000000:   // Charlock B7, center-right chest
          collected = Player_CollectItem( &( game->player ), Item_Key );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_KEY );
          break;
-      case 0x8000000:   // Dragonlord's Castle B7, bottom-left chest
+      case 0x8000000:   // Charlock B7, bottom-left chest
          collected = Player_CollectItem( &( game->player ), Item_Wing );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_WING );
          break;
-      case 0x10000000:  // Dragonlord's Castle B7, bottom-center chest
+      case 0x10000000:  // Charlock B7, bottom-center chest
          collected = Player_CollectItem( &( game->player ), Item_CursedBelt );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_CURSEDBELT );
          break;
-      case 0x20000000:  // Dragonlord's Castle B7, bottom-right chest
+      case 0x20000000:  // Charlock B7, bottom-right chest
          collected = Player_CollectItem( &( game->player ), Item_Herb );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;

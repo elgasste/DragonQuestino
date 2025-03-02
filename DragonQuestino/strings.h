@@ -130,4 +130,6 @@
 #define STRING_FOUNDITEM_TOKEN                              "Erdrick's Token"
 #define STRING_FOUNDITEM_FAIRYFLUTE                         "the Fairy Flute"
 
+#define STRING_FOUND_HIDDENSTAIRS                           "You found a hidden stairway!"
+
 #endif // STRINGS_H

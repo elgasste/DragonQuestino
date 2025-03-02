@@ -12,7 +12,7 @@
 
 #define TILEMAP_SWAP_SECONDS                       0.4f
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
-#define OVERWORLD_LIGHTING_FRAME_SECONDS           0.1f
+#define GLOW_EXPAND_FRAME_SECONDS                  0.1f
 
 #define ANIMATION_OVERWORLD_WASH_DURATION          0.2f
 #define ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION    6.0f
@@ -24,6 +24,8 @@
 
 typedef struct Game_t
 {
+   TilePortal_t* swapPortal;
+
    Screen_t screen;
    TileMap_t tileMap;
    Clock_t clock;
@@ -34,16 +36,13 @@ typedef struct Game_t
    ScrollingDialog_t scrollingDialog;
 
    float overworldInactivitySeconds;
+   float tileMapSwapSeconds;
+   float glowExpandSeconds;
 
    Bool_t isAnimating;
    Animation_t animation;
    float animationSeconds;
    float animationDuration;
-
-   TilePortal_t* swapPortal;
-   float tileMapSwapSecondsElapsed;
-
-   float lightingSecondsElapsed;
 }
 Game_t;
 
@@ -70,6 +69,7 @@ void Game_TicAnimation( Game_t* game );
 
 // game_physics.c
 void Game_TicPhysics( Game_t* game );
+void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 
 // game_render.c
 void Game_Draw( Game_t* game );

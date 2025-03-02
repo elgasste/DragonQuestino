@@ -54,7 +54,18 @@ internal void Game_TicAnimation_Overworld_Wash( Game_t* game )
    if ( game->animationSeconds > ANIMATION_OVERWORLD_WASH_DURATION )
    {
       Game_StopAnimation( game );
-      Game_ChangeState( game, GameState_Overworld );
+
+      if ( game->scrollingDialog.messageId == DialogMessageId_Search_FoundHiddenStairs &&
+           game->tileMap.id == TILEMAP_CHARLOCK_ID &&
+           game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX )
+      {
+         game->scrollingDialog.messageId = DialogMessageId_Count;
+         Game_PlayerSteppedOnTile( game, TILEMAP_HIDDENSTAIRS_INDEX );
+      }
+      else
+      {
+         Game_ChangeState( game, GameState_Overworld );
+      }
    }
 }
 

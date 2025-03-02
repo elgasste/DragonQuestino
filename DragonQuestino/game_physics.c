@@ -2,7 +2,6 @@
 #include "random.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
-internal void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 
 void Game_TicPhysics( Game_t* game )
 {
@@ -139,6 +138,33 @@ void Game_TicPhysics( Game_t* game )
    Game_UpdatePlayerTileIndex( game );
 }
 
+void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
+{
+   TilePortal_t* portal;
+
+   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
+   game->player.tileIndex = tileIndex;
+   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
+
+   if ( game->tileMap.isDark && game->tileMap.glowDiameter > 1 )
+   {
+      game->tileMap.glowTileCount++;
+
+      if ( game->tileMap.glowTileCount > GLOW_MAX_TILES )
+      {
+         game->tileMap.glowTileCount = 0;
+         TileMap_ReduceGlowDiameter( &( game->tileMap ) );
+      }
+   }
+
+   if ( portal )
+   {
+      game->swapPortal = portal;
+      Game_ChangeState( game, GameState_TileMapTransition );
+      Random_Seed();
+   }
+}
+
 internal void Game_UpdatePlayerTileIndex( Game_t* game )
 {
    uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.hitBoxSize.x / 2 ) );
@@ -149,32 +175,5 @@ internal void Game_UpdatePlayerTileIndex( Game_t* game )
    {
       game->player.tileIndex = newTileIndex;
       Game_PlayerSteppedOnTile( game, newTileIndex );
-   }
-}
-
-internal void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
-{
-   TilePortal_t* portal;
-
-   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
-   game->player.tileIndex = tileIndex;
-   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
-
-   if ( game->tileMap.isDark && game->tileMap.lightDiameter > 1 )
-   {
-      game->tileMap.lightTileCount++;
-
-      if ( game->tileMap.lightTileCount > LIGHT_MAX_TILES )
-      {
-         game->tileMap.lightTileCount = 0;
-         TileMap_ReduceLightDiameter( &( game->tileMap ) );
-      }
-   }
-
-   if ( portal )
-   {
-      game->swapPortal = portal;
-      Game_ChangeState( game, GameState_TileMapTransition );
-      Random_Seed();
    }
 }
