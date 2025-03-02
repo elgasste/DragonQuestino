@@ -1,6 +1,6 @@
 #include "game.h"
 
-internal void Game_TicAnimation_Overworld_Wash( Game_t* game );
+internal void Game_TicAnimation_Overworld_Pause( Game_t* game );
 internal void Game_TicAnimation_RainbowBridge_Trippy( Game_t* game );
 internal void Game_TicAnimation_RainbowBridge_Whiteout( Game_t* game );
 internal void Game_TicAnimation_RainbowBridge_FadeIn( Game_t* game );
@@ -14,7 +14,7 @@ void Game_StartAnimation( Game_t* game, Animation_t animation )
 
    switch ( animation )
    {
-      case Animation_Overworld_Wash: game->animationDuration = ANIMATION_OVERWORLD_WASH_DURATION; break;
+      case Animation_Overworld_Pause: game->animationDuration = ANIMATION_OVERWORLD_PAUSE_DURATION; break;
       case Animation_RainbowBridge_Trippy: game->animationDuration = ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION; break;
       case Animation_RainbowBridge_Whiteout: game->animationDuration = ANIMATION_RAINBOWBRIDGE_WHITEOUT_DURATION; break;
       case Animation_RainbowBridge_FadeIn: game->animationDuration = ANIMATION_RAINBOWBRIDGE_FADEIN_DURATION; break;
@@ -28,7 +28,7 @@ void Game_StopAnimation( Game_t* game )
 
    switch ( game->animation )
    {
-      case Animation_Overworld_Wash:
+      case Animation_Overworld_Pause:
       case Animation_RainbowBridge_Pause:
          Game_ChangeState( game, GameState_Overworld );
          break;
@@ -39,7 +39,7 @@ void Game_TicAnimation( Game_t* game )
 {
    switch ( game->animation )
    {
-      case Animation_Overworld_Wash: Game_TicAnimation_Overworld_Wash( game ); break;
+      case Animation_Overworld_Pause: Game_TicAnimation_Overworld_Pause( game ); break;
       case Animation_RainbowBridge_Trippy: Game_TicAnimation_RainbowBridge_Trippy( game ); break;
       case Animation_RainbowBridge_Whiteout: Game_TicAnimation_RainbowBridge_Whiteout( game ); break;
       case Animation_RainbowBridge_FadeIn: Game_TicAnimation_RainbowBridge_FadeIn( game ); break;
@@ -47,11 +47,11 @@ void Game_TicAnimation( Game_t* game )
    }
 }
 
-internal void Game_TicAnimation_Overworld_Wash( Game_t* game )
+internal void Game_TicAnimation_Overworld_Pause( Game_t* game )
 {
    game->animationSeconds += CLOCK_FRAME_SECONDS;
 
-   if ( game->animationSeconds > ANIMATION_OVERWORLD_WASH_DURATION )
+   if ( game->animationSeconds > ANIMATION_OVERWORLD_PAUSE_DURATION )
    {
       Game_StopAnimation( game );
 

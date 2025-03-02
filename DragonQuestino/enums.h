@@ -43,7 +43,7 @@ GameState_t;
 
 typedef enum Animation_t
 {
-   Animation_Overworld_Wash = 0,
+   Animation_Overworld_Pause = 0,
    Animation_RainbowBridge_Trippy,
    Animation_RainbowBridge_Whiteout,
    Animation_RainbowBridge_FadeIn,

@@ -10,7 +10,7 @@ void Game_Draw( Game_t* game )
    {
       switch ( game->animation )
       {
-         case Animation_Overworld_Wash:
+         case Animation_Overworld_Pause:
          case Animation_RainbowBridge_Trippy:
          case Animation_RainbowBridge_Whiteout:
          case Animation_RainbowBridge_FadeIn:
