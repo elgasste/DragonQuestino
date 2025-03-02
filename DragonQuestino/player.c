@@ -4,9 +4,10 @@
 #include "math.h"
 #include "tables.h"
 
-void Player_Init( Player_t* player, Screen_t* screen )
+void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
 {
    player->screen = screen;
+   player->tileMap = tileMap;
 
    player->tileIndex = 148; // sort of in front of King Lorik
    player->sprite.position.x = (float)( TILE_SIZE * 8 );

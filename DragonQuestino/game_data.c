@@ -2668,6 +2668,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
    {
       case 0:
          tileMap->id = 0;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 140;
          tileMap->tilesY = 135;
@@ -6108,6 +6109,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 1:
          tileMap->id = 1;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -6160,6 +6162,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 2:
          tileMap->id = 2;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -6220,6 +6223,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 3:
          tileMap->id = 3;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
@@ -6738,6 +6742,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 4:
          tileMap->id = 4;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
@@ -7104,6 +7109,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 5:
          tileMap->id = 5;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -7133,6 +7139,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 6:
          tileMap->id = 6;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -7166,6 +7173,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 7:
          tileMap->id = 7;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
@@ -7412,6 +7420,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 8:
          tileMap->id = 8;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -7471,6 +7480,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 9:
          tileMap->id = 9;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
@@ -7812,6 +7822,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 10:
          tileMap->id = 10;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 30;
          tileMap->tilesY = 31;
@@ -8341,6 +8352,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 11:
          tileMap->id = 11;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -8539,6 +8551,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 12:
          tileMap->id = 12;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 26;
          tileMap->tilesY = 26;
@@ -8930,6 +8943,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 13:
          tileMap->id = 13;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
@@ -9608,6 +9622,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 14:
          tileMap->id = 14;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -9644,6 +9659,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 15:
          tileMap->id = 15;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -9699,6 +9715,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 16:
          tileMap->id = 16;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
@@ -9757,6 +9774,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 17:
          tileMap->id = 17;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
@@ -9813,6 +9831,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 18:
          tileMap->id = 18;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 36;
          tileMap->tilesY = 32;
@@ -9911,6 +9930,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 19:
          tileMap->id = 19;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 36;
          tileMap->tilesY = 32;
@@ -10010,6 +10030,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 20:
          tileMap->id = 20;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 28;
          tileMap->tilesY = 49;
@@ -10110,6 +10131,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 21:
          tileMap->id = 21;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
@@ -10248,6 +10270,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 22:
          tileMap->id = 22;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 36;
          tileMap->tilesY = 30;
@@ -10345,6 +10368,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 23:
          tileMap->id = 23;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
@@ -10517,6 +10541,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 24:
          tileMap->id = 24;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 27;
@@ -10563,6 +10588,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 25:
          tileMap->id = 25;
+         tileMap->isDungeon = True;
          tileMap->isDark = False;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
@@ -10767,6 +10793,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 26:
          tileMap->id = 26;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
@@ -10976,6 +11003,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 27:
          tileMap->id = 27;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
@@ -11048,6 +11076,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 28:
          tileMap->id = 28;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
@@ -11137,6 +11166,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 29:
          tileMap->id = 29;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
@@ -11264,6 +11294,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 30:
          tileMap->id = 30;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
@@ -11326,6 +11357,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 31:
          tileMap->id = 31;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 23;
@@ -11353,6 +11385,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 32:
          tileMap->id = 32;
+         tileMap->isDungeon = True;
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 23;
@@ -11384,6 +11417,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 33:
          tileMap->id = 33;
+         tileMap->isDungeon = True;
          tileMap->isDark = False;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
@@ -11684,6 +11718,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 34:
          tileMap->id = 34;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -11736,6 +11771,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 35:
          tileMap->id = 35;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -11788,6 +11824,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 36:
          tileMap->id = 36;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
@@ -11808,6 +11845,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
       case 37:
          tileMap->id = 37;
+         tileMap->isDungeon = False;
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
