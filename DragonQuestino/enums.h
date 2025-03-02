@@ -35,7 +35,6 @@ typedef enum GameState_t
    GameState_Overworld_SpellMenu,
    GameState_Overworld_ItemMenu,
    GameState_Overworld_ScrollingDialog,
-   GameState_TileMapTransition,
 
    GameState_Count
 }
@@ -44,6 +43,8 @@ GameState_t;
 typedef enum Animation_t
 {
    Animation_Overworld_Pause = 0,
+   Animation_TileMap_FadeOut,
+   Animation_TileMap_FadeIn,
    Animation_RainbowBridge_Trippy,
    Animation_RainbowBridge_Whiteout,
    Animation_RainbowBridge_FadeIn,

@@ -2,6 +2,7 @@
 
 #include "screen.h"
 #include "tile_map.h"
+#include "random.h"
 
 void Screen_LoadPalette( Screen_t* screen )
 {
@@ -2663,6 +2664,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
 
    tileMap->doorFlags = ( 0xFFFF0000 | ( tileMap->doorFlags & 0xFFFF ) );
+
+   Random_Seed();
 
    switch( id )
    {

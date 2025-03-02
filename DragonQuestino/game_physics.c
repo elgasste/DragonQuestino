@@ -159,9 +159,8 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 
    if ( portal )
    {
-      game->swapPortal = portal;
-      Game_ChangeState( game, GameState_TileMapTransition );
-      Random_Seed();
+      game->targetPortal = portal;
+      Game_StartAnimation( game, Animation_TileMap_FadeOut );
    }
 }
 

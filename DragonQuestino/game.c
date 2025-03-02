@@ -2,7 +2,6 @@
 #include "random.h"
 
 internal void Game_TicOverworld( Game_t* game );
-internal void Game_TicTileMapTransition( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
@@ -20,14 +19,13 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
    game->state = GameState_Overworld;
-   game->swapPortal = 0;
+   game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
 }
 
 void Game_Tic( Game_t* game )
 {
-   Input_Read( &( game->input ) );
-   Game_HandleInput( game );
+   Input_Read( &( game->input ) );   
 
    if ( game->isAnimating )
    {
@@ -35,6 +33,8 @@ void Game_Tic( Game_t* game )
    }
    else
    {
+      Game_HandleInput( game );
+
       switch ( game->state )
       {
          case GameState_Overworld:
@@ -47,9 +47,6 @@ void Game_Tic( Game_t* game )
          case GameState_Overworld_SpellMenu:
          case GameState_Overworld_ItemMenu:
             Menu_Tic( &( game->menu ) );
-            break;
-         case GameState_TileMapTransition:
-            Game_TicTileMapTransition( game );
             break;
       }
    }
@@ -68,6 +65,38 @@ void Game_ChangeState( Game_t* game, GameState_t newState )
          game->overworldInactivitySeconds = 0.0f;
          break;
    }
+}
+
+void Game_EnterTargetPortal( Game_t* game )
+{
+   uint32_t destinationTileIndex = game->targetPortal->destinationTileIndex;
+   Direction_t arrivalDirection = game->targetPortal->arrivalDirection;
+
+   TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
+
+   game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x ) + COLLISION_THETA;
+   // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
+   game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
+   game->player.tileIndex = destinationTileIndex;
+   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
+   game->targetPortal = 0;
+
+   Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+
+   if ( game->tileMap.isDark )
+   {
+      TileMap_ChangeViewportSize( &( game->tileMap ),
+                                  (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ),
+                                  (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ) );
+   }
+   else
+   {
+      TileMap_ResetViewport( &( game->tileMap ) );
+   }
+
+   TileMap_UpdateViewport( &( game->tileMap ),
+                           (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
+                           game->player.hitBoxSize.x, game->player.hitBoxSize.y );
 }
 
 void Game_OpenMenu( Game_t* game, MenuId_t id )
@@ -190,54 +219,6 @@ internal void Game_TicOverworld( Game_t* game )
    TileMap_UpdateViewport( &( game->tileMap ),
                            (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
                            game->player.hitBoxSize.x, game->player.hitBoxSize.y );
-}
-
-internal void Game_TicTileMapTransition( Game_t* game )
-{
-   uint32_t destinationTileIndex;
-   Direction_t arrivalDirection;
-
-   if ( game->swapPortal )
-   {
-      destinationTileIndex = game->swapPortal->destinationTileIndex;
-      arrivalDirection = game->swapPortal->arrivalDirection;
-
-      TileMap_Load( &( game->tileMap ), game->swapPortal->destinationTileMapIndex );
-
-      game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x ) + COLLISION_THETA;
-      // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
-      game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
-      game->player.tileIndex = destinationTileIndex;
-      game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
-      game->tileMapSwapSeconds = 0.0f;
-      game->swapPortal = 0;
-
-      Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
-
-      if ( game->tileMap.isDark )
-      {
-         TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ),
-                                     (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ) );
-      }
-      else
-      {
-         TileMap_ResetViewport( &( game->tileMap ) );
-      }
-
-      TileMap_UpdateViewport( &( game->tileMap ),
-                              (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
-                              game->player.hitBoxSize.x, game->player.hitBoxSize.y );
-   }
-   else
-   {
-      game->tileMapSwapSeconds += CLOCK_FRAME_SECONDS;
-
-      if ( game->tileMapSwapSeconds > TILEMAP_SWAP_SECONDS )
-      {
-         Game_ChangeState( game, GameState_Overworld );
-      }
-   }
 }
 
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )

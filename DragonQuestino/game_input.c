@@ -132,7 +132,6 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
       {
          if ( game->scrollingDialog.messageId == DialogMessageId_Use_RainbowDrop )
          {
-            Screen_BackupPalette( &( game->screen ) );
             Game_StartAnimation( game, Animation_RainbowBridge_Trippy );
          }
          else
