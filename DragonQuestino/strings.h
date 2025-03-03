@@ -71,6 +71,7 @@
 #define STRING_OVERWORLD_DIALOG_SEARCH_FOUND                "You find %s!"
 #define STRING_OVERWORLD_DIALOG_NO_SPELLS                   "You do not know any spells."
 #define STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CANT_CAST  "You do not know any spells that can be cast here."
+#define STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST       "You cast %s."
 #define STRING_OVERWORLD_DIALOG_NO_ITEMS                    "You do not have any items."
 #define STRING_OVERWORLD_DIALOG_NO_DOOR                     "There is no door here."
 #define STRING_OVERWORLD_DIALOG_NO_KEYS                     "You do not have any keys."

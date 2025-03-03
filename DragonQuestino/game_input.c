@@ -232,7 +232,7 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
    }
-   else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells, game->tileMap.isDungeon ) )
+   else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells, game->tileMap.isDungeon, game->tileMap.isDark ) )
    {
       Game_OpenMenu( game, MenuId_OverworldSpell );
    }
