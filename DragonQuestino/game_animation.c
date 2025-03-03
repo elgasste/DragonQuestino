@@ -2,6 +2,7 @@
 
 internal void Game_TicAnimation_Overworld_Pause( Game_t* game );
 internal void Game_TicAnimation_TileMap_FadeOut( Game_t* game );
+internal void Game_TicAnimation_TileMap_FadePause( Game_t* game );
 internal void Game_TicAnimation_TileMap_FadeIn( Game_t* game );
 internal void Game_TicAnimation_RainbowBridge_Trippy( Game_t* game );
 internal void Game_TicAnimation_RainbowBridge_Whiteout( Game_t* game );
@@ -21,6 +22,12 @@ void Game_StartAnimation( Game_t* game, Animation_t animation )
          break;
       case Animation_TileMap_FadeOut:
          Screen_BackupPalette( &( game->screen ) );
+         game->animationDuration = ANIMATION_TILEMAP_FADE_DURATION;
+         break;
+      case Animation_TileMap_FadePause:
+         game->animationDuration = ANIMATION_TILEMAP_FADEPAUSE_DURATION;
+         break;
+      case Animation_TileMap_FadeIn:
          game->animationDuration = ANIMATION_TILEMAP_FADE_DURATION;
          break;
       case Animation_RainbowBridge_Trippy:
@@ -64,6 +71,7 @@ void Game_TicAnimation( Game_t* game )
    {
       case Animation_Overworld_Pause: Game_TicAnimation_Overworld_Pause( game ); break;
       case Animation_TileMap_FadeOut: Game_TicAnimation_TileMap_FadeOut( game ); break;
+      case Animation_TileMap_FadePause: Game_TicAnimation_TileMap_FadePause( game ); break;
       case Animation_TileMap_FadeIn: Game_TicAnimation_TileMap_FadeIn( game ); break;
       case Animation_RainbowBridge_Trippy: Game_TicAnimation_RainbowBridge_Trippy( game ); break;
       case Animation_RainbowBridge_Whiteout: Game_TicAnimation_RainbowBridge_Whiteout( game ); break;
@@ -106,7 +114,7 @@ internal void Game_TicAnimation_TileMap_FadeOut( Game_t* game )
    {
       Game_EnterTargetPortal( game );
       Game_StopAnimation( game );
-      Game_StartAnimation( game, Animation_TileMap_FadeIn );
+      Game_StartAnimation( game, Animation_TileMap_FadePause );
    }
    else
    {
@@ -118,6 +126,16 @@ internal void Game_TicAnimation_TileMap_FadeOut( Game_t* game )
          p = 1.0f - ( game->animationSeconds / game->animationDuration );
          game->screen.palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
       }
+   }
+}
+
+internal void Game_TicAnimation_TileMap_FadePause( Game_t* game )
+{
+   game->animationSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( game->animationSeconds > game->animationDuration )
+   {
+      Game_StartAnimation( game, Animation_TileMap_FadeIn );
    }
 }
 

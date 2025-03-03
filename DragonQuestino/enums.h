@@ -44,6 +44,7 @@ typedef enum Animation_t
 {
    Animation_Overworld_Pause = 0,
    Animation_TileMap_FadeOut,
+   Animation_TileMap_FadePause,
    Animation_TileMap_FadeIn,
    Animation_RainbowBridge_Trippy,
    Animation_RainbowBridge_Whiteout,

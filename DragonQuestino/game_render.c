@@ -12,6 +12,7 @@ void Game_Draw( Game_t* game )
       {
          case Animation_Overworld_Pause:
          case Animation_TileMap_FadeOut:
+         case Animation_TileMap_FadePause:
          case Animation_TileMap_FadeIn:
          case Animation_RainbowBridge_Trippy:
          case Animation_RainbowBridge_Whiteout:
