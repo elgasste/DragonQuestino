@@ -35,6 +35,7 @@ typedef struct Game_t
    Player_t player;
    Menu_t menu;
    ScrollingDialog_t scrollingDialog;
+   TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
 
    float overworldInactivitySeconds;
    float glowExpandSeconds;

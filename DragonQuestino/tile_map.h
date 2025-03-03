@@ -53,6 +53,22 @@
 #define TILEMAP_HIDDENSTAIRS_DESTINATION_INDEX  398
 #define TILEMAP_HIDDENSTAIRS_DESTINATION_DIR    Direction_Right
 
+#define TILEMAP_TOWN_COUNT                      6
+
+#define TILEMAP_TANTEGEL_TOWN_ID                0
+#define TILEMAP_BRECCONARY_TOWN_ID              1
+#define TILEMAP_GARINHAM_TOWN_ID                2
+#define TILEMAP_KOL_TOWN_ID                     3
+#define TILEMAP_CANTLIN_TOWN_ID                 4
+#define TILEMAP_RIMULDAR_TOWN_ID                5
+
+#define TILEMAP_TANTEGEL_ZOOM_INDEX             7193
+#define TILEMAP_BRECCONARY_ZOOM_INDEX           6918
+#define TILEMAP_GARINHAM_ZOOM_INDEX             1412
+#define TILEMAP_KOL_ZOOM_INDEX                  2634
+#define TILEMAP_CANTLIN_ZOOM_INDEX              15483
+#define TILEMAP_RIMULDAR_ZOOM_INDEX             11312
+
 typedef struct Screen_t Screen_t;
 
 typedef struct TileTexture_t

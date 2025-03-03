@@ -6,6 +6,8 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
+   uint32_t i;
+
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_Init( &( game->tileMap ), &( game->screen ) );
@@ -18,6 +20,19 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
+   for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
+   {
+      game->zoomPortals[i].destinationTileMapIndex = TILEMAP_OVERWORLD_ID;
+      game->zoomPortals[i].arrivalDirection = Direction_Down;
+   }
+
+   game->zoomPortals[TILEMAP_TANTEGEL_TOWN_ID].destinationTileIndex = TILEMAP_TANTEGEL_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_BRECCONARY_TOWN_ID].destinationTileIndex = TILEMAP_BRECCONARY_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_GARINHAM_TOWN_ID].destinationTileIndex = TILEMAP_GARINHAM_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_KOL_TOWN_ID].destinationTileIndex = TILEMAP_KOL_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_CANTLIN_TOWN_ID].destinationTileIndex = TILEMAP_CANTLIN_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_RIMULDAR_TOWN_ID].destinationTileIndex = TILEMAP_RIMULDAR_ZOOM_INDEX;
+
    game->state = GameState_Overworld;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
@@ -25,7 +40,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
 void Game_Tic( Game_t* game )
 {
-   Input_Read( &( game->input ) );   
+   Input_Read( &( game->input ) );
 
    if ( game->isAnimating )
    {

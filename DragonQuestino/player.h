@@ -112,23 +112,26 @@ typedef struct TileMap_t TileMap_t;
 #define ITEM_TOGGLE_HASCURSEDBELT( x )          ( x ) ^= ( 0x1 << 24 )
 
 #define HAS_VISITED_TANTEGEL( x )               ( x ) & 0x1
-#define HAS_VISITED_GARINHAM( x )               ( x ) & 0x2
-#define HAS_VISITED_KOL( x )                    ( x ) & 0x4
-#define HAS_VISITED_CANTLIN( x )                ( x ) & 0x8
-#define HAS_VISITED_RIMULDAR( x )               ( x ) & 0x10
+#define HAS_VISITED_BRECCONARY( x )             ( x ) & 0x2
+#define HAS_VISITED_GARINHAM( x )               ( x ) & 0x4
+#define HAS_VISITED_KOL( x )                    ( x ) & 0x8
+#define HAS_VISITED_CANTLIN( x )                ( x ) & 0x10
+#define HAS_VISITED_RIMULDAR( x )               ( x ) & 0x20
 
 #define HAS_VISITED_COUNT( x )                  ( 0 + \
                                                 ( HAS_VISITED_TANTEGEL( x ) ? 1 : 0 ) + \
+                                                ( HAS_VISITED_BRECCONARY( x ) ? 1 : 0 ) + \
                                                 ( HAS_VISITED_GARINHAM( x ) ? 1 : 0 ) + \
                                                 ( HAS_VISITED_KOL( x ) ? 1 : 0 ) + \
                                                 ( HAS_VISITED_CANTLIN( x ) ? 1 : 0 ) + \
                                                 ( HAS_VISITED_RIMULDAR( x ) ? 1 : 0 ) )
 
 #define SET_VISITED_TANTEGEL( x )               ( x ) |= 0x1
-#define SET_VISITED_GARINHAM( x )               ( x ) |= 0x2
-#define SET_VISITED_KOL( x )                    ( x ) |= 0x4
-#define SET_VISITED_CANTLIN( x )                ( x ) |= 0x8
-#define SET_VISITED_RIMULDAR( x )               ( x ) |= 0x10
+#define SET_VISITED_BRECCONARY( x )             ( x ) |= 0x2
+#define SET_VISITED_GARINHAM( x )               ( x ) |= 0x4
+#define SET_VISITED_KOL( x )                    ( x ) |= 0x8
+#define SET_VISITED_CANTLIN( x )                ( x ) |= 0x10
+#define SET_VISITED_RIMULDAR( x )               ( x ) |= 0x20
 
 #define HOLY_PROTECTION_MAX_STEPS               127
 
@@ -166,7 +169,6 @@ typedef struct Player_t
    // bit 22: sphere of light
    // bit 23: dragon scale
    // bit 24: cursed belt
-   // bits 25-31: reserved
    uint32_t items;
 
    // bit 0: heal
@@ -179,15 +181,14 @@ typedef struct Player_t
    // bit 7: repel
    // bit 8: midheal
    // bit 9: sizzle
-   // bits 10-15: reserved
    uint16_t spells;
 
    // bit 0: tantegel
-   // bit 1: garinham
-   // bit 2: kol
-   // bit 3: cantlin
-   // bit 4: rimuldar
-   // bits 5-7: reserved
+   // bit 1: brecconary
+   // bit 2: garinham
+   // bit 3: kol
+   // bit 4: cantlin
+   // bit 5: rimuldar
    uint8_t townsVisited;
 }
 Player_t;
