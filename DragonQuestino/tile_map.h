@@ -53,12 +53,6 @@
 #define TILEMAP_HIDDENSTAIRS_DESTINATION_INDEX  398
 #define TILEMAP_HIDDENSTAIRS_DESTINATION_DIR    Direction_Right
 
-
-//    - source tile index: 55
-//    - destination tile map id: 26
-//    - destination tile index: 398
-//    - arrival direction: 2
-
 typedef struct Screen_t Screen_t;
 
 typedef struct TileTexture_t
@@ -107,6 +101,7 @@ typedef struct TileMap_t
 
    TilePortal_t portals[TILEMAP_MAX_PORTALS];
    uint32_t portalCount;
+   TilePortal_t evacPortal;
 
    ActiveSprite_t activeSprites[TILEMAP_MAX_ACTIVESPRITES];
    uint32_t activeSpriteCount;

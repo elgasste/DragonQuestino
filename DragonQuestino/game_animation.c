@@ -90,8 +90,9 @@ internal void Game_TicAnimation_Overworld_Pause( Game_t* game )
 
       if ( game->scrollingDialog.messageId == DialogMessageId_Spell_CastEvac )
       {
-         // TODO: actually do the evac
+         game->targetPortal = &( game->tileMap.evacPortal );
          game->scrollingDialog.messageId = DialogMessageId_Count;
+         Game_StartAnimation( game, Animation_TileMap_FadeOut );
       }
       else if ( game->scrollingDialog.messageId == DialogMessageId_Search_FoundHiddenStairs &&
                 game->tileMap.id == TILEMAP_CHARLOCK_ID &&
