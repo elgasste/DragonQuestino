@@ -12,6 +12,7 @@ namespace DragonQuestinoEditor.FileOps
       public int TilesX { get; set; }
       public int TilesY { get; set; }
       public List<TilePortalSaveData> Portals { get; set; } = [];
+      public TilePortalSaveData EvacPortal { get; set; } = new();
       public List<StaticSpriteSaveData> StaticSprites { get; set; } = [];
 
       public TileMapSaveData() { }
@@ -24,6 +25,7 @@ namespace DragonQuestinoEditor.FileOps
          IsDark = tileMap.IsDark;
          TilesX = tileMap.TilesX;
          TilesY = tileMap.TilesY;
+         EvacPortal = new( tileMap.EvacPortal );
 
          foreach ( var tile in tileMap.Tiles )
          {

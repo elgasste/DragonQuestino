@@ -11,6 +11,8 @@ namespace DragonQuestinoEditor.ViewModels
 
       public ObservableCollection<TilePortalViewModel> Portals { get; } = [];
 
+      public TilePortalViewModel EvacPortal { get; }
+
       private int _tilesX;
       public int TilesX
       {
@@ -61,6 +63,7 @@ namespace DragonQuestinoEditor.ViewModels
          _isDark = isDark;
          _tilesX = tilesX;
          _tilesY = tilesY;
+         EvacPortal = new( 0, 0, 0, Direction.Left );
 
          for ( int i = 0; i < tilesX * tilesY; i++ )
          {
@@ -76,6 +79,7 @@ namespace DragonQuestinoEditor.ViewModels
          _isDark = saveData.IsDark;
          _tilesX = saveData.TilesX;
          _tilesY = saveData.TilesY;
+         EvacPortal = new( saveData.EvacPortal );
 
          foreach ( var tileSaveData in saveData.Tiles )
          {
