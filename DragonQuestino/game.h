@@ -83,7 +83,7 @@ void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 void Game_CastHeal( Game_t* game );
 void Game_CastGlow( Game_t* game );
 void Game_CastEvac( Game_t* game );
-void Game_CastZoom( Game_t* game );
+void Game_CastZoom( Game_t* game, uint32_t townId );
 void Game_CastRepel( Game_t* game );
 void Game_CastMidheal( Game_t* game );
 

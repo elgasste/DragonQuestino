@@ -184,6 +184,13 @@ internal void Game_HandleMenuInput( Game_t* game )
          case MenuCommand_Item_GwaelynsLove: Game_UseGwaelynsLove( game ); break;
          case MenuCommand_Item_RainbowDrop: Game_UseRainbowDrop( game ); break;
          case MenuCommand_Item_CursedBelt: Game_UseCursedBelt( game ); break;
+
+         case MenuCommand_Zoom_Tantegel: Game_CastZoom( game, TILEMAP_TANTEGEL_TOWN_ID ); break;
+         case MenuCommand_Zoom_Brecconary: Game_CastZoom( game, TILEMAP_BRECCONARY_TOWN_ID ); break;
+         case MenuCommand_Zoom_Garinham: Game_CastZoom( game, TILEMAP_GARINHAM_TOWN_ID ); break;
+         case MenuCommand_Zoom_Kol: Game_CastZoom( game, TILEMAP_KOL_TOWN_ID ); break;
+         case MenuCommand_Zoom_Cantlin: Game_CastZoom( game, TILEMAP_CANTLIN_TOWN_ID ); break;
+         case MenuCommand_Zoom_Rimuldar: Game_CastZoom( game, TILEMAP_RIMULDAR_TOWN_ID ); break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )

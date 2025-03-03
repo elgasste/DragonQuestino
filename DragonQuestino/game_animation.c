@@ -91,20 +91,24 @@ internal void Game_TicAnimation_Overworld_Pause( Game_t* game )
       if ( game->scrollingDialog.messageId == DialogMessageId_Spell_CastEvac )
       {
          game->targetPortal = &( game->tileMap.evacPortal );
-         game->scrollingDialog.messageId = DialogMessageId_Count;
+         Game_StartAnimation( game, Animation_TileMap_FadeOut );
+      }
+      else if ( game->scrollingDialog.messageId == DialogMessageId_Spell_CastZoom )
+      {
          Game_StartAnimation( game, Animation_TileMap_FadeOut );
       }
       else if ( game->scrollingDialog.messageId == DialogMessageId_Search_FoundHiddenStairs &&
                 game->tileMap.id == TILEMAP_CHARLOCK_ID &&
                 game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX )
       {
-         game->scrollingDialog.messageId = DialogMessageId_Count;
          Game_PlayerSteppedOnTile( game, TILEMAP_HIDDENSTAIRS_INDEX );
       }
       else
       {
          Game_ChangeState( game, GameState_Overworld );
       }
+
+      game->scrollingDialog.messageId = DialogMessageId_Count;
    }
 }
 

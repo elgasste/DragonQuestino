@@ -153,6 +153,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Spell_OverworldCastGlow,
    DialogMessageId_Spell_CastRepel,
    DialogMessageId_Spell_CastEvac,
+   DialogMessageId_Spell_CastZoom,
    DialogMessageId_Spell_NotEnoughMp,
    DialogMessageId_Spell_FullyHealed,
    DialogMessageId_Item_None,
