@@ -51,6 +51,28 @@ void Game_Tic( Game_t* game )
       }
    }
 
+#if defined( VISUAL_STUDIO_DEV )
+   if ( game->tileMap.isDark )
+   {
+      if ( g_debugFlags.noDark )
+      {
+         TileMap_ChangeViewportSize( &( game->tileMap ), SCREEN_WIDTH, SCREEN_HEIGHT );
+         TileMap_UpdateViewport( &( game->tileMap ),
+                                 (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
+                                 game->player.hitBoxSize.x, game->player.hitBoxSize.y );
+      }
+      else
+      {
+         TileMap_ChangeViewportSize( &( game->tileMap ),
+                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ),
+                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ) );
+         TileMap_UpdateViewport( &( game->tileMap ),
+                                 (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
+                                 game->player.hitBoxSize.x, game->player.hitBoxSize.y );
+      }
+   }
+#endif
+
    Game_Draw( game );
    Screen_RenderBuffer( &( game->screen ) );
 }
@@ -188,22 +210,6 @@ internal void Game_TicOverworld( Game_t* game )
 {
    Game_TicPhysics( game );
    Sprite_Tic( &( game->player.sprite ) );
-
-#if defined( VISUAL_STUDIO_DEV )
-   if ( game->tileMap.isDark )
-   {
-      if ( g_debugFlags.noDark )
-      {
-         TileMap_ChangeViewportSize( &( game->tileMap ), SCREEN_WIDTH, SCREEN_HEIGHT );
-      }
-      else
-      {
-         TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ) );
-      }
-   }
-#endif
 
    if ( game->tileMap.isDark && game->tileMap.glowDiameter < game->tileMap.targetGlowDiameter )
    {

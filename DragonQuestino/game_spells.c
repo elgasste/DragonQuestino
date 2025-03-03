@@ -48,9 +48,11 @@ void Game_CastEvac( Game_t* game )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
    }
-   else
+   else if ( game->tileMap.isDungeon )
    {
-      // TODO
+      game->player.stats.magicPoints -= SPELL_EVAC_MP;
+      Game_DrawOverworldQuickStatus( game );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastEvac );
    }
 }
 
