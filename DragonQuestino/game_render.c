@@ -32,6 +32,7 @@ void Game_Draw( Game_t* game )
          case GameState_Overworld_MainMenu:
          case GameState_Overworld_SpellMenu:
          case GameState_Overworld_ItemMenu:
+         case GameState_Overworld_ZoomMenu:
             Menu_Draw( &( game->menu ) );
             break;
          case GameState_Overworld_ScrollingDialog:

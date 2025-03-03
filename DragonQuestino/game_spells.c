@@ -56,16 +56,12 @@ void Game_CastEvac( Game_t* game )
    }
 }
 
-void Game_CastZoom( Game_t* game )
+void Game_CastZoom( Game_t* game, uint32_t townId )
 {
-   if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
-   {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
-   }
-   else
-   {
-      // TODO
-   }
+   game->player.stats.magicPoints -= SPELL_ZOOM_MP;
+   game->targetPortal = &( game->zoomPortals[townId] );
+   Game_DrawOverworldQuickStatus( game );
+   Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastZoom );
 }
 
 void Game_CastRepel( Game_t* game )

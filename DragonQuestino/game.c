@@ -6,6 +6,8 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
+   uint32_t i;
+
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_Init( &( game->tileMap ), &( game->screen ) );
@@ -18,6 +20,19 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
+   for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
+   {
+      game->zoomPortals[i].destinationTileMapIndex = TILEMAP_OVERWORLD_ID;
+      game->zoomPortals[i].arrivalDirection = Direction_Down;
+   }
+
+   game->zoomPortals[TILEMAP_TANTEGEL_TOWN_ID].destinationTileIndex = TILEMAP_TANTEGEL_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_BRECCONARY_TOWN_ID].destinationTileIndex = TILEMAP_BRECCONARY_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_GARINHAM_TOWN_ID].destinationTileIndex = TILEMAP_GARINHAM_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_KOL_TOWN_ID].destinationTileIndex = TILEMAP_KOL_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_CANTLIN_TOWN_ID].destinationTileIndex = TILEMAP_CANTLIN_ZOOM_INDEX;
+   game->zoomPortals[TILEMAP_RIMULDAR_TOWN_ID].destinationTileIndex = TILEMAP_RIMULDAR_ZOOM_INDEX;
+
    game->state = GameState_Overworld;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
@@ -25,7 +40,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
 void Game_Tic( Game_t* game )
 {
-   Input_Read( &( game->input ) );   
+   Input_Read( &( game->input ) );
 
    if ( game->isAnimating )
    {
@@ -46,6 +61,7 @@ void Game_Tic( Game_t* game )
          case GameState_Overworld_MainMenu:
          case GameState_Overworld_SpellMenu:
          case GameState_Overworld_ItemMenu:
+         case GameState_Overworld_ZoomMenu:
             Menu_Tic( &( game->menu ) );
             break;
       }
@@ -96,6 +112,16 @@ void Game_EnterTargetPortal( Game_t* game )
 
    TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
 
+   switch ( game->targetPortal->destinationTileMapIndex )
+   {
+      case TILEMAP_TANTEGEL_ID: SET_VISITED_TANTEGEL( game->player.townsVisited ); break;
+      case TILEMAP_BRECCONARY_ID: SET_VISITED_BRECCONARY( game->player.townsVisited ); break;
+      case TILEMAP_GARINHAM_ID: SET_VISITED_GARINHAM( game->player.townsVisited ); break;
+      case TILEMAP_KOL_ID: SET_VISITED_KOL( game->player.townsVisited ); break;
+      case TILEMAP_CANTLIN_ID: SET_VISITED_CANTLIN( game->player.townsVisited ); break;
+      case TILEMAP_RIMULDAR_ID: SET_VISITED_RIMULDAR( game->player.townsVisited ); break;
+   }
+
    game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x ) + COLLISION_THETA;
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
    game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
@@ -130,6 +156,7 @@ void Game_OpenMenu( Game_t* game, MenuId_t id )
       case MenuId_Overworld: Game_ChangeState( game, GameState_Overworld_MainMenu ); break;
       case MenuId_OverworldSpell: Game_ChangeState( game, GameState_Overworld_SpellMenu ); break;
       case MenuId_OverworldItem: Game_ChangeState( game, GameState_Overworld_ItemMenu ); break;
+      case MenuId_Zoom: Game_ChangeState( game, GameState_Overworld_ZoomMenu ); break;
    }
 }
 

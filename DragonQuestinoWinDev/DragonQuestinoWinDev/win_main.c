@@ -471,4 +471,5 @@ internal void MaxOutStats()
    g_globals.game.player.stats.agility = UINT8_MAX;
 
    g_globals.game.player.spells = 0x3FF;
+   g_globals.game.player.townsVisited = 0x3F;
 }
