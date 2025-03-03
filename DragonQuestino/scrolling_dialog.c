@@ -227,6 +227,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Item_None:
       case DialogMessageId_Door_None:
       case DialogMessageId_Door_NoKeys:
+      case DialogMessageId_HolyProtection_Off:
       case DialogMessageId_Use_TorchCantUse:
       case DialogMessageId_Use_Torch:
       case DialogMessageId_Use_GwaelynsLoveCantUse:
@@ -244,6 +245,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Use_FairyFlute:
       case DialogMessageId_Use_SilverHarp:
       case DialogMessageId_Use_CursedBelt:
+      case DialogMessageId_Spell_CastRepel:
       case DialogMessageId_Chest_ItemNoSpace:
       case DialogMessageId_Chest_GoldNoSpace:
       case DialogMessageId_Chest_DeathNecklace:
@@ -272,60 +274,67 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
       case DialogMessageId_Search_NothingFound:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH ); return;
+            case 0: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH ); return;
             case 1: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH_NOT_FOUND ); return;
          }
       case DialogMessageId_Search_FoundItem:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH ); return;
+            case 0: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH ); return;
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH_FOUND, dialog->insertionText ); return;
          }
       case DialogMessageId_Search_FoundHiddenStairs:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SEARCH ); return;
-            case 1: sprintf( text, STRING_FOUND_HIDDENSTAIRS ); return;
+            case 0: strcpy( text, STRING_OVERWORLD_DIALOG_SEARCH ); return;
+            case 1: strcpy( text, STRING_FOUND_HIDDENSTAIRS ); return;
          }
       case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
       case DialogMessageId_Spell_OverworldCantCast: strcpy( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CANT_CAST ); return;
       case DialogMessageId_Spell_OverworldCastGlow: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_GLOW ); return;
+      case DialogMessageId_Spell_CastRepel:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_REPEL ); return;
+            case 1: strcpy( text, STRING_HOLYPROTECTION_ON ); return;
+         }
       case DialogMessageId_Spell_NotEnoughMp: strcpy( text, STRING_NOTENOUGHMP ); return;
       case DialogMessageId_Spell_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogMessageId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
       case DialogMessageId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;
       case DialogMessageId_Door_NoKeys: strcpy( text, STRING_OVERWORLD_DIALOG_NO_KEYS ); return;
+      case DialogMessageId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
       case DialogMessageId_Use_Herb:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_HERB ); return;
+            case 0: strcpy( text, STRING_ITEMUSE_HERB ); return;
             case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
       case DialogMessageId_Use_Wing:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_WING ); return;
+            case 0: strcpy( text, STRING_ITEMUSE_WING ); return;
             case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
          }
       case DialogMessageId_Use_FairyWater:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_FAIRYWATER ); return;
-            case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
+            case 0: strcpy( text, STRING_ITEMUSE_FAIRYWATER ); return;
+            case 1: strcpy( text, STRING_HOLYPROTECTION_ON ); return;
          }
 
       case DialogMessageId_Use_TorchCantUse: strcpy( text, STRING_ITEMUSE_TORCH_CANTUSE ); return;
-      case DialogMessageId_Use_Torch: sprintf( text, STRING_ITEMUSE_TORCH ); return;
+      case DialogMessageId_Use_Torch: strcpy( text, STRING_ITEMUSE_TORCH ); return;
       case DialogMessageId_Use_FairyFlute:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_FAIRYFLUTE_1 ); return;
+            case 0: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_1 ); return;
             case 1: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_2 ); return;
          }
       case DialogMessageId_Use_SilverHarp:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_SILVERHARP_1 ); return;
+            case 0: strcpy( text, STRING_ITEMUSE_SILVERHARP_1 ); return;
             case 1: strcpy( text, STRING_ITEMUSE_SILVERHARP_2 ); return;
          }
       case DialogMessageId_Use_GwaelynsLoveCantUse: strcpy( text, STRING_ITEMUSE_GWAELINSLOVE_CANTUSE ); return;
@@ -348,11 +357,11 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 3: sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_4, player->name ); return;
          }
       case DialogMessageId_Use_RainbowDropCantUse: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
-      case DialogMessageId_Use_RainbowDrop: sprintf( text, STRING_ITEMUSE_RAINBOWDROP ); return;
+      case DialogMessageId_Use_RainbowDrop: strcpy( text, STRING_ITEMUSE_RAINBOWDROP ); return;
       case DialogMessageId_Use_CursedBelt:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_ITEMUSE_CURSEDBELT ); return;
+            case 0: strcpy( text, STRING_ITEMUSE_CURSEDBELT ); return;
             case 1:
                Player_SetCursed( dialog->player, True );
                strcpy( text, STRING_CURSED );
@@ -363,14 +372,14 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
-            case 1: sprintf( text, STRING_CHEST_ITEMNOSPACE ); return;
+            case 1: strcpy( text, STRING_CHEST_ITEMNOSPACE ); return;
          }
       case DialogMessageId_Chest_GoldCollected: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
       case DialogMessageId_Chest_GoldNoSpace:
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
-            case 1: sprintf( text, STRING_CHEST_GOLDNOSPACE ); return;
+            case 1: strcpy( text, STRING_CHEST_GOLDNOSPACE ); return;
          }
       case DialogMessageId_Chest_Tablet:
          switch ( dialog->section )

@@ -23,6 +23,8 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
 
    strcpy( player->name, "TestMan1" );
    player->isCursed = False;
+   player->hasHolyProtection = False;
+   player->holyProtectionSteps = 0;
 
    player->stats.hitPoints = 12;
    player->stats.maxHitPoints = 12;
@@ -153,4 +155,14 @@ void Player_SetCursed( Player_t* player, Bool_t cursed )
 {
    player->isCursed = cursed;
    player->screen->textColor = cursed ? COLOR_GROSSYELLOW : COLOR_WHITE;
+}
+
+void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection )
+{
+   player->hasHolyProtection = hasHolyProtection;
+
+   if ( hasHolyProtection )
+   {
+      player->holyProtectionSteps = 0;
+   }
 }

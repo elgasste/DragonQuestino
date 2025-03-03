@@ -78,6 +78,9 @@
 #define STRING_OVERWORLD_DIALOG_NO_DOOR                              "There is no door here."
 #define STRING_OVERWORLD_DIALOG_NO_KEYS                              "You do not have any keys."
 
+#define STRING_HOLYPROTECTION_ON                                     "A barrier of Holy Protection surrounds you."
+#define STRING_HOLYPROTECTION_OFF                                    "The effects of Holy Protection have worn off."
+
 #define STRING_BUTNOTHINGHAPPENS                                     "But nothing happens."
 #define STRING_NOTENOUGHMP                                           "You do not have enough MP."
 #define STRING_FULLYHEALED                                           "You are already fully healed."

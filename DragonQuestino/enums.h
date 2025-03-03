@@ -142,11 +142,14 @@ typedef enum DialogMessageId_t
    DialogMessageId_Spell_OverworldCastMidheal1,
    DialogMessageId_Spell_OverworldCastMidheal2,
    DialogMessageId_Spell_OverworldCastGlow,
+   DialogMessageId_Spell_CastRepel,
    DialogMessageId_Spell_NotEnoughMp,
    DialogMessageId_Spell_FullyHealed,
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
    DialogMessageId_Door_NoKeys,
+
+   DialogMessageId_HolyProtection_Off,
 
    DialogMessageId_Use_Herb,
    DialogMessageId_Use_Wing,
