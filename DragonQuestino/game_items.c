@@ -22,15 +22,22 @@ void Game_UseFairyWater( Game_t* game )
 
 void Game_UseTorch( Game_t* game )
 {
-   if ( game->tileMap.isDark && game->tileMap.glowDiameter <= TORCH_DIAMETER )
+   if ( game->tileMap.isDark )
    {
-      TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
-      game->tileMap.glowTileCount = 0;
-      game->glowExpandSeconds = GLOW_EXPAND_FRAME_SECONDS; // push one frame immediately
-   }
+      if ( game->tileMap.glowDiameter <= TORCH_DIAMETER )
+      {
+         TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
+         game->tileMap.glowTileCount = 0;
+         game->glowExpandSeconds = GLOW_EXPAND_FRAME_SECONDS; // push one frame immediately
+      }
 
-   ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
-   Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_Torch );
+      ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_Torch );
+   }
+   else
+   {
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_TorchCantUse );
+   }
 }
 
 void Game_UseSilverHarp( Game_t* game )
