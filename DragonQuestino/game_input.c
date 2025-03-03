@@ -8,6 +8,7 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game );
 internal void Game_HandleMenuInput( Game_t* game );
 internal void Game_OpenOverworldSpellMenu( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
+internal void Game_OpenZoomMenu( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -22,6 +23,7 @@ void Game_HandleInput( Game_t* game )
       case GameState_Overworld_MainMenu:
       case GameState_Overworld_SpellMenu:
       case GameState_Overworld_ItemMenu:
+      case GameState_Overworld_ZoomMenu:
          Game_HandleMenuInput( game );
          break;
       case GameState_Overworld_ScrollingDialog:
@@ -156,30 +158,20 @@ internal void Game_HandleMenuInput( Game_t* game )
 
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
-         case MenuCommand_OverworldMain_Talk:
-            Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere );
-            break;
+         case MenuCommand_OverworldMain_Talk: Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere ); break;
          case MenuCommand_OverworldMain_Status:
             Game_DrawOverworldDeepStatus( game );
             Game_ChangeState( game, GameState_Overworld_Waiting );
             break;
-         case MenuCommand_OverworldMain_Search:
-            Game_Search( game );
-            break;
-         case MenuCommand_OverworldMain_Spell:
-            Game_OpenOverworldSpellMenu( game );
-            break;
-         case MenuCommand_OverworldMain_Item:
-            Game_OpenOverworldItemMenu( game );
-            break;
-         case MenuCommand_OverworldMain_Door:
-            Game_OpenDoor( game );
-            break;
+         case MenuCommand_OverworldMain_Search: Game_Search( game ); break;
+         case MenuCommand_OverworldMain_Spell: Game_OpenOverworldSpellMenu( game ); break;
+         case MenuCommand_OverworldMain_Item: Game_OpenOverworldItemMenu( game ); break;
+         case MenuCommand_OverworldMain_Door: Game_OpenDoor( game ); break;
 
          case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
          case MenuCommand_Spell_Glow: Game_CastGlow( game ); break;
          case MenuCommand_Spell_Evac: Game_CastEvac( game ); break;
-         case MenuCommand_Spell_Zoom: Game_CastZoom( game ); break;
+         case MenuCommand_Spell_Zoom: Game_OpenZoomMenu( game ); break;
          case MenuCommand_Spell_Repel: Game_CastRepel( game ); break;
          case MenuCommand_Spell_Midheal: Game_CastMidheal( game ); break;
 
@@ -196,11 +188,13 @@ internal void Game_HandleMenuInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
+      // TODO: some of these should probably return to their parent menus
       switch ( game->state )
       {
          case GameState_Overworld_MainMenu:
          case GameState_Overworld_SpellMenu:
          case GameState_Overworld_ItemMenu:
+         case GameState_Overworld_ZoomMenu:
             Game_ChangeState( game, GameState_Overworld );
             break;
       }
@@ -251,7 +245,6 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 
       if ( useableCount > 0 )
       {
-         Menu_Load( &( game->menu ), MenuId_OverworldItem );
          Game_OpenMenu( game, MenuId_OverworldItem );
       }
       else
@@ -261,3 +254,16 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
    }
 }
 
+internal void Game_OpenZoomMenu( Game_t* game )
+{
+   uint32_t townCount = HAS_VISITED_COUNT( game->player.townsVisited );
+
+   if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
+   {
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
+   }
+   else if ( townCount > 0 )
+   {
+      Game_OpenMenu( game, MenuId_Zoom );
+   }
+}

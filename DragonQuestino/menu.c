@@ -8,6 +8,7 @@ internal void Menu_DrawCarat( Menu_t* menu );
 internal void Menu_LoadOverworld( Menu_t* menu );
 internal void Menu_LoadOverworldSpell( Menu_t* menu );
 internal void Menu_LoadOverworldItem( Menu_t* menu );
+internal void Menu_LoadZoom( Menu_t* menu );
 
 void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player )
 {
@@ -22,6 +23,7 @@ void Menu_Load( Menu_t* menu, MenuId_t id )
       case MenuId_Overworld: Menu_LoadOverworld( menu ); break;
       case MenuId_OverworldSpell: Menu_LoadOverworldSpell( menu ); break;
       case MenuId_OverworldItem: Menu_LoadOverworldItem( menu ); break;
+      case MenuId_Zoom: Menu_LoadZoom( menu ); break;
    }
 
    menu->hasDrawn = False;
@@ -70,6 +72,7 @@ void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
    int32_t newIndex = 0;
    uint32_t column;
 
+   // TODO: there's still a bug in here, pressing left/right with a single column is unpredictable
    switch ( direction )
    {
       case Direction_Left:
@@ -250,7 +253,6 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
    {
       sprintf( menu->items[i].text, STRING_SPELLMENU_MIDHEAL );
       menu->items[i].command = MenuCommand_Spell_Midheal;
-      i++;
    }
 }
 
@@ -341,6 +343,69 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
       strcpy( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_CURSEDBELT_1 );
       strcpy( menu->items[i].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_CURSEDBELT_2 );
       menu->items[i].command = MenuCommand_Item_CursedBelt;
+   }
+}
+
+internal void Menu_LoadZoom( Menu_t* menu )
+{
+   uint32_t i = 0;
+   uint8_t tv = menu->player->townsVisited;
+
+   strcpy( menu->title, STRING_SPELLMENU_ZOOM );
+
+   menu->itemCount = HAS_VISITED_COUNT( tv );
+   menu->itemsPerColumn = menu->itemCount;
+   menu->selectedIndex = 0;
+   menu->position.x = 136;
+   menu->position.y = 64;
+   menu->borderSize.x = 13;
+   menu->borderSize.y = (uint16_t)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderPadding.x = 1;
+   menu->borderPadding.y = 1;
+   menu->columnWidth = 10;
+   menu->itemPadding = 1;
+   menu->caratOffset = 1;
+
+   for ( i = 0; i < menu->itemCount; i++ )
+   {
+      menu->items[i].twoLineText = False;
+   }
+
+   i = 0;
+
+   if ( HAS_VISITED_TANTEGEL( tv ) )
+   {
+      strcpy( menu->items[i].text, STRING_TOWN_TANTEGEL );
+      menu->items[i].command = MenuCommand_Zoom_Tantegel;
       i++;
+   }
+   if ( HAS_VISITED_BRECCONARY( tv ) )
+   {
+      strcpy( menu->items[i].text, STRING_TOWN_BRECCONARY );
+      menu->items[i].command = MenuCommand_Zoom_Brecconary;
+      i++;
+   }
+   if ( HAS_VISITED_GARINHAM( tv ) )
+   {
+      strcpy( menu->items[i].text, STRING_TOWN_GARINHAM );
+      menu->items[i].command = MenuCommand_Zoom_Garinham;
+      i++;
+   }
+   if ( HAS_VISITED_KOL( tv ) )
+   {
+      strcpy( menu->items[i].text, STRING_TOWN_KOL );
+      menu->items[i].command = MenuCommand_Zoom_Kol;
+      i++;
+   }
+   if ( HAS_VISITED_CANTLIN( tv ) )
+   {
+      strcpy( menu->items[i].text, STRING_TOWN_CANTLIN );
+      menu->items[i].command = MenuCommand_Zoom_Cantlin;
+      i++;
+   }
+   if ( HAS_VISITED_RIMULDAR( tv ) )
+   {
+      strcpy( menu->items[i].text, STRING_TOWN_RIMULDAR );
+      menu->items[i].command = MenuCommand_Zoom_Rimuldar;
    }
 }

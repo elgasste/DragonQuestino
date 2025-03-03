@@ -20,6 +20,13 @@
 #define STRING_SPELLMENU_MIDHEAL                                     "Midheal"
 #define STRING_SPELLMENU_SIZZLE                                      "Sizzle"
 
+#define STRING_TOWN_TANTEGEL                                         "Tantegel"
+#define STRING_TOWN_BRECCONARY                                       "Brecconary"
+#define STRING_TOWN_GARINHAM                                         "Garinham"
+#define STRING_TOWN_KOL                                              "Kol"
+#define STRING_TOWN_CANTLIN                                          "Cantlin"
+#define STRING_TOWN_RIMULDAR                                         "Rimuldar"
+
 #define STRING_OVERWORLD_ITEMMENU_KEY                                "Key     %u"
 #define STRING_OVERWORLD_ITEMMENU_HERB                               "Herb    %u"
 #define STRING_OVERWORLD_ITEMMENU_WING                               "Wing    %u"

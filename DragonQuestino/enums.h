@@ -34,6 +34,7 @@ typedef enum GameState_t
    GameState_Overworld_MainMenu,
    GameState_Overworld_SpellMenu,
    GameState_Overworld_ItemMenu,
+   GameState_Overworld_ZoomMenu,
    GameState_Overworld_ScrollingDialog,
 
    GameState_Count
@@ -82,6 +83,7 @@ typedef enum MenuId_t
    MenuId_Overworld = 0,
    MenuId_OverworldSpell,
    MenuId_OverworldItem,
+   MenuId_Zoom,
 
    MenuId_Count
 }
@@ -116,6 +118,13 @@ typedef enum MenuCommand_t
    MenuCommand_Item_GwaelynsLove,
    MenuCommand_Item_RainbowDrop,
    MenuCommand_Item_CursedBelt,
+
+   MenuCommand_Zoom_Tantegel,
+   MenuCommand_Zoom_Brecconary,
+   MenuCommand_Zoom_Garinham,
+   MenuCommand_Zoom_Kol,
+   MenuCommand_Zoom_Cantlin,
+   MenuCommand_Zoom_Rimuldar,
 
    MenuCommand_Count
 }

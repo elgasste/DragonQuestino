@@ -61,6 +61,7 @@ void Game_Tic( Game_t* game )
          case GameState_Overworld_MainMenu:
          case GameState_Overworld_SpellMenu:
          case GameState_Overworld_ItemMenu:
+         case GameState_Overworld_ZoomMenu:
             Menu_Tic( &( game->menu ) );
             break;
       }
@@ -155,6 +156,7 @@ void Game_OpenMenu( Game_t* game, MenuId_t id )
       case MenuId_Overworld: Game_ChangeState( game, GameState_Overworld_MainMenu ); break;
       case MenuId_OverworldSpell: Game_ChangeState( game, GameState_Overworld_SpellMenu ); break;
       case MenuId_OverworldItem: Game_ChangeState( game, GameState_Overworld_ItemMenu ); break;
+      case MenuId_Zoom: Game_ChangeState( game, GameState_Overworld_ZoomMenu ); break;
    }
 }
 
