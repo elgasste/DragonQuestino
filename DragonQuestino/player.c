@@ -20,14 +20,11 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->spriteOffset.x = -2;
    player->spriteOffset.y = -4;
    player->sprite.direction = Direction_Down;
-
    strcpy( player->name, "TestMan1" );
    player->isCursed = False;
    player->hasHolyProtection = False;
    player->holyProtectionSteps = 0;
-
    player->townsVisited = 0;
-   SET_VISITED_TANTEGEL( player->townsVisited );
 
    player->stats.hitPoints = 12;
    player->stats.maxHitPoints = 12;

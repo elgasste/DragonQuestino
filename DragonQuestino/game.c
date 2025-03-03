@@ -109,7 +109,17 @@ void Game_EnterTargetPortal( Game_t* game )
    uint32_t destinationTileIndex = game->targetPortal->destinationTileIndex;
    Direction_t arrivalDirection = game->targetPortal->arrivalDirection;
 
-   TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
+   TileMap_Load( &( game->tileMap ), destinationTileIndex );
+
+   switch ( destinationTileIndex )
+   {
+      case TILEMAP_TANTEGEL_ID: SET_VISITED_TANTEGEL( game->player.townsVisited ); break;
+      case TILEMAP_BRECCONARY_ID: SET_VISITED_BRECCONARY( game->player.townsVisited ); break;
+      case TILEMAP_GARINHAM_ID: SET_VISITED_GARINHAM( game->player.townsVisited ); break;
+      case TILEMAP_KOL_ID: SET_VISITED_KOL( game->player.townsVisited ); break;
+      case TILEMAP_CANTLIN_ID: SET_VISITED_CANTLIN( game->player.townsVisited ); break;
+      case TILEMAP_RIMULDAR_ID: SET_VISITED_RIMULDAR( game->player.townsVisited ); break;
+   }
 
    game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x ) + COLLISION_THETA;
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems

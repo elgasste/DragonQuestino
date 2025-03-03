@@ -42,6 +42,12 @@
 #define GLOW_MAX_TILES                          200
 
 #define TILEMAP_OVERWORLD_ID                    0
+#define TILEMAP_TANTEGEL_ID                     2
+#define TILEMAP_BRECCONARY_ID                   4
+#define TILEMAP_GARINHAM_ID                     7
+#define TILEMAP_KOL_ID                          12
+#define TILEMAP_CANTLIN_ID                      10
+#define TILEMAP_RIMULDAR_ID                     13
 #define TILEMAP_KOL_ID                          12
 #define TILEMAP_CHARLOCK_ID                     25
 #define TILEMAP_TANTEGEL_INDEX                  7053
