@@ -30,10 +30,10 @@ typedef struct TileMap_t TileMap_t;
 #define SPELL_SET_HASMIDHEAL( x )               ( x ) |= 0x100
 #define SPELL_SET_HASSIZZLE( x )                ( x ) |= 0x200
 
-#define SPELL_GET_MAPUSEABLECOUNT( x, d )       ( 0 + \
+#define SPELL_GET_MAPUSEABLECOUNT( x, d1, d2 )  ( 0 + \
                                                 ( SPELL_HAS_HEAL( x ) ? 1 : 0 ) + \
-                                                ( SPELL_HAS_GLOW( x ) ? 1 : 0 ) + \
-                                                ( ( ( d ) && SPELL_HAS_EVAC( x ) ) ? 1 : 0 ) + \
+                                                ( ( ( d2 ) && SPELL_HAS_GLOW( x ) ) ? 1 : 0 ) + \
+                                                ( ( ( d1 ) && SPELL_HAS_EVAC( x ) ) ? 1 : 0 ) + \
                                                 ( SPELL_HAS_ZOOM( x ) ? 1 : 0 ) + \
                                                 ( SPELL_HAS_REPEL( x ) ? 1 : 0 ) + \
                                                 ( SPELL_HAS_MIDHEAL( x ) ? 1 : 0 ) )

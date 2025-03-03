@@ -196,7 +196,7 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
 
    strcpy( menu->title, STRING_OVERWORLD_MENU_SPELL );
 
-   menu->itemCount = SPELL_GET_MAPUSEABLECOUNT( spells, menu->player->tileMap->isDungeon );
+   menu->itemCount = SPELL_GET_MAPUSEABLECOUNT( spells, menu->player->tileMap->isDungeon, menu->player->tileMap->isDark );
    menu->itemsPerColumn = menu->itemCount;
    menu->selectedIndex = 0;
    menu->position.x = 152;
@@ -222,7 +222,7 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
       menu->items[i].command = MenuCommand_Spell_Heal;
       i++;
    }
-   if ( SPELL_HAS_GLOW( spells ) )
+   if ( menu->player->tileMap->isDark && SPELL_HAS_GLOW( spells ) )
    {
       sprintf( menu->items[i].text, STRING_SPELLMENU_GLOW );
       menu->items[i].command = MenuCommand_Spell_Glow;
