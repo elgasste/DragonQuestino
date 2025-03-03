@@ -150,7 +150,7 @@ namespace DragonQuestinoEditor.FileOps
 
             WriteToFileStream( fs, string.Format( "         tileMap->evacPortal.destinationTileMapIndex = {0};\n", tileMap.EvacPortal.DestinationTileMapIndex ) );
             WriteToFileStream( fs, string.Format( "         tileMap->evacPortal.destinationTileIndex = {0};\n", tileMap.EvacPortal.DestinationTileIndex ) );
-            WriteToFileStream( fs, string.Format( "         tileMap->evacPortal.arrivalDirection = {0};\n", tileMap.EvacPortal.ArrivalDirection ) );
+            WriteToFileStream( fs, string.Format( "         tileMap->evacPortal.arrivalDirection = (Direction_t){0};\n", (int)( tileMap.EvacPortal.ArrivalDirection ) ) );
 
             WriteToFileStream( fs, "         tileMap->activeSpriteCount = 0;\n" );
             WriteToFileStream( fs, string.Format( "         tileMap->staticSpriteCount = {0};\n", tileMap.StaticSprites.Count ) );
