@@ -27,7 +27,7 @@ void Game_CastGlow( Game_t* game )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
    }
-   else
+   else if ( game->tileMap.isDark )
    {
       if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
       {
