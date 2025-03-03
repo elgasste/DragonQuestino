@@ -26,6 +26,9 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->hasHolyProtection = False;
    player->holyProtectionSteps = 0;
 
+   player->townsVisited = 0;
+   SET_VISITED_TANTEGEL( player->townsVisited );
+
    player->stats.hitPoints = 12;
    player->stats.maxHitPoints = 12;
    player->stats.magicPoints = 0;
