@@ -137,6 +137,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Search_FoundHiddenStairs,
    DialogMessageId_Spell_None,
    DialogMessageId_Spell_OverworldCantCast,
+   DialogMessageId_Spell_OverworldCastGlow,
    DialogMessageId_Spell_NotEnoughMp,
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
