@@ -110,9 +110,9 @@ void Game_EnterTargetPortal( Game_t* game )
    uint32_t destinationTileIndex = game->targetPortal->destinationTileIndex;
    Direction_t arrivalDirection = game->targetPortal->arrivalDirection;
 
-   TileMap_Load( &( game->tileMap ), destinationTileIndex );
+   TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
 
-   switch ( destinationTileIndex )
+   switch ( game->targetPortal->destinationTileMapIndex )
    {
       case TILEMAP_TANTEGEL_ID: SET_VISITED_TANTEGEL( game->player.townsVisited ); break;
       case TILEMAP_BRECCONARY_ID: SET_VISITED_BRECCONARY( game->player.townsVisited ); break;
