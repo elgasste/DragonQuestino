@@ -75,6 +75,11 @@ uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
    return Math_CollectAmount16u( &( player->experience ), experience );
 }
 
+uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
+{
+   return Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
+}
+
 Bool_t Player_CollectItem( Player_t* player, Item_t item )
 {
    Bool_t collected = False;

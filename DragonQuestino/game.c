@@ -240,13 +240,13 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;
       case 0x8:         // Tantegel ground floor, left room, upper-left chest
-         gold = Random_U16( 6, 13 ); break;
+         gold = Random_u16( 6, 13 ); break;
       case 0x10:        // Tantegel ground floor, left room, middle chest
-         gold = Random_U16( 6, 13 ); break;
+         gold = Random_u16( 6, 13 ); break;
       case 0x20:        // Tantegel ground floor, left room, bottom-left chest
-         gold = Random_U16( 6, 13 ); break;
+         gold = Random_u16( 6, 13 ); break;
       case 0x40:        // Tantegel ground floor, left room, bottom-right chest
-         gold = Random_U16( 6, 13 ); break;
+         gold = Random_u16( 6, 13 ); break;
       case 0x80:        // Tantegel basement
          collected = Player_CollectItem( &( game->player ), Item_StoneOfSunlight );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_STONEOFSUNLIGHT );
@@ -280,13 +280,13 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          }
          else
          {
-            gold = Random_U16( 100, 131 ); break;
+            gold = Random_u16( 100, 131 ); break;
          }
          break;
       case 0x4000:      // Rocky Mountain Cave B2, center-right chest
-         gold = Random_U16( 10, 17 ); break;
+         gold = Random_u16( 10, 17 ); break;
       case 0x8000:      // Garinham, top-left chest
-         gold = Random_U16( 10, 17 ); break;
+         gold = Random_u16( 10, 17 ); break;
       case 0x10000:     // Garinham, top-right chest
          collected = Player_CollectItem( &( game->player ), Item_Torch );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_TORCH );
@@ -300,9 +300,9 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;
       case 0x80000:     // Garin's Grave B1, center chest
-         gold = Random_U16( 5, 20 ); break;
+         gold = Random_u16( 5, 20 ); break;
       case 0x100000:    // Garin's Grave B1, right chest
-         gold = Random_U16( 6, 13 ); break;
+         gold = Random_u16( 6, 13 ); break;
       case 0x200000:    // Garin's Grave B3, upper-left chest
          collected = Player_CollectItem( &( game->player ), Item_CursedBelt );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_CURSEDBELT );
@@ -319,7 +319,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_HERB );
          break;
       case 0x2000000:   // Charlock B7, center-left chest
-         gold = Random_U16( 500, 755 ); break;
+         gold = Random_u16( 500, 755 ); break;
       case 0x4000000:   // Charlock B7, center-right chest
          collected = Player_CollectItem( &( game->player ), Item_Key );
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_KEY );
