@@ -88,9 +88,14 @@ internal void Game_TicAnimation_Overworld_Pause( Game_t* game )
    {
       Game_StopAnimation( game );
 
-      if ( game->scrollingDialog.messageId == DialogMessageId_Search_FoundHiddenStairs &&
-           game->tileMap.id == TILEMAP_CHARLOCK_ID &&
-           game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX )
+      if ( game->scrollingDialog.messageId == DialogMessageId_Spell_CastEvac )
+      {
+         // TODO: actually do the evac
+         game->scrollingDialog.messageId = DialogMessageId_Count;
+      }
+      else if ( game->scrollingDialog.messageId == DialogMessageId_Search_FoundHiddenStairs &&
+                game->tileMap.id == TILEMAP_CHARLOCK_ID &&
+                game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX )
       {
          game->scrollingDialog.messageId = DialogMessageId_Count;
          Game_PlayerSteppedOnTile( game, TILEMAP_HIDDENSTAIRS_INDEX );
