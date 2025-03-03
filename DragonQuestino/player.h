@@ -30,6 +30,22 @@ typedef struct TileMap_t TileMap_t;
 #define SPELL_SET_HASMIDHEAL( x )               ( x ) |= 0x100
 #define SPELL_SET_HASSIZZLE( x )                ( x ) |= 0x200
 
+#define SPELL_HEAL_MP                           4
+#define SPELL_SIZZ_MP                           2
+#define SPELL_SLEEP_MP                          2
+#define SPELL_GLOW_MP                           3
+#define SPELL_FIZZLE_MP                         2
+#define SPELL_EVAC_MP                           6
+#define SPELL_ZOOM_MP                           8
+#define SPELL_REPEL_MP                          2
+#define SPELL_MIDHEAL_MP                        10
+#define SPELL_SIZZLE_MP                         5
+
+#define SPELL_HEAL_MINEFFECT                    10
+#define SPELL_HEAL_MAXEFFECT                    17
+#define SPELL_MIDHEAL_MINEFFECT                 85
+#define SPELL_MIDHEAL_MAXEFFECT                 100
+
 #define SPELL_GET_MAPUSEABLECOUNT( x, d1, d2 )  ( 0 + \
                                                 ( SPELL_HAS_HEAL( x ) ? 1 : 0 ) + \
                                                 ( ( ( d2 ) && SPELL_HAS_GLOW( x ) ) ? 1 : 0 ) + \
@@ -95,6 +111,8 @@ typedef struct TileMap_t TileMap_t;
 #define ITEM_TOGGLE_HASDRAGONSCALE( x )         ( x ) ^= ( 0x1 << 23 )
 #define ITEM_TOGGLE_HASCURSEDBELT( x )          ( x ) ^= ( 0x1 << 24 )
 
+#define HOLY_PROTECTION_MAX_STEPS               127
+
 typedef struct Player_t
 {
    Screen_t* screen;
@@ -108,6 +126,8 @@ typedef struct Player_t
 
    uint32_t tileIndex;
    Bool_t isCursed;
+   Bool_t hasHolyProtection;
+   uint32_t holyProtectionSteps;
 
    char name[9];
    BattleStats_t stats;
@@ -159,6 +179,7 @@ uint16_t Player_CollectExperience( Player_t* player, uint16_t experience );
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
 void Player_SetCursed( Player_t* player, Bool_t cursed );
+void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection);
 
 #if defined( __cplusplus )
 }

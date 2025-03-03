@@ -74,7 +74,9 @@ void Game_CastRepel( Game_t* game )
    }
    else
    {
-      // TODO
+      Game_DrawOverworldQuickStatus( game );
+      Player_SetHolyProtection( &( game->player ), True );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepel );
    }
 }
 

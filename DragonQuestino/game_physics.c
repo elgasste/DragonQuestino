@@ -146,6 +146,13 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    game->player.tileIndex = tileIndex;
    portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
 
+   if ( portal )
+   {
+      game->targetPortal = portal;
+      Game_StartAnimation( game, Animation_TileMap_FadeOut );
+      return;
+   }
+
    if ( game->tileMap.isDark && game->tileMap.glowDiameter > 1 )
    {
       game->tileMap.glowTileCount++;
@@ -157,10 +164,15 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
       }
    }
 
-   if ( portal )
+   if ( game->player.hasHolyProtection )
    {
-      game->targetPortal = portal;
-      Game_StartAnimation( game, Animation_TileMap_FadeOut );
+      game->player.holyProtectionSteps++;
+
+      if ( game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
+      {
+         game->player.hasHolyProtection = False;
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_HolyProtection_Off );
+      }
    }
 }
 
