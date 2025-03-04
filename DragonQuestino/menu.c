@@ -72,7 +72,6 @@ void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
    int32_t newIndex = 0;
    uint32_t column;
 
-   // TODO: there's still a bug in here, pressing left/right with a single column is unpredictable
    switch ( direction )
    {
       case Direction_Left:
@@ -86,7 +85,7 @@ void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
          newIndex = (int32_t)menu->selectedIndex + menu->itemsPerColumn;
          if ( newIndex >= (int32_t)( menu->itemCount ) )
          {
-            newIndex = menu->itemCount - newIndex;
+            newIndex = menu->itemsPerColumn - ( menu->itemCount - menu->selectedIndex );
          }
          break;
       case Direction_Up:
