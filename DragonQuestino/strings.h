@@ -111,6 +111,7 @@
 #define STRING_ITEMUSE_HERB                                          "You grind up an herb and eat it."
 #define STRING_ITEMUSE_WING                                          "You throw a Chimaera wing into the air."
 #define STRING_ITEMUSE_FAIRYWATER                                    "You drink a vial of fairy water."
+#define STRING_ITEMUSE_WING_CANTUSE                                  "You cannot use a Chimaera wing here."
 #define STRING_ITEMUSE_TORCH_CANTUSE                                 "You cannot use a torch here."
 #define STRING_ITEMUSE_TORCH                                         "You light a torch."
 #define STRING_ITEMUSE_FAIRYFLUTE_1                                  "You play the Fairy Flute."

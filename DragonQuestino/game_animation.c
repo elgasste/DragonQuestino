@@ -93,7 +93,8 @@ internal void Game_TicAnimation_Overworld_Pause( Game_t* game )
          game->targetPortal = &( game->tileMap.evacPortal );
          Game_StartAnimation( game, Animation_TileMap_FadeOut );
       }
-      else if ( game->scrollingDialog.messageId == DialogMessageId_Spell_CastZoom )
+      else if ( game->scrollingDialog.messageId == DialogMessageId_Use_Wing ||
+                game->scrollingDialog.messageId == DialogMessageId_Spell_CastZoom )
       {
          Game_StartAnimation( game, Animation_TileMap_FadeOut );
       }

@@ -15,8 +15,16 @@ void Game_UseHerb( Game_t* game )
 
 void Game_UseWing( Game_t* game )
 {
-   ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
-   Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_Wing );
+   if ( game->tileMap.isDungeon )
+   {
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_WingCantUse );
+   }
+   else
+   {
+      ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
+      game->targetPortal = &( game->zoomPortals[TILEMAP_TANTEGEL_TOWN_ID] );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_Wing );
+   }
 }
 
 void Game_UseFairyWater( Game_t* game )

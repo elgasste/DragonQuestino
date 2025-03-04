@@ -42,7 +42,7 @@
 #define GLOW_MAX_TILES                          200
 
 #define TILEMAP_OVERWORLD_ID                    0
-#define TILEMAP_TANTEGEL_ID                     2
+#define TILEMAP_TANTEGEL_ID                     3
 #define TILEMAP_BRECCONARY_ID                   4
 #define TILEMAP_GARINHAM_ID                     7
 #define TILEMAP_KOL_ID                          12
