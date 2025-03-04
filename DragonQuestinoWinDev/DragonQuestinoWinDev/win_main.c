@@ -472,7 +472,4 @@ internal void MaxOutStats()
 
    g_globals.game.player.spells = 0x3FF;
    g_globals.game.player.townsVisited = 0x3F;
-
-   // MUFFINS: for testing
-   g_globals.game.player.stats.hitPoints = 100;
 }
