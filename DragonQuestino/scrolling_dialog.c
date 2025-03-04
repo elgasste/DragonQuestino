@@ -238,6 +238,8 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Door_NoKeys:
       case DialogMessageId_FullyHealed:
       case DialogMessageId_HolyProtection_Off:
+      case DialogMessageId_Use_WingCantUse:
+      case DialogMessageId_Use_Wing:
       case DialogMessageId_Use_TorchCantUse:
       case DialogMessageId_Use_Torch:
       case DialogMessageId_Use_GwaelynsLoveCantUse:
@@ -251,7 +253,6 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Search_FoundHiddenStairs:
       case DialogMessageId_Use_Herb1:
       case DialogMessageId_Use_Herb2:
-      case DialogMessageId_Use_Wing:
       case DialogMessageId_Use_FairyWater:
       case DialogMessageId_Use_FairyFlute:
       case DialogMessageId_Use_SilverHarp:
@@ -329,19 +330,14 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 0: strcpy( text, STRING_ITEMUSE_HERB ); return;
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_2, dialog->insertionText ); return;
          }
-      case DialogMessageId_Use_Wing:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_ITEMUSE_WING ); return;
-            case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
-         }
+      case DialogMessageId_Use_Wing: strcpy( text, STRING_ITEMUSE_WING ); return;
       case DialogMessageId_Use_FairyWater:
          switch ( dialog->section )
          {
             case 0: strcpy( text, STRING_ITEMUSE_FAIRYWATER ); return;
             case 1: strcpy( text, STRING_HOLYPROTECTION_ON ); return;
          }
-
+      case DialogMessageId_Use_WingCantUse: strcpy( text, STRING_ITEMUSE_WING_CANTUSE ); return;
       case DialogMessageId_Use_TorchCantUse: strcpy( text, STRING_ITEMUSE_TORCH_CANTUSE ); return;
       case DialogMessageId_Use_Torch: strcpy( text, STRING_ITEMUSE_TORCH ); return;
       case DialogMessageId_Use_FairyFlute:
