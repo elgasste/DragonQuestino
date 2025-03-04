@@ -15,6 +15,7 @@ void Game_UseHerb( Game_t* game )
 
 void Game_UseWing( Game_t* game )
 {
+   // MUFFINS: do the same thing as Zoom
    ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
    Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_Wing );
 }
