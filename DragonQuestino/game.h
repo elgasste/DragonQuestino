@@ -60,6 +60,7 @@ void Game_OpenMenu( Game_t* game, MenuId_t id );
 void Game_OpenScrollingDialog( Game_t* game, ScrollingDialogType_t type, DialogMessageId_t messageId );
 void Game_Search( Game_t* game );
 void Game_OpenDoor( Game_t* game );
+void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogMessageId_t msg1, DialogMessageId_t msg2 );
 
 // game_input.c
 void Game_HandleInput( Game_t* game );

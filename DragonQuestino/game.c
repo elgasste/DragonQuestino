@@ -233,6 +233,17 @@ void Game_OpenDoor( Game_t* game )
    }
 }
 
+void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogMessageId_t msg1, DialogMessageId_t msg2 )
+{
+   uint8_t amount;
+   char str[16];
+
+   amount = Player_RestoreHitPoints( &( game->player ), Random_u8( minHp, maxHp ) );
+   sprintf( str, "%u", amount );
+   ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), str );
+   Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, ( amount == 1 ) ? msg1: msg2 );
+}
+
 internal void Game_TicOverworld( Game_t* game )
 {
    Game_TicPhysics( game );

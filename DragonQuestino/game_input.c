@@ -128,6 +128,8 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 
 internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
 {
+   uint32_t e;
+
    if ( ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
@@ -144,7 +146,36 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      ScrollingDialog_Next( &( game->scrollingDialog ) );
+      if ( ScrollingDialog_Next( &( game->scrollingDialog ) ) )
+      {
+         switch ( game->scrollingDialog.section )
+         {
+            case 1:
+               switch ( game->scrollingDialog.messageId )
+               {
+                  case DialogMessageId_Use_Herb1:
+                  case DialogMessageId_Use_Herb2:
+                  case DialogMessageId_Spell_OverworldCastHeal1:
+                  case DialogMessageId_Spell_OverworldCastHeal2:
+                  case DialogMessageId_Spell_OverworldCastMidheal1:
+                  case DialogMessageId_Spell_OverworldCastMidheal2:
+                     Game_DrawOverworldQuickStatus( game );
+                     break;
+                  case DialogMessageId_Use_CursedBelt:
+                  case DialogMessageId_Chest_DeathNecklace:
+                     Player_SetCursed( &( game->player ), True );
+                     break;
+                  case DialogMessageId_Use_GwaelynsLove:
+                     e = Player_GetExperienceRemaining( &( game->player ) );
+                     if ( e == 0 )
+                     {
+                        ScrollingDialog_Skip( &( game->scrollingDialog ) );
+                     }
+                     break;
+               }
+               break;
+         }
+      }
    }
 }
 

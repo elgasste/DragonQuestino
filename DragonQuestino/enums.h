@@ -155,14 +155,15 @@ typedef enum DialogMessageId_t
    DialogMessageId_Spell_CastEvac,
    DialogMessageId_Spell_CastZoom,
    DialogMessageId_Spell_NotEnoughMp,
-   DialogMessageId_Spell_FullyHealed,
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
    DialogMessageId_Door_NoKeys,
 
+   DialogMessageId_FullyHealed,
    DialogMessageId_HolyProtection_Off,
 
-   DialogMessageId_Use_Herb,
+   DialogMessageId_Use_Herb1,
+   DialogMessageId_Use_Herb2,
    DialogMessageId_Use_Wing,
    DialogMessageId_Use_FairyWater,
    DialogMessageId_Use_TorchCantUse,
