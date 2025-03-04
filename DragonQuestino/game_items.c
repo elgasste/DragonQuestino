@@ -2,9 +2,15 @@
 
 void Game_UseHerb( Game_t* game )
 {
-   ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
-   Game_DrawOverworldQuickStatus( game );
-   Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_Herb );
+   if ( game->player.stats.hitPoints == UINT8_MAX )
+   {
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_FullyHealed );
+   }
+   else
+   {
+      ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
+      Game_ApplyHealing( game, ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT, DialogMessageId_Use_Herb1, DialogMessageId_Use_Herb2 );
+   }
 }
 
 void Game_UseWing( Game_t* game )

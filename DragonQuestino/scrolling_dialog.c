@@ -225,10 +225,10 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Spell_CastEvac:
       case DialogMessageId_Spell_CastZoom:
       case DialogMessageId_Spell_NotEnoughMp:
-      case DialogMessageId_Spell_FullyHealed:
       case DialogMessageId_Item_None:
       case DialogMessageId_Door_None:
       case DialogMessageId_Door_NoKeys:
+      case DialogMessageId_FullyHealed:
       case DialogMessageId_HolyProtection_Off:
       case DialogMessageId_Use_TorchCantUse:
       case DialogMessageId_Use_Torch:
@@ -241,7 +241,8 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Search_NothingFound:
       case DialogMessageId_Search_FoundItem:
       case DialogMessageId_Search_FoundHiddenStairs:
-      case DialogMessageId_Use_Herb:
+      case DialogMessageId_Use_Herb1:
+      case DialogMessageId_Use_Herb2:
       case DialogMessageId_Use_Wing:
       case DialogMessageId_Use_FairyWater:
       case DialogMessageId_Use_FairyFlute:
@@ -303,16 +304,22 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
       case DialogMessageId_Spell_CastEvac: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_EVAC ); return;
       case DialogMessageId_Spell_CastZoom: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_ZOOM ); return;
       case DialogMessageId_Spell_NotEnoughMp: strcpy( text, STRING_NOTENOUGHMP ); return;
-      case DialogMessageId_Spell_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogMessageId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
       case DialogMessageId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;
       case DialogMessageId_Door_NoKeys: strcpy( text, STRING_OVERWORLD_DIALOG_NO_KEYS ); return;
+      case DialogMessageId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogMessageId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
-      case DialogMessageId_Use_Herb:
+      case DialogMessageId_Use_Herb1:
          switch ( dialog->section )
          {
             case 0: strcpy( text, STRING_ITEMUSE_HERB ); return;
-            case 1: strcpy( text, STRING_BUTNOTHINGHAPPENS ); return;
+            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_1, dialog->insertionText ); return;
+         }
+      case DialogMessageId_Use_Herb2:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, STRING_ITEMUSE_HERB ); return;
+            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_2, dialog->insertionText ); return;
          }
       case DialogMessageId_Use_Wing:
          switch ( dialog->section )
@@ -410,25 +417,25 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_HEAL ); return;
-            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CASTHEAL_RESULT_1, dialog->insertionText ); return;
+            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_1, dialog->insertionText ); return;
          }
       case DialogMessageId_Spell_OverworldCastHeal2:
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_HEAL ); return;
-            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CASTHEAL_RESULT_2, dialog->insertionText ); return;
+            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_2, dialog->insertionText ); return;
          }
       case DialogMessageId_Spell_OverworldCastMidheal1:
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_MIDHEAL ); return;
-            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CASTHEAL_RESULT_1, dialog->insertionText ); return;
+            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_1, dialog->insertionText ); return;
          }
       case DialogMessageId_Spell_OverworldCastMidheal2:
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_MIDHEAL ); return;
-            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CASTHEAL_RESULT_2, dialog->insertionText ); return;
+            case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_2, dialog->insertionText ); return;
          }
    }
 }
