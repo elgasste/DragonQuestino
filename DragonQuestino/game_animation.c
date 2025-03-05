@@ -275,9 +275,9 @@ internal void Game_TicAnimation_RainbowBridge_Trippy( Game_t* game )
 
       Screen_WipeColor( &( game->screen ), COLOR_WHITE );
       ITEM_TOGGLE_HASRAINBOWDROP( game->player.items );
-      game->tileMap.usedRainbowDrop = True;
+      game->gameFlags.usedRainbowDrop = True;
       TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
-      TILE_SET_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
+      TILE_TOGGLE_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX] );
       Game_StartAnimation( game, Animation_RainbowBridge_WhiteOut );
    }
    else

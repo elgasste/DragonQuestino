@@ -1,5 +1,6 @@
 #include "tile_map.h"
 #include "screen.h"
+#include "game_flags.h"
 #include "math.h"
 
 #define SPRITE_CHEST_INDEX    0
@@ -8,21 +9,17 @@
 internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter );
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
 
-void TileMap_Init( TileMap_t* tileMap, Screen_t* screen )
+void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags )
 {
    tileMap->screen = screen;
+   tileMap->gameFlags = gameFlags;
    TileMap_ResetViewport( tileMap );
 
    Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
-   tileMap->treasureFlags = 0xFFFFFFFF;
-
    Sprite_LoadStatic( &( tileMap->doorSprite ), SPRITE_DOOR_INDEX );
-   tileMap->doorFlags = 0xFFFFFFFF;
 
    tileMap->isDungeon = False;
    tileMap->isDark = False;
-   tileMap->usedRainbowDrop = False;
-   tileMap->foundHiddenStairs = False;
 }
 
 void TileMap_ResetViewport( TileMap_t* tileMap )
@@ -181,14 +178,14 @@ void TileMap_Draw( TileMap_t* tileMap )
          treasureFlag = TileMap_GetTreasureFlag( tileMap->id, tileIndex );
          doorFlag = TileMap_GetDoorFlag( tileMap->id, tileIndex );
 
-         if ( treasureFlag && ( tileMap->treasureFlags & treasureFlag ) )
+         if ( treasureFlag && ( tileMap->gameFlags->treasures & treasureFlag ) )
          {
             Screen_DrawMemorySection( tileMap->screen, tileMap->chestSprite.texture.memory, SPRITE_TEXTURE_SIZE,
                                       tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,
                                       tileWidth, tileHeight,
                                       screenX + tileMap->viewportScreenPos.x, screenY + tileMap->viewportScreenPos.y, True );
          }
-         else if ( doorFlag && ( tileMap->doorFlags & doorFlag ) )
+         else if ( doorFlag && ( tileMap->gameFlags->doors & doorFlag ) )
          {
             Screen_DrawMemorySection( tileMap->screen, tileMap->doorSprite.texture.memory, SPRITE_TEXTURE_SIZE,
                                       tileX == firstTileX ? tileOffsetX : 0, tileY == firstTileY ? tileOffsetY : 0,

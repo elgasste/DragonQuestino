@@ -50,7 +50,6 @@ internal void Game_HandleOverworldInput( Game_t* game )
    {
       game->overworldInactivitySeconds = 0.0f;
 
-      // MUFFINS: use the dpad intensity values in here
       if ( leftIsDown && !rightIsDown )
       {
          player->velocity.x = -( player->maxVelocity ) * game->input.dpadIntensity[Direction_Left];

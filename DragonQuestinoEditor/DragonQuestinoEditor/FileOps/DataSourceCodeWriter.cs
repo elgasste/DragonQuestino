@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
-using System.Security.Policy;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -67,6 +66,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
          WriteToFileStream( fs, "#include \"screen.h\"\n" );
          WriteToFileStream( fs, "#include \"tile_map.h\"\n" );
+         WriteToFileStream( fs, "#include \"game_flags.h\"\n" );
          WriteToFileStream( fs, "#include \"random.h\"\n" );
       }
 
@@ -118,7 +118,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "{\n" );
          WriteToFileStream( fs, "   int32_t i, j;\n" );
          WriteToFileStream( fs, "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n" );
-         WriteToFileStream( fs, "   tileMap->doorFlags = ( 0xFFFF0000 | ( tileMap->doorFlags & 0xFFFF ) );\n\n" );
+         WriteToFileStream( fs, "   tileMap->gameFlags->doors = ( 0xFFFF0000 | ( tileMap->gameFlags->doors & 0xFFFF ) );\n\n" );
          WriteToFileStream( fs, "   Random_Seed();\n\n" );
          WriteToFileStream( fs, "   switch( id )\n" );
          WriteToFileStream( fs, "   {\n" );
@@ -271,13 +271,13 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, "   }\n\n" );
 
-         WriteToFileStream( fs, "   if ( id == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )\n" );
+         WriteToFileStream( fs, "   if ( id == TILEMAP_OVERWORLD_ID && tileMap->gameFlags->usedRainbowDrop )\n" );
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );\n" );
-         WriteToFileStream( fs, "      TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );\n" );
+         WriteToFileStream( fs, "      TILE_TOGGLE_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX] );\n" );
          WriteToFileStream( fs, "   }\n\n" );
 
-         WriteToFileStream( fs, "   if ( id == TILEMAP_CHARLOCK_ID && tileMap->foundHiddenStairs )\n" );
+         WriteToFileStream( fs, "   if ( id == TILEMAP_CHARLOCK_ID && tileMap->gameFlags->foundHiddenStairs )\n" );
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      TileMap_LoadHiddenStairs( tileMap );\n" );
          WriteToFileStream( fs, "   }\n" );

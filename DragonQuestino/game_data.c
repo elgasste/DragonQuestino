@@ -2,6 +2,7 @@
 
 #include "screen.h"
 #include "tile_map.h"
+#include "game_flags.h"
 #include "random.h"
 
 void Screen_LoadPalette( Screen_t* screen )
@@ -2663,7 +2664,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
    int32_t i, j;
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
 
-   tileMap->doorFlags = ( 0xFFFF0000 | ( tileMap->doorFlags & 0xFFFF ) );
+   tileMap->gameFlags->doors = ( 0xFFFF0000 | ( tileMap->gameFlags->doors & 0xFFFF ) );
 
    Random_Seed();
 
@@ -11983,13 +11984,13 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
    }
 
-   if ( id == TILEMAP_OVERWORLD_ID && tileMap->usedRainbowDrop )
+   if ( id == TILEMAP_OVERWORLD_ID && tileMap->gameFlags->usedRainbowDrop )
    {
       TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
-      TILE_SET_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], True );
+      TILE_TOGGLE_PASSABLE( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX] );
    }
 
-   if ( id == TILEMAP_CHARLOCK_ID && tileMap->foundHiddenStairs )
+   if ( id == TILEMAP_CHARLOCK_ID && tileMap->gameFlags->foundHiddenStairs )
    {
       TileMap_LoadHiddenStairs( tileMap );
    }

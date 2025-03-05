@@ -35,7 +35,7 @@
 #define TILE_GET_DAMAGERATE( t )                ( ( ( t ) & 0x1800 ) >> 11 )
 
 #define TILE_SET_TEXTUREINDEX( t, i )           ( t ) = ( ( t ) & 0xFFE0 ) | i
-#define TILE_SET_PASSABLE( t, b )               ( t ) = ( ( t ) & 0xFFDF ) | ( b << 5 )
+#define TILE_TOGGLE_PASSABLE( t )               ( t ) ^= 0x20
 
 #define TORCH_DIAMETER                          3
 #define GLOW_SPELL_DIAMETER                     7
@@ -76,6 +76,7 @@
 #define TILEMAP_RIMULDAR_ZOOM_INDEX             11312
 
 typedef struct Screen_t Screen_t;
+typedef struct GameFlags_t GameFlags_t;
 
 typedef struct TileTexture_t
 {
@@ -95,6 +96,8 @@ TilePortal_t;
 typedef struct TileMap_t
 {
    Screen_t* screen;
+   GameFlags_t* gameFlags;
+
    uint32_t id;
 
    Bool_t isDungeon;
@@ -102,9 +105,6 @@ typedef struct TileMap_t
    uint32_t glowDiameter;
    uint32_t targetGlowDiameter;
    uint32_t glowTileCount;
-
-   Bool_t usedRainbowDrop;
-   Bool_t foundHiddenStairs;
 
    // bits 0-4: texture index (max 32 textures)
    // bit 5: is-passable flag
@@ -132,12 +132,7 @@ typedef struct TileMap_t
    uint32_t staticSpriteCount;
 
    StaticSprite_t chestSprite;
-   uint32_t treasureFlags;
-
    StaticSprite_t doorSprite;
-   // low 16 bits: permanent doors (they stay opened)
-   // high 16 bits: temporary doors (they close again when you leave the tile map)
-   uint32_t doorFlags;
 }
 TileMap_t;
 
@@ -145,7 +140,7 @@ TileMap_t;
 extern "C" {
 #endif
 
-void TileMap_Init( TileMap_t* tileMap, Screen_t* screen );
+void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags );
 void TileMap_ResetViewport( TileMap_t* tileMap );
 void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH );
 void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );
