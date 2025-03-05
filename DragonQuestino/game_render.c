@@ -14,8 +14,11 @@ void Game_Draw( Game_t* game )
          case Animation_TileMap_FadeOut:
          case Animation_TileMap_FadePause:
          case Animation_TileMap_FadeIn:
+         case Animation_TileMap_WhiteOut:
+         case Animation_TileMap_WhitePause:
+         case Animation_TileMap_WhiteIn:
          case Animation_RainbowBridge_Trippy:
-         case Animation_RainbowBridge_Whiteout:
+         case Animation_RainbowBridge_WhiteOut:
          case Animation_RainbowBridge_FadeIn:
          case Animation_RainbowBridge_Pause:
             Game_DrawOverworld( game );

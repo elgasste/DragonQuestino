@@ -47,8 +47,11 @@ typedef enum Animation_t
    Animation_TileMap_FadeOut,
    Animation_TileMap_FadePause,
    Animation_TileMap_FadeIn,
+   Animation_TileMap_WhiteOut,
+   Animation_TileMap_WhitePause,
+   Animation_TileMap_WhiteIn,
    Animation_RainbowBridge_Trippy,
-   Animation_RainbowBridge_Whiteout,
+   Animation_RainbowBridge_WhiteOut,
    Animation_RainbowBridge_FadeIn,
    Animation_RainbowBridge_Pause,
 
