@@ -50,9 +50,10 @@ internal void Game_HandleOverworldInput( Game_t* game )
    {
       game->overworldInactivitySeconds = 0.0f;
 
+      // MUFFINS: use the dpad intensity values in here
       if ( leftIsDown && !rightIsDown )
       {
-         player->velocity.x = -( player->maxVelocity );
+         player->velocity.x = -( player->maxVelocity ) * game->input.dpadIntensity[Direction_Left];
 
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
@@ -67,7 +68,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
       }
       else if ( rightIsDown && !leftIsDown )
       {
-         player->velocity.x = player->maxVelocity;
+         player->velocity.x = player->maxVelocity * game->input.dpadIntensity[Direction_Right];
 
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
@@ -83,7 +84,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
       if ( upIsDown && !downIsDown )
       {
-         player->velocity.y = -( player->maxVelocity );
+         player->velocity.y = -( player->maxVelocity )* game->input.dpadIntensity[Direction_Up];
 
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
@@ -98,7 +99,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
       }
       else if ( downIsDown && !upIsDown )
       {
-         player->velocity.y = player->maxVelocity;
+         player->velocity.y = player->maxVelocity* game->input.dpadIntensity[Direction_Down];
 
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
