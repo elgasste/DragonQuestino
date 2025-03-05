@@ -10,6 +10,7 @@
 
 typedef struct Screen_t Screen_t;
 typedef struct Player_t Player_t;
+typedef struct TileMap_t TileMap_t;
 
 typedef struct MenuItem_t
 {
@@ -23,6 +24,7 @@ typedef struct Menu_t
 {
    Screen_t* screen;
    Player_t* player;
+   TileMap_t* tileMap;
 
    char title[MENU_LINE_LENGTH];
    MenuItem_t items[MENU_MAX_ITEMS];
@@ -47,7 +49,7 @@ Menu_t;
 extern "C" {
 #endif
 
-void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player );
+void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player, TileMap_t* tileMap );
 void Menu_Load( Menu_t* menu, MenuId_t id );
 void Menu_Draw( Menu_t* menu );
 void Menu_ResetCarat( Menu_t* menu );

@@ -16,8 +16,8 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
-   Player_Init( &( game->player ), &( game->screen ), &( game->tileMap ) );
-   Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
+   Player_Init( &( game->player ), &( game->screen ) );
+   Menu_Init( &( game->menu ), &( game->screen ), &( game->player ), &( game->tileMap ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )

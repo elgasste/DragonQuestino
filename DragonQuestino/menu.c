@@ -10,10 +10,11 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu );
 internal void Menu_LoadOverworldItem( Menu_t* menu );
 internal void Menu_LoadZoom( Menu_t* menu );
 
-void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player )
+void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player, TileMap_t* tileMap )
 {
    menu->screen = screen;
    menu->player = player;
+   menu->tileMap = tileMap;
 }
 
 void Menu_Load( Menu_t* menu, MenuId_t id )
@@ -198,7 +199,7 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
 
    strcpy( menu->title, STRING_OVERWORLD_MENU_SPELL );
 
-   menu->itemCount = SPELL_GET_MAPUSEABLECOUNT( spells, menu->player->tileMap->isDungeon, menu->player->tileMap->isDark );
+   menu->itemCount = SPELL_GET_MAPUSEABLECOUNT( spells, menu->tileMap->isDungeon, menu->tileMap->isDark );
    menu->itemsPerColumn = menu->itemCount;
    menu->selectedIndex = 0;
    menu->position.x = 152;
@@ -224,13 +225,13 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
       menu->items[i].command = MenuCommand_Spell_Heal;
       i++;
    }
-   if ( menu->player->tileMap->isDark && SPELL_HAS_GLOW( spells ) )
+   if ( menu->tileMap->isDark && SPELL_HAS_GLOW( spells ) )
    {
       sprintf( menu->items[i].text, STRING_SPELLMENU_GLOW );
       menu->items[i].command = MenuCommand_Spell_Glow;
       i++;
    }
-   if ( menu->player->tileMap->isDungeon && SPELL_HAS_EVAC( spells ) )
+   if ( menu->tileMap->isDungeon && SPELL_HAS_EVAC( spells ) )
    {
       sprintf( menu->items[i].text, STRING_SPELLMENU_EVAC );
       menu->items[i].command = MenuCommand_Spell_Evac;
