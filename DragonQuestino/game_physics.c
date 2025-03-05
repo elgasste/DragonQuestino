@@ -56,7 +56,7 @@ void Game_TicPhysics( Game_t* game )
                tile = game->tileMap.tiles[tileIndex];
 
                if ( !TILE_GET_PASSABLE( tile ) ||
-                    ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->tileMap.doorFlags ) )
+                    ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->gameFlags.doors ) )
                {
                   newPos.x = (float)( ( ( col + 1 ) * TILE_SIZE ) );
                   break;
@@ -74,7 +74,7 @@ void Game_TicPhysics( Game_t* game )
                tile = game->tileMap.tiles[tileIndex];
 
                if ( !TILE_GET_PASSABLE( tile ) ||
-                    ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->tileMap.doorFlags ) )
+                    ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->gameFlags.doors ) )
                {
                   newPos.x = ( col * TILE_SIZE ) - player->hitBoxSize.x - COLLISION_THETA;
                   break;
@@ -100,7 +100,7 @@ void Game_TicPhysics( Game_t* game )
                tile = game->tileMap.tiles[tileIndex];
 
                if ( !TILE_GET_PASSABLE( tile ) ||
-                    ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->tileMap.doorFlags ) )
+                    ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->gameFlags.doors ) )
                {
                   newPos.y = (float)( ( ( row + 1 ) * TILE_SIZE ) );
                   break;
@@ -118,7 +118,7 @@ void Game_TicPhysics( Game_t* game )
                tile = game->tileMap.tiles[tileIndex];
 
                if ( !TILE_GET_PASSABLE( tile ) ||
-                    ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->tileMap.doorFlags ) )
+                    ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->gameFlags.doors ) )
                {
                   newPos.y = ( row * TILE_SIZE ) - player->hitBoxSize.y - COLLISION_THETA;
                   break;

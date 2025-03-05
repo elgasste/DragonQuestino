@@ -72,6 +72,12 @@
     <ClInclude Include="..\..\DragonQuestino\generated_defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\DragonQuestino\tables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DragonQuestino\game_flags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="win_clock.c">
@@ -135,6 +141,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\DragonQuestino\random.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\game_animation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\game_spells.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

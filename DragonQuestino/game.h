@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "screen.h"
+#include "game_flags.h"
 #include "tile_map.h"
 #include "clock.h"
 #include "input.h"
@@ -30,6 +31,7 @@ typedef struct Game_t
    TilePortal_t* targetPortal;
 
    Screen_t screen;
+   GameFlags_t gameFlags;
    TileMap_t tileMap;
    Clock_t clock;
    Input_t input;

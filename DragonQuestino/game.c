@@ -10,14 +10,14 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
-   TileMap_Init( &( game->tileMap ), &( game->screen ) );
+   TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ) );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 1 );
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
-   Player_Init( &( game->player ), &( game->screen ), &( game->tileMap ) );
-   Menu_Init( &( game->menu ), &( game->screen ), &( game->player ) );
+   Player_Init( &( game->player ), &( game->screen ) );
+   Menu_Init( &( game->menu ), &( game->screen ), &( game->player ), &( game->tileMap ) );
    ScrollingDialog_Init( &( game->scrollingDialog ), &( game->screen ), &( game->player ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
@@ -33,6 +33,10 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->zoomPortals[TILEMAP_CANTLIN_TOWN_ID].destinationTileIndex = TILEMAP_CANTLIN_ZOOM_INDEX;
    game->zoomPortals[TILEMAP_RIMULDAR_TOWN_ID].destinationTileIndex = TILEMAP_RIMULDAR_ZOOM_INDEX;
 
+   game->gameFlags.treasures = 0xFFFFFFFF;
+   game->gameFlags.doors = 0xFFFFFFFF;
+   game->gameFlags.usedRainbowDrop = False;
+   game->gameFlags.foundHiddenStairs = False;
    game->state = GameState_Overworld;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
@@ -188,9 +192,9 @@ void Game_Search( Game_t* game )
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
    }
-   else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID && game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->tileMap.foundHiddenStairs )
+   else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID && game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->gameFlags.foundHiddenStairs )
    {
-      game->tileMap.foundHiddenStairs = True;
+      game->gameFlags.foundHiddenStairs = True;
       TileMap_LoadHiddenStairs( &( game->tileMap ) );
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundHiddenStairs );
    }
@@ -198,7 +202,7 @@ void Game_Search( Game_t* game )
    {
       treasureFlag = TileMap_GetTreasureFlag( game->tileMap.id, game->player.tileIndex );
 
-      if ( treasureFlag && ( game->tileMap.treasureFlags & treasureFlag ) )
+      if ( treasureFlag && ( game->gameFlags.treasures & treasureFlag ) )
       {
          Game_CollectTreasure( game, treasureFlag );
       }
@@ -214,7 +218,7 @@ void Game_OpenDoor( Game_t* game )
    uint32_t doorTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
    uint32_t doorFlag = TileMap_GetDoorFlag( game->tileMap.id, doorTileIndex );
 
-   if ( doorFlag && ( game->tileMap.doorFlags & doorFlag ) )
+   if ( doorFlag && ( game->gameFlags.doors & doorFlag ) )
    {
       if ( !ITEM_GET_KEYCOUNT( game->player.items ) )
       {
@@ -223,7 +227,7 @@ void Game_OpenDoor( Game_t* game )
       else
       {
          ITEM_SET_KEYCOUNT( game->player.items, ITEM_GET_KEYCOUNT( game->player.items ) - 1 );
-         game->tileMap.doorFlags ^= doorFlag;
+         game->gameFlags.doors ^= doorFlag;
          Game_ChangeState( game, GameState_Overworld );
       }
    }
@@ -297,7 +301,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          break;
       case 0x100:       // Erdrick's Cave, the tablet. this is not an item that can be collected.
          Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Chest_Tablet );
-         game->tileMap.treasureFlags ^= treasureFlag;
+         game->gameFlags.treasures ^= treasureFlag;
          return;
       case 0x200:       // Rimuldar Inn
          collected = Player_CollectItem( &( game->player ), Item_Wing );
@@ -318,7 +322,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       case 0x2000:      // Rocky Mountain Cave B2, center-left chest
          if ( Random_Percent() <= 5 )
          {
-            game->tileMap.treasureFlags ^= treasureFlag;
+            game->gameFlags.treasures ^= treasureFlag;
             Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Chest_DeathNecklace );
             return;
          }
@@ -392,7 +396,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 
    if ( collected )
    {
-      game->tileMap.treasureFlags ^= treasureFlag;
+      game->gameFlags.treasures ^= treasureFlag;
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, ( gold > 0 ) ? DialogMessageId_Chest_GoldCollected : DialogMessageId_Chest_ItemCollected );
    }
    else
