@@ -20,7 +20,7 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->spriteOffset.x = -2;
    player->spriteOffset.y = -4;
    player->sprite.direction = Direction_Down;
-   strcpy( player->name, "TestMan1" );
+   strcpy( player->name, "Ed209" );
    player->isCursed = False;
    player->hasHolyProtection = False;
    player->holyProtectionSteps = 0;

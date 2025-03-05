@@ -13,9 +13,9 @@
 
 // pixels per second
 #define TILE_WALKSPEED_FAST                     192.0f
-#define TILE_WALKSPEED_NORMAL                   72.0f
-#define TILE_WALKSPEED_SLOW                     60.0f
-#define TILE_WALKSPEED_VERYSLOW                 48.0f
+#define TILE_WALKSPEED_NORMAL                   64.0f
+#define TILE_WALKSPEED_SLOW                     56.0f
+#define TILE_WALKSPEED_VERYSLOW                 44.0f
 #define TILE_WALKSPEED_CRAWL                    36.0f
 
 #define TILEMAP_MAX_VIEWPORT_WIDTH              SCREEN_WIDTH
