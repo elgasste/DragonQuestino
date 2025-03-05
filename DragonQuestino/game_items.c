@@ -2,7 +2,7 @@
 
 void Game_UseHerb( Game_t* game )
 {
-   if ( game->player.stats.hitPoints == UINT8_MAX )
+   if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_FullyHealed );
    }
