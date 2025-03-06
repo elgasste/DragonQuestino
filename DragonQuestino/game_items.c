@@ -50,7 +50,7 @@ void Game_UseTorch( Game_t* game )
       {
          TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
          game->tileMap.glowTileCount = 0;
-         game->glowExpandSeconds = GLOW_EXPAND_FRAME_SECONDS; // push one frame immediately
+         TileMap_StartGlowTransition( &( game->tileMap ) );
       }
 
       ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );

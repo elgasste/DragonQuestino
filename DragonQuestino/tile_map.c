@@ -1,18 +1,24 @@
 #include "tile_map.h"
 #include "screen.h"
 #include "game_flags.h"
+#include "player.h"
+#include "clock.h"
 #include "math.h"
 
 #define SPRITE_CHEST_INDEX    0
 #define SPRITE_DOOR_INDEX     1
 
+internal void TileMap_UpdateViewport( TileMap_t* tileMap );
 internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter );
+internal void TileMap_ReduceGlowDiameter( TileMap_t* tileMap );
+internal void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap );
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
 
-void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags )
+void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags, Player_t* player )
 {
    tileMap->screen = screen;
    tileMap->gameFlags = gameFlags;
+   tileMap->player = player;
    TileMap_ResetViewport( tileMap );
 
    Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
@@ -20,6 +26,30 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags 
 
    tileMap->isDungeon = False;
    tileMap->isDark = False;
+}
+
+void TileMap_Tic( TileMap_t* tileMap )
+{
+   if ( tileMap->isDark && tileMap->glowDiameter != tileMap->targetGlowDiameter )
+   {
+      tileMap->glowTransitionSeconds += CLOCK_FRAME_SECONDS;
+
+      while ( tileMap->glowTransitionSeconds > GLOW_TRANSITION_FRAME_SECONDS )
+      {
+         tileMap->glowTransitionSeconds -= GLOW_TRANSITION_FRAME_SECONDS;
+
+         if ( tileMap->glowDiameter < tileMap->targetGlowDiameter )
+         {
+            TileMap_IncreaseGlowDiameter( tileMap );
+         }
+         else
+         {
+            TileMap_ReduceGlowDiameter( tileMap );
+         }
+      }
+   }
+
+   TileMap_UpdateViewport( tileMap );
 }
 
 void TileMap_ResetViewport( TileMap_t* tileMap )
@@ -32,32 +62,8 @@ void TileMap_ResetViewport( TileMap_t* tileMap )
    tileMap->viewportScreenPos.y = 0;
    tileMap->glowDiameter = 1;
    tileMap->targetGlowDiameter = 1;
-}
 
-void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH )
-{
-   Vector4i32_t* viewport = &( tileMap->viewport );
-
-   viewport->x = anchorX - ( viewport->w / 2 ) + ( anchorW / 2 );
-   viewport->y = anchorY - ( viewport->h / 2 ) + ( anchorH / 2 );
-
-   if ( viewport->x < 0 )
-   {
-      viewport->x = 0;
-   }
-   else if ( ( viewport->x + viewport->w ) > (int32_t)( tileMap->tilesX * TILE_SIZE ) )
-   {
-      viewport->x = ( tileMap->tilesX * TILE_SIZE ) - viewport->w;
-   }
-
-   if ( viewport->y < 0 )
-   {
-      viewport->y = 0;
-   }
-   else if ( ( viewport->y + viewport->h ) > (int32_t)( tileMap->tilesY * TILE_SIZE ) )
-   {
-      viewport->y = ( tileMap->tilesY * TILE_SIZE ) - viewport->h;
-   }
+   TileMap_UpdateViewport( tileMap );
 }
 
 void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h )
@@ -66,32 +72,25 @@ void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h )
    tileMap->viewport.h = h;
    tileMap->viewportScreenPos.x = ( SCREEN_WIDTH - w ) / 2;
    tileMap->viewportScreenPos.y = ( SCREEN_HEIGHT - h ) / 2;
+
+   TileMap_UpdateViewport( tileMap );
 }
 
 void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, uint32_t targetDiameter )
 {
    tileMap->targetGlowDiameter = targetDiameter;
-
-   if ( targetDiameter < tileMap->glowDiameter )
-   {
-      tileMap->glowDiameter = targetDiameter;
-   }
 }
 
-void TileMap_ReduceGlowDiameter( TileMap_t* tileMap )
+void TileMap_StartGlowTransition( TileMap_t* tileMap )
 {
-   if ( tileMap->glowDiameter > 1 )
-   {
-      TileMap_SetGlowDiameter( tileMap, tileMap->glowDiameter - 2 );
-      tileMap->targetGlowDiameter = tileMap->glowDiameter;
-   }
+   tileMap->glowTransitionSeconds = GLOW_TRANSITION_FRAME_SECONDS; // push one frame immediately
 }
 
-void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap )
+void TileMap_ReduceTargetGlowDiameter( TileMap_t* tileMap )
 {
-   if ( tileMap->glowDiameter < tileMap->targetGlowDiameter )
+   if ( tileMap->targetGlowDiameter > 1 )
    {
-      TileMap_SetGlowDiameter( tileMap, tileMap->glowDiameter + 2 );
+      tileMap->targetGlowDiameter -= 2;
    }
 }
 
@@ -202,10 +201,56 @@ void TileMap_Draw( TileMap_t* tileMap )
    TileMap_DrawStaticSprites( tileMap );
 }
 
-void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter )
+internal void TileMap_UpdateViewport( TileMap_t* tileMap )
+{
+   int32_t anchorX = (int32_t)( tileMap->player->sprite.position.x );
+   int32_t anchorY = (int32_t)( tileMap->player->sprite.position.y );
+   uint32_t anchorW = tileMap->player->hitBoxSize.x;
+   uint32_t anchorH = tileMap->player->hitBoxSize.y;
+   Vector4i32_t* viewport = &( tileMap->viewport );
+
+   viewport->x = anchorX - ( viewport->w / 2 ) + ( anchorW / 2 );
+   viewport->y = anchorY - ( viewport->h / 2 ) + ( anchorH / 2 );
+
+   if ( viewport->x < 0 )
+   {
+      viewport->x = 0;
+   }
+   else if ( ( viewport->x + viewport->w ) > (int32_t)( tileMap->tilesX * TILE_SIZE ) )
+   {
+      viewport->x = ( tileMap->tilesX * TILE_SIZE ) - viewport->w;
+   }
+
+   if ( viewport->y < 0 )
+   {
+      viewport->y = 0;
+   }
+   else if ( ( viewport->y + viewport->h ) > (int32_t)( tileMap->tilesY * TILE_SIZE ) )
+   {
+      viewport->y = ( tileMap->tilesY * TILE_SIZE ) - viewport->h;
+   }
+}
+
+internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter )
 {
    tileMap->glowDiameter = diameter;
    TileMap_ChangeViewportSize( tileMap, (uint16_t)( tileMap->glowDiameter * TILE_SIZE ), (uint16_t)tileMap->glowDiameter * TILE_SIZE );
+}
+
+internal void TileMap_ReduceGlowDiameter( TileMap_t* tileMap )
+{
+   if ( tileMap->glowDiameter > tileMap->targetGlowDiameter )
+   {
+      TileMap_SetGlowDiameter( tileMap, tileMap->glowDiameter - 2 );
+   }
+}
+
+internal void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap )
+{
+   if ( tileMap->glowDiameter < tileMap->targetGlowDiameter )
+   {
+      TileMap_SetGlowDiameter( tileMap, tileMap->glowDiameter + 2 );
+   }
 }
 
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap )

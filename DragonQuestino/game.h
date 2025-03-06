@@ -12,7 +12,6 @@
 #include "scrolling_dialog.h"
 
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
-#define GLOW_EXPAND_FRAME_SECONDS                  0.1f
 
 #define ANIMATION_OVERWORLD_PAUSE_DURATION         0.3f
 #define ANIMATION_TILEMAP_FADE_DURATION            0.3f
@@ -42,7 +41,6 @@ typedef struct Game_t
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
 
    float overworldInactivitySeconds;
-   float glowExpandSeconds;
 
    Bool_t isAnimating;
    Animation_t animation;

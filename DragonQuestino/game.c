@@ -10,7 +10,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
-   TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ) );
+   TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ), &( game->player ) );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 1 );
    Sprite_LoadPlayer( &( game->player.sprite ) );
@@ -77,18 +77,12 @@ void Game_Tic( Game_t* game )
       if ( g_debugFlags.noDark )
       {
          TileMap_ChangeViewportSize( &( game->tileMap ), SCREEN_WIDTH, SCREEN_HEIGHT );
-         TileMap_UpdateViewport( &( game->tileMap ),
-                                 (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
-                                 game->player.hitBoxSize.x, game->player.hitBoxSize.y );
       }
       else
       {
          TileMap_ChangeViewportSize( &( game->tileMap ),
                                      TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ),
                                      TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ) );
-         TileMap_UpdateViewport( &( game->tileMap ),
-                                 (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
-                                 game->player.hitBoxSize.x, game->player.hitBoxSize.y );
       }
    }
 #endif
@@ -145,10 +139,6 @@ void Game_EnterTargetPortal( Game_t* game )
    {
       TileMap_ResetViewport( &( game->tileMap ) );
    }
-
-   TileMap_UpdateViewport( &( game->tileMap ),
-                           (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
-                           game->player.hitBoxSize.x, game->player.hitBoxSize.y );
 }
 
 void Game_OpenMenu( Game_t* game, MenuId_t id )
@@ -252,21 +242,7 @@ internal void Game_TicOverworld( Game_t* game )
 {
    Game_TicPhysics( game );
    Sprite_Tic( &( game->player.sprite ) );
-
-   if ( game->tileMap.isDark && game->tileMap.glowDiameter < game->tileMap.targetGlowDiameter )
-   {
-      game->glowExpandSeconds += CLOCK_FRAME_SECONDS;
-
-      while ( game->glowExpandSeconds > GLOW_EXPAND_FRAME_SECONDS )
-      {
-         game->glowExpandSeconds -= GLOW_EXPAND_FRAME_SECONDS;
-         TileMap_IncreaseGlowDiameter( &( game->tileMap ) );
-      }
-   }
-
-   TileMap_UpdateViewport( &( game->tileMap ),
-                           (int32_t)( game->player.sprite.position.x ), (int32_t)( game->player.sprite.position.y ),
-                           game->player.hitBoxSize.x, game->player.hitBoxSize.y );
+   TileMap_Tic( &(game->tileMap ) );
 }
 
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )

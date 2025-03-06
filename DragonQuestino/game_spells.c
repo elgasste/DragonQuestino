@@ -45,7 +45,7 @@ void Game_CastGlow( Game_t* game )
          {
             TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
             game->tileMap.glowTileCount = 0;
-            game->glowExpandSeconds = GLOW_EXPAND_FRAME_SECONDS; // push one frame immediately
+            TileMap_StartGlowTransition( &( game->tileMap ) );
          }
 
          Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCastGlow );
