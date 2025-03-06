@@ -31,16 +31,25 @@ void Game_CastGlow( Game_t* game )
    }
    else if ( game->tileMap.isDark )
    {
-      if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
-      {
-         TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
-         game->tileMap.glowTileCount = 0;
-         game->glowExpandSeconds = GLOW_EXPAND_FRAME_SECONDS; // push one frame immediately
-      }
-
       game->player.stats.magicPoints -= SPELL_GLOW_MP;
       Game_DrawOverworldQuickStatus( game );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCastGlow );
+
+      if ( game->player.isCursed )
+      {
+         TileMap_SetTargetGlowDiameter( &( game->tileMap ), 1 );
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCastGlowCursed );
+      }
+      else
+      {
+         if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
+         {
+            TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
+            game->tileMap.glowTileCount = 0;
+            game->glowExpandSeconds = GLOW_EXPAND_FRAME_SECONDS; // push one frame immediately
+         }
+
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCastGlow );
+      }
    }
 }
 
