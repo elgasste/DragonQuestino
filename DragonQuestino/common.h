@@ -3,7 +3,7 @@
 
 // ARDUINO DEBUG FLAGS
 // un-comment to get serial logging
-//#define DEBUG_SERIAL
+#define DEBUG_SERIAL
 
 #if !defined( VISUAL_STUDIO_DEV )
 

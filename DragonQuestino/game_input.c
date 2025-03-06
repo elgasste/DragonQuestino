@@ -52,7 +52,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
       if ( leftIsDown && !rightIsDown )
       {
-         player->velocity.x = -( player->maxVelocity ) * game->input.dpadIntensity[Direction_Left];
+         player->velocity.x = -( player->maxVelocity ) * game->input.analogIntensity[Direction_Left];
 
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
@@ -67,7 +67,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
       }
       else if ( rightIsDown && !leftIsDown )
       {
-         player->velocity.x = player->maxVelocity * game->input.dpadIntensity[Direction_Right];
+         player->velocity.x = player->maxVelocity * game->input.analogIntensity[Direction_Right];
 
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
@@ -83,7 +83,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
       if ( upIsDown && !downIsDown )
       {
-         player->velocity.y = -( player->maxVelocity )* game->input.dpadIntensity[Direction_Up];
+         player->velocity.y = -( player->maxVelocity )* game->input.analogIntensity[Direction_Up];
 
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
@@ -98,7 +98,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
       }
       else if ( downIsDown && !upIsDown )
       {
-         player->velocity.y = player->maxVelocity* game->input.dpadIntensity[Direction_Down];
+         player->velocity.y = player->maxVelocity* game->input.analogIntensity[Direction_Down];
 
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
