@@ -253,6 +253,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Search_FoundHiddenStairs:
       case DialogMessageId_Use_Herb1:
       case DialogMessageId_Use_Herb2:
+      case DialogMessageId_Use_FairyWaterCursed:
       case DialogMessageId_Use_FairyWater:
       case DialogMessageId_Use_FairyFlute:
       case DialogMessageId_Use_SilverHarp:
@@ -338,6 +339,12 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_2, dialog->insertionText ); return;
          }
       case DialogMessageId_Use_Wing: strcpy( text, STRING_ITEMUSE_WING ); return;
+      case DialogMessageId_Use_FairyWaterCursed:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, STRING_ITEMUSE_FAIRYWATER ); return;
+            case 1: strcpy( text, STRING_HOLYPROTECTION_CURSED ); return;
+         }
       case DialogMessageId_Use_FairyWater:
          switch ( dialog->section )
          {

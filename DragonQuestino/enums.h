@@ -170,6 +170,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Use_Herb2,
    DialogMessageId_Use_WingCantUse,
    DialogMessageId_Use_Wing,
+   DialogMessageId_Use_FairyWaterCursed,
    DialogMessageId_Use_FairyWater,
    DialogMessageId_Use_TorchCantUse,
    DialogMessageId_Use_Torch,

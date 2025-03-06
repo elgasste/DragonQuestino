@@ -30,8 +30,16 @@ void Game_UseWing( Game_t* game )
 void Game_UseFairyWater( Game_t* game )
 {
    ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 );
-   Player_SetHolyProtection( &( game->player ), True );
-   Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWater );
+
+   if ( game->player.isCursed )
+   {
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWaterCursed );
+   }
+   else
+   {
+      Player_SetHolyProtection( &( game->player ), True );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWater );
+   }
 }
 
 void Game_UseTorch( Game_t* game )
