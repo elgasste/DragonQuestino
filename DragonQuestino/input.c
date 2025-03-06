@@ -6,7 +6,10 @@ internal void Input_UpdateButtonState( ButtonState_t* buttonState, Bool_t down )
 void Input_Init( Input_t* input )
 {
    uint32_t i;
-   int32_t totalX, totalY;
+
+#if !defined( VISUAL_STUDIO_DEV )
+   int32_t totalX = 0, totalY = 0;
+#endif
 
    for ( i = 0; i < Button_Count; i++ )
    {
@@ -18,7 +21,7 @@ void Input_Init( Input_t* input )
 #if !defined( VISUAL_STUDIO_DEV )
    analogReadResolution( INPUT_ANALOG_BITS );
 
-   for ( i = 0, totalX = 0, totalY = 0; i < INPUT_ANALOG_POLL_COUNT; i++ )
+   for ( i = 0; i < INPUT_ANALOG_POLL_COUNT; i++ )
    {
       totalX += analogRead( PIN_ANALOG_X );
       totalY += analogRead( PIN_ANALOG_Y );
