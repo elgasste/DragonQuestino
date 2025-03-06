@@ -3,6 +3,8 @@
 
 void Game_CastHeal( Game_t* game )
 {
+   uint8_t maxEffect;
+
    if ( game->player.stats.magicPoints < SPELL_HEAL_MP )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
@@ -13,9 +15,10 @@ void Game_CastHeal( Game_t* game )
    }
    else
    {
+      maxEffect = game->player.isCursed ? ( SPELL_HEAL_MAXEFFECT / 2 ) : SPELL_HEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_HEAL_MP;
       Game_DrawOverworldQuickStatus( game );
-      Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, SPELL_HEAL_MAXEFFECT,
+      Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, maxEffect,
                          DialogMessageId_Spell_OverworldCastHeal1, DialogMessageId_Spell_OverworldCastHeal2 );
    }
 }
@@ -88,6 +91,8 @@ void Game_CastRepel( Game_t* game )
 
 void Game_CastMidheal( Game_t* game )
 {
+   uint8_t maxEffect;
+
    if ( game->player.stats.magicPoints < SPELL_MIDHEAL_MP )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
@@ -98,9 +103,10 @@ void Game_CastMidheal( Game_t* game )
    }
    else
    {
+      maxEffect = game->player.isCursed ? ( SPELL_MIDHEAL_MAXEFFECT / 2 ) : SPELL_MIDHEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
       Game_DrawOverworldQuickStatus( game );
-      Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, SPELL_MIDHEAL_MAXEFFECT,
+      Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, maxEffect,
                          DialogMessageId_Spell_OverworldCastMidheal1, DialogMessageId_Spell_OverworldCastMidheal2 );
    }
 }
