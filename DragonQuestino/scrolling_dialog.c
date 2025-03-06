@@ -257,6 +257,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Use_FairyFlute:
       case DialogMessageId_Use_SilverHarp:
       case DialogMessageId_Use_CursedBelt:
+      case DialogMessageId_Spell_CastRepelCursed:
       case DialogMessageId_Spell_CastRepel:
       case DialogMessageId_Chest_ItemNoSpace:
       case DialogMessageId_Chest_GoldNoSpace:
@@ -304,6 +305,12 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
       case DialogMessageId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
       case DialogMessageId_Spell_OverworldCantCast: strcpy( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CANT_CAST ); return;
       case DialogMessageId_Spell_OverworldCastGlow: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_GLOW ); return;
+      case DialogMessageId_Spell_CastRepelCursed:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_REPEL ); return;
+            case 1: strcpy( text, STRING_HOLYPROTECTION_CURSED ); return;
+         }
       case DialogMessageId_Spell_CastRepel:
          switch ( dialog->section )
          {

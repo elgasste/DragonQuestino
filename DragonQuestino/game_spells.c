@@ -71,9 +71,18 @@ void Game_CastRepel( Game_t* game )
    }
    else
    {
+      game->player.stats.magicPoints -= SPELL_REPEL_MP;
       Game_DrawOverworldQuickStatus( game );
-      Player_SetHolyProtection( &( game->player ), True );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepel );
+
+      if ( game->player.isCursed )
+      {
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepelCursed );
+      }
+      else
+      {
+         Player_SetHolyProtection( &( game->player ), True );
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepel );
+      }
    }
 }
 
