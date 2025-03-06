@@ -178,13 +178,13 @@ namespace DragonQuestinoEditor.FileOps
                   var index0 = (UInt32)( tiles[tileIndex].TextureIndex )
                      | ( tiles[tileIndex].IsPassable ? (UInt32)0x20 : 0 )
                      | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex].TextureIndex]
-                     | 0x100  // is encounterable
+                     | ( tileMap.HasEncounters ? (UInt32)0x100 : 0 )
                      | Constants.TileSetIndexEncounterRates[tiles[tileIndex].TextureIndex]
                      | Constants.TileSetIndexDamageRates[tiles[tileIndex].TextureIndex];
                   var index1 = (UInt32)( tiles[tileIndex + 1].TextureIndex )
                      | ( tiles[tileIndex + 1].IsPassable ? (UInt32)0x20 : 0 )
                      | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex + 1].TextureIndex]
-                     | 0x100  // is encounterable
+                     | ( tileMap.HasEncounters ? (UInt32)0x100 : 0 )
                      | Constants.TileSetIndexEncounterRates[tiles[tileIndex + 1].TextureIndex]
                      | Constants.TileSetIndexDamageRates[tiles[tileIndex + 1].TextureIndex];
 

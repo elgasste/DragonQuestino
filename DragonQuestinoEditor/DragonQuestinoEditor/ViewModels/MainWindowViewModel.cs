@@ -224,7 +224,7 @@ namespace DragonQuestinoEditor.ViewModels
          if ( result.HasValue && result.Value )
          {
             int id = TileMaps[^1].Id + 1;
-            var newTileMap = new TileMapViewModel( _tileSet, id, window.NewTileMapName, false, false, window.NewTilesX, window.NewTilesY, Constants.TileTextureDefaultIndex );
+            var newTileMap = new TileMapViewModel( _tileSet, id, window.NewTileMapName, true, false, false, window.NewTilesX, window.NewTilesY, Constants.TileTextureDefaultIndex );
 
             foreach ( var tile in newTileMap.Tiles )
             {
