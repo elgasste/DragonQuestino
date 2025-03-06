@@ -9,8 +9,9 @@
 #define PIN_A_BUTTON             51
 #define PIN_B_BUTTON             53
 
-// the analog stick ranges from 0 to 1023
-#define INPUT_ANALOG_THRESHOLD   24
+#define INPUT_ANALOG_THRESHOLD   512
+#define INPUT_ANALOG_CUTOFF_HIGH 65471
+#define INPUT_ANALOG_CUTOFF_LOW  64
 
 typedef struct ButtonState_t
 {
@@ -22,9 +23,11 @@ ButtonState_t;
 
 typedef struct Input_t
 {
-   Vector2i32_t analogRestingState;
    ButtonState_t buttonStates[Button_Count];
-   float dpadIntensity[Direction_Count];
+   float analogIntensity[Direction_Count];
+   Vector2i32_t analogRestingState;
+   Vector2i32_t analogLowRange;
+   Vector2i32_t analogHighRange;
 }
 Input_t;
 
