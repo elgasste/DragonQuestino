@@ -103,6 +103,7 @@ typedef struct TileMap_t
    uint32_t id;
 
    Bool_t hasEncounters;
+   Bool_t blocksMagic;
    Bool_t isDungeon;
    Bool_t isDark;
    uint32_t glowDiameter;
