@@ -6,6 +6,7 @@ internal void Input_UpdateButtonState( ButtonState_t* buttonState, Bool_t down )
 void Input_Init( Input_t* input )
 {
    uint32_t i;
+   int32_t totalX, totalY;
 
    for ( i = 0; i < Button_Count; i++ )
    {
@@ -15,9 +16,17 @@ void Input_Init( Input_t* input )
    }
 
 #if !defined( VISUAL_STUDIO_DEV )
-   analogReadResolution( 16 );
-   input->analogRestingState.x = analogRead( PIN_ANALOG_X );
-   input->analogRestingState.y = analogRead( PIN_ANALOG_Y );
+   analogReadResolution( INPUT_ANALOG_BITS );
+
+   for ( i = 0, totalX = 0, totalY = 0; i < INPUT_ANALOG_POLL_COUNT; i++ )
+   {
+      totalX += analogRead( PIN_ANALOG_X );
+      totalY += analogRead( PIN_ANALOG_Y );
+      DELAY_MS( 1 );
+   }
+
+   input->analogRestingState.x = totalX / INPUT_ANALOG_POLL_COUNT;
+   input->analogRestingState.y = totalY / INPUT_ANALOG_POLL_COUNT;
    input->analogLowRange.x = input->analogRestingState.x - INPUT_ANALOG_THRESHOLD - INPUT_ANALOG_CUTOFF_LOW;
    input->analogLowRange.y = input->analogRestingState.y - INPUT_ANALOG_THRESHOLD - INPUT_ANALOG_CUTOFF_LOW;
    input->analogHighRange.x = INPUT_ANALOG_CUTOFF_HIGH - ( input->analogRestingState.x + INPUT_ANALOG_THRESHOLD );
