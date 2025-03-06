@@ -131,6 +131,7 @@ namespace DragonQuestinoEditor.FileOps
 
             WriteToFileStream( fs, string.Format( "      case {0}:\n", tileMap.Id ) );
             WriteToFileStream( fs, string.Format( "         tileMap->id = {0};\n", tm ) );
+            WriteToFileStream( fs, string.Format( "         tileMap->hasEncounters = {0};\n", tileMap.HasEncounters ? "True" : "False" ) );
             WriteToFileStream( fs, string.Format( "         tileMap->isDungeon = {0};\n", tileMap.IsDungeon ? "True" : "False" ) );
             WriteToFileStream( fs, string.Format( "         tileMap->isDark = {0};\n", tileMap.IsDark ? "True" : "False" ) );
             WriteToFileStream( fs, string.Format( "         tileMap->tilesX = {0};\n", tileMap.TilesX ) );
@@ -178,13 +179,11 @@ namespace DragonQuestinoEditor.FileOps
                   var index0 = (UInt32)( tiles[tileIndex].TextureIndex )
                      | ( tiles[tileIndex].IsPassable ? (UInt32)0x20 : 0 )
                      | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex].TextureIndex]
-                     | ( tileMap.HasEncounters ? (UInt32)0x100 : 0 )
                      | Constants.TileSetIndexEncounterRates[tiles[tileIndex].TextureIndex]
                      | Constants.TileSetIndexDamageRates[tiles[tileIndex].TextureIndex];
                   var index1 = (UInt32)( tiles[tileIndex + 1].TextureIndex )
                      | ( tiles[tileIndex + 1].IsPassable ? (UInt32)0x20 : 0 )
                      | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex + 1].TextureIndex]
-                     | ( tileMap.HasEncounters ? (UInt32)0x100 : 0 )
                      | Constants.TileSetIndexEncounterRates[tiles[tileIndex + 1].TextureIndex]
                      | Constants.TileSetIndexDamageRates[tiles[tileIndex + 1].TextureIndex];
 

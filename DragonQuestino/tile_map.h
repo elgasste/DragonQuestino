@@ -30,9 +30,8 @@
 #define TILE_GET_TEXTUREINDEX( t )              ( ( t ) & 0x1F )
 #define TILE_GET_PASSABLE( t )                  ( ( ( t ) & 0x20 ) >> 5 )
 #define TILE_GET_WALKSPEED( t )                 ( ( ( t ) & 0xC0 ) >> 6 )
-#define TILE_GET_ENCOUNTERABLE( t )             ( ( ( t ) & 0x100 ) >> 8 )
-#define TILE_GET_ENCOUNTERRATE( t )             ( ( ( t ) & 0x300 ) >> 9 )
-#define TILE_GET_DAMAGERATE( t )                ( ( ( t ) & 0x1800 ) >> 11 )
+#define TILE_GET_ENCOUNTERRATE( t )             ( ( ( t ) & 0x300 ) >> 8 )
+#define TILE_GET_DAMAGERATE( t )                ( ( ( t ) & 0xC00 ) >> 10 )
 
 #define TILE_SET_TEXTUREINDEX( t, i )           ( t ) = ( ( t ) & 0xFFE0 ) | i
 #define TILE_TOGGLE_PASSABLE( t )               ( t ) ^= 0x20
@@ -103,6 +102,7 @@ typedef struct TileMap_t
 
    uint32_t id;
 
+   Bool_t hasEncounters;
    Bool_t isDungeon;
    Bool_t isDark;
    uint32_t glowDiameter;
@@ -113,10 +113,8 @@ typedef struct TileMap_t
    // bits 0-4: texture index (max 32 textures)
    // bit 5: is-passable flag
    // bits 6-7: walk speed (0 = normal, 3 = crawl)
-   // bit 8: is-encounterable flag
-   // bits 9-10: encounter rate
-   // bits 11-12: damage rate
-   // bits 13-15: reserved
+   // bits 8-9: encounter rate
+   // bits 10-11: damage rate
    uint16_t tiles[TILE_COUNT];
    uint32_t tilesX;
    uint32_t tilesY;

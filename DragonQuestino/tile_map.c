@@ -24,6 +24,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags,
    Sprite_LoadStatic( &( tileMap->chestSprite ), SPRITE_CHEST_INDEX );
    Sprite_LoadStatic( &( tileMap->doorSprite ), SPRITE_DOOR_INDEX );
 
+   tileMap->hasEncounters = False;
    tileMap->isDungeon = False;
    tileMap->isDark = False;
 }
