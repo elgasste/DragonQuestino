@@ -93,6 +93,7 @@
 
 #define STRING_BUTNOTHINGHAPPENS                                     "But nothing happens."
 #define STRING_NOTENOUGHMP                                           "You do not have enough MP."
+#define STRING_SPELLBLOCKED                                          "But a mysterious force has contained your magic!"
 #define STRING_FULLYHEALED                                           "You are already fully healed."
 #define STRING_CURSED                                                "A curse has befallen you!"
 #define STRING_NORTH                                                 "north"

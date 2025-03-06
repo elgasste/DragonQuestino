@@ -50,7 +50,7 @@ typedef struct TileMap_t TileMap_t;
                                                 ( SPELL_HAS_HEAL( x ) ? 1 : 0 ) + \
                                                 ( ( ( d2 ) && SPELL_HAS_GLOW( x ) ) ? 1 : 0 ) + \
                                                 ( ( ( d1 ) && SPELL_HAS_EVAC( x ) ) ? 1 : 0 ) + \
-                                                ( SPELL_HAS_ZOOM( x ) ? 1 : 0 ) + \
+                                                ( ( ( !( d1 ) ) && SPELL_HAS_ZOOM( x ) ) ? 1 : 0 ) + \
                                                 ( SPELL_HAS_REPEL( x ) ? 1 : 0 ) + \
                                                 ( SPELL_HAS_MIDHEAL( x ) ? 1 : 0 ) )
 

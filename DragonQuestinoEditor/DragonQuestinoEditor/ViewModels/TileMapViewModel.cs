@@ -41,6 +41,20 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _name, value );
       }
 
+      private bool _hasEncounters;
+      public bool HasEncounters
+      {
+         get => _hasEncounters;
+         set => SetProperty( ref _hasEncounters, value );
+      }
+
+      private bool _blocksMagic;
+      public bool BlocksMagic
+      {
+         get => _blocksMagic;
+         set => SetProperty( ref _blocksMagic, value );
+      }
+
       private bool _isDungeon;
       public bool IsDungeon
       {
@@ -55,10 +69,21 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _isDark, value );
       }
 
-      public TileMapViewModel( TileSet tileSet, int id, string? name, bool isDungeon, bool isDark, int tilesX, int tilesY, int defaultTileTextureIndex )
+      public TileMapViewModel( TileSet tileSet,
+                               int id,
+                               string? name,
+                               bool hasEncounters,
+                               bool blocksMagic,
+                               bool isDungeon,
+                               bool isDark,
+                               int tilesX,
+                               int tilesY,
+                               int defaultTileTextureIndex )
       {
          _id = id;
          _name = name;
+         _hasEncounters = hasEncounters;
+         _blocksMagic = blocksMagic;
          _isDungeon = isDungeon;
          _isDark = isDark;
          _tilesX = tilesX;
@@ -75,6 +100,8 @@ namespace DragonQuestinoEditor.ViewModels
       {
          _id = saveData.Id;
          _name = saveData.Name;
+         _hasEncounters = saveData.HasEncounters;
+         _blocksMagic = saveData.BlocksMagic;
          _isDungeon = saveData.IsDungeon;
          _isDark = saveData.IsDark;
          _tilesX = saveData.TilesX;

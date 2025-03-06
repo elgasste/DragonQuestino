@@ -42,7 +42,7 @@
       public const int TextTileSize = 8;
       public const int TextTileCount = 85;  // keep this in parity with TEXT_TILE_COUNT
 
-      // bits 7-8
+      // bits 6-7
       public static readonly UInt32[] TileSetIndexWalkSpeeds = [
          0,       // grass
          0x40,    // trees
@@ -75,13 +75,13 @@
          0        // water, vertical river
       ];
 
-      // bits 10-11
+      // bits 8-9
       public static readonly UInt32[] TileSetIndexEncounterRates = [
          0,       // grass
-         0x200,   // trees
-         0x300,   // hills
-         0x200,   // desert
-         0x400,   // swamp
+         0x100,   // trees
+         0x200,   // hills
+         0x100,   // desert
+         0x300,   // swamp
          0,       // mountains
          0,       // stone wall
          0,       // brick path
@@ -108,18 +108,18 @@
          0        // water, vertical river
       ];
 
-      // bits 12-13
+      // bits 10-11
       public static readonly UInt32[] TileSetIndexDamageRates = [
          0x0,     // grass
          0x0,     // trees
          0x0,     // hills
          0x0,     // desert
-         0x800,   // swamp
+         0x400,   // swamp
          0,       // mountains
          0,       // stone wall
          0,       // brick path
          0,       // void
-         0x1000,  // barrier
+         0x800,   // barrier
          0,       // counter
          0,       // metal wall
          0,       // water, no shore

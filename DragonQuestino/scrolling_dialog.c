@@ -269,6 +269,7 @@ internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t mess
       case DialogMessageId_Spell_OverworldCastHeal2:
       case DialogMessageId_Spell_OverworldCastMidheal1:
       case DialogMessageId_Spell_OverworldCastMidheal2:
+      case DialogMessageId_Spell_Blocked:
          return 2;
       case DialogMessageId_Use_GwaelynsLove:
          return 4;
@@ -455,6 +456,12 @@ internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* t
          {
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_MIDHEAL ); return;
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_2, dialog->insertionText ); return;
+         }
+      case DialogMessageId_Spell_Blocked:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, dialog->insertionText ); return;
+            case 1: strcpy( text, STRING_SPELLBLOCKED ); return;
          }
    }
 }

@@ -1,15 +1,17 @@
 #include "game.h"
 #include "random.h"
 
+#define CHECK_CAST_ABILITY( m, n ) if ( !Game_CanCastSpell( game, m, n ) ) return;
+
+internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName );
+
 void Game_CastHeal( Game_t* game )
 {
    uint8_t maxEffect;
 
-   if ( game->player.stats.magicPoints < SPELL_HEAL_MP )
-   {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
-   }
-   else if ( game->player.stats.hitPoints == UINT8_MAX )
+   CHECK_CAST_ABILITY( SPELL_HEAL_MP, STRING_SPELLMENU_HEAL );
+
+   if ( game->player.stats.hitPoints == UINT8_MAX )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_FullyHealed );
    }
@@ -25,11 +27,9 @@ void Game_CastHeal( Game_t* game )
 
 void Game_CastGlow( Game_t* game )
 {
-   if ( game->player.stats.magicPoints < SPELL_GLOW_MP )
-   {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
-   }
-   else if ( game->tileMap.isDark )
+   CHECK_CAST_ABILITY( SPELL_GLOW_MP, STRING_SPELLMENU_GLOW );
+
+   if ( game->tileMap.isDark )
    {
       game->player.stats.magicPoints -= SPELL_GLOW_MP;
       Game_DrawOverworldQuickStatus( game );
@@ -55,11 +55,9 @@ void Game_CastGlow( Game_t* game )
 
 void Game_CastEvac( Game_t* game )
 {
-   if ( game->player.stats.magicPoints < SPELL_EVAC_MP )
-   {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
-   }
-   else if ( game->tileMap.isDungeon )
+   CHECK_CAST_ABILITY( SPELL_EVAC_MP, STRING_SPELLMENU_EVAC );
+
+   if ( game->tileMap.isDungeon )
    {
       game->player.stats.magicPoints -= SPELL_EVAC_MP;
       Game_DrawOverworldQuickStatus( game );
@@ -77,6 +75,8 @@ void Game_CastEvac( Game_t* game )
 
 void Game_CastZoom( Game_t* game, uint32_t townId )
 {
+   CHECK_CAST_ABILITY( SPELL_ZOOM_MP, STRING_SPELLMENU_ZOOM );
+
    game->player.stats.magicPoints -= SPELL_ZOOM_MP;
    game->targetPortal = &( game->zoomPortals[townId] );
    Game_DrawOverworldQuickStatus( game );
@@ -85,24 +85,19 @@ void Game_CastZoom( Game_t* game, uint32_t townId )
 
 void Game_CastRepel( Game_t* game )
 {
-   if ( game->player.stats.magicPoints < SPELL_REPEL_MP )
+   CHECK_CAST_ABILITY( SPELL_REPEL_MP, STRING_SPELLMENU_REPEL );
+
+   game->player.stats.magicPoints -= SPELL_REPEL_MP;
+   Game_DrawOverworldQuickStatus( game );
+
+   if ( game->player.isCursed )
    {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepelCursed );
    }
    else
    {
-      game->player.stats.magicPoints -= SPELL_REPEL_MP;
-      Game_DrawOverworldQuickStatus( game );
-
-      if ( game->player.isCursed )
-      {
-         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepelCursed );
-      }
-      else
-      {
-         Player_SetHolyProtection( &( game->player ), True );
-         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepel );
-      }
+      Player_SetHolyProtection( &( game->player ), True );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepel );
    }
 }
 
@@ -110,11 +105,9 @@ void Game_CastMidheal( Game_t* game )
 {
    uint8_t maxEffect;
 
-   if ( game->player.stats.magicPoints < SPELL_MIDHEAL_MP )
-   {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
-   }
-   else if ( game->player.stats.hitPoints == UINT8_MAX )
+   CHECK_CAST_ABILITY( SPELL_MIDHEAL_MP, STRING_SPELLMENU_MIDHEAL );
+
+   if ( game->player.stats.hitPoints == UINT8_MAX )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_FullyHealed );
    }
@@ -126,4 +119,23 @@ void Game_CastMidheal( Game_t* game )
       Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, maxEffect,
                          DialogMessageId_Spell_OverworldCastMidheal1, DialogMessageId_Spell_OverworldCastMidheal2 );
    }
+}
+
+internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName )
+{
+   if ( game->player.stats.magicPoints < requiredMp )
+   {
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
+      return False;
+   }
+   else if ( game->tileMap.blocksMagic )
+   {
+      game->player.stats.magicPoints -= requiredMp;
+      Game_DrawOverworldQuickStatus( game );
+      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), spellName );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_Blocked );
+      return False;
+   }
+
+   return True;
 }
