@@ -161,6 +161,7 @@ typedef enum DialogMessageId_t
    DialogMessageId_Spell_CastEvac,
    DialogMessageId_Spell_CastZoom,
    DialogMessageId_Spell_NotEnoughMp,
+   DialogMessageId_Spell_Blocked,
    DialogMessageId_Item_None,
    DialogMessageId_Door_None,
    DialogMessageId_Door_NoKeys,

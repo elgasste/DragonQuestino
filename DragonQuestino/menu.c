@@ -237,7 +237,7 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
       menu->items[i].command = MenuCommand_Spell_Evac;
       i++;
    }
-   if ( SPELL_HAS_ZOOM( spells ) )
+   if ( !( menu->tileMap->isDungeon ) && SPELL_HAS_ZOOM(spells) )
    {
       sprintf( menu->items[i].text, STRING_SPELLMENU_ZOOM );
       menu->items[i].command = MenuCommand_Spell_Zoom;
