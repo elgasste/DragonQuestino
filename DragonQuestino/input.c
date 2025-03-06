@@ -13,6 +13,11 @@ void Input_Init( Input_t* input )
       input->buttonStates[i].released = False;
       input->buttonStates[i].down = False;
    }
+
+#if !defined( VISUAL_STUDIO_DEV )
+   input->analogRestingState.x = analogRead( PIN_ANALOG_X );
+   input->analogRestingState.y = analogRead( PIN_ANALOG_Y );
+#endif
 }
 
 void Input_Read( Input_t* input )
@@ -28,17 +33,15 @@ void Input_Read( Input_t* input )
    int32_t yValue = analogRead( PIN_ANALOG_Y );
 
    // our analog stick is rotated, so X and Y values are reversed
-   leftIsDown = ( xValue >= ANALOG_THRESHOLD_HIGH ) ? True : False;
-   upIsDown = ( yValue <= ANALOG_THRESHOLD_LOW ) ? True : False;
-   rightIsDown = ( xValue <= ANALOG_THRESHOLD_LOW ) ? True : False;
-   downIsDown = ( yValue >= ANALOG_THRESHOLD_HIGH ) ? True : False;
+   leftIsDown = ( xValue >= ( input->analogRestingState.x + INPUT_ANALOG_THRESHOLD ) ) ? True : False;
+   upIsDown = ( yValue <= ( input->analogRestingState.y - INPUT_ANALOG_THRESHOLD ) ) ? True: False;
+   rightIsDown = ( xValue <= ( input->analogRestingState.x - INPUT_ANALOG_THRESHOLD ) ) ? True : False;
+   downIsDown = ( yValue >= ( input->analogRestingState.y + INPUT_ANALOG_THRESHOLD ) ) ? True : False;
 
    Input_UpdateButtonState( &( input->buttonStates[Button_Left] ), leftIsDown );
    Input_UpdateButtonState( &( input->buttonStates[Button_Up] ), upIsDown );
    Input_UpdateButtonState( &( input->buttonStates[Button_Right] ), rightIsDown );
    Input_UpdateButtonState( &( input->buttonStates[Button_Down] ), downIsDown );
-
-   // TODO: test this on Arduino and adjust the threshold/cutoff if it's weird
 
    // for reference:
    //
@@ -46,10 +49,16 @@ void Input_Read( Input_t* input )
    // - X is between 512 and 1024: left
    // - Y is between 0 and 512: up
    // - Y is between 512 and 1024: down
-   input->dpadIntensity[Button_Left] = leftIsDown ? (float)( MATH_MIN( xValue, ANALOG_CUTOFF_HIGH ) - ANALOG_THRESHOLD_HIGH ) / ANALOG_ADJUSTED_RANGE : 0.0f;
-   input->dpadIntensity[Button_Up] = upIsDown ? (float)( MATH_MAX( yValue, ANALOG_CUTOFF_LOW ) - ANALOG_CUTOFF_LOW ) / ANALOG_ADJUSTED_RANGE : 0.0f;
-   input->dpadIntensity[Button_Right] = rightIsDown ? (float)( MATH_MAX( xValue, ANALOG_CUTOFF_LOW ) - ANALOG_CUTOFF_LOW ) / ANALOG_ADJUSTED_RANGE : 0.0f;
-   input->dpadIntensity[Button_Down] = downIsDown ? (float)( MATH_MIN( yValue, ANALOG_CUTOFF_HIGH ) - ANALOG_THRESHOLD_HIGH ) / ANALOG_ADJUSTED_RANGE : 0.0f;
+
+   // TODO: fix this
+   // input->dpadIntensity[Button_Left] = leftIsDown ? (float)( MATH_MIN( xValue, ANALOG_CUTOFF_HIGH ) - ANALOG_THRESHOLD_HIGH ) / ANALOG_ADJUSTED_RANGE : 0.0f;
+   // input->dpadIntensity[Button_Up] = upIsDown ? (float)( MATH_MAX( yValue, ANALOG_CUTOFF_LOW ) - ANALOG_CUTOFF_LOW ) / ANALOG_ADJUSTED_RANGE : 0.0f;
+   // input->dpadIntensity[Button_Right] = rightIsDown ? (float)( MATH_MAX( xValue, ANALOG_CUTOFF_LOW ) - ANALOG_CUTOFF_LOW ) / ANALOG_ADJUSTED_RANGE : 0.0f;
+   // input->dpadIntensity[Button_Down] = downIsDown ? (float)( MATH_MIN( yValue, ANALOG_CUTOFF_HIGH ) - ANALOG_THRESHOLD_HIGH ) / ANALOG_ADJUSTED_RANGE : 0.0f;
+   input->dpadIntensity[Button_Left] = leftIsDown ? 1.0f : 0.0f;
+   input->dpadIntensity[Button_Up] = upIsDown ? 1.0f : 0.0f;
+   input->dpadIntensity[Button_Right] = rightIsDown ? 1.0f : 0.0f;
+   input->dpadIntensity[Button_Down] = downIsDown ? 1.0f : 0.0f;
 
    Input_UpdateButtonState( &( input->buttonStates[Button_A] ), digitalRead( PIN_A_BUTTON ) == LOW );
    Input_UpdateButtonState( &( input->buttonStates[Button_B] ), digitalRead( PIN_B_BUTTON ) == LOW );
