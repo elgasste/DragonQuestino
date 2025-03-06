@@ -63,7 +63,15 @@ void Game_CastEvac( Game_t* game )
    {
       game->player.stats.magicPoints -= SPELL_EVAC_MP;
       Game_DrawOverworldQuickStatus( game );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastEvac );
+
+      if ( game->player.isCursed )
+      {
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastEvacCursed );
+      }
+      else
+      {
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastEvac );
+      }
    }
 }
 

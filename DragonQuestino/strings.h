@@ -89,6 +89,7 @@
 #define STRING_HOLYPROTECTION_OFF                                    "The effects of Holy Protection have worn off."
 #define STRING_HOLYPROTECTION_CURSED                                 "But the curse dispels the Holy Protection."
 #define STRING_GLOW_CURSED                                           "But the curse draws the darkness back to you."
+#define STRING_EVAC_CURSED                                           "But the curse restrains you from the outside light."
 
 #define STRING_BUTNOTHINGHAPPENS                                     "But nothing happens."
 #define STRING_NOTENOUGHMP                                           "You do not have enough MP."
