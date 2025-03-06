@@ -164,6 +164,7 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
                   case DialogMessageId_Use_CursedBelt:
                   case DialogMessageId_Chest_DeathNecklace:
                      Player_SetCursed( &( game->player ), True );
+                     TileMap_StartGlowTransition( &( game->tileMap ) );
                      break;
                   case DialogMessageId_Use_GwaelynsLove:
                      e = Player_GetExperienceRemaining( &( game->player ) );

@@ -6,6 +6,7 @@
 #include "battle_stats.h"
 
 typedef struct Screen_t Screen_t;
+typedef struct TileMap_t TileMap_t;
 
 #define SPELL_HAS_HEAL( x )                     ( ( x ) & 0x1 )
 #define SPELL_HAS_SIZZ( x )                     ( ( x ) & 0x2 )
@@ -140,6 +141,7 @@ typedef struct Screen_t Screen_t;
 typedef struct Player_t
 {
    Screen_t* screen;
+   TileMap_t* tileMap;
 
    ActiveSprite_t sprite;
    Vector2i32_t spriteOffset;
@@ -198,7 +200,7 @@ Player_t;
 extern "C" {
 #endif
 
-void Player_Init( Player_t* player, Screen_t* screen );
+void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap );
 uint16_t Player_GetLevel( Player_t* player );
 uint16_t Player_GetExperienceRemaining( Player_t* player );
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold );

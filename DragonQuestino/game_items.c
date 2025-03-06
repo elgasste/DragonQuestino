@@ -30,8 +30,16 @@ void Game_UseWing( Game_t* game )
 void Game_UseFairyWater( Game_t* game )
 {
    ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 );
-   Player_SetHolyProtection( &( game->player ), True );
-   Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWater );
+
+   if ( game->player.isCursed )
+   {
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWaterCursed );
+   }
+   else
+   {
+      Player_SetHolyProtection( &( game->player ), True );
+      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Use_FairyWater );
+   }
 }
 
 void Game_UseTorch( Game_t* game )
@@ -42,7 +50,7 @@ void Game_UseTorch( Game_t* game )
       {
          TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
          game->tileMap.glowTileCount = 0;
-         game->glowExpandSeconds = GLOW_EXPAND_FRAME_SECONDS; // push one frame immediately
+         TileMap_StartGlowTransition( &( game->tileMap ) );
       }
 
       ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );

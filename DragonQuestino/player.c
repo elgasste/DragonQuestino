@@ -4,9 +4,10 @@
 #include "math.h"
 #include "tables.h"
 
-void Player_Init( Player_t* player, Screen_t* screen )
+void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
 {
    player->screen = screen;
+   player->tileMap = tileMap;
 
    player->tileIndex = 148; // sort of in front of King Lorik
    player->sprite.position.x = (float)( TILE_SIZE * 8 );
@@ -154,6 +155,11 @@ void Player_SetCursed( Player_t* player, Bool_t cursed )
 {
    player->isCursed = cursed;
    player->screen->textColor = cursed ? COLOR_GROSSYELLOW : COLOR_WHITE;
+
+   if ( cursed )
+   {
+      TileMap_SetTargetGlowDiameter( player->tileMap, 1 );
+   }
 }
 
 void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection )

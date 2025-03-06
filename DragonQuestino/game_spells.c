@@ -3,6 +3,8 @@
 
 void Game_CastHeal( Game_t* game )
 {
+   uint8_t maxEffect;
+
    if ( game->player.stats.magicPoints < SPELL_HEAL_MP )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
@@ -13,9 +15,10 @@ void Game_CastHeal( Game_t* game )
    }
    else
    {
+      maxEffect = game->player.isCursed ? ( SPELL_HEAL_MAXEFFECT / 2 ) : SPELL_HEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_HEAL_MP;
       Game_DrawOverworldQuickStatus( game );
-      Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, SPELL_HEAL_MAXEFFECT,
+      Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, maxEffect,
                          DialogMessageId_Spell_OverworldCastHeal1, DialogMessageId_Spell_OverworldCastHeal2 );
    }
 }
@@ -28,16 +31,25 @@ void Game_CastGlow( Game_t* game )
    }
    else if ( game->tileMap.isDark )
    {
-      if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
-      {
-         TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
-         game->tileMap.glowTileCount = 0;
-         game->glowExpandSeconds = GLOW_EXPAND_FRAME_SECONDS; // push one frame immediately
-      }
-
       game->player.stats.magicPoints -= SPELL_GLOW_MP;
       Game_DrawOverworldQuickStatus( game );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCastGlow );
+
+      if ( game->player.isCursed )
+      {
+         TileMap_SetTargetGlowDiameter( &( game->tileMap ), 1 );
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCastGlowCursed );
+      }
+      else
+      {
+         if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
+         {
+            TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
+            game->tileMap.glowTileCount = 0;
+            TileMap_StartGlowTransition( &( game->tileMap ) );
+         }
+
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCastGlow );
+      }
    }
 }
 
@@ -51,7 +63,15 @@ void Game_CastEvac( Game_t* game )
    {
       game->player.stats.magicPoints -= SPELL_EVAC_MP;
       Game_DrawOverworldQuickStatus( game );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastEvac );
+
+      if ( game->player.isCursed )
+      {
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastEvacCursed );
+      }
+      else
+      {
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastEvac );
+      }
    }
 }
 
@@ -71,14 +91,25 @@ void Game_CastRepel( Game_t* game )
    }
    else
    {
+      game->player.stats.magicPoints -= SPELL_REPEL_MP;
       Game_DrawOverworldQuickStatus( game );
-      Player_SetHolyProtection( &( game->player ), True );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepel );
+
+      if ( game->player.isCursed )
+      {
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepelCursed );
+      }
+      else
+      {
+         Player_SetHolyProtection( &( game->player ), True );
+         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_CastRepel );
+      }
    }
 }
 
 void Game_CastMidheal( Game_t* game )
 {
+   uint8_t maxEffect;
+
    if ( game->player.stats.magicPoints < SPELL_MIDHEAL_MP )
    {
       Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
@@ -89,9 +120,10 @@ void Game_CastMidheal( Game_t* game )
    }
    else
    {
+      maxEffect = game->player.isCursed ? ( SPELL_MIDHEAL_MAXEFFECT / 2 ) : SPELL_MIDHEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
       Game_DrawOverworldQuickStatus( game );
-      Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, SPELL_MIDHEAL_MAXEFFECT,
+      Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, maxEffect,
                          DialogMessageId_Spell_OverworldCastMidheal1, DialogMessageId_Spell_OverworldCastMidheal2 );
    }
 }

@@ -40,6 +40,7 @@
 #define TORCH_DIAMETER                          3
 #define GLOW_SPELL_DIAMETER                     7
 #define GLOW_MAX_TILES                          200
+#define GLOW_TRANSITION_FRAME_SECONDS           0.1f
 
 #define TILEMAP_OVERWORLD_ID                    0
 #define TILEMAP_TANTEGEL_ID                     3
@@ -77,6 +78,7 @@
 
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
+typedef struct Player_t Player_t;
 
 typedef struct TileTexture_t
 {
@@ -97,6 +99,7 @@ typedef struct TileMap_t
 {
    Screen_t* screen;
    GameFlags_t* gameFlags;
+   Player_t* player;
 
    uint32_t id;
 
@@ -105,6 +108,7 @@ typedef struct TileMap_t
    uint32_t glowDiameter;
    uint32_t targetGlowDiameter;
    uint32_t glowTileCount;
+   float glowTransitionSeconds;
 
    // bits 0-4: texture index (max 32 textures)
    // bit 5: is-passable flag
@@ -140,13 +144,13 @@ TileMap_t;
 extern "C" {
 #endif
 
-void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags );
+void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags, Player_t* player );
+void TileMap_Tic( TileMap_t* tileMap );
 void TileMap_ResetViewport( TileMap_t* tileMap );
-void TileMap_UpdateViewport( TileMap_t* tileMap, int32_t anchorX, int32_t anchorY, uint32_t anchorW, uint32_t anchorH );
 void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );
 void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, uint32_t targetDiameter );
-void TileMap_ReduceGlowDiameter( TileMap_t* tileMap );
-void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap );
+void TileMap_StartGlowTransition( TileMap_t* tileMap );
+void TileMap_ReduceTargetGlowDiameter( TileMap_t* tileMap );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
 uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction );
