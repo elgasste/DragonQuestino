@@ -32,7 +32,12 @@ void loop()
    Clock_EndFrame( &( g_game.clock ) );
 }
 
+void Screen_RenderColor( Screen_t* screen, uint16_t color )
+{
+   g_gigaShield.drawColor( color );
+}
+
 void Screen_RenderBuffer( Screen_t* screen )
 {
-   g_gigaShield.drawScreen();
+   g_gigaShield.drawBuffer();
 }

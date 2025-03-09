@@ -10,6 +10,7 @@
 
 GigaShield::GigaShield() : Adafruit_GFX( GIGA_SHIELD_WIDTH, GIGA_SHIELD_HEIGHT )
 {
+   _useBuffer = true;
 }
 
 GigaShield::~GigaShield()
@@ -43,11 +44,26 @@ void GigaShield::refreshThreadWorker()
       uint16_t* shieldBuffer = (uint16_t*)( dsi_getActiveFrameBuffer() );
       shieldBuffer += ( ( GIGA_SHIELD_WIDTH * PLAY_AREA_OFFSET_Y ) + PLAY_AREA_OFFSET_X );
 
-      dsi_lcdDrawImage( (void*)_buffer, (void*)shieldBuffer, SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
+      if ( _useBuffer )
+      {
+         dsi_lcdDrawImage( (void*)_buffer, (void*)shieldBuffer, SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
+      }
+      else
+      {
+         // TODO: figure out how to actually do this, because this doesn't take a color
+         dsi_lcdFillArea( (void*)shieldBuffer, SCREEN_WIDTH, SCREEN_HEIGHT, DMA2D_INPUT_RGB565 );
+      }
    }
 }
 
-void GigaShield::drawScreen()
+void GigaShield::drawColor( uint16_t color )
 {
+   _useBuffer = false;
+   _wipeColor = color;
+}
+
+void GigaShield::drawBuffer()
+{
+   _useBuffer = true;
    _refreshThread->flags_set( 0x1 );
 }

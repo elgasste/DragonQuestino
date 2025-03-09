@@ -62,6 +62,7 @@ void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w
 void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title );
 
 // platform-specific
+void Screen_RenderColor( Screen_t* screen, uint16_t color );
 void Screen_RenderBuffer( Screen_t* screen );
 
 // game_data.c

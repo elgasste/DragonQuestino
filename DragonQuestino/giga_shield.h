@@ -15,7 +15,8 @@ class GigaShield : public Adafruit_GFX {
       void setScreen( Screen_t* screen ) { _screen = screen; };
       // we have to implement this, even if it does nothing
       void drawPixel( int16_t x, int16_t y, uint16_t color ) { }
-      void drawScreen();
+      void drawColor( uint16_t color );
+      void drawBuffer();
       uint16_t* getBuffer() { return _buffer; }
 
    private:
@@ -26,6 +27,8 @@ class GigaShield : public Adafruit_GFX {
       uint16_t* _buffer = nullptr;
       Screen_t* _screen;
       rtos::Thread* _refreshThread;
+      bool _useBuffer;
+      uint16_t _wipeColor;
 };
 
 #endif // GIGA_SHIELD_H

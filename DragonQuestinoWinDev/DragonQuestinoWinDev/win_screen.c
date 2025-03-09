@@ -19,6 +19,18 @@ internal uint32_t Convert565To32( uint16_t color )
    return (uint32_t)0xFF000000 | ( (uint32_t)( 0xFF * pR ) << 16 ) | ( (uint32_t)( 0xFF * pG ) << 8 ) | (uint32_t)( 0xFF * pB );
 }
 
+void Screen_RenderColor( Screen_t* screen, uint16_t color )
+{
+   uint32_t i;
+   uint16_t* bufferPos = screen->buffer;
+
+   for ( i = 0; i < SCREEN_PIXELS; i++ )
+   {
+      *bufferPos = color;
+      bufferPos++;
+   }
+}
+
 void Screen_RenderBuffer( Screen_t* screen )
 {
    uint32_t i;
