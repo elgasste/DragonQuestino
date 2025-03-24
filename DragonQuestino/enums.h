@@ -54,6 +54,7 @@ typedef enum Animation_t
    Animation_RainbowBridge_WhiteOut,
    Animation_RainbowBridge_FadeIn,
    Animation_RainbowBridge_Pause,
+   Animation_Spell,
 
    Animation_Count
 }

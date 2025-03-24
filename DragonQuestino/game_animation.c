@@ -11,6 +11,7 @@ internal void Game_TicAnimation_RainbowBridge_Trippy( Game_t* game );
 internal void Game_TicAnimation_RainbowBridge_WhiteOut( Game_t* game );
 internal void Game_TicAnimation_RainbowBridge_FadeIn( Game_t* game );
 internal void Game_TicAnimation_RainbowBridge_Pause( Game_t* game );
+internal void Game_TicAnimation_Spell( Game_t* game );
 
 void Game_StartAnimation( Game_t* game, Animation_t animation )
 {
@@ -56,6 +57,9 @@ void Game_StartAnimation( Game_t* game, Animation_t animation )
       case Animation_RainbowBridge_Pause:
          game->animationDuration = ANIMATION_RAINBOWBRIDGE_PAUSE_DURATION;
          break;
+      case Animation_Spell:
+         game->animationDuration = ANIMATION_SPELL_DURATION;
+         break;
    }
 }
 
@@ -94,6 +98,7 @@ void Game_TicAnimation( Game_t* game )
       case Animation_RainbowBridge_WhiteOut: Game_TicAnimation_RainbowBridge_WhiteOut( game ); break;
       case Animation_RainbowBridge_FadeIn: Game_TicAnimation_RainbowBridge_FadeIn( game ); break;
       case Animation_RainbowBridge_Pause: Game_TicAnimation_RainbowBridge_Pause( game ); break;
+      case Animation_Spell: Game_TicAnimation_Spell( game ); break;
    }
 }
 
@@ -338,4 +343,9 @@ internal void Game_TicAnimation_RainbowBridge_Pause( Game_t* game )
    {
       Game_StopAnimation( game );
    }
+}
+
+internal void Game_TicAnimation_Spell( Game_t* game )
+{
+   // MUFFINS: flash to white and back
 }

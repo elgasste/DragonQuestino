@@ -200,6 +200,7 @@ internal void Game_HandleMenuInput( Game_t* game )
          case MenuCommand_OverworldMain_Item: Game_OpenOverworldItemMenu( game ); break;
          case MenuCommand_OverworldMain_Door: Game_OpenDoor( game ); break;
 
+         // MUFFINS: I guess we should start the animation here, then?
          case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
          case MenuCommand_Spell_Glow: Game_CastGlow( game ); break;
          case MenuCommand_Spell_Evac: Game_CastEvac( game ); break;
