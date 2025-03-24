@@ -171,7 +171,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
       if ( game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
       {
          game->player.hasHolyProtection = False;
-         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_HolyProtection_Off );
+         Game_OpenScrollingDialog( game, DialogMessageId_HolyProtection_Off );
       }
    }
 }

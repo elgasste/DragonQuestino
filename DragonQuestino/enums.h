@@ -133,14 +133,6 @@ typedef enum MenuCommand_t
 }
 MenuCommand_t;
 
-typedef enum ScrollingDialogType_t
-{
-   ScrollingDialogType_Overworld = 0,
-
-   ScrollingDialogType_Count
-}
-ScrollingDialogType_t;
-
 typedef enum DialogMessageId_t
 {
    DialogMessageId_Talk_NobodyThere = 0,
