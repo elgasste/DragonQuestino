@@ -38,3 +38,20 @@ uint16_t Math_CollectAmount16u( uint16_t* dest, uint16_t src )
       return returnAmount;
    }
 }
+
+uint8_t Math_ReduceAmount8u( uint8_t* dest, uint8_t src )
+{
+   uint8_t returnAmount;
+
+   if ( src > *dest )
+   {
+      returnAmount = *dest;
+      *dest = 0;
+      return returnAmount;
+   }
+   else
+   {
+      *dest -= src;
+      return src;
+   }
+}

@@ -472,4 +472,6 @@ internal void MaxOutStats()
 
    g_globals.game.player.spells = 0x3FF;
    g_globals.game.player.townsVisited = 0x3F;
+
+   Player_RestoreHitPoints( &( g_globals.game.player ), UINT8_MAX );
 }

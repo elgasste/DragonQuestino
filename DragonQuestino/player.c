@@ -4,6 +4,8 @@
 #include "math.h"
 #include "tables.h"
 
+internal void Player_SetTextColorByHitPoints( Player_t* player );
+
 void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
 {
    player->screen = screen;
@@ -39,10 +41,6 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->gold = 0;
    player->items = 0;
    player->spells = 0;
-
-   // uncomment for testing
-   //player->spells = 0x3FF;
-   //SPELL_SET_HASSIZZ( player->spells );
 }
 
 uint16_t Player_GetLevel( Player_t* player )
@@ -79,7 +77,16 @@ uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
 
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
 {
-   return Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
+   uint8_t amount = Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
+   Player_SetTextColorByHitPoints( player );
+   return amount;
+}
+
+uint8_t Player_ReduceHitPoints( Player_t* player, uint8_t hitPoints )
+{
+   uint8_t amount = Math_ReduceAmount8u( &( player->stats.hitPoints ), hitPoints );
+   Player_SetTextColorByHitPoints( player );
+   return amount;
 }
 
 Bool_t Player_CollectItem( Player_t* player, Item_t item )
@@ -154,7 +161,7 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
 void Player_SetCursed( Player_t* player, Bool_t cursed )
 {
    player->isCursed = cursed;
-   player->screen->textColor = cursed ? COLOR_GROSSYELLOW : COLOR_WHITE;
+   Player_SetTextColorByHitPoints( player );
 
    if ( cursed )
    {
@@ -169,5 +176,21 @@ void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection )
    if ( hasHolyProtection )
    {
       player->holyProtectionSteps = 0;
+   }
+}
+
+internal void Player_SetTextColorByHitPoints( Player_t* player )
+{
+   if ( player->isCursed )
+   {
+      player->screen->textColor = COLOR_GROSSYELLOW;
+   }
+   else if ( ( (float)( player->stats.hitPoints ) / player->stats.maxHitPoints ) < PLAYER_DAMAGE_TEXT_THRESHOLD )
+   {
+      player->screen->textColor = COLOR_SOFTRED;
+   }
+   else
+   {
+      player->screen->textColor = COLOR_WHITE;
    }
 }
