@@ -59,7 +59,7 @@ void Game_Tic( Game_t* game );
 void Game_ChangeState( Game_t* game, GameState_t newState );
 void Game_EnterTargetPortal( Game_t* game );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
-void Game_OpenScrollingDialog( Game_t* game, ScrollingDialogType_t type, DialogMessageId_t messageId );
+void Game_OpenScrollingDialog( Game_t* game, DialogMessageId_t messageId );
 void Game_Search( Game_t* game );
 void Game_OpenDoor( Game_t* game );
 void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogMessageId_t msg1, DialogMessageId_t msg2 );

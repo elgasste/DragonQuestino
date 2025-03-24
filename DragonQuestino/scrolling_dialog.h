@@ -44,7 +44,7 @@ extern "C" {
 #endif
 
 void ScrollingDialog_Init( ScrollingDialog_t* dialog, Screen_t* screen, Player_t* player );
-void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId );
+void ScrollingDialog_Load( ScrollingDialog_t* dialog, DialogMessageId_t messageId );
 void ScrollingDialog_SetInsertionText( ScrollingDialog_t* dialog, const char* text );
 void ScrollingDialog_Draw( ScrollingDialog_t* dialog );
 Bool_t ScrollingDialog_Next( ScrollingDialog_t* dialog );

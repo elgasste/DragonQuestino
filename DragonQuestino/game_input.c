@@ -190,7 +190,7 @@ internal void Game_HandleMenuInput( Game_t* game )
 
       switch ( game->menu.items[game->menu.selectedIndex].command )
       {
-         case MenuCommand_OverworldMain_Talk: Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Talk_NobodyThere ); break;
+         case MenuCommand_OverworldMain_Talk: Game_OpenScrollingDialog( game, DialogMessageId_Talk_NobodyThere ); break;
          case MenuCommand_OverworldMain_Status:
             Game_DrawOverworldDeepStatus( game );
             Game_ChangeState( game, GameState_Overworld_Waiting );
@@ -254,7 +254,7 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_None );
+      Game_OpenScrollingDialog( game, DialogMessageId_Spell_None );
    }
    else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells, game->tileMap.isDungeon, game->tileMap.isDark ) )
    {
@@ -262,7 +262,7 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    }
    else
    {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_OverworldCantCast );
+      Game_OpenScrollingDialog( game, DialogMessageId_Spell_OverworldCantCast );
    }
 }
 
@@ -273,7 +273,7 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 
    if ( useableCount == 0 && nonUseableCount == 0 )
    {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Item_None );
+      Game_OpenScrollingDialog( game, DialogMessageId_Item_None );
    }
    else
    {
@@ -299,7 +299,7 @@ internal void Game_OpenZoomMenu( Game_t* game )
 
    if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
    {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Spell_NotEnoughMp );
+      Game_OpenScrollingDialog( game, DialogMessageId_Spell_NotEnoughMp );
    }
    else if ( townCount > 0 )
    {

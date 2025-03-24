@@ -5,8 +5,6 @@
 
 internal void ScrollingDialog_ResetScroll( ScrollingDialog_t* dialog );
 internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog );
-internal void ScrollingDialog_LoadType( ScrollingDialog_t* dialog, ScrollingDialogType_t type );
-internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog );
 internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t messageId );
 internal void ScrollingDialog_GetMessageText( ScrollingDialog_t* dialog, char* text );
 
@@ -16,12 +14,16 @@ void ScrollingDialog_Init( ScrollingDialog_t* dialog, Screen_t* screen, Player_t
    dialog->player = player;
 }
 
-void ScrollingDialog_Load( ScrollingDialog_t* dialog, ScrollingDialogType_t type, DialogMessageId_t messageId )
+void ScrollingDialog_Load( ScrollingDialog_t* dialog, DialogMessageId_t messageId )
 {
    dialog->messageId = messageId;
    dialog->section = 0;
+   dialog->position.x = 32;
+   dialog->position.y = 144;
+   dialog->size.x = 24;
+   dialog->size.y = 8;
+   dialog->lineWidth = 22;
 
-   ScrollingDialog_LoadType( dialog, type );
    ScrollingDialog_LoadMessage( dialog );
    ScrollingDialog_ResetScroll( dialog );
 }
@@ -201,25 +203,6 @@ internal void ScrollingDialog_LoadMessage( ScrollingDialog_t* dialog )
          lastSpaceIndex = lineIndex;
       }
    }
-}
-
-internal void ScrollingDialog_LoadType( ScrollingDialog_t* dialog, ScrollingDialogType_t type )
-{
-   switch ( type )
-   {
-      case ScrollingDialogType_Overworld:
-         ScrollingDialog_LoadOverworldType( dialog );
-         break;
-   }
-}
-
-internal void ScrollingDialog_LoadOverworldType( ScrollingDialog_t* dialog )
-{
-   dialog->position.x = 32;
-   dialog->position.y = 144;
-   dialog->size.x = 24;
-   dialog->size.y = 8;
-   dialog->lineWidth = 22;
 }
 
 internal uint32_t ScrollingDialog_GetMessageSectionCount( DialogMessageId_t messageId )

@@ -154,16 +154,10 @@ void Game_OpenMenu( Game_t* game, MenuId_t id )
    }
 }
 
-void Game_OpenScrollingDialog( Game_t* game, ScrollingDialogType_t type, DialogMessageId_t messageId )
+void Game_OpenScrollingDialog( Game_t* game, DialogMessageId_t messageId )
 {
-   ScrollingDialog_Load( &( game->scrollingDialog ), type, messageId );
-
-   switch ( type )
-   {
-      case ScrollingDialogType_Overworld:
-         Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
-         break;
-   }
+   ScrollingDialog_Load( &( game->scrollingDialog ), messageId );
+   Game_ChangeState( game, GameState_Overworld_ScrollingDialog );
 }
 
 void Game_Search( Game_t* game )
@@ -174,19 +168,19 @@ void Game_Search( Game_t* game )
    {
       Player_CollectItem( &( game->player ), Item_Token );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_TOKEN );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+      Game_OpenScrollingDialog( game, DialogMessageId_Search_FoundItem );
    }
    else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !ITEM_HAS_FAIRYFLUTE( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_FairyFlute );
       ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_FOUNDITEM_FAIRYFLUTE );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundItem );
+      Game_OpenScrollingDialog( game, DialogMessageId_Search_FoundItem );
    }
    else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID && game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->gameFlags.foundHiddenStairs )
    {
       game->gameFlags.foundHiddenStairs = True;
       TileMap_LoadHiddenStairs( &( game->tileMap ) );
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_FoundHiddenStairs );
+      Game_OpenScrollingDialog( game, DialogMessageId_Search_FoundHiddenStairs );
    }
    else
    {
@@ -198,7 +192,7 @@ void Game_Search( Game_t* game )
       }
       else
       {
-         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Search_NothingFound );
+         Game_OpenScrollingDialog( game, DialogMessageId_Search_NothingFound );
       }
    }
 }
@@ -212,7 +206,7 @@ void Game_OpenDoor( Game_t* game )
    {
       if ( !ITEM_GET_KEYCOUNT( game->player.items ) )
       {
-         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Door_NoKeys );
+         Game_OpenScrollingDialog( game, DialogMessageId_Door_NoKeys );
       }
       else
       {
@@ -223,7 +217,7 @@ void Game_OpenDoor( Game_t* game )
    }
    else
    {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Door_None );
+      Game_OpenScrollingDialog( game, DialogMessageId_Door_None );
    }
 }
 
@@ -235,7 +229,7 @@ void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogMessag
    amount = Player_RestoreHitPoints( &( game->player ), Random_u8( minHp, maxHp ) );
    sprintf( str, "%u", amount );
    ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), str );
-   Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, ( amount == 1 ) ? msg1: msg2 );
+   Game_OpenScrollingDialog( game, ( amount == 1 ) ? msg1: msg2 );
 }
 
 internal void Game_TicOverworld( Game_t* game )
@@ -276,7 +270,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), STRING_CHESTCOLLECT_STONEOFSUNLIGHT );
          break;
       case 0x100:       // Erdrick's Cave, the tablet. this is not an item that can be collected.
-         Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Chest_Tablet );
+         Game_OpenScrollingDialog( game, DialogMessageId_Chest_Tablet );
          game->gameFlags.treasures ^= treasureFlag;
          return;
       case 0x200:       // Rimuldar Inn
@@ -299,7 +293,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          if ( Random_Percent() <= 5 )
          {
             game->gameFlags.treasures ^= treasureFlag;
-            Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, DialogMessageId_Chest_DeathNecklace );
+            Game_OpenScrollingDialog( game, DialogMessageId_Chest_DeathNecklace );
             return;
          }
          else
@@ -373,10 +367,10 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
    if ( collected )
    {
       game->gameFlags.treasures ^= treasureFlag;
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, ( gold > 0 ) ? DialogMessageId_Chest_GoldCollected : DialogMessageId_Chest_ItemCollected );
+      Game_OpenScrollingDialog( game, ( gold > 0 ) ? DialogMessageId_Chest_GoldCollected : DialogMessageId_Chest_ItemCollected );
    }
    else
    {
-      Game_OpenScrollingDialog( game, ScrollingDialogType_Overworld, ( gold > 0 ) ? DialogMessageId_Chest_GoldNoSpace : DialogMessageId_Chest_ItemNoSpace );
+      Game_OpenScrollingDialog( game, ( gold > 0 ) ? DialogMessageId_Chest_GoldNoSpace : DialogMessageId_Chest_ItemNoSpace );
    }
 }
