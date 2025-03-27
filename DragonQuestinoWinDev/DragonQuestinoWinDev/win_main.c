@@ -454,10 +454,14 @@ internal void GetAllItems()
    {
       ITEM_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
    }
+
+   g_globals.game.needsRedraw = True;
 }
 
 internal void MaxOutStats()
 {
+   uint32_t i;
+
    g_globals.game.player.experience = UINT16_MAX;
    g_globals.game.player.gold = UINT16_MAX;
 
@@ -472,4 +476,11 @@ internal void MaxOutStats()
 
    g_globals.game.player.spells = 0x3FF;
    g_globals.game.player.townsVisited = 0x3F;
+
+   for ( i = 0; i < MenuId_Count; i++ )
+   {
+      Menu_Reset( &( g_globals.game.menus[i] ) );
+   }
+
+   g_globals.game.needsRedraw = True;
 }

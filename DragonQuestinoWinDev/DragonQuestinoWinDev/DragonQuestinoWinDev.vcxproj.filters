@@ -60,7 +60,7 @@
     <ClInclude Include="..\..\DragonQuestino\strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\DragonQuestino\scrolling_dialog.h">
+    <ClInclude Include="..\..\DragonQuestino\dialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\DragonQuestino\battle_stats.h">
@@ -122,7 +122,7 @@
     <ClCompile Include="..\..\DragonQuestino\menu.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\DragonQuestino\scrolling_dialog.c">
+    <ClCompile Include="..\..\DragonQuestino\dialog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\DragonQuestino\game_input.c">

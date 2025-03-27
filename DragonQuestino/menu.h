@@ -26,6 +26,7 @@ typedef struct Menu_t
    Player_t* player;
    TileMap_t* tileMap;
 
+   MenuId_t id;
    char title[MENU_LINE_LENGTH];
    MenuItem_t items[MENU_MAX_ITEMS];
    uint32_t itemCount;
@@ -49,8 +50,8 @@ Menu_t;
 extern "C" {
 #endif
 
-void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player, TileMap_t* tileMap );
-void Menu_Load( Menu_t* menu, MenuId_t id );
+void Menu_Init( Menu_t* menu, MenuId_t id, Screen_t* screen, Player_t* player, TileMap_t* tileMap );
+void Menu_Reset( Menu_t* menu );
 void Menu_Draw( Menu_t* menu );
 void Menu_ResetCarat( Menu_t* menu );
 void Menu_MoveSelection( Menu_t* menu, Direction_t direction );

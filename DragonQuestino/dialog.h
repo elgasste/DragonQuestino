@@ -1,5 +1,5 @@
-#if !defined( SCROLLING_DIALOG_H )
-#define SCROLLING_DIALOG_H
+#if !defined( DIALOG_H )
+#define DIALOG_H
 
 #include "common.h"
 #include "vector.h"
@@ -13,12 +13,12 @@
 typedef struct Screen_t Screen_t;
 typedef struct Player_t Player_t;
 
-typedef struct ScrollingDialog_t
+typedef struct Dialog_t
 {
    Screen_t* screen;
    Player_t* player;
 
-   DialogMessageId_t messageId;
+   DialogId_t id;
    Vector2u16_t position;  // in pixels
    Vector2u16_t size;      // in characters
    uint32_t lineWidth;     // in characters
@@ -37,23 +37,23 @@ typedef struct ScrollingDialog_t
    Bool_t showCarat;
    float blinkSeconds;
 }
-ScrollingDialog_t;
+Dialog_t;
 
 #if defined( __cplusplus )
 extern "C" {
 #endif
 
-void ScrollingDialog_Init( ScrollingDialog_t* dialog, Screen_t* screen, Player_t* player );
-void ScrollingDialog_Load( ScrollingDialog_t* dialog, DialogMessageId_t messageId );
-void ScrollingDialog_SetInsertionText( ScrollingDialog_t* dialog, const char* text );
-void ScrollingDialog_Draw( ScrollingDialog_t* dialog );
-Bool_t ScrollingDialog_Next( ScrollingDialog_t* dialog );
-void ScrollingDialog_Skip( ScrollingDialog_t* dialog );
-void ScrollingDialog_Tic( ScrollingDialog_t* dialog );
-Bool_t ScrollingDialog_IsDone( ScrollingDialog_t* dialog );
+void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player );
+void Dialog_Load( Dialog_t* dialog, DialogId_t id );
+void Dialog_SetInsertionText( Dialog_t* dialog, const char* text );
+void Dialog_Draw( Dialog_t* dialog );
+Bool_t Dialog_Next( Dialog_t* dialog );
+void Dialog_Skip( Dialog_t* dialog );
+void Dialog_Tic( Dialog_t* dialog );
+Bool_t Dialog_IsDone( Dialog_t* dialog );
 
 #if defined( __cplusplus )
 }
 #endif
 
-#endif // SCROLLING_DIALOG_H
+#endif // DIALOG_H

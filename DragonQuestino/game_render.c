@@ -10,37 +10,55 @@ void Game_Draw( Game_t* game )
    {
       switch ( game->animation )
       {
-         case Animation_Overworld_Pause:
-         case Animation_TileMap_FadeOut:
-         case Animation_TileMap_FadePause:
-         case Animation_TileMap_FadeIn:
-         case Animation_TileMap_WhiteOut:
-         case Animation_TileMap_WhitePause:
-         case Animation_TileMap_WhiteIn:
-         case Animation_RainbowBridge_Trippy:
-         case Animation_RainbowBridge_WhiteOut:
-         case Animation_RainbowBridge_FadeIn:
-         case Animation_RainbowBridge_Pause:
+         default:
             Game_DrawOverworld( game );
             break;
       }
    }
    else
    {
-      switch ( game->state )
+      if ( game->mainState == MainState_Overworld )
       {
-         case GameState_Overworld:
+         if ( game->needsRedraw )
+         {
             Game_DrawOverworld( game );
-            break;
-         case GameState_Overworld_MainMenu:
-         case GameState_Overworld_SpellMenu:
-         case GameState_Overworld_ItemMenu:
-         case GameState_Overworld_ZoomMenu:
-            Menu_Draw( &( game->menu ) );
-            break;
-         case GameState_Overworld_ScrollingDialog:
-            ScrollingDialog_Draw( &( game->scrollingDialog ) );
-            break;
+            game->needsRedraw = False;
+
+            switch ( game->subState )
+            {
+               case SubState_Menu:
+                  Game_DrawOverworldQuickStatus( game );
+                  Menu_Draw( &( game->menus[MenuId_Overworld] ) );
+                  switch ( game->activeMenu->id )
+                  {
+                     case MenuId_OverworldItem:
+                        Menu_Draw( &( game->menus[MenuId_OverworldItem] ) );
+                        break;
+                     case MenuId_OverworldSpell:
+                        Menu_Draw( &( game->menus[MenuId_OverworldSpell] ) );
+                        break;
+                  }
+            }
+         }
+         else
+         {
+            switch ( game->subState )
+            {
+               case SubState_None:
+                  Game_DrawOverworld( game );
+                  break;
+               case SubState_Menu:
+                  Menu_Draw( game->activeMenu );
+                  break;
+               case SubState_Dialog:
+                  Dialog_Draw( &( game->dialog ) );
+                  break;
+            }
+         }
+      }
+      else
+      {
+         // TODO: battle stuff
       }
    }
 }
@@ -177,7 +195,7 @@ internal void Game_DrawOverworld( Game_t* game )
    TileMap_Draw( &( game->tileMap ) );
    Game_DrawPlayer( game );
 
-   if ( game->state == GameState_Overworld && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
+   if ( game->subState == SubState_None && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
    {
       Game_DrawOverworldQuickStatus( game );
    }

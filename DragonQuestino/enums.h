@@ -27,35 +27,42 @@ typedef enum Direction_t
 }
 Direction_t;
 
-typedef enum GameState_t
+typedef enum MainState_t
 {
-   GameState_Overworld = 0,
-   GameState_Overworld_Waiting,
-   GameState_Overworld_MainMenu,
-   GameState_Overworld_SpellMenu,
-   GameState_Overworld_ItemMenu,
-   GameState_Overworld_ZoomMenu,
-   GameState_Overworld_ScrollingDialog,
+   MainState_Overworld = 0,
+   MainState_Battle,
 
-   GameState_Count
+   MainState_Count
 }
-GameState_t;
+MainState_t;
 
-typedef enum Animation_t
+typedef enum SubState_t
 {
-   Animation_Overworld_Pause = 0,
-   Animation_TileMap_FadeOut,
-   Animation_TileMap_FadePause,
-   Animation_TileMap_FadeIn,
-   Animation_TileMap_WhiteOut,
-   Animation_TileMap_WhitePause,
-   Animation_TileMap_WhiteIn,
-   Animation_RainbowBridge_Trippy,
-   Animation_RainbowBridge_WhiteOut,
-   Animation_RainbowBridge_FadeIn,
-   Animation_RainbowBridge_Pause,
+   SubState_None = 0,
+   SubState_Waiting,
+   SubState_Menu,
+   SubState_Animation,
+   SubState_Dialog,
 
-   Animation_Count
+   SubState_Count
+}
+SubState_t;
+
+typedef enum AnimationId_t
+{
+   AnimationId_Overworld_Pause = 0,
+   AnimationId_TileMap_FadeOut,
+   AnimationId_TileMap_FadePause,
+   AnimationId_TileMap_FadeIn,
+   AnimationId_TileMap_WhiteOut,
+   AnimationId_TileMap_WhitePause,
+   AnimationId_TileMap_WhiteIn,
+   AnimationId_RainbowBridge_Trippy,
+   AnimationId_RainbowBridge_WhiteOut,
+   AnimationId_RainbowBridge_FadeIn,
+   AnimationId_RainbowBridge_Pause,
+
+   AnimationId_Count
 }
 Animation_t;
 
@@ -94,12 +101,12 @@ MenuId_t;
 
 typedef enum MenuCommand_t
 {
-   MenuCommand_OverworldMain_Talk = 0,
-   MenuCommand_OverworldMain_Status,
-   MenuCommand_OverworldMain_Search,
-   MenuCommand_OverworldMain_Spell,
-   MenuCommand_OverworldMain_Item,
-   MenuCommand_OverworldMain_Door,
+   MenuCommand_Overworld_Talk = 0,
+   MenuCommand_Overworld_Status,
+   MenuCommand_Overworld_Search,
+   MenuCommand_Overworld_Spell,
+   MenuCommand_Overworld_Item,
+   MenuCommand_Overworld_Door,
 
    MenuCommand_Spell_Heal,
    MenuCommand_Spell_Sizz,
@@ -133,59 +140,59 @@ typedef enum MenuCommand_t
 }
 MenuCommand_t;
 
-typedef enum DialogMessageId_t
+typedef enum DialogId_t
 {
-   DialogMessageId_Talk_NobodyThere = 0,
-   DialogMessageId_Search_NothingFound,
-   DialogMessageId_Search_FoundItem,
-   DialogMessageId_Search_FoundHiddenStairs,
-   DialogMessageId_Spell_None,
-   DialogMessageId_Spell_OverworldCantCast,
-   DialogMessageId_Spell_OverworldCastHeal1,
-   DialogMessageId_Spell_OverworldCastHeal2,
-   DialogMessageId_Spell_OverworldCastMidheal1,
-   DialogMessageId_Spell_OverworldCastMidheal2,
-   DialogMessageId_Spell_OverworldCastGlowCursed,
-   DialogMessageId_Spell_OverworldCastGlow,
-   DialogMessageId_Spell_CastRepelCursed,
-   DialogMessageId_Spell_CastRepel,
-   DialogMessageId_Spell_CastEvacCursed,
-   DialogMessageId_Spell_CastEvac,
-   DialogMessageId_Spell_CastZoom,
-   DialogMessageId_Spell_NotEnoughMp,
-   DialogMessageId_Spell_Blocked,
-   DialogMessageId_Item_None,
-   DialogMessageId_Door_None,
-   DialogMessageId_Door_NoKeys,
+   DialogId_Talk_NobodyThere = 0,
+   DialogId_Search_NothingFound,
+   DialogId_Search_FoundItem,
+   DialogId_Search_FoundHiddenStairs,
+   DialogId_Spell_None,
+   DialogId_Spell_OverworldCantCast,
+   DialogId_Spell_OverworldCastHeal1,
+   DialogId_Spell_OverworldCastHeal2,
+   DialogId_Spell_OverworldCastMidheal1,
+   DialogId_Spell_OverworldCastMidheal2,
+   DialogId_Spell_OverworldCastGlowCursed,
+   DialogId_Spell_OverworldCastGlow,
+   DialogId_Spell_CastRepelCursed,
+   DialogId_Spell_CastRepel,
+   DialogId_Spell_CastEvacCursed,
+   DialogId_Spell_CastEvac,
+   DialogId_Spell_CastZoom,
+   DialogId_Spell_NotEnoughMp,
+   DialogId_Spell_Blocked,
+   DialogId_Item_None,
+   DialogId_Door_None,
+   DialogId_Door_NoKeys,
 
-   DialogMessageId_FullyHealed,
-   DialogMessageId_HolyProtection_Off,
+   DialogId_FullyHealed,
+   DialogId_HolyProtection_Off,
 
-   DialogMessageId_Use_Herb1,
-   DialogMessageId_Use_Herb2,
-   DialogMessageId_Use_WingCantUse,
-   DialogMessageId_Use_Wing,
-   DialogMessageId_Use_FairyWaterCursed,
-   DialogMessageId_Use_FairyWater,
-   DialogMessageId_Use_TorchCantUse,
-   DialogMessageId_Use_Torch,
-   DialogMessageId_Use_FairyFlute,
-   DialogMessageId_Use_SilverHarp,
-   DialogMessageId_Use_GwaelynsLoveCantUse,
-   DialogMessageId_Use_GwaelynsLove,
-   DialogMessageId_Use_RainbowDropCantUse,
-   DialogMessageId_Use_RainbowDrop,
-   DialogMessageId_Use_CursedBelt,
+   DialogId_Use_Herb1,
+   DialogId_Use_Herb2,
+   DialogId_Use_WingCantUse,
+   DialogId_Use_Wing,
+   DialogId_Use_FairyWaterCursed,
+   DialogId_Use_FairyWater,
+   DialogId_Use_TorchCantUse,
+   DialogId_Use_Torch,
+   DialogId_Use_FairyFlute,
+   DialogId_Use_SilverHarp,
+   DialogId_Use_GwaelynsLoveCantUse,
+   DialogId_Use_GwaelynsLove,
+   DialogId_Use_RainbowDropCantUse,
+   DialogId_Use_RainbowDrop,
+   DialogId_Use_CursedBelt,
 
-   DialogMessageId_Chest_ItemCollected,
-   DialogMessageId_Chest_ItemNoSpace,
-   DialogMessageId_Chest_GoldCollected,
-   DialogMessageId_Chest_GoldNoSpace,
-   DialogMessageId_Chest_Tablet,
-   DialogMessageId_Chest_DeathNecklace,
+   DialogId_Chest_ItemCollected,
+   DialogId_Chest_ItemNoSpace,
+   DialogId_Chest_GoldCollected,
+   DialogId_Chest_GoldNoSpace,
+   DialogId_Chest_Tablet,
+   DialogId_Chest_DeathNecklace,
 
-   DialogMessageId_Count
+   DialogId_Count
 }
-DialogMessageId_t;
+DialogId_t;
 
 #endif // ENUMS_H
