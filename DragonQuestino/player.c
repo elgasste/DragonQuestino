@@ -42,9 +42,6 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->items = 0;
    player->spells = 0;
 
-   // MUFFINS
-   player->stats.hitPoints = 1;
-
    Player_UpdateTextColor( player, UINT8_MAX );
 }
 
@@ -168,6 +165,7 @@ void Player_SetCursed( Player_t* player, Bool_t cursed )
    }
    else
    {
+      player->screen->textColor = COLOR_WHITE;
       Player_UpdateTextColor( player, INT8_MAX );
    }
 }
