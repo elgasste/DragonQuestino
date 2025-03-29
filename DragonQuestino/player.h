@@ -8,6 +8,8 @@
 typedef struct Screen_t Screen_t;
 typedef struct TileMap_t TileMap_t;
 
+#define PLAYER_LOWHEALTH_PERCENTAGE             0.2f
+
 #define SPELL_HAS_HEAL( x )                     ( ( x ) & 0x1 )
 #define SPELL_HAS_SIZZ( x )                     ( ( x ) & 0x2 )
 #define SPELL_HAS_SLEEP( x )                    ( ( x ) & 0x4 )

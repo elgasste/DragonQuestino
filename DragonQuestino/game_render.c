@@ -7,6 +7,8 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 
 void Game_Draw( Game_t* game )
 {
+   uint32_t i;
+
    if ( game->isAnimating )
    {
       switch ( game->animation )
@@ -20,10 +22,16 @@ void Game_Draw( Game_t* game )
    {
       if ( game->mainState == MainState_Overworld )
       {
-         if ( game->needsRedraw )
+         if ( game->screen.needsRedraw )
          {
+            game->screen.needsRedraw = False;
+
+            for ( i = 0; i < MenuId_Count; i++ )
+            {
+               game->menus[i].hasDrawn = False;
+            }
+
             Game_DrawOverworld( game );
-            game->needsRedraw = False;
 
             switch ( game->subState )
             {

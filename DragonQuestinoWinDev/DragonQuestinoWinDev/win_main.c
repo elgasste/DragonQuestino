@@ -231,7 +231,7 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
                break;
             case VK_TOGGLECURSED:
                Player_SetCursed( &( g_globals.game.player ), g_globals.game.player.isCursed ? False : True );
-               Game_FlagRedraw( &( g_globals.game ) );
+               g_globals.game.screen.needsRedraw = True;
                break;
          }
       }
@@ -456,7 +456,7 @@ internal void GetAllItems()
       ITEM_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
    }
 
-   Game_FlagRedraw( &( g_globals.game ) );
+   g_globals.game.screen.needsRedraw = True;
 }
 
 internal void MaxOutStats()
@@ -466,7 +466,7 @@ internal void MaxOutStats()
    g_globals.game.player.experience = UINT16_MAX;
    g_globals.game.player.gold = UINT16_MAX;
 
-   g_globals.game.player.stats.hitPoints = UINT8_MAX;
+   Player_RestoreHitPoints( &( g_globals.game.player ), UINT8_MAX );
    g_globals.game.player.stats.maxHitPoints = UINT8_MAX;
    g_globals.game.player.stats.magicPoints = UINT8_MAX;
    g_globals.game.player.stats.maxMagicPoints = UINT8_MAX;
@@ -483,5 +483,5 @@ internal void MaxOutStats()
       Menu_Reset( &( g_globals.game.menus[i] ) );
    }
 
-   Game_FlagRedraw( &( g_globals.game ) );
+   g_globals.game.screen.needsRedraw = True;
 }

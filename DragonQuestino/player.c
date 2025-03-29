@@ -4,6 +4,8 @@
 #include "math.h"
 #include "tables.h"
 
+internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints );
+
 void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
 {
    player->screen = screen;
@@ -40,12 +42,13 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->items = 0;
    player->spells = 0;
 
-   // TODO: use this to test setting red text when health is low
-   //player->stats.hitPoints = 1;
-   //player->stats.magicPoints = 200;
-   //player->stats.maxHitPoints = 255;
-   //player->stats.maxMagicPoints = 255;
-   //SPELL_SET_HASHEAL( player->spells );
+   player->stats.hitPoints = 1;
+   player->stats.magicPoints = 200;
+   player->stats.maxHitPoints = 255;
+   player->stats.maxMagicPoints = 255;
+   SPELL_SET_HASHEAL( player->spells );
+
+   Player_UpdateTextColor( player, UINT8_MAX );
 }
 
 uint16_t Player_GetLevel( Player_t* player )
@@ -82,7 +85,12 @@ uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
 
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
 {
-   return Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
+   uint8_t amount;
+   uint8_t previousHitPoints = player->stats.hitPoints;
+
+   amount = Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
+   Player_UpdateTextColor( player, previousHitPoints );
+   return amount;
 }
 
 Bool_t Player_CollectItem( Player_t* player, Item_t item )
@@ -172,5 +180,29 @@ void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection )
    if ( hasHolyProtection )
    {
       player->holyProtectionSteps = 0;
+   }
+}
+
+internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints )
+{
+   float percentage, previousPercentage;
+
+   if ( player->isCursed )
+   {
+      return;
+   }
+
+   percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
+   previousPercentage = (float)( previousHitPoints ) / player->stats.maxHitPoints;
+
+   if ( percentage < PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage >= PLAYER_LOWHEALTH_PERCENTAGE )
+   {
+      player->screen->textColor = COLOR_RED;
+      player->screen->needsRedraw = True;
+   }
+   else if ( percentage >= PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage < PLAYER_LOWHEALTH_PERCENTAGE )
+   {
+      player->screen->textColor = COLOR_WHITE;
+      player->screen->needsRedraw = True;
    }
 }

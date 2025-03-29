@@ -38,6 +38,7 @@ typedef struct Screen_t
    uint16_t backupPalette[PALETTE_COLORS];
    uint8_t textBitFields[TEXT_TILE_COUNT][TEXT_TILE_SIZE];
    uint16_t textColor;
+   Bool_t needsRedraw;
 }
 Screen_t;
 
