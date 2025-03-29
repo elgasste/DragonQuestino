@@ -42,9 +42,9 @@ typedef struct Game_t
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
 
-   Bool_t needsRedraw;
-
    float overworldInactivitySeconds;
+
+   uint8_t pendingPayload8u;
 
    Bool_t isAnimating;
    Animation_t animation;
@@ -62,7 +62,6 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
 void Game_ChangeMainState( Game_t* game, MainState_t newState );
 void Game_ChangeSubState( Game_t* game, SubState_t newState );
-void Game_FlagRedraw( Game_t* game );
 void Game_EnterTargetPortal( Game_t* game );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
 void Game_OpenDialog( Game_t* game, DialogId_t id );

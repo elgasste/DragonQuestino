@@ -13,6 +13,7 @@
 #define COLOR_GREEN                    0x07E0
 #define COLOR_BLUE                     0x001F
 #define COLOR_GROSSYELLOW              0x7BA1
+#define COLOR_INJUREDRED               0xDA8A
 
 #define TEXT_TILE_COUNT                85
 #define TEXT_TILE_SIZE                 8
@@ -38,6 +39,7 @@ typedef struct Screen_t
    uint16_t backupPalette[PALETTE_COLORS];
    uint8_t textBitFields[TEXT_TILE_COUNT][TEXT_TILE_SIZE];
    uint16_t textColor;
+   Bool_t needsRedraw;
 }
 Screen_t;
 

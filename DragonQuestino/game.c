@@ -1,5 +1,6 @@
 #include "game.h"
 #include "random.h"
+#include "math.h"
 
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
@@ -47,7 +48,6 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
    game->targetPortal = 0;
-   game->needsRedraw = False;
    game->overworldInactivitySeconds = 0.0f;
 }
 
@@ -120,18 +120,6 @@ void Game_ChangeMainState( Game_t* game, MainState_t newState )
 void Game_ChangeSubState( Game_t* game, SubState_t newState )
 {
    game->subState = newState;
-}
-
-void Game_FlagRedraw( Game_t* game )
-{
-   uint32_t i;
-
-   game->needsRedraw = True;
-
-   for ( i = 0; i < MenuId_Count; i++ )
-   {
-      game->menus[i].hasDrawn = False;
-   }
 }
 
 void Game_EnterTargetPortal( Game_t* game )
@@ -248,13 +236,18 @@ void Game_OpenDoor( Game_t* game )
 
 void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t dialogId1, DialogId_t dialogId2 )
 {
-   uint8_t amount;
    char str[16];
 
-   amount = Player_RestoreHitPoints( &( game->player ), Random_u8( minHp, maxHp ) );
-   sprintf( str, "%u", amount );
+   game->pendingPayload8u = Random_u8( minHp, maxHp );
+
+   if ( ( UINT8_MAX - game->player.stats.hitPoints ) < game->pendingPayload8u )
+   {
+      game->pendingPayload8u = UINT8_MAX - game->player.stats.hitPoints;
+   }
+
+   sprintf( str, "%u", game->pendingPayload8u );
    Dialog_SetInsertionText( &( game->dialog ), str );
-   Game_OpenDialog( game, ( amount == 1 ) ? dialogId1 : dialogId2 );
+   Game_OpenDialog( game, ( game->pendingPayload8u == 1 ) ? dialogId1 : dialogId2 );
 }
 
 internal void Game_TicOverworld( Game_t* game )

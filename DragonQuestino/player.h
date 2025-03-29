@@ -8,6 +8,8 @@
 typedef struct Screen_t Screen_t;
 typedef struct TileMap_t TileMap_t;
 
+#define PLAYER_LOWHEALTH_PERCENTAGE             0.2f
+
 #define SPELL_HAS_HEAL( x )                     ( ( x ) & 0x1 )
 #define SPELL_HAS_SIZZ( x )                     ( ( x ) & 0x2 )
 #define SPELL_HAS_SLEEP( x )                    ( ( x ) & 0x4 )
@@ -205,7 +207,7 @@ uint16_t Player_GetLevel( Player_t* player );
 uint16_t Player_GetExperienceRemaining( Player_t* player );
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold );
 uint16_t Player_CollectExperience( Player_t* player, uint16_t experience );
-uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
+void Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
 void Player_SetCursed( Player_t* player, Bool_t cursed );
 void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection);

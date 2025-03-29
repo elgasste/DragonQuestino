@@ -163,13 +163,14 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                   case DialogId_Spell_OverworldCastHeal2:
                   case DialogId_Spell_OverworldCastMidheal1:
                   case DialogId_Spell_OverworldCastMidheal2:
+                     Player_RestoreHitPoints( &( game->player ), game->pendingPayload8u );
                      Game_DrawOverworldQuickStatus( game );
                      break;
                   case DialogId_Use_CursedBelt:
                   case DialogId_Chest_DeathNecklace:
                      Player_SetCursed( &( game->player ), True );
                      TileMap_StartGlowTransition( &( game->tileMap ) );
-                     Game_FlagRedraw( game );
+                     game->screen.needsRedraw = True;
                      break;
                   case DialogId_Use_GwaelynsLove:
                      e = Player_GetExperienceRemaining( &( game->player ) );
@@ -239,7 +240,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             case MenuId_OverworldItem:
             case MenuId_OverworldSpell:
                Game_OpenMenu( game, MenuId_Overworld );
-               Game_FlagRedraw( game );
+               game->screen.needsRedraw = True;
                break;
             default:
                Game_ChangeMainState( game, MainState_Overworld );

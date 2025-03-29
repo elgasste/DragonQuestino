@@ -19,9 +19,9 @@ void Game_CastHeal( Game_t* game )
    {
       maxEffect = game->player.isCursed ? ( SPELL_HEAL_MAXEFFECT / 2 ) : SPELL_HEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_HEAL_MP;
-      Game_DrawOverworldQuickStatus( game );
       Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, maxEffect,
                          DialogId_Spell_OverworldCastHeal1, DialogId_Spell_OverworldCastHeal2 );
+      Game_DrawOverworldQuickStatus( game );
    }
 }
 
