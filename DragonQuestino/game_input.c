@@ -169,6 +169,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                   case DialogId_Chest_DeathNecklace:
                      Player_SetCursed( &( game->player ), True );
                      TileMap_StartGlowTransition( &( game->tileMap ) );
+                     Game_FlagRedraw( game );
                      break;
                   case DialogId_Use_GwaelynsLove:
                      e = Player_GetExperienceRemaining( &( game->player ) );
@@ -238,7 +239,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             case MenuId_OverworldItem:
             case MenuId_OverworldSpell:
                Game_OpenMenu( game, MenuId_Overworld );
-               game->needsRedraw = True;
+               Game_FlagRedraw( game );
                break;
             default:
                Game_ChangeMainState( game, MainState_Overworld );
@@ -280,28 +281,14 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
 
 internal void Game_OpenOverworldItemMenu( Game_t* game )
 {
-   uint32_t useableCount = ITEM_GET_MAPUSEABLECOUNT( game->player.items );
-   uint32_t nonUseableCount = ITEM_GET_MAPNONUSEABLECOUNT( game->player.items );
-
-   if ( useableCount == 0 && nonUseableCount == 0 )
+   if ( ITEM_GET_MAPUSEABLECOUNT( game->player.items ) == 0 && ITEM_GET_MAPNONUSEABLECOUNT( game->player.items ) == 0 )
    {
       Game_OpenDialog( game, DialogId_Item_None );
    }
    else
    {
-      if ( nonUseableCount > 0 )
-      {
-         Game_DrawNonUseableItems( game, ( useableCount > 0 ) ? True : False );
-      }
-
-      if ( useableCount > 0 )
-      {
-         Game_OpenMenu( game, MenuId_OverworldItem );
-      }
-      else
-      {
-         Game_ChangeSubState( game, SubState_Waiting );
-      }
+      Game_OpenMenu( game, MenuId_OverworldItem );
+      Game_DrawOverworldItemMenu( game );
    }
 }
 

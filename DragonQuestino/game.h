@@ -62,6 +62,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
 void Game_ChangeMainState( Game_t* game, MainState_t newState );
 void Game_ChangeSubState( Game_t* game, SubState_t newState );
+void Game_FlagRedraw( Game_t* game );
 void Game_EnterTargetPortal( Game_t* game );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
 void Game_OpenDialog( Game_t* game, DialogId_t id );
@@ -85,7 +86,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 void Game_Draw( Game_t* game );
 void Game_DrawOverworldQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
-void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
+void Game_DrawOverworldItemMenu( Game_t* game );
 
 // game_spells.c
 void Game_CastHeal( Game_t* game );

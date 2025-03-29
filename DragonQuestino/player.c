@@ -40,9 +40,12 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->items = 0;
    player->spells = 0;
 
-   // uncomment for testing
-   //player->spells = 0x3FF;
-   //SPELL_SET_HASSIZZ( player->spells );
+   // TODO: use this to test setting red text when health is low
+   //player->stats.hitPoints = 1;
+   //player->stats.magicPoints = 200;
+   //player->stats.maxHitPoints = 255;
+   //player->stats.maxMagicPoints = 255;
+   //SPELL_SET_HASHEAL( player->spells );
 }
 
 uint16_t Player_GetLevel( Player_t* player )

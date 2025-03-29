@@ -122,6 +122,18 @@ void Game_ChangeSubState( Game_t* game, SubState_t newState )
    game->subState = newState;
 }
 
+void Game_FlagRedraw( Game_t* game )
+{
+   uint32_t i;
+
+   game->needsRedraw = True;
+
+   for ( i = 0; i < MenuId_Count; i++ )
+   {
+      game->menus[i].hasDrawn = False;
+   }
+}
+
 void Game_EnterTargetPortal( Game_t* game )
 {
    uint32_t destinationTileIndex = game->targetPortal->destinationTileIndex;
