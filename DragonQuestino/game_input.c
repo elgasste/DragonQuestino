@@ -239,7 +239,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
          {
             case MenuId_OverworldItem:
             case MenuId_OverworldSpell:
-               Game_OpenMenu( game, MenuId_Overworld );
+               game->activeMenu = &( game->menus[MenuId_Overworld] );
                game->screen.needsRedraw = True;
                break;
             default:
