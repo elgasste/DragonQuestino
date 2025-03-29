@@ -197,7 +197,7 @@ internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoint
 
    if ( percentage < PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage >= PLAYER_LOWHEALTH_PERCENTAGE )
    {
-      player->screen->textColor = COLOR_RED;
+      player->screen->textColor = COLOR_INJUREDRED;
       player->screen->needsRedraw = True;
    }
    else if ( percentage >= PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage < PLAYER_LOWHEALTH_PERCENTAGE )

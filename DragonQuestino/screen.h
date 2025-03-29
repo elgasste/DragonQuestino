@@ -13,6 +13,7 @@
 #define COLOR_GREEN                    0x07E0
 #define COLOR_BLUE                     0x001F
 #define COLOR_GROSSYELLOW              0x7BA1
+#define COLOR_INJUREDRED               0xDA8A
 
 #define TEXT_TILE_COUNT                85
 #define TEXT_TILE_SIZE                 8
