@@ -42,6 +42,9 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->items = 0;
    player->spells = 0;
 
+   // MUFFINS
+   player->stats.hitPoints = 1;
+
    Player_UpdateTextColor( player, UINT8_MAX );
 }
 
@@ -157,11 +160,15 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
 void Player_SetCursed( Player_t* player, Bool_t cursed )
 {
    player->isCursed = cursed;
-   player->screen->textColor = cursed ? COLOR_GROSSYELLOW : COLOR_WHITE;
 
    if ( cursed )
    {
+      player->screen->textColor = COLOR_GROSSYELLOW;
       TileMap_SetTargetGlowDiameter( player->tileMap, 1 );
+   }
+   else
+   {
+      Player_UpdateTextColor( player, INT8_MAX );
    }
 }
 
