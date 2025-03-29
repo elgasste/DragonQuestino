@@ -3,6 +3,7 @@
 
 internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
+internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 
 void Game_Draw( Game_t* game )
 {
@@ -10,37 +11,73 @@ void Game_Draw( Game_t* game )
    {
       switch ( game->animation )
       {
-         case Animation_Overworld_Pause:
-         case Animation_TileMap_FadeOut:
-         case Animation_TileMap_FadePause:
-         case Animation_TileMap_FadeIn:
-         case Animation_TileMap_WhiteOut:
-         case Animation_TileMap_WhitePause:
-         case Animation_TileMap_WhiteIn:
-         case Animation_RainbowBridge_Trippy:
-         case Animation_RainbowBridge_WhiteOut:
-         case Animation_RainbowBridge_FadeIn:
-         case Animation_RainbowBridge_Pause:
+         default:
             Game_DrawOverworld( game );
             break;
       }
    }
    else
    {
-      switch ( game->state )
+      if ( game->mainState == MainState_Overworld )
       {
-         case GameState_Overworld:
+         if ( game->needsRedraw )
+         {
             Game_DrawOverworld( game );
-            break;
-         case GameState_Overworld_MainMenu:
-         case GameState_Overworld_SpellMenu:
-         case GameState_Overworld_ItemMenu:
-         case GameState_Overworld_ZoomMenu:
-            Menu_Draw( &( game->menu ) );
-            break;
-         case GameState_Overworld_ScrollingDialog:
-            ScrollingDialog_Draw( &( game->scrollingDialog ) );
-            break;
+            game->needsRedraw = False;
+
+            switch ( game->subState )
+            {
+               case SubState_Menu:
+                  Game_DrawOverworldQuickStatus( game );
+                  Menu_Draw( &( game->menus[MenuId_Overworld] ) );
+                  if ( game->activeMenu->id == MenuId_OverworldItem )
+                  {
+                     Game_DrawOverworldItemMenu( game );
+                  }
+                  else
+                  {
+                     Menu_Draw( game->activeMenu );
+                  }
+                  break;
+               case SubState_Dialog:
+                  Game_DrawOverworldQuickStatus( game );
+                  switch ( game->activeMenu->id )
+                  {
+                     case MenuId_Overworld:
+                        Menu_Draw( &( game->menus[MenuId_Overworld] ) );
+                        break;
+                     case MenuId_OverworldItem:
+                        Menu_Draw( &( game->menus[MenuId_Overworld] ) );
+                        Game_DrawOverworldItemMenu( game );
+                        break;
+                     case MenuId_OverworldSpell:
+                        Menu_Draw( &( game->menus[MenuId_Overworld] ) );
+                        Menu_Draw( &( game->menus[MenuId_OverworldSpell] ) );
+                        break;
+                  }
+                  Dialog_Draw( &( game->dialog ) );
+                  break;
+            }
+         }
+         else
+         {
+            switch ( game->subState )
+            {
+               case SubState_None:
+                  Game_DrawOverworld( game );
+                  break;
+               case SubState_Menu:
+                  Menu_Draw( game->activeMenu );
+                  break;
+               case SubState_Dialog:
+                  Dialog_Draw( &( game->dialog ) );
+                  break;
+            }
+         }
+      }
+      else
+      {
+         // TODO: battle stuff
       }
    }
 }
@@ -108,7 +145,61 @@ void Game_DrawOverworldDeepStatus( Game_t* game )
    Screen_DrawText( &( game->screen ), line, 96, 184 );
 }
 
-void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
+void Game_DrawOverworldItemMenu( Game_t* game )
+{
+   uint32_t useableCount = ITEM_GET_MAPUSEABLECOUNT( game->player.items );
+
+   if ( ITEM_GET_MAPNONUSEABLECOUNT( game->player.items ) > 0 )
+   {
+      Game_DrawNonUseableItems( game, ( useableCount > 0 ) ? True : False );
+   }
+
+   if ( useableCount > 0 )
+   {
+      Menu_Draw( &( game->menus[MenuId_OverworldItem] ) );
+   }
+   else
+   {
+      Game_ChangeSubState( game, SubState_Waiting );
+   }
+}
+
+internal void Game_DrawOverworld( Game_t* game )
+{
+   if ( game->tileMap.viewportScreenPos.x != 0 || game->tileMap.viewportScreenPos.y != 0 )
+   {
+      Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+   }
+
+   TileMap_Draw( &( game->tileMap ) );
+   Game_DrawPlayer( game );
+
+   if ( game->subState == SubState_None && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
+   {
+      Game_DrawOverworldQuickStatus( game );
+   }
+}
+
+internal void Game_DrawPlayer( Game_t* game )
+{
+   ActiveSprite_t* sprite = &( game->player.sprite );
+   int32_t wx = (int32_t)( sprite->position.x ) + game->player.spriteOffset.x;
+   int32_t wy = (int32_t)( sprite->position.y ) + game->player.spriteOffset.y;
+   int32_t sx = wx - game->tileMap.viewport.x;
+   int32_t sy = wy - game->tileMap.viewport.y;
+   uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
+   uint32_t tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
+   uint32_t ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
+   uint32_t tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > game->tileMap.viewport.w ) ? ( game->tileMap.viewport.w - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
+   uint32_t th = ( ( sy + SPRITE_TEXTURE_SIZE ) > game->tileMap.viewport.h ) ? ( game->tileMap.viewport.h - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
+   uint32_t sxu = ( sx < 0 ) ? 0 : sx;
+   uint32_t syu = ( sy < 0 ) ? 0 : sy;
+
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
+                             sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
+}
+
+internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
 {
    uint32_t x, y;
    Player_t* player = &( game->player );
@@ -165,39 +256,4 @@ void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_2, x, y + TEXT_TILE_SIZE );
       y += ( TEXT_TILE_SIZE * 2 );
    }
-}
-
-internal void Game_DrawOverworld( Game_t* game )
-{
-   if ( game->tileMap.viewportScreenPos.x != 0 || game->tileMap.viewportScreenPos.y != 0 )
-   {
-      Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   }
-
-   TileMap_Draw( &( game->tileMap ) );
-   Game_DrawPlayer( game );
-
-   if ( game->state == GameState_Overworld && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
-   {
-      Game_DrawOverworldQuickStatus( game );
-   }
-}
-
-internal void Game_DrawPlayer( Game_t* game )
-{
-   ActiveSprite_t* sprite = &( game->player.sprite );
-   int32_t wx = (int32_t)( sprite->position.x ) + game->player.spriteOffset.x;
-   int32_t wy = (int32_t)( sprite->position.y ) + game->player.spriteOffset.y;
-   int32_t sx = wx - game->tileMap.viewport.x;
-   int32_t sy = wy - game->tileMap.viewport.y;
-   uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
-   uint32_t tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
-   uint32_t ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
-   uint32_t tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > game->tileMap.viewport.w ) ? ( game->tileMap.viewport.w - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
-   uint32_t th = ( ( sy + SPRITE_TEXTURE_SIZE ) > game->tileMap.viewport.h ) ? ( game->tileMap.viewport.h - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
-   uint32_t sxu = ( sx < 0 ) ? 0 : sx;
-   uint32_t syu = ( sy < 0 ) ? 0 : sy;
-
-   Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
-                             sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
 }

@@ -4,31 +4,35 @@
 
 internal void Game_HandleOverworldInput( Game_t* game );
 internal void Game_HandleOverworldWaitingInput( Game_t* game );
-internal void Game_HandleOverworldScrollingDialogInput( Game_t* game );
-internal void Game_HandleMenuInput( Game_t* game );
+internal void Game_HandleOverworldDialogInput( Game_t* game );
+internal void Game_HandleOverworldMenuInput( Game_t* game );
 internal void Game_OpenOverworldSpellMenu( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
 internal void Game_OpenZoomMenu( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
-   switch ( game->state )
+   if ( game->mainState == MainState_Overworld )
    {
-      case GameState_Overworld:
-         Game_HandleOverworldInput( game );
-         break;
-      case GameState_Overworld_Waiting:
-         Game_HandleOverworldWaitingInput( game );
-         break;
-      case GameState_Overworld_MainMenu:
-      case GameState_Overworld_SpellMenu:
-      case GameState_Overworld_ItemMenu:
-      case GameState_Overworld_ZoomMenu:
-         Game_HandleMenuInput( game );
-         break;
-      case GameState_Overworld_ScrollingDialog:
-         Game_HandleOverworldScrollingDialogInput( game );
-         break;
+      switch ( game->subState )
+      {
+         case SubState_None:
+            Game_HandleOverworldInput( game );
+            break;
+         case SubState_Waiting:
+            Game_HandleOverworldWaitingInput( game );
+            break;
+         case SubState_Menu:
+            Game_HandleOverworldMenuInput( game );
+            break;
+         case SubState_Dialog:
+            Game_HandleOverworldDialogInput( game );
+            break;
+      }
+   }
+   else
+   {
+      // TODO: battle stuff
    }
 }
 
@@ -122,55 +126,56 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Game_StartAnimation( game, Animation_Overworld_Pause );
+      Game_StartAnimation( game, AnimationId_Overworld_Pause );
    }
 }
 
-internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
+internal void Game_HandleOverworldDialogInput( Game_t* game )
 {
    uint32_t e;
 
-   if ( ScrollingDialog_IsDone( &( game->scrollingDialog ) ) )
+   if ( Dialog_IsDone( &( game->dialog ) ) )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         if ( game->scrollingDialog.messageId == DialogMessageId_Use_RainbowDrop )
+         if ( game->dialog.id == DialogId_Use_RainbowDrop )
          {
-            Game_StartAnimation( game, Animation_RainbowBridge_Trippy );
+            Game_StartAnimation( game, AnimationId_RainbowBridge_Trippy );
          }
          else
          {
-            Game_StartAnimation( game, Animation_Overworld_Pause );
+            Game_StartAnimation( game, AnimationId_Overworld_Pause );
          }
       }
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      if ( ScrollingDialog_Next( &( game->scrollingDialog ) ) )
+      if ( Dialog_Next( &( game->dialog ) ) )
       {
-         switch ( game->scrollingDialog.section )
+         switch ( game->dialog.section )
          {
             case 1:
-               switch ( game->scrollingDialog.messageId )
+               switch ( game->dialog.id )
                {
-                  case DialogMessageId_Use_Herb1:
-                  case DialogMessageId_Use_Herb2:
-                  case DialogMessageId_Spell_OverworldCastHeal1:
-                  case DialogMessageId_Spell_OverworldCastHeal2:
-                  case DialogMessageId_Spell_OverworldCastMidheal1:
-                  case DialogMessageId_Spell_OverworldCastMidheal2:
+                  case DialogId_Use_Herb1:
+                  case DialogId_Use_Herb2:
+                  case DialogId_Spell_OverworldCastHeal1:
+                  case DialogId_Spell_OverworldCastHeal2:
+                  case DialogId_Spell_OverworldCastMidheal1:
+                  case DialogId_Spell_OverworldCastMidheal2:
                      Game_DrawOverworldQuickStatus( game );
                      break;
-                  case DialogMessageId_Use_CursedBelt:
-                  case DialogMessageId_Chest_DeathNecklace:
+                  case DialogId_Use_CursedBelt:
+                  case DialogId_Chest_DeathNecklace:
                      Player_SetCursed( &( game->player ), True );
                      TileMap_StartGlowTransition( &( game->tileMap ) );
+                     Game_FlagRedraw( game );
                      break;
-                  case DialogMessageId_Use_GwaelynsLove:
+                  case DialogId_Use_GwaelynsLove:
                      e = Player_GetExperienceRemaining( &( game->player ) );
                      if ( e == 0 )
                      {
-                        ScrollingDialog_Skip( &( game->scrollingDialog ) );
+                        Dialog_Skip( &( game->dialog ) );
                      }
                      break;
                }
@@ -180,25 +185,25 @@ internal void Game_HandleOverworldScrollingDialogInput( Game_t* game )
    }
 }
 
-internal void Game_HandleMenuInput( Game_t* game )
+internal void Game_HandleOverworldMenuInput( Game_t* game )
 {
    uint32_t i;
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
-      Menu_ResetCarat( &( game->menu ) );
+      Menu_ResetCarat( game->activeMenu );
 
-      switch ( game->menu.items[game->menu.selectedIndex].command )
+      switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
-         case MenuCommand_OverworldMain_Talk: Game_OpenScrollingDialog( game, DialogMessageId_Talk_NobodyThere ); break;
-         case MenuCommand_OverworldMain_Status:
+         case MenuCommand_Overworld_Talk: Game_OpenDialog( game, DialogId_Talk_NobodyThere ); break;
+         case MenuCommand_Overworld_Status:
             Game_DrawOverworldDeepStatus( game );
-            Game_ChangeState( game, GameState_Overworld_Waiting );
+            Game_ChangeSubState( game, SubState_Waiting );
             break;
-         case MenuCommand_OverworldMain_Search: Game_Search( game ); break;
-         case MenuCommand_OverworldMain_Spell: Game_OpenOverworldSpellMenu( game ); break;
-         case MenuCommand_OverworldMain_Item: Game_OpenOverworldItemMenu( game ); break;
-         case MenuCommand_OverworldMain_Door: Game_OpenDoor( game ); break;
+         case MenuCommand_Overworld_Search: Game_Search( game ); break;
+         case MenuCommand_Overworld_Spell: Game_OpenOverworldSpellMenu( game ); break;
+         case MenuCommand_Overworld_Item: Game_OpenOverworldItemMenu( game ); break;
+         case MenuCommand_Overworld_Door: Game_OpenDoor( game ); break;
 
          case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
          case MenuCommand_Spell_Glow: Game_CastGlow( game ); break;
@@ -227,24 +232,32 @@ internal void Game_HandleMenuInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
-      // TODO: some of these should probably return to their parent menus
-      switch ( game->state )
+      if ( game->mainState == MainState_Overworld )
       {
-         case GameState_Overworld_MainMenu:
-         case GameState_Overworld_SpellMenu:
-         case GameState_Overworld_ItemMenu:
-         case GameState_Overworld_ZoomMenu:
-            Game_ChangeState( game, GameState_Overworld );
-            break;
+         switch ( game->activeMenu->id )
+         {
+            case MenuId_OverworldItem:
+            case MenuId_OverworldSpell:
+               Game_OpenMenu( game, MenuId_Overworld );
+               Game_FlagRedraw( game );
+               break;
+            default:
+               Game_ChangeMainState( game, MainState_Overworld );
+               break;
+         }
+      }
+      else
+      {
+         // TODO: battle stuff
       }
    }
-   else
+   else if ( game->activeMenu->itemCount )
    {
       for ( i = 0; i < Direction_Count; i++ )
       {
          if ( game->input.buttonStates[i].pressed )
          {
-            Menu_MoveSelection( &( game->menu ), (Direction_t)i );
+            Menu_MoveSelection( game->activeMenu, (Direction_t)i );
          }
       }
    }
@@ -254,7 +267,7 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Spell_None );
+      Game_OpenDialog( game, DialogId_Spell_None );
    }
    else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells, game->tileMap.isDungeon, game->tileMap.isDark ) )
    {
@@ -262,34 +275,20 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    }
    else
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Spell_OverworldCantCast );
+      Game_OpenDialog( game, DialogId_Spell_OverworldCantCast );
    }
 }
 
 internal void Game_OpenOverworldItemMenu( Game_t* game )
 {
-   uint32_t useableCount = ITEM_GET_MAPUSEABLECOUNT( game->player.items );
-   uint32_t nonUseableCount = ITEM_GET_MAPNONUSEABLECOUNT( game->player.items );
-
-   if ( useableCount == 0 && nonUseableCount == 0 )
+   if ( ITEM_GET_MAPUSEABLECOUNT( game->player.items ) == 0 && ITEM_GET_MAPNONUSEABLECOUNT( game->player.items ) == 0 )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Item_None );
+      Game_OpenDialog( game, DialogId_Item_None );
    }
    else
    {
-      if ( nonUseableCount > 0 )
-      {
-         Game_DrawNonUseableItems( game, ( useableCount > 0 ) ? True : False );
-      }
-
-      if ( useableCount > 0 )
-      {
-         Game_OpenMenu( game, MenuId_OverworldItem );
-      }
-      else
-      {
-         Game_ChangeState( game, GameState_Overworld_Waiting );
-      }
+      Game_OpenMenu( game, MenuId_OverworldItem );
+      Game_DrawOverworldItemMenu( game );
    }
 }
 
@@ -299,7 +298,7 @@ internal void Game_OpenZoomMenu( Game_t* game )
 
    if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Spell_NotEnoughMp );
+      Game_OpenDialog( game, DialogId_Spell_NotEnoughMp );
    }
    else if ( townCount > 0 )
    {

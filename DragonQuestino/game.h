@@ -9,7 +9,7 @@
 #include "input.h"
 #include "player.h"
 #include "menu.h"
-#include "scrolling_dialog.h"
+#include "dialog.h"
 
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
 
@@ -34,11 +34,15 @@ typedef struct Game_t
    TileMap_t tileMap;
    Clock_t clock;
    Input_t input;
-   GameState_t state;
+   MainState_t mainState;
+   SubState_t subState;
    Player_t player;
-   Menu_t menu;
-   ScrollingDialog_t scrollingDialog;
+   Menu_t menus[MenuId_Count];
+   Menu_t* activeMenu;
+   Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
+
+   Bool_t needsRedraw;
 
    float overworldInactivitySeconds;
 
@@ -56,13 +60,15 @@ extern "C" {
 // game.c
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
-void Game_ChangeState( Game_t* game, GameState_t newState );
+void Game_ChangeMainState( Game_t* game, MainState_t newState );
+void Game_ChangeSubState( Game_t* game, SubState_t newState );
+void Game_FlagRedraw( Game_t* game );
 void Game_EnterTargetPortal( Game_t* game );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
-void Game_OpenScrollingDialog( Game_t* game, DialogMessageId_t messageId );
+void Game_OpenDialog( Game_t* game, DialogId_t id );
 void Game_Search( Game_t* game );
 void Game_OpenDoor( Game_t* game );
-void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogMessageId_t msg1, DialogMessageId_t msg2 );
+void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t dialogId1, DialogId_t dialogId2 );
 
 // game_input.c
 void Game_HandleInput( Game_t* game );
@@ -80,7 +86,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 void Game_Draw( Game_t* game );
 void Game_DrawOverworldQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
-void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
+void Game_DrawOverworldItemMenu( Game_t* game );
 
 // game_spells.c
 void Game_CastHeal( Game_t* game );

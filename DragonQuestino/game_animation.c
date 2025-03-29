@@ -20,40 +20,40 @@ void Game_StartAnimation( Game_t* game, Animation_t animation )
 
    switch ( animation )
    {
-      case Animation_Overworld_Pause:
+      case AnimationId_Overworld_Pause:
          game->animationDuration = ANIMATION_OVERWORLD_PAUSE_DURATION;
          break;
-      case Animation_TileMap_FadeOut:
+      case AnimationId_TileMap_FadeOut:
          Screen_BackupPalette( &( game->screen ) );
          game->animationDuration = ANIMATION_TILEMAP_FADE_DURATION;
          break;
-      case Animation_TileMap_FadePause:
+      case AnimationId_TileMap_FadePause:
          game->animationDuration = ANIMATION_TILEMAP_FADEPAUSE_DURATION;
          break;
-      case Animation_TileMap_FadeIn:
+      case AnimationId_TileMap_FadeIn:
          game->animationDuration = ANIMATION_TILEMAP_FADE_DURATION;
          break;
-      case Animation_TileMap_WhiteOut:
+      case AnimationId_TileMap_WhiteOut:
          Screen_BackupPalette( &( game->screen ) );
          game->animationDuration = ANIMATION_TILEMAP_WHITE_DURATION;
          break;
-      case Animation_TileMap_WhitePause:
+      case AnimationId_TileMap_WhitePause:
          game->animationDuration = ANIMATION_TILEMAP_WHITEPAUSE_DURATION;
          break;
-      case Animation_TileMap_WhiteIn:
+      case AnimationId_TileMap_WhiteIn:
          game->animationDuration = ANIMATION_TILEMAP_WHITE_DURATION;
          break;
-      case Animation_RainbowBridge_Trippy:
+      case AnimationId_RainbowBridge_Trippy:
          Screen_BackupPalette( &( game->screen ) );
          game->animationDuration = ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION;
          break;
-      case Animation_RainbowBridge_WhiteOut:
+      case AnimationId_RainbowBridge_WhiteOut:
          game->animationDuration = ANIMATION_RAINBOWBRIDGE_WHITEOUT_DURATION;
          break;
-      case Animation_RainbowBridge_FadeIn:
+      case AnimationId_RainbowBridge_FadeIn:
          game->animationDuration = ANIMATION_RAINBOWBRIDGE_FADEIN_DURATION;
          break;
-      case Animation_RainbowBridge_Pause:
+      case AnimationId_RainbowBridge_Pause:
          game->animationDuration = ANIMATION_RAINBOWBRIDGE_PAUSE_DURATION;
          break;
    }
@@ -65,16 +65,16 @@ void Game_StopAnimation( Game_t* game )
 
    switch ( game->animation )
    {
-      case Animation_Overworld_Pause:
-         Game_ChangeState( game, GameState_Overworld );
+      case AnimationId_Overworld_Pause:
+         Game_ChangeMainState( game, MainState_Overworld );
          break;
-      case Animation_TileMap_FadeIn:
-      case Animation_TileMap_WhiteIn:
-      case Animation_RainbowBridge_FadeIn:
+      case AnimationId_TileMap_FadeIn:
+      case AnimationId_TileMap_WhiteIn:
+      case AnimationId_RainbowBridge_FadeIn:
          Screen_RestorePalette( &( game->screen ) );
          break;
-      case Animation_RainbowBridge_Pause:
-         Game_ChangeState( game, GameState_Overworld );
+      case AnimationId_RainbowBridge_Pause:
+         Game_ChangeMainState( game, MainState_Overworld );
          break;
    }
 }
@@ -83,17 +83,17 @@ void Game_TicAnimation( Game_t* game )
 {
    switch ( game->animation )
    {
-      case Animation_Overworld_Pause: Game_TicAnimation_Overworld_Pause( game ); break;
-      case Animation_TileMap_FadeOut: Game_TicAnimation_TileMap_FadeOut( game ); break;
-      case Animation_TileMap_FadePause: Game_TicAnimation_TileMap_FadePause( game ); break;
-      case Animation_TileMap_FadeIn: Game_TicAnimation_TileMap_FadeIn( game ); break;
-      case Animation_TileMap_WhiteOut: Game_TicAnimation_TileMap_WhiteOut( game ); break;
-      case Animation_TileMap_WhitePause: Game_TicAnimation_TileMap_WhitePause( game ); break;
-      case Animation_TileMap_WhiteIn: Game_TicAnimation_TileMap_WhiteIn( game ); break;
-      case Animation_RainbowBridge_Trippy: Game_TicAnimation_RainbowBridge_Trippy( game ); break;
-      case Animation_RainbowBridge_WhiteOut: Game_TicAnimation_RainbowBridge_WhiteOut( game ); break;
-      case Animation_RainbowBridge_FadeIn: Game_TicAnimation_RainbowBridge_FadeIn( game ); break;
-      case Animation_RainbowBridge_Pause: Game_TicAnimation_RainbowBridge_Pause( game ); break;
+      case AnimationId_Overworld_Pause: Game_TicAnimation_Overworld_Pause( game ); break;
+      case AnimationId_TileMap_FadeOut: Game_TicAnimation_TileMap_FadeOut( game ); break;
+      case AnimationId_TileMap_FadePause: Game_TicAnimation_TileMap_FadePause( game ); break;
+      case AnimationId_TileMap_FadeIn: Game_TicAnimation_TileMap_FadeIn( game ); break;
+      case AnimationId_TileMap_WhiteOut: Game_TicAnimation_TileMap_WhiteOut( game ); break;
+      case AnimationId_TileMap_WhitePause: Game_TicAnimation_TileMap_WhitePause( game ); break;
+      case AnimationId_TileMap_WhiteIn: Game_TicAnimation_TileMap_WhiteIn( game ); break;
+      case AnimationId_RainbowBridge_Trippy: Game_TicAnimation_RainbowBridge_Trippy( game ); break;
+      case AnimationId_RainbowBridge_WhiteOut: Game_TicAnimation_RainbowBridge_WhiteOut( game ); break;
+      case AnimationId_RainbowBridge_FadeIn: Game_TicAnimation_RainbowBridge_FadeIn( game ); break;
+      case AnimationId_RainbowBridge_Pause: Game_TicAnimation_RainbowBridge_Pause( game ); break;
    }
 }
 
@@ -105,17 +105,17 @@ internal void Game_TicAnimation_Overworld_Pause( Game_t* game )
    {
       Game_StopAnimation( game );
 
-      if ( game->scrollingDialog.messageId == DialogMessageId_Spell_CastEvac )
+      if ( game->dialog.id == DialogId_Spell_CastEvac )
       {
          game->targetPortal = &( game->tileMap.evacPortal );
-         Game_StartAnimation( game, Animation_TileMap_FadeOut );
+         Game_StartAnimation( game, AnimationId_TileMap_FadeOut );
       }
-      else if ( game->scrollingDialog.messageId == DialogMessageId_Use_Wing ||
-                game->scrollingDialog.messageId == DialogMessageId_Spell_CastZoom )
+      else if ( game->dialog.id == DialogId_Use_Wing ||
+                game->dialog.id == DialogId_Spell_CastZoom )
       {
-         Game_StartAnimation( game, Animation_TileMap_WhiteOut );
+         Game_StartAnimation( game, AnimationId_TileMap_WhiteOut );
       }
-      else if ( game->scrollingDialog.messageId == DialogMessageId_Search_FoundHiddenStairs &&
+      else if ( game->dialog.id == DialogId_Search_FoundHiddenStairs &&
                 game->tileMap.id == TILEMAP_CHARLOCK_ID &&
                 game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX )
       {
@@ -123,10 +123,10 @@ internal void Game_TicAnimation_Overworld_Pause( Game_t* game )
       }
       else
       {
-         Game_ChangeState( game, GameState_Overworld );
+         Game_ChangeMainState( game, MainState_Overworld );
       }
 
-      game->scrollingDialog.messageId = DialogMessageId_Count;
+      game->dialog.id = DialogId_Count;
    }
 }
 
@@ -142,7 +142,7 @@ internal void Game_TicAnimation_TileMap_FadeOut( Game_t* game )
    {
       Game_EnterTargetPortal( game );
       Game_StopAnimation( game );
-      Game_StartAnimation( game, Animation_TileMap_FadePause );
+      Game_StartAnimation( game, AnimationId_TileMap_FadePause );
    }
    else
    {
@@ -163,7 +163,7 @@ internal void Game_TicAnimation_TileMap_FadePause( Game_t* game )
 
    if ( game->animationSeconds > game->animationDuration )
    {
-      Game_StartAnimation( game, Animation_TileMap_FadeIn );
+      Game_StartAnimation( game, AnimationId_TileMap_FadeIn );
    }
 }
 
@@ -204,7 +204,7 @@ internal void Game_TicAnimation_TileMap_WhiteOut( Game_t* game )
    {
       Game_EnterTargetPortal( game );
       Game_StopAnimation( game );
-      Game_StartAnimation( game, Animation_TileMap_WhitePause );
+      Game_StartAnimation( game, AnimationId_TileMap_WhitePause );
    }
    else
    {
@@ -227,7 +227,7 @@ internal void Game_TicAnimation_TileMap_WhitePause( Game_t* game )
 
    if ( game->animationSeconds > game->animationDuration )
    {
-      Game_StartAnimation( game, Animation_TileMap_WhiteIn );
+      Game_StartAnimation( game, AnimationId_TileMap_WhiteIn );
    }
 }
 
@@ -278,7 +278,7 @@ internal void Game_TicAnimation_RainbowBridge_Trippy( Game_t* game )
       game->gameFlags.usedRainbowDrop = True;
       TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
       TILE_TOGGLE_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX] );
-      Game_StartAnimation( game, Animation_RainbowBridge_WhiteOut );
+      Game_StartAnimation( game, AnimationId_RainbowBridge_WhiteOut );
    }
    else
    {
@@ -300,7 +300,7 @@ internal void Game_TicAnimation_RainbowBridge_WhiteOut( Game_t* game )
 
    if ( game->animationSeconds > game->animationDuration )
    {
-      Game_StartAnimation( game, Animation_RainbowBridge_FadeIn );
+      Game_StartAnimation( game, AnimationId_RainbowBridge_FadeIn );
    }
 }
 
@@ -314,7 +314,7 @@ internal void Game_TicAnimation_RainbowBridge_FadeIn( Game_t* game )
 
    if ( game->animationSeconds > game->animationDuration )
    {
-      Game_StartAnimation( game, Animation_RainbowBridge_Pause );
+      Game_StartAnimation( game, AnimationId_RainbowBridge_Pause );
    }
    else
    {

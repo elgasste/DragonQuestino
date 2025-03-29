@@ -13,7 +13,7 @@ void Game_CastHeal( Game_t* game )
 
    if ( game->player.stats.hitPoints == UINT8_MAX )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_FullyHealed );
+      Game_OpenDialog( game, DialogId_FullyHealed );
    }
    else
    {
@@ -21,7 +21,7 @@ void Game_CastHeal( Game_t* game )
       game->player.stats.magicPoints -= SPELL_HEAL_MP;
       Game_DrawOverworldQuickStatus( game );
       Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, maxEffect,
-                         DialogMessageId_Spell_OverworldCastHeal1, DialogMessageId_Spell_OverworldCastHeal2 );
+                         DialogId_Spell_OverworldCastHeal1, DialogId_Spell_OverworldCastHeal2 );
    }
 }
 
@@ -37,7 +37,7 @@ void Game_CastGlow( Game_t* game )
       if ( game->player.isCursed )
       {
          TileMap_SetTargetGlowDiameter( &( game->tileMap ), 1 );
-         Game_OpenScrollingDialog( game, DialogMessageId_Spell_OverworldCastGlowCursed );
+         Game_OpenDialog( game, DialogId_Spell_OverworldCastGlowCursed );
       }
       else
       {
@@ -48,7 +48,7 @@ void Game_CastGlow( Game_t* game )
             TileMap_StartGlowTransition( &( game->tileMap ) );
          }
 
-         Game_OpenScrollingDialog( game, DialogMessageId_Spell_OverworldCastGlow );
+         Game_OpenDialog( game, DialogId_Spell_OverworldCastGlow );
       }
    }
 }
@@ -64,11 +64,11 @@ void Game_CastEvac( Game_t* game )
 
       if ( game->player.isCursed )
       {
-         Game_OpenScrollingDialog( game, DialogMessageId_Spell_CastEvacCursed );
+         Game_OpenDialog( game, DialogId_Spell_CastEvacCursed );
       }
       else
       {
-         Game_OpenScrollingDialog( game, DialogMessageId_Spell_CastEvac );
+         Game_OpenDialog( game, DialogId_Spell_CastEvac );
       }
    }
 }
@@ -80,7 +80,7 @@ void Game_CastZoom( Game_t* game, uint32_t townId )
    game->player.stats.magicPoints -= SPELL_ZOOM_MP;
    game->targetPortal = &( game->zoomPortals[townId] );
    Game_DrawOverworldQuickStatus( game );
-   Game_OpenScrollingDialog( game, DialogMessageId_Spell_CastZoom );
+   Game_OpenDialog( game, DialogId_Spell_CastZoom );
 }
 
 void Game_CastRepel( Game_t* game )
@@ -92,12 +92,12 @@ void Game_CastRepel( Game_t* game )
 
    if ( game->player.isCursed )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Spell_CastRepelCursed );
+      Game_OpenDialog( game, DialogId_Spell_CastRepelCursed );
    }
    else
    {
       Player_SetHolyProtection( &( game->player ), True );
-      Game_OpenScrollingDialog( game, DialogMessageId_Spell_CastRepel );
+      Game_OpenDialog( game, DialogId_Spell_CastRepel );
    }
 }
 
@@ -109,7 +109,7 @@ void Game_CastMidheal( Game_t* game )
 
    if ( game->player.stats.hitPoints == UINT8_MAX )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_FullyHealed );
+      Game_OpenDialog( game, DialogId_FullyHealed );
    }
    else
    {
@@ -117,7 +117,7 @@ void Game_CastMidheal( Game_t* game )
       game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
       Game_DrawOverworldQuickStatus( game );
       Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, maxEffect,
-                         DialogMessageId_Spell_OverworldCastMidheal1, DialogMessageId_Spell_OverworldCastMidheal2 );
+                         DialogId_Spell_OverworldCastMidheal1, DialogId_Spell_OverworldCastMidheal2 );
    }
 }
 
@@ -125,15 +125,15 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
 {
    if ( game->player.stats.magicPoints < requiredMp )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Spell_NotEnoughMp );
+      Game_OpenDialog( game, DialogId_Spell_NotEnoughMp );
       return False;
    }
    else if ( game->tileMap.blocksMagic )
    {
       game->player.stats.magicPoints -= requiredMp;
       Game_DrawOverworldQuickStatus( game );
-      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), spellName );
-      Game_OpenScrollingDialog( game, DialogMessageId_Spell_Blocked );
+      Dialog_SetInsertionText( &( game->dialog ), spellName );
+      Game_OpenDialog( game, DialogId_Spell_Blocked );
       return False;
    }
 

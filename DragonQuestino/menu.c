@@ -5,29 +5,35 @@
 #include "tile_map.h"
 
 internal void Menu_DrawCarat( Menu_t* menu );
-internal void Menu_LoadOverworld( Menu_t* menu );
-internal void Menu_LoadOverworldSpell( Menu_t* menu );
-internal void Menu_LoadOverworldItem( Menu_t* menu );
-internal void Menu_LoadZoom( Menu_t* menu );
+internal void Menu_InitOverworld( Menu_t* menu );
+internal void Menu_Update( Menu_t* menu );
+internal void Menu_UpdateOverworldSpell( Menu_t* menu );
+internal void Menu_UpdateOverworldItem( Menu_t* menu );
+internal void Menu_UpdateZoom( Menu_t* menu );
 
-void Menu_Init( Menu_t* menu, Screen_t* screen, Player_t* player, TileMap_t* tileMap )
+void Menu_Init( Menu_t* menu, MenuId_t id, Screen_t* screen, Player_t* player, TileMap_t* tileMap )
 {
    menu->screen = screen;
    menu->player = player;
    menu->tileMap = tileMap;
-}
+   menu->id = id;
 
-void Menu_Load( Menu_t* menu, MenuId_t id )
-{
    switch ( id )
    {
-      case MenuId_Overworld: Menu_LoadOverworld( menu ); break;
-      case MenuId_OverworldSpell: Menu_LoadOverworldSpell( menu ); break;
-      case MenuId_OverworldItem: Menu_LoadOverworldItem( menu ); break;
-      case MenuId_Zoom: Menu_LoadZoom( menu ); break;
+      case MenuId_Overworld:
+         Menu_InitOverworld( menu );
+         break;
+      default:
+         Menu_Update( menu );
+         break;
    }
+}
 
+void Menu_Reset( Menu_t* menu )
+{
    menu->hasDrawn = False;
+   menu->selectedIndex = 0;
+   Menu_Update( menu );
    Menu_ResetCarat( menu );
 }
 
@@ -136,6 +142,16 @@ void Menu_Tic( Menu_t* menu )
    }
 }
 
+internal void Menu_Update( Menu_t* menu )
+{
+   switch ( menu->id )
+   {
+      case MenuId_OverworldSpell: Menu_UpdateOverworldSpell( menu ); break;
+      case MenuId_OverworldItem: Menu_UpdateOverworldItem( menu ); break;
+      case MenuId_Zoom: Menu_UpdateZoom( menu ); break;
+   }
+}
+
 internal void Menu_DrawCarat( Menu_t* menu )
 {
    uint32_t i;
@@ -159,7 +175,7 @@ internal void Menu_DrawCarat( Menu_t* menu )
    }
 }
 
-internal void Menu_LoadOverworld( Menu_t* menu )
+internal void Menu_InitOverworld( Menu_t* menu )
 {
    uint32_t i;
 
@@ -170,12 +186,12 @@ internal void Menu_LoadOverworld( Menu_t* menu )
    strcpy( menu->items[3].text, STRING_OVERWORLD_MENU_SPELL );
    strcpy( menu->items[4].text, STRING_OVERWORLD_MENU_ITEM );
    strcpy( menu->items[5].text, STRING_OVERWORLD_MENU_DOOR );
-   menu->items[0].command = MenuCommand_OverworldMain_Talk;
-   menu->items[1].command = MenuCommand_OverworldMain_Status;
-   menu->items[2].command = MenuCommand_OverworldMain_Search;
-   menu->items[3].command = MenuCommand_OverworldMain_Spell;
-   menu->items[4].command = MenuCommand_OverworldMain_Item;
-   menu->items[5].command = MenuCommand_OverworldMain_Door;
+   menu->items[0].command = MenuCommand_Overworld_Talk;
+   menu->items[1].command = MenuCommand_Overworld_Status;
+   menu->items[2].command = MenuCommand_Overworld_Search;
+   menu->items[3].command = MenuCommand_Overworld_Spell;
+   menu->items[4].command = MenuCommand_Overworld_Item;
+   menu->items[5].command = MenuCommand_Overworld_Door;
    menu->itemCount = 6;
    for ( i = 0; i < menu->itemCount; i++ ) menu->items[i].twoLineText = False;
    menu->itemsPerColumn = 3;
@@ -192,7 +208,7 @@ internal void Menu_LoadOverworld( Menu_t* menu )
    menu->caratOffset = 1;
 }
 
-internal void Menu_LoadOverworldSpell( Menu_t* menu )
+internal void Menu_UpdateOverworldSpell( Menu_t* menu )
 {
    uint32_t i;
    uint32_t spells = menu->player->spells;
@@ -256,7 +272,7 @@ internal void Menu_LoadOverworldSpell( Menu_t* menu )
    }
 }
 
-internal void Menu_LoadOverworldItem( Menu_t* menu )
+internal void Menu_UpdateOverworldItem( Menu_t* menu )
 {
    uint32_t i = 0;
    uint32_t items = menu->player->items;
@@ -346,7 +362,7 @@ internal void Menu_LoadOverworldItem( Menu_t* menu )
    }
 }
 
-internal void Menu_LoadZoom( Menu_t* menu )
+internal void Menu_UpdateZoom( Menu_t* menu )
 {
    uint32_t i = 0;
    uint8_t tv = menu->player->townsVisited;

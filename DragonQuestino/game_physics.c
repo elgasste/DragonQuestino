@@ -149,7 +149,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    if ( portal )
    {
       game->targetPortal = portal;
-      Game_StartAnimation( game, Animation_TileMap_FadeOut );
+      Game_StartAnimation( game, AnimationId_TileMap_FadeOut );
       return;
    }
 
@@ -171,7 +171,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
       if ( game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
       {
          game->player.hasHolyProtection = False;
-         Game_OpenScrollingDialog( game, DialogMessageId_HolyProtection_Off );
+         Game_OpenDialog( game, DialogId_HolyProtection_Off );
       }
    }
 }

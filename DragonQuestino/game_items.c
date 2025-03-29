@@ -4,12 +4,12 @@ void Game_UseHerb( Game_t* game )
 {
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_FullyHealed );
+      Game_OpenDialog( game, DialogId_FullyHealed );
    }
    else
    {
       ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
-      Game_ApplyHealing( game, ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT, DialogMessageId_Use_Herb1, DialogMessageId_Use_Herb2 );
+      Game_ApplyHealing( game, ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT, DialogId_Use_Herb1, DialogId_Use_Herb2 );
    }
 }
 
@@ -17,13 +17,13 @@ void Game_UseWing( Game_t* game )
 {
    if ( game->tileMap.isDungeon )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_WingCantUse );
+      Game_OpenDialog( game, DialogId_Use_WingCantUse );
    }
    else
    {
       ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
       game->targetPortal = &( game->zoomPortals[TILEMAP_TANTEGEL_TOWN_ID] );
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_Wing );
+      Game_OpenDialog( game, DialogId_Use_Wing );
    }
 }
 
@@ -33,12 +33,12 @@ void Game_UseFairyWater( Game_t* game )
 
    if ( game->player.isCursed )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_FairyWaterCursed );
+      Game_OpenDialog( game, DialogId_Use_FairyWaterCursed );
    }
    else
    {
       Player_SetHolyProtection( &( game->player ), True );
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_FairyWater );
+      Game_OpenDialog( game, DialogId_Use_FairyWater );
    }
 }
 
@@ -54,22 +54,22 @@ void Game_UseTorch( Game_t* game )
       }
 
       ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_Torch );
+      Game_OpenDialog( game, DialogId_Use_Torch );
    }
    else
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_TorchCantUse );
+      Game_OpenDialog( game, DialogId_Use_TorchCantUse );
    }
 }
 
 void Game_UseSilverHarp( Game_t* game )
 {
-   Game_OpenScrollingDialog( game, DialogMessageId_Use_SilverHarp );
+   Game_OpenDialog( game, DialogId_Use_SilverHarp );
 }
 
 void Game_UseFairyFlute( Game_t* game )
 {
-   Game_OpenScrollingDialog( game, DialogMessageId_Use_FairyFlute );
+   Game_OpenDialog( game, DialogId_Use_FairyFlute );
 }
 
 void Game_UseGwaelynsLove( Game_t* game )
@@ -101,12 +101,12 @@ void Game_UseGwaelynsLove( Game_t* game )
                   ( px > tx ) ? ( px - tx ) : ( tx - px ), ( px > tx ) ? STRING_WEST : STRING_EAST );
       }
 
-      ScrollingDialog_SetInsertionText( &( game->scrollingDialog ), msg );
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_GwaelynsLove );
+      Dialog_SetInsertionText( &( game->dialog ), msg );
+      Game_OpenDialog( game, DialogId_Use_GwaelynsLove );
    }
    else
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_GwaelynsLoveCantUse );
+      Game_OpenDialog( game, DialogId_Use_GwaelynsLoveCantUse );
    }
 }
 
@@ -116,16 +116,16 @@ void Game_UseRainbowDrop( Game_t* game )
         game->player.tileIndex == ( TILEMAP_RAINBOWBRIDGE_INDEX + 1 ) &&
         game->player.sprite.direction == Direction_Left )
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_RainbowDrop );
+      Game_OpenDialog( game, DialogId_Use_RainbowDrop );
    }
    else
    {
-      Game_OpenScrollingDialog( game, DialogMessageId_Use_RainbowDropCantUse );
+      Game_OpenDialog( game, DialogId_Use_RainbowDropCantUse );
    }
 }
 
 void Game_UseCursedBelt( Game_t* game )
 {
    ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
-   Game_OpenScrollingDialog( game, DialogMessageId_Use_CursedBelt );
+   Game_OpenDialog( game, DialogId_Use_CursedBelt );
 }
