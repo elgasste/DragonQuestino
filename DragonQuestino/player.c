@@ -42,12 +42,6 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->items = 0;
    player->spells = 0;
 
-   player->stats.hitPoints = 1;
-   player->stats.magicPoints = 200;
-   player->stats.maxHitPoints = 255;
-   player->stats.maxMagicPoints = 255;
-   SPELL_SET_HASHEAL( player->spells );
-
    Player_UpdateTextColor( player, UINT8_MAX );
 }
 
@@ -83,14 +77,12 @@ uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
    return Math_CollectAmount16u( &( player->experience ), experience );
 }
 
-uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
+void Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
 {
-   uint8_t amount;
    uint8_t previousHitPoints = player->stats.hitPoints;
 
-   amount = Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
+   Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
    Player_UpdateTextColor( player, previousHitPoints );
-   return amount;
 }
 
 Bool_t Player_CollectItem( Player_t* player, Item_t item )

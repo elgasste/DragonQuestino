@@ -44,6 +44,8 @@ typedef struct Game_t
 
    float overworldInactivitySeconds;
 
+   uint8_t pendingPayload8u;
+
    Bool_t isAnimating;
    Animation_t animation;
    float animationSeconds;

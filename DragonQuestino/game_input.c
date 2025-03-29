@@ -163,6 +163,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                   case DialogId_Spell_OverworldCastHeal2:
                   case DialogId_Spell_OverworldCastMidheal1:
                   case DialogId_Spell_OverworldCastMidheal2:
+                     Player_RestoreHitPoints( &( game->player ), game->pendingPayload8u );
                      Game_DrawOverworldQuickStatus( game );
                      break;
                   case DialogId_Use_CursedBelt:

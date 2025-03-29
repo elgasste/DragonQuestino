@@ -57,6 +57,10 @@ void Game_Draw( Game_t* game )
                      case MenuId_OverworldItem:
                         Menu_Draw( &( game->menus[MenuId_Overworld] ) );
                         Game_DrawOverworldItemMenu( game );
+                        if ( game->dialog.id == DialogId_Use_Herb2 )
+                        {
+                           Game_DrawOverworldQuickStatus( game );
+                        }
                         break;
                      case MenuId_OverworldSpell:
                         Menu_Draw( &( game->menus[MenuId_Overworld] ) );

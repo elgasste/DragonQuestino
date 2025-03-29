@@ -1,5 +1,6 @@
 #include "game.h"
 #include "random.h"
+#include "math.h"
 
 internal void Game_TicOverworld( Game_t* game );
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
@@ -235,13 +236,18 @@ void Game_OpenDoor( Game_t* game )
 
 void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t dialogId1, DialogId_t dialogId2 )
 {
-   uint8_t amount;
    char str[16];
 
-   amount = Player_RestoreHitPoints( &( game->player ), Random_u8( minHp, maxHp ) );
-   sprintf( str, "%u", amount );
+   game->pendingPayload8u = Random_u8( minHp, maxHp );
+
+   if ( ( UINT8_MAX - game->player.stats.hitPoints ) < game->pendingPayload8u )
+   {
+      game->pendingPayload8u = UINT8_MAX - game->player.stats.hitPoints;
+   }
+
+   sprintf( str, "%u", game->pendingPayload8u );
    Dialog_SetInsertionText( &( game->dialog ), str );
-   Game_OpenDialog( game, ( amount == 1 ) ? dialogId1 : dialogId2 );
+   Game_OpenDialog( game, ( game->pendingPayload8u == 1 ) ? dialogId1 : dialogId2 );
 }
 
 internal void Game_TicOverworld( Game_t* game )
