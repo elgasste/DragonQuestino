@@ -47,8 +47,8 @@ void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player );
 void Dialog_Load( Dialog_t* dialog, DialogId_t id );
 void Dialog_SetInsertionText( Dialog_t* dialog, const char* text );
 void Dialog_Draw( Dialog_t* dialog );
-Bool_t Dialog_Next( Dialog_t* dialog );
-void Dialog_Skip( Dialog_t* dialog );
+Bool_t Dialog_StepAhead( Dialog_t* dialog );
+void Dialog_NextSection( Dialog_t* dialog );
 void Dialog_Tic( Dialog_t* dialog );
 Bool_t Dialog_IsDone( Dialog_t* dialog );
 

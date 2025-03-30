@@ -79,7 +79,7 @@ void Dialog_Draw( Dialog_t* dialog )
    }
 }
 
-Bool_t Dialog_Next( Dialog_t* dialog )
+Bool_t Dialog_StepAhead( Dialog_t* dialog )
 {
    if ( dialog->isScrolling )
    {
@@ -87,14 +87,14 @@ Bool_t Dialog_Next( Dialog_t* dialog )
    }
    else if ( dialog->section < ( dialog->sectionCount - 1 ) )
    {
-      Dialog_Skip( dialog );
+      Dialog_NextSection( dialog );
       return True;
    }
 
    return False;
 }
 
-void Dialog_Skip( Dialog_t* dialog )
+void Dialog_NextSection( Dialog_t* dialog )
 {
    dialog->section++;
    Dialog_LoadMessage( dialog );

@@ -150,7 +150,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      if ( Dialog_Next( &( game->dialog ) ) )
+      if ( Dialog_StepAhead( &( game->dialog ) ) )
       {
          switch ( game->dialog.section )
          {
@@ -176,7 +176,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                      e = Player_GetExperienceRemaining( &( game->player ) );
                      if ( e == 0 )
                      {
-                        Dialog_Skip( &( game->dialog ) );
+                        Dialog_NextSection( &( game->dialog ) );
                      }
                      break;
                }

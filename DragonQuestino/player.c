@@ -42,6 +42,10 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->items = 0;
    player->spells = 0;
 
+   // MUFFINS
+   player->stats.hitPoints = 1;
+   player->stats.maxHitPoints = 220;
+
    Player_UpdateTextColor( player, UINT8_MAX );
 }
 
