@@ -43,9 +43,8 @@ internal uint32_t Convert565To32( uint16_t color )
    return (uint32_t)0xFF000000 | ( (uint32_t)( 0xFF * pR ) << 16 ) | ( (uint32_t)( 0xFF * pG ) << 8 ) | (uint32_t)( 0xFF * pB );
 }
 
-// MUFFINS: implement this on the Giga
 internal void Screen_Wipe( Screen_t* screen )
 {
    uint32_t color = Convert565To32( screen->wipeColor );
-   memset( g_globals.screenBuffer.memory32, color, sizeof(uint32_t) * SCREEN_WIDTH * SCREEN_HEIGHT );
+   memset( g_globals.screenBuffer.memory32, color, sizeof(uint32_t) * SCREEN_PIXELS );
 }
