@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\DragonQuestino\animation.h" />
     <ClInclude Include="..\..\DragonQuestino\battle_stats.h" />
     <ClInclude Include="..\..\DragonQuestino\clock.h" />
     <ClInclude Include="..\..\DragonQuestino\common.h" />
@@ -42,8 +43,8 @@
     <ClInclude Include="win_pixel_buffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\DragonQuestino\animation.c" />
     <ClCompile Include="..\..\DragonQuestino\game.c" />
-    <ClCompile Include="..\..\DragonQuestino\game_animation.c" />
     <ClCompile Include="..\..\DragonQuestino\game_data.c" />
     <ClCompile Include="..\..\DragonQuestino\game_input.c" />
     <ClCompile Include="..\..\DragonQuestino\game_items.c" />

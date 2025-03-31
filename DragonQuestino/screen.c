@@ -8,7 +8,9 @@ void Screen_Init( Screen_t* screen, uint16_t* buffer )
    Screen_LoadPalette( screen );
    Screen_LoadTextBitFields( screen );
    screen->textColor = COLOR_WHITE;
+   screen->wipeColor = COLOR_BLACK;
    screen->needsRedraw = False;
+   screen->needsWipe = False;
 }
 
 void Screen_BackupPalette( Screen_t* screen )

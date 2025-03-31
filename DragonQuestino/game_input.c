@@ -126,7 +126,7 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Game_StartAnimation( game, AnimationId_Overworld_Pause );
+      Animation_Start( &( game->animation ), AnimationId_Overworld_Pause);
    }
 }
 
@@ -140,11 +140,11 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
       {
          if ( game->dialog.id == DialogId_Use_RainbowDrop )
          {
-            Game_StartAnimation( game, AnimationId_RainbowBridge_Trippy );
+            Animation_Start( &( game->animation ), AnimationId_RainbowBridge_Trippy );
          }
          else
          {
-            Game_StartAnimation( game, AnimationId_Overworld_Pause );
+            Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
          }
       }
    }

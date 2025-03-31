@@ -12,11 +12,13 @@
 
 typedef struct Screen_t Screen_t;
 typedef struct Player_t Player_t;
+typedef struct Animation_t Animation_t;
 
 typedef struct Dialog_t
 {
    Screen_t* screen;
    Player_t* player;
+   Animation_t* animation;
 
    DialogId_t id;
    Vector2u16_t position;  // in pixels
@@ -43,7 +45,7 @@ Dialog_t;
 extern "C" {
 #endif
 
-void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player );
+void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player, Animation_t* animation );
 void Dialog_Load( Dialog_t* dialog, DialogId_t id );
 void Dialog_SetInsertionText( Dialog_t* dialog, const char* text );
 void Dialog_Draw( Dialog_t* dialog );

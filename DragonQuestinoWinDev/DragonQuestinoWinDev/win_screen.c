@@ -1,6 +1,30 @@
 #include "screen.h"
 #include "win_common.h"
 
+internal uint32_t Convert565To32( uint16_t color );
+internal void Screen_Wipe( Screen_t* screen );
+
+void Screen_RenderBuffer( Screen_t* screen )
+{
+   uint32_t i;
+   uint16_t* bufferPos16 = screen->buffer;
+   uint32_t* bufferPos32 = g_globals.screenBuffer.memory32;
+
+   if ( screen->needsWipe )
+   {
+      Screen_Wipe( screen );
+   }
+   else
+   {
+      for ( i = 0; i < SCREEN_PIXELS; i++ )
+      {
+         *bufferPos32 = Convert565To32( *bufferPos16 );
+         bufferPos16++;
+         bufferPos32++;
+      }
+   }
+}
+
 internal uint32_t Convert565To32( uint16_t color )
 {
    if ( color == 0 )
@@ -19,16 +43,9 @@ internal uint32_t Convert565To32( uint16_t color )
    return (uint32_t)0xFF000000 | ( (uint32_t)( 0xFF * pR ) << 16 ) | ( (uint32_t)( 0xFF * pG ) << 8 ) | (uint32_t)( 0xFF * pB );
 }
 
-void Screen_RenderBuffer( Screen_t* screen )
+// MUFFINS: implement this on the Giga
+internal void Screen_Wipe( Screen_t* screen )
 {
-   uint32_t i;
-   uint16_t* bufferPos16 = screen->buffer;
-   uint32_t* bufferPos32 = g_globals.screenBuffer.memory32;
-
-   for ( i = 0; i < SCREEN_PIXELS; i++ )
-   {
-      *bufferPos32 = Convert565To32( *bufferPos16 );
-      bufferPos16++;
-      bufferPos32++;
-   }
+   uint32_t color = Convert565To32( screen->wipeColor );
+   memset( g_globals.screenBuffer.memory32, color, sizeof(uint32_t) * SCREEN_WIDTH * SCREEN_HEIGHT );
 }

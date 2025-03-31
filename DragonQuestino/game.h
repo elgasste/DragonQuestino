@@ -10,18 +10,9 @@
 #include "player.h"
 #include "menu.h"
 #include "dialog.h"
+#include "animation.h"
 
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
-
-#define ANIMATION_OVERWORLD_PAUSE_DURATION         0.3f
-#define ANIMATION_TILEMAP_FADE_DURATION            0.3f
-#define ANIMATION_TILEMAP_FADEPAUSE_DURATION       0.2f
-#define ANIMATION_TILEMAP_WHITE_DURATION           0.5f
-#define ANIMATION_TILEMAP_WHITEPAUSE_DURATION      1.0f
-#define ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION    6.0f
-#define ANIMATION_RAINBOWBRIDGE_WHITEOUT_DURATION  1.5f
-#define ANIMATION_RAINBOWBRIDGE_FADEIN_DURATION    1.5f
-#define ANIMATION_RAINBOWBRIDGE_PAUSE_DURATION     1.5f
 
 #define COLLISION_THETA                            0.001f
 
@@ -41,15 +32,11 @@ typedef struct Game_t
    Menu_t* activeMenu;
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
+   Animation_t animation;
 
    float overworldInactivitySeconds;
 
    uint8_t pendingPayload8u;
-
-   Bool_t isAnimating;
-   Animation_t animation;
-   float animationSeconds;
-   float animationDuration;
 }
 Game_t;
 
@@ -71,11 +58,6 @@ void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t d
 
 // game_input.c
 void Game_HandleInput( Game_t* game );
-
-// game_animation.c
-void Game_StartAnimation( Game_t* game, Animation_t animation );
-void Game_StopAnimation( Game_t* game );
-void Game_TicAnimation( Game_t* game );
 
 // game_physics.c
 void Game_TicPhysics( Game_t* game );

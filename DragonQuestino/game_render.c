@@ -9,13 +9,18 @@ void Game_Draw( Game_t* game )
 {
    uint32_t i;
 
-   if ( game->isAnimating )
+   if ( game->animation.isRunning )
    {
-      switch ( game->animation )
+      if ( game->mainState == MainState_Overworld )
       {
-         default:
+         if ( game->animation.id != AnimationId_CastSpell )
+         {
             Game_DrawOverworld( game );
-            break;
+         }
+      }
+      else
+      {
+         // TODO: battle stuff
       }
    }
    else
