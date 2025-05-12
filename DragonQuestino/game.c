@@ -14,6 +14,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ), &( game->player ) );
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 1 );
+   Animation_Init( &( game->animation ), game );
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
@@ -26,7 +27,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
       Menu_Init( &( game->menus[(MenuId_t)i] ), (MenuId_t)( i ), &( game->screen ), &( game->player ), &( game->tileMap ) );
    }
 
-   Dialog_Init( &( game->dialog ), &( game->screen ), &( game->player ) );
+   Dialog_Init( &( game->dialog ), &( game->screen ), &( game->player ), &( game->animation ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
    {
@@ -55,9 +56,9 @@ void Game_Tic( Game_t* game )
 {
    Input_Read( &( game->input ) );
 
-   if ( game->isAnimating )
+   if ( game->animation.isRunning )
    {
-      Game_TicAnimation( game );
+      Animation_Tic( &( game->animation ) );
    }
    else
    {

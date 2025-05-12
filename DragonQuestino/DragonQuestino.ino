@@ -34,5 +34,12 @@ void loop()
 
 void Screen_RenderBuffer( Screen_t* screen )
 {
-   g_gigaShield.drawScreen();
+   if ( screen->needsWipe )
+   {
+      g_gigaShield.wipeScreen( screen->wipeColor );
+   }
+   else
+   {
+      g_gigaShield.drawScreen();
+   }
 }

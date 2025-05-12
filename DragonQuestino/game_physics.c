@@ -149,7 +149,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    if ( portal )
    {
       game->targetPortal = portal;
-      Game_StartAnimation( game, AnimationId_TileMap_FadeOut );
+      Animation_Start( &( game->animation ), AnimationId_TileMap_FadeOut );
       return;
    }
 

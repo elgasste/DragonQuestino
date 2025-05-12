@@ -16,14 +16,17 @@ class GigaShield : public Adafruit_GFX {
       // we have to implement this, even if it does nothing
       void drawPixel( int16_t x, int16_t y, uint16_t color ) { }
       void drawScreen();
-      uint16_t* getBuffer() { return _buffer; }
+      void wipeScreen( uint16_t color );
+      uint16_t* getBuffer() { return _mainBuffer; }
 
    private:
       void refreshThreadWorker();
 
    private:
       Arduino_H7_Video* _display;
-      uint16_t* _buffer = nullptr;
+      uint16_t* _mainBuffer = nullptr;
+      uint16_t* _wipeBuffer = nullptr;
+      bool _isWiping = false;
       Screen_t* _screen;
       rtos::Thread* _refreshThread;
 };

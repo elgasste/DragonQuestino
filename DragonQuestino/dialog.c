@@ -2,16 +2,19 @@
 #include "screen.h"
 #include "player.h"
 #include "clock.h"
+#include "animation.h"
 
 internal void Dialog_ResetScroll( Dialog_t* dialog );
 internal void Dialog_LoadMessage( Dialog_t* dialog );
 internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id );
 internal void Dialog_GetMessageText( Dialog_t* dialog, char* text );
+internal void Dialog_FinishSection( Dialog_t* dialog );
 
-void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player )
+void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player, Animation_t* animation )
 {
    dialog->screen = screen;
    dialog->player = player;
+   dialog->animation = animation;
 }
 
 void Dialog_Load( Dialog_t* dialog, DialogId_t id )
@@ -79,22 +82,22 @@ void Dialog_Draw( Dialog_t* dialog )
    }
 }
 
-Bool_t Dialog_Next( Dialog_t* dialog )
+Bool_t Dialog_StepAhead( Dialog_t* dialog )
 {
    if ( dialog->isScrolling )
    {
-      dialog->isScrolling = False;
+      Dialog_FinishSection( dialog );
    }
    else if ( dialog->section < ( dialog->sectionCount - 1 ) )
    {
-      Dialog_Skip( dialog );
+      Dialog_NextSection( dialog );
       return True;
    }
 
    return False;
 }
 
-void Dialog_Skip( Dialog_t* dialog )
+void Dialog_NextSection( Dialog_t* dialog )
 {
    dialog->section++;
    Dialog_LoadMessage( dialog );
@@ -109,7 +112,7 @@ void Dialog_Tic( Dialog_t* dialog )
 
       if ( dialog->scrollSeconds > dialog->scrollTotalSeconds )
       {
-         dialog->isScrolling = False;
+         Dialog_FinishSection( dialog );
       }
    }
    else if ( !Dialog_IsDone( dialog ) )
@@ -446,5 +449,31 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, dialog->insertionText ); return;
             case 1: strcpy( text, STRING_SPELLBLOCKED ); return;
          }
+   }
+}
+
+internal void Dialog_FinishSection( Dialog_t* dialog )
+{
+   dialog->isScrolling = False;
+
+   if ( dialog->section == 0 )
+   {
+      switch ( dialog->id )
+      {
+         case DialogId_Spell_OverworldCastHeal1:
+         case DialogId_Spell_OverworldCastHeal2:
+         case DialogId_Spell_OverworldCastMidheal1:
+         case DialogId_Spell_OverworldCastMidheal2:
+         case DialogId_Spell_OverworldCastGlowCursed:
+         case DialogId_Spell_OverworldCastGlow:
+         case DialogId_Spell_CastRepelCursed:
+         case DialogId_Spell_CastRepel:
+         case DialogId_Spell_CastEvacCursed:
+         case DialogId_Spell_CastEvac:
+         case DialogId_Spell_CastZoom:
+         case DialogId_Spell_Blocked:
+            Animation_Start( dialog->animation, AnimationId_CastSpell );
+            break;
+      }
    }
 }

@@ -57,6 +57,7 @@ typedef enum AnimationId_t
    AnimationId_TileMap_WhiteOut,
    AnimationId_TileMap_WhitePause,
    AnimationId_TileMap_WhiteIn,
+   AnimationId_CastSpell,
    AnimationId_RainbowBridge_Trippy,
    AnimationId_RainbowBridge_WhiteOut,
    AnimationId_RainbowBridge_FadeIn,
@@ -64,7 +65,7 @@ typedef enum AnimationId_t
 
    AnimationId_Count
 }
-Animation_t;
+AnimationId_t;
 
 typedef enum Item_t
 {
