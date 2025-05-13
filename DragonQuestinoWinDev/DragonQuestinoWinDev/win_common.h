@@ -22,6 +22,7 @@
 #define VK_ALLITEMS                 52    // 4
 #define VK_MAXSTATS                 53    // 5
 #define VK_TOGGLECURSED             54    // 6
+#define VK_TOGGLEENCOUNTERS         55    // 7
 
 typedef struct GlobalObjects_t
 {

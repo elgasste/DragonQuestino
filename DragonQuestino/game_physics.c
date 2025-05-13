@@ -203,6 +203,13 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
    uint32_t encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[tileIndex] );
    Bool_t spawnEncounter = False;
 
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.noEncounters )
+   {
+      return;
+   }
+#endif
+
    switch( encounterRate )
    {
       case 1: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_LOW; break;
