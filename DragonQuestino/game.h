@@ -16,6 +16,10 @@
 
 #define COLLISION_THETA                            0.001f
 
+#define ENCOUNTERRATE_LOW                          4
+#define ENCOUNTERRATE_MEDIUM                       6
+#define ENCOUNTERRATE_HIGH                         8
+
 typedef struct Game_t
 {
    TilePortal_t* targetPortal;

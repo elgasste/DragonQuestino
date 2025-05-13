@@ -1,7 +1,9 @@
 #include "game.h"
 #include "random.h"
+#include "battle.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
+internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex );
 
 void Game_TicPhysics( Game_t* game )
 {
@@ -164,14 +166,21 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
       }
    }
 
-   if ( game->player.hasHolyProtection )
+   if ( game->tileMap.hasEncounters )
    {
-      game->player.holyProtectionSteps++;
-
-      if ( game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
+      if ( game->player.hasHolyProtection )
       {
-         game->player.hasHolyProtection = False;
-         Game_OpenDialog( game, DialogId_HolyProtection_Off );
+         game->player.holyProtectionSteps++;
+
+         if ( game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
+         {
+            game->player.hasHolyProtection = False;
+            Game_OpenDialog( game, DialogId_HolyProtection_Off );
+         }
+      }
+      else
+      {
+         Game_RollEncounter( game, tileIndex );
       }
    }
 }
@@ -186,5 +195,24 @@ internal void Game_UpdatePlayerTileIndex( Game_t* game )
    {
       game->player.tileIndex = newTileIndex;
       Game_PlayerSteppedOnTile( game, newTileIndex );
+   }
+}
+
+internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
+{
+   uint32_t encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[tileIndex] );
+   Bool_t spawnEncounter = False;
+
+   switch( encounterRate )
+   {
+      case 1: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_LOW; break;
+      case 2: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_MEDIUM; break;
+      case 3: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_HIGH; break;
+      default: return;
+   }
+
+   if ( spawnEncounter )
+   {
+      Battle_Start( game );
    }
 }
