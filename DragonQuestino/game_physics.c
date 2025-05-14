@@ -1,6 +1,6 @@
 #include "game.h"
 #include "random.h"
-#include "battle.h"
+#include "animation.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex );
@@ -220,6 +220,6 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
 
    if ( spawnEncounter )
    {
-      Battle_Start( game );
+      Game_ChangeMainState( game, MainState_Battle );
    }
 }

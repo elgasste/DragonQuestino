@@ -9,6 +9,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game );
 internal void Game_OpenOverworldSpellMenu( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
 internal void Game_OpenZoomMenu( Game_t* game );
+internal void Game_HandleBattleInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -30,9 +31,9 @@ void Game_HandleInput( Game_t* game )
             break;
       }
    }
-   else
+   else if ( game->mainState == MainState_Battle )
    {
-      // TODO: battle stuff
+      Game_HandleBattleInput( game );
    }
 }
 
@@ -233,24 +234,18 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
-      if ( game->mainState == MainState_Overworld )
+      switch ( game->activeMenu->id )
       {
-         switch ( game->activeMenu->id )
-         {
-            case MenuId_OverworldItem:
-            case MenuId_OverworldSpell:
-               game->activeMenu = &( game->menus[MenuId_Overworld] );
-               game->screen.needsRedraw = True;
-               break;
-            default:
-               Game_ChangeMainState( game, MainState_Overworld );
-               break;
-         }
+         case MenuId_OverworldItem:
+         case MenuId_OverworldSpell:
+            game->activeMenu = &( game->menus[MenuId_Overworld] );
+            game->screen.needsRedraw = True;
+            break;
+         default:
+            Game_ChangeMainState( game, MainState_Overworld );
+            break;
       }
-      else
-      {
-         // TODO: battle stuff
-      }
+
    }
    else if ( game->activeMenu->itemCount )
    {
@@ -304,5 +299,13 @@ internal void Game_OpenZoomMenu( Game_t* game )
    else if ( townCount > 0 )
    {
       Game_OpenMenu( game, MenuId_Zoom );
+   }
+}
+
+internal void Game_HandleBattleInput( Game_t* game )
+{
+   if ( Input_AnyButtonPressed( &( game->input ) ) )
+   {
+      Game_ChangeMainState( game, MainState_Overworld );
    }
 }

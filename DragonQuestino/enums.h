@@ -41,7 +41,6 @@ typedef enum SubState_t
    SubState_None = 0,
    SubState_Waiting,
    SubState_Menu,
-   SubState_Animation,
    SubState_Dialog,
 
    SubState_Count
@@ -62,6 +61,7 @@ typedef enum AnimationId_t
    AnimationId_RainbowBridge_WhiteOut,
    AnimationId_RainbowBridge_FadeIn,
    AnimationId_RainbowBridge_Pause,
+   AnimationId_Battle_Checkerboard,
 
    AnimationId_Count
 }
