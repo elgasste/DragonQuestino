@@ -42,12 +42,6 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->items = 0;
    player->spells = 0;
 
-   player->stats.hitPoints = 1;
-   player->stats.maxHitPoints = 220;
-   player->stats.maxMagicPoints = 200;
-   player->stats.magicPoints = 100;
-   SPELL_SET_HASHEAL( player->spells );
-
    Player_UpdateTextColor( player, UINT8_MAX );
 }
 
