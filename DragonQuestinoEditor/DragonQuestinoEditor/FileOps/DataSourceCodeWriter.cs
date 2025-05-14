@@ -21,6 +21,35 @@ namespace DragonQuestinoEditor.FileOps
       private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
       private readonly StaticSpriteSheet _staticSpriteSheet = staticSpriteSheet;
 
+      private readonly List<List<int>> _overworldEnemyIndexPools = new()
+      {
+         new() { 0, 1 },
+         new() { 0, 1, 3 },
+         new() { 0, 1, 3, 6 },
+         new() { 1, 3, 6, 9 },
+         new() { 4, 6, 9, 12 },
+         new() { 4, 6, 9, 12, 19 },
+         new() { 4, 10, 12, 19, 23 },
+         new() { 10, 13, 19, 23 },
+         new() { 13, 20, 24, 26 },
+         new() { 20, 24, 26, 29 },
+         new() { 14, 21, 22, 29, 32 },
+         new() { 2, 21, 22, 30, 32 },
+         new() { 22, 25, 30, 31, 32 },
+         new() { 11, 25, 31, 35 }
+      };
+
+      private readonly List<List<int>> _dungeonEnemyIndexPools = new()
+      {
+         new() { 6, 9, 12, 15 },
+         new() { 5, 7, 10, 17, 19 },
+         new() { 10, 13, 19, 23 },
+         new() { 8, 16, 18, 21, 24 },
+         new() { 11, 25, 31, 33, 35 },
+         new() { 11, 28, 36, 33 },
+         new() { 11, 28, 34, 37 }
+      };
+
       public void WriteFiles()
       {
          WriteGeneratedHeaderFile();
@@ -35,7 +64,27 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
          WriteToFileStream( fs, "#if !defined( GENERATED_DEFINES_H )\n" );
          WriteToFileStream( fs, "#define GENERATED_DEFINES_H\n\n" );
-         WriteToFileStream( fs, string.Format( "#define PALETTE_COLORS {0}\n\n", _palette.ColorCount ) );
+         WriteToFileStream( fs, string.Format( "#define PALETTE_COLORS {0}\n", _palette.ColorCount ) );
+
+         int highestCount = 0;
+         foreach( var pool in _overworldEnemyIndexPools )
+         {
+            if ( pool.Count > highestCount )
+            {
+               highestCount = pool.Count;
+            }
+         }
+         foreach ( var pool in _dungeonEnemyIndexPools )
+         {
+            if ( pool.Count > highestCount )
+            {
+               highestCount = pool.Count;
+            }
+         }
+         WriteToFileStream( fs, string.Format( "#define TILE_MAX_ENEMY_INDEX_POOL_ENEMIES {0}\n", highestCount ) );
+
+         WriteToFileStream( fs, string.Format( "#define TILE_OVERWORLD_ENEMY_INDEX_POOLS {0}\n", _overworldEnemyIndexPools.Count ) );
+         WriteToFileStream( fs, string.Format( "#define TILE_DUNGEON_ENEMY_INDEX_POOLS {0}\n\n", _dungeonEnemyIndexPools.Count ) );
          WriteToFileStream( fs, "#endif // GENERATED_DEFINES_H\n" );
       }
 
@@ -52,6 +101,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteStaticSpritesFunction( fs );
          WriteTreasureFlagsFunction( fs );
          WriteDoorFlagsFunction( fs );
+         WriteEnemyIndexPoolsFunction( fs );
       }
 
       private void WriteShieldBackgroundDataFile()
@@ -64,9 +114,7 @@ namespace DragonQuestinoEditor.FileOps
       private static void WriteHeaderSection( FileStream fs )
       {
          WriteToFileStream( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
-         WriteToFileStream( fs, "#include \"screen.h\"\n" );
-         WriteToFileStream( fs, "#include \"tile_map.h\"\n" );
-         WriteToFileStream( fs, "#include \"game_flags.h\"\n" );
+         WriteToFileStream( fs, "#include \"game.h\"\n" );
          WriteToFileStream( fs, "#include \"random.h\"\n" );
       }
 
@@ -488,6 +536,34 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, "   }\n\n" );
          WriteToFileStream( fs, "   return 0;\n" );
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteEnemyIndexPoolsFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nvoid Game_LoadEnemyIndexPools( Game_t* game )\n" );
+         WriteToFileStream( fs, "{\n" );
+
+         for ( int i = 0; i < _overworldEnemyIndexPools.Count; i++ )
+         {
+            WriteToFileStream( fs, string.Format( "   game->overworldEnemyIndexPools[{0}].enemyCount = {1};\n", i, _overworldEnemyIndexPools[i].Count ) );
+
+            for ( int j = 0; j < _overworldEnemyIndexPools[i].Count; j++ )
+            {
+               WriteToFileStream( fs, string.Format( "   game->overworldEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _overworldEnemyIndexPools[i][j] ) );
+            }
+         }
+
+         for ( int i = 0; i < _dungeonEnemyIndexPools.Count; i++ )
+         {
+            WriteToFileStream( fs, string.Format( "   game->dungeonEnemyIndexPools[{0}].enemyCount = {1};\n", i, _dungeonEnemyIndexPools[i].Count ) );
+
+            for ( int j = 0; j < _dungeonEnemyIndexPools[i].Count; j++ )
+            {
+               WriteToFileStream( fs, string.Format( "   game->dungeonEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _dungeonEnemyIndexPools[i][j] ) );
+            }
+         }
+
          WriteToFileStream( fs, "}\n" );
       }
 

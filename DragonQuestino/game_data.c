@@ -1,8 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!
 
-#include "screen.h"
-#include "tile_map.h"
-#include "game_flags.h"
+#include "game.h"
 #include "random.h"
 
 void Screen_LoadPalette( Screen_t* screen )
@@ -13202,4 +13200,118 @@ uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
    }
 
    return 0;
+}
+
+void Game_LoadEnemyIndexPools( Game_t* game )
+{
+   game->overworldEnemyIndexPools[0].enemyCount = 2;
+   game->overworldEnemyIndexPools[0].enemyIndexes[0] = 0;
+   game->overworldEnemyIndexPools[0].enemyIndexes[1] = 1;
+   game->overworldEnemyIndexPools[1].enemyCount = 3;
+   game->overworldEnemyIndexPools[1].enemyIndexes[0] = 0;
+   game->overworldEnemyIndexPools[1].enemyIndexes[1] = 1;
+   game->overworldEnemyIndexPools[1].enemyIndexes[2] = 3;
+   game->overworldEnemyIndexPools[2].enemyCount = 4;
+   game->overworldEnemyIndexPools[2].enemyIndexes[0] = 0;
+   game->overworldEnemyIndexPools[2].enemyIndexes[1] = 1;
+   game->overworldEnemyIndexPools[2].enemyIndexes[2] = 3;
+   game->overworldEnemyIndexPools[2].enemyIndexes[3] = 6;
+   game->overworldEnemyIndexPools[3].enemyCount = 4;
+   game->overworldEnemyIndexPools[3].enemyIndexes[0] = 1;
+   game->overworldEnemyIndexPools[3].enemyIndexes[1] = 3;
+   game->overworldEnemyIndexPools[3].enemyIndexes[2] = 6;
+   game->overworldEnemyIndexPools[3].enemyIndexes[3] = 9;
+   game->overworldEnemyIndexPools[4].enemyCount = 4;
+   game->overworldEnemyIndexPools[4].enemyIndexes[0] = 4;
+   game->overworldEnemyIndexPools[4].enemyIndexes[1] = 6;
+   game->overworldEnemyIndexPools[4].enemyIndexes[2] = 9;
+   game->overworldEnemyIndexPools[4].enemyIndexes[3] = 12;
+   game->overworldEnemyIndexPools[5].enemyCount = 5;
+   game->overworldEnemyIndexPools[5].enemyIndexes[0] = 4;
+   game->overworldEnemyIndexPools[5].enemyIndexes[1] = 6;
+   game->overworldEnemyIndexPools[5].enemyIndexes[2] = 9;
+   game->overworldEnemyIndexPools[5].enemyIndexes[3] = 12;
+   game->overworldEnemyIndexPools[5].enemyIndexes[4] = 19;
+   game->overworldEnemyIndexPools[6].enemyCount = 5;
+   game->overworldEnemyIndexPools[6].enemyIndexes[0] = 4;
+   game->overworldEnemyIndexPools[6].enemyIndexes[1] = 10;
+   game->overworldEnemyIndexPools[6].enemyIndexes[2] = 12;
+   game->overworldEnemyIndexPools[6].enemyIndexes[3] = 19;
+   game->overworldEnemyIndexPools[6].enemyIndexes[4] = 23;
+   game->overworldEnemyIndexPools[7].enemyCount = 4;
+   game->overworldEnemyIndexPools[7].enemyIndexes[0] = 10;
+   game->overworldEnemyIndexPools[7].enemyIndexes[1] = 13;
+   game->overworldEnemyIndexPools[7].enemyIndexes[2] = 19;
+   game->overworldEnemyIndexPools[7].enemyIndexes[3] = 23;
+   game->overworldEnemyIndexPools[8].enemyCount = 4;
+   game->overworldEnemyIndexPools[8].enemyIndexes[0] = 13;
+   game->overworldEnemyIndexPools[8].enemyIndexes[1] = 20;
+   game->overworldEnemyIndexPools[8].enemyIndexes[2] = 24;
+   game->overworldEnemyIndexPools[8].enemyIndexes[3] = 26;
+   game->overworldEnemyIndexPools[9].enemyCount = 4;
+   game->overworldEnemyIndexPools[9].enemyIndexes[0] = 20;
+   game->overworldEnemyIndexPools[9].enemyIndexes[1] = 24;
+   game->overworldEnemyIndexPools[9].enemyIndexes[2] = 26;
+   game->overworldEnemyIndexPools[9].enemyIndexes[3] = 29;
+   game->overworldEnemyIndexPools[10].enemyCount = 5;
+   game->overworldEnemyIndexPools[10].enemyIndexes[0] = 14;
+   game->overworldEnemyIndexPools[10].enemyIndexes[1] = 21;
+   game->overworldEnemyIndexPools[10].enemyIndexes[2] = 22;
+   game->overworldEnemyIndexPools[10].enemyIndexes[3] = 29;
+   game->overworldEnemyIndexPools[10].enemyIndexes[4] = 32;
+   game->overworldEnemyIndexPools[11].enemyCount = 5;
+   game->overworldEnemyIndexPools[11].enemyIndexes[0] = 2;
+   game->overworldEnemyIndexPools[11].enemyIndexes[1] = 21;
+   game->overworldEnemyIndexPools[11].enemyIndexes[2] = 22;
+   game->overworldEnemyIndexPools[11].enemyIndexes[3] = 30;
+   game->overworldEnemyIndexPools[11].enemyIndexes[4] = 32;
+   game->overworldEnemyIndexPools[12].enemyCount = 5;
+   game->overworldEnemyIndexPools[12].enemyIndexes[0] = 22;
+   game->overworldEnemyIndexPools[12].enemyIndexes[1] = 25;
+   game->overworldEnemyIndexPools[12].enemyIndexes[2] = 30;
+   game->overworldEnemyIndexPools[12].enemyIndexes[3] = 31;
+   game->overworldEnemyIndexPools[12].enemyIndexes[4] = 32;
+   game->overworldEnemyIndexPools[13].enemyCount = 4;
+   game->overworldEnemyIndexPools[13].enemyIndexes[0] = 11;
+   game->overworldEnemyIndexPools[13].enemyIndexes[1] = 25;
+   game->overworldEnemyIndexPools[13].enemyIndexes[2] = 31;
+   game->overworldEnemyIndexPools[13].enemyIndexes[3] = 35;
+   game->dungeonEnemyIndexPools[0].enemyCount = 4;
+   game->dungeonEnemyIndexPools[0].enemyIndexes[0] = 6;
+   game->dungeonEnemyIndexPools[0].enemyIndexes[1] = 9;
+   game->dungeonEnemyIndexPools[0].enemyIndexes[2] = 12;
+   game->dungeonEnemyIndexPools[0].enemyIndexes[3] = 15;
+   game->dungeonEnemyIndexPools[1].enemyCount = 5;
+   game->dungeonEnemyIndexPools[1].enemyIndexes[0] = 5;
+   game->dungeonEnemyIndexPools[1].enemyIndexes[1] = 7;
+   game->dungeonEnemyIndexPools[1].enemyIndexes[2] = 10;
+   game->dungeonEnemyIndexPools[1].enemyIndexes[3] = 17;
+   game->dungeonEnemyIndexPools[1].enemyIndexes[4] = 19;
+   game->dungeonEnemyIndexPools[2].enemyCount = 4;
+   game->dungeonEnemyIndexPools[2].enemyIndexes[0] = 10;
+   game->dungeonEnemyIndexPools[2].enemyIndexes[1] = 13;
+   game->dungeonEnemyIndexPools[2].enemyIndexes[2] = 19;
+   game->dungeonEnemyIndexPools[2].enemyIndexes[3] = 23;
+   game->dungeonEnemyIndexPools[3].enemyCount = 5;
+   game->dungeonEnemyIndexPools[3].enemyIndexes[0] = 8;
+   game->dungeonEnemyIndexPools[3].enemyIndexes[1] = 16;
+   game->dungeonEnemyIndexPools[3].enemyIndexes[2] = 18;
+   game->dungeonEnemyIndexPools[3].enemyIndexes[3] = 21;
+   game->dungeonEnemyIndexPools[3].enemyIndexes[4] = 24;
+   game->dungeonEnemyIndexPools[4].enemyCount = 5;
+   game->dungeonEnemyIndexPools[4].enemyIndexes[0] = 11;
+   game->dungeonEnemyIndexPools[4].enemyIndexes[1] = 25;
+   game->dungeonEnemyIndexPools[4].enemyIndexes[2] = 31;
+   game->dungeonEnemyIndexPools[4].enemyIndexes[3] = 33;
+   game->dungeonEnemyIndexPools[4].enemyIndexes[4] = 35;
+   game->dungeonEnemyIndexPools[5].enemyCount = 4;
+   game->dungeonEnemyIndexPools[5].enemyIndexes[0] = 11;
+   game->dungeonEnemyIndexPools[5].enemyIndexes[1] = 28;
+   game->dungeonEnemyIndexPools[5].enemyIndexes[2] = 36;
+   game->dungeonEnemyIndexPools[5].enemyIndexes[3] = 33;
+   game->dungeonEnemyIndexPools[6].enemyCount = 4;
+   game->dungeonEnemyIndexPools[6].enemyIndexes[0] = 11;
+   game->dungeonEnemyIndexPools[6].enemyIndexes[1] = 28;
+   game->dungeonEnemyIndexPools[6].enemyIndexes[2] = 34;
+   game->dungeonEnemyIndexPools[6].enemyIndexes[3] = 37;
 }
