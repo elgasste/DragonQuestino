@@ -22,6 +22,13 @@ namespace DragonQuestinoEditor.ViewModels
 
       public TileSet TileSet { get; }
 
+      private int _id = 0;
+      public int Id
+      {
+         get => _id;
+         set => SetProperty( ref _id, value );
+      }
+
       private int _textureIndex = -1;
       public int TextureIndex
       {
@@ -85,6 +92,13 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _isPortalDestination, value );
       }
 
+      private int _enemyPoolIndex = 0;
+      public int EnemyPoolIndex
+      {
+         get => _enemyPoolIndex;
+         set => SetProperty( ref _enemyPoolIndex, value );
+      }
+
       private TilePortalViewModel? _portal = null;
       public TilePortalViewModel? Portal
       {
@@ -98,20 +112,23 @@ namespace DragonQuestinoEditor.ViewModels
 
       public bool HasPortal => _portal is not null;
 
-      public TileViewModel( TileSet tileSet, int textureIndex )
+      public TileViewModel( TileSet tileSet, int id, int textureIndex )
       {
+         Id = id;
          TileSet = tileSet;
          TextureIndex = textureIndex;
          _isPassable = _passableTextureIndexes.Contains( textureIndex );
       }
 
-      public TileViewModel( TileSet tileSet, TileSaveData saveData )
+      public TileViewModel( TileSet tileSet, int id, TileSaveData saveData )
       {
          TileSet = tileSet;
+         Id = id;
          TextureIndex = saveData.TextureIndex;
          TreasureFlag = saveData.TreasureFlag;
          DoorFlag = saveData.DoorFlag;
          _isPassable = saveData.IsPassable;
+         _enemyPoolIndex = saveData.EnemyPoolIndex;
       }
 
       public void SetTextureProvider( ITileTextureProvider? provider ) => _textureProvider = provider;

@@ -181,12 +181,14 @@ namespace DragonQuestinoEditor.FileOps
                      | ( tiles[tileIndex].IsPassable ? (UInt32)0x20 : 0 )
                      | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex].TextureIndex]
                      | Constants.TileSetIndexEncounterRates[tiles[tileIndex].TextureIndex]
-                     | Constants.TileSetIndexDamageRates[tiles[tileIndex].TextureIndex];
+                     | Constants.TileSetIndexDamageRates[tiles[tileIndex].TextureIndex]
+                     | ( ( (UInt32)tiles[tileIndex].EnemyPoolIndex & 0xFFFFFFF0 ) << 12 );
                   var index1 = (UInt32)( tiles[tileIndex + 1].TextureIndex )
                      | ( tiles[tileIndex + 1].IsPassable ? (UInt32)0x20 : 0 )
                      | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex + 1].TextureIndex]
                      | Constants.TileSetIndexEncounterRates[tiles[tileIndex + 1].TextureIndex]
-                     | Constants.TileSetIndexDamageRates[tiles[tileIndex + 1].TextureIndex];
+                     | Constants.TileSetIndexDamageRates[tiles[tileIndex + 1].TextureIndex]
+                     | ( ( (UInt32)tiles[tileIndex + 1].EnemyPoolIndex & 0xFFFFFFF0 ) << 12 );
 
                   var packed = ( index1 << 16 ) | index0;
                   packedTiles.Add( packed );

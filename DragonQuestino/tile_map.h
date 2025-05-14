@@ -116,6 +116,7 @@ typedef struct TileMap_t
    // bits 6-7: walk speed (0 = normal, 3 = crawl)
    // bits 8-9: encounter rate
    // bits 10-11: damage rate
+   // bits 12-15: enemy pool index
    uint16_t tiles[TILE_COUNT];
    uint32_t tilesX;
    uint32_t tilesY;

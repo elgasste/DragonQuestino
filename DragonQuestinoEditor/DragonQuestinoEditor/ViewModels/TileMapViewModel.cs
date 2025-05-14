@@ -92,7 +92,7 @@ namespace DragonQuestinoEditor.ViewModels
 
          for ( int i = 0; i < tilesX * tilesY; i++ )
          {
-            Tiles.Add( new TileViewModel( tileSet, defaultTileTextureIndex ) );
+            Tiles.Add( new TileViewModel( tileSet, i, defaultTileTextureIndex ) );
          }
       }
 
@@ -108,9 +108,9 @@ namespace DragonQuestinoEditor.ViewModels
          _tilesY = saveData.TilesY;
          EvacPortal = new( saveData.EvacPortal );
 
-         foreach ( var tileSaveData in saveData.Tiles )
+         for ( int i = 0; i < saveData.Tiles.Count; i++ )
          {
-            Tiles.Add( new( tileSet, tileSaveData ) );
+            Tiles.Add( new( tileSet, i, saveData.Tiles[i] ) );
          }
 
          foreach ( var portal in saveData.Portals )
