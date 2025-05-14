@@ -65,7 +65,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
    g_globals.hWndMain = CreateWindowExA( 0,
                                          mainWindowClass.lpszClassName,
-                                         "Final Questino Windows Development Tool",
+                                         "Dragon Questino Windows Development Tool",
                                          windowStyle,
                                          CW_USEDEFAULT,
                                          CW_USEDEFAULT,
