@@ -1,6 +1,7 @@
 #include "game.h"
 #include "math.h"
 
+internal void Game_DrawTileMap( Game_t* game );
 internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
@@ -18,9 +19,13 @@ void Game_Draw( Game_t* game )
             Game_DrawOverworld( game );
          }
       }
-      else
+      else if ( game->mainState == MainState_Battle )
       {
-         // TODO: battle stuff
+         if ( game->screen.needsRedraw )
+         {
+            game->screen.needsRedraw = False;
+            Game_DrawTileMap( game );
+         }
       }
    }
    else
@@ -181,7 +186,7 @@ void Game_DrawOverworldItemMenu( Game_t* game )
    }
 }
 
-internal void Game_DrawOverworld( Game_t* game )
+internal void Game_DrawTileMap( Game_t* game )
 {
    if ( game->tileMap.viewportScreenPos.x != 0 || game->tileMap.viewportScreenPos.y != 0 )
    {
@@ -189,6 +194,11 @@ internal void Game_DrawOverworld( Game_t* game )
    }
 
    TileMap_Draw( &( game->tileMap ) );
+}
+
+internal void Game_DrawOverworld( Game_t* game )
+{
+   Game_DrawTileMap( game );
    Game_DrawPlayer( game );
 
    if ( game->subState == SubState_None && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )

@@ -11,6 +11,7 @@ internal void RenderScreen();
 internal void DrawDiagnostics( HDC* dcMem );
 internal void ToggleFastWalk();
 internal void ToggleNoDark();
+internal void ToggleNoEncounters();
 internal void GetAllItems();
 internal void MaxOutStats();
 
@@ -64,7 +65,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
    g_globals.hWndMain = CreateWindowExA( 0,
                                          mainWindowClass.lpszClassName,
-                                         "Final Questino Windows Development Tool",
+                                         "Dragon Questino Windows Development Tool",
                                          windowStyle,
                                          CW_USEDEFAULT,
                                          CW_USEDEFAULT,
@@ -104,6 +105,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_debugFlags.noClip = False;
    g_debugFlags.fastWalk = False;
    g_debugFlags.noDark = False;
+   g_debugFlags.noEncounters = False;
 
    while ( 1 )
    {
@@ -232,6 +234,9 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
             case VK_TOGGLECURSED:
                Player_SetCursed( &( g_globals.game.player ), g_globals.game.player.isCursed ? False : True );
                g_globals.game.screen.needsRedraw = True;
+               break;
+            case VK_TOGGLEENCOUNTERS:
+               ToggleNoEncounters();
                break;
          }
       }
@@ -384,6 +389,11 @@ internal void DrawDiagnostics( HDC* dcMem )
 
    sprintf_s( str, STRING_SIZE_DEFAULT, "6: Toggle cursed" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   SetTextColor( *dcMem, g_debugFlags.noEncounters ? 0x00FFFFFF : 0x00333333 );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "7: No Encounters" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
 }
@@ -405,6 +415,11 @@ internal void ToggleFastWalk()
 internal void ToggleNoDark()
 {
    TOGGLE_BOOL( g_debugFlags.noDark );
+}
+
+internal void ToggleNoEncounters()
+{
+   TOGGLE_BOOL( g_debugFlags.noEncounters );
 }
 
 internal void GetAllItems()

@@ -1,5 +1,6 @@
 #include "animation.h"
 #include "game.h"
+#include "vector.h"
 
 internal void Animation_Stop( Animation_t* animation );
 internal void Animation_Tic_Overworld_Pause( Animation_t* animation );
@@ -14,6 +15,18 @@ internal void Animation_Tic_RainbowBridge_Trippy( Animation_t* animation );
 internal void Animation_Tic_RainbowBridge_WhiteOut( Animation_t* animation );
 internal void Animation_Tic_RainbowBridge_FadeIn( Animation_t* animation );
 internal void Animation_Tic_RainbowBridge_Pause( Animation_t* animation );
+internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation );
+
+internal Vector2u16_t g_battleCheckerboardPos[49] =
+{
+   { 144, 96  }, { 160, 96  }, { 160, 112 }, { 144, 112 }, { 128, 112 }, { 128, 96  }, { 128, 80  },
+   { 144, 80  }, { 160, 80  }, { 176, 80  }, { 176, 96  }, { 176, 112 }, { 176, 128 }, { 160, 128 },
+   { 144, 128 }, { 128, 128 }, { 112, 128 }, { 112, 112 }, { 112, 96  }, { 112, 80  }, { 112, 64  },
+   { 128, 64  }, { 144, 64  }, { 160, 64  }, { 176, 64  }, { 192, 64  }, { 192, 80  }, { 192, 96  },
+   { 192, 112 }, { 192, 128 }, { 192, 144 }, { 176, 144 }, { 160, 144 }, { 144, 144 }, { 128, 144 },
+   { 112, 144 }, { 96,  144 }, { 96,  128 }, { 96,  112 }, { 96,  96  }, { 96,  80  }, { 96,  64  },
+   { 96,  48  }, { 112, 48  }, { 128, 48  }, { 144, 48  }, { 160, 48  }, { 176, 48  }, { 192, 48  }
+};
 
 void Animation_Init( Animation_t* animation, Game_t* game )
 {
@@ -91,6 +104,7 @@ void Animation_Tic( Animation_t* animation )
       case AnimationId_RainbowBridge_WhiteOut: Animation_Tic_RainbowBridge_WhiteOut( animation ); break;
       case AnimationId_RainbowBridge_FadeIn: Animation_Tic_RainbowBridge_FadeIn( animation ); break;
       case AnimationId_RainbowBridge_Pause: Animation_Tic_RainbowBridge_Pause( animation ); break;
+      case AnimationId_Battle_Checkerboard: Animation_Tic_Battle_Checkerboard( animation ); break;
    }
 }
 
@@ -378,5 +392,30 @@ internal void Animation_Tic_RainbowBridge_Pause( Animation_t* animation )
    if ( animation->totalElapsedSeconds > animation->totalDuration )
    {
       Animation_Stop( animation );
+   }
+}
+
+internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation )
+{
+   animation->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   while ( animation->frameElapsedSeconds > ANIMATION_BATTLE_CHECKERSQUARE_DURATION )
+   {
+      uint32_t squareIndex = (uint32_t)( animation->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION );
+      Screen_DrawRectColor( &( animation->game->screen ),
+                            g_battleCheckerboardPos[squareIndex].x, g_battleCheckerboardPos[squareIndex].y,
+                            TILE_SIZE, TILE_SIZE,
+                            COLOR_BLACK );
+
+      if ( squareIndex == 48 )
+      {
+         Animation_Stop( animation );
+         break;
+      }
+      else
+      {
+         animation->totalElapsedSeconds += ANIMATION_BATTLE_CHECKERSQUARE_DURATION;
+         animation->frameElapsedSeconds -= ANIMATION_BATTLE_CHECKERSQUARE_DURATION;
+      }
    }
 }

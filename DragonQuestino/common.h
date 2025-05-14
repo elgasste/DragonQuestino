@@ -53,6 +53,7 @@ typedef struct DebugFlags_t
    Bool_t noClip;
    Bool_t fastWalk;
    Bool_t noDark;
+   Bool_t noEncounters;
 }
 DebugFlags_t;
 
