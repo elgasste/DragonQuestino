@@ -19,6 +19,7 @@
 #define ENCOUNTERRATE_LOW                          4
 #define ENCOUNTERRATE_MEDIUM                       6
 #define ENCOUNTERRATE_HIGH                         8
+#define ENCOUNTERRATE_EXTREME                      10
 
 typedef struct Game_t
 {

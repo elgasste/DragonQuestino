@@ -212,9 +212,10 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
 
    switch( encounterRate )
    {
-      case 1: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_LOW; break;
-      case 2: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_MEDIUM; break;
-      case 3: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_HIGH; break;
+      case 0: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_LOW; break;
+      case 1: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_MEDIUM; break;
+      case 2: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_HIGH; break;
+      case 3: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_EXTREME; break;
       default: return;
    }
 
