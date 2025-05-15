@@ -19,7 +19,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ), &( game->screen ), &( game->tileMap ) );
-   Game_LoadEnemyIndexPools( game );
+   Battle_Init( &( game->battle ), &( game->player ), (& game->tileMap ) );
 
    game->activeMenu = 0;
 
@@ -118,6 +118,7 @@ void Game_ChangeMainState( Game_t* game, MainState_t newState )
          break;
       case MainState_Battle:
          game->screen.needsRedraw = True;
+         Battle_Generate( &( game->battle ) );
          Animation_Start( &( game->animation ), AnimationId_Battle_Checkerboard );
          break;
    }

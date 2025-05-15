@@ -95,13 +95,13 @@ namespace DragonQuestinoEditor.FileOps
          WritePaletteFunction( fs );
          WriteTextTilesFunction( fs );
          WriteTileTexturesFunction( fs );
+         WriteEnemyIndexPoolsFunction( fs );
          WriteTileMapFunction( fs );
          WriteTileMapHiddenStairsFunction( fs );
          WriteActiveSpritesFunctions( fs );
          WriteStaticSpritesFunction( fs );
          WriteTreasureFlagsFunction( fs );
          WriteDoorFlagsFunction( fs );
-         WriteEnemyIndexPoolsFunction( fs );
       }
 
       private void WriteShieldBackgroundDataFile()
@@ -154,6 +154,34 @@ namespace DragonQuestinoEditor.FileOps
                var packed = ( index3 << 24 ) | ( index2 << 16  ) | ( index1 << 8  ) | ( index0 << 0  );
 
                WriteToFileStream( fs, string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) ) );
+            }
+         }
+
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteEnemyIndexPoolsFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nvoid TileMap_LoadEnemyIndexPools( TileMap_t* tileMap )\n" );
+         WriteToFileStream( fs, "{\n" );
+
+         for ( int i = 0; i < _overworldEnemyIndexPools.Count; i++ )
+         {
+            WriteToFileStream( fs, string.Format( "   tileMap->overworldEnemyIndexPools[{0}].enemyCount = {1};\n", i, _overworldEnemyIndexPools[i].Count ) );
+
+            for ( int j = 0; j < _overworldEnemyIndexPools[i].Count; j++ )
+            {
+               WriteToFileStream( fs, string.Format( "   tileMap->overworldEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _overworldEnemyIndexPools[i][j] ) );
+            }
+         }
+
+         for ( int i = 0; i < _dungeonEnemyIndexPools.Count; i++ )
+         {
+            WriteToFileStream( fs, string.Format( "   tileMap->dungeonEnemyIndexPools[{0}].enemyCount = {1};\n", i, _dungeonEnemyIndexPools[i].Count ) );
+
+            for ( int j = 0; j < _dungeonEnemyIndexPools[i].Count; j++ )
+            {
+               WriteToFileStream( fs, string.Format( "   tileMap->dungeonEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _dungeonEnemyIndexPools[i][j] ) );
             }
          }
 
@@ -536,34 +564,6 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, "   }\n\n" );
          WriteToFileStream( fs, "   return 0;\n" );
-         WriteToFileStream( fs, "}\n" );
-      }
-
-      private void WriteEnemyIndexPoolsFunction( FileStream fs )
-      {
-         WriteToFileStream( fs, "\nvoid Game_LoadEnemyIndexPools( Game_t* game )\n" );
-         WriteToFileStream( fs, "{\n" );
-
-         for ( int i = 0; i < _overworldEnemyIndexPools.Count; i++ )
-         {
-            WriteToFileStream( fs, string.Format( "   game->overworldEnemyIndexPools[{0}].enemyCount = {1};\n", i, _overworldEnemyIndexPools[i].Count ) );
-
-            for ( int j = 0; j < _overworldEnemyIndexPools[i].Count; j++ )
-            {
-               WriteToFileStream( fs, string.Format( "   game->overworldEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _overworldEnemyIndexPools[i][j] ) );
-            }
-         }
-
-         for ( int i = 0; i < _dungeonEnemyIndexPools.Count; i++ )
-         {
-            WriteToFileStream( fs, string.Format( "   game->dungeonEnemyIndexPools[{0}].enemyCount = {1};\n", i, _dungeonEnemyIndexPools[i].Count ) );
-
-            for ( int j = 0; j < _dungeonEnemyIndexPools[i].Count; j++ )
-            {
-               WriteToFileStream( fs, string.Format( "   game->dungeonEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _dungeonEnemyIndexPools[i][j] ) );
-            }
-         }
-
          WriteToFileStream( fs, "}\n" );
       }
 

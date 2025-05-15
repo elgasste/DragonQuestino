@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "dialog.h"
 #include "animation.h"
+#include "battle.h"
 
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
 
@@ -20,13 +21,6 @@
 #define ENCOUNTERRATE_MEDIUM                       4
 #define ENCOUNTERRATE_HIGH                         6
 #define ENCOUNTERRATE_EXTREME                      10
-
-typedef struct EnemyIndexPool_t
-{
-   uint8_t enemyIndexes[TILE_MAX_ENEMY_INDEX_POOL_ENEMIES];
-   uint8_t enemyCount;
-}
-EnemyIndexPool_t;
 
 typedef struct Game_t
 {
@@ -45,8 +39,7 @@ typedef struct Game_t
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    Animation_t animation;
-   EnemyIndexPool_t overworldEnemyIndexPools[TILE_OVERWORLD_ENEMY_INDEX_POOLS];
-   EnemyIndexPool_t dungeonEnemyIndexPools[TILE_DUNGEON_ENEMY_INDEX_POOLS];
+   Battle_t battle;
 
    float overworldInactivitySeconds;
 
@@ -101,9 +94,6 @@ void Game_UseSilverHarp( Game_t* game );
 void Game_UseGwaelynsLove( Game_t* game );
 void Game_UseRainbowDrop( Game_t* game );
 void Game_UseCursedBelt( Game_t* game );
-
-// game_data.c
-void Game_LoadEnemyIndexPools( Game_t* game );
 
 #if defined( __cplusplus )
 }

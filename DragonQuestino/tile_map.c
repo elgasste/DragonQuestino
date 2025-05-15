@@ -16,6 +16,8 @@ internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
 
 void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags, Player_t* player )
 {
+   TileMap_LoadEnemyIndexPools( tileMap );
+
    tileMap->screen = screen;
    tileMap->gameFlags = gameFlags;
    tileMap->player = player;

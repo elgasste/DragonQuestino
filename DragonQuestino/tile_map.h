@@ -95,6 +95,13 @@ typedef struct TilePortal_t
 }
 TilePortal_t;
 
+typedef struct EnemyIndexPool_t
+{
+   uint8_t enemyIndexes[TILE_MAX_ENEMY_INDEX_POOL_ENEMIES];
+   uint8_t enemyCount;
+}
+EnemyIndexPool_t;
+
 typedef struct TileMap_t
 {
    Screen_t* screen;
@@ -130,6 +137,9 @@ typedef struct TileMap_t
    uint32_t portalCount;
    TilePortal_t evacPortal;
 
+   EnemyIndexPool_t overworldEnemyIndexPools[TILE_OVERWORLD_ENEMY_INDEX_POOLS];
+   EnemyIndexPool_t dungeonEnemyIndexPools[TILE_DUNGEON_ENEMY_INDEX_POOLS];
+
    ActiveSprite_t activeSprites[TILEMAP_MAX_ACTIVESPRITES];
    uint32_t activeSpriteCount;
 
@@ -159,6 +169,7 @@ void TileMap_Draw( TileMap_t* tileMap );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
+void TileMap_LoadEnemyIndexPools( TileMap_t* tileMap );
 void TileMap_Load( TileMap_t* tileMap, uint32_t id );
 void TileMap_LoadHiddenStairs( TileMap_t* tileMap );
 uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex );
