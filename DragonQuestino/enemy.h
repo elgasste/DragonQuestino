@@ -14,4 +14,15 @@ typedef struct Enemy_t
 }
 Enemy_t;
 
+#if defined( __cplusplus )
+extern "C" {
+#endif
+
+// game_data.c
+void Enemy_Load( Enemy_t* enemy, uint32_t index );
+
+#if defined( __cplusplus )
+}
+#endif
+
 #endif // ENEMY_H

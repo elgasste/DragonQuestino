@@ -2771,6 +2771,413 @@ void TileMap_LoadEnemyIndexPools( TileMap_t* tileMap )
    tileMap->dungeonEnemyIndexPools[6].enemyIndexes[3] = 37;
 }
 
+void Enemy_Load( Enemy_t* enemy, uint32_t index )
+{
+   switch( index )
+   {
+   case 0:
+      strcpy( enemy->name, STRING_ENEMY_SLIME );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 3;
+      enemy->stats.attackPower = 5;
+      enemy->stats.defensePower = 3;
+      enemy->stats.agility = 15;
+      enemy->experience = 1;
+      enemy->gold = 1;
+      break;
+   case 1:
+      strcpy( enemy->name, STRING_ENEMY_REDSLIME );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 4;
+      enemy->stats.attackPower = 7;
+      enemy->stats.defensePower = 3;
+      enemy->stats.agility = 15;
+      enemy->experience = 1;
+      enemy->gold = 2;
+      break;
+   case 2:
+      strcpy( enemy->name, STRING_ENEMY_METALSLIME );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 4;
+      enemy->stats.attackPower = 10;
+      enemy->stats.defensePower = 225;
+      enemy->stats.agility = 255;
+      enemy->experience = 115;
+      enemy->gold = 6;
+      break;
+   case 3:
+      strcpy( enemy->name, STRING_ENEMY_DRAKEE );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 6;
+      enemy->stats.attackPower = 9;
+      enemy->stats.defensePower = 6;
+      enemy->stats.agility = 15;
+      enemy->experience = 2;
+      enemy->gold = 2;
+      break;
+   case 4:
+      strcpy( enemy->name, STRING_ENEMY_MAGIDRAKEE );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 15;
+      enemy->stats.attackPower = 14;
+      enemy->stats.defensePower = 14;
+      enemy->stats.agility = 0;
+      enemy->experience = 5;
+      enemy->gold = 12;
+      break;
+   case 5:
+      strcpy( enemy->name, STRING_ENEMY_DRAKEEMA );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 20;
+      enemy->stats.attackPower = 22;
+      enemy->stats.defensePower = 26;
+      enemy->stats.agility = 32;
+      enemy->experience = 11;
+      enemy->gold = 20;
+      break;
+   case 6:
+      strcpy( enemy->name, STRING_ENEMY_GHOST );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 7;
+      enemy->stats.attackPower = 11;
+      enemy->stats.defensePower = 8;
+      enemy->stats.agility = 15;
+      enemy->experience = 3;
+      enemy->gold = 4;
+      break;
+   case 7:
+      strcpy( enemy->name, STRING_ENEMY_POLTERGEIST );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 23;
+      enemy->stats.attackPower = 18;
+      enemy->stats.defensePower = 20;
+      enemy->stats.agility = 0;
+      enemy->experience = 7;
+      enemy->gold = 18;
+      break;
+   case 8:
+      strcpy( enemy->name, STRING_ENEMY_SPECTER );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 36;
+      enemy->stats.attackPower = 40;
+      enemy->stats.defensePower = 38;
+      enemy->stats.agility = 49;
+      enemy->experience = 18;
+      enemy->gold = 70;
+      break;
+   case 9:
+      strcpy( enemy->name, STRING_ENEMY_MAGICIAN );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 12;
+      enemy->stats.attackPower = 11;
+      enemy->stats.defensePower = 12;
+      enemy->stats.agility = 0;
+      enemy->experience = 4;
+      enemy->gold = 11;
+      break;
+   case 10:
+      strcpy( enemy->name, STRING_ENEMY_WARLOCK );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 30;
+      enemy->stats.attackPower = 28;
+      enemy->stats.defensePower = 22;
+      enemy->stats.agility = 49;
+      enemy->experience = 14;
+      enemy->gold = 35;
+      break;
+   case 11:
+      strcpy( enemy->name, STRING_ENEMY_WIZARD );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 65;
+      enemy->stats.attackPower = 80;
+      enemy->stats.defensePower = 70;
+      enemy->stats.agility = 247;
+      enemy->experience = 50;
+      enemy->gold = 65;
+      break;
+   case 12:
+      strcpy( enemy->name, STRING_ENEMY_SCORPION );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 20;
+      enemy->stats.attackPower = 18;
+      enemy->stats.defensePower = 16;
+      enemy->stats.agility = 15;
+      enemy->experience = 6;
+      enemy->gold = 16;
+      break;
+   case 13:
+      strcpy( enemy->name, STRING_ENEMY_METALSCORPION );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 22;
+      enemy->stats.attackPower = 36;
+      enemy->stats.defensePower = 42;
+      enemy->stats.agility = 15;
+      enemy->experience = 14;
+      enemy->gold = 40;
+      break;
+   case 14:
+      strcpy( enemy->name, STRING_ENEMY_ROGUESCORPION );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 35;
+      enemy->stats.attackPower = 60;
+      enemy->stats.defensePower = 90;
+      enemy->stats.agility = 127;
+      enemy->experience = 26;
+      enemy->gold = 110;
+      break;
+   case 15:
+      strcpy( enemy->name, STRING_ENEMY_DRUIN );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 22;
+      enemy->stats.attackPower = 22;
+      enemy->stats.defensePower = 18;
+      enemy->stats.agility = 15;
+      enemy->experience = 7;
+      enemy->gold = 16;
+      break;
+   case 16:
+      strcpy( enemy->name, STRING_ENEMY_DRUINLORD );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 35;
+      enemy->stats.attackPower = 47;
+      enemy->stats.defensePower = 40;
+      enemy->stats.agility = 240;
+      enemy->experience = 20;
+      enemy->gold = 85;
+      break;
+   case 17:
+      strcpy( enemy->name, STRING_ENEMY_DROLL );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 25;
+      enemy->stats.attackPower = 24;
+      enemy->stats.defensePower = 24;
+      enemy->stats.agility = 14;
+      enemy->experience = 10;
+      enemy->gold = 25;
+      break;
+   case 18:
+      strcpy( enemy->name, STRING_ENEMY_DROLLMAGI );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 38;
+      enemy->stats.attackPower = 52;
+      enemy->stats.defensePower = 50;
+      enemy->stats.agility = 34;
+      enemy->experience = 22;
+      enemy->gold = 90;
+      break;
+   case 19:
+      strcpy( enemy->name, STRING_ENEMY_SKELETON );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 30;
+      enemy->stats.attackPower = 28;
+      enemy->stats.defensePower = 22;
+      enemy->stats.agility = 15;
+      enemy->experience = 11;
+      enemy->gold = 30;
+      break;
+   case 20:
+      strcpy( enemy->name, STRING_ENEMY_WRAITH );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 36;
+      enemy->stats.attackPower = 44;
+      enemy->stats.defensePower = 34;
+      enemy->stats.agility = 112;
+      enemy->experience = 17;
+      enemy->gold = 60;
+      break;
+   case 21:
+      strcpy( enemy->name, STRING_ENEMY_WRAITHKNIGHT );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 46;
+      enemy->stats.attackPower = 68;
+      enemy->stats.defensePower = 56;
+      enemy->stats.agility = 80;
+      enemy->experience = 28;
+      enemy->gold = 120;
+      break;
+   case 22:
+      strcpy( enemy->name, STRING_ENEMY_DEMONKNIGHT );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 50;
+      enemy->stats.attackPower = 79;
+      enemy->stats.defensePower = 64;
+      enemy->stats.agility = 255;
+      enemy->experience = 37;
+      enemy->gold = 150;
+      break;
+   case 23:
+      strcpy( enemy->name, STRING_ENEMY_WOLF );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 34;
+      enemy->stats.attackPower = 40;
+      enemy->stats.defensePower = 30;
+      enemy->stats.agility = 31;
+      enemy->experience = 16;
+      enemy->gold = 45;
+      break;
+   case 24:
+      strcpy( enemy->name, STRING_ENEMY_WOLFLORD );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 38;
+      enemy->stats.attackPower = 50;
+      enemy->stats.defensePower = 36;
+      enemy->stats.agility = 71;
+      enemy->experience = 20;
+      enemy->gold = 80;
+      break;
+   case 25:
+      strcpy( enemy->name, STRING_ENEMY_WEREWOLF );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 60;
+      enemy->stats.attackPower = 86;
+      enemy->stats.defensePower = 70;
+      enemy->stats.agility = 127;
+      enemy->experience = 40;
+      enemy->gold = 155;
+      break;
+   case 26:
+      strcpy( enemy->name, STRING_ENEMY_GOLDMAN );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 50;
+      enemy->stats.attackPower = 48;
+      enemy->stats.defensePower = 40;
+      enemy->stats.agility = 223;
+      enemy->experience = 6;
+      enemy->gold = 200;
+      break;
+   case 27:
+      strcpy( enemy->name, STRING_ENEMY_GOLEM );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 70;
+      enemy->stats.attackPower = 120;
+      enemy->stats.defensePower = 60;
+      enemy->stats.agility = 255;
+      enemy->experience = 5;
+      enemy->gold = 10;
+      break;
+   case 28:
+      strcpy( enemy->name, STRING_ENEMY_STONEMAN );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 160;
+      enemy->stats.attackPower = 100;
+      enemy->stats.defensePower = 40;
+      enemy->stats.agility = 47;
+      enemy->experience = 65;
+      enemy->gold = 140;
+      break;
+   case 29:
+      strcpy( enemy->name, STRING_ENEMY_WYVERN );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 42;
+      enemy->stats.attackPower = 56;
+      enemy->stats.defensePower = 48;
+      enemy->stats.agility = 79;
+      enemy->experience = 24;
+      enemy->gold = 100;
+      break;
+   case 30:
+      strcpy( enemy->name, STRING_ENEMY_MAGIWYVERN );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 58;
+      enemy->stats.attackPower = 78;
+      enemy->stats.defensePower = 68;
+      enemy->stats.agility = 32;
+      enemy->experience = 34;
+      enemy->gold = 140;
+      break;
+   case 31:
+      strcpy( enemy->name, STRING_ENEMY_STARWYVERN );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 65;
+      enemy->stats.attackPower = 86;
+      enemy->stats.defensePower = 80;
+      enemy->stats.agility = 128;
+      enemy->experience = 43;
+      enemy->gold = 160;
+      break;
+   case 32:
+      strcpy( enemy->name, STRING_ENEMY_KNIGHT );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 55;
+      enemy->stats.attackPower = 76;
+      enemy->stats.defensePower = 78;
+      enemy->stats.agility = 103;
+      enemy->experience = 33;
+      enemy->gold = 150;
+      break;
+   case 33:
+      strcpy( enemy->name, STRING_ENEMY_AXEKNIGHT );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_AN );
+      enemy->stats.maxHitPoints = 70;
+      enemy->stats.attackPower = 94;
+      enemy->stats.defensePower = 82;
+      enemy->stats.agility = 243;
+      enemy->experience = 54;
+      enemy->gold = 165;
+      break;
+   case 34:
+      strcpy( enemy->name, STRING_ENEMY_ARMOREDKNIGHT );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_AN );
+      enemy->stats.maxHitPoints = 90;
+      enemy->stats.attackPower = 105;
+      enemy->stats.defensePower = 86;
+      enemy->stats.agility = 147;
+      enemy->experience = 70;
+      enemy->gold = 140;
+      break;
+   case 35:
+      strcpy( enemy->name, STRING_ENEMY_GREENDRAGON );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 65;
+      enemy->stats.attackPower = 88;
+      enemy->stats.defensePower = 74;
+      enemy->stats.agility = 127;
+      enemy->experience = 45;
+      enemy->gold = 110;
+      break;
+   case 36:
+      strcpy( enemy->name, STRING_ENEMY_BLUEDRAGON );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 70;
+      enemy->stats.attackPower = 98;
+      enemy->stats.defensePower = 84;
+      enemy->stats.agility = 255;
+      enemy->experience = 60;
+      enemy->gold = 150;
+      break;
+   case 37:
+      strcpy( enemy->name, STRING_ENEMY_REDDRAGON );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 100;
+      enemy->stats.attackPower = 120;
+      enemy->stats.defensePower = 90;
+      enemy->stats.agility = 247;
+      enemy->experience = 100;
+      enemy->gold = 140;
+      break;
+   case 38:
+      strcpy( enemy->name, STRING_ENEMY_DRAGONLORDWIZARD );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 100;
+      enemy->stats.attackPower = 60;
+      enemy->stats.defensePower = 50;
+      enemy->stats.agility = 60;
+      enemy->experience = 0;
+      enemy->gold = 0;
+      break;
+   case 39:
+      strcpy( enemy->name, STRING_ENEMY_DRAGONLORDDRAGON );
+      strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
+      enemy->stats.maxHitPoints = 200;
+      enemy->stats.attackPower = 180;
+      enemy->stats.defensePower = 200;
+      enemy->stats.agility = 100;
+      enemy->experience = 0;
+      enemy->gold = 0;
+      break;
+   }
+}
+
 void TileMap_Load( TileMap_t* tileMap, uint32_t id )
 {
    int32_t i, j;

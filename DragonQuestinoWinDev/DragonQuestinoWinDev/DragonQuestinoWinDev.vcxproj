@@ -24,6 +24,7 @@
     <ClInclude Include="..\..\DragonQuestino\battle_stats.h" />
     <ClInclude Include="..\..\DragonQuestino\clock.h" />
     <ClInclude Include="..\..\DragonQuestino\common.h" />
+    <ClInclude Include="..\..\DragonQuestino\enemy.h" />
     <ClInclude Include="..\..\DragonQuestino\enums.h" />
     <ClInclude Include="..\..\DragonQuestino\game_flags.h" />
     <ClInclude Include="..\..\DragonQuestino\game.h" />

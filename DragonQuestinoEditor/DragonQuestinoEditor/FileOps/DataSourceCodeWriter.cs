@@ -12,12 +12,14 @@ namespace DragonQuestinoEditor.FileOps
    public class DataSourceCodeWriter( Palette palette,
                                       TileSet tileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
+                                      ObservableCollection<EnemyViewModel> enemies,
                                       ActiveSpriteSheet activeSpriteSheet,
                                       StaticSpriteSheet staticSpriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
+      private readonly ObservableCollection<EnemyViewModel> _enemies = enemies;
       private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
       private readonly StaticSpriteSheet _staticSpriteSheet = staticSpriteSheet;
 
@@ -96,6 +98,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteTextTilesFunction( fs );
          WriteTileTexturesFunction( fs );
          WriteEnemyIndexPoolsFunction( fs );
+         WriteEnemyLoadFunction( fs );
          WriteTileMapFunction( fs );
          WriteTileMapHiddenStairsFunction( fs );
          WriteActiveSpritesFunctions( fs );
@@ -185,6 +188,31 @@ namespace DragonQuestinoEditor.FileOps
             }
          }
 
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteEnemyLoadFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nvoid Enemy_Load( Enemy_t* enemy, uint32_t index )\n" );
+         WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   switch( index )\n" );
+         WriteToFileStream( fs, "   {\n" );
+
+         foreach( var enemy in _enemies )
+         {
+            WriteToFileStream( fs, string.Format( "   case {0}:\n", enemy.Index ) );
+            WriteToFileStream( fs, string.Format( "      strcpy( enemy->name, {0} );\n", enemy.NameMacro ) );
+            WriteToFileStream( fs, string.Format( "      strcpy( enemy->indefiniteArticle, {0} );\n", enemy.IndefiniteArticle == "An" ? "STRING_INDEFINITE_ARTICLE_AN" : "STRING_INDEFINITE_ARTICLE_A" ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.maxHitPoints = {0};\n", enemy.HitPoints ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.attackPower = {0};\n", enemy.AttackPower ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.defensePower = {0};\n", enemy.DefensePower ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.agility = {0};\n", enemy.Agility ) );
+            WriteToFileStream( fs, string.Format( "      enemy->experience = {0};\n", enemy.Experience ) );
+            WriteToFileStream( fs, string.Format( "      enemy->gold = {0};\n", enemy.Gold ) );
+            WriteToFileStream( fs, "      break;\n" );
+         }
+
+         WriteToFileStream( fs, "   }\n" );
          WriteToFileStream( fs, "}\n" );
       }
 
