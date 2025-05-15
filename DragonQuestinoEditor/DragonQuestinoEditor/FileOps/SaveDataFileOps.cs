@@ -8,9 +8,9 @@ namespace DragonQuestinoEditor.FileOps
 {
    public static class SaveDataFileOps
    {
-      public static void SaveData( string filePath, IEnumerable<TileMapViewModel> tileMaps )
+      public static void SaveData( string filePath, IEnumerable<TileMapViewModel> tileMaps, IEnumerable<EnemyViewModel> enemies )
       {
-         SaveData saveData = new( tileMaps );
+         SaveData saveData = new( tileMaps, enemies );
          File.WriteAllText( filePath, JsonSerializer.Serialize( saveData ) );
       }
 

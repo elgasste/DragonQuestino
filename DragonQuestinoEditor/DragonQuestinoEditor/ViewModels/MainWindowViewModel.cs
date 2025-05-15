@@ -15,6 +15,7 @@ namespace DragonQuestinoEditor.ViewModels
       private readonly StaticSpriteSheet _staticSpriteSheet;
 
       public ObservableCollection<TileMapViewModel> TileMaps { get; } = [];
+      public ObservableCollection<EnemyViewModel> Enemies { get; } = [];
 
       public ObservableCollection<TileTextureViewModel> TileTextureViewModels { get; } = [];
 
@@ -212,7 +213,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void SaveTileMaps()
       {
-         SaveDataFileOps.SaveData( Constants.EditorSaveDataFilePath, TileMaps );
+         SaveDataFileOps.SaveData( Constants.EditorSaveDataFilePath, TileMaps, Enemies );
          MessageBox.Show( "Tile maps have been saved!" );
       }
 
