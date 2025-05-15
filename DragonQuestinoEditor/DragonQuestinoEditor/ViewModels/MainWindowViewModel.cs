@@ -163,7 +163,7 @@ namespace DragonQuestinoEditor.ViewModels
             TileTextureViewModels.Add( new( _tileSet, i ) );
          }
 
-         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileSet, TileMaps ) )
+         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileSet, TileMaps, Enemies ) )
          {
             MessageBox.Show( "Could not load editor save file!" );
          }

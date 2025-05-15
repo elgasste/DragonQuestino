@@ -14,7 +14,10 @@ namespace DragonQuestinoEditor.FileOps
          File.WriteAllText( filePath, JsonSerializer.Serialize( saveData ) );
       }
 
-      public static bool LoadData( string filePath, TileSet tileSet, ObservableCollection<TileMapViewModel> tileMaps )
+      public static bool LoadData( string filePath,
+                                   TileSet tileSet,
+                                   ObservableCollection<TileMapViewModel> tileMaps,
+                                   ObservableCollection<EnemyViewModel> enemies )
       {
          var contents = File.ReadAllText( filePath );
          var saveData = JsonSerializer.Deserialize<SaveData>( contents );
@@ -27,6 +30,11 @@ namespace DragonQuestinoEditor.FileOps
          foreach ( var tileMapSaveData in saveData.TileMaps )
          {
             tileMaps.Add( new( tileSet, tileMapSaveData ) );
+         }
+
+         foreach ( var enemySaveData in saveData.Enemies )
+         {
+            enemies.Add( new( enemySaveData ) );
          }
 
          return true;
