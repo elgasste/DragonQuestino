@@ -21,6 +21,35 @@ namespace DragonQuestinoEditor.FileOps
       private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
       private readonly StaticSpriteSheet _staticSpriteSheet = staticSpriteSheet;
 
+      private readonly List<List<int>> _overworldEnemyIndexPools =
+      [
+         [0, 1],
+         [0, 1, 3],
+         [0, 1, 3, 6],
+         [1, 3, 6, 9],
+         [4, 6, 9, 12],
+         [4, 6, 9, 12, 19],
+         [4, 10, 12, 19, 23],
+         [10, 13, 19, 23],
+         [13, 20, 24, 26],
+         [20, 24, 26, 29],
+         [14, 21, 22, 29, 32],
+         [2, 21, 22, 30, 32],
+         [22, 25, 30, 31, 32],
+         [11, 25, 31, 35]
+      ];
+
+      private readonly List<List<int>> _dungeonEnemyIndexPools =
+      [
+         [6, 9, 12, 15],
+         [5, 7, 10, 17, 19],
+         [10, 13, 19, 23],
+         [8, 16, 18, 21, 24],
+         [11, 25, 31, 33, 35],
+         [11, 28, 36, 33],
+         [11, 28, 34, 37]
+      ];
+
       public void WriteFiles()
       {
          WriteGeneratedHeaderFile();
@@ -35,7 +64,27 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
          WriteToFileStream( fs, "#if !defined( GENERATED_DEFINES_H )\n" );
          WriteToFileStream( fs, "#define GENERATED_DEFINES_H\n\n" );
-         WriteToFileStream( fs, string.Format( "#define PALETTE_COLORS {0}\n\n", _palette.ColorCount ) );
+         WriteToFileStream( fs, string.Format( "#define PALETTE_COLORS {0}\n", _palette.ColorCount ) );
+
+         int highestCount = 0;
+         foreach( var pool in _overworldEnemyIndexPools )
+         {
+            if ( pool.Count > highestCount )
+            {
+               highestCount = pool.Count;
+            }
+         }
+         foreach ( var pool in _dungeonEnemyIndexPools )
+         {
+            if ( pool.Count > highestCount )
+            {
+               highestCount = pool.Count;
+            }
+         }
+         WriteToFileStream( fs, string.Format( "#define TILE_MAX_ENEMY_INDEX_POOL_ENEMIES {0}\n", highestCount ) );
+
+         WriteToFileStream( fs, string.Format( "#define TILE_OVERWORLD_ENEMY_INDEX_POOLS {0}\n", _overworldEnemyIndexPools.Count ) );
+         WriteToFileStream( fs, string.Format( "#define TILE_DUNGEON_ENEMY_INDEX_POOLS {0}\n\n", _dungeonEnemyIndexPools.Count ) );
          WriteToFileStream( fs, "#endif // GENERATED_DEFINES_H\n" );
       }
 
@@ -46,6 +95,7 @@ namespace DragonQuestinoEditor.FileOps
          WritePaletteFunction( fs );
          WriteTextTilesFunction( fs );
          WriteTileTexturesFunction( fs );
+         WriteEnemyIndexPoolsFunction( fs );
          WriteTileMapFunction( fs );
          WriteTileMapHiddenStairsFunction( fs );
          WriteActiveSpritesFunctions( fs );
@@ -64,9 +114,7 @@ namespace DragonQuestinoEditor.FileOps
       private static void WriteHeaderSection( FileStream fs )
       {
          WriteToFileStream( fs, "// THIS FILE IS AUTO-GENERATED, PLEASE DO NOT MODIFY!\n\n" );
-         WriteToFileStream( fs, "#include \"screen.h\"\n" );
-         WriteToFileStream( fs, "#include \"tile_map.h\"\n" );
-         WriteToFileStream( fs, "#include \"game_flags.h\"\n" );
+         WriteToFileStream( fs, "#include \"game.h\"\n" );
          WriteToFileStream( fs, "#include \"random.h\"\n" );
       }
 
@@ -106,6 +154,34 @@ namespace DragonQuestinoEditor.FileOps
                var packed = ( index3 << 24 ) | ( index2 << 16  ) | ( index1 << 8  ) | ( index0 << 0  );
 
                WriteToFileStream( fs, string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) ) );
+            }
+         }
+
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteEnemyIndexPoolsFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nvoid TileMap_LoadEnemyIndexPools( TileMap_t* tileMap )\n" );
+         WriteToFileStream( fs, "{\n" );
+
+         for ( int i = 0; i < _overworldEnemyIndexPools.Count; i++ )
+         {
+            WriteToFileStream( fs, string.Format( "   tileMap->overworldEnemyIndexPools[{0}].enemyCount = {1};\n", i, _overworldEnemyIndexPools[i].Count ) );
+
+            for ( int j = 0; j < _overworldEnemyIndexPools[i].Count; j++ )
+            {
+               WriteToFileStream( fs, string.Format( "   tileMap->overworldEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _overworldEnemyIndexPools[i][j] ) );
+            }
+         }
+
+         for ( int i = 0; i < _dungeonEnemyIndexPools.Count; i++ )
+         {
+            WriteToFileStream( fs, string.Format( "   tileMap->dungeonEnemyIndexPools[{0}].enemyCount = {1};\n", i, _dungeonEnemyIndexPools[i].Count ) );
+
+            for ( int j = 0; j < _dungeonEnemyIndexPools[i].Count; j++ )
+            {
+               WriteToFileStream( fs, string.Format( "   tileMap->dungeonEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _dungeonEnemyIndexPools[i][j] ) );
             }
          }
 
@@ -181,12 +257,14 @@ namespace DragonQuestinoEditor.FileOps
                      | ( tiles[tileIndex].IsPassable ? (UInt32)0x20 : 0 )
                      | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex].TextureIndex]
                      | Constants.TileSetIndexEncounterRates[tiles[tileIndex].TextureIndex]
-                     | Constants.TileSetIndexDamageRates[tiles[tileIndex].TextureIndex];
+                     | Constants.TileSetIndexDamageRates[tiles[tileIndex].TextureIndex]
+                     | ( ( (UInt32)tiles[tileIndex].EnemyPoolIndex & 0xF ) << 12 );
                   var index1 = (UInt32)( tiles[tileIndex + 1].TextureIndex )
                      | ( tiles[tileIndex + 1].IsPassable ? (UInt32)0x20 : 0 )
                      | Constants.TileSetIndexWalkSpeeds[tiles[tileIndex + 1].TextureIndex]
                      | Constants.TileSetIndexEncounterRates[tiles[tileIndex + 1].TextureIndex]
-                     | Constants.TileSetIndexDamageRates[tiles[tileIndex + 1].TextureIndex];
+                     | Constants.TileSetIndexDamageRates[tiles[tileIndex + 1].TextureIndex]
+                     | ( ( (UInt32)tiles[tileIndex + 1].EnemyPoolIndex & 0xF ) << 12 );
 
                   var packed = ( index1 << 16 ) | index0;
                   packedTiles.Add( packed );

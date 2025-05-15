@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "dialog.h"
 #include "animation.h"
+#include "battle.h"
 
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
 
@@ -38,6 +39,7 @@ typedef struct Game_t
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    Animation_t animation;
+   Battle_t battle;
 
    float overworldInactivitySeconds;
 

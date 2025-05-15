@@ -32,6 +32,7 @@
 #define TILE_GET_WALKSPEED( t )                 ( ( ( t ) & 0xC0 ) >> 6 )
 #define TILE_GET_ENCOUNTERRATE( t )             ( ( ( t ) & 0x300 ) >> 8 )
 #define TILE_GET_DAMAGERATE( t )                ( ( ( t ) & 0xC00 ) >> 10 )
+#define TILE_GET_ENEMYPOOLINDEX( t )            ( ( ( t ) & 0xF000 ) >> 12 )
 
 #define TILE_SET_TEXTUREINDEX( t, i )           ( t ) = ( ( t ) & 0xFFE0 ) | i
 #define TILE_TOGGLE_PASSABLE( t )               ( t ) ^= 0x20
@@ -94,6 +95,13 @@ typedef struct TilePortal_t
 }
 TilePortal_t;
 
+typedef struct EnemyIndexPool_t
+{
+   uint8_t enemyIndexes[TILE_MAX_ENEMY_INDEX_POOL_ENEMIES];
+   uint8_t enemyCount;
+}
+EnemyIndexPool_t;
+
 typedef struct TileMap_t
 {
    Screen_t* screen;
@@ -116,6 +124,7 @@ typedef struct TileMap_t
    // bits 6-7: walk speed (0 = normal, 3 = crawl)
    // bits 8-9: encounter rate
    // bits 10-11: damage rate
+   // bits 12-15: enemy pool index
    uint16_t tiles[TILE_COUNT];
    uint32_t tilesX;
    uint32_t tilesY;
@@ -127,6 +136,9 @@ typedef struct TileMap_t
    TilePortal_t portals[TILEMAP_MAX_PORTALS];
    uint32_t portalCount;
    TilePortal_t evacPortal;
+
+   EnemyIndexPool_t overworldEnemyIndexPools[TILE_OVERWORLD_ENEMY_INDEX_POOLS];
+   EnemyIndexPool_t dungeonEnemyIndexPools[TILE_DUNGEON_ENEMY_INDEX_POOLS];
 
    ActiveSprite_t activeSprites[TILEMAP_MAX_ACTIVESPRITES];
    uint32_t activeSpriteCount;
@@ -157,6 +169,7 @@ void TileMap_Draw( TileMap_t* tileMap );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
+void TileMap_LoadEnemyIndexPools( TileMap_t* tileMap );
 void TileMap_Load( TileMap_t* tileMap, uint32_t id );
 void TileMap_LoadHiddenStairs( TileMap_t* tileMap );
 uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex );
