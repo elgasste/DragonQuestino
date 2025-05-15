@@ -32,6 +32,7 @@
 #define TILE_GET_WALKSPEED( t )                 ( ( ( t ) & 0xC0 ) >> 6 )
 #define TILE_GET_ENCOUNTERRATE( t )             ( ( ( t ) & 0x300 ) >> 8 )
 #define TILE_GET_DAMAGERATE( t )                ( ( ( t ) & 0xC00 ) >> 10 )
+#define TILE_GET_ENEMYPOOLINDEX( t )            ( ( ( t ) & 0xF000 ) >> 12 )
 
 #define TILE_SET_TEXTUREINDEX( t, i )           ( t ) = ( ( t ) & 0xFFE0 ) | i
 #define TILE_TOGGLE_PASSABLE( t )               ( t ) ^= 0x20

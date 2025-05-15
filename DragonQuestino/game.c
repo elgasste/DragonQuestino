@@ -19,6 +19,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ), &( game->screen ), &( game->tileMap ) );
+   Game_LoadEnemyIndexPools( game );
 
    game->activeMenu = 0;
 
