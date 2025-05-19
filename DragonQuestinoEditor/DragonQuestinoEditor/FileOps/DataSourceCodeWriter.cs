@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Windows.Media;
@@ -12,12 +13,14 @@ namespace DragonQuestinoEditor.FileOps
    public class DataSourceCodeWriter( Palette palette,
                                       TileSet tileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
+                                      ObservableCollection<EnemyViewModel> enemies,
                                       ActiveSpriteSheet activeSpriteSheet,
                                       StaticSpriteSheet staticSpriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
+      private readonly ObservableCollection<EnemyViewModel> _enemies = enemies;
       private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
       private readonly StaticSpriteSheet _staticSpriteSheet = staticSpriteSheet;
 
@@ -96,6 +99,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteTextTilesFunction( fs );
          WriteTileTexturesFunction( fs );
          WriteEnemyIndexPoolsFunction( fs );
+         WriteEnemyLoadFunction( fs );
          WriteTileMapFunction( fs );
          WriteTileMapHiddenStairsFunction( fs );
          WriteActiveSpritesFunctions( fs );
@@ -138,13 +142,13 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
 
          // TODO: try compressing this, it only ever gets called once
-         for ( int i = 0; i < Constants.TileTextureCount; i++ )
+         for ( int i = 0; i < Constants.MapTileTextureCount; i++ )
          {
             WriteToFileStream( fs, string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
 
             var pixelIndexes = _tileSet.TilePaletteIndexes[i];
 
-            for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
+            for ( int j = 0, memoryIndex = 0; j < Constants.MapTilePixels; j += 4, memoryIndex++ )
             {
                var index0 = (UInt32)( pixelIndexes[j + 0] );
                var index1 = (UInt32)( pixelIndexes[j + 1] );
@@ -185,6 +189,70 @@ namespace DragonQuestinoEditor.FileOps
             }
          }
 
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteEnemyLoadFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nvoid Enemy_Load( Enemy_t* enemy, uint32_t index )\n" );
+         WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   uint32_t i, j;\n" );
+         WriteToFileStream( fs, "   uint32_t* mem32;" );
+
+         var blankPaletteIndex = (ushort)_palette.GetIndexForColor( 0 );
+         var packedBlankPaletteIndex = ( blankPaletteIndex << 24 ) | ( blankPaletteIndex << 16 ) | ( blankPaletteIndex << 8 ) | ( blankPaletteIndex << 0 );
+
+         WriteToFileStream( fs, string.Format( "   for ( i = 0; i < 78; i++ ) {{ mem32 = (uint32_t*)( enemy->tileTextures[i] ); for ( j = 0; j < 16; j++ ) {{ mem32[j] = 0x{0}; }} }}\n", packedBlankPaletteIndex.ToString( "X8" ) ) );
+         WriteToFileStream( fs, "   for ( i = 0; i < 120; i++ ) {{ enemy->tileTextureIndexes[i] = -1; }}\n\n" );
+
+         WriteToFileStream( fs, "   switch( index )\n" );
+         WriteToFileStream( fs, "   {\n" );
+
+         var sortedEnemies = _enemies.OrderBy( e => e.Index ).ToList();
+
+         foreach ( var enemy in sortedEnemies )
+         {
+            WriteToFileStream( fs, string.Format( "   case {0}:\n", enemy.Index ) );
+            WriteToFileStream( fs, string.Format( "      strcpy( enemy->name, {0} );\n", enemy.NameMacro ) );
+            WriteToFileStream( fs, string.Format( "      strcpy( enemy->indefiniteArticle, {0} );\n", enemy.IndefiniteArticle == "An" ? "STRING_INDEFINITE_ARTICLE_AN" : "STRING_INDEFINITE_ARTICLE_A" ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.maxHitPoints = {0};\n", enemy.HitPoints ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.attackPower = {0};\n", enemy.AttackPower ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.defensePower = {0};\n", enemy.DefensePower ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.agility = {0};\n", enemy.Agility ) );
+            WriteToFileStream( fs, string.Format( "      enemy->experience = {0};\n", enemy.Experience ) );
+            WriteToFileStream( fs, string.Format( "      enemy->gold = {0};\n", enemy.Gold ) );
+
+            for ( int i = 0; i < enemy.TextureIndexes.Count; i++ )
+            {
+               if ( enemy.TextureIndexes[i] >= 0 )
+               {
+                  WriteToFileStream( fs, string.Format( "      enemy->tileTextureIndexes[{0}] = {1};\n", i, enemy.TextureIndexes[i] ) );
+               }
+            }
+
+            for ( int i = 0; i < enemy.TileTextures.Count; i++ )
+            {
+               WriteToFileStream( fs, string.Format( "      mem32 = (uint32_t*)( enemy->tileTextures[{0}] );\n", i ) );
+
+               for ( int j = 0, idx = 0; j < enemy.TileTextures[i].Count; j++, idx++ )
+               {
+                  var index0 = (ushort)enemy.TileTextures[i][j++];
+                  var index1 = (ushort)enemy.TileTextures[i][j++];
+                  var index2 = (ushort)enemy.TileTextures[i][j++];
+                  var index3 = (ushort)enemy.TileTextures[i][j];
+                  var packedIndexes = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
+
+                  if ( packedIndexes != packedBlankPaletteIndex )
+                  {
+                     WriteToFileStream( fs, string.Format( "      mem32[{0}] = 0x{1};\n", idx, packedIndexes.ToString( "X8" ) ) );
+                  }
+               }
+            }
+
+            WriteToFileStream( fs, "      break;\n" );
+         }
+
+         WriteToFileStream( fs, "   }\n" );
          WriteToFileStream( fs, "}\n" );
       }
 

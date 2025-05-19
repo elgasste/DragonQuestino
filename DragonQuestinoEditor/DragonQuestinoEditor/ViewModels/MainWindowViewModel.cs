@@ -15,6 +15,7 @@ namespace DragonQuestinoEditor.ViewModels
       private readonly StaticSpriteSheet _staticSpriteSheet;
 
       public ObservableCollection<TileMapViewModel> TileMaps { get; } = [];
+      public ObservableCollection<EnemyViewModel> Enemies { get; } = [];
 
       public ObservableCollection<TileTextureViewModel> TileTextureViewModels { get; } = [];
 
@@ -157,12 +158,12 @@ namespace DragonQuestinoEditor.ViewModels
          _playerSpriteSheet = new ActiveSpriteSheet( Constants.PlayerSpriteFilePath, _palette );
          _staticSpriteSheet = new StaticSpriteSheet( Constants.StaticSpriteSheetFilePath, _palette );
 
-         for ( int i = 0; i < Constants.TileTextureCount; i++ )
+         for ( int i = 0; i < Constants.MapTileTextureCount; i++ )
          {
             TileTextureViewModels.Add( new( _tileSet, i ) );
          }
 
-         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileSet, TileMaps ) )
+         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileSet, _palette, TileMaps, Enemies ) )
          {
             MessageBox.Show( "Could not load editor save file!" );
          }
@@ -212,7 +213,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void SaveTileMaps()
       {
-         SaveDataFileOps.SaveData( Constants.EditorSaveDataFilePath, TileMaps );
+         SaveDataFileOps.SaveData( Constants.EditorSaveDataFilePath, TileMaps, Enemies );
          MessageBox.Show( "Tile maps have been saved!" );
       }
 
@@ -233,7 +234,7 @@ namespace DragonQuestinoEditor.ViewModels
                                                    false,
                                                    window.NewTilesX,
                                                    window.NewTilesY,
-                                                   Constants.TileTextureDefaultIndex );
+                                                   Constants.MapTileTextureDefaultIndex );
 
             foreach ( var tile in newTileMap.Tiles )
             {
@@ -252,7 +253,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void WriteGameData()
       {
-         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileMaps, _playerSpriteSheet, _staticSpriteSheet );
+         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileMaps, Enemies, _playerSpriteSheet, _staticSpriteSheet );
          writer.WriteFiles();
          MessageBox.Show( "Game data file has been written!" );
       }

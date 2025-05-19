@@ -2,6 +2,7 @@
 #define BATTLE_H
 
 #include "common.h"
+#include "enemy.h"
 
 typedef struct Player_t Player_t;
 typedef struct TileMap_t TileMap_t;
@@ -11,7 +12,7 @@ typedef struct Battle_t
    Player_t* player;
    TileMap_t* tileMap;
 
-   uint32_t enemyIndex;
+   Enemy_t enemy;
 }
 Battle_t;
 

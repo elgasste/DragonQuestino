@@ -6,6 +6,15 @@ namespace DragonQuestinoEditor.Utilities
 {
    public static class BitmapUtils
    {
+      public static ushort ColortoUInt16( Color color )
+      {
+         var r16 = (ushort)( ( color.R / 255.0 ) * 31 );
+         var g16 = (ushort)( ( color.G / 255.0 ) * 63 );
+         var b16 = (ushort)( ( color.B / 255.0 ) * 31 );
+
+         return (ushort)( ( r16 << 11 ) | ( g16 << 5 ) | b16 );
+      }
+
       public static Color GetBitmapPixelColor( BitmapSource bitmap, int x, int y )
       {
          var bytesPerPixel = (int)Math.Truncate( ( bitmap.Format.BitsPerPixel + 7.0 ) / 8.0 );
@@ -17,19 +26,21 @@ namespace DragonQuestinoEditor.Utilities
          return bitmap.Palette.Colors[pixel[0]];
       }
 
-      public static void CheckTileSetBitmapFormat( BitmapSource bitmapSource )
+      public static ushort GetPixelColor16( BitmapSource bitmap, int x, int y ) => ColortoUInt16( GetBitmapPixelColor( bitmap, x, y ) );
+
+      public static void CheckMapTileSetBitmapFormat( BitmapSource bitmapSource )
       {
          if ( bitmapSource.Format != PixelFormats.Indexed8 )
          {
             throw new Exception( "Tileset image pixel format should be Indexed8" );
          }
-         else if ( bitmapSource.PixelWidth != ( Constants.TileSize * Constants.TileTextureCount ) )
+         else if ( bitmapSource.PixelWidth != ( Constants.MapTileSize * Constants.MapTileTextureCount ) )
          {
-            throw new Exception( string.Format( "Tileset image width should be {0}", Constants.TileSize * Constants.TileTextureCount ) );
+            throw new Exception( string.Format( "Tileset image width should be {0}", Constants.MapTileSize * Constants.MapTileTextureCount ) );
          }
-         else if ( bitmapSource.PixelHeight != Constants.TileSize )
+         else if ( bitmapSource.PixelHeight != Constants.MapTileSize )
          {
-            throw new Exception( string.Format( "Tileset image height should be {0}", Constants.TileSize ) );
+            throw new Exception( string.Format( "Tileset image height should be {0}", Constants.MapTileSize ) );
          }
       }
 
@@ -90,6 +101,22 @@ namespace DragonQuestinoEditor.Utilities
          else if ( bitmapSource.PixelHeight != Constants.TextTileSize )
          {
             throw new Exception( string.Format( "Text tileset image height should be {0}", Constants.TextTileSize ) );
+         }
+      }
+
+      public static void CheckEnemyTileSetBitmapFormat( BitmapSource bitmapSource )
+      {
+         if ( bitmapSource.Format != PixelFormats.Indexed8 )
+         {
+            throw new Exception( "Enemy tileset image pixel format should be Indexed8" );
+         }
+         else if ( bitmapSource.PixelWidth != ( Constants.EnemyTileStride * Constants.EnemyTileSize ) )
+         {
+            throw new Exception( string.Format( "Enemy tileset image width should be {0}", Constants.EnemyTileStride * Constants.EnemyTileSize ) );
+         }
+         else if ( bitmapSource.PixelHeight != ( Constants.EnemyTileCount / Constants.EnemyTileStride ) * Constants.EnemyTileSize )
+         {
+            throw new Exception( string.Format( "Enemy tileset image height should be {0}", ( Constants.EnemyTileCount / Constants.EnemyTileStride ) * Constants.EnemyTileSize ) );
          }
       }
    }
