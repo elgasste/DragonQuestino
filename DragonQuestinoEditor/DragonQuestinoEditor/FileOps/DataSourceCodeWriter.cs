@@ -202,7 +202,7 @@ namespace DragonQuestinoEditor.FileOps
          var blankPaletteIndex = (ushort)_palette.GetIndexForColor( 0 );
          var packedBlankPaletteIndex = ( blankPaletteIndex << 24 ) | ( blankPaletteIndex << 16 ) | ( blankPaletteIndex << 8 ) | ( blankPaletteIndex << 0 );
 
-         WriteToFileStream( fs, string.Format( "   for ( i = 0; i < 78; i++ ) {{ mem32 = (uint32_t*)( enemy->tileTextures[i] ); for ( j = 0; j < 16; j++ ) {{ mem32[j] = 0x{0}; }} }}\n", blankPaletteIndex.ToString( "X8" ) ) );
+         WriteToFileStream( fs, string.Format( "   for ( i = 0; i < 78; i++ ) {{ mem32 = (uint32_t*)( enemy->tileTextures[i] ); for ( j = 0; j < 16; j++ ) {{ mem32[j] = 0x{0}; }} }}\n", packedBlankPaletteIndex.ToString( "X8" ) ) );
          WriteToFileStream( fs, "   for ( i = 0; i < 120; i++ ) {{ enemy->tileTextureIndexes[i] = -1; }}\n\n" );
 
          WriteToFileStream( fs, "   switch( index )\n" );

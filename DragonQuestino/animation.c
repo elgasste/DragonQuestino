@@ -125,6 +125,9 @@ internal void Animation_Stop( Animation_t* animation )
       case AnimationId_RainbowBridge_Pause:
          Game_ChangeMainState( animation->game, MainState_Overworld );
          break;
+      case AnimationId_Battle_Checkerboard:
+         animation->game->screen.needsRedraw = True;
+         break;
    }
 }
 

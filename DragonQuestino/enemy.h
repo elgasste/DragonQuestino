@@ -6,7 +6,10 @@
 
 #define ENEMY_TILE_TEXTURE_COUNT       78
 #define ENEMY_TILE_TEXTURE_SIZE_BYTES  64
+#define ENEMY_TILE_SIZE                8
 #define ENEMY_TILE_COUNT               120
+#define ENEMY_TILES_X                  10
+#define ENEMY_TILES_Y                  12
 
 typedef struct Enemy_t
 {

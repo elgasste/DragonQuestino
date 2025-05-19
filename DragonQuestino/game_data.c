@@ -2798,7 +2798,7 @@ void TileMap_LoadEnemyIndexPools( TileMap_t* tileMap )
 void Enemy_Load( Enemy_t* enemy, uint32_t index )
 {
    uint32_t i, j;
-   uint32_t* mem32;   for ( i = 0; i < 78; i++ ) { mem32 = (uint32_t*)( enemy->tileTextures[i] ); for ( j = 0; j < 16; j++ ) { mem32[j] = 0x00000002; } }
+   uint32_t* mem32;   for ( i = 0; i < 78; i++ ) { mem32 = (uint32_t*)( enemy->tileTextures[i] ); for ( j = 0; j < 16; j++ ) { mem32[j] = 0x02020202; } }
    for ( i = 0; i < 120; i++ ) {{ enemy->tileTextureIndexes[i] = -1; }}
 
    switch( index )
