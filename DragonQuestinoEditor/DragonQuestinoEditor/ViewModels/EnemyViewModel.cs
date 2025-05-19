@@ -1,9 +1,19 @@
 ﻿using DragonQuestinoEditor.FileOps;
+using System.IO;
+using System;
+using System.Windows.Media.Imaging;
+using DragonQuestinoEditor.Utilities;
+using DragonQuestinoEditor.Graphics;
+using System.Windows;
 
 namespace DragonQuestinoEditor.ViewModels
 {
    public class EnemyViewModel : ViewModelBase
    {
+      private readonly Palette _palette;
+      public List<int> TextureIndexes = [];
+      public List<List<byte>> TileTextures = [];
+
       private int _index;
       public int Index
       {
@@ -74,8 +84,10 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _gold, value );
       }
 
-      public EnemyViewModel( EnemySaveData saveData )
+      public EnemyViewModel( Palette palette, EnemySaveData saveData )
       {
+         _palette = palette;
+
          Index = saveData.Index;
          Name = saveData.Name;
          NameMacro = saveData.NameMacro;
@@ -86,6 +98,77 @@ namespace DragonQuestinoEditor.ViewModels
          Agility = saveData.Agility;
          Experience = saveData.Experience;
          Gold = saveData.Gold;
+
+         var enemyFileStream = new FileStream( Constants.AssetsBasePath + Name + ".png", FileMode.Open, FileAccess.Read, FileShare.Read );
+         var enemyDecoder = new PngBitmapDecoder( enemyFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
+         BitmapSource bitmapSource = enemyDecoder.Frames[0];
+         BitmapUtils.CheckEnemyTileSetBitmapFormat( bitmapSource );
+         ReadTileBitmaps( bitmapSource );
+      }
+
+      private int PaletteIndexFromColor( ushort color )
+      {
+         int paletteIndex = _palette.GetIndexForColor( color );
+
+         if ( paletteIndex < 0 )
+         {
+            _palette.AddColor( color );
+            paletteIndex = _palette.ColorCount - 1;
+         }
+
+         return paletteIndex;
+      }
+
+      private void ReadTileBitmaps( BitmapSource bitmapSource )
+      {
+         var textureMapBytes = new List<byte>();
+
+         for ( int row = 0; row < bitmapSource.PixelHeight; row++ )
+         {
+            for ( int col = 0; col < bitmapSource.PixelWidth; col++ )
+            {
+               var pixelColor = BitmapUtils.GetPixelColor16( bitmapSource, col, row );
+               textureMapBytes.Add( (byte)PaletteIndexFromColor( pixelColor ) );
+            }
+         }
+
+         for ( int tileRow = 0; tileRow < 12; tileRow++ )
+         {
+            for ( int tileCol = 0; tileCol < 10; tileCol++ )
+            {
+               bool blankTexture = true;
+               var tileTextureBytes = new List<byte>();
+
+               for ( int pixelRow = 0; pixelRow < 8; pixelRow++ )
+               {
+                  for ( int pixelCol = 0; pixelCol < 8; pixelCol++ )
+                  {
+                     int pixelIndex = ( tileRow * 10 * 8 * 8 ) + ( pixelRow * 10 * 8 ) + ( tileCol * 8 ) + pixelCol;
+                     tileTextureBytes.Add( textureMapBytes[pixelIndex] );
+                  }
+               }
+
+               foreach ( var textureByte in tileTextureBytes )
+               {
+                  if ( textureByte != 0 )
+                  {
+                     blankTexture = false;
+                     break;
+                  }
+               }
+
+               if ( blankTexture )
+               {
+                  TextureIndexes.Add( -1 );
+               }
+               else
+               {
+                  // TODO: what if this tile texture already exists for this enemy? should we check for that?
+                  TileTextures.Add( tileTextureBytes );
+                  TextureIndexes.Add( TileTextures.Count - 1 );
+               }
+            }
+         }
       }
    }
 }

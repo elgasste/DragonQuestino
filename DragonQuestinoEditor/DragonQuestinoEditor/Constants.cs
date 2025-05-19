@@ -1,32 +1,37 @@
-﻿namespace DragonQuestinoEditor
+﻿using System.CodeDom;
+
+namespace DragonQuestinoEditor
 {
    public static class Constants
    {
-      public const string ShieldBackgroundFilePath = "..\\..\\..\\..\\..\\Assets\\shield_background.png";
-      public const string TileTexturesFilePath = "..\\..\\..\\..\\..\\Assets\\tile_textures.png";
-      public const string EditorSaveDataFilePath = "..\\..\\..\\..\\..\\Assets\\editor_save.json";
-      public const string PlayerSpriteFilePath = "..\\..\\..\\..\\..\\Assets\\player_sprite.png";
-      public const string StaticSpriteSheetFilePath = "..\\..\\..\\..\\..\\Assets\\static_sprites.png";
-      public const string TextTileSetFilePath = "..\\..\\..\\..\\..\\Assets\\text_tileset.png";
+      public const string AssetsBasePath = "..\\..\\..\\..\\..\\Assets\\";
+      public const string SourceBasePath = "..\\..\\..\\..\\..\\DragonQuestino\\";
 
-      public const string GameDataSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\game_data.c";
-      public const string ShieldBackgroundSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\giga_shield_background_data.c";
-      public const string GeneratedDefinesSourceFilePath = "..\\..\\..\\..\\..\\DragonQuestino\\generated_defines.h";
+      public const string ShieldBackgroundFilePath = AssetsBasePath + "shield_background.png";
+      public const string TileTexturesFilePath = AssetsBasePath + "tile_textures.png";
+      public const string EditorSaveDataFilePath = AssetsBasePath + "editor_save.json";
+      public const string PlayerSpriteFilePath = AssetsBasePath + "player_sprite.png";
+      public const string StaticSpriteSheetFilePath = AssetsBasePath + "static_sprites.png";
+      public const string TextTileSetFilePath = AssetsBasePath + "text_tileset.png";
+
+      public const string GameDataSourceFilePath = SourceBasePath + "game_data.c";
+      public const string ShieldBackgroundSourceFilePath = SourceBasePath + "giga_shield_background_data.c";
+      public const string GeneratedDefinesSourceFilePath = SourceBasePath + "generated_defines.h";
 
       public const int GigaShieldWidth = 480;
       public const int GigaShieldHeight = 800;
 
       public const int PaletteMaxSize = 256;
 
-      public const int TileSize = 16;
-      public const int TilePixels = 256;
-      public const int TileTextureCount = 32;
+      public const int MapTileSize = 16;
+      public const int MapTilePixels = 256;
+      public const int MapTileTextureCount = 32;
       public const int TileMapMinTilesX = 20;
       public const int TileMapMinTilesY = 15;
       public const int TileMapMaxTilesX = 140;
       public const int TileMapMaxTilesY = 135;
       public const int TileMapTileCount = TileMapMaxTilesX * TileMapMaxTilesY;
-      public const int TileTextureDefaultIndex = 8;  // black square
+      public const int MapTileTextureDefaultIndex = 8;  // black square
 
       public const int TileMapListViewItemSize = 32;
       public const int TileMapTextureListViewMaxWidth = 1120;
@@ -41,6 +46,10 @@
 
       public const int TextTileSize = 8;
       public const int TextTileCount = 85;  // keep this in parity with TEXT_TILE_COUNT
+
+      public const int EnemyTileSize = 8;
+      public const int EnemyTileStride = 10;
+      public const int EnemyTileCount = 120;   // keep this in parity with ENEMY_TILE_COUNT
 
       // bits 6-7
       public static readonly UInt32[] TileSetIndexWalkSpeeds = [

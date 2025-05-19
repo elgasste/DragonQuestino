@@ -141,13 +141,13 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
 
          // TODO: try compressing this, it only ever gets called once
-         for ( int i = 0; i < Constants.TileTextureCount; i++ )
+         for ( int i = 0; i < Constants.MapTileTextureCount; i++ )
          {
             WriteToFileStream( fs, string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
 
             var pixelIndexes = _tileSet.TilePaletteIndexes[i];
 
-            for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
+            for ( int j = 0, memoryIndex = 0; j < Constants.MapTilePixels; j += 4, memoryIndex++ )
             {
                var index0 = (UInt32)( pixelIndexes[j + 0] );
                var index1 = (UInt32)( pixelIndexes[j + 1] );

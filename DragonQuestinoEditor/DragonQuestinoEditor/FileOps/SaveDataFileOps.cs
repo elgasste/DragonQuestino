@@ -16,6 +16,7 @@ namespace DragonQuestinoEditor.FileOps
 
       public static bool LoadData( string filePath,
                                    TileSet tileSet,
+                                   Palette palette,
                                    ObservableCollection<TileMapViewModel> tileMaps,
                                    ObservableCollection<EnemyViewModel> enemies )
       {
@@ -34,7 +35,7 @@ namespace DragonQuestinoEditor.FileOps
 
          foreach ( var enemySaveData in saveData.Enemies )
          {
-            enemies.Add( new( enemySaveData ) );
+            enemies.Add( new( palette, enemySaveData ) );
          }
 
          return true;

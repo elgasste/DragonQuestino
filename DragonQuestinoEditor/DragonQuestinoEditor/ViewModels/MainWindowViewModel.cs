@@ -158,12 +158,12 @@ namespace DragonQuestinoEditor.ViewModels
          _playerSpriteSheet = new ActiveSpriteSheet( Constants.PlayerSpriteFilePath, _palette );
          _staticSpriteSheet = new StaticSpriteSheet( Constants.StaticSpriteSheetFilePath, _palette );
 
-         for ( int i = 0; i < Constants.TileTextureCount; i++ )
+         for ( int i = 0; i < Constants.MapTileTextureCount; i++ )
          {
             TileTextureViewModels.Add( new( _tileSet, i ) );
          }
 
-         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileSet, TileMaps, Enemies ) )
+         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileSet, _palette, TileMaps, Enemies ) )
          {
             MessageBox.Show( "Could not load editor save file!" );
          }
@@ -234,7 +234,7 @@ namespace DragonQuestinoEditor.ViewModels
                                                    false,
                                                    window.NewTilesX,
                                                    window.NewTilesY,
-                                                   Constants.TileTextureDefaultIndex );
+                                                   Constants.MapTileTextureDefaultIndex );
 
             foreach ( var tile in newTileMap.Tiles )
             {

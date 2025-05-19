@@ -18,6 +18,30 @@ void Screen_LoadPalette( Screen_t* screen )
    screen->palette[10] = 0xF81F;
    screen->palette[11] = 0x39FF;
    screen->palette[12] = 0xFDBC;
+   screen->palette[13] = 0x3C77;
+   screen->palette[14] = 0xD1EB;
+   screen->palette[15] = 0x1815;
+   screen->palette[16] = 0xFE36;
+   screen->palette[17] = 0xFAF5;
+   screen->palette[18] = 0x89FD;
+   screen->palette[19] = 0x2A6F;
+   screen->palette[20] = 0xFBA5;
+   screen->palette[21] = 0x6EF1;
+   screen->palette[22] = 0x44EC;
+   screen->palette[23] = 0x9B7F;
+   screen->palette[24] = 0x71E0;
+   screen->palette[25] = 0x5CFF;
+   screen->palette[26] = 0x9960;
+   screen->palette[27] = 0xBB60;
+   screen->palette[28] = 0x5873;
+   screen->palette[29] = 0xA865;
+   screen->palette[30] = 0x5E7B;
+   screen->palette[31] = 0xDD7F;
+   screen->palette[32] = 0x8420;
+   screen->palette[33] = 0x2965;
+   screen->palette[34] = 0x2016;
+   screen->palette[35] = 0x8E7F;
+   screen->palette[36] = 0x4BFF;
 }
 
 void Screen_LoadTextBitFields( Screen_t* screen )
