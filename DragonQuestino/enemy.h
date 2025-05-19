@@ -4,6 +4,11 @@
 #include "common.h"
 #include "battle_stats.h"
 
+#define ENEMY_TILE_TEXTURE_COUNT       78
+#define ENEMY_TILE_TEXTURE_SIZE_BYTES  32
+#define ENEMY_TILE_COUNT               120
+#define ENEMY_PALETTE_SIZE             16
+
 typedef struct Enemy_t
 {
    char name[16];
@@ -11,6 +16,10 @@ typedef struct Enemy_t
    BattleStats_t stats;
    uint16_t experience;
    uint16_t gold;
+
+   uint8_t tileTextures[ENEMY_TILE_TEXTURE_COUNT][ENEMY_TILE_TEXTURE_SIZE_BYTES];
+   int8_t tileTextureIndexes[ENEMY_TILE_COUNT];
+   uint16_t palette[ENEMY_PALETTE_SIZE];
 }
 Enemy_t;
 
