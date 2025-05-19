@@ -11,6 +11,10 @@
 #define ENEMY_TILES_X                  10
 #define ENEMY_TILES_Y                  12
 
+#define ENEMY_GREENDRAGON_INDEX        35
+#define ENEMY_AXEKNIGHT_INDEX          33
+#define ENEMY_GOLEM_INDEX              27
+
 typedef struct Enemy_t
 {
    char name[16];

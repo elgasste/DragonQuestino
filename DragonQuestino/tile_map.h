@@ -76,6 +76,13 @@
 #define TILEMAP_CANTLIN_ZOOM_INDEX              15483
 #define TILEMAP_RIMULDAR_ZOOM_INDEX             11312
 
+#define TILEMAP_GREENDRAGON_MAPID               20
+#define TILEMAP_GREENDRAGON_TILEINDEX           687
+#define TILEMAP_AXEKNIGHT_MAPID                 9
+#define TILEMAP_AXEKNIGHT_TILEINDEX             305
+#define TILEMAP_GOLEM_MAPID                     0
+#define TILEMAP_GOLEM_TILEINDEX                 15063
+
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
 typedef struct Player_t Player_t;

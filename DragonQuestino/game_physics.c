@@ -4,6 +4,7 @@
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex );
+internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
 
 void Game_TicPhysics( Game_t* game )
 {
@@ -143,6 +144,7 @@ void Game_TicPhysics( Game_t* game )
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 {
    TilePortal_t* portal;
+   SpecialEnemy_t specialEnemy;
 
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
    game->player.tileIndex = tileIndex;
@@ -166,7 +168,21 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
       }
    }
 
-   if ( game->tileMap.hasEncounters )
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.noEncounters )
+   {
+      return;
+   }
+#endif
+
+   specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
+
+   if ( specialEnemy != SpecialEnemy_None )
+   {
+      game->battle.specialEnemy = specialEnemy;
+      Game_ChangeMainState( game, MainState_Battle );
+   }
+   else if ( game->tileMap.hasEncounters )
    {
       if ( game->player.hasHolyProtection )
       {
@@ -203,13 +219,6 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
    uint32_t encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[tileIndex] );
    Bool_t spawnEncounter = False;
 
-#if defined( VISUAL_STUDIO_DEV )
-   if ( g_debugFlags.noEncounters )
-   {
-      return;
-   }
-#endif
-
    switch( encounterRate )
    {
       case 0: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_LOW; break;
@@ -221,6 +230,28 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
 
    if ( spawnEncounter )
    {
+      game->battle.specialEnemy = SpecialEnemy_None;
       Game_ChangeMainState( game, MainState_Battle );
    }
+}
+
+internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game )
+{
+   uint32_t tileMapId = game->tileMap.id;
+   uint32_t tileIndex = game->player.tileIndex;
+
+   if ( tileMapId == TILEMAP_GREENDRAGON_MAPID && tileIndex == TILEMAP_GREENDRAGON_TILEINDEX )
+   {
+      return SpecialEnemy_GreenDragon;
+   }
+   else if ( tileMapId == TILEMAP_AXEKNIGHT_MAPID && tileIndex == TILEMAP_AXEKNIGHT_TILEINDEX )
+   {
+      return SpecialEnemy_AxeKnight;
+   }
+   else if ( tileMapId == TILEMAP_GOLEM_MAPID && tileIndex == TILEMAP_GOLEM_TILEINDEX )
+   {
+      return SpecialEnemy_Golem;
+   }
+
+   return SpecialEnemy_None;
 }

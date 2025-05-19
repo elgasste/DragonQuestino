@@ -13,6 +13,7 @@ typedef struct Battle_t
    TileMap_t* tileMap;
 
    Enemy_t enemy;
+   SpecialEnemy_t specialEnemy;
 }
 Battle_t;
 

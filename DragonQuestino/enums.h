@@ -89,6 +89,17 @@ typedef enum Item_t
 }
 Item_t;
 
+typedef enum SpecialEnemy_t
+{
+   SpecialEnemy_None = 0,
+   SpecialEnemy_GreenDragon,
+   SpecialEnemy_AxeKnight,
+   SpecialEnemy_Golem,
+
+   SpecialEnemy_Count
+}
+SpecialEnemy_t;
+
 typedef enum MenuId_t
 {
    MenuId_Overworld = 0,
