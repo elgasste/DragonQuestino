@@ -11,8 +11,10 @@ namespace DragonQuestinoEditor.ViewModels
    public class EnemyViewModel : ViewModelBase
    {
       private readonly Palette _palette;
-      public List<int> TextureIndexes = [];
-      public List<List<byte>> TileTextures = [];
+
+      public List<int> TextureIndexes { get; } = [];
+
+      public List<List<byte>> TileTextures { get; } = [];
 
       private int _index;
       public int Index
@@ -122,6 +124,7 @@ namespace DragonQuestinoEditor.ViewModels
       private void ReadTileBitmaps( BitmapSource bitmapSource )
       {
          var textureMapBytes = new List<byte>();
+         byte blankPaletteIndex = (byte)_palette.GetIndexForColor( 0 );
 
          for ( int row = 0; row < bitmapSource.PixelHeight; row++ )
          {
@@ -132,6 +135,7 @@ namespace DragonQuestinoEditor.ViewModels
             }
          }
 
+         // TODO: magic numbers!
          for ( int tileRow = 0; tileRow < 12; tileRow++ )
          {
             for ( int tileCol = 0; tileCol < 10; tileCol++ )
@@ -150,7 +154,7 @@ namespace DragonQuestinoEditor.ViewModels
 
                foreach ( var textureByte in tileTextureBytes )
                {
-                  if ( textureByte != 0 )
+                  if ( textureByte != blankPaletteIndex )
                   {
                      blankTexture = false;
                      break;

@@ -5,7 +5,7 @@
 #include "battle_stats.h"
 
 #define ENEMY_TILE_TEXTURE_COUNT       78
-#define ENEMY_TILE_TEXTURE_SIZE_BYTES  32
+#define ENEMY_TILE_TEXTURE_SIZE_BYTES  64
 #define ENEMY_TILE_COUNT               120
 
 typedef struct Enemy_t
