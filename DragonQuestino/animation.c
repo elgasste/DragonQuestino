@@ -401,14 +401,17 @@ internal void Animation_Tic_RainbowBridge_Pause( Animation_t* animation )
 internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation )
 {
    animation->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+   int16_t xOffset = animation->game->tileMap.isDark ? -24 : 0;
+   int16_t yOffset = animation->game->tileMap.isDark ? 8 : 0;
 
    while ( animation->frameElapsedSeconds > ANIMATION_BATTLE_CHECKERSQUARE_DURATION )
    {
       uint32_t squareIndex = (uint32_t)( animation->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION );
+
       Screen_DrawRectColor( &( animation->game->screen ),
-                            g_battleCheckerboardPos[squareIndex].x, g_battleCheckerboardPos[squareIndex].y,
-                            TILE_SIZE, TILE_SIZE,
-                            COLOR_BLACK );
+                            (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].x ) + xOffset ),
+                            (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].y ) + yOffset ),
+                            TILE_SIZE, TILE_SIZE, COLOR_BLACK );
 
       if ( squareIndex == 48 )
       {
