@@ -82,7 +82,12 @@ void Game_Tic( Game_t* game )
       }
       else
       {
-         // TODO: battle stuff
+         switch ( game->subState )
+         {
+            case SubState_Dialog:
+               Dialog_Tic( &( game->dialog ) );
+               break;
+         }
       }
    }
 
@@ -176,7 +181,7 @@ void Game_OpenMenu( Game_t* game, MenuId_t id )
 
 void Game_OpenDialog( Game_t* game, DialogId_t id )
 {
-   Dialog_Load( &( game->dialog ), id );
+   Dialog_Load( &( game->dialog ), id, game->mainState );
    Game_ChangeSubState( game, SubState_Dialog );
 }
 

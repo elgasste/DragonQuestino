@@ -17,15 +17,27 @@ void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player, Animatio
    dialog->animation = animation;
 }
 
-void Dialog_Load( Dialog_t* dialog, DialogId_t id )
+void Dialog_Load( Dialog_t* dialog, DialogId_t id, MainState_t mainState )
 {
    dialog->id = id;
    dialog->section = 0;
-   dialog->position.x = 32;
-   dialog->position.y = 144;
-   dialog->size.x = 24;
-   dialog->size.y = 8;
-   dialog->lineWidth = 22;
+
+   if ( mainState == MainState_Overworld )
+   {
+      dialog->position.x = 32;
+      dialog->position.y = 144;
+      dialog->size.x = 24;
+      dialog->size.y = 8;
+      dialog->lineWidth = 22;
+   }
+   else
+   {
+      dialog->position.x = 56;
+      dialog->position.y = 168;
+      dialog->size.x = 24;
+      dialog->size.y = 6;
+      dialog->lineWidth = 22;
+   }
 
    Dialog_LoadMessage( dialog );
    Dialog_ResetScroll( dialog );
@@ -233,6 +245,7 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
       case DialogId_Use_RainbowDrop:
       case DialogId_Chest_ItemCollected:
       case DialogId_Chest_GoldCollected:
+      case DialogId_Battle_EnemyApproaches:
          return 1;
       case DialogId_Search_NothingFound:
       case DialogId_Search_FoundItem:
@@ -449,6 +462,8 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, dialog->insertionText ); return;
             case 1: strcpy( text, STRING_SPELLBLOCKED ); return;
          }
+      case DialogId_Battle_EnemyApproaches:
+         sprintf( text, STRING_BATTLE_ENEMYAPPROACHES, dialog->insertionText ); return;
    }
 }
 
