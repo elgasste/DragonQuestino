@@ -52,6 +52,7 @@ extern "C" {
 void Screen_Init( Screen_t* screen, uint16_t* buffer );
 void Screen_BackupPalette( Screen_t* screen );
 void Screen_RestorePalette( Screen_t* screen );
+void Screen_ClearPalette( Screen_t* screen, uint16_t color );
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex );
 void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex );
 void Screen_WipeColor( Screen_t* screen, uint16_t color );

@@ -83,6 +83,8 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
          animation->totalDuration = ANIMATION_RAINBOWBRIDGE_PAUSE_DURATION;
          break;
       case AnimationId_Battle_EnemyFadeIn:
+         Screen_BackupPalette( &( animation->game->screen ) );
+         Screen_ClearPalette( &( animation->game->screen ), COLOR_BLACK );
          animation->totalDuration = ANIMATION_BATTLE_ENEMYFADEIN_DURATION;
          break;
    }
@@ -139,6 +141,7 @@ internal void Animation_Stop( Animation_t* animation )
          Animation_Start( animation, AnimationId_Battle_EnemyFadeIn );
          break;
       case AnimationId_Battle_EnemyFadeIn:
+         Screen_RestorePalette( &( animation->game->screen ) );
          animation->game->screen.needsRedraw = True;
          break;
    }
@@ -441,11 +444,25 @@ internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation )
 
 internal void Animation_Tic_Battle_EnemyFadeIn( Animation_t* animation )
 {
-   // MUFFINS
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG;
+   float p;
+
    animation->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
 
    if ( animation->totalElapsedSeconds > animation->totalDuration )
    {
       Animation_Stop( animation );
+   }
+   else
+   {
+      for ( i = 0; i < PALETTE_COLORS; i++ )
+      {
+         rangeR = animation->game->screen.backupPalette[i] >> 11;
+         rangeG = ( animation->game->screen.backupPalette[i] & 0x7E0 ) >> 5;
+         rangeB = animation->game->screen.backupPalette[i] & 0x1F;
+         p = animation->totalElapsedSeconds / animation->totalDuration;
+         animation->game->screen.palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      }
    }
 }
