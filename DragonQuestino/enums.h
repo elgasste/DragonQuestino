@@ -63,6 +63,7 @@ typedef enum AnimationId_t
    AnimationId_RainbowBridge_Pause,
    AnimationId_Battle_Checkerboard,
    AnimationId_Battle_EnemyFadeIn,
+   AnimationId_Battle_EnemyFadeInPause,
 
    AnimationId_Count
 }
@@ -108,6 +109,8 @@ typedef enum MenuId_t
    MenuId_OverworldItem,
    MenuId_Zoom,
 
+   MenuId_Battle,
+
    MenuId_Count
 }
 MenuId_t;
@@ -148,6 +151,11 @@ typedef enum MenuCommand_t
    MenuCommand_Zoom_Kol,
    MenuCommand_Zoom_Cantlin,
    MenuCommand_Zoom_Rimuldar,
+
+   MenuCommand_Battle_Attack,
+   MenuCommand_Battle_Flee,
+   MenuCommand_Battle_Spell,
+   MenuCommand_Battle_Item,
 
    MenuCommand_Count
 }

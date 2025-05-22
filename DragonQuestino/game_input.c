@@ -9,7 +9,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game );
 internal void Game_OpenOverworldSpellMenu( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
 internal void Game_OpenZoomMenu( Game_t* game );
-internal void Game_HandleBattleInput( Game_t* game );
+internal void Game_HandleBattleMenuInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -33,7 +33,12 @@ void Game_HandleInput( Game_t* game )
    }
    else if ( game->mainState == MainState_Battle )
    {
-      Game_HandleBattleInput( game );
+      switch ( game->subState )
+      {
+         case SubState_Menu:
+            Game_HandleBattleMenuInput( game );
+            break;
+      }
    }
 }
 
@@ -302,10 +307,30 @@ internal void Game_OpenZoomMenu( Game_t* game )
    }
 }
 
-internal void Game_HandleBattleInput( Game_t* game )
+internal void Game_HandleBattleMenuInput( Game_t* game )
 {
-   if ( Input_AnyButtonPressed( &( game->input ) ) )
+   uint32_t i;
+
+   if ( game->input.buttonStates[Button_A].pressed )
    {
-      Game_ChangeMainState( game, MainState_Overworld );
+      Menu_ResetCarat( game->activeMenu );
+
+      switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
+      {
+         case MenuCommand_Battle_Attack: Game_ChangeMainState( game, MainState_Overworld ); break;
+         case MenuCommand_Battle_Flee: Game_ChangeMainState( game, MainState_Overworld ); break;
+         case MenuCommand_Battle_Spell: Game_ChangeMainState( game, MainState_Overworld ); break;
+         case MenuCommand_Battle_Item: Game_ChangeMainState( game, MainState_Overworld ); break;
+      }
+   }
+   else if ( game->activeMenu->itemCount )
+   {
+      for ( i = 0; i < Direction_Count; i++ )
+      {
+         if ( game->input.buttonStates[i].pressed )
+         {
+            Menu_MoveSelection( game->activeMenu, (Direction_t)i );
+         }
+      }
    }
 }

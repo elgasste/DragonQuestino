@@ -115,6 +115,9 @@ void Game_Draw( Game_t* game )
          {
             switch ( game->subState )
             {
+               case SubState_Menu:
+                  Menu_Draw( &( game->menus[MenuId_Battle] ) );
+                  break;
                case SubState_Dialog:
                   Dialog_Draw( &( game->dialog ) );
                   break;
