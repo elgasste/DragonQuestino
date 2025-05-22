@@ -231,9 +231,9 @@ internal void Menu_InitBattle( Menu_t* menu )
    menu->selectedIndex = 0;
 
    menu->position.x = 96;
-   menu->position.y = 16;
+   menu->position.y = 8;
    menu->borderSize.x = 16;
-   menu->borderSize.y = 8;
+   menu->borderSize.y = 6;
    menu->borderPadding.x = 1;
    menu->borderPadding.y = 1;
    menu->columnWidth = 8;

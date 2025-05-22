@@ -195,7 +195,7 @@
 #define STRING_ENEMY_DRAGONLORDWIZARD                                "dragonlord"
 #define STRING_ENEMY_DRAGONLORDDRAGON                                "dragonlord"
 
-#define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches!"
+#define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches! Command?"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

@@ -489,6 +489,9 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Spell_Blocked:
             Animation_Start( dialog->animation, AnimationId_CastSpell );
             break;
+         case DialogId_Battle_EnemyApproaches:
+            Animation_Start( dialog->animation, AnimationId_Battle_EnemyFadeInPause );
+            break;
       }
    }
 }

@@ -17,6 +17,7 @@ internal void Animation_Tic_RainbowBridge_FadeIn( Animation_t* animation );
 internal void Animation_Tic_RainbowBridge_Pause( Animation_t* animation );
 internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation );
 internal void Animation_Tic_Battle_EnemyFadeIn( Animation_t* animation );
+internal void Animation_Tic_Battle_EnemyFadeInPause( Animation_t* animation );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -87,6 +88,10 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
          Screen_ClearPalette( &( animation->game->screen ), COLOR_BLACK );
          animation->totalDuration = ANIMATION_BATTLE_ENEMYFADEIN_DURATION;
          break;
+      case AnimationId_Battle_EnemyFadeInPause:
+         Dialog_Draw( &( animation->game->dialog ) );
+         animation->totalDuration = ANIMATION_BATTLE_ENEMYFADEINPAUSE_DURATION;
+         break;
    }
 
    animation->totalElapsedSeconds = 0.0f;
@@ -112,6 +117,7 @@ void Animation_Tic( Animation_t* animation )
       case AnimationId_RainbowBridge_Pause: Animation_Tic_RainbowBridge_Pause( animation ); break;
       case AnimationId_Battle_Checkerboard: Animation_Tic_Battle_Checkerboard( animation ); break;
       case AnimationId_Battle_EnemyFadeIn: Animation_Tic_Battle_EnemyFadeIn( animation ); break;
+      case AnimationId_Battle_EnemyFadeInPause: Animation_Tic_Battle_EnemyFadeInPause( animation ); break;
    }
 }
 
@@ -147,6 +153,9 @@ internal void Animation_Stop( Animation_t* animation )
          sprintf( enemyName, "%s %s", animation->game->battle.enemy.indefiniteArticle, animation->game->battle.enemy.name );
          Dialog_SetInsertionText( &( animation->game->dialog ), enemyName );
          Game_OpenDialog( animation->game, DialogId_Battle_EnemyApproaches );
+         break;
+      case AnimationId_Battle_EnemyFadeInPause:
+         Game_OpenMenu( animation->game, MenuId_Battle );
          break;
    }
 }
@@ -468,5 +477,15 @@ internal void Animation_Tic_Battle_EnemyFadeIn( Animation_t* animation )
          p = animation->totalElapsedSeconds / animation->totalDuration;
          animation->game->screen.palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
       }
+   }
+}
+
+internal void Animation_Tic_Battle_EnemyFadeInPause( Animation_t* animation )
+{
+   animation->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( animation->totalElapsedSeconds > animation->totalDuration )
+   {
+      Animation_Stop( animation );
    }
 }
