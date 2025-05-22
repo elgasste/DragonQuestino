@@ -62,6 +62,7 @@ typedef enum AnimationId_t
    AnimationId_RainbowBridge_FadeIn,
    AnimationId_RainbowBridge_Pause,
    AnimationId_Battle_Checkerboard,
+   AnimationId_Battle_EnemyFadeIn,
 
    AnimationId_Count
 }
