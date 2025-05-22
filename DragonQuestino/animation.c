@@ -21,13 +21,13 @@ internal void Animation_Tic_Battle_EnemyFadeInPause( Animation_t* animation );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
-   { 144, 96  }, { 160, 96  }, { 160, 112 }, { 144, 112 }, { 128, 112 }, { 128, 96  }, { 128, 80  },
-   { 144, 80  }, { 160, 80  }, { 176, 80  }, { 176, 96  }, { 176, 112 }, { 176, 128 }, { 160, 128 },
-   { 144, 128 }, { 128, 128 }, { 112, 128 }, { 112, 112 }, { 112, 96  }, { 112, 80  }, { 112, 64  },
-   { 128, 64  }, { 144, 64  }, { 160, 64  }, { 176, 64  }, { 192, 64  }, { 192, 80  }, { 192, 96  },
-   { 192, 112 }, { 192, 128 }, { 192, 144 }, { 176, 144 }, { 160, 144 }, { 144, 144 }, { 128, 144 },
-   { 112, 144 }, { 96,  144 }, { 96,  128 }, { 96,  112 }, { 96,  96  }, { 96,  80  }, { 96,  64  },
-   { 96,  48  }, { 112, 48  }, { 128, 48  }, { 144, 48  }, { 160, 48  }, { 176, 48  }, { 192, 48  }
+   { 144, 100 }, { 160, 100 }, { 160, 116 }, { 144, 116 }, { 128, 116 }, { 128, 100 }, { 128, 84  },
+   { 144, 84  }, { 160, 84  }, { 176, 84  }, { 176, 100 }, { 176, 116 }, { 176, 132 }, { 160, 132 },
+   { 144, 132 }, { 128, 132 }, { 112, 132 }, { 112, 116 }, { 112, 100 }, { 112, 84  }, { 112, 68  },
+   { 128, 68  }, { 144, 68  }, { 160, 68  }, { 176, 68  }, { 192, 68  }, { 192, 84  }, { 192, 100 },
+   { 192, 116 }, { 192, 132 }, { 192, 148 }, { 176, 148 }, { 160, 148 }, { 144, 148 }, { 128, 148 },
+   { 112, 148 }, { 96,  148 }, { 96,  132 }, { 96,  116 }, { 96,  100 }, { 96,  84  }, { 96,  68  },
+   { 96,  52  }, { 112, 52  }, { 128, 52  }, { 144, 52  }, { 160, 52  }, { 176, 52  }, { 192, 52  }
 };
 
 void Animation_Init( Animation_t* animation, Game_t* game )
@@ -144,7 +144,7 @@ internal void Animation_Stop( Animation_t* animation )
       case AnimationId_Battle_Checkerboard:
          xOffset = animation->game->tileMap.isDark ? -24 : 0;
          yOffset = animation->game->tileMap.isDark ? 8 : 0;
-         Screen_DrawRectColor( &( animation->game->screen ), 96 + xOffset, 48 + yOffset, 96, 96, COLOR_BLACK );
+         Screen_DrawRectColor( &( animation->game->screen ), 96 + xOffset, 52 + yOffset, 96, 96, COLOR_BLACK );
          Animation_Start( animation, AnimationId_Battle_EnemyFadeIn );
          break;
       case AnimationId_Battle_EnemyFadeIn:
@@ -432,7 +432,7 @@ internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation )
 {
    animation->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
    int16_t xOffset = animation->game->tileMap.isDark ? -24 : 0;
-   int16_t yOffset = animation->game->tileMap.isDark ? 8 : 0;
+   int16_t yOffset = animation->game->tileMap.isDark ? 47 : 0;
 
    while ( animation->frameElapsedSeconds > ANIMATION_BATTLE_CHECKERSQUARE_DURATION )
    {
