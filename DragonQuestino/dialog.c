@@ -17,15 +17,27 @@ void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player, Animatio
    dialog->animation = animation;
 }
 
-void Dialog_Load( Dialog_t* dialog, DialogId_t id )
+void Dialog_Load( Dialog_t* dialog, DialogId_t id, MainState_t mainState )
 {
    dialog->id = id;
    dialog->section = 0;
-   dialog->position.x = 32;
-   dialog->position.y = 144;
-   dialog->size.x = 24;
-   dialog->size.y = 8;
-   dialog->lineWidth = 22;
+
+   if ( mainState == MainState_Overworld )
+   {
+      dialog->position.x = 32;
+      dialog->position.y = 144;
+      dialog->size.x = 24;
+      dialog->size.y = 8;
+      dialog->lineWidth = 22;
+   }
+   else
+   {
+      dialog->position.x = 56;
+      dialog->position.y = 168;
+      dialog->size.x = 24;
+      dialog->size.y = 6;
+      dialog->lineWidth = 22;
+   }
 
    Dialog_LoadMessage( dialog );
    Dialog_ResetScroll( dialog );

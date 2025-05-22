@@ -46,7 +46,7 @@ extern "C" {
 #endif
 
 void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player, Animation_t* animation );
-void Dialog_Load( Dialog_t* dialog, DialogId_t id );
+void Dialog_Load( Dialog_t* dialog, DialogId_t id, MainState_t mainState );
 void Dialog_SetInsertionText( Dialog_t* dialog, const char* text );
 void Dialog_Draw( Dialog_t* dialog );
 Bool_t Dialog_StepAhead( Dialog_t* dialog );
