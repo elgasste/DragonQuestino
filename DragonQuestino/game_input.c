@@ -53,7 +53,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
-      Game_DrawOverworldQuickStatus( game );
+      Game_DrawQuickStatus( game );
       Game_OpenMenu( game, MenuId_Overworld );
    }
    else if ( leftIsDown || upIsDown || rightIsDown || downIsDown )
@@ -170,7 +170,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                   case DialogId_Spell_OverworldCastMidheal1:
                   case DialogId_Spell_OverworldCastMidheal2:
                      Player_RestoreHitPoints( &( game->player ), game->pendingPayload8u );
-                     Game_DrawOverworldQuickStatus( game );
+                     Game_DrawQuickStatus( game );
                      break;
                   case DialogId_Use_CursedBelt:
                   case DialogId_Chest_DeathNecklace:

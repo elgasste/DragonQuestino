@@ -53,7 +53,7 @@ void Game_Draw( Game_t* game )
             switch ( game->subState )
             {
                case SubState_Menu:
-                  Game_DrawOverworldQuickStatus( game );
+                  Game_DrawQuickStatus( game );
                   Menu_Draw( &( game->menus[MenuId_Overworld] ) );
                   if ( game->activeMenu->id == MenuId_OverworldItem )
                   {
@@ -65,7 +65,7 @@ void Game_Draw( Game_t* game )
                   }
                   break;
                case SubState_Dialog:
-                  Game_DrawOverworldQuickStatus( game );
+                  Game_DrawQuickStatus( game );
                   switch ( game->activeMenu->id )
                   {
                      case MenuId_Overworld:
@@ -76,7 +76,7 @@ void Game_Draw( Game_t* game )
                         Game_DrawOverworldItemMenu( game );
                         if ( game->dialog.id == DialogId_Use_Herb2 )
                         {
-                           Game_DrawOverworldQuickStatus( game );
+                           Game_DrawQuickStatus( game );
                         }
                         break;
                      case MenuId_OverworldSpell:
@@ -127,7 +127,7 @@ void Game_Draw( Game_t* game )
    }
 }
 
-void Game_DrawOverworldQuickStatus( Game_t* game )
+void Game_DrawQuickStatus( Game_t* game )
 {
    uint16_t lvl = Player_GetLevel( &( game->player ) );
    uint32_t memSize;
@@ -226,7 +226,7 @@ internal void Game_DrawOverworld( Game_t* game )
 
    if ( game->subState == SubState_None && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
    {
-      Game_DrawOverworldQuickStatus( game );
+      Game_DrawQuickStatus( game );
    }
 }
 

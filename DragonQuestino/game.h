@@ -72,7 +72,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
 
 // game_render.c
 void Game_Draw( Game_t* game );
-void Game_DrawOverworldQuickStatus( Game_t* game );
+void Game_DrawQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
 void Game_DrawOverworldItemMenu( Game_t* game );
 

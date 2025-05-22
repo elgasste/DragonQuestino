@@ -156,6 +156,7 @@ internal void Animation_Stop( Animation_t* animation )
          break;
       case AnimationId_Battle_EnemyFadeInPause:
          Game_OpenMenu( animation->game, MenuId_Battle );
+         Game_DrawQuickStatus( animation->game );
          break;
    }
 }
