@@ -6,6 +6,7 @@
 
 internal void Menu_DrawCarat( Menu_t* menu );
 internal void Menu_InitOverworld( Menu_t* menu );
+internal void Menu_InitBattle( Menu_t* menu );
 internal void Menu_Update( Menu_t* menu );
 internal void Menu_UpdateOverworldSpell( Menu_t* menu );
 internal void Menu_UpdateOverworldItem( Menu_t* menu );
@@ -22,6 +23,9 @@ void Menu_Init( Menu_t* menu, MenuId_t id, Screen_t* screen, Player_t* player, T
    {
       case MenuId_Overworld:
          Menu_InitOverworld( menu );
+         break;
+      case MenuId_Battle:
+         Menu_InitBattle( menu );
          break;
       default:
          Menu_Update( menu );
@@ -195,6 +199,35 @@ internal void Menu_InitOverworld( Menu_t* menu )
    menu->itemCount = 6;
    for ( i = 0; i < menu->itemCount; i++ ) menu->items[i].twoLineText = False;
    menu->itemsPerColumn = 3;
+   menu->selectedIndex = 0;
+
+   menu->position.x = 96;
+   menu->position.y = 16;
+   menu->borderSize.x = 16;
+   menu->borderSize.y = 8;
+   menu->borderPadding.x = 1;
+   menu->borderPadding.y = 1;
+   menu->columnWidth = 8;
+   menu->itemPadding = 1;
+   menu->caratOffset = 1;
+}
+
+internal void Menu_InitBattle( Menu_t* menu )
+{
+   uint32_t i;
+
+   strcpy( menu->title, STRING_BATTLE_MENU_TITLE );
+   strcpy( menu->items[0].text, STRING_BATTLE_MENU_ATTACK );
+   strcpy( menu->items[1].text, STRING_BATTLE_MENU_FLEE );
+   strcpy( menu->items[2].text, STRING_BATTLE_MENU_SPELL );
+   strcpy( menu->items[3].text, STRING_BATTLE_MENU_ITEM );
+   menu->items[0].command = MenuCommand_Battle_Attack;
+   menu->items[1].command = MenuCommand_Battle_Flee;
+   menu->items[2].command = MenuCommand_Battle_Spell;
+   menu->items[3].command = MenuCommand_Battle_Item;
+   menu->itemCount = 4;
+   for ( i = 0; i < menu->itemCount; i++ ) menu->items[i].twoLineText = False;
+   menu->itemsPerColumn = 2;
    menu->selectedIndex = 0;
 
    menu->position.x = 96;
