@@ -16,6 +16,7 @@ internal void Animation_Tic_RainbowBridge_WhiteOut( Animation_t* animation );
 internal void Animation_Tic_RainbowBridge_FadeIn( Animation_t* animation );
 internal void Animation_Tic_RainbowBridge_Pause( Animation_t* animation );
 internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation );
+internal void Animation_Tic_Battle_EnemyFadeIn( Animation_t* animation );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -81,6 +82,11 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
       case AnimationId_RainbowBridge_Pause:
          animation->totalDuration = ANIMATION_RAINBOWBRIDGE_PAUSE_DURATION;
          break;
+      case AnimationId_Battle_EnemyFadeIn:
+         Screen_BackupPalette( &( animation->game->screen ) );
+         Screen_ClearPalette( &( animation->game->screen ), COLOR_BLACK );
+         animation->totalDuration = ANIMATION_BATTLE_ENEMYFADEIN_DURATION;
+         break;
    }
 
    animation->totalElapsedSeconds = 0.0f;
@@ -105,11 +111,14 @@ void Animation_Tic( Animation_t* animation )
       case AnimationId_RainbowBridge_FadeIn: Animation_Tic_RainbowBridge_FadeIn( animation ); break;
       case AnimationId_RainbowBridge_Pause: Animation_Tic_RainbowBridge_Pause( animation ); break;
       case AnimationId_Battle_Checkerboard: Animation_Tic_Battle_Checkerboard( animation ); break;
+      case AnimationId_Battle_EnemyFadeIn: Animation_Tic_Battle_EnemyFadeIn( animation ); break;
    }
 }
 
 internal void Animation_Stop( Animation_t* animation )
 {
+   int16_t xOffset, yOffset;
+
    animation->isRunning = False;
 
    switch ( animation->id )
@@ -126,6 +135,13 @@ internal void Animation_Stop( Animation_t* animation )
          Game_ChangeMainState( animation->game, MainState_Overworld );
          break;
       case AnimationId_Battle_Checkerboard:
+         xOffset = animation->game->tileMap.isDark ? -24 : 0;
+         yOffset = animation->game->tileMap.isDark ? 8 : 0;
+         Screen_DrawRectColor( &( animation->game->screen ), 96 + xOffset, 48 + yOffset, 96, 96, COLOR_BLACK );
+         Animation_Start( animation, AnimationId_Battle_EnemyFadeIn );
+         break;
+      case AnimationId_Battle_EnemyFadeIn:
+         Screen_RestorePalette( &( animation->game->screen ) );
          animation->game->screen.needsRedraw = True;
          break;
    }
@@ -422,6 +438,31 @@ internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation )
       {
          animation->totalElapsedSeconds += ANIMATION_BATTLE_CHECKERSQUARE_DURATION;
          animation->frameElapsedSeconds -= ANIMATION_BATTLE_CHECKERSQUARE_DURATION;
+      }
+   }
+}
+
+internal void Animation_Tic_Battle_EnemyFadeIn( Animation_t* animation )
+{
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG;
+   float p;
+
+   animation->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( animation->totalElapsedSeconds > animation->totalDuration )
+   {
+      Animation_Stop( animation );
+   }
+   else
+   {
+      for ( i = 0; i < PALETTE_COLORS; i++ )
+      {
+         rangeR = animation->game->screen.backupPalette[i] >> 11;
+         rangeG = ( animation->game->screen.backupPalette[i] & 0x7E0 ) >> 5;
+         rangeB = animation->game->screen.backupPalette[i] & 0x1F;
+         p = animation->totalElapsedSeconds / animation->totalDuration;
+         animation->game->screen.palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
       }
    }
 }

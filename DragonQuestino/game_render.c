@@ -29,6 +29,10 @@ void Game_Draw( Game_t* game )
             game->screen.needsRedraw = False;
             Game_DrawTileMap( game );
          }
+         else if ( game->animation.id == AnimationId_Battle_EnemyFadeIn )
+         {
+            Game_DrawEnemy( game );
+         }
       }
    }
    else
