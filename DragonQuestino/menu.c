@@ -216,7 +216,7 @@ internal void Menu_InitBattle( Menu_t* menu )
 {
    uint32_t i;
 
-   strcpy( menu->title, STRING_BATTLE_MENU_TITLE );
+   strcpy( menu->title, "" );
    strcpy( menu->items[0].text, STRING_BATTLE_MENU_ATTACK );
    strcpy( menu->items[1].text, STRING_BATTLE_MENU_FLEE );
    strcpy( menu->items[2].text, STRING_BATTLE_MENU_SPELL );
@@ -235,9 +235,9 @@ internal void Menu_InitBattle( Menu_t* menu )
    menu->borderSize.x = 16;
    menu->borderSize.y = 5;
    menu->borderPadding.x = 1;
-   menu->borderPadding.y = 1;
+   menu->borderPadding.y = 0;
    menu->columnWidth = 8;
-   menu->itemPadding = 0;
+   menu->itemPadding = 1;
    menu->caratOffset = 1;
 }
 
