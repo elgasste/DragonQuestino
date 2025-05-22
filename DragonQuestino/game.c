@@ -84,6 +84,9 @@ void Game_Tic( Game_t* game )
       {
          switch ( game->subState )
          {
+            case SubState_Menu:
+               Menu_Tic( game->activeMenu );
+               break;
             case SubState_Dialog:
                Dialog_Tic( &( game->dialog ) );
                break;
