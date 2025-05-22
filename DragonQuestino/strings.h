@@ -195,4 +195,6 @@
 #define STRING_ENEMY_DRAGONLORDWIZARD                                "dragonlord"
 #define STRING_ENEMY_DRAGONLORDDRAGON                                "dragonlord"
 
+#define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches!"
+
 #endif // STRINGS_H

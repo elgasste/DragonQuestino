@@ -204,6 +204,8 @@ typedef enum DialogId_t
    DialogId_Chest_Tablet,
    DialogId_Chest_DeathNecklace,
 
+   DialogId_Battle_EnemyApproaches,
+
    DialogId_Count
 }
 DialogId_t;

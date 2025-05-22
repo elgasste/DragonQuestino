@@ -104,11 +104,21 @@ void Game_Draw( Game_t* game )
             }
          }
       }
-      else
+      else // main state is battle
       {
          if ( game->screen.needsRedraw )
          {
             Game_DrawEnemy( game );
+            game->screen.needsRedraw = False;
+         }
+         else
+         {
+            switch ( game->subState )
+            {
+               case SubState_Dialog:
+                  Dialog_Draw( &( game->dialog ) );
+                  break;
+            }
          }
       }
    }

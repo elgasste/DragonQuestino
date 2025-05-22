@@ -233,6 +233,7 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
       case DialogId_Use_RainbowDrop:
       case DialogId_Chest_ItemCollected:
       case DialogId_Chest_GoldCollected:
+      case DialogId_Battle_EnemyApproaches:
          return 1;
       case DialogId_Search_NothingFound:
       case DialogId_Search_FoundItem:
@@ -449,6 +450,8 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
             case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, dialog->insertionText ); return;
             case 1: strcpy( text, STRING_SPELLBLOCKED ); return;
          }
+      case DialogId_Battle_EnemyApproaches:
+         sprintf( text, STRING_BATTLE_ENEMYAPPROACHES, dialog->insertionText ); return;
    }
 }
 

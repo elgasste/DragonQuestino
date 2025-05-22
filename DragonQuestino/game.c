@@ -82,7 +82,12 @@ void Game_Tic( Game_t* game )
       }
       else
       {
-         // TODO: battle stuff
+         switch ( game->subState )
+         {
+            case SubState_Dialog:
+               Dialog_Tic( &( game->dialog ) );
+               break;
+         }
       }
    }
 

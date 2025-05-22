@@ -118,6 +118,7 @@ void Animation_Tic( Animation_t* animation )
 internal void Animation_Stop( Animation_t* animation )
 {
    int16_t xOffset, yOffset;
+   char enemyName[32];
 
    animation->isRunning = False;
 
@@ -143,6 +144,9 @@ internal void Animation_Stop( Animation_t* animation )
       case AnimationId_Battle_EnemyFadeIn:
          Screen_RestorePalette( &( animation->game->screen ) );
          animation->game->screen.needsRedraw = True;
+         sprintf( enemyName, "%s %s", animation->game->battle.enemy.indefiniteArticle, animation->game->battle.enemy.name );
+         Dialog_SetInsertionText( &( animation->game->dialog ), enemyName );
+         Game_OpenDialog( animation->game, DialogId_Battle_EnemyApproaches );
          break;
    }
 }
