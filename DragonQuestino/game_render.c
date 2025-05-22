@@ -53,7 +53,7 @@ void Game_Draw( Game_t* game )
             switch ( game->subState )
             {
                case SubState_Menu:
-                  Game_DrawOverworldQuickStatus( game );
+                  Game_DrawQuickStatus( game );
                   Menu_Draw( &( game->menus[MenuId_Overworld] ) );
                   if ( game->activeMenu->id == MenuId_OverworldItem )
                   {
@@ -65,7 +65,7 @@ void Game_Draw( Game_t* game )
                   }
                   break;
                case SubState_Dialog:
-                  Game_DrawOverworldQuickStatus( game );
+                  Game_DrawQuickStatus( game );
                   switch ( game->activeMenu->id )
                   {
                      case MenuId_Overworld:
@@ -76,7 +76,7 @@ void Game_Draw( Game_t* game )
                         Game_DrawOverworldItemMenu( game );
                         if ( game->dialog.id == DialogId_Use_Herb2 )
                         {
-                           Game_DrawOverworldQuickStatus( game );
+                           Game_DrawQuickStatus( game );
                         }
                         break;
                      case MenuId_OverworldSpell:
@@ -127,31 +127,32 @@ void Game_Draw( Game_t* game )
    }
 }
 
-void Game_DrawOverworldQuickStatus( Game_t* game )
+void Game_DrawQuickStatus( Game_t* game )
 {
    uint16_t lvl = Player_GetLevel( &( game->player ) );
    uint32_t memSize;
+   int32_t xOffset = ( game->mainState == MainState_Battle ) ? -8 : 0;
    char line[9];
 
    memSize = MATH_MIN( (uint32_t)( strlen( game->player.name ) ), 4 );
    memcpy( line, game->player.name, sizeof( char ) * memSize );
    line[memSize] = '\0';
-   Screen_DrawTextWindowWithTitle( &( game->screen ), 16, 16, 8, 12, line );
+   Screen_DrawTextWindowWithTitle( &( game->screen ), 16 + xOffset, 16, 8, 12, line );
 
    sprintf( line, lvl < 10 ? "%s   %u" : "%s  %u", STRING_OVERWORLD_QUICKSTATS_LEVEL, lvl);
-   Screen_DrawText( &( game->screen ), line, 24, 32 );
+   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 32 );
 
    sprintf( line, game->player.stats.hitPoints < 10 ? "%s   %u" : game->player.stats.hitPoints < 100 ? "%s  %u" : "%s %u", STRING_OVERWORLD_QUICKSTATS_HP, game->player.stats.hitPoints );
-   Screen_DrawText( &( game->screen ), line, 24, 48 );
+   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 48 );
 
    sprintf( line, game->player.stats.magicPoints < 10 ? "%s   %u" : game->player.stats.magicPoints < 100 ? "%s  %u" : "%s %u", STRING_OVERWORLD_QUICKSTATS_MP, game->player.stats.magicPoints );
-   Screen_DrawText( &( game->screen ), line, 24, 64 );
+   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 64 );
 
    sprintf( line, game->player.gold < 10 ? "%s    %u" : game->player.gold < 100 ? "%s   %u" : game->player.gold < 1000 ? "%s  %u" : game->player.gold < 10000 ? "%s %u" : "%s%u", STRING_OVERWORLD_QUICKSTATS_GOLD, game->player.gold );
-   Screen_DrawText( &( game->screen ), line, 24, 80 );
+   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 80 );
 
    sprintf( line, game->player.experience < 10 ? "%s    %u" : game->player.experience < 100 ? "%s   %u" : game->player.experience < 1000 ? "%s  %u" : game->player.experience < 10000 ? "%s %u" : "%s%u", STRING_OVERWORLD_QUICKSTATS_EXP, game->player.experience );
-   Screen_DrawText( &( game->screen ), line, 24, 96 );
+   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 96 );
 }
 
 void Game_DrawOverworldDeepStatus( Game_t* game )
@@ -226,7 +227,7 @@ internal void Game_DrawOverworld( Game_t* game )
 
    if ( game->subState == SubState_None && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
    {
-      Game_DrawOverworldQuickStatus( game );
+      Game_DrawQuickStatus( game );
    }
 }
 
@@ -315,7 +316,7 @@ internal void Game_DrawEnemy( Game_t* game )
    Enemy_t* enemy = &( game->battle.enemy );
 
    x = 112;
-   y = 64;
+   y = 68;
 
    for ( i = 0; i < ENEMY_TILE_COUNT; i++ )
    {

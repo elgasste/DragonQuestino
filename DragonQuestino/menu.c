@@ -230,14 +230,14 @@ internal void Menu_InitBattle( Menu_t* menu )
    menu->itemsPerColumn = 2;
    menu->selectedIndex = 0;
 
-   menu->position.x = 96;
+   menu->position.x = 88;
    menu->position.y = 8;
    menu->borderSize.x = 16;
-   menu->borderSize.y = 6;
+   menu->borderSize.y = 5;
    menu->borderPadding.x = 1;
    menu->borderPadding.y = 1;
    menu->columnWidth = 8;
-   menu->itemPadding = 1;
+   menu->itemPadding = 0;
    menu->caratOffset = 1;
 }
 

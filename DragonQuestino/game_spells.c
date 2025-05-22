@@ -21,7 +21,7 @@ void Game_CastHeal( Game_t* game )
       game->player.stats.magicPoints -= SPELL_HEAL_MP;
       Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, maxEffect,
                          DialogId_Spell_OverworldCastHeal1, DialogId_Spell_OverworldCastHeal2 );
-      Game_DrawOverworldQuickStatus( game );
+      Game_DrawQuickStatus( game );
    }
 }
 
@@ -32,7 +32,7 @@ void Game_CastGlow( Game_t* game )
    if ( game->tileMap.isDark )
    {
       game->player.stats.magicPoints -= SPELL_GLOW_MP;
-      Game_DrawOverworldQuickStatus( game );
+      Game_DrawQuickStatus( game );
 
       if ( game->player.isCursed )
       {
@@ -60,7 +60,7 @@ void Game_CastEvac( Game_t* game )
    if ( game->tileMap.isDungeon )
    {
       game->player.stats.magicPoints -= SPELL_EVAC_MP;
-      Game_DrawOverworldQuickStatus( game );
+      Game_DrawQuickStatus( game );
 
       if ( game->player.isCursed )
       {
@@ -79,7 +79,7 @@ void Game_CastZoom( Game_t* game, uint32_t townId )
 
    game->player.stats.magicPoints -= SPELL_ZOOM_MP;
    game->targetPortal = &( game->zoomPortals[townId] );
-   Game_DrawOverworldQuickStatus( game );
+   Game_DrawQuickStatus( game );
    Game_OpenDialog( game, DialogId_Spell_CastZoom );
 }
 
@@ -88,7 +88,7 @@ void Game_CastRepel( Game_t* game )
    CHECK_CAST_ABILITY( SPELL_REPEL_MP, STRING_SPELLMENU_REPEL );
 
    game->player.stats.magicPoints -= SPELL_REPEL_MP;
-   Game_DrawOverworldQuickStatus( game );
+   Game_DrawQuickStatus( game );
 
    if ( game->player.isCursed )
    {
@@ -115,7 +115,7 @@ void Game_CastMidheal( Game_t* game )
    {
       maxEffect = game->player.isCursed ? ( SPELL_MIDHEAL_MAXEFFECT / 2 ) : SPELL_MIDHEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
-      Game_DrawOverworldQuickStatus( game );
+      Game_DrawQuickStatus( game );
       Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, maxEffect,
                          DialogId_Spell_OverworldCastMidheal1, DialogId_Spell_OverworldCastMidheal2 );
    }
@@ -131,7 +131,7 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
    else if ( game->tileMap.blocksMagic )
    {
       game->player.stats.magicPoints -= requiredMp;
-      Game_DrawOverworldQuickStatus( game );
+      Game_DrawQuickStatus( game );
       Dialog_SetInsertionText( &( game->dialog ), spellName );
       Game_OpenDialog( game, DialogId_Spell_Blocked );
       return False;

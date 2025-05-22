@@ -32,11 +32,11 @@ void Dialog_Load( Dialog_t* dialog, DialogId_t id, MainState_t mainState )
    }
    else
    {
-      dialog->position.x = 56;
+      dialog->position.x = 24;
       dialog->position.y = 168;
-      dialog->size.x = 24;
+      dialog->size.x = 26;
       dialog->size.y = 6;
-      dialog->lineWidth = 22;
+      dialog->lineWidth = 24;
    }
 
    Dialog_LoadMessage( dialog );
