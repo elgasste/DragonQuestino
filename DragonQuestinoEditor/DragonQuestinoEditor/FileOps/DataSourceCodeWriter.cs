@@ -170,8 +170,6 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int i = 0; i < _overworldEnemyIndexPools.Count; i++ )
          {
-            WriteToFileStream( fs, string.Format( "   tileMap->overworldEnemyIndexPools[{0}].enemyCount = {1};\n", i, _overworldEnemyIndexPools[i].Count ) );
-
             for ( int j = 0; j < _overworldEnemyIndexPools[i].Count; j++ )
             {
                WriteToFileStream( fs, string.Format( "   tileMap->overworldEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _overworldEnemyIndexPools[i][j] ) );
@@ -180,8 +178,6 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int i = 0; i < _dungeonEnemyIndexPools.Count; i++ )
          {
-            WriteToFileStream( fs, string.Format( "   tileMap->dungeonEnemyIndexPools[{0}].enemyCount = {1};\n", i, _dungeonEnemyIndexPools[i].Count ) );
-
             for ( int j = 0; j < _dungeonEnemyIndexPools[i].Count; j++ )
             {
                WriteToFileStream( fs, string.Format( "   tileMap->dungeonEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _dungeonEnemyIndexPools[i][j] ) );
