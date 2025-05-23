@@ -20,6 +20,7 @@ void Battle_Init( Battle_t* battle, Player_t* player, TileMap_t* tileMap )
 void Battle_Generate( Battle_t* battle )
 {
    uint32_t enemyIndex;
+   Enemy_t* enemy = &( battle->enemy );
 
    switch ( battle->specialEnemy )
    {
@@ -29,11 +30,11 @@ void Battle_Generate( Battle_t* battle )
       default: enemyIndex = Battle_GenerateEnemyIndex( battle ); break;
    }
 
-   // TODO: this doesn't load the "strength" stat, but really I'm not sure what that actually does
-   Enemy_Load( &( battle->enemy ), enemyIndex );
+   Enemy_Load( enemy, enemyIndex );
 
-   // TODO: possibly adjust this later, 75% seems a little much
-   battle->enemy.stats.hitPoints = Random_u8( (uint8_t)( battle->enemy.stats.maxHitPoints * 0.75f ), battle->enemy.stats.maxHitPoints );
+   enemy->stats.maxHitPoints = Random_u8( enemy->minHitPoints, enemy->maxHitPoints );
+   enemy->stats.hitPoints = enemy->stats.maxHitPoints;
+   enemy->gold = Random_u8( enemy->minGold, enemy->maxGold );
 }
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
@@ -46,12 +47,12 @@ internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
 
    if ( tileMap->isDungeon )
    {
-      i = Random_u32( 0, tileMap->dungeonEnemyIndexPools[enemyPoolIndex].enemyCount - 1 );
+      i = Random_u32( 0, TILE_ENEMY_POOL_ENEMY_INDEX_COUNT - 1 );
       enemyIndex = tileMap->dungeonEnemyIndexPools[enemyPoolIndex].enemyIndexes[i];
    }
    else
    {
-      i = Random_u32( 0, tileMap->overworldEnemyIndexPools[enemyPoolIndex].enemyCount - 1 );
+      i = Random_u32( 0, TILE_ENEMY_POOL_ENEMY_INDEX_COUNT - 1 );
       enemyIndex = tileMap->overworldEnemyIndexPools[enemyPoolIndex].enemyIndexes[i];
    }
 

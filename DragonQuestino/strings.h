@@ -68,8 +68,6 @@
 #define STRING_OVERWORLD_DEEPSTATS_AGILITY                           "AGILITY: %u"
 #define STRING_OVERWORLD_DEEPSTATS_MAXHP                             "MAX HP: %u"
 #define STRING_OVERWORLD_DEEPSTATS_MAXMP                             "MAX MP: %u"
-#define STRING_OVERWORLD_DEEPSTATS_ATTACK                            "ATTACK: %u"
-#define STRING_OVERWORLD_DEEPSTATS_DEFENSE                           "DEFENSE: %u"
 #define STRING_OVERWORLD_DEEPSTATS_WEAPON                            "WEAPON: %s"
 #define STRING_OVERWORLD_DEEPSTATS_ARMOR                             "ARMOR: %s"
 #define STRING_OVERWORLD_DEEPSTATS_SHIELD                            "SHIELD: %s"
@@ -192,8 +190,7 @@
 #define STRING_ENEMY_GREENDRAGON                                     "green dragon"
 #define STRING_ENEMY_BLUEDRAGON                                      "blue dragon"
 #define STRING_ENEMY_REDDRAGON                                       "red dragon"
-#define STRING_ENEMY_DRAGONLORDWIZARD                                "dragonlord"
-#define STRING_ENEMY_DRAGONLORDDRAGON                                "dragonlord"
+#define STRING_ENEMY_DRAGONLORD                                      "dragonlord"
 
 #define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches! Command?"
 

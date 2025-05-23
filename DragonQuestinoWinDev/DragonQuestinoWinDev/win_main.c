@@ -485,10 +485,12 @@ internal void MaxOutStats()
    g_globals.game.player.stats.maxHitPoints = UINT8_MAX;
    g_globals.game.player.stats.magicPoints = UINT8_MAX;
    g_globals.game.player.stats.maxMagicPoints = UINT8_MAX;
-   g_globals.game.player.stats.attackPower = UINT8_MAX;
-   g_globals.game.player.stats.defensePower = UINT8_MAX;
    g_globals.game.player.stats.strength = UINT8_MAX;
    g_globals.game.player.stats.agility = UINT8_MAX;
+   g_globals.game.player.stats.sleepResist = 15;
+   g_globals.game.player.stats.stopSpellResist = 15;
+   g_globals.game.player.stats.hurtResist = 15;
+   g_globals.game.player.stats.dodge = 2;
 
    g_globals.game.player.spells = 0x3FF;
    g_globals.game.player.townsVisited = 0x3F;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Windows.Media;
@@ -26,31 +25,31 @@ namespace DragonQuestinoEditor.FileOps
 
       private readonly List<List<int>> _overworldEnemyIndexPools =
       [
-         [0, 1],
-         [0, 1, 3],
-         [0, 1, 3, 6],
-         [1, 3, 6, 9],
-         [4, 6, 9, 12],
-         [4, 6, 9, 12, 19],
-         [4, 10, 12, 19, 23],
-         [10, 13, 19, 23],
-         [13, 20, 24, 26],
-         [20, 24, 26, 29],
-         [14, 21, 22, 29, 32],
-         [2, 21, 22, 30, 32],
-         [22, 25, 30, 31, 32],
-         [11, 25, 31, 35]
+         [0, 1, 0, 1, 0],
+         [1, 0, 1, 2, 1],
+         [0, 3, 2, 3, 1],
+         [1, 1, 2, 3, 4],
+         [3, 4, 5, 5, 6],
+         [3, 4, 5, 6, 11],
+         [5, 6, 11, 12, 14],
+         [11, 12, 13, 14, 14],
+         [13, 15, 18, 18, 25],
+         [15, 21, 18, 21, 25],
+         [21, 22, 23, 26, 28],
+         [23, 26, 27, 27, 16],
+         [26, 27, 28, 29, 31],
+         [29, 30, 31, 31, 32]
       ];
 
       private readonly List<List<int>> _dungeonEnemyIndexPools =
       [
-         [6, 9, 12, 15],
-         [5, 7, 10, 17, 19],
-         [10, 13, 19, 23],
-         [8, 16, 18, 21, 24],
-         [11, 25, 31, 33, 35],
-         [11, 28, 36, 33],
-         [11, 28, 34, 37]
+         [3, 4, 6, 7, 7],
+         [8, 9, 10, 11, 12],
+         [11, 12, 13, 14, 14],
+         [17, 18, 19, 20, 23],
+         [29, 30, 31, 32, 33],
+         [32, 33, 34, 34, 35],
+         [32, 35, 36, 36, 37]
       ];
 
       public void WriteFiles()
@@ -171,8 +170,6 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int i = 0; i < _overworldEnemyIndexPools.Count; i++ )
          {
-            WriteToFileStream( fs, string.Format( "   tileMap->overworldEnemyIndexPools[{0}].enemyCount = {1};\n", i, _overworldEnemyIndexPools[i].Count ) );
-
             for ( int j = 0; j < _overworldEnemyIndexPools[i].Count; j++ )
             {
                WriteToFileStream( fs, string.Format( "   tileMap->overworldEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _overworldEnemyIndexPools[i][j] ) );
@@ -181,8 +178,6 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int i = 0; i < _dungeonEnemyIndexPools.Count; i++ )
          {
-            WriteToFileStream( fs, string.Format( "   tileMap->dungeonEnemyIndexPools[{0}].enemyCount = {1};\n", i, _dungeonEnemyIndexPools[i].Count ) );
-
             for ( int j = 0; j < _dungeonEnemyIndexPools[i].Count; j++ )
             {
                WriteToFileStream( fs, string.Format( "   tileMap->dungeonEnemyIndexPools[{0}].enemyIndexes[{1}] = {2};\n", i, j, _dungeonEnemyIndexPools[i][j] ) );
@@ -215,12 +210,17 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, string.Format( "   case {0}:\n", enemy.Index ) );
             WriteToFileStream( fs, string.Format( "      strcpy( enemy->name, {0} );\n", enemy.NameMacro ) );
             WriteToFileStream( fs, string.Format( "      strcpy( enemy->indefiniteArticle, {0} );\n", enemy.IndefiniteArticle == "An" ? "STRING_INDEFINITE_ARTICLE_AN" : "STRING_INDEFINITE_ARTICLE_A" ) );
-            WriteToFileStream( fs, string.Format( "      enemy->stats.maxHitPoints = {0};\n", enemy.HitPoints ) );
-            WriteToFileStream( fs, string.Format( "      enemy->stats.attackPower = {0};\n", enemy.AttackPower ) );
-            WriteToFileStream( fs, string.Format( "      enemy->stats.defensePower = {0};\n", enemy.DefensePower ) );
-            WriteToFileStream( fs, string.Format( "      enemy->stats.agility = {0};\n", enemy.Agility ) );
+            WriteToFileStream( fs, string.Format( "      enemy->minHitPoints = {0};\n", enemy.MinHitPoints ) );
+            WriteToFileStream( fs, string.Format( "      enemy->maxHitPoints = {0};\n", enemy.MaxHitPoints ) );
             WriteToFileStream( fs, string.Format( "      enemy->experience = {0};\n", enemy.Experience ) );
-            WriteToFileStream( fs, string.Format( "      enemy->gold = {0};\n", enemy.Gold ) );
+            WriteToFileStream( fs, string.Format( "      enemy->minGold = {0};\n", enemy.MinGold ) );
+            WriteToFileStream( fs, string.Format( "      enemy->maxGold = {0};\n", enemy.MaxGold ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.strength = {0};\n", enemy.Strength ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.agility = {0};\n", enemy.Agility ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.sleepResist = {0};\n", enemy.SleepResist ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.stopSpellResist = {0};\n", enemy.StopSpellResist ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.hurtResist = {0};\n", enemy.HurtResist ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.dodge = {0};\n", enemy.Dodge ) );
 
             for ( int i = 0; i < enemy.TextureIndexes.Count; i++ )
             {

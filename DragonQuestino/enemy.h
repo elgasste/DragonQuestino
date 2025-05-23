@@ -11,17 +11,21 @@
 #define ENEMY_TILES_X                  10
 #define ENEMY_TILES_Y                  12
 
-#define ENEMY_GREENDRAGON_INDEX        35
+#define ENEMY_GREENDRAGON_INDEX        30
 #define ENEMY_AXEKNIGHT_INDEX          33
-#define ENEMY_GOLEM_INDEX              27
+#define ENEMY_GOLEM_INDEX              24
 
 typedef struct Enemy_t
 {
    char name[16];
    char indefiniteArticle[3];
+   uint8_t minHitPoints;
+   uint8_t maxHitPoints;
+   uint8_t experience;
+   uint8_t minGold;
+   uint8_t maxGold;
+   uint8_t gold;
    BattleStats_t stats;
-   uint16_t experience;
-   uint16_t gold;
 
    uint8_t tileTextures[ENEMY_TILE_TEXTURE_COUNT][ENEMY_TILE_TEXTURE_SIZE_BYTES];
    int8_t tileTextureIndexes[ENEMY_TILE_COUNT];

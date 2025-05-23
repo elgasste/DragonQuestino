@@ -18,6 +18,8 @@
 #define TILE_WALKSPEED_VERYSLOW                 44.0f
 #define TILE_WALKSPEED_CRAWL                    36.0f
 
+#define TILE_ENEMY_POOL_ENEMY_INDEX_COUNT       5
+
 #define TILEMAP_MAX_VIEWPORT_WIDTH              SCREEN_WIDTH
 #define TILEMAP_MAX_VIEWPORT_HEIGHT             SCREEN_HEIGHT
 #define TILEMAP_VIEWPORT_TILES_X                16
@@ -104,8 +106,7 @@ TilePortal_t;
 
 typedef struct EnemyIndexPool_t
 {
-   uint8_t enemyIndexes[TILE_MAX_ENEMY_INDEX_POOL_ENEMIES];
-   uint8_t enemyCount;
+   uint8_t enemyIndexes[TILE_ENEMY_POOL_ENEMY_INDEX_COUNT];
 }
 EnemyIndexPool_t;
 
