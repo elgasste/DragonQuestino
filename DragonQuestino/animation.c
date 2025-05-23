@@ -123,7 +123,6 @@ void Animation_Tic( Animation_t* animation )
 
 internal void Animation_Stop( Animation_t* animation )
 {
-   int16_t xOffset, yOffset;
    char enemyName[32];
 
    animation->isRunning = False;
@@ -142,9 +141,7 @@ internal void Animation_Stop( Animation_t* animation )
          Game_ChangeMainState( animation->game, MainState_Overworld );
          break;
       case AnimationId_Battle_Checkerboard:
-         xOffset = animation->game->tileMap.isDark ? -24 : 0;
-         yOffset = animation->game->tileMap.isDark ? 4 : 0;
-         Screen_DrawRectColor( &( animation->game->screen ), 96 + xOffset, 52 + yOffset, 96, 96, COLOR_BLACK );
+         Screen_DrawRectColor( &( animation->game->screen ), 96, 52, 96, 96, COLOR_BLACK );
          Animation_Start( animation, AnimationId_Battle_EnemyFadeIn );
          break;
       case AnimationId_Battle_EnemyFadeIn:
