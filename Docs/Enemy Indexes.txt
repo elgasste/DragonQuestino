@@ -1,0 +1,40 @@
+0  - slime
+1  - red slime
+2  - drakee
+3  - ghost
+4  - magician
+5  - magidrakee
+6  - scorpion
+7  - druin
+8  - poltergeist
+9  - droll
+10 - drakeema
+11 - skeleton
+12 - warlock
+13 - metal scorpion
+14 - wolf
+15 - wraith
+16 - metal slime
+17 - specter
+18 - wolflord
+19 - druinlord
+20 - drollmagi
+21 - wyvern
+22 - rogue scorpion
+23 - wraith knight
+24 - golem
+25 - goldman
+26 - knight
+27 - magiwyvern
+28 - demon knight
+29 - werewolf
+30 - green dragon
+31 - starwyvern
+32 - wizard
+33 - axe knight
+34 - blue dragon
+35 - stoneman
+36 - armored knight
+37 - red dragon
+38 - dragonlord wizard
+39 - dragonlord dragon
