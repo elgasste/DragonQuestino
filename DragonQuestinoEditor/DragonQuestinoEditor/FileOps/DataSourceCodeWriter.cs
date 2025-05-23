@@ -215,12 +215,17 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, string.Format( "   case {0}:\n", enemy.Index ) );
             WriteToFileStream( fs, string.Format( "      strcpy( enemy->name, {0} );\n", enemy.NameMacro ) );
             WriteToFileStream( fs, string.Format( "      strcpy( enemy->indefiniteArticle, {0} );\n", enemy.IndefiniteArticle == "An" ? "STRING_INDEFINITE_ARTICLE_AN" : "STRING_INDEFINITE_ARTICLE_A" ) );
-            WriteToFileStream( fs, string.Format( "      enemy->stats.maxHitPoints = {0};\n", enemy.HitPoints ) );
-            WriteToFileStream( fs, string.Format( "      enemy->stats.attackPower = {0};\n", enemy.AttackPower ) );
-            WriteToFileStream( fs, string.Format( "      enemy->stats.defensePower = {0};\n", enemy.DefensePower ) );
-            WriteToFileStream( fs, string.Format( "      enemy->stats.agility = {0};\n", enemy.Agility ) );
+            WriteToFileStream( fs, string.Format( "      enemy->minHitPoints = {0};\n", enemy.MinHitPoints ) );
+            WriteToFileStream( fs, string.Format( "      enemy->maxHitPoints = {0};\n", enemy.MaxHitPoints ) );
             WriteToFileStream( fs, string.Format( "      enemy->experience = {0};\n", enemy.Experience ) );
-            WriteToFileStream( fs, string.Format( "      enemy->gold = {0};\n", enemy.Gold ) );
+            WriteToFileStream( fs, string.Format( "      enemy->minGold = {0};\n", enemy.MinGold ) );
+            WriteToFileStream( fs, string.Format( "      enemy->maxGold = {0};\n", enemy.MaxGold ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.strength = {0};\n", enemy.Strength ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.agility = {0};\n", enemy.Agility ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.sleepResist = {0};\n", enemy.SleepResist ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.stopSpellResist = {0};\n", enemy.StopSpellResist ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.hurtResist = {0};\n", enemy.HurtResist ) );
+            WriteToFileStream( fs, string.Format( "      enemy->stats.dodge = {0};\n", enemy.Dodge ) );
 
             for ( int i = 0; i < enemy.TextureIndexes.Count; i++ )
             {

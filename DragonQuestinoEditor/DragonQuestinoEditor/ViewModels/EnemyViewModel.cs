@@ -44,25 +44,11 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _indefiniteArticle, value );
       }
 
-      private int _hitPoints;
-      public int HitPoints
+      private int _strength;
+      public int Strength
       {
-         get => _hitPoints;
-         set => SetProperty( ref _hitPoints, value );
-      }
-
-      private int _attackPower;
-      public int AttackPower
-      {
-         get => _attackPower;
-         set => SetProperty( ref _attackPower, value );
-      }
-
-      private int _defensePower;
-      public int DefensePower
-      {
-         get => _defensePower;
-         set => SetProperty( ref _defensePower, value );
+         get => _strength;
+         set => SetProperty( ref _strength, value );
       }
 
       private int _agility;
@@ -72,6 +58,48 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _agility, value );
       }
 
+      private int _minHitPoints;
+      public int MinHitPoints
+      {
+         get => _minHitPoints;
+         set => SetProperty( ref _minHitPoints, value );
+      }
+
+      private int _maxHitPoints;
+      public int MaxHitPoints
+      {
+         get => _maxHitPoints;
+         set => SetProperty( ref _maxHitPoints, value );
+      }
+
+      private int _sleepResist;
+      public int SleepResist
+      {
+         get => _sleepResist;
+         set => SetProperty( ref _sleepResist, value );
+      }
+
+      private int _stopSpellResist;
+      public int StopSpellResist
+      {
+         get => _stopSpellResist;
+         set => SetProperty( ref _stopSpellResist, value );
+      }
+
+      private int _hurtResist;
+      public int HurtResist
+      {
+         get => _hurtResist;
+         set => SetProperty( ref _hurtResist, value );
+      }
+
+      private int _dodge;
+      public int Dodge
+      {
+         get => _dodge;
+         set => SetProperty( ref _dodge, value );
+      }
+
       private int _experience;
       public int Experience
       {
@@ -79,11 +107,18 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _experience, value );
       }
 
-      private int _gold;
-      public int Gold
+      private int _minGold;
+      public int MinGold
       {
-         get => _gold;
-         set => SetProperty( ref _gold, value );
+         get => _minGold;
+         set => SetProperty( ref _minGold, value );
+      }
+
+      private int _maxGold;
+      public int MaxGold
+      {
+         get => _maxGold;
+         set => SetProperty( ref _maxGold, value );
       }
 
       public EnemyViewModel( Palette palette, EnemySaveData saveData )
@@ -94,12 +129,17 @@ namespace DragonQuestinoEditor.ViewModels
          Name = saveData.Name;
          NameMacro = saveData.NameMacro;
          IndefiniteArticle = saveData.IndefiniteArticle;
-         HitPoints = saveData.HitPoints;
-         AttackPower = saveData.AttackPower;
-         DefensePower = saveData.DefensePower;
+         Strength = saveData.Strength;
          Agility = saveData.Agility;
+         MinHitPoints = saveData.MinHitPoints;
+         MaxHitPoints = saveData.MaxHitPoints;
+         SleepResist = saveData.SleepResist;
+         StopSpellResist = saveData.StopSpellResist;
+         HurtResist = saveData.HurtResist;
+         Dodge = saveData.Dodge;
          Experience = saveData.Experience;
-         Gold = saveData.Gold;
+         MinGold = saveData.MinGold;
+         MaxGold = saveData.MaxGold;
 
          var enemyFileStream = new FileStream( Constants.AssetsBasePath + Name + ".png", FileMode.Open, FileAccess.Read, FileShare.Read );
          var enemyDecoder = new PngBitmapDecoder( enemyFileStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default );
