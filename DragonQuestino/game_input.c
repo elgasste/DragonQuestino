@@ -348,7 +348,8 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
          switch ( game->dialog.id )
          {
             case DialogId_Battle_FleeAttemptSucceeded:
-               Game_ChangeMainState( game, MainState_Overworld );
+               Game_DrawOverworld( game );
+               Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
                break;
             case DialogId_Battle_FleeAttemptFailed:
                Game_ChangeSubState( game, SubState_Menu );

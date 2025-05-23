@@ -106,6 +106,16 @@ Bool_t Dialog_StepAhead( Dialog_t* dialog )
 
 void Dialog_NextSection( Dialog_t* dialog )
 {
+   if ( dialog->section == 0 )
+   {
+      switch ( dialog->id )
+      {
+         case DialogId_Battle_FleeAttemptSucceeded:
+            Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyFadeOut );
+            break;
+      }
+   }
+
    dialog->section++;
    Dialog_LoadMessage( dialog );
    Dialog_ResetScroll( dialog );
