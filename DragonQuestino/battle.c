@@ -1,14 +1,12 @@
-#include "battle.h"
-#include "player.h"
-#include "tile_map.h"
+#include "game.h"
 #include "random.h"
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle );
+internal Bool_t Battle_GetFleeResult( Battle_t* battle );
 
-void Battle_Init( Battle_t* battle, Player_t* player, TileMap_t* tileMap )
+void Battle_Init( Battle_t* battle, Game_t* game )
 {
-   battle->player = player;
-   battle->tileMap = tileMap;
+   battle->game = game;
 
    // enemies have infinite magic
    battle->enemy.stats.magicPoints = 0;
@@ -37,10 +35,26 @@ void Battle_Generate( Battle_t* battle )
    enemy->gold = Random_u8( enemy->minGold, enemy->maxGold );
 }
 
+void Battle_AttemptFlee( Battle_t* battle )
+{
+   Bool_t fleed = Battle_GetFleeResult( battle );
+
+   Dialog_SetInsertionText( &( battle->game->dialog ), battle->enemy.name );
+
+   if ( fleed )
+   {  
+      Game_OpenDialog( battle->game, DialogId_Battle_FleeAttemptSucceeded );
+   }
+   else
+   {
+      Game_OpenDialog( battle->game, DialogId_Battle_FleeAttemptFailed );
+   }
+}
+
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
 {
-   TileMap_t* tileMap = battle->tileMap;
-   Player_t* player = battle->player;
+   TileMap_t* tileMap = &( battle->game->tileMap );
+   Player_t* player = &( battle->game->player );
    uint32_t adjustedTileIndex = player->tileIndex + ( ( player->tileIndex / tileMap->tilesX ) * ( TILE_COUNT_X - tileMap->tilesX ) );
    uint32_t enemyPoolIndex = TILE_GET_ENEMYPOOLINDEX( tileMap->tiles[adjustedTileIndex] );
    uint32_t i, enemyIndex;
@@ -57,4 +71,11 @@ internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
    }
 
    return enemyIndex;
+}
+
+internal Bool_t Battle_GetFleeResult( Battle_t* battle )
+{
+   // TODO: look this up in the tech guide
+   UNUSED_PARAM( battle );
+   return True;
 }

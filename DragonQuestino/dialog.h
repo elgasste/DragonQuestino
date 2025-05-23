@@ -10,15 +10,11 @@
 #define DIALOG_MAX_MESSAGE_CHARS       224
 #define DIALOG_SCROLL_CHAR_SECONDS     0.015f
 
-typedef struct Screen_t Screen_t;
-typedef struct Player_t Player_t;
-typedef struct Animation_t Animation_t;
+typedef struct Game_t Game_t;
 
 typedef struct Dialog_t
 {
-   Screen_t* screen;
-   Player_t* player;
-   Animation_t* animation;
+   Game_t* game;
 
    DialogId_t id;
    Vector2u16_t position;  // in pixels
@@ -45,8 +41,8 @@ Dialog_t;
 extern "C" {
 #endif
 
-void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player, Animation_t* animation );
-void Dialog_Load( Dialog_t* dialog, DialogId_t id, MainState_t mainState );
+void Dialog_Init( Dialog_t* dialog, Game_t* game );
+void Dialog_Load( Dialog_t* dialog, DialogId_t id );
 void Dialog_SetInsertionText( Dialog_t* dialog, const char* text );
 void Dialog_Draw( Dialog_t* dialog );
 Bool_t Dialog_StepAhead( Dialog_t* dialog );

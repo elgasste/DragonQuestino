@@ -19,7 +19,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ), &( game->screen ), &( game->tileMap ) );
-   Battle_Init( &( game->battle ), &( game->player ), (& game->tileMap ) );
+   Battle_Init( &( game->battle ), game );
 
    game->activeMenu = 0;
 
@@ -28,7 +28,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
       Menu_Init( &( game->menus[(MenuId_t)i] ), (MenuId_t)( i ), &( game->screen ), &( game->player ), &( game->tileMap ) );
    }
 
-   Dialog_Init( &( game->dialog ), &( game->screen ), &( game->player ), &( game->animation ) );
+   Dialog_Init( &( game->dialog ), game );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
    {
@@ -184,7 +184,7 @@ void Game_OpenMenu( Game_t* game, MenuId_t id )
 
 void Game_OpenDialog( Game_t* game, DialogId_t id )
 {
-   Dialog_Load( &( game->dialog ), id, game->mainState );
+   Dialog_Load( &( game->dialog ), id );
    Game_ChangeSubState( game, SubState_Dialog );
 }
 

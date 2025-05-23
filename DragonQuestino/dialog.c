@@ -1,8 +1,4 @@
-#include "dialog.h"
-#include "screen.h"
-#include "player.h"
-#include "clock.h"
-#include "animation.h"
+#include "game.h"
 
 internal void Dialog_ResetScroll( Dialog_t* dialog );
 internal void Dialog_LoadMessage( Dialog_t* dialog );
@@ -10,19 +6,17 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id );
 internal void Dialog_GetMessageText( Dialog_t* dialog, char* text );
 internal void Dialog_FinishSection( Dialog_t* dialog );
 
-void Dialog_Init( Dialog_t* dialog, Screen_t* screen, Player_t* player, Animation_t* animation )
+void Dialog_Init( Dialog_t* dialog, Game_t* game )
 {
-   dialog->screen = screen;
-   dialog->player = player;
-   dialog->animation = animation;
+   dialog->game = game;
 }
 
-void Dialog_Load( Dialog_t* dialog, DialogId_t id, MainState_t mainState )
+void Dialog_Load( Dialog_t* dialog, DialogId_t id )
 {
    dialog->id = id;
    dialog->section = 0;
 
-   if ( mainState == MainState_Overworld )
+   if ( dialog->game->mainState == MainState_Overworld )
    {
       dialog->position.x = 32;
       dialog->position.y = 144;
@@ -52,8 +46,9 @@ void Dialog_Draw( Dialog_t* dialog )
 {
    uint32_t i, x, y, stopCharIndex, len;
    char substr[DIALOG_MAX_LINE_CHARS];
+   Screen_t* screen = &( dialog->game->screen );
 
-   Screen_DrawTextWindow( dialog->screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y );
+   Screen_DrawTextWindow( screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y );
 
    x = dialog->position.x + TEXT_TILE_SIZE;
    y = dialog->position.y + TEXT_TILE_SIZE;
@@ -68,14 +63,14 @@ void Dialog_Draw( Dialog_t* dialog )
 
          if ( len < stopCharIndex )
          {
-            Screen_DrawText( dialog->screen, dialog->lines[i], x, y );
+            Screen_DrawText( screen, dialog->lines[i], x, y );
             stopCharIndex -= len;
          }
          else
          {
             strcpy( substr, dialog->lines[i] );
             substr[stopCharIndex] = '\0';
-            Screen_DrawText( dialog->screen, substr, x, y );
+            Screen_DrawText( screen, substr, x, y );
             break;
          }
       }
@@ -84,12 +79,12 @@ void Dialog_Draw( Dialog_t* dialog )
    {
       for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
       {
-         Screen_DrawText( dialog->screen, dialog->lines[i], x, y );
+         Screen_DrawText( screen, dialog->lines[i], x, y );
       }
 
       if ( dialog->showCarat && !Dialog_IsDone( dialog ) )
       {
-         Screen_DrawChar( dialog->screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y );
+         Screen_DrawChar( screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y );
       }
    }
 }
@@ -269,6 +264,8 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
       case DialogId_Spell_OverworldCastMidheal1:
       case DialogId_Spell_OverworldCastMidheal2:
       case DialogId_Spell_Blocked:
+      case DialogId_Battle_FleeAttemptSucceeded:
+      case DialogId_Battle_FleeAttemptFailed:
          return 2;
       case DialogId_Use_GwaelynsLove:
          return 4;
@@ -282,7 +279,7 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
 internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
 {
    uint32_t e;
-   Player_t* player = dialog->player;
+   Player_t* player = &( dialog->game->player );
 
    switch ( dialog->id )
    {
@@ -464,6 +461,18 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          }
       case DialogId_Battle_EnemyApproaches:
          sprintf( text, STRING_BATTLE_ENEMYAPPROACHES, dialog->insertionText ); return;
+      case DialogId_Battle_FleeAttemptSucceeded:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, STRING_BATTLE_FLEEATTEMPT); return;
+            case 1: sprintf( text, STRING_BATTLE_FLEEATTEMPTSUCCEEDED, dialog->insertionText ); return;
+         }
+      case DialogId_Battle_FleeAttemptFailed:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, STRING_BATTLE_FLEEATTEMPT); return;
+            case 1: sprintf( text, STRING_BATTLE_FLEEATTEMPTFAILED, dialog->insertionText ); return;
+         }
    }
 }
 
@@ -487,10 +496,20 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Spell_CastEvac:
          case DialogId_Spell_CastZoom:
          case DialogId_Spell_Blocked:
-            Animation_Start( dialog->animation, AnimationId_CastSpell );
+            Animation_Start( &( dialog->game->animation ), AnimationId_CastSpell );
             break;
          case DialogId_Battle_EnemyApproaches:
-            Animation_Start( dialog->animation, AnimationId_Battle_EnemyFadeInPause );
+            Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyFadeInPause );
+            break;
+      }
+   }
+   else if ( dialog->section == 1 )
+   {
+      switch ( dialog->id )
+      {
+         case DialogId_Battle_FleeAttemptFailed:
+            Menu_Reset( dialog->game->activeMenu );
+            Game_ChangeSubState( dialog->game, SubState_Menu );
             break;
       }
    }

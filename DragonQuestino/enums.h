@@ -213,6 +213,8 @@ typedef enum DialogId_t
    DialogId_Chest_DeathNecklace,
 
    DialogId_Battle_EnemyApproaches,
+   DialogId_Battle_FleeAttemptSucceeded,
+   DialogId_Battle_FleeAttemptFailed,
 
    DialogId_Count
 }
