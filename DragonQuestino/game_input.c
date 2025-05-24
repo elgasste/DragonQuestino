@@ -10,6 +10,7 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
 internal void Game_OpenZoomMenu( Game_t* game );
 internal void Game_HandleBattleMenuInput( Game_t* game );
+internal void Game_HandleBattleDialogInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -37,6 +38,9 @@ void Game_HandleInput( Game_t* game )
       {
          case SubState_Menu:
             Game_HandleBattleMenuInput( game );
+            break;
+         case SubState_Dialog:
+            Game_HandleBattleDialogInput( game );
             break;
       }
    }
@@ -318,7 +322,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
       switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
          case MenuCommand_Battle_Attack: Game_ChangeMainState( game, MainState_Overworld ); break;
-         case MenuCommand_Battle_Flee: Game_ChangeMainState( game, MainState_Overworld ); break;
+         case MenuCommand_Battle_Flee: Battle_AttemptFlee( &( game->battle ) ); break;
          case MenuCommand_Battle_Spell: Game_ChangeMainState( game, MainState_Overworld ); break;
          case MenuCommand_Battle_Item: Game_ChangeMainState( game, MainState_Overworld ); break;
       }
@@ -332,5 +336,29 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
             Menu_MoveSelection( game->activeMenu, (Direction_t)i );
          }
       }
+   }
+}
+
+internal void Game_HandleBattleDialogInput( Game_t* game )
+{
+   if ( Dialog_IsDone( &( game->dialog ) ) )
+   {
+      if ( Input_AnyButtonPressed( &( game->input ) ) )
+      {
+         switch ( game->dialog.id )
+         {
+            case DialogId_Battle_FleeAttemptSucceeded:
+               Game_DrawOverworld( game );
+               Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
+               break;
+            case DialogId_Battle_FleeAttemptFailed:
+               Game_ChangeSubState( game, SubState_Menu );
+               break;
+         }
+      }
+   }
+   else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
+   {
+      Dialog_StepAhead( &( game->dialog ) );
    }
 }

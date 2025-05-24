@@ -63,6 +63,7 @@ typedef enum AnimationId_t
    AnimationId_RainbowBridge_Pause,
    AnimationId_Battle_Checkerboard,
    AnimationId_Battle_EnemyFadeIn,
+   AnimationId_Battle_EnemyFadeOut,
    AnimationId_Battle_EnemyFadeInPause,
 
    AnimationId_Count
@@ -213,6 +214,8 @@ typedef enum DialogId_t
    DialogId_Chest_DeathNecklace,
 
    DialogId_Battle_EnemyApproaches,
+   DialogId_Battle_FleeAttemptSucceeded,
+   DialogId_Battle_FleeAttemptFailed,
 
    DialogId_Count
 }

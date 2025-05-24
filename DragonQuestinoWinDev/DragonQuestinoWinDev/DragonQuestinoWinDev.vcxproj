@@ -47,6 +47,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\DragonQuestino\animation.c" />
     <ClCompile Include="..\..\DragonQuestino\battle.c" />
+    <ClCompile Include="..\..\DragonQuestino\enemy.c" />
     <ClCompile Include="..\..\DragonQuestino\game.c" />
     <ClCompile Include="..\..\DragonQuestino\game_data.c" />
     <ClCompile Include="..\..\DragonQuestino\game_input.c" />

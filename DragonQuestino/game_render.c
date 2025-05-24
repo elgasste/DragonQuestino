@@ -4,7 +4,6 @@
 #include "math.h"
 
 internal void Game_DrawTileMap( Game_t* game );
-internal void Game_DrawOverworld( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 internal void Game_DrawEnemy( Game_t* game );
@@ -29,7 +28,7 @@ void Game_Draw( Game_t* game )
             game->screen.needsRedraw = False;
             Game_DrawTileMap( game );
          }
-         else if ( game->animation.id == AnimationId_Battle_EnemyFadeIn )
+         else if ( game->animation.id == AnimationId_Battle_EnemyFadeIn || game->animation.id == AnimationId_Battle_EnemyFadeOut )
          {
             Game_DrawEnemy( game );
          }
@@ -127,6 +126,17 @@ void Game_Draw( Game_t* game )
    }
 }
 
+void Game_DrawOverworld( Game_t* game )
+{
+   Game_DrawTileMap( game );
+   Game_DrawPlayer( game );
+
+   if ( game->subState == SubState_None && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
+   {
+      Game_DrawQuickStatus( game );
+   }
+}
+
 void Game_DrawQuickStatus( Game_t* game )
 {
    uint16_t lvl = Player_GetLevel( &( game->player ) );
@@ -204,6 +214,11 @@ void Game_DrawOverworldItemMenu( Game_t* game )
    }
 }
 
+void Game_WipeEnemy( Game_t* game )
+{
+   Screen_DrawRectColor( &( game->screen ), 96, 52, 96, 96, COLOR_BLACK );
+}
+
 internal void Game_DrawTileMap( Game_t* game )
 {
    if ( game->tileMap.viewportScreenPos.x != 0 || game->tileMap.viewportScreenPos.y != 0 )
@@ -212,17 +227,6 @@ internal void Game_DrawTileMap( Game_t* game )
    }
 
    TileMap_Draw( &( game->tileMap ) );
-}
-
-internal void Game_DrawOverworld( Game_t* game )
-{
-   Game_DrawTileMap( game );
-   Game_DrawPlayer( game );
-
-   if ( game->subState == SubState_None && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
-   {
-      Game_DrawQuickStatus( game );
-   }
 }
 
 internal void Game_DrawPlayer( Game_t* game )
