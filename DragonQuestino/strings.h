@@ -195,7 +195,7 @@
 #define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches! Command?"
 #define STRING_BATTLE_FLEEATTEMPT                                    "You make a run for it..."
 #define STRING_BATTLE_FLEEATTEMPTSUCCEEDED                           "Success, you have eluded the %s!"
-#define STRING_BATTLE_FLEEATTEMPTFAILED                              "But the %s outmaneuvers you! Command?"
+#define STRING_BATTLE_FLEEATTEMPTFAILED                              "But the %s blocks your escape! Command?"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"
