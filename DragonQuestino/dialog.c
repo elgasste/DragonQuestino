@@ -518,6 +518,7 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
       switch ( dialog->id )
       {
          case DialogId_Battle_FleeAttemptFailed:
+            Dialog_Draw( dialog );
             Menu_Reset( dialog->game->activeMenu );
             Game_ChangeSubState( dialog->game, SubState_Menu );
             break;

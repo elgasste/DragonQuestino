@@ -17,6 +17,7 @@
 
 typedef struct Enemy_t
 {
+   uint32_t groupId;
    char name[16];
    char indefiniteArticle[3];
    uint8_t minHitPoints;
@@ -35,6 +36,8 @@ Enemy_t;
 #if defined( __cplusplus )
 extern "C" {
 #endif
+
+float Enemy_GetFleeFactor( Enemy_t* enemy );
 
 // game_data.c
 void Enemy_Load( Enemy_t* enemy, uint32_t index );

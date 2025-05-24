@@ -22,3 +22,9 @@ uint32_t Random_u32( uint32_t min, uint32_t max )
    // min and max inclusive
    return ( (uint32_t)rand() % ( ( max + 1 ) - min ) ) + min;
 }
+
+float Random_NormalizedPercent()
+{
+   uint32_t percent = Random_Percent();
+   return (float)percent * 0.01f;
+}

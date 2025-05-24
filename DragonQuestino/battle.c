@@ -75,7 +75,18 @@ internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
 
 internal Bool_t Battle_GetFleeResult( Battle_t* battle )
 {
-   // TODO: look this up in the tech guide
-   UNUSED_PARAM( battle );
-   return True;
+   Player_t* player = &( battle->game->player );
+   Enemy_t* enemy = &( battle->enemy );
+   float enemyFleeFactor = Enemy_GetFleeFactor( enemy );
+
+   if ( battle->specialEnemy != SpecialEnemy_None )
+   {
+      return False;
+   }
+
+   uint16_t playerFactor = (uint16_t)( player->stats.agility ) * Random_u8( 0, UINT8_MAX );
+   uint16_t enemyFactor = (uint16_t)( enemy->stats.agility ) * Random_u8( 0, UINT8_MAX );
+   enemyFactor = (uint16_t)( enemyFactor * enemyFleeFactor );
+
+   return ( playerFactor < enemyFactor ) ? False : True;
 }
