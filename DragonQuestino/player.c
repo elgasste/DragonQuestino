@@ -28,22 +28,22 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->holyProtectionSteps = 0;
    player->townsVisited = 0;
 
-   player->stats.strength = 255;
-   player->stats.agility = 4;
-   player->stats.hitPoints = 15;
-   player->stats.maxHitPoints = 15;
-   player->stats.magicPoints = 0;
-   player->stats.maxMagicPoints = 0;
-   player->stats.sleepResist = 0;
-   player->stats.stopSpellResist = 0;
-   player->stats.hurtResist = 0;
-   player->stats.dodge = 1;
-
    player->experience = 0;
    player->gold = 0;
    player->items = 0;
    player->spells = 0;
    player->level = Player_GetLevelFromExperience( player->experience );
+
+   player->stats.strength = g_strengthTable[player->level - 1];
+   player->stats.agility = g_agilityTable[player->level - 1];
+   player->stats.hitPoints = g_hitPointsTable[player->level - 1];
+   player->stats.maxHitPoints = g_hitPointsTable[player->level - 1];
+   player->stats.magicPoints = g_magicPointsTable[player->level - 1];
+   player->stats.maxMagicPoints = g_magicPointsTable[player->level - 1];
+   player->stats.sleepResist = 0;
+   player->stats.stopSpellResist = 0;
+   player->stats.hurtResist = 0;
+   player->stats.dodge = 1;
 
    Player_UpdateTextColor( player, UINT8_MAX );
 }
@@ -52,20 +52,20 @@ uint8_t Player_GetLevelFromExperience( uint16_t experience )
 {
    uint8_t i;
 
-   for ( i = 0; i < EXPERIENCE_TABLE_SIZE; i++ )
+   for ( i = 0; i < STAT_TABLE_SIZE; i++ )
    {
-      if ( experience < g_experienceTable[i] )
+      if ( experience <= g_experienceTable[i] )
       {
          return i + 1;
       }
    }
 
-   return EXPERIENCE_TABLE_SIZE + 1;
+   return STAT_TABLE_SIZE;
 }
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
 {
-   return ( player->level == ( EXPERIENCE_TABLE_SIZE + 1 ) ) ? 0 : ( g_experienceTable[player->level - 1] - player->experience );
+   return ( player->level == ( STAT_TABLE_SIZE + 1 ) ) ? 0 : ( g_experienceTable[player->level] - player->experience );
 }
 
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold )

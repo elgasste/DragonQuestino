@@ -3,9 +3,10 @@
 
 #include "common.h"
 
-#define EXPERIENCE_TABLE_SIZE  29
+#define STAT_TABLE_SIZE 30
 
-global uint16_t g_experienceTable[EXPERIENCE_TABLE_SIZE] = {
+global uint16_t g_experienceTable[STAT_TABLE_SIZE] = {
+   0,
    7,
    23,
    47,
@@ -35,6 +36,138 @@ global uint16_t g_experienceTable[EXPERIENCE_TABLE_SIZE] = {
    58000,
    62000,
    UINT16_MAX
+};
+
+global uint8_t g_strengthTable[STAT_TABLE_SIZE] = {
+   4,
+   5,
+   7,
+   7,
+   12,
+   16,
+   18,
+   22,
+   30,
+   35,
+   40,
+   48,
+   52,
+   60,
+   68,
+   72,
+   72,
+   85,
+   87,
+   92,
+   95,
+   97,
+   99,
+   103,
+   113,
+   117,
+   125,
+   130,
+   135,
+   140
+};
+
+global uint8_t g_agilityTable[STAT_TABLE_SIZE] = {
+   4,
+   4,
+   6,
+   8,
+   10,
+   10,
+   17,
+   20,
+   22,
+   31,
+   35,
+   40,
+   48,
+   55,
+   64,
+   70,
+   78,
+   84,
+   86,
+   88,
+   90,
+   90,
+   94,
+   98,
+   100,
+   105,
+   107,
+   115,
+   120,
+   130
+};
+
+global uint8_t g_hitPointsTable[STAT_TABLE_SIZE] = {
+   15,
+   22,
+   24,
+   31,
+   35,
+   38,
+   40,
+   46,
+   50,
+   54,
+   62,
+   63,
+   70,
+   78,
+   86,
+   92,
+   100,
+   115,
+   130,
+   138,
+   149,
+   158,
+   165,
+   170,
+   174,
+   180,
+   189,
+   195,
+   200,
+   210
+};
+
+global uint8_t g_magicPointsTable[STAT_TABLE_SIZE] = {
+   0,
+   0,
+   5,
+   16,
+   20,
+   24,
+   26,
+   29,
+   36,
+   40,
+   50,
+   58,
+   64,
+   70,
+   72,
+   95,
+   100,
+   108,
+   115,
+   128,
+   135,
+   146,
+   153,
+   161,
+   161,
+   168,
+   175,
+   180,
+   190,
+   200
 };
 
 #endif // TABLES_H
