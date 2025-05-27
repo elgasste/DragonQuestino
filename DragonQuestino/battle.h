@@ -12,6 +12,9 @@ typedef struct Battle_t
 
    Enemy_t enemy;
    SpecialEnemy_t specialEnemy;
+
+   uint16_t experienceGained;
+   uint16_t goldGained;
 }
 Battle_t;
 
@@ -23,6 +26,7 @@ void Battle_Init( Battle_t* battle, Game_t* game );
 void Battle_Generate( Battle_t* battle );
 void Battle_AttemptAttack( Battle_t* battle );
 void Battle_AttemptFlee( Battle_t* battle );
+void Battle_Victory( Battle_t* battle );
 
 #if defined( __cplusplus )
 }

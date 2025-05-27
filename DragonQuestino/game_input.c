@@ -348,6 +348,8 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
          switch ( game->dialog.id )
          {
             case DialogId_Battle_FleeAttemptSucceeded:
+            case DialogId_Battle_Victory:
+            case DialogId_Battle_VictoryWithSpoils:
                Game_DrawOverworld( game );
                Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
                break;

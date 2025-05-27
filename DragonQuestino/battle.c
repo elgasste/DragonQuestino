@@ -44,7 +44,16 @@ void Battle_AttemptAttack( Battle_t* battle )
    if ( damage > 0 )
    {
       battle->enemy.stats.hitPoints -= damage;
-      sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+
+      if ( battle->enemy.stats.hitPoints > 0 )
+      {
+         sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+      }
+      else
+      {
+         sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDEDVICTORY, battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+      }
+
       Dialog_SetInsertionText( &( battle->game->dialog ), msg );
       Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptSucceeded );
    }
@@ -69,6 +78,20 @@ void Battle_AttemptFlee( Battle_t* battle )
    {
       Game_OpenDialog( battle->game, DialogId_Battle_FleeAttemptFailed );
    }
+}
+
+void Battle_Victory( Battle_t* battle )
+{
+   Player_t* player = &( battle->game->player );
+   Enemy_t* enemy = &( battle->enemy );
+   DialogId_t dialogId;
+
+   battle->experienceGained = Player_CollectExperience( player, enemy->experience );
+   battle->goldGained = Player_CollectGold( player, enemy->gold );
+   dialogId = battle->experienceGained == 0 && battle->goldGained == 0 ? DialogId_Battle_Victory : DialogId_Battle_VictoryWithSpoils;
+
+   Dialog_SetInsertionText( &( battle->game->dialog ), enemy->name );
+   Game_OpenDialog( battle->game, dialogId );
 }
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
