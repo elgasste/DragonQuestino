@@ -28,7 +28,7 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->holyProtectionSteps = 0;
    player->townsVisited = 0;
 
-   player->stats.strength = 255;
+   player->stats.strength = 4;
    player->stats.agility = 4;
    player->stats.hitPoints = 15;
    player->stats.maxHitPoints = 15;

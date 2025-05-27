@@ -2,7 +2,7 @@
 #include "random.h"
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle );
-internal uint8_t Battle_GetAttackResult( Battle_t* battle );
+internal uint8_t Battle_GetAttackDamage( Battle_t* battle );
 internal Bool_t Battle_GetFleeResult( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
@@ -38,12 +38,13 @@ void Battle_Generate( Battle_t* battle )
 
 void Battle_AttemptAttack( Battle_t* battle )
 {
-   uint8_t payload = Battle_GetAttackResult( battle );
+   uint8_t damage = Battle_GetAttackDamage( battle );
    char msg[64];
 
-   if ( payload > 0 )
+   if ( damage > 0 )
    {
-      sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, battle->enemy.name, payload, ( payload == 1 ) ? STRING_POINT : STRING_POINTS );
+      battle->enemy.stats.hitPoints -= damage;
+      sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
       Dialog_SetInsertionText( &( battle->game->dialog ), msg );
       Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptSucceeded );
    }
@@ -92,7 +93,7 @@ internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
    return enemyIndex;
 }
 
-internal uint8_t Battle_GetAttackResult( Battle_t* battle )
+internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
 {
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
