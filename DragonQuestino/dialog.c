@@ -274,6 +274,8 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
       case DialogId_Spell_OverworldCastMidheal1:
       case DialogId_Spell_OverworldCastMidheal2:
       case DialogId_Spell_Blocked:
+      case DialogId_Battle_AttackAttemptSucceeded:
+      case DialogId_Battle_AttackAttemptFailed:
       case DialogId_Battle_FleeAttemptSucceeded:
       case DialogId_Battle_FleeAttemptFailed:
          return 2;
@@ -471,6 +473,18 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          }
       case DialogId_Battle_EnemyApproaches:
          sprintf( text, STRING_BATTLE_ENEMYAPPROACHES, dialog->insertionText ); return;
+      case DialogId_Battle_AttackAttemptSucceeded:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT); return;
+            case 1: strcpy( text, dialog->insertionText ); return;
+         }
+      case DialogId_Battle_AttackAttemptFailed:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT); return;
+            case 1: sprintf( text, STRING_BATTLE_ATTACKATTEMPTFAILED, dialog->insertionText ); return;
+         }
       case DialogId_Battle_FleeAttemptSucceeded:
          switch ( dialog->section )
          {
@@ -511,12 +525,20 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Battle_EnemyApproaches:
             Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyFadeInPause );
             break;
+         case DialogId_Battle_AttackAttemptSucceeded:
+            Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyDamage );
+            break;
+         case DialogId_Battle_AttackAttemptFailed:
+            Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyDodge );
+            break;
       }
    }
    else if ( dialog->section == 1 )
    {
       switch ( dialog->id )
       {
+         case DialogId_Battle_AttackAttemptSucceeded:
+         case DialogId_Battle_AttackAttemptFailed:
          case DialogId_Battle_FleeAttemptFailed:
             Dialog_Draw( dialog );
             Menu_Reset( dialog->game->activeMenu );

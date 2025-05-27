@@ -321,7 +321,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
 
       switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
-         case MenuCommand_Battle_Attack: Game_ChangeMainState( game, MainState_Overworld ); break;
+         case MenuCommand_Battle_Attack: Battle_AttemptAttack( &( game->battle ) ); break;
          case MenuCommand_Battle_Flee: Battle_AttemptFlee( &( game->battle ) ); break;
          case MenuCommand_Battle_Spell: Game_ChangeMainState( game, MainState_Overworld ); break;
          case MenuCommand_Battle_Item: Game_ChangeMainState( game, MainState_Overworld ); break;
@@ -351,6 +351,8 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
                Game_DrawOverworld( game );
                Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
                break;
+            case DialogId_Battle_AttackAttemptSucceeded:
+            case DialogId_Battle_AttackAttemptFailed:
             case DialogId_Battle_FleeAttemptFailed:
                Game_ChangeSubState( game, SubState_Menu );
                break;

@@ -193,6 +193,9 @@
 #define STRING_ENEMY_DRAGONLORD                                      "dragonlord"
 
 #define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches! Command?"
+#define STRING_BATTLE_ATTACKATTEMPT                                  "You attack!"
+#define STRING_BATTLE_ATTACKATTEMPTSUCCEEDED                         "The %s has lost %u hit points. Command?"
+#define STRING_BATTLE_ATTACKATTEMPTFAILED                            "But the %s dodges your attack! Command?"
 #define STRING_BATTLE_FLEEATTEMPT                                    "You make a run for it..."
 #define STRING_BATTLE_FLEEATTEMPTSUCCEEDED                           "Success, you have eluded the %s!"
 #define STRING_BATTLE_FLEEATTEMPTFAILED                              "But the %s blocks your escape! Command?"

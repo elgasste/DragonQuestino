@@ -18,6 +18,9 @@
 #define ANIMATION_BATTLE_ENEMYFADEIN_DURATION         0.25f
 #define ANIMATION_BATTLE_ENEMYFADEOUT_DURATION        0.25f
 #define ANIMATION_BATTLE_ENEMYFADEINPAUSE_DURATION    0.1f
+#define ANIMATION_BATTLE_ENEMYDAMAGE_DURATION         0.6f
+#define ANIMATION_BATTLE_ENEMYDAMAGE_FRAMEDURATION    0.1f
+#define ANIMATION_BATTLE_ENEMYDODGE_DURATION          0.5f
 
 typedef struct Game_t Game_t;
 
@@ -30,6 +33,7 @@ typedef struct Animation_t
    float totalElapsedSeconds;
    float frameElapsedSeconds;
    float totalDuration;
+   Bool_t flag;
 }
 Animation_t;
 
