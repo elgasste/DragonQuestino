@@ -28,16 +28,16 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->holyProtectionSteps = 0;
    player->townsVisited = 0;
 
-   player->stats.strength = 2;
-   player->stats.agility = 2;
-   player->stats.hitPoints = 12;
-   player->stats.maxHitPoints = 12;
+   player->stats.strength = 255;
+   player->stats.agility = 4;
+   player->stats.hitPoints = 15;
+   player->stats.maxHitPoints = 15;
    player->stats.magicPoints = 0;
    player->stats.maxMagicPoints = 0;
    player->stats.sleepResist = 0;
    player->stats.stopSpellResist = 0;
    player->stats.hurtResist = 0;
-   player->stats.dodge = 0;
+   player->stats.dodge = 1;
 
    player->experience = 0;
    player->gold = 0;

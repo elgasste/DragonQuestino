@@ -43,7 +43,7 @@ void Battle_AttemptAttack( Battle_t* battle )
 
    if ( payload > 0 )
    {
-      sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, battle->enemy.name, payload );
+      sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, battle->enemy.name, payload, ( payload == 1 ) ? STRING_POINT : STRING_POINTS );
       Dialog_SetInsertionText( &( battle->game->dialog ), msg );
       Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptSucceeded );
    }
@@ -94,22 +94,45 @@ internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
 
 internal uint8_t Battle_GetAttackResult( Battle_t* battle )
 {
-   // TODO: use the algorithm in the tech guide
-   UNUSED_PARAM( battle );
-   return 0;
+   Player_t* player = &( battle->game->player );
+   Enemy_t* enemy = &( battle->enemy );
+   uint8_t defense, damage, minDamage = 0, maxDamage = 0;
+
+   if ( enemy->stats.dodge > 0 && Random_u8( 1, 64 ) <= enemy->stats.dodge )
+   {
+      return 0;
+   }
+
+   defense = enemy->stats.agility / 2;
+
+   if ( defense < player->stats.strength )
+   {
+      minDamage = ( player->stats.strength - defense ) / 4;
+      maxDamage = ( player->stats.strength - defense ) / 2;
+   }
+
+   damage = Random_u8( minDamage, maxDamage );
+
+   if ( damage == 0 )
+   {
+      damage = Random_u8( 0, 1 );
+   }
+
+   return ( damage > enemy->stats.hitPoints ) ? enemy->stats.hitPoints : damage;
 }
 
 internal Bool_t Battle_GetFleeResult( Battle_t* battle )
 {
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
-   float enemyFleeFactor = Enemy_GetFleeFactor( enemy );
+   float enemyFleeFactor;
 
    if ( battle->specialEnemy != SpecialEnemy_None )
    {
       return False;
    }
 
+   enemyFleeFactor = Enemy_GetFleeFactor( enemy );
    uint16_t playerFactor = (uint16_t)( player->stats.agility ) * Random_u8( 0, UINT8_MAX );
    uint16_t enemyFactor = (uint16_t)( enemy->stats.agility ) * Random_u8( 0, UINT8_MAX );
    enemyFactor = (uint16_t)( enemyFactor * enemyFleeFactor );

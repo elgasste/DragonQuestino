@@ -100,6 +100,7 @@ typedef enum SpecialEnemy_t
    SpecialEnemy_GreenDragon,
    SpecialEnemy_AxeKnight,
    SpecialEnemy_Golem,
+   SpecialEnemy_Dragonlord,
 
    SpecialEnemy_Count
 }

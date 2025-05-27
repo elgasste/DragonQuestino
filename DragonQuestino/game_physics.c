@@ -144,7 +144,6 @@ void Game_TicPhysics( Game_t* game )
 void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 {
    TilePortal_t* portal;
-   SpecialEnemy_t specialEnemy;
 
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
    game->player.tileIndex = tileIndex;
@@ -175,11 +174,10 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    }
 #endif
 
-   specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
+   game->battle.specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
 
-   if ( specialEnemy != SpecialEnemy_None )
+   if ( game->battle.specialEnemy != SpecialEnemy_None )
    {
-      game->battle.specialEnemy = specialEnemy;
       Game_ChangeMainState( game, MainState_Battle );
    }
    else if ( game->tileMap.hasEncounters )
@@ -230,7 +228,6 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
 
    if ( spawnEncounter )
    {
-      game->battle.specialEnemy = SpecialEnemy_None;
       Game_ChangeMainState( game, MainState_Battle );
    }
 }
