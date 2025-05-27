@@ -65,6 +65,9 @@ typedef enum AnimationId_t
    AnimationId_Battle_EnemyFadeIn,
    AnimationId_Battle_EnemyFadeOut,
    AnimationId_Battle_EnemyFadeInPause,
+   AnimationId_Battle_EnemyDamage,
+   AnimationId_Battle_EnemyDodge,
+   AnimationId_Battle_VictoryPause,
 
    AnimationId_Count
 }
@@ -98,6 +101,7 @@ typedef enum SpecialEnemy_t
    SpecialEnemy_GreenDragon,
    SpecialEnemy_AxeKnight,
    SpecialEnemy_Golem,
+   SpecialEnemy_Dragonlord,
 
    SpecialEnemy_Count
 }
@@ -214,8 +218,12 @@ typedef enum DialogId_t
    DialogId_Chest_DeathNecklace,
 
    DialogId_Battle_EnemyApproaches,
+   DialogId_Battle_AttackAttemptSucceeded,
+   DialogId_Battle_AttackAttemptFailed,
    DialogId_Battle_FleeAttemptSucceeded,
    DialogId_Battle_FleeAttemptFailed,
+   DialogId_Battle_Victory,
+   DialogId_Battle_VictoryWithSpoils,
 
    DialogId_Count
 }

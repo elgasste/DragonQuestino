@@ -2,6 +2,7 @@
 #include "random.h"
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle );
+internal uint8_t Battle_GetAttackDamage( Battle_t* battle );
 internal Bool_t Battle_GetFleeResult( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
@@ -35,6 +36,34 @@ void Battle_Generate( Battle_t* battle )
    enemy->gold = Random_u8( enemy->minGold, enemy->maxGold );
 }
 
+void Battle_AttemptAttack( Battle_t* battle )
+{
+   uint8_t damage = Battle_GetAttackDamage( battle );
+   char msg[64];
+
+   if ( damage > 0 )
+   {
+      battle->enemy.stats.hitPoints -= damage;
+
+      if ( battle->enemy.stats.hitPoints > 0 )
+      {
+         sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+      }
+      else
+      {
+         sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDEDVICTORY, battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+      }
+
+      Dialog_SetInsertionText( &( battle->game->dialog ), msg );
+      Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptSucceeded );
+   }
+   else
+   {
+      Dialog_SetInsertionText( &( battle->game->dialog ), battle->enemy.name );
+      Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptFailed );
+   }
+}
+
 void Battle_AttemptFlee( Battle_t* battle )
 {
    Bool_t fleed = Battle_GetFleeResult( battle );
@@ -49,6 +78,20 @@ void Battle_AttemptFlee( Battle_t* battle )
    {
       Game_OpenDialog( battle->game, DialogId_Battle_FleeAttemptFailed );
    }
+}
+
+void Battle_Victory( Battle_t* battle )
+{
+   Player_t* player = &( battle->game->player );
+   Enemy_t* enemy = &( battle->enemy );
+   DialogId_t dialogId;
+
+   battle->experienceGained = Player_CollectExperience( player, enemy->experience );
+   battle->goldGained = Player_CollectGold( player, enemy->gold );
+   dialogId = battle->experienceGained == 0 && battle->goldGained == 0 ? DialogId_Battle_Victory : DialogId_Battle_VictoryWithSpoils;
+
+   Dialog_SetInsertionText( &( battle->game->dialog ), enemy->name );
+   Game_OpenDialog( battle->game, dialogId );
 }
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
@@ -73,17 +116,47 @@ internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
    return enemyIndex;
 }
 
+internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
+{
+   Player_t* player = &( battle->game->player );
+   Enemy_t* enemy = &( battle->enemy );
+   uint8_t defense, damage, minDamage = 0, maxDamage = 0;
+
+   if ( enemy->stats.dodge > 0 && Random_u8( 1, 64 ) <= enemy->stats.dodge )
+   {
+      return 0;
+   }
+
+   defense = enemy->stats.agility / 2;
+
+   if ( defense < player->stats.strength )
+   {
+      minDamage = ( player->stats.strength - defense ) / 4;
+      maxDamage = ( player->stats.strength - defense ) / 2;
+   }
+
+   damage = Random_u8( minDamage, maxDamage );
+
+   if ( damage == 0 )
+   {
+      damage = Random_u8( 0, 1 );
+   }
+
+   return ( damage > enemy->stats.hitPoints ) ? enemy->stats.hitPoints : damage;
+}
+
 internal Bool_t Battle_GetFleeResult( Battle_t* battle )
 {
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
-   float enemyFleeFactor = Enemy_GetFleeFactor( enemy );
+   float enemyFleeFactor;
 
    if ( battle->specialEnemy != SpecialEnemy_None )
    {
       return False;
    }
 
+   enemyFleeFactor = Enemy_GetFleeFactor( enemy );
    uint16_t playerFactor = (uint16_t)( player->stats.agility ) * Random_u8( 0, UINT8_MAX );
    uint16_t enemyFactor = (uint16_t)( enemy->stats.agility ) * Random_u8( 0, UINT8_MAX );
    enemyFactor = (uint16_t)( enemyFactor * enemyFleeFactor );

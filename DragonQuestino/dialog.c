@@ -251,6 +251,7 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
       case DialogId_Chest_ItemCollected:
       case DialogId_Chest_GoldCollected:
       case DialogId_Battle_EnemyApproaches:
+      case DialogId_Battle_Victory:
          return 1;
       case DialogId_Search_NothingFound:
       case DialogId_Search_FoundItem:
@@ -274,8 +275,11 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
       case DialogId_Spell_OverworldCastMidheal1:
       case DialogId_Spell_OverworldCastMidheal2:
       case DialogId_Spell_Blocked:
+      case DialogId_Battle_AttackAttemptSucceeded:
+      case DialogId_Battle_AttackAttemptFailed:
       case DialogId_Battle_FleeAttemptSucceeded:
       case DialogId_Battle_FleeAttemptFailed:
+      case DialogId_Battle_VictoryWithSpoils:
          return 2;
       case DialogId_Use_GwaelynsLove:
          return 4;
@@ -290,6 +294,7 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
 {
    uint32_t e;
    Player_t* player = &( dialog->game->player );
+   Battle_t* battle = &( dialog->game->battle );
 
    switch ( dialog->id )
    {
@@ -471,6 +476,18 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          }
       case DialogId_Battle_EnemyApproaches:
          sprintf( text, STRING_BATTLE_ENEMYAPPROACHES, dialog->insertionText ); return;
+      case DialogId_Battle_AttackAttemptSucceeded:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT); return;
+            case 1: strcpy( text, dialog->insertionText ); return;
+         }
+      case DialogId_Battle_AttackAttemptFailed:
+         switch ( dialog->section )
+         {
+            case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT); return;
+            case 1: sprintf( text, STRING_BATTLE_ATTACKATTEMPTFAILED, dialog->insertionText ); return;
+         }
       case DialogId_Battle_FleeAttemptSucceeded:
          switch ( dialog->section )
          {
@@ -482,6 +499,18 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          {
             case 0: strcpy( text, STRING_BATTLE_FLEEATTEMPT); return;
             case 1: sprintf( text, STRING_BATTLE_FLEEATTEMPTFAILED, dialog->insertionText ); return;
+         }
+      case DialogId_Battle_Victory:
+         sprintf( text, STRING_BATTLE_VICTORY, battle->enemy.name ); return;
+      case DialogId_Battle_VictoryWithSpoils:
+         switch( dialog->section )
+         {
+            case 0: sprintf( text, STRING_BATTLE_VICTORY, battle->enemy.name ); return;
+            case 1:
+               if ( battle->experienceGained > 0 && battle->goldGained > 0 ) sprintf( text, STRING_BATTLE_EXPERIENCEANDGOLD, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS, battle->goldGained );
+               else if ( battle->experienceGained > 0 && battle->goldGained == 0 ) sprintf( text, STRING_BATTLE_EXPERIENCEONLY, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS );
+               else if ( battle->experienceGained == 0 && battle->goldGained > 0 ) sprintf( text, STRING_BATTLE_GOLDONLY, battle->goldGained );
+               return;
          }
    }
 }
@@ -511,16 +540,38 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Battle_EnemyApproaches:
             Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyFadeInPause );
             break;
+         case DialogId_Battle_AttackAttemptSucceeded:
+            Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyDamage );
+            break;
+         case DialogId_Battle_AttackAttemptFailed:
+            Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyDodge );
+            break;
       }
    }
    else if ( dialog->section == 1 )
    {
       switch ( dialog->id )
       {
+         case DialogId_Battle_AttackAttemptSucceeded:
+            Dialog_Draw( dialog );
+            if ( dialog->game->battle.enemy.stats.hitPoints == 0 )
+            {
+               Animation_Start( &( dialog->game->animation ), AnimationId_Battle_VictoryPause );
+            }
+            else
+            {
+               Menu_Reset( dialog->game->activeMenu );
+               Game_ChangeSubState( dialog->game, SubState_Menu );
+            }
+            break;
+         case DialogId_Battle_AttackAttemptFailed:
          case DialogId_Battle_FleeAttemptFailed:
             Dialog_Draw( dialog );
             Menu_Reset( dialog->game->activeMenu );
             Game_ChangeSubState( dialog->game, SubState_Menu );
+            break;
+         case DialogId_Battle_VictoryWithSpoils:
+            Game_DrawQuickStatus( dialog->game );
             break;
       }
    }

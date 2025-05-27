@@ -6,7 +6,6 @@
 internal void Game_DrawTileMap( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
-internal void Game_DrawEnemy( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -214,6 +213,32 @@ void Game_DrawOverworldItemMenu( Game_t* game )
    }
 }
 
+void Game_DrawEnemy( Game_t* game )
+{
+   uint8_t x, y, i;
+   uint16_t screenOffsetX, screenOffsetY;
+   Enemy_t* enemy = &( game->battle.enemy );
+
+   x = 112;
+   y = 68;
+
+   for ( i = 0; i < ENEMY_TILE_COUNT; i++ )
+   {
+      if ( enemy->tileTextureIndexes[i] >= 0 )
+      {
+         uint8_t* texture = enemy->tileTextures[enemy->tileTextureIndexes[i]];
+
+         screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
+         screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
+
+         Screen_DrawMemorySection( &( game->screen ), texture, ENEMY_TILE_SIZE,
+                                   0, 0,
+                                   ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,
+                                   x + screenOffsetX, y + screenOffsetY, False );
+      }
+   }
+}
+
 void Game_WipeEnemy( Game_t* game )
 {
    Screen_DrawRectColor( &( game->screen ), 96, 52, 96, 96, COLOR_BLACK );
@@ -304,31 +329,5 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_2, x, y + TEXT_TILE_SIZE );
       y += ( TEXT_TILE_SIZE * 2 );
-   }
-}
-
-internal void Game_DrawEnemy( Game_t* game )
-{
-   uint8_t x, y, i;
-   uint16_t screenOffsetX, screenOffsetY;
-   Enemy_t* enemy = &( game->battle.enemy );
-
-   x = 112;
-   y = 68;
-
-   for ( i = 0; i < ENEMY_TILE_COUNT; i++ )
-   {
-      if ( enemy->tileTextureIndexes[i] >= 0 )
-      {
-         uint8_t* texture = enemy->tileTextures[enemy->tileTextureIndexes[i]];
-
-         screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
-         screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
-
-         Screen_DrawMemorySection( &( game->screen ), texture, ENEMY_TILE_SIZE,
-                                   0, 0,
-                                   ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,
-                                   x + screenOffsetX, y + screenOffsetY, False );
-      }
    }
 }

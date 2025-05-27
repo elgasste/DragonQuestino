@@ -3,6 +3,8 @@
 
 #define STRING_INDEFINITE_ARTICLE_A                                  "A"
 #define STRING_INDEFINITE_ARTICLE_AN                                 "An"
+#define STRING_POINT                                                 "point"
+#define STRING_POINTS                                                "points"
 
 #define STRING_OVERWORLD_MENU_TITLE                                  "COMMAND"
 #define STRING_OVERWORLD_MENU_TALK                                   "TALK"
@@ -193,9 +195,17 @@
 #define STRING_ENEMY_DRAGONLORD                                      "dragonlord"
 
 #define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches! Command?"
+#define STRING_BATTLE_ATTACKATTEMPT                                  "You attack!"
+#define STRING_BATTLE_ATTACKATTEMPTSUCCEEDED                         "The %s has lost %u hit %s. Command?"
+#define STRING_BATTLE_ATTACKATTEMPTSUCCEEDEDVICTORY                  "The %s has lost %u hit %s."
+#define STRING_BATTLE_ATTACKATTEMPTFAILED                            "But the %s dodges your attack! Command?"
 #define STRING_BATTLE_FLEEATTEMPT                                    "You make a run for it..."
 #define STRING_BATTLE_FLEEATTEMPTSUCCEEDED                           "Success, you have eluded the %s!"
 #define STRING_BATTLE_FLEEATTEMPTFAILED                              "But the %s blocks your escape! Command?"
+#define STRING_BATTLE_VICTORY                                        "The %s is defeated!"
+#define STRING_BATTLE_EXPERIENCEANDGOLD                              "You have gained %u experience %s and %u gold."
+#define STRING_BATTLE_EXPERIENCEONLY                                 "You have gained %u experience %s."
+#define STRING_BATTLE_GOLDONLY                                       "You have gained %u gold."
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

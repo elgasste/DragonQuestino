@@ -2,6 +2,7 @@
 #include "game.h"
 #include "vector.h"
 
+// TODO: refactor this file to combine some of this stuff, a lot of it is duplicated
 internal void Animation_Stop( Animation_t* animation );
 internal void Animation_Tic_Overworld_Pause( Animation_t* animation );
 internal void Animation_Tic_TileMap_FadeOut( Animation_t* animation );
@@ -19,6 +20,9 @@ internal void Animation_Tic_Battle_Checkerboard( Animation_t* animation );
 internal void Animation_Tic_Battle_EnemyFadeIn( Animation_t* animation );
 internal void Animation_Tic_Battle_EnemyFadeOut( Animation_t* animation );
 internal void Animation_Tic_Battle_EnemyFadeInPause( Animation_t* animation );
+internal void Animation_Tic_Battle_EnemyDamage( Animation_t* animation );
+internal void Animation_Tic_Battle_EnemyDodge( Animation_t* animation );
+internal void Animation_Tic_Battle_VictoryPause( Animation_t* animation );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -97,6 +101,21 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
          Dialog_Draw( &( animation->game->dialog ) );
          animation->totalDuration = ANIMATION_BATTLE_ENEMYFADEINPAUSE_DURATION;
          break;
+      case AnimationId_Battle_EnemyDamage:
+         animation->game->dialog.showCarat = False;
+         Dialog_Draw( &( animation->game->dialog ) );
+         animation->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION;
+         animation->flag = False;
+         break;
+      case AnimationId_Battle_EnemyDodge:
+         animation->game->dialog.showCarat = False;
+         Dialog_Draw( &( animation->game->dialog ) );
+         animation->totalDuration = ANIMATION_BATTLE_ENEMYDODGE_DURATION;
+         break;
+      case AnimationId_Battle_VictoryPause:
+         Dialog_Draw( &( animation->game->dialog ) );
+         animation->totalDuration = ANIMATION_BATTLE_VICTORYPAUSE_DURATION;
+         break;
    }
 
    animation->totalElapsedSeconds = 0.0f;
@@ -124,6 +143,9 @@ void Animation_Tic( Animation_t* animation )
       case AnimationId_Battle_EnemyFadeIn: Animation_Tic_Battle_EnemyFadeIn( animation ); break;
       case AnimationId_Battle_EnemyFadeOut: Animation_Tic_Battle_EnemyFadeOut( animation ); break;
       case AnimationId_Battle_EnemyFadeInPause: Animation_Tic_Battle_EnemyFadeInPause( animation ); break;
+      case AnimationId_Battle_EnemyDamage: Animation_Tic_Battle_EnemyDamage( animation ); break;
+      case AnimationId_Battle_EnemyDodge: Animation_Tic_Battle_EnemyDodge( animation ); break;
+      case AnimationId_Battle_VictoryPause: Animation_Tic_Battle_VictoryPause( animation ); break;
    }
 }
 
@@ -160,10 +182,24 @@ internal void Animation_Stop( Animation_t* animation )
       case AnimationId_Battle_EnemyFadeOut:
          Screen_RestorePalette( &( animation->game->screen ) );
          Game_WipeEnemy( animation->game );
+         if ( animation->game->battle.enemy.stats.hitPoints == 0 )
+         {
+            Battle_Victory( &( animation->game->battle ) );
+         }
          break;
       case AnimationId_Battle_EnemyFadeInPause:
          Game_OpenMenu( animation->game, MenuId_Battle );
          Game_DrawQuickStatus( animation->game );
+         break;
+      case AnimationId_Battle_EnemyDamage:
+         Game_DrawEnemy( animation-> game );
+         Dialog_NextSection( &( animation->game->dialog ) );
+         break;
+      case AnimationId_Battle_EnemyDodge:
+         Dialog_NextSection( &( animation->game->dialog ) );
+         break;
+      case AnimationId_Battle_VictoryPause:
+         Animation_Start( animation, AnimationId_Battle_EnemyFadeOut );
          break;
    }
 }
@@ -514,6 +550,56 @@ internal void Animation_Tic_Battle_EnemyFadeOut( Animation_t* animation )
 }
 
 internal void Animation_Tic_Battle_EnemyFadeInPause( Animation_t* animation )
+{
+   animation->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( animation->totalElapsedSeconds > animation->totalDuration )
+   {
+      Animation_Stop( animation );
+   }
+}
+
+internal void Animation_Tic_Battle_EnemyDamage( Animation_t* animation )
+{
+   animation->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( animation->totalElapsedSeconds > animation->totalDuration )
+   {
+      Animation_Stop( animation );
+   }
+   else
+   {
+      animation->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+      while ( animation->frameElapsedSeconds > ANIMATION_BATTLE_ENEMYDAMAGE_FRAMEDURATION )
+      {
+         animation->frameElapsedSeconds -= ANIMATION_BATTLE_ENEMYDAMAGE_FRAMEDURATION;
+
+         if ( animation->flag )
+         {
+            Game_DrawEnemy( animation->game );
+         }
+         else
+         {
+            Game_WipeEnemy( animation->game );
+         }
+
+         TOGGLE_BOOL( animation->flag );
+      }
+   }
+}
+
+internal void Animation_Tic_Battle_EnemyDodge( Animation_t* animation )
+{
+   animation->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( animation->totalElapsedSeconds > animation->totalDuration )
+   {
+      Animation_Stop( animation );
+   }
+}
+
+internal void Animation_Tic_Battle_VictoryPause( Animation_t* animation )
 {
    animation->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
 

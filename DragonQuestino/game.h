@@ -76,6 +76,7 @@ void Game_DrawOverworld( Game_t* game );
 void Game_DrawQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
 void Game_DrawOverworldItemMenu( Game_t* game );
+void Game_DrawEnemy( Game_t* game );
 void Game_WipeEnemy( Game_t* game );
 
 // game_spells.c
