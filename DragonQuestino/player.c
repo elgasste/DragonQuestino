@@ -28,7 +28,7 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->holyProtectionSteps = 0;
    player->townsVisited = 0;
 
-   player->stats.strength = 4;
+   player->stats.strength = 255;
    player->stats.agility = 4;
    player->stats.hitPoints = 15;
    player->stats.maxHitPoints = 15;
@@ -43,17 +43,18 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->gold = 0;
    player->items = 0;
    player->spells = 0;
+   player->level = Player_GetLevelFromExperience( player->experience );
 
    Player_UpdateTextColor( player, UINT8_MAX );
 }
 
-uint16_t Player_GetLevel( Player_t* player )
+uint8_t Player_GetLevelFromExperience( uint16_t experience )
 {
-   uint16_t i;
+   uint8_t i;
 
    for ( i = 0; i < EXPERIENCE_TABLE_SIZE; i++ )
    {
-      if ( player->experience < g_experienceTable[i] )
+      if ( experience < g_experienceTable[i] )
       {
          return i + 1;
       }
@@ -64,9 +65,7 @@ uint16_t Player_GetLevel( Player_t* player )
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
 {
-   uint16_t level = Player_GetLevel( player );
-
-   return ( level == ( EXPERIENCE_TABLE_SIZE + 1 ) ) ? 0 : ( g_experienceTable[level - 1] - player->experience );
+   return ( player->level == ( EXPERIENCE_TABLE_SIZE + 1 ) ) ? 0 : ( g_experienceTable[player->level - 1] - player->experience );
 }
 
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold )
