@@ -48,11 +48,15 @@ void Battle_AttemptAttack( Battle_t* battle )
 
       if ( battle->enemy.stats.hitPoints > 0 )
       {
-         sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+         sprintf( msg,
+                  battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKATTEMPTSUCCEEDED,
+                  battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
       }
       else
       {
-         sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDEDVICTORY, battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+         sprintf( msg,
+                  battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVEVICTORY : STRING_BATTLE_ATTACKATTEMPTSUCCEEDEDVICTORY,
+                  battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
       }
 
       Dialog_SetInsertionText( &( battle->game->dialog ), msg );
