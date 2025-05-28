@@ -204,7 +204,7 @@ extern "C" {
 #endif
 
 void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap );
-uint8_t Player_GetLevelFromExperience( uint16_t experience );
+uint8_t Player_GetLevelFromExperience( Player_t* player );
 uint16_t Player_GetExperienceRemaining( Player_t* player );
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold );
 uint16_t Player_CollectExperience( Player_t* player, uint16_t experience );

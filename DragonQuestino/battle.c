@@ -1,5 +1,6 @@
 #include "game.h"
 #include "random.h"
+#include "tables.h"
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle );
 internal uint8_t Battle_GetAttackDamage( Battle_t* battle );
@@ -85,10 +86,26 @@ void Battle_Victory( Battle_t* battle )
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
    DialogId_t dialogId;
+   uint8_t newLevel;
 
    battle->experienceGained = Player_CollectExperience( player, enemy->experience );
    battle->goldGained = Player_CollectGold( player, enemy->gold );
-   dialogId = battle->experienceGained == 0 && battle->goldGained == 0 ? DialogId_Battle_Victory : DialogId_Battle_VictoryWithSpoils;
+   newLevel = Player_GetLevelFromExperience( player );
+
+   if ( newLevel > player->level )
+   {
+      battle->strengthGained = g_strengthTable[newLevel] - player->stats.strength;
+      battle->agilityGained = g_agilityTable[newLevel] - player->stats.agility;
+      battle->hitPointsGained = g_hitPointsTable[newLevel] - player->stats.maxHitPoints;
+      battle->magicPointsGained = g_magicPointsTable[newLevel] - player->stats.maxMagicPoints;
+      player->stats.strength += battle->strengthGained;
+      player->stats.agility += battle->agilityGained;
+      dialogId = DialogId_Battle_VictoryWithLevelUp;
+   }
+   else
+   {
+      dialogId = battle->experienceGained == 0 && battle->goldGained == 0 ? DialogId_Battle_Victory : DialogId_Battle_VictoryWithSpoils;
+   }
 
    Dialog_SetInsertionText( &( battle->game->dialog ), enemy->name );
    Game_OpenDialog( battle->game, dialogId );

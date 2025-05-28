@@ -32,14 +32,14 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->gold = 0;
    player->items = 0;
    player->spells = 0;
-   player->level = Player_GetLevelFromExperience( player->experience );
+   player->level = Player_GetLevelFromExperience( player );
 
-   player->stats.strength = g_strengthTable[player->level - 1];
-   player->stats.agility = g_agilityTable[player->level - 1];
-   player->stats.hitPoints = g_hitPointsTable[player->level - 1];
-   player->stats.maxHitPoints = g_hitPointsTable[player->level - 1];
-   player->stats.magicPoints = g_magicPointsTable[player->level - 1];
-   player->stats.maxMagicPoints = g_magicPointsTable[player->level - 1];
+   player->stats.strength = g_strengthTable[player->level];
+   player->stats.agility = g_agilityTable[player->level];
+   player->stats.hitPoints = g_hitPointsTable[player->level];
+   player->stats.maxHitPoints = g_hitPointsTable[player->level];
+   player->stats.magicPoints = g_magicPointsTable[player->level];
+   player->stats.maxMagicPoints = g_magicPointsTable[player->level];
    player->stats.sleepResist = 0;
    player->stats.stopSpellResist = 0;
    player->stats.hurtResist = 0;
@@ -48,24 +48,24 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    Player_UpdateTextColor( player, UINT8_MAX );
 }
 
-uint8_t Player_GetLevelFromExperience( uint16_t experience )
+uint8_t Player_GetLevelFromExperience( Player_t* player )
 {
    uint8_t i;
 
-   for ( i = 0; i < STAT_TABLE_SIZE; i++ )
+   for ( i = 0; i < STAT_TABLE_SIZE - 1; i++ )
    {
-      if ( experience <= g_experienceTable[i] )
+      if ( player->experience < g_experienceTable[i + 1] )
       {
-         return i + 1;
+         return i;
       }
    }
 
-   return STAT_TABLE_SIZE;
+   return i;
 }
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
 {
-   return ( player->level == ( STAT_TABLE_SIZE + 1 ) ) ? 0 : ( g_experienceTable[player->level] - player->experience );
+   return ( player->level == ( STAT_TABLE_SIZE - 1 ) ) ? 0 : ( g_experienceTable[player->level + 1] - player->experience );
 }
 
 uint16_t Player_CollectGold( Player_t* player, uint16_t gold )
