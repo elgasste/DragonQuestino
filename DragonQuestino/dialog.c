@@ -5,6 +5,9 @@ internal void Dialog_LoadMessage( Dialog_t* dialog );
 internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id );
 internal void Dialog_GetMessageText( Dialog_t* dialog, char* text );
 internal void Dialog_FinishSection( Dialog_t* dialog );
+internal void Dialog_LoadBattleVictorySpoils( Dialog_t* dialog, char* text );
+internal void Dialog_LoadBattleStrengthAndAgilityUp( Dialog_t* dialog, char* text );
+internal void Dialog_LoadBattleHitPointsAndMagicPointsUp( Dialog_t* dialog, char* text );
 
 void Dialog_Init( Dialog_t* dialog, Game_t* game )
 {
@@ -283,6 +286,8 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
          return 2;
       case DialogId_Use_GwaelynsLove:
          return 4;
+      case DialogId_Battle_VictoryWithLevelUp:
+         return 5;
       case DialogId_Chest_Tablet:
          return 8;
    }
@@ -479,38 +484,43 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
       case DialogId_Battle_AttackAttemptSucceeded:
          switch ( dialog->section )
          {
-            case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT); return;
+            case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT ); return;
             case 1: strcpy( text, dialog->insertionText ); return;
          }
       case DialogId_Battle_AttackAttemptFailed:
          switch ( dialog->section )
          {
-            case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT); return;
+            case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT ); return;
             case 1: sprintf( text, STRING_BATTLE_ATTACKATTEMPTFAILED, dialog->insertionText ); return;
          }
       case DialogId_Battle_FleeAttemptSucceeded:
          switch ( dialog->section )
          {
-            case 0: strcpy( text, STRING_BATTLE_FLEEATTEMPT); return;
+            case 0: strcpy( text, STRING_BATTLE_FLEEATTEMPT ); return;
             case 1: sprintf( text, STRING_BATTLE_FLEEATTEMPTSUCCEEDED, dialog->insertionText ); return;
          }
       case DialogId_Battle_FleeAttemptFailed:
          switch ( dialog->section )
          {
-            case 0: strcpy( text, STRING_BATTLE_FLEEATTEMPT); return;
+            case 0: strcpy( text, STRING_BATTLE_FLEEATTEMPT ); return;
             case 1: sprintf( text, STRING_BATTLE_FLEEATTEMPTFAILED, dialog->insertionText ); return;
          }
       case DialogId_Battle_Victory:
          sprintf( text, STRING_BATTLE_VICTORY, battle->enemy.name ); return;
       case DialogId_Battle_VictoryWithSpoils:
-         switch( dialog->section )
+         switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_BATTLE_VICTORY, battle->enemy.name ); return;
-            case 1:
-               if ( battle->experienceGained > 0 && battle->goldGained > 0 ) sprintf( text, STRING_BATTLE_EXPERIENCEANDGOLD, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS, battle->goldGained );
-               else if ( battle->experienceGained > 0 && battle->goldGained == 0 ) sprintf( text, STRING_BATTLE_EXPERIENCEONLY, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS );
-               else if ( battle->experienceGained == 0 && battle->goldGained > 0 ) sprintf( text, STRING_BATTLE_GOLDONLY, battle->goldGained );
-               return;
+            case 1: Dialog_LoadBattleVictorySpoils( dialog, text ); return;
+         }
+      case DialogId_Battle_VictoryWithLevelUp:
+         switch ( dialog->section )
+         {
+            case 0: sprintf( text, STRING_BATTLE_VICTORY, battle->enemy.name ); return;
+            case 1: Dialog_LoadBattleVictorySpoils( dialog, text ); return;
+            case 2: strcpy( text, STRING_BATTLE_LEVELUP ); return;
+            case 3: Dialog_LoadBattleStrengthAndAgilityUp( dialog, text ); return;
+            case 4: Dialog_LoadBattleHitPointsAndMagicPointsUp( dialog, text ); return;
          }
    }
 }
@@ -571,8 +581,86 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
             Game_ChangeSubState( dialog->game, SubState_Menu );
             break;
          case DialogId_Battle_VictoryWithSpoils:
+         case DialogId_Battle_VictoryWithLevelUp:
             Game_DrawQuickStatus( dialog->game );
             break;
       }
+   }
+   else if ( dialog->section == 2 )
+   {
+      switch ( dialog->id )
+      {
+         case DialogId_Battle_VictoryWithLevelUp:
+            dialog->game->player.level = Player_GetLevelFromExperience( &( dialog->game->player ) );
+            Game_DrawQuickStatus( dialog->game );
+            break;
+      }
+   }
+   else if ( dialog->section == 4 )
+   {
+      switch ( dialog->id )
+      {
+         case DialogId_Battle_VictoryWithLevelUp:
+            dialog->game->player.stats.maxHitPoints += dialog->game->battle.hitPointsGained;
+            dialog->game->player.stats.hitPoints += dialog->game->battle.hitPointsGained;
+            dialog->game->player.stats.maxMagicPoints += dialog->game->battle.magicPointsGained;
+            dialog->game->player.stats.magicPoints += dialog->game->battle.magicPointsGained;
+            Game_DrawQuickStatus( dialog->game );
+            break;
+      }
+   }
+}
+
+internal void Dialog_LoadBattleVictorySpoils( Dialog_t* dialog, char* text )
+{
+   Battle_t* battle = &( dialog->game->battle );
+
+   if ( battle->experienceGained > 0 && battle->goldGained > 0 )
+   {
+      sprintf( text, STRING_BATTLE_EXPERIENCEANDGOLD, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS, battle->goldGained );
+   }
+   else if ( battle->experienceGained > 0 && battle->goldGained == 0 )
+   {
+      sprintf( text, STRING_BATTLE_EXPERIENCEONLY, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS );
+   }
+   else if ( battle->experienceGained == 0 && battle->goldGained > 0 )
+   {
+      sprintf( text, STRING_BATTLE_GOLDONLY, battle->goldGained );
+   }
+}
+
+internal void Dialog_LoadBattleStrengthAndAgilityUp( Dialog_t* dialog, char* text )
+{
+   Battle_t* battle = &( dialog->game->battle );
+
+   if ( battle->strengthGained > 0 && battle->agilityGained > 0 )
+   {
+      sprintf( text, STRING_BATTLE_STRENGTHANDAGILITYGAIN, battle->strengthGained, battle->agilityGained );
+   }
+   else if ( battle->strengthGained > 0 && battle->agilityGained == 0 )
+   {
+      sprintf( text, STRING_BATTLE_STRENGTHGAIN, battle->strengthGained );
+   }
+   else if ( battle->strengthGained == 0 && battle->agilityGained > 0 )
+   {
+      sprintf( text, STRING_BATTLE_AGILITYGAIN, battle->agilityGained );
+   }
+}
+
+internal void Dialog_LoadBattleHitPointsAndMagicPointsUp( Dialog_t* dialog, char* text )
+{
+   Battle_t* battle = &( dialog->game->battle );
+
+   if ( battle->hitPointsGained > 0 && battle->magicPointsGained > 0 )
+   {
+      sprintf( text, STRING_BATTLE_HITPOINTSANDMAGICPOINTSGAIN, battle->hitPointsGained, battle->magicPointsGained );
+   }
+   else if ( battle->hitPointsGained > 0 && battle->magicPointsGained == 0 )
+   {
+      sprintf( text, STRING_BATTLE_HITPOINTSGAIN, battle->hitPointsGained );
+   }
+   else if ( battle->hitPointsGained == 0 && battle->magicPointsGained > 0 )
+   {
+      sprintf( text, STRING_BATTLE_MAGICPOINTSGAIN, battle->magicPointsGained );
    }
 }

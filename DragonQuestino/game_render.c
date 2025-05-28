@@ -138,9 +138,9 @@ void Game_DrawOverworld( Game_t* game )
 
 void Game_DrawQuickStatus( Game_t* game )
 {
-   uint16_t lvl = Player_GetLevel( &( game->player ) );
    uint32_t memSize;
    int32_t xOffset = ( game->mainState == MainState_Battle ) ? -8 : 0;
+   uint8_t level = game->player.level + 1;
    char line[9];
 
    memSize = MATH_MIN( (uint32_t)( strlen( game->player.name ) ), 4 );
@@ -148,7 +148,7 @@ void Game_DrawQuickStatus( Game_t* game )
    line[memSize] = '\0';
    Screen_DrawTextWindowWithTitle( &( game->screen ), 16 + xOffset, 16, 8, 12, line );
 
-   sprintf( line, lvl < 10 ? "%s   %u" : "%s  %u", STRING_OVERWORLD_QUICKSTATS_LEVEL, lvl);
+   sprintf( line, level < 10 ? "%s   %u" : "%s  %u", STRING_OVERWORLD_QUICKSTATS_LEVEL, level );
    Screen_DrawText( &( game->screen ), line, 24 + xOffset, 32 );
 
    sprintf( line, game->player.stats.hitPoints < 10 ? "%s   %u" : game->player.stats.hitPoints < 100 ? "%s  %u" : "%s %u", STRING_OVERWORLD_QUICKSTATS_HP, game->player.stats.hitPoints );

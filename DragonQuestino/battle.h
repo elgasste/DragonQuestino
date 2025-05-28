@@ -15,6 +15,10 @@ typedef struct Battle_t
 
    uint16_t experienceGained;
    uint16_t goldGained;
+   uint8_t strengthGained;
+   uint8_t agilityGained;
+   uint8_t hitPointsGained;
+   uint8_t magicPointsGained;
 }
 Battle_t;
 

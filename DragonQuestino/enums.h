@@ -224,6 +224,7 @@ typedef enum DialogId_t
    DialogId_Battle_FleeAttemptFailed,
    DialogId_Battle_Victory,
    DialogId_Battle_VictoryWithSpoils,
+   DialogId_Battle_VictoryWithLevelUp,
 
    DialogId_Count
 }
