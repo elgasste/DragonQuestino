@@ -206,7 +206,7 @@
 #define STRING_BATTLE_EXPERIENCEANDGOLD                              "You have gained %u experience %s and %u gold."
 #define STRING_BATTLE_EXPERIENCEONLY                                 "You have gained %u experience %s."
 #define STRING_BATTLE_GOLDONLY                                       "You have gained %u gold."
-#define STRING_BATTLE_LEVELUP                                        "You have been promoted to the next level!"
+#define STRING_BATTLE_LEVELUP                                        "This experience has pushed you to a higher level!"
 #define STRING_BATTLE_STRENGTHGAIN                                   "Your strength has increased by %u."
 #define STRING_BATTLE_AGILITYGAIN                                    "Your agility has increased by %u."
 #define STRING_BATTLE_STRENGTHANDAGILITYGAIN                         "Your strength has increased by %u, and agility by %u."
