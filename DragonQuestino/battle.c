@@ -104,6 +104,7 @@ void Battle_Victory( Battle_t* battle )
       battle->magicPointsGained = g_magicPointsTable[newLevel] - player->stats.maxMagicPoints;
       player->stats.strength += battle->strengthGained;
       player->stats.agility += battle->agilityGained;
+      Player_UpdateSpells( player );
       dialogId = DialogId_Battle_VictoryWithLevelUp;
    }
    else

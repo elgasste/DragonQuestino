@@ -170,4 +170,17 @@ global uint8_t g_magicPointsTable[STAT_TABLE_SIZE] = {
    200
 };
 
+global uint8_t g_spellsLevelTable[10] = {
+   2,
+   3,
+   6,
+   8,
+   9,
+   11,
+   12,
+   14,
+   16,
+   18
+};
+
 #endif // TABLES_H
