@@ -249,6 +249,7 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Use_WingCantUse:
       case DialogId_Use_Wing:
       case DialogId_Use_TorchCantUse:
+      case DialogId_Use_TorchAlreadyUsed:
       case DialogId_Use_Torch:
       case DialogId_Use_GwaelynsLoveCantUse:
       case DialogId_Use_RainbowDropCantUse:
@@ -386,6 +387,7 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          }
       case DialogId_Use_WingCantUse: strcpy( text, STRING_ITEMUSE_WING_CANTUSE ); return;
       case DialogId_Use_TorchCantUse: strcpy( text, STRING_ITEMUSE_TORCH_CANTUSE ); return;
+      case DialogId_Use_TorchAlreadyUsed: strcpy( text, STRING_ITEMUSE_TORCH_ALREADYUSED ); return;
       case DialogId_Use_Torch: strcpy( text, STRING_ITEMUSE_TORCH ); return;
       case DialogId_Use_FairyFlute:
          switch ( dialog->section )

@@ -30,6 +30,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags,
    tileMap->blocksMagic = False;
    tileMap->isDungeon = False;
    tileMap->isDark = False;
+   tileMap->torchIsLit = False;
 }
 
 void TileMap_Tic( TileMap_t* tileMap )
@@ -66,6 +67,7 @@ void TileMap_ResetViewport( TileMap_t* tileMap )
    tileMap->viewportScreenPos.y = 0;
    tileMap->glowDiameter = 1;
    tileMap->targetGlowDiameter = 1;
+   tileMap->torchIsLit = False;
 
    TileMap_UpdateViewport( tileMap );
 }
@@ -243,7 +245,11 @@ internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter )
 
 internal void TileMap_ReduceGlowDiameter( TileMap_t* tileMap )
 {
-   if ( tileMap->glowDiameter > tileMap->targetGlowDiameter )
+   if ( tileMap->glowDiameter == 3 && tileMap->torchIsLit )
+   {
+      tileMap->targetGlowDiameter = 3;
+   }
+   else if ( tileMap->glowDiameter > tileMap->targetGlowDiameter )
    {
       TileMap_SetGlowDiameter( tileMap, tileMap->glowDiameter - 2 );
    }

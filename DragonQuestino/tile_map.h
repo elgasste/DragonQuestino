@@ -122,6 +122,7 @@ typedef struct TileMap_t
    Bool_t blocksMagic;
    Bool_t isDungeon;
    Bool_t isDark;
+   Bool_t torchIsLit;
    uint32_t glowDiameter;
    uint32_t targetGlowDiameter;
    uint32_t glowTileCount;
