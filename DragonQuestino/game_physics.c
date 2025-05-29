@@ -185,7 +185,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    }
    else if ( game->tileMap.hasEncounters )
    {
-      if ( game->player.hasHolyProtection )
+      if ( !( game->tileMap.isDungeon ) && game->player.hasHolyProtection )
       {
          game->player.holyProtectionSteps++;
       }
@@ -225,7 +225,7 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
    {
       Battle_Generate( &( game->battle ) );
 
-      if ( !( game->player.hasHolyProtection ) || game->battle.enemy.stats.strength > ( game->player.stats.agility / 2 ) )
+      if ( game->tileMap.isDungeon || !( game->player.hasHolyProtection ) || game->battle.enemy.stats.strength > ( game->player.stats.agility / 2 ) )
       {
          Game_ChangeMainState( game, MainState_Battle );
       }
