@@ -126,7 +126,6 @@ void Game_ChangeMainState( Game_t* game, MainState_t newState )
          break;
       case MainState_Battle:
          game->screen.needsRedraw = True;
-         Battle_Generate( &( game->battle ) );
          Animation_Start( &( game->animation ), AnimationId_Battle_Checkerboard );
          break;
    }

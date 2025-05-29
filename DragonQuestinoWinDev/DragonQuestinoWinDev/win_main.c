@@ -2,6 +2,7 @@
 
 #include "win_common.h"
 #include "game.h"
+#include "tables.h"
 
 internal void FatalError( const char* message );
 internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam );
@@ -478,6 +479,7 @@ internal void MaxOutStats()
 {
    uint32_t i;
 
+   g_globals.game.player.level = STAT_TABLE_SIZE - 1;
    g_globals.game.player.experience = UINT16_MAX;
    g_globals.game.player.gold = UINT16_MAX;
 
