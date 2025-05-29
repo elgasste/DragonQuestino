@@ -120,6 +120,7 @@
 #define STRING_ITEMUSE_FAIRYWATER                                    "You drink a vial of fairy water."
 #define STRING_ITEMUSE_WING_CANTUSE                                  "You cannot use a Chimaera wing here."
 #define STRING_ITEMUSE_TORCH_CANTUSE                                 "You cannot use a torch here."
+#define STRING_ITEMUSE_TORCH_ALREADYUSED                             "A torch has already been lit."
 #define STRING_ITEMUSE_TORCH                                         "You light a torch."
 #define STRING_ITEMUSE_FAIRYFLUTE_1                                  "You play the Fairy Flute."
 #define STRING_ITEMUSE_FAIRYFLUTE_2                                  "A mysterious melody fills the air."

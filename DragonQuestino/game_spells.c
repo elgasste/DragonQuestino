@@ -36,6 +36,7 @@ void Game_CastGlow( Game_t* game )
 
       if ( game->player.isCursed )
       {
+         game->tileMap.torchIsLit = False;
          TileMap_SetTargetGlowDiameter( &( game->tileMap ), 1 );
          Game_OpenDialog( game, DialogId_Spell_OverworldCastGlowCursed );
       }

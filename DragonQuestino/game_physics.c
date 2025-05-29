@@ -160,7 +160,9 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    {
       game->tileMap.glowTileCount++;
 
-      if ( game->tileMap.glowTileCount > GLOW_MAX_TILES )
+      if ( ( game->tileMap.glowDiameter == 7 && game->tileMap.glowTileCount > GLOW_THREERADIUS_TILES ) ||
+           ( game->tileMap.glowDiameter == 5 && game->tileMap.glowTileCount > GLOW_TWORADIUS_TILES ) ||
+           ( game->tileMap.glowDiameter == 3 && game->tileMap.glowTileCount > GLOW_ONERADIUS_TILES ) )
       {
          game->tileMap.glowTileCount = 0;
          TileMap_ReduceTargetGlowDiameter( &( game->tileMap ) );
@@ -178,24 +180,17 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 
    if ( game->battle.specialEnemy != SpecialEnemy_None )
    {
+      Battle_Generate( &( game->battle ) );
       Game_ChangeMainState( game, MainState_Battle );
    }
    else if ( game->tileMap.hasEncounters )
    {
-      if ( game->player.hasHolyProtection )
+      if ( !( game->tileMap.isDungeon ) && game->player.hasHolyProtection )
       {
          game->player.holyProtectionSteps++;
+      }
 
-         if ( game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
-         {
-            game->player.hasHolyProtection = False;
-            Game_OpenDialog( game, DialogId_HolyProtection_Off );
-         }
-      }
-      else
-      {
-         Game_RollEncounter( game, tileIndex );
-      }
+      Game_RollEncounter( game, tileIndex );
    }
 }
 
@@ -228,7 +223,20 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
 
    if ( spawnEncounter )
    {
-      Game_ChangeMainState( game, MainState_Battle );
+      Battle_Generate( &( game->battle ) );
+
+      if ( game->tileMap.isDungeon || !( game->player.hasHolyProtection ) || game->battle.enemy.stats.strength > ( game->player.stats.agility / 2 ) )
+      {
+         Game_ChangeMainState( game, MainState_Battle );
+      }
+   }
+   else
+   {
+      if ( game->player.hasHolyProtection && game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
+      {
+         game->player.hasHolyProtection = False;
+         Game_OpenDialog( game, DialogId_HolyProtection_Off );
+      }
    }
 }
 

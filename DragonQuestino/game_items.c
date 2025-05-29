@@ -46,15 +46,22 @@ void Game_UseTorch( Game_t* game )
 {
    if ( game->tileMap.isDark )
    {
-      if ( game->tileMap.glowDiameter <= TORCH_DIAMETER )
+      if ( game->tileMap.torchIsLit )
       {
-         TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
-         game->tileMap.glowTileCount = 0;
-         TileMap_StartGlowTransition( &( game->tileMap ) );
+         Game_OpenDialog( game, DialogId_Use_TorchAlreadyUsed );
       }
+      else
+      {
+         if ( game->tileMap.glowDiameter <= TORCH_DIAMETER )
+         {
+            TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
+            game->tileMap.torchIsLit = True;
+            TileMap_StartGlowTransition( &( game->tileMap ) );
+         }
 
-      ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
-      Game_OpenDialog( game, DialogId_Use_Torch );
+         ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
+         Game_OpenDialog( game, DialogId_Use_Torch );
+      }
    }
    else
    {

@@ -201,6 +201,7 @@ typedef enum DialogId_t
    DialogId_Use_FairyWaterCursed,
    DialogId_Use_FairyWater,
    DialogId_Use_TorchCantUse,
+   DialogId_Use_TorchAlreadyUsed,
    DialogId_Use_Torch,
    DialogId_Use_FairyFlute,
    DialogId_Use_SilverHarp,
