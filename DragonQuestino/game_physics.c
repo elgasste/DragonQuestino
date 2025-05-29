@@ -160,7 +160,9 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    {
       game->tileMap.glowTileCount++;
 
-      if ( game->tileMap.glowTileCount > GLOW_MAX_TILES )
+      if ( ( game->tileMap.glowDiameter == 7 && game->tileMap.glowTileCount > GLOW_THREERADIUS_TILES ) ||
+           ( game->tileMap.glowDiameter == 5 && game->tileMap.glowTileCount > GLOW_TWORADIUS_TILES ) ||
+           ( game->tileMap.glowDiameter == 3 && game->tileMap.glowTileCount > GLOW_ONERADIUS_TILES ) )
       {
          game->tileMap.glowTileCount = 0;
          TileMap_ReduceTargetGlowDiameter( &( game->tileMap ) );

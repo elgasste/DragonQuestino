@@ -41,7 +41,9 @@
 
 #define TORCH_DIAMETER                          3
 #define GLOW_SPELL_DIAMETER                     7
-#define GLOW_MAX_TILES                          200
+#define GLOW_THREERADIUS_TILES                  80
+#define GLOW_TWORADIUS_TILES                    60
+#define GLOW_ONERADIUS_TILES                    60
 #define GLOW_TRANSITION_FRAME_SECONDS           0.1f
 
 #define TILEMAP_OVERWORLD_ID                    0
