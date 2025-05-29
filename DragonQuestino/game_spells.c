@@ -9,7 +9,7 @@ void Game_CastHeal( Game_t* game )
 {
    uint8_t maxEffect;
 
-   CHECK_CAST_ABILITY( SPELL_HEAL_MP, STRING_SPELLMENU_HEAL );
+   CHECK_CAST_ABILITY( SPELL_HEAL_MP, STRING_SPELL_HEAL );
 
    if ( game->player.stats.hitPoints == UINT8_MAX )
    {
@@ -27,7 +27,7 @@ void Game_CastHeal( Game_t* game )
 
 void Game_CastGlow( Game_t* game )
 {
-   CHECK_CAST_ABILITY( SPELL_GLOW_MP, STRING_SPELLMENU_GLOW );
+   CHECK_CAST_ABILITY( SPELL_GLOW_MP, STRING_SPELL_GLOW );
 
    if ( game->tileMap.isDark )
    {
@@ -55,7 +55,7 @@ void Game_CastGlow( Game_t* game )
 
 void Game_CastEvac( Game_t* game )
 {
-   CHECK_CAST_ABILITY( SPELL_EVAC_MP, STRING_SPELLMENU_EVAC );
+   CHECK_CAST_ABILITY( SPELL_EVAC_MP, STRING_SPELL_EVAC );
 
    if ( game->tileMap.isDungeon )
    {
@@ -75,7 +75,7 @@ void Game_CastEvac( Game_t* game )
 
 void Game_CastZoom( Game_t* game, uint32_t townId )
 {
-   CHECK_CAST_ABILITY( SPELL_ZOOM_MP, STRING_SPELLMENU_ZOOM );
+   CHECK_CAST_ABILITY( SPELL_ZOOM_MP, STRING_SPELL_ZOOM );
 
    game->player.stats.magicPoints -= SPELL_ZOOM_MP;
    game->targetPortal = &( game->zoomPortals[townId] );
@@ -85,7 +85,7 @@ void Game_CastZoom( Game_t* game, uint32_t townId )
 
 void Game_CastRepel( Game_t* game )
 {
-   CHECK_CAST_ABILITY( SPELL_REPEL_MP, STRING_SPELLMENU_REPEL );
+   CHECK_CAST_ABILITY( SPELL_REPEL_MP, STRING_SPELL_REPEL );
 
    game->player.stats.magicPoints -= SPELL_REPEL_MP;
    Game_DrawQuickStatus( game );
@@ -105,7 +105,7 @@ void Game_CastMidheal( Game_t* game )
 {
    uint8_t maxEffect;
 
-   CHECK_CAST_ABILITY( SPELL_MIDHEAL_MP, STRING_SPELLMENU_MIDHEAL );
+   CHECK_CAST_ABILITY( SPELL_MIDHEAL_MP, STRING_SPELL_MIDHEAL );
 
    if ( game->player.stats.hitPoints == UINT8_MAX )
    {

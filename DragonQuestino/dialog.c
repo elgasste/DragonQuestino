@@ -1,13 +1,15 @@
 #include "game.h"
+#include "tables.h"
 
 internal void Dialog_ResetScroll( Dialog_t* dialog );
 internal void Dialog_LoadMessage( Dialog_t* dialog );
-internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id );
+internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog );
 internal void Dialog_GetMessageText( Dialog_t* dialog, char* text );
 internal void Dialog_FinishSection( Dialog_t* dialog );
 internal void Dialog_LoadBattleVictorySpoils( Dialog_t* dialog, char* text );
 internal void Dialog_LoadBattleStrengthAndAgilityUp( Dialog_t* dialog, char* text );
 internal void Dialog_LoadBattleHitPointsAndMagicPointsUp( Dialog_t* dialog, char* text );
+internal void Dialog_LoadSpellsLearned( Dialog_t* dialog, char* text );
 
 void Dialog_Init( Dialog_t* dialog, Game_t* game )
 {
@@ -170,7 +172,7 @@ internal void Dialog_LoadMessage( Dialog_t* dialog )
 
    dialog->lineCount = 0;
    dialog->charCount = 0;
-   dialog->sectionCount = Dialog_GetMessageSectionCount( dialog->id );
+   dialog->sectionCount = Dialog_GetMessageSectionCount( dialog );
 
    Dialog_GetMessageText( dialog, message );
    strLen = (uint16_t)strlen( message );
@@ -228,9 +230,9 @@ internal void Dialog_LoadMessage( Dialog_t* dialog )
    }
 }
 
-internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
+internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
 {
-   switch ( id )
+   switch ( dialog->id )
    {
       case DialogId_Talk_NobodyThere:
       case DialogId_Spell_None:
@@ -287,7 +289,7 @@ internal uint32_t Dialog_GetMessageSectionCount( DialogId_t id )
       case DialogId_Use_GwaelynsLove:
          return 4;
       case DialogId_Battle_VictoryWithLevelUp:
-         return 5;
+         return ( dialog->game->battle.previousSpells < dialog->game->player.spells ) ? 6 : 5;
       case DialogId_Chest_Tablet:
          return 8;
    }
@@ -324,33 +326,33 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          }
       case DialogId_Spell_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_SPELLS ); return;
       case DialogId_Spell_OverworldCantCast: strcpy( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CANT_CAST ); return;
-      case DialogId_Spell_OverworldCastGlow: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_GLOW ); return;
+      case DialogId_Spell_OverworldCastGlow: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW ); return;
       case DialogId_Spell_OverworldCastGlowCursed:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_GLOW ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW ); return;
             case 1: strcpy( text, STRING_GLOW_CURSED ); return;
          }
       case DialogId_Spell_CastRepelCursed:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_REPEL ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_REPEL ); return;
             case 1: strcpy( text, STRING_HOLYPROTECTION_CURSED ); return;
          }
       case DialogId_Spell_CastEvacCursed:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_EVAC ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC ); return;
             case 1: strcpy( text, STRING_EVAC_CURSED ); return;
          }
       case DialogId_Spell_CastRepel:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_REPEL ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_REPEL ); return;
             case 1: strcpy( text, STRING_HOLYPROTECTION_ON ); return;
          }
-      case DialogId_Spell_CastEvac: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_EVAC ); return;
-      case DialogId_Spell_CastZoom: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_ZOOM ); return;
+      case DialogId_Spell_CastEvac: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC ); return;
+      case DialogId_Spell_CastZoom: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_ZOOM ); return;
       case DialogId_Spell_NotEnoughMp: strcpy( text, STRING_NOTENOUGHMP ); return;
       case DialogId_Item_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_ITEMS ); return;
       case DialogId_Door_None: strcpy( text, STRING_OVERWORLD_DIALOG_NO_DOOR ); return;
@@ -452,25 +454,25 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
       case DialogId_Spell_OverworldCastHeal1:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_HEAL ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_HEAL ); return;
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_1, dialog->insertionText ); return;
          }
       case DialogId_Spell_OverworldCastHeal2:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_HEAL ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_HEAL ); return;
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_2, dialog->insertionText ); return;
          }
       case DialogId_Spell_OverworldCastMidheal1:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_MIDHEAL ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_MIDHEAL ); return;
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_1, dialog->insertionText ); return;
          }
       case DialogId_Spell_OverworldCastMidheal2:
          switch ( dialog->section )
          {
-            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELLMENU_MIDHEAL ); return;
+            case 0: sprintf( text, STRING_OVERWORLD_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_MIDHEAL ); return;
             case 1: sprintf( text, STRING_OVERWORLD_DIALOG_HEAL_RESULT_2, dialog->insertionText ); return;
          }
       case DialogId_Spell_Blocked:
@@ -521,6 +523,7 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
             case 2: strcpy( text, STRING_BATTLE_LEVELUP ); return;
             case 3: Dialog_LoadBattleStrengthAndAgilityUp( dialog, text ); return;
             case 4: Dialog_LoadBattleHitPointsAndMagicPointsUp( dialog, text ); return;
+            case 5: Dialog_LoadSpellsLearned( dialog, text ); return;
          }
    }
 }
@@ -662,5 +665,33 @@ internal void Dialog_LoadBattleHitPointsAndMagicPointsUp( Dialog_t* dialog, char
    else if ( battle->hitPointsGained == 0 && battle->magicPointsGained > 0 )
    {
       sprintf( text, STRING_BATTLE_MAGICPOINTSGAIN, battle->magicPointsGained );
+   }
+}
+
+internal void Dialog_LoadSpellsLearned( Dialog_t* dialog, char* text )
+{
+   uint16_t i, learnedSpell = 0;
+
+   for ( i = 0; i < SPELL_TABLE_SIZE; i++ )
+   {
+      if ( ( dialog->game->battle.previousSpells & ( 0x1 << i ) ) != ( dialog->game->player.spells & ( 0x1 << i ) ) )
+      {
+         learnedSpell = i;
+         break;
+      }
+   }
+
+   switch ( i )
+   {
+      case 0: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_HEAL ); break;
+      case 1: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZ ); break;
+      case 2: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SLEEP ); break;
+      case 3: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_GLOW ); break;
+      case 4: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_FIZZLE ); break;
+      case 5: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_EVAC ); break;
+      case 6: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_ZOOM ); break;
+      case 7: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_REPEL ); break;
+      case 8: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_MIDHEAL ); break;
+      case 9: sprintf( text, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZLE ); break;
    }
 }

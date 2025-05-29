@@ -3,7 +3,8 @@
 
 #include "common.h"
 
-#define STAT_TABLE_SIZE 30
+#define STAT_TABLE_SIZE  30
+#define SPELL_TABLE_SIZE 10
 
 global uint16_t g_experienceTable[STAT_TABLE_SIZE] = {
    0,
@@ -168,6 +169,19 @@ global uint8_t g_magicPointsTable[STAT_TABLE_SIZE] = {
    180,
    190,
    200
+};
+
+global uint8_t g_spellsLevelTable[SPELL_TABLE_SIZE] = {
+   2,
+   3,
+   6,
+   8,
+   9,
+   11,
+   12,
+   14,
+   16,
+   18
 };
 
 #endif // TABLES_H

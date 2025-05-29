@@ -270,37 +270,37 @@ internal void Menu_UpdateOverworldSpell( Menu_t* menu )
 
    if ( SPELL_HAS_HEAL( spells ) )
    {
-      sprintf( menu->items[i].text, STRING_SPELLMENU_HEAL );
+      sprintf( menu->items[i].text, STRING_SPELL_HEAL );
       menu->items[i].command = MenuCommand_Spell_Heal;
       i++;
    }
    if ( menu->tileMap->isDark && SPELL_HAS_GLOW( spells ) )
    {
-      sprintf( menu->items[i].text, STRING_SPELLMENU_GLOW );
+      sprintf( menu->items[i].text, STRING_SPELL_GLOW );
       menu->items[i].command = MenuCommand_Spell_Glow;
       i++;
    }
    if ( menu->tileMap->isDungeon && SPELL_HAS_EVAC( spells ) )
    {
-      sprintf( menu->items[i].text, STRING_SPELLMENU_EVAC );
+      sprintf( menu->items[i].text, STRING_SPELL_EVAC );
       menu->items[i].command = MenuCommand_Spell_Evac;
       i++;
    }
    if ( !( menu->tileMap->isDungeon ) && SPELL_HAS_ZOOM(spells) )
    {
-      sprintf( menu->items[i].text, STRING_SPELLMENU_ZOOM );
+      sprintf( menu->items[i].text, STRING_SPELL_ZOOM );
       menu->items[i].command = MenuCommand_Spell_Zoom;
       i++;
    }
    if ( SPELL_HAS_REPEL( spells ) )
    {
-      sprintf( menu->items[i].text, STRING_SPELLMENU_REPEL );
+      sprintf( menu->items[i].text, STRING_SPELL_REPEL );
       menu->items[i].command = MenuCommand_Spell_Repel;
       i++;
    }
    if ( SPELL_HAS_MIDHEAL( spells ) )
    {
-      sprintf( menu->items[i].text, STRING_SPELLMENU_MIDHEAL );
+      sprintf( menu->items[i].text, STRING_SPELL_MIDHEAL );
       menu->items[i].command = MenuCommand_Spell_Midheal;
    }
 }
@@ -400,7 +400,7 @@ internal void Menu_UpdateZoom( Menu_t* menu )
    uint32_t i = 0;
    uint8_t tv = menu->player->townsVisited;
 
-   strcpy( menu->title, STRING_SPELLMENU_ZOOM );
+   strcpy( menu->title, STRING_SPELL_ZOOM );
 
    menu->itemCount = HAS_VISITED_COUNT( tv );
    menu->itemsPerColumn = menu->itemCount;

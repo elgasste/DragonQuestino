@@ -21,6 +21,7 @@ typedef struct Battle_t
    uint8_t agilityGained;
    uint8_t hitPointsGained;
    uint8_t magicPointsGained;
+   uint16_t previousSpells;
 }
 Battle_t;
 
