@@ -33,7 +33,7 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->items = 0;
    player->spells = 0;
    player->level = Player_GetLevelFromExperience( player );
-   Player_UpdateSpells( player );
+   Player_UpdateSpellsToLevel( player, player->level );
 
    player->stats.strength = g_strengthTable[player->level];
    player->stats.agility = g_agilityTable[player->level];
@@ -182,13 +182,13 @@ void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection )
    }
 }
 
-void Player_UpdateSpells( Player_t* player )
+void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level )
 {
    uint32_t i;
 
-   for ( i = 0; i < 10; i++ )
+   for ( i = 0; i < SPELL_TABLE_SIZE; i++ )
    {
-      if ( player->level >= g_spellsLevelTable[i] )
+      if ( level >= g_spellsLevelTable[i] )
       {
          player->spells |= ( 0x1 << i );
       }

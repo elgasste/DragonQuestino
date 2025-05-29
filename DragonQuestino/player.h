@@ -212,7 +212,7 @@ void Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
 void Player_SetCursed( Player_t* player, Bool_t cursed );
 void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection );
-void Player_UpdateSpells( Player_t* player );
+void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level );
 
 #if defined( __cplusplus )
 }
