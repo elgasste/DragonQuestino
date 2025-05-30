@@ -81,11 +81,15 @@ void Game_WipeEnemy( Game_t* game );
 
 // game_spells.c
 void Game_CastHeal( Game_t* game );
+void Game_CastSizz( Game_t* game );
+void Game_CastSleep( Game_t* game );
 void Game_CastGlow( Game_t* game );
+void Game_CastFizzle( Game_t* game );
 void Game_CastEvac( Game_t* game );
 void Game_CastZoom( Game_t* game, uint32_t townId );
 void Game_CastRepel( Game_t* game );
 void Game_CastMidheal( Game_t* game );
+void Game_CastSizzle( Game_t* game );
 
 // game_items.c
 void Game_UseHerb( Game_t* game );

@@ -22,6 +22,8 @@ void Battle_Generate( Battle_t* battle )
    uint32_t enemyIndex;
    Enemy_t* enemy = &( battle->enemy );
 
+   battle->game->player.stats.isFizzled = False;
+
    switch ( battle->specialEnemy )
    {
       case SpecialEnemy_GreenDragon: enemyIndex = ENEMY_GREENDRAGON_INDEX; break;
@@ -35,6 +37,7 @@ void Battle_Generate( Battle_t* battle )
    enemy->stats.maxHitPoints = Random_u8( enemy->minHitPoints, enemy->maxHitPoints );
    enemy->stats.hitPoints = enemy->stats.maxHitPoints;
    enemy->gold = Random_u8( enemy->minGold, enemy->maxGold );
+   enemy->stats.isFizzled = False;
 }
 
 void Battle_AttemptAttack( Battle_t* battle )
@@ -45,20 +48,9 @@ void Battle_AttemptAttack( Battle_t* battle )
    if ( damage > 0 )
    {
       battle->enemy.stats.hitPoints -= damage;
-
-      if ( battle->enemy.stats.hitPoints > 0 )
-      {
-         sprintf( msg,
-                  battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKATTEMPTSUCCEEDED,
-                  battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
-      }
-      else
-      {
-         sprintf( msg,
-                  battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVEVICTORY : STRING_BATTLE_ATTACKATTEMPTSUCCEEDEDVICTORY,
-                  battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
-      }
-
+      sprintf( msg,
+               battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKATTEMPTSUCCEEDED,
+               battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
       Dialog_SetInsertionText( &( battle->game->dialog ), msg );
       Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptSucceeded );
    }

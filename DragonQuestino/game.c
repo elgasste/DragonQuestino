@@ -254,9 +254,9 @@ void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t d
 
    game->pendingPayload8u = Random_u8( minHp, maxHp );
 
-   if ( ( UINT8_MAX - game->player.stats.hitPoints ) < game->pendingPayload8u )
+   if ( ( game->player.stats.maxHitPoints - game->player.stats.hitPoints ) < game->pendingPayload8u )
    {
-      game->pendingPayload8u = UINT8_MAX - game->player.stats.hitPoints;
+      game->pendingPayload8u = game->player.stats.maxHitPoints - game->player.stats.hitPoints;
    }
 
    sprintf( str, "%u", game->pendingPayload8u );

@@ -15,6 +15,7 @@ typedef struct BattleStats_t
    uint8_t stopSpellResist;
    uint8_t hurtResist;
    uint8_t dodge;
+   Bool_t isFizzled;
 }
 BattleStats_t;
 
