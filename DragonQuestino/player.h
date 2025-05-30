@@ -56,6 +56,14 @@ typedef struct TileMap_t TileMap_t;
                                                 ( SPELL_HAS_REPEL( x ) ? 1 : 0 ) + \
                                                 ( SPELL_HAS_MIDHEAL( x ) ? 1 : 0 ) )
 
+#define SPELL_GET_BATTLEUSEABLECOUNT( x )       ( 0 + \
+                                                ( SPELL_HAS_HEAL( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_SIZZ( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_SLEEP( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_FIZZLE( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_MIDHEAL( x ) ? 1 : 0 ) + \
+                                                ( SPELL_HAS_SIZZLE( x ) ? 1 : 0 ) )
+
 #define ITEM_HERB_MINEFFECT                     23
 #define ITEM_HERB_MAXEFFECT                     30
 
