@@ -217,6 +217,8 @@
 #define STRING_BATTLE_MAGICPOINTSGAIN                                "Your magic points have increased by %u."
 #define STRING_BATTLE_HITPOINTSANDMAGICPOINTSGAIN                    "Your hit points have increased by %u, and magic points by %u."
 #define STRING_BATTLE_LEARNEDSPELL                                   "You learned a new spell: %s!"
+#define STRING_BATTLE_NOSPELLS                                       "You do not know any spells. Command?"
+#define STRING_BATTLE_CANTCASTSPELL                                  "You do not know any spells that can be cast in battle. Command?"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

@@ -258,6 +258,8 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Chest_GoldCollected:
       case DialogId_Battle_EnemyApproaches:
       case DialogId_Battle_Victory:
+      case DialogId_Battle_Spell_None:
+      case DialogId_Battle_Spell_CantCast:
          return 1;
       case DialogId_Search_NothingFound:
       case DialogId_Search_FoundItem:
@@ -527,6 +529,8 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
             case 4: Dialog_LoadBattleHitPointsAndMagicPointsUp( dialog, text ); return;
             case 5: Dialog_LoadSpellsLearned( dialog, text ); return;
          }
+      case DialogId_Battle_Spell_None: strcpy( text, STRING_BATTLE_NOSPELLS ); return;
+      case DialogId_Battle_Spell_CantCast: strcpy( text, STRING_BATTLE_CANTCASTSPELL ); return;
    }
 }
 
@@ -560,6 +564,12 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
             break;
          case DialogId_Battle_AttackAttemptFailed:
             Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyDodge );
+            break;
+         case DialogId_Battle_Spell_None:
+         case DialogId_Battle_Spell_CantCast:
+            Dialog_Draw( dialog );
+            Menu_Reset( dialog->game->activeMenu );
+            Game_ChangeSubState( dialog->game, SubState_Menu );
             break;
       }
    }

@@ -115,6 +115,7 @@ typedef enum MenuId_t
    MenuId_Zoom,
 
    MenuId_Battle,
+   MenuId_BattleSpell,
 
    MenuId_Count
 }
@@ -226,6 +227,8 @@ typedef enum DialogId_t
    DialogId_Battle_Victory,
    DialogId_Battle_VictoryWithSpoils,
    DialogId_Battle_VictoryWithLevelUp,
+   DialogId_Battle_Spell_None,
+   DialogId_Battle_Spell_CantCast,
 
    DialogId_Count
 }

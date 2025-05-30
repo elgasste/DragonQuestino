@@ -106,7 +106,22 @@ void Game_Draw( Game_t* game )
       {
          if ( game->screen.needsRedraw )
          {
-            Game_DrawEnemy( game );
+            switch ( game->subState )
+            {
+               case SubState_None:
+                  Game_DrawEnemy( game );
+                  break;
+               case SubState_Menu:
+                  Game_DrawTileMap( game );
+                  Game_DrawQuickStatus( game );
+                  game->activeMenu->hasDrawn = False;
+                  Menu_Draw( game->activeMenu );
+                  Game_WipeEnemy( game );
+                  Game_DrawEnemy( game );
+                  Dialog_Draw( &( game->dialog ) );
+                  break;
+            }
+
             game->screen.needsRedraw = False;
          }
          else
@@ -114,7 +129,7 @@ void Game_Draw( Game_t* game )
             switch ( game->subState )
             {
                case SubState_Menu:
-                  Menu_Draw( &( game->menus[MenuId_Battle] ) );
+                  Menu_Draw( game->activeMenu );
                   break;
                case SubState_Dialog:
                   Dialog_Draw( &( game->dialog ) );
@@ -241,7 +256,7 @@ void Game_DrawEnemy( Game_t* game )
 
 void Game_WipeEnemy( Game_t* game )
 {
-   Screen_DrawRectColor( &( game->screen ), 96, 52, 96, 96, COLOR_BLACK );
+   Screen_DrawRectColor( &( game->screen ), 96, 52, 112, 112, COLOR_BLACK );
 }
 
 internal void Game_DrawTileMap( Game_t* game )

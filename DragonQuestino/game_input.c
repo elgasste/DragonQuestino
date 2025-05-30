@@ -11,6 +11,7 @@ internal void Game_OpenOverworldItemMenu( Game_t* game );
 internal void Game_OpenZoomMenu( Game_t* game );
 internal void Game_HandleBattleMenuInput( Game_t* game );
 internal void Game_HandleBattleDialogInput( Game_t* game );
+internal void Game_OpenBattleSpellMenu( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -254,7 +255,6 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             Game_ChangeMainState( game, MainState_Overworld );
             break;
       }
-
    }
    else if ( game->activeMenu->itemCount )
    {
@@ -323,8 +323,18 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
       {
          case MenuCommand_Battle_Attack: Battle_AttemptAttack( &( game->battle ) ); break;
          case MenuCommand_Battle_Flee: Battle_AttemptFlee( &( game->battle ) ); break;
-         case MenuCommand_Battle_Spell: Game_ChangeMainState( game, MainState_Overworld ); break;
+         case MenuCommand_Battle_Spell: Game_OpenBattleSpellMenu( game ); break;
          case MenuCommand_Battle_Item: Game_ChangeMainState( game, MainState_Overworld ); break;
+      }
+   }
+   else if ( game->input.buttonStates[Button_B].pressed )
+   {
+      switch ( game->activeMenu->id )
+      {
+         case MenuId_BattleSpell:
+            game->activeMenu = &( game->menus[MenuId_Battle] );
+            game->screen.needsRedraw = True;
+            break;
       }
    }
    else if ( game->activeMenu->itemCount )
@@ -365,5 +375,22 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
       Dialog_StepAhead( &( game->dialog ) );
+   }
+}
+
+internal void Game_OpenBattleSpellMenu( Game_t* game )
+{
+   if ( !game->player.spells )
+   {
+      Game_OpenDialog( game, DialogId_Battle_Spell_None );
+   }
+   else if ( SPELL_GET_BATTLEUSEABLECOUNT( game->player.spells ) )
+   {
+      Game_OpenMenu( game, MenuId_BattleSpell );
+   }
+   else
+   {
+      // this is impossible in normal gameplay, but we'll account for it anyway
+      Game_OpenDialog( game, DialogId_Battle_Spell_CantCast );
    }
 }
