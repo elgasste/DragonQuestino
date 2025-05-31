@@ -104,6 +104,11 @@ void Game_Draw( Game_t* game )
       }
       else // main state is battle
       {
+         // MUFFINS: let's update it so this happens:
+         //
+         // - any action from the main menu should start a re-draw
+         // - if we're not in menu mode, don't draw any menus
+         // - if you can't cast a spell, go back to the main menu and reset it
          if ( game->screen.needsRedraw )
          {
             switch ( game->subState )
