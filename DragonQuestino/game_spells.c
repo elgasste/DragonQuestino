@@ -4,6 +4,7 @@
 #define CHECK_CAST_ABILITY( m, n ) if ( !Game_CanCastSpell( game, m, n ) ) return;
 
 internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName );
+internal void Game_ResetBattleMenu( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
@@ -11,6 +12,7 @@ void Game_CastHeal( Game_t* game )
    DialogId_t dialogId;
 
    CHECK_CAST_ABILITY( SPELL_HEAL_MP, STRING_SPELL_HEAL );
+   Game_ResetBattleMenu( game );
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
@@ -128,6 +130,7 @@ void Game_CastMidheal( Game_t* game )
    DialogId_t dialogId;
 
    CHECK_CAST_ABILITY( SPELL_MIDHEAL_MP, STRING_SPELL_MIDHEAL );
+   Game_ResetBattleMenu( game );
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
@@ -163,6 +166,7 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
 
    if ( game->tileMap.blocksMagic )
    {
+      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
       Game_DrawQuickStatus( game );
       Dialog_SetInsertionText( &( game->dialog ), spellName );
@@ -172,6 +176,7 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
    }
    else if ( game->mainState == MainState_Battle && game->player.stats.isFizzled )
    {
+      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
       Game_DrawQuickStatus( game );
       Dialog_SetInsertionText( &( game->dialog ), spellName );
@@ -180,4 +185,16 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
    }
 
    return True;
+}
+
+internal void Game_ResetBattleMenu( Game_t* game )
+{
+   if ( game->mainState == MainState_Battle )
+   {
+      game->screen.needsRedraw = True;
+      game->activeMenu = &( game->menus[MenuId_Battle] );
+      Menu_Reset( game->activeMenu );
+      game->screen.needsRedraw = True;
+      Game_ChangeSubState( game, SubState_Menu );
+   }
 }

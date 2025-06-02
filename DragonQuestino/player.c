@@ -46,21 +46,6 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
 
-   // MUFFINS
-   player->experience = 62000;
-   player->level = Player_GetLevelFromExperience( player );
-   Player_UpdateSpellsToLevel( player, player->level );
-   player->stats.strength = g_strengthTable[player->level];
-   player->stats.agility = g_agilityTable[player->level];
-   player->stats.hitPoints = g_hitPointsTable[player->level] - 60;
-   player->stats.maxHitPoints = g_hitPointsTable[player->level];
-   player->stats.magicPoints = g_magicPointsTable[player->level];
-   player->stats.maxMagicPoints = g_magicPointsTable[player->level];
-   ITEM_SET_KEYCOUNT( player->items, 5 );
-   ITEM_SET_TORCHCOUNT( player->items, 6);
-   ITEM_SET_FAIRYWATERCOUNT( player->items, 3);
-   ITEM_SET_WINGCOUNT( player->items, 2 );
-
    Player_UpdateTextColor( player, UINT8_MAX );
 }
 

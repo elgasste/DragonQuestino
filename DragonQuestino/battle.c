@@ -45,6 +45,8 @@ void Battle_AttemptAttack( Battle_t* battle )
    uint8_t damage = Battle_GetAttackDamage( battle );
    char msg[64];
 
+   battle->game->screen.needsRedraw = True;
+
    if ( damage > 0 )
    {
       battle->enemy.stats.hitPoints -= damage;
@@ -66,6 +68,7 @@ void Battle_AttemptFlee( Battle_t* battle )
    Bool_t fleed = Battle_GetFleeResult( battle );
 
    Dialog_SetInsertionText( &( battle->game->dialog ), battle->enemy.name );
+   battle->game->screen.needsRedraw = True;
 
    if ( fleed )
    {  
