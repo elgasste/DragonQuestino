@@ -47,6 +47,10 @@ typedef struct TileMap_t TileMap_t;
 #define SPELL_HEAL_MAXEFFECT                    17
 #define SPELL_MIDHEAL_MINEFFECT                 85
 #define SPELL_MIDHEAL_MAXEFFECT                 100
+#define SPELL_SIZZ_MINEFFECT                    3
+#define SPELL_SIZZ_MAXEFFECT                    16
+#define SPELL_SIZZLE_MINEFFECT                  30
+#define SPELL_SIZZLE_MAXEFFECT                  45
 
 #define SPELL_GET_MAPUSEABLECOUNT( x, d1, d2 )  ( 0 + \
                                                 ( SPELL_HAS_HEAL( x ) ? 1 : 0 ) + \

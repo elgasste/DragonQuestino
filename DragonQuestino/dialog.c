@@ -269,6 +269,10 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_CantCast:
       case DialogId_Battle_Spell_NotEnoughMp:
       case DialogId_Battle_FullyHealed:
+      case DialogId_Battle_Spell_NoEffect:
+      case DialogId_Battle_Spell_AttackSucceeded:
+      case DialogId_Battle_Spell_Sizz:
+      case DialogId_Battle_Spell_Sizzle:
          return 1;
       case DialogId_Search_NothingFound:
       case DialogId_Search_FoundItem:
@@ -556,6 +560,11 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
             case 1: strcpy( text, STRING_BATTLE_SPELLFIZZLED ); return;
          }
       case DialogId_Battle_FullyHealed: strcpy( text, STRING_BATTLE_FULLYHEALED ); return;
+      case DialogId_Battle_Spell_NoEffect: sprintf( text, STRING_BATTLE_SPELL_NOEFFECT, dialog->insertionText ); return;
+      case DialogId_Battle_Spell_AttackSucceeded: strcpy( text, dialog->insertionText ); return;
+      case DialogId_Battle_Spell_Sizz:
+      case DialogId_Battle_Spell_Sizzle:
+         sprintf( text, STRING_BATTLE_SPELLCAST, dialog->insertionText ); return;
    }
 }
 
@@ -581,6 +590,8 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Spell_Blocked:
          case DialogId_Battle_Spell_Blocked:
          case DialogId_Battle_Spell_Fizzled:
+         case DialogId_Battle_Spell_Sizz:
+         case DialogId_Battle_Spell_Sizzle:
             Animation_Start( &( dialog->game->animation ), AnimationId_CastSpell );
             break;
          case DialogId_Battle_EnemyApproaches:
@@ -596,6 +607,7 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Battle_Spell_CantCast:
          case DialogId_Battle_Spell_NotEnoughMp:
          case DialogId_Battle_FullyHealed:
+         case DialogId_Battle_Spell_NoEffect:
             Dialog_Draw( dialog );
             Menu_Reset( dialog->game->activeMenu );
             Game_ChangeSubState( dialog->game, SubState_Menu );
@@ -622,9 +634,17 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Battle_FleeAttemptFailed:
          case DialogId_Battle_Spell_Blocked:
          case DialogId_Battle_Spell_Fizzled:
+         case DialogId_Battle_Spell_AttackSucceeded:
             Dialog_Draw( dialog );
-            Menu_Reset( dialog->game->activeMenu );
-            Game_ChangeSubState( dialog->game, SubState_Menu );
+            if ( dialog->game->battle.enemy.stats.hitPoints == 0 )
+            {
+               Animation_Start( &( dialog->game->animation ), AnimationId_Battle_VictoryPause );
+            }
+            else
+            {
+               Menu_Reset( dialog->game->activeMenu );
+               Game_ChangeSubState( dialog->game, SubState_Menu );
+            }
             break;
          case DialogId_Battle_VictoryWithSpoils:
          case DialogId_Battle_VictoryWithLevelUp:

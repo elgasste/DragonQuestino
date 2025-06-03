@@ -233,6 +233,10 @@ typedef enum DialogId_t
    DialogId_Battle_Spell_Blocked,
    DialogId_Battle_Spell_Fizzled,
    DialogId_Battle_FullyHealed,
+   DialogId_Battle_Spell_NoEffect,
+   DialogId_Battle_Spell_AttackSucceeded,
+   DialogId_Battle_Spell_Sizz,
+   DialogId_Battle_Spell_Sizzle,
 
    DialogId_Count
 }
