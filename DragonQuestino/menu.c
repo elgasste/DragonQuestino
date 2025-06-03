@@ -11,6 +11,7 @@ internal void Menu_Update( Menu_t* menu );
 internal void Menu_UpdateOverworldSpell( Menu_t* menu );
 internal void Menu_UpdateOverworldItem( Menu_t* menu );
 internal void Menu_UpdateZoom( Menu_t* menu );
+internal void Menu_UpdateBattleSpell( Menu_t* menu );
 
 void Menu_Init( Menu_t* menu, MenuId_t id, Screen_t* screen, Player_t* player, TileMap_t* tileMap )
 {
@@ -153,6 +154,7 @@ internal void Menu_Update( Menu_t* menu )
       case MenuId_OverworldSpell: Menu_UpdateOverworldSpell( menu ); break;
       case MenuId_OverworldItem: Menu_UpdateOverworldItem( menu ); break;
       case MenuId_Zoom: Menu_UpdateZoom( menu ); break;
+      case MenuId_BattleSpell: Menu_UpdateBattleSpell( menu ); break;
    }
 }
 
@@ -456,5 +458,69 @@ internal void Menu_UpdateZoom( Menu_t* menu )
    {
       strcpy( menu->items[i].text, STRING_TOWN_RIMULDAR );
       menu->items[i].command = MenuCommand_Zoom_Rimuldar;
+   }
+}
+
+internal void Menu_UpdateBattleSpell( Menu_t* menu )
+{
+   uint32_t i;
+   uint32_t spells = menu->player->spells;
+
+   strcpy( menu->title, STRING_BATTLE_MENU_SPELL );
+
+   menu->itemCount = SPELL_GET_BATTLEUSEABLECOUNT( spells );
+   menu->itemsPerColumn = menu->itemCount;
+   menu->selectedIndex = 0;
+   menu->position.x = 144;
+   menu->position.y = 16;
+   menu->borderSize.x = 12;
+   menu->borderSize.y = (uint16_t)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderPadding.x = 1;
+   menu->borderPadding.y = 1;
+   menu->columnWidth = 10;
+   menu->itemPadding = 1;
+   menu->caratOffset = 1;
+
+   for ( i = 0; i < menu->itemCount; i++ )
+   {
+      menu->items[i].twoLineText = False;
+   }
+
+   i = 0;
+
+   if ( SPELL_HAS_HEAL( spells ) )
+   {
+      sprintf( menu->items[i].text, STRING_SPELL_HEAL );
+      menu->items[i].command = MenuCommand_Spell_Heal;
+      i++;
+   }
+   if ( SPELL_HAS_SIZZ( spells ) )
+   {
+      sprintf( menu->items[i].text, STRING_SPELL_SIZZ );
+      menu->items[i].command = MenuCommand_Spell_Sizz;
+      i++;
+   }
+   if ( SPELL_HAS_SLEEP( spells ) )
+   {
+      sprintf( menu->items[i].text, STRING_SPELL_SLEEP );
+      menu->items[i].command = MenuCommand_Spell_Sleep;
+      i++;
+   }
+   if ( SPELL_HAS_FIZZLE(spells) )
+   {
+      sprintf( menu->items[i].text, STRING_SPELL_FIZZLE );
+      menu->items[i].command = MenuCommand_Spell_Fizzle;
+      i++;
+   }
+   if ( SPELL_HAS_MIDHEAL( spells ) )
+   {
+      sprintf( menu->items[i].text, STRING_SPELL_MIDHEAL );
+      menu->items[i].command = MenuCommand_Spell_Midheal;
+      i++;
+   }
+   if ( SPELL_HAS_SIZZLE( spells ) )
+   {
+      sprintf( menu->items[i].text, STRING_SPELL_SIZZLE );
+      menu->items[i].command = MenuCommand_Spell_Sizzle;
    }
 }

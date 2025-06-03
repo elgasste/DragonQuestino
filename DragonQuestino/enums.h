@@ -115,6 +115,7 @@ typedef enum MenuId_t
    MenuId_Zoom,
 
    MenuId_Battle,
+   MenuId_BattleSpell,
 
    MenuId_Count
 }
@@ -174,10 +175,10 @@ typedef enum DialogId_t
    DialogId_Search_FoundHiddenStairs,
    DialogId_Spell_None,
    DialogId_Spell_OverworldCantCast,
-   DialogId_Spell_OverworldCastHeal1,
-   DialogId_Spell_OverworldCastHeal2,
-   DialogId_Spell_OverworldCastMidheal1,
-   DialogId_Spell_OverworldCastMidheal2,
+   DialogId_Spell_CastHeal1,
+   DialogId_Spell_CastHeal2,
+   DialogId_Spell_CastMidheal1,
+   DialogId_Spell_CastMidheal2,
    DialogId_Spell_OverworldCastGlowCursed,
    DialogId_Spell_OverworldCastGlow,
    DialogId_Spell_CastRepelCursed,
@@ -226,6 +227,16 @@ typedef enum DialogId_t
    DialogId_Battle_Victory,
    DialogId_Battle_VictoryWithSpoils,
    DialogId_Battle_VictoryWithLevelUp,
+   DialogId_Battle_Spell_None,
+   DialogId_Battle_Spell_CantCast,
+   DialogId_Battle_Spell_NotEnoughMp,
+   DialogId_Battle_Spell_Blocked,
+   DialogId_Battle_Spell_Fizzled,
+   DialogId_Battle_FullyHealed,
+   DialogId_Battle_Spell_NoEffect,
+   DialogId_Battle_Spell_AttackSucceeded,
+   DialogId_Battle_Spell_Sizz,
+   DialogId_Battle_Spell_Sizzle,
 
    DialogId_Count
 }

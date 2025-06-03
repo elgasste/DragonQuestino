@@ -201,6 +201,12 @@ internal void Animation_Stop( Animation_t* animation )
       case AnimationId_Battle_VictoryPause:
          Animation_Start( animation, AnimationId_Battle_EnemyFadeOut );
          break;
+      case AnimationId_CastSpell:
+         switch ( animation->game->dialog.id )
+         {
+            case DialogId_Battle_Spell_Sizz: Game_ApplySizz( animation->game ); break;
+            case DialogId_Battle_Spell_Sizzle: Game_ApplySizzle( animation->game ); break;
+         }
    }
 }
 

@@ -106,7 +106,25 @@ void Game_Draw( Game_t* game )
       {
          if ( game->screen.needsRedraw )
          {
+            Game_DrawTileMap( game );
+            Game_WipeEnemy( game );
             Game_DrawEnemy( game );
+
+            switch ( game->subState )
+            {
+               case SubState_Menu:
+                  Game_DrawQuickStatus( game );
+                  game->activeMenu->hasDrawn = False;
+                  Menu_Draw( game->activeMenu );
+                  Dialog_Draw( &( game->dialog ) );
+                  break;
+               case SubState_None:
+               case SubState_Dialog:
+                  Game_DrawQuickStatus( game );
+                  Dialog_Draw( &( game->dialog ) );
+                  break;
+            }
+
             game->screen.needsRedraw = False;
          }
          else
@@ -114,7 +132,7 @@ void Game_Draw( Game_t* game )
             switch ( game->subState )
             {
                case SubState_Menu:
-                  Menu_Draw( &( game->menus[MenuId_Battle] ) );
+                  Menu_Draw( game->activeMenu );
                   break;
                case SubState_Dialog:
                   Dialog_Draw( &( game->dialog ) );
@@ -148,19 +166,19 @@ void Game_DrawQuickStatus( Game_t* game )
    line[memSize] = '\0';
    Screen_DrawTextWindowWithTitle( &( game->screen ), 16 + xOffset, 16, 8, 12, line );
 
-   sprintf( line, level < 10 ? "%s   %u" : "%s  %u", STRING_OVERWORLD_QUICKSTATS_LEVEL, level );
+   sprintf( line, level < 10 ? "%s   %u" : "%s  %u", STRING_QUICKSTATS_LEVEL, level );
    Screen_DrawText( &( game->screen ), line, 24 + xOffset, 32 );
 
-   sprintf( line, game->player.stats.hitPoints < 10 ? "%s   %u" : game->player.stats.hitPoints < 100 ? "%s  %u" : "%s %u", STRING_OVERWORLD_QUICKSTATS_HP, game->player.stats.hitPoints );
+   sprintf( line, game->player.stats.hitPoints < 10 ? "%s   %u" : game->player.stats.hitPoints < 100 ? "%s  %u" : "%s %u", STRING_QUICKSTATS_HP, game->player.stats.hitPoints );
    Screen_DrawText( &( game->screen ), line, 24 + xOffset, 48 );
 
-   sprintf( line, game->player.stats.magicPoints < 10 ? "%s   %u" : game->player.stats.magicPoints < 100 ? "%s  %u" : "%s %u", STRING_OVERWORLD_QUICKSTATS_MP, game->player.stats.magicPoints );
+   sprintf( line, game->player.stats.magicPoints < 10 ? "%s   %u" : game->player.stats.magicPoints < 100 ? "%s  %u" : "%s %u", STRING_QUICKSTATS_MP, game->player.stats.magicPoints );
    Screen_DrawText( &( game->screen ), line, 24 + xOffset, 64 );
 
-   sprintf( line, game->player.gold < 10 ? "%s    %u" : game->player.gold < 100 ? "%s   %u" : game->player.gold < 1000 ? "%s  %u" : game->player.gold < 10000 ? "%s %u" : "%s%u", STRING_OVERWORLD_QUICKSTATS_GOLD, game->player.gold );
+   sprintf( line, game->player.gold < 10 ? "%s    %u" : game->player.gold < 100 ? "%s   %u" : game->player.gold < 1000 ? "%s  %u" : game->player.gold < 10000 ? "%s %u" : "%s%u", STRING_QUICKSTATS_GOLD, game->player.gold );
    Screen_DrawText( &( game->screen ), line, 24 + xOffset, 80 );
 
-   sprintf( line, game->player.experience < 10 ? "%s    %u" : game->player.experience < 100 ? "%s   %u" : game->player.experience < 1000 ? "%s  %u" : game->player.experience < 10000 ? "%s %u" : "%s%u", STRING_OVERWORLD_QUICKSTATS_EXP, game->player.experience );
+   sprintf( line, game->player.experience < 10 ? "%s    %u" : game->player.experience < 100 ? "%s   %u" : game->player.experience < 1000 ? "%s  %u" : game->player.experience < 10000 ? "%s %u" : "%s%u", STRING_QUICKSTATS_EXP, game->player.experience );
    Screen_DrawText( &( game->screen ), line, 24 + xOffset, 96 );
 }
 
@@ -241,7 +259,7 @@ void Game_DrawEnemy( Game_t* game )
 
 void Game_WipeEnemy( Game_t* game )
 {
-   Screen_DrawRectColor( &( game->screen ), 96, 52, 96, 96, COLOR_BLACK );
+   Screen_DrawRectColor( &( game->screen ), 96, 52, 112, 112, COLOR_BLACK );
 }
 
 internal void Game_DrawTileMap( Game_t* game )

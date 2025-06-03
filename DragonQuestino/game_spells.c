@@ -4,25 +4,78 @@
 #define CHECK_CAST_ABILITY( m, n ) if ( !Game_CanCastSpell( game, m, n ) ) return;
 
 internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName );
+internal void Game_ResetBattleMenu( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
    uint8_t maxEffect;
+   DialogId_t dialogId;
 
    CHECK_CAST_ABILITY( SPELL_HEAL_MP, STRING_SPELL_HEAL );
+   Game_ResetBattleMenu( game );
 
-   if ( game->player.stats.hitPoints == UINT8_MAX )
+   if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Game_OpenDialog( game, DialogId_FullyHealed );
+      dialogId = ( game->mainState == MainState_Overworld ) ? DialogId_FullyHealed : DialogId_Battle_FullyHealed;
+      Game_OpenDialog( game, dialogId );
    }
    else
    {
       maxEffect = game->player.isCursed ? ( SPELL_HEAL_MAXEFFECT / 2 ) : SPELL_HEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_HEAL_MP;
       Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, maxEffect,
-                         DialogId_Spell_OverworldCastHeal1, DialogId_Spell_OverworldCastHeal2 );
+                         DialogId_Spell_CastHeal1, DialogId_Spell_CastHeal2 );
       Game_DrawQuickStatus( game );
    }
+}
+
+void Game_CastSizz( Game_t* game )
+{
+   CHECK_CAST_ABILITY( SPELL_SIZZ_MP, STRING_SPELL_SIZZ );
+   Game_ResetBattleMenu( game );
+
+   game->player.stats.magicPoints -= SPELL_SIZZ_MP;
+   Game_DrawQuickStatus( game );
+
+   if ( Random_u8( 0, 15 ) <= game->battle.enemy.stats.hurtResist )
+   {
+      game->pendingPayload8u = 0;
+   }
+   else
+   {
+      game->pendingPayload8u = Random_u8( SPELL_SIZZ_MINEFFECT, SPELL_SIZZ_MAXEFFECT );
+   }
+
+   Dialog_SetInsertionText( &( game->dialog ), STRING_SPELL_SIZZ );
+   Game_OpenDialog( game, DialogId_Battle_Spell_Sizz );
+}
+
+void Game_ApplySizz( Game_t* game )
+{
+   char msg[64];
+   uint8_t damage;
+
+   if ( game->pendingPayload8u == 0 )
+   {
+      Dialog_SetInsertionText( &( game->dialog ), game->battle.enemy.name );
+      Game_OpenDialog( game, DialogId_Battle_Spell_NoEffect );
+   }
+   else
+   {
+      Dialog_Draw( &( game->dialog ) );
+      Animation_Start( &( game->animation ), AnimationId_Battle_EnemyDamage );
+      damage = ( game->battle.enemy.stats.hitPoints > game->pendingPayload8u ) ? game->pendingPayload8u : game->battle.enemy.stats.hitPoints;
+      game->battle.enemy.stats.hitPoints -= damage;
+      sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, game->battle.enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+      Dialog_SetInsertionText( &( game->dialog ), msg );
+      Game_OpenDialog( game, DialogId_Battle_Spell_AttackSucceeded );
+   }
+}
+
+void Game_CastSleep( Game_t* game )
+{
+   // TODO
+   UNUSED_PARAM( game );
 }
 
 void Game_CastGlow( Game_t* game )
@@ -52,6 +105,12 @@ void Game_CastGlow( Game_t* game )
          Game_OpenDialog( game, DialogId_Spell_OverworldCastGlow );
       }
    }
+}
+
+void Game_CastFizzle( Game_t* game )
+{
+   // TODO
+   UNUSED_PARAM( game );
 }
 
 void Game_CastEvac( Game_t* game )
@@ -105,38 +164,111 @@ void Game_CastRepel( Game_t* game )
 void Game_CastMidheal( Game_t* game )
 {
    uint8_t maxEffect;
+   DialogId_t dialogId;
 
    CHECK_CAST_ABILITY( SPELL_MIDHEAL_MP, STRING_SPELL_MIDHEAL );
+   Game_ResetBattleMenu( game );
 
-   if ( game->player.stats.hitPoints == UINT8_MAX )
+   if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Game_OpenDialog( game, DialogId_FullyHealed );
+      dialogId = ( game->mainState == MainState_Overworld ) ? DialogId_FullyHealed : DialogId_Battle_FullyHealed;
+      Game_OpenDialog( game, dialogId );
    }
    else
    {
       maxEffect = game->player.isCursed ? ( SPELL_MIDHEAL_MAXEFFECT / 2 ) : SPELL_MIDHEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
-      Game_DrawQuickStatus( game );
       Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, maxEffect,
-                         DialogId_Spell_OverworldCastMidheal1, DialogId_Spell_OverworldCastMidheal2 );
+                         DialogId_Spell_CastMidheal1, DialogId_Spell_CastMidheal2 );
+      Game_DrawQuickStatus( game );
+   }
+}
+
+void Game_CastSizzle( Game_t* game )
+{
+   CHECK_CAST_ABILITY( SPELL_SIZZLE_MP, STRING_SPELL_SIZZLE );
+   Game_ResetBattleMenu( game );
+
+   game->player.stats.magicPoints -= SPELL_SIZZLE_MP;
+   Game_DrawQuickStatus( game );
+
+   if ( Random_u8( 0, 15 ) <= game->battle.enemy.stats.hurtResist )
+   {
+      game->pendingPayload8u = 0;
+   }
+   else
+   {
+      game->pendingPayload8u = Random_u8( SPELL_SIZZLE_MINEFFECT, SPELL_SIZZLE_MAXEFFECT );
+   }
+
+   Dialog_SetInsertionText( &( game->dialog ), STRING_SPELL_SIZZLE );
+   Game_OpenDialog( game, DialogId_Battle_Spell_Sizzle );
+}
+
+void Game_ApplySizzle( Game_t* game )
+{
+   char msg[64];
+   uint8_t damage;
+
+   if ( game->pendingPayload8u == 0 )
+   {
+      Dialog_SetInsertionText( &( game->dialog ), game->battle.enemy.name );
+      Game_OpenDialog( game, DialogId_Battle_Spell_NoEffect );
+   }
+   else
+   {
+      Dialog_Draw( &( game->dialog ) );
+      Animation_Start( &( game->animation ), AnimationId_Battle_EnemyDamage );
+      damage = ( game->battle.enemy.stats.hitPoints > game->pendingPayload8u ) ? game->pendingPayload8u : game->battle.enemy.stats.hitPoints;
+      game->battle.enemy.stats.hitPoints -= damage;
+      sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, game->battle.enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
+      Dialog_SetInsertionText( &( game->dialog ), msg );
+      Game_OpenDialog( game, DialogId_Battle_Spell_AttackSucceeded );
    }
 }
 
 internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName )
 {
+   DialogId_t dialogId;
+
    if ( game->player.stats.magicPoints < requiredMp )
    {
-      Game_OpenDialog( game, DialogId_Spell_NotEnoughMp );
+      dialogId = ( game->mainState == MainState_Overworld ) ? DialogId_Spell_NotEnoughMp : DialogId_Battle_Spell_NotEnoughMp;
+      Game_OpenDialog( game, dialogId );
       return False;
    }
-   else if ( game->tileMap.blocksMagic )
+
+   if ( game->tileMap.blocksMagic )
    {
+      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
       Game_DrawQuickStatus( game );
       Dialog_SetInsertionText( &( game->dialog ), spellName );
-      Game_OpenDialog( game, DialogId_Spell_Blocked );
+      dialogId = game->mainState == MainState_Overworld ? DialogId_Spell_Blocked : DialogId_Battle_Spell_Blocked;
+      Game_OpenDialog( game, dialogId );
+      return False;
+   }
+   else if ( game->mainState == MainState_Battle && game->player.stats.isFizzled )
+   {
+      game->screen.needsRedraw = True;
+      game->player.stats.magicPoints -= requiredMp;
+      Game_DrawQuickStatus( game );
+      Dialog_SetInsertionText( &( game->dialog ), spellName );
+      Game_OpenDialog( game, DialogId_Battle_Spell_Fizzled );
       return False;
    }
 
    return True;
+}
+
+internal void Game_ResetBattleMenu( Game_t* game )
+{
+   if ( game->mainState == MainState_Battle )
+   {
+      game->screen.needsRedraw = True;
+      game->activeMenu = &( game->menus[MenuId_Battle] );
+      Menu_Reset( game->activeMenu );
+      game->screen.needsRedraw = True;
+      Game_ChangeSubState( game, SubState_Menu );
+   }
 }
