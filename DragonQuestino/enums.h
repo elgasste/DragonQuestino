@@ -185,8 +185,6 @@ typedef enum DialogId_t
    DialogId_Spell_NotEnoughMp,
    DialogId_Spell_Blocked,
    DialogId_Item_None,
-   DialogId_Door_None,
-   DialogId_Door_NoKeys,
 
    DialogId_FullyHealed,
    DialogId_HolyProtection_Off,

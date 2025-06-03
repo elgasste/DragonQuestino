@@ -69,7 +69,10 @@ void Game_OpenDoor( Game_t* game )
    {
       if ( !ITEM_GET_KEYCOUNT( game->player.items ) )
       {
-         Game_OpenDialog( game, DialogId_Door_NoKeys );
+         Dialog2_Reset( &( game->dialog2 ), game->mainState );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_KEYS, 0, 0 );
+         Dialog2_Start( &( game->dialog2 ) );
+         Game_ChangeSubState( game, SubState_Dialog );
       }
       else
       {
@@ -80,7 +83,10 @@ void Game_OpenDoor( Game_t* game )
    }
    else
    {
-      Game_OpenDialog( game, DialogId_Door_None );
+      Dialog2_Reset( &( game->dialog2 ), game->mainState );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_DOOR, 0, 0 );
+      Dialog2_Start( &( game->dialog2 ) );
+      Game_ChangeSubState( game, SubState_Dialog );
    }
 }
 

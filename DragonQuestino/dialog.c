@@ -252,8 +252,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Spell_CastZoom:
       case DialogId_Spell_NotEnoughMp:
       case DialogId_Item_None:
-      case DialogId_Door_None:
-      case DialogId_Door_NoKeys:
       case DialogId_FullyHealed:
       case DialogId_HolyProtection_Off:
       case DialogId_Use_WingCantUse:
@@ -348,8 +346,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
       case DialogId_Spell_CastZoom: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_ZOOM ); return;
       case DialogId_Spell_NotEnoughMp: strcpy( text, STRING_NOTENOUGHMP ); return;
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
-      case DialogId_Door_None: strcpy( text, STRING_DIALOG_NO_DOOR ); return;
-      case DialogId_Door_NoKeys: strcpy( text, STRING_DIALOG_NO_KEYS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
       case DialogId_Use_Herb1:
