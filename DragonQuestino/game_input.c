@@ -145,7 +145,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
 {
    uint32_t e;
 
-   if ( Dialog_IsDone( &( game->dialog ) ) )
+   if ( Dialog2_IsDone( &( game->dialog2 ) ) )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
@@ -161,7 +161,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      if ( Dialog_StepAhead( &( game->dialog ) ) )
+      if ( Dialog2_StepAhead( &( game->dialog2 ) ) )
       {
          switch ( game->dialog.section )
          {
@@ -186,7 +186,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                      e = Player_GetExperienceRemaining( &( game->player ) );
                      if ( e == 0 )
                      {
-                        Dialog_NextSection( &( game->dialog ) );
+                        Dialog2_NextSection( &( game->dialog2 ) );
                      }
                      break;
                }
@@ -206,7 +206,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
 
       switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
-         case MenuCommand_Overworld_Talk: Game_OpenDialog( game, DialogId_Talk_NobodyThere ); break;
+         case MenuCommand_Overworld_Talk: Game_Talk( game ); break;
          case MenuCommand_Overworld_Status:
             Game_DrawOverworldDeepStatus( game );
             Game_ChangeSubState( game, SubState_Waiting );
@@ -357,7 +357,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
 
 internal void Game_HandleBattleDialogInput( Game_t* game )
 {
-   if ( Dialog_IsDone( &( game->dialog ) ) )
+   if ( Dialog2_IsDone( &( game->dialog2 ) ) )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
@@ -380,7 +380,7 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      Dialog_StepAhead( &( game->dialog ) );
+      Dialog2_StepAhead( &( game->dialog2 ) );
    }
 }
 

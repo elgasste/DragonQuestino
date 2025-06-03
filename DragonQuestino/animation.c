@@ -70,7 +70,7 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
          animation->totalDuration = ANIMATION_TILEMAP_WHITE_DURATION;
          break;
       case AnimationId_CastSpell:
-         Dialog_Draw( &( animation->game->dialog ) );
+         Dialog2_Draw( &( animation->game->dialog2 ) );
          animation->game->screen.wipeColor = COLOR_WHITE;
          animation->game->screen.needsWipe = True;
          animation->totalDuration = ANIMATION_CASTSPELL_TOTALDURATION;
@@ -98,22 +98,22 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
          animation->totalDuration = ANIMATION_BATTLE_ENEMYFADEOUT_DURATION;
          break;
       case AnimationId_Battle_EnemyFadeInPause:
-         Dialog_Draw( &( animation->game->dialog ) );
+         Dialog2_Draw( &( animation->game->dialog2 ) );
          animation->totalDuration = ANIMATION_BATTLE_ENEMYFADEINPAUSE_DURATION;
          break;
       case AnimationId_Battle_EnemyDamage:
          animation->game->dialog.showCarat = False;
-         Dialog_Draw( &( animation->game->dialog ) );
+         Dialog2_Draw( &( animation->game->dialog2 ) );
          animation->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION;
          animation->flag = False;
          break;
       case AnimationId_Battle_EnemyDodge:
          animation->game->dialog.showCarat = False;
-         Dialog_Draw( &( animation->game->dialog ) );
+         Dialog2_Draw( &( animation->game->dialog2 ) );
          animation->totalDuration = ANIMATION_BATTLE_ENEMYDODGE_DURATION;
          break;
       case AnimationId_Battle_VictoryPause:
-         Dialog_Draw( &( animation->game->dialog ) );
+         Dialog2_Draw( &( animation->game->dialog2 ) );
          animation->totalDuration = ANIMATION_BATTLE_VICTORYPAUSE_DURATION;
          break;
    }
@@ -193,10 +193,10 @@ internal void Animation_Stop( Animation_t* animation )
          break;
       case AnimationId_Battle_EnemyDamage:
          Game_DrawEnemy( animation-> game );
-         Dialog_NextSection( &( animation->game->dialog ) );
+         Dialog2_NextSection( &( animation->game->dialog2 ) );
          break;
       case AnimationId_Battle_EnemyDodge:
-         Dialog_NextSection( &( animation->game->dialog ) );
+         Dialog2_NextSection( &( animation->game->dialog2 ) );
          break;
       case AnimationId_Battle_VictoryPause:
          Animation_Start( animation, AnimationId_Battle_EnemyFadeOut );

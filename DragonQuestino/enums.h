@@ -169,8 +169,7 @@ MenuCommand_t;
 
 typedef enum DialogId_t
 {
-   DialogId_Talk_NobodyThere = 0,
-   DialogId_Search_NothingFound,
+   DialogId_Search_NothingFound = 0,
    DialogId_Search_FoundItem,
    DialogId_Search_FoundHiddenStairs,
    DialogId_Spell_None,

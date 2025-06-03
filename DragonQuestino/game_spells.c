@@ -62,7 +62,7 @@ void Game_ApplySizz( Game_t* game )
    }
    else
    {
-      Dialog_Draw( &( game->dialog ) );
+      Dialog2_Draw( &( game->dialog2 ) );
       Animation_Start( &( game->animation ), AnimationId_Battle_EnemyDamage );
       damage = ( game->battle.enemy.stats.hitPoints > game->pendingPayload8u ) ? game->pendingPayload8u : game->battle.enemy.stats.hitPoints;
       game->battle.enemy.stats.hitPoints -= damage;
@@ -217,7 +217,7 @@ void Game_ApplySizzle( Game_t* game )
    }
    else
    {
-      Dialog_Draw( &( game->dialog ) );
+      Dialog2_Draw( &( game->dialog2 ) );
       Animation_Start( &( game->animation ), AnimationId_Battle_EnemyDamage );
       damage = ( game->battle.enemy.stats.hitPoints > game->pendingPayload8u ) ? game->pendingPayload8u : game->battle.enemy.stats.hitPoints;
       game->battle.enemy.stats.hitPoints -= damage;

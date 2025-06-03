@@ -82,7 +82,7 @@ void Game_Draw( Game_t* game )
                         Menu_Draw( &( game->menus[MenuId_OverworldSpell] ) );
                         break;
                   }
-                  Dialog_Draw( &( game->dialog ) );
+                  Dialog2_Draw( &( game->dialog2 ) );
                   break;
             }
          }
@@ -97,7 +97,7 @@ void Game_Draw( Game_t* game )
                   Menu_Draw( game->activeMenu );
                   break;
                case SubState_Dialog:
-                  Dialog_Draw( &( game->dialog ) );
+                  Dialog2_Draw( &( game->dialog2 ) );
                   break;
             }
          }
@@ -116,12 +116,12 @@ void Game_Draw( Game_t* game )
                   Game_DrawQuickStatus( game );
                   game->activeMenu->hasDrawn = False;
                   Menu_Draw( game->activeMenu );
-                  Dialog_Draw( &( game->dialog ) );
+                  Dialog2_Draw( &( game->dialog2 ) );
                   break;
                case SubState_None:
                case SubState_Dialog:
                   Game_DrawQuickStatus( game );
-                  Dialog_Draw( &( game->dialog ) );
+                  Dialog2_Draw( &( game->dialog2 ) );
                   break;
             }
 
@@ -135,7 +135,7 @@ void Game_Draw( Game_t* game )
                   Menu_Draw( game->activeMenu );
                   break;
                case SubState_Dialog:
-                  Dialog_Draw( &( game->dialog ) );
+                  Dialog2_Draw( &( game->dialog2 ) );
                   break;
             }
          }

@@ -28,7 +28,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
       Menu_Init( &( game->menus[(MenuId_t)i] ), (MenuId_t)( i ), &( game->screen ), &( game->player ), &( game->tileMap ) );
    }
 
-   Dialog_Init( &( game->dialog ), game );
+   Dialog2_Init( &( game->dialog2 ), &( game->screen ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
    {
@@ -65,20 +65,9 @@ void Game_Tic( Game_t* game )
    {
       Game_HandleInput( game );
 
-      if ( game->mainState == MainState_Overworld )
+      if ( game->mainState == MainState_Overworld && game->subState == SubState_None )
       {
-         switch ( game->subState )
-         {
-            case SubState_None:
-               Game_TicOverworld( game );
-               break;
-            case SubState_Menu:
-               Menu_Tic( game->activeMenu );
-               break;
-            case SubState_Dialog:
-               Dialog_Tic( &( game->dialog ) );
-               break;
-         }
+         Game_TicOverworld( game );
       }
       else
       {
@@ -88,7 +77,7 @@ void Game_Tic( Game_t* game )
                Menu_Tic( game->activeMenu );
                break;
             case SubState_Dialog:
-               Dialog_Tic( &( game->dialog ) );
+               Dialog2_Tic( &( game->dialog2 ) );
                break;
          }
       }
@@ -183,7 +172,23 @@ void Game_OpenMenu( Game_t* game, MenuId_t id )
 
 void Game_OpenDialog( Game_t* game, DialogId_t id )
 {
-   Dialog_Load( &( game->dialog ), id );
+   UNUSED_PARAM( game );
+   UNUSED_PARAM( id );
+   //Dialog_Load( &( game->dialog ), id );
+   //Game_ChangeSubState( game, SubState_Dialog );
+}
+
+void Game_OpenDialog2( Game_t* game )
+{
+   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Game_ChangeSubState( game, SubState_Dialog );
+}
+
+void Game_Talk( Game_t* game )
+{
+   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NOBODY_THERE, 0, 0 );
+   Dialog2_Start( &( game->dialog2 ) );
    Game_ChangeSubState( game, SubState_Dialog );
 }
 
