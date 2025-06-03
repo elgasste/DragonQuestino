@@ -169,10 +169,7 @@ MenuCommand_t;
 
 typedef enum DialogId_t
 {
-   DialogId_Search_NothingFound = 0,
-   DialogId_Search_FoundItem,
-   DialogId_Search_FoundHiddenStairs,
-   DialogId_Spell_None,
+   DialogId_Spell_None = 0,
    DialogId_Spell_OverworldCantCast,
    DialogId_Spell_CastHeal1,
    DialogId_Spell_CastHeal2,
@@ -211,11 +208,6 @@ typedef enum DialogId_t
    DialogId_Use_RainbowDrop,
    DialogId_Use_CursedBelt,
 
-   DialogId_Chest_ItemCollected,
-   DialogId_Chest_ItemNoSpace,
-   DialogId_Chest_GoldCollected,
-   DialogId_Chest_GoldNoSpace,
-   DialogId_Chest_Tablet,
    DialogId_Chest_DeathNecklace,
 
    DialogId_Battle_EnemyApproaches,

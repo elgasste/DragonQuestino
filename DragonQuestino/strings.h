@@ -140,7 +140,7 @@
 
 #define STRING_CHEST_ITEMFOUND                                       "The chest contains %s!"
 #define STRING_CHEST_ITEMNOSPACE                                     "But you can't carry any more of these."
-#define STRING_CHEST_GOLDFOUND                                       "The chest contains %s gold pieces!"
+#define STRING_CHEST_GOLDFOUND                                       "The chest contains %u gold pieces!"
 #define STRING_CHEST_GOLDNOSPACE                                     "But you can't carry any more gold."
 #define STRING_CHEST_TABLET_1                                        "The tablet reads as follows..."
 #define STRING_CHEST_TABLET_2                                        "\"I am Erdrick, and thou art my descendant."

@@ -264,8 +264,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Use_GwaelynsLoveCantUse:
       case DialogId_Use_RainbowDropCantUse:
       case DialogId_Use_RainbowDrop:
-      case DialogId_Chest_ItemCollected:
-      case DialogId_Chest_GoldCollected:
       case DialogId_Battle_EnemyApproaches:
       case DialogId_Battle_Victory:
       case DialogId_Battle_Spell_None:
@@ -277,9 +275,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_Sizz:
       case DialogId_Battle_Spell_Sizzle:
          return 1;
-      case DialogId_Search_NothingFound:
-      case DialogId_Search_FoundItem:
-      case DialogId_Search_FoundHiddenStairs:
       case DialogId_Use_Herb1:
       case DialogId_Use_Herb2:
       case DialogId_Use_FairyWaterCursed:
@@ -291,8 +286,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Spell_CastRepelCursed:
       case DialogId_Spell_CastRepel:
       case DialogId_Spell_CastEvacCursed:
-      case DialogId_Chest_ItemNoSpace:
-      case DialogId_Chest_GoldNoSpace:
       case DialogId_Chest_DeathNecklace:
       case DialogId_Spell_CastHeal1:
       case DialogId_Spell_CastHeal2:
@@ -311,8 +304,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
          return 4;
       case DialogId_Battle_VictoryWithLevelUp:
          return ( dialog->game->battle.previousSpells < dialog->game->player.spells ) ? 6 : 5;
-      case DialogId_Chest_Tablet:
-         return 8;
    }
 
    return 0;
@@ -326,24 +317,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
 
    switch ( dialog->id )
    {
-      case DialogId_Search_NothingFound:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_DIALOG_SEARCH ); return;
-            case 1: strcpy( text, STRING_DIALOG_SEARCH_NOT_FOUND ); return;
-         }
-      case DialogId_Search_FoundItem:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_DIALOG_SEARCH ); return;
-            case 1: sprintf( text, STRING_DIALOG_SEARCH_FOUND, dialog->insertionText ); return;
-         }
-      case DialogId_Search_FoundHiddenStairs:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_DIALOG_SEARCH ); return;
-            case 1: strcpy( text, STRING_FOUND_HIDDENSTAIRS ); return;
-         }
       case DialogId_Spell_None: strcpy( text, STRING_DIALOG_NO_SPELLS ); return;
       case DialogId_Spell_OverworldCantCast: strcpy( text, STRING_DIALOG_SPELLS_OVERWORLD_CANT_CAST ); return;
       case DialogId_Spell_OverworldCastGlow: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW ); return;
@@ -439,32 +412,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          {
             case 0: strcpy( text, STRING_ITEMUSE_CURSEDBELT ); return;
             case 1: strcpy( text, STRING_CURSED ); return;
-         }
-      case DialogId_Chest_ItemCollected: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
-      case DialogId_Chest_ItemNoSpace:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_CHEST_ITEMFOUND, dialog->insertionText ); return;
-            case 1: strcpy( text, STRING_CHEST_ITEMNOSPACE ); return;
-         }
-      case DialogId_Chest_GoldCollected: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
-      case DialogId_Chest_GoldNoSpace:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_CHEST_GOLDFOUND, dialog->insertionText ); return;
-            case 1: strcpy( text, STRING_CHEST_GOLDNOSPACE ); return;
-         }
-      case DialogId_Chest_Tablet:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_TABLET ); return;
-            case 1: strcpy( text, STRING_CHEST_TABLET_1 ); return;
-            case 2: strcpy( text, STRING_CHEST_TABLET_2 ); return;
-            case 3: strcpy( text, STRING_CHEST_TABLET_3 ); return;
-            case 4: strcpy( text, STRING_CHEST_TABLET_4 ); return;
-            case 5: strcpy( text, STRING_CHEST_TABLET_5 ); return;
-            case 6: strcpy( text, STRING_CHEST_TABLET_6 ); return;
-            case 7: strcpy( text, STRING_CHEST_TABLET_7 ); return;
          }
       case DialogId_Chest_DeathNecklace:
          switch ( dialog->section )

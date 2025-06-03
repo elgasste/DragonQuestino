@@ -228,12 +228,6 @@ internal void Animation_Tic_Overworld_Pause( Animation_t* animation )
       {
          Animation_Start( animation, AnimationId_TileMap_WhiteOut );
       }
-      else if ( animation->game->dialog.id == DialogId_Search_FoundHiddenStairs &&
-                animation->game->tileMap.id == TILEMAP_CHARLOCK_ID &&
-                animation->game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX )
-      {
-         Game_PlayerSteppedOnTile( animation->game, TILEMAP_HIDDENSTAIRS_INDEX );
-      }
       else
       {
          Game_ChangeMainState( animation->game, MainState_Overworld );

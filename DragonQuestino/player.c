@@ -4,7 +4,7 @@
 #include "math.h"
 #include "tables.h"
 
-internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints );
+internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints, Bool_t forceRedraw );
 
 void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
 {
@@ -46,7 +46,7 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
 
-   Player_UpdateTextColor( player, UINT8_MAX );
+   Player_UpdateTextColor( player, player->stats.hitPoints, True );
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )
@@ -84,7 +84,7 @@ void Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
    uint8_t previousHitPoints = player->stats.hitPoints;
 
    Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
-   Player_UpdateTextColor( player, previousHitPoints );
+   Player_UpdateTextColor( player, previousHitPoints, False );
 }
 
 Bool_t Player_CollectItem( Player_t* player, Item_t item )
@@ -162,14 +162,11 @@ void Player_SetCursed( Player_t* player, Bool_t cursed )
 
    if ( cursed )
    {
-      player->screen->textColor = COLOR_GROSSYELLOW;
       TileMap_SetTargetGlowDiameter( player->tileMap, 1 );
    }
-   else
-   {
-      player->screen->textColor = COLOR_WHITE;
-      Player_UpdateTextColor( player, INT8_MAX );
-   }
+   
+   Player_UpdateTextColor( player, player->stats.hitPoints, True );
+   player->screen->needsRedraw = True;
 }
 
 void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection )
@@ -195,26 +192,33 @@ void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level )
    }
 }
 
-internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints )
+internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints, Bool_t forceRedraw )
 {
    float percentage, previousPercentage;
 
    if ( player->isCursed )
    {
-      return;
+      player->screen->textColor = COLOR_GROSSYELLOW;
    }
-
-   percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
-   previousPercentage = (float)( previousHitPoints ) / player->stats.maxHitPoints;
-
-   if ( percentage < PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage >= PLAYER_LOWHEALTH_PERCENTAGE )
+   else
    {
-      player->screen->textColor = COLOR_INJUREDRED;
-      player->screen->needsRedraw = True;
-   }
-   else if ( percentage >= PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage < PLAYER_LOWHEALTH_PERCENTAGE )
-   {
-      player->screen->textColor = COLOR_WHITE;
-      player->screen->needsRedraw = True;
+      percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
+      previousPercentage = (float)( previousHitPoints ) / player->stats.maxHitPoints;
+
+      if ( forceRedraw )
+      {
+         player->screen->textColor = ( percentage < PLAYER_LOWHEALTH_PERCENTAGE ) ? COLOR_INJUREDRED : COLOR_WHITE;
+         player->screen->needsRedraw = True;
+      }
+      else if ( percentage < PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage >= PLAYER_LOWHEALTH_PERCENTAGE )
+      {
+         player->screen->textColor = COLOR_INJUREDRED;
+         player->screen->needsRedraw = True;
+      }
+      else if ( percentage >= PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage < PLAYER_LOWHEALTH_PERCENTAGE )
+      {
+         player->screen->textColor = COLOR_WHITE;
+         player->screen->needsRedraw = True;
+      }
    }
 }

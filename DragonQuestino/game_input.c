@@ -177,7 +177,6 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                      Game_DrawQuickStatus( game );
                      break;
                   case DialogId_Use_CursedBelt:
-                  case DialogId_Chest_DeathNecklace:
                      Player_SetCursed( &( game->player ), True );
                      TileMap_StartGlowTransition( &( game->tileMap ) );
                      game->screen.needsRedraw = True;

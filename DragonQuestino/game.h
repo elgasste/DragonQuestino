@@ -60,7 +60,8 @@ void Game_ChangeSubState( Game_t* game, SubState_t newState );
 void Game_EnterTargetPortal( Game_t* game );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
 void Game_OpenDialog( Game_t* game, DialogId_t id );
-void Game_OpenDialog2( Game_t* game );
+
+// game_actions.c
 void Game_Talk( Game_t* game );
 void Game_Search( Game_t* game );
 void Game_OpenDoor( Game_t* game );

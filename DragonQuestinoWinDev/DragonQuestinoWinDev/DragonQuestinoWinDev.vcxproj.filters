@@ -164,5 +164,8 @@
     <ClCompile Include="..\..\DragonQuestino\enemy.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\game_actions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
