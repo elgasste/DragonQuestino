@@ -14,6 +14,7 @@ void Game_UseHerb( Game_t* game )
    }
    else
    {
+      game->screen.needsRedraw = True;
       ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
       restoredHitPoints = Random_u8( ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT );
       game->pendingPayload8u = restoredHitPoints;
