@@ -2,7 +2,14 @@
 #include "game.h"
 #include "vector.h"
 
-// TODO: refactor this file to combine some of this stuff, a lot of it is duplicated
+#define ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( c ) \
+   c->totalElapsedSeconds += CLOCK_FRAME_SECONDS; \
+   if ( c->totalElapsedSeconds > ANIMATION_TILEMAP_WHITE_DURATION ) \
+   { \
+      AnimationChain_AnimationFinished( c ); \
+      return; \
+   } \
+
 internal void Animation_Stop( Animation_t* animation );
 internal void Animation_Tic_Overworld_Pause( Animation_t* animation );
 internal void Animation_Tic_TileMap_FadeOut( Animation_t* animation );
@@ -23,6 +30,13 @@ internal void Animation_Tic_Battle_EnemyFadeInPause( Animation_t* animation );
 internal void Animation_Tic_Battle_EnemyDamage( Animation_t* animation );
 internal void Animation_Tic_Battle_EnemyDodge( Animation_t* animation );
 internal void Animation_Tic_Battle_VictoryPause( Animation_t* animation );
+
+internal void AnimationChain_StartAnimation( AnimationChain_t* chain );
+internal void AnimationChain_AnimationFinished( AnimationChain_t* chain );
+internal void AnimationChain_Tic_Pause( AnimationChain_t* chain );
+internal void AnimationChain_Tic_WhiteOut( AnimationChain_t* chain );
+internal void AnimationChain_Tic_WhitePause( AnimationChain_t* chain );
+internal void AnimationChain_Tic_WhiteIn( AnimationChain_t* chain );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -46,7 +60,7 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
    
    switch ( id )
    {
-      case AnimationId_Overworld_Pause:
+      case AnimationId_Pause:
          animation->totalDuration = ANIMATION_OVERWORLD_PAUSE_DURATION;
          break;
       case AnimationId_TileMap_FadeOut:
@@ -59,14 +73,14 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
       case AnimationId_TileMap_FadeIn:
          animation->totalDuration = ANIMATION_TILEMAP_FADE_DURATION;
          break;
-      case AnimationId_TileMap_WhiteOut:
+      case AnimationId_WhiteOut:
          Screen_BackupPalette( &( animation->game->screen ) );
          animation->totalDuration = ANIMATION_TILEMAP_WHITE_DURATION;
          break;
-      case AnimationId_TileMap_WhitePause:
+      case AnimationId_WhitePause:
          animation->totalDuration = ANIMATION_TILEMAP_WHITEPAUSE_DURATION;
          break;
-      case AnimationId_TileMap_WhiteIn:
+      case AnimationId_WhiteIn:
          animation->totalDuration = ANIMATION_TILEMAP_WHITE_DURATION;
          break;
       case AnimationId_CastSpell:
@@ -127,13 +141,13 @@ void Animation_Tic( Animation_t* animation )
 {
    switch ( animation->id )
    {
-      case AnimationId_Overworld_Pause: Animation_Tic_Overworld_Pause( animation ); break;
+      case AnimationId_Pause: Animation_Tic_Overworld_Pause( animation ); break;
       case AnimationId_TileMap_FadeOut: Animation_Tic_TileMap_FadeOut( animation ); break;
       case AnimationId_TileMap_FadePause: Animation_Tic_TileMap_FadePause( animation ); break;
       case AnimationId_TileMap_FadeIn: Animation_Tic_TileMap_FadeIn( animation ); break;
-      case AnimationId_TileMap_WhiteOut: Animation_Tic_TileMap_WhiteOut( animation ); break;
-      case AnimationId_TileMap_WhitePause: Animation_Tic_TileMap_WhitePause( animation ); break;
-      case AnimationId_TileMap_WhiteIn: Animation_Tic_TileMap_WhiteIn( animation ); break;
+      case AnimationId_WhiteOut: Animation_Tic_TileMap_WhiteOut( animation ); break;
+      case AnimationId_WhitePause: Animation_Tic_TileMap_WhitePause( animation ); break;
+      case AnimationId_WhiteIn: Animation_Tic_TileMap_WhiteIn( animation ); break;
       case AnimationId_CastSpell: Animation_Tic_CastSpell( animation ); break;
       case AnimationId_RainbowBridge_Trippy: Animation_Tic_RainbowBridge_Trippy( animation ); break;
       case AnimationId_RainbowBridge_WhiteOut: Animation_Tic_RainbowBridge_WhiteOut( animation ); break;
@@ -157,11 +171,11 @@ internal void Animation_Stop( Animation_t* animation )
 
    switch ( animation->id )
    {
-      case AnimationId_Overworld_Pause:
+      case AnimationId_Pause:
          Game_ChangeMainState( animation->game, MainState_Overworld );
          break;
       case AnimationId_TileMap_FadeIn:
-      case AnimationId_TileMap_WhiteIn:
+      case AnimationId_WhiteIn:
       case AnimationId_RainbowBridge_FadeIn:
          Screen_RestorePalette( &( animation->game->screen ) );
          break;
@@ -223,10 +237,9 @@ internal void Animation_Tic_Overworld_Pause( Animation_t* animation )
          animation->game->targetPortal = &( animation->game->tileMap.evacPortal );
          Animation_Start( animation, AnimationId_TileMap_FadeOut );
       }
-      else if ( animation->game->dialog.id == DialogId_Use_Wing ||
-                animation->game->dialog.id == DialogId_Spell_CastZoom )
+      else if ( animation->game->dialog.id == DialogId_Spell_CastZoom )
       {
-         Animation_Start( animation, AnimationId_TileMap_WhiteOut );
+         Animation_Start( animation, AnimationId_WhiteOut );
       }
       else
       {
@@ -311,7 +324,7 @@ internal void Animation_Tic_TileMap_WhiteOut( Animation_t* animation )
    {
       Game_EnterTargetPortal( animation->game );
       Animation_Stop( animation );
-      Animation_Start( animation, AnimationId_TileMap_WhitePause );
+      Animation_Start( animation, AnimationId_WhitePause );
    }
    else
    {
@@ -334,7 +347,7 @@ internal void Animation_Tic_TileMap_WhitePause( Animation_t* animation )
 
    if ( animation->totalElapsedSeconds > animation->totalDuration )
    {
-      Animation_Start( animation, AnimationId_TileMap_WhiteIn );
+      Animation_Start( animation, AnimationId_WhiteIn );
    }
 }
 
@@ -606,5 +619,140 @@ internal void Animation_Tic_Battle_VictoryPause( Animation_t* animation )
    if ( animation->totalElapsedSeconds > animation->totalDuration )
    {
       Animation_Stop( animation );
+   }
+}
+
+void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen )
+{
+   chain->screen = screen;
+}
+
+void AnimationChain_Reset( AnimationChain_t* chain )
+{
+   chain->animationCount = 0;
+}
+
+void AnimationChain_PushAnimation( AnimationChain_t* chain, AnimationId_t id, void ( *callback )( void* ), void* callbackData )
+{
+   chain->animationIds[chain->animationCount] = id;
+   chain->callbacks[chain->animationCount] = callback;
+   chain->callbackDatas[chain->animationCount] = callbackData;
+   chain->animationCount++;
+}
+
+void AnimationChain_Start( AnimationChain_t* chain )
+{
+   chain->activeAnimation = 0;
+   chain->isRunning = True;
+   AnimationChain_StartAnimation( chain );
+}
+
+void AnimationChain_Tic( AnimationChain_t* chain )
+{
+   switch ( chain->animationIds[chain->activeAnimation] )
+   {
+      case AnimationId_Pause: AnimationChain_Tic_Pause( chain ); break;
+      case AnimationId_WhiteOut: AnimationChain_Tic_WhiteOut( chain ); break;
+      case AnimationId_WhitePause: AnimationChain_Tic_WhitePause( chain ); break;
+      case AnimationId_WhiteIn: AnimationChain_Tic_WhiteIn( chain ); break;
+   }
+}
+
+AnimationId_t AnimationChain_GetActiveAnimationId( AnimationChain_t* chain )
+{
+   return chain->animationIds[chain->activeAnimation];
+}
+
+internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
+{
+   switch ( chain->animationIds[chain->activeAnimation] )
+   {
+      case AnimationId_Pause: chain->totalDuration = ANIMATIONCHAIN_PAUSE_DURATION; break;
+      case AnimationId_WhiteOut:
+         Screen_BackupPalette( chain->screen );
+         chain->totalDuration = ANIMATIONCHAIN_WHITEOUT_DURATION;
+         break;
+      case AnimationId_WhitePause: chain->totalDuration = ANIMATIONCHAIN_WHITEPAUSE_DURATION; break;
+      case AnimationId_WhiteIn: chain->totalDuration = ANIMATIONCHAIN_WHITEIN_DURATION; break;
+   }
+
+   chain->totalElapsedSeconds = 0.0f;
+   chain->frameElapsedSeconds = 0.0f;
+   chain->isRunning = True;
+}
+
+internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
+{
+   switch ( chain->animationIds[chain->activeAnimation] )
+   {
+      case AnimationId_WhiteIn: Screen_RestorePalette( chain->screen ); break;
+   }
+
+   if ( chain->callbacks[chain->activeAnimation] )
+   {
+      chain->callbacks[chain->activeAnimation]( chain->callbackDatas[chain->activeAnimation] );
+   }
+
+   chain->activeAnimation++;
+
+   if ( chain->activeAnimation == chain->animationCount )
+   {
+      chain->isRunning = False;
+   }
+   else
+   {
+      AnimationChain_StartAnimation( chain );
+   }
+}
+
+internal void AnimationChain_Tic_Pause( AnimationChain_t* chain )
+{
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+}
+
+internal void AnimationChain_Tic_WhiteOut( AnimationChain_t* chain )
+{
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG;
+   float p;
+   Screen_t* screen = chain->screen;
+
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   for ( i = 0; i < PALETTE_COLORS; i++ )
+   {
+      rangeR = 0x1F - ( screen->backupPalette[i] >> 11 );
+      rangeG = 0x3F - ( ( screen->backupPalette[i] & 0x7E0 ) >> 5 );
+      rangeB = 0x1F - ( screen->backupPalette[i] & 0x1F );
+      p = chain->totalElapsedSeconds / chain->totalDuration;
+      screen->palette[i] = ( ( ( screen->backupPalette[i] >> 11 ) + ( uint16_t )( rangeR * p ) ) << 11 ) |
+         ( ( ( ( screen->backupPalette[i] >> 5 ) & 0x3F ) + ( uint16_t )( rangeG * p ) ) << 5 ) |
+         ( ( ( ( screen->backupPalette[i] ) & 0x1F ) + ( uint16_t )( rangeB * p ) ) );
+   }
+}
+
+internal void AnimationChain_Tic_WhitePause( AnimationChain_t* chain )
+{
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+}
+
+internal void AnimationChain_Tic_WhiteIn( AnimationChain_t* chain )
+{
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG;
+   float p;
+   Screen_t* screen = chain->screen;
+
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   for ( i = 0; i < PALETTE_COLORS; i++ )
+   {
+      rangeR = 0x1F - ( screen->backupPalette[i] >> 11 );
+      rangeG = 0x3F - ( ( screen->backupPalette[i] & 0x7E0 ) >> 5 );
+      rangeB = 0x1F - ( screen->backupPalette[i] & 0x1F );
+      p = 1.0f - ( chain->totalElapsedSeconds / chain->totalDuration );
+      screen->palette[i] = ( ( ( screen->backupPalette[i] >> 11 ) + ( uint16_t )( rangeR * p ) ) << 11 ) |
+         ( ( ( ( screen->backupPalette[i] >> 5 ) & 0x3F ) + ( uint16_t )( rangeG * p ) ) << 5 ) |
+         ( ( ( ( screen->backupPalette[i] ) & 0x1F ) + ( uint16_t )( rangeB * p ) ) );
    }
 }

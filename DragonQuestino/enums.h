@@ -49,13 +49,13 @@ SubState_t;
 
 typedef enum AnimationId_t
 {
-   AnimationId_Overworld_Pause = 0,
+   AnimationId_Pause = 0,
    AnimationId_TileMap_FadeOut,
    AnimationId_TileMap_FadePause,
    AnimationId_TileMap_FadeIn,
-   AnimationId_TileMap_WhiteOut,
-   AnimationId_TileMap_WhitePause,
-   AnimationId_TileMap_WhiteIn,
+   AnimationId_WhiteOut,
+   AnimationId_WhitePause,
+   AnimationId_WhiteIn,
    AnimationId_CastSpell,
    AnimationId_RainbowBridge_Trippy,
    AnimationId_RainbowBridge_WhiteOut,
@@ -189,8 +189,6 @@ typedef enum DialogId_t
    DialogId_FullyHealed,
    DialogId_HolyProtection_Off,
 
-   DialogId_Use_WingCantUse,
-   DialogId_Use_Wing,
    DialogId_Use_FairyWaterCursed,
    DialogId_Use_FairyWater,
    DialogId_Use_TorchCantUse,

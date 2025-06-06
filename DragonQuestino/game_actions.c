@@ -9,8 +9,7 @@ void Game_Talk( Game_t* game )
 {
    Dialog2_Reset( &( game->dialog2 ), game->mainState );
    Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NOBODY_THERE, 0, 0 );
-   Dialog2_Start( &( game->dialog2 ) );
-   Game_ChangeSubState( game, SubState_Dialog );
+   Game_OpenDialog2( game );
 }
 
 void Game_Search( Game_t* game )
@@ -56,8 +55,7 @@ void Game_Search( Game_t* game )
       }
    }
 
-   Dialog2_Start( &( game->dialog2 ) );
-   Game_ChangeSubState( game, SubState_Dialog );
+   Game_OpenDialog2( game );
 }
 
 void Game_OpenDoor( Game_t* game )
@@ -71,8 +69,7 @@ void Game_OpenDoor( Game_t* game )
       {
          Dialog2_Reset( &( game->dialog2 ), game->mainState );
          Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_KEYS, 0, 0 );
-         Dialog2_Start( &( game->dialog2 ) );
-         Game_ChangeSubState( game, SubState_Dialog );
+         Game_OpenDialog2( game );
       }
       else
       {
@@ -85,8 +82,7 @@ void Game_OpenDoor( Game_t* game )
    {
       Dialog2_Reset( &( game->dialog2 ), game->mainState );
       Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_DOOR, 0, 0 );
-      Dialog2_Start( &( game->dialog2 ) );
-      Game_ChangeSubState( game, SubState_Dialog );
+      Game_OpenDialog2( game );
    }
 }
 

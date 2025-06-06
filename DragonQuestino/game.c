@@ -16,6 +16,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 1 );
    Animation_Init( &( game->animation ), game );
+   AnimationChain_Init( &( game->animationChain ), &( game->screen ) );
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
@@ -59,9 +60,9 @@ void Game_Tic( Game_t* game )
 {
    Input_Read( &( game->input ) );
 
-   if ( game->animation.isRunning )
+   if ( game->animationChain.isRunning )
    {
-      Animation_Tic( &( game->animation ) );
+      AnimationChain_Tic( &( game->animationChain ) );
    }
    else
    {
@@ -180,6 +181,12 @@ void Game_OpenDialog( Game_t* game, DialogId_t id )
    UNUSED_PARAM( id );
    //Dialog_Load( &( game->dialog ), id );
    //Game_ChangeSubState( game, SubState_Dialog );
+}
+
+void Game_OpenDialog2( Game_t* game )
+{
+   Dialog2_Start( &( game->dialog2 ) );
+   Game_ChangeSubState( game, SubState_Dialog );
 }
 
 void Game_RestoredHitPointsCallback( Game_t* game )

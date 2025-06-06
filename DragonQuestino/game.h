@@ -40,6 +40,7 @@ typedef struct Game_t
    Dialog2_t dialog2;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    Animation_t animation;
+   AnimationChain_t animationChain;
    Battle_t battle;
 
    float overworldInactivitySeconds;
@@ -60,6 +61,7 @@ void Game_ChangeSubState( Game_t* game, SubState_t newState );
 void Game_EnterTargetPortal( Game_t* game );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
 void Game_OpenDialog( Game_t* game, DialogId_t id );
+void Game_OpenDialog2( Game_t* game );
 void Game_RestoredHitPointsCallback( Game_t* game );
 
 // game_actions.c

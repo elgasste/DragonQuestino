@@ -137,7 +137,7 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Animation_Start( &( game->animation ), AnimationId_Overworld_Pause);
+      Animation_Start( &( game->animation ), AnimationId_Pause );
    }
 }
 
@@ -155,7 +155,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
          }
          else
          {
-            Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
+            Animation_Start( &( game->animation ), AnimationId_Pause );
          }
       }
    }
@@ -365,7 +365,7 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
             case DialogId_Battle_VictoryWithSpoils:
             case DialogId_Battle_VictoryWithLevelUp:
                Game_DrawOverworld( game );
-               Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
+               Animation_Start( &( game->animation ), AnimationId_Pause );
                break;
             case DialogId_Battle_AttackAttemptSucceeded:
             case DialogId_Battle_AttackAttemptFailed:

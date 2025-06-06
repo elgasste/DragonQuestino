@@ -10,15 +10,23 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 void Game_Draw( Game_t* game )
 {
    uint32_t i;
+   AnimationId_t activeAnimationId;
 
-   if ( game->animation.isRunning )
+   if ( game->animationChain.isRunning )
    {
       if ( game->mainState == MainState_Overworld )
       {
-         if ( game->animation.id != AnimationId_CastSpell )
+         activeAnimationId = AnimationChain_GetActiveAnimationId( &( game->animationChain ) );
+
+         if ( activeAnimationId != AnimationId_Pause )
          {
             Game_DrawOverworld( game );
          }
+
+         /*if ( game->animation.id != AnimationId_CastSpell )
+         {
+            Game_DrawOverworld( game );
+         }*/
       }
       else if ( game->mainState == MainState_Battle )
       {

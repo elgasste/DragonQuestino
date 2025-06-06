@@ -1,6 +1,8 @@
 #include "game.h"
 #include "random.h"
 
+internal void Game_UseWingCallback( Game_t* game );
+
 void Game_UseHerb( Game_t* game )
 {
    uint8_t restoredHitPoints;
@@ -23,22 +25,26 @@ void Game_UseHerb( Game_t* game )
       Dialog2_PushSection( &( game->dialog2 ), msg, Game_RestoredHitPointsCallback, game );
    }
 
-   Dialog2_Start( &( game->dialog2 ) );
-   Game_ChangeSubState( game, SubState_Dialog );
+   Game_OpenDialog2( game );
 }
 
 void Game_UseWing( Game_t* game )
 {
+   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+
    if ( game->tileMap.isDungeon )
    {
-      Game_OpenDialog( game, DialogId_Use_WingCantUse );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_WING_CANTUSE, 0, 0 );
    }
    else
    {
+      game->screen.needsRedraw = True;
       ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
       game->targetPortal = &( game->zoomPortals[TILEMAP_TANTEGEL_TOWN_ID] );
-      Game_OpenDialog( game, DialogId_Use_Wing );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_WING, Game_UseWingCallback, game );
    }
+
+   Game_OpenDialog2( game );
 }
 
 void Game_UseFairyWater( Game_t* game )
@@ -149,4 +155,16 @@ void Game_UseCursedBelt( Game_t* game )
 {
    ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
    Game_OpenDialog( game, DialogId_Use_CursedBelt );
+}
+
+internal void Game_UseWingCallback( Game_t* game )
+{
+   Game_ChangeMainState( game, MainState_Overworld );
+   Dialog2_Draw( &( game->dialog2 ) );
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteOut, Game_EnterTargetPortal, game );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhitePause, 0, 0 );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteIn, 0, 0 );
+   AnimationChain_Start( &( game->animationChain ) );
 }
