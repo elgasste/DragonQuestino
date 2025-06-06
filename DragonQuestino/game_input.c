@@ -155,8 +155,12 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
          }
          else
          {
-            Animation_Start( &( game->animation ), AnimationId_Pause );
-         }
+            Game_ChangeMainState( game, MainState_Overworld );
+            Game_DrawOverworld( game );
+            AnimationChain_Reset( &( game->animationChain ) );
+            AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
+            AnimationChain_Start( &( game->animationChain ) );
+         }  
       }
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )

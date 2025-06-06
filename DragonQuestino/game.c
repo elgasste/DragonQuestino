@@ -119,7 +119,6 @@ void Game_ChangeMainState( Game_t* game, MainState_t newState )
          game->overworldInactivitySeconds = 0.0f;
          break;
       case MainState_Battle:
-         game->screen.needsRedraw = True;
          Animation_Start( &( game->animation ), AnimationId_Battle_Checkerboard );
          break;
    }
