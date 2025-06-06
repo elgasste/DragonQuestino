@@ -4,11 +4,8 @@
 #include "math.h"
 #include "tables.h"
 
-internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints, Bool_t forceRedraw );
-
-void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
+void Player_Init( Player_t* player, TileMap_t* tileMap )
 {
-   player->screen = screen;
    player->tileMap = tileMap;
 
    player->tileIndex = 148; // sort of in front of King Lorik
@@ -46,7 +43,10 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
 
-   Player_UpdateTextColor( player, player->stats.hitPoints, True );
+   // MUFFINS: for testing
+   player->stats.maxHitPoints = 100;
+   player->stats.hitPoints = 1;
+   ITEM_SET_HERBCOUNT( player->items, 6 );
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )
@@ -79,12 +79,17 @@ uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
    return Math_CollectAmount16u( &( player->experience ), experience );
 }
 
-void Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
+uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
 {
-   uint8_t previousHitPoints = player->stats.hitPoints;
+   uint8_t restoredHitPoints = hitPoints;
 
-   Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
-   Player_UpdateTextColor( player, previousHitPoints, False );
+   if ( ( player->stats.maxHitPoints - player->stats.hitPoints ) < hitPoints )
+   {
+      restoredHitPoints = player->stats.maxHitPoints - player->stats.hitPoints;
+   }
+
+   player->stats.hitPoints += restoredHitPoints;
+   return restoredHitPoints;
 }
 
 Bool_t Player_CollectItem( Player_t* player, Item_t item )
@@ -164,9 +169,6 @@ void Player_SetCursed( Player_t* player, Bool_t cursed )
    {
       TileMap_SetTargetGlowDiameter( player->tileMap, 1 );
    }
-   
-   Player_UpdateTextColor( player, player->stats.hitPoints, True );
-   player->screen->needsRedraw = True;
 }
 
 void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection )
@@ -188,37 +190,6 @@ void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level )
       if ( level >= g_spellsLevelTable[i] )
       {
          player->spells |= ( 0x1 << i );
-      }
-   }
-}
-
-internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints, Bool_t forceRedraw )
-{
-   float percentage, previousPercentage;
-
-   if ( player->isCursed )
-   {
-      player->screen->textColor = COLOR_GROSSYELLOW;
-   }
-   else
-   {
-      percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
-      previousPercentage = (float)( previousHitPoints ) / player->stats.maxHitPoints;
-
-      if ( forceRedraw )
-      {
-         player->screen->textColor = ( percentage < PLAYER_LOWHEALTH_PERCENTAGE ) ? COLOR_INJUREDRED : COLOR_WHITE;
-         player->screen->needsRedraw = True;
-      }
-      else if ( percentage < PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage >= PLAYER_LOWHEALTH_PERCENTAGE )
-      {
-         player->screen->textColor = COLOR_INJUREDRED;
-         player->screen->needsRedraw = True;
-      }
-      else if ( percentage >= PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage < PLAYER_LOWHEALTH_PERCENTAGE )
-      {
-         player->screen->textColor = COLOR_WHITE;
-         player->screen->needsRedraw = True;
       }
    }
 }

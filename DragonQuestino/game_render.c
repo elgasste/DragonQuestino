@@ -47,6 +47,7 @@ void Game_Draw( Game_t* game )
             }
 
             Game_DrawOverworld( game );
+            Game_SetTextColor( game );
 
             switch ( game->subState )
             {
@@ -72,10 +73,6 @@ void Game_Draw( Game_t* game )
                      case MenuId_OverworldItem:
                         Menu_Draw( &( game->menus[MenuId_Overworld] ) );
                         Game_DrawOverworldItemMenu( game );
-                        if ( game->dialog.id == DialogId_Use_Herb2 )
-                        {
-                           Game_DrawQuickStatus( game );
-                        }
                         break;
                      case MenuId_OverworldSpell:
                         Menu_Draw( &( game->menus[MenuId_Overworld] ) );
@@ -347,5 +344,21 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_2, x, y + TEXT_TILE_SIZE );
       y += ( TEXT_TILE_SIZE * 2 );
+   }
+}
+
+void Game_SetTextColor( Game_t* game )
+{
+   float percentage;
+   Player_t* player = &( game->player );
+
+   if ( player->isCursed )
+   {
+      game->screen.textColor = COLOR_GROSSYELLOW;
+   }
+   else
+   {
+      percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
+      game->screen.textColor = ( percentage < PLAYER_LOWHEALTH_PERCENTAGE ) ? COLOR_INJUREDRED : COLOR_WHITE;
    }
 }

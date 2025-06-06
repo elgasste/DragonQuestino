@@ -168,8 +168,6 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
             case 1:
                switch ( game->dialog.id )
                {
-                  case DialogId_Use_Herb1:
-                  case DialogId_Use_Herb2:
                   case DialogId_Spell_CastHeal1:
                   case DialogId_Spell_CastHeal2:
                   case DialogId_Spell_CastMidheal1:

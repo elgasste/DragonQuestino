@@ -19,8 +19,9 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
-   Player_Init( &( game->player ), &( game->screen ), &( game->tileMap ) );
+   Player_Init( &( game->player ), &( game->tileMap ) );
    Battle_Init( &( game->battle ), game );
+   Game_SetTextColor( game );
 
    game->activeMenu = 0;
 
@@ -179,4 +180,10 @@ void Game_OpenDialog( Game_t* game, DialogId_t id )
    UNUSED_PARAM( id );
    //Dialog_Load( &( game->dialog ), id );
    //Game_ChangeSubState( game, SubState_Dialog );
+}
+
+void Game_RestoredHitPointsCallback( Game_t* game )
+{
+   Player_RestoreHitPoints( &( game->player ), game->pendingPayload8u );
+   game->screen.needsRedraw = True;
 }

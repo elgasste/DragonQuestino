@@ -1,16 +1,29 @@
 #include "game.h"
+#include "random.h"
 
 void Game_UseHerb( Game_t* game )
 {
+   uint8_t restoredHitPoints;
+   char msg[64];
+
+   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Game_OpenDialog( game, DialogId_FullyHealed );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_FULLYHEALED, 0, 0 );
    }
    else
    {
       ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
-      Game_ApplyHealing( game, ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT, DialogId_Use_Herb1, DialogId_Use_Herb2 );
+      restoredHitPoints = Random_u8( ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT );
+      game->pendingPayload8u = restoredHitPoints;
+      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_HERB, 0, 0 );
+      sprintf( msg, STRING_DIALOG_HEAL_RESULT, restoredHitPoints, ( restoredHitPoints == 1 ) ? STRING_POINT : STRING_POINTS );
+      Dialog2_PushSection( &( game->dialog2 ), msg, Game_RestoredHitPointsCallback, game );
    }
+
+   Dialog2_Start( &( game->dialog2 ) );
+   Game_ChangeSubState( game, SubState_Dialog );
 }
 
 void Game_UseWing( Game_t* game )

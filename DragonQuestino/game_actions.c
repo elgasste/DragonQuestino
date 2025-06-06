@@ -90,6 +90,7 @@ void Game_OpenDoor( Game_t* game )
    }
 }
 
+// TODO: this is still used when casting spells, I'd like to get rid of it
 void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t dialogId1, DialogId_t dialogId2 )
 {
    char str[16];
