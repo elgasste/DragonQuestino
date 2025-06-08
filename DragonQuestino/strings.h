@@ -123,7 +123,7 @@
 #define STRING_ITEMUSE_TORCH                                         "You light a torch."
 #define STRING_ITEMUSE_FAIRYFLUTE_1                                  "You play the Fairy Flute."
 #define STRING_ITEMUSE_FAIRYFLUTE_2                                  "A mysterious melody fills the air."
-#define STRING_ITEMUSE_SILVERHARP_1                                  "You plays the Silver Harp."
+#define STRING_ITEMUSE_SILVERHARP_1                                  "You play the Silver Harp."
 #define STRING_ITEMUSE_SILVERHARP_2                                  "Beautiful music flows from its glistening strings."
 #define STRING_ITEMUSE_GWAELINSLOVE_CANTUSE                          "Gwaelin's Love cannot be used here."
 #define STRING_ITEMUSE_GWAELINSLOVE_1                                "\"Heed my voice %s, for this is Gwaelin."

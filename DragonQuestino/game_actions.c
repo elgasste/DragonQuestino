@@ -7,7 +7,7 @@ internal void Game_FoundHiddenStairsCallback( Game_t* game );
 
 void Game_Talk( Game_t* game )
 {
-   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Dialog2_Reset( &( game->dialog2 ) );;
    Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NOBODY_THERE );
    Game_OpenDialog2( game );
 }
@@ -17,7 +17,7 @@ void Game_Search( Game_t* game )
    uint32_t treasureFlag;
    char msg[64];
 
-   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Dialog2_Reset( &( game->dialog2 ) );;
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !ITEM_HAS_TOKEN( game->player.items ) )
    {
@@ -67,7 +67,7 @@ void Game_OpenDoor( Game_t* game )
    {
       if ( !ITEM_GET_KEYCOUNT( game->player.items ) )
       {
-         Dialog2_Reset( &( game->dialog2 ), game->mainState );
+         Dialog2_Reset( &( game->dialog2 ) );;
          Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_KEYS );
          Game_OpenDialog2( game );
       }
@@ -80,7 +80,7 @@ void Game_OpenDoor( Game_t* game )
    }
    else
    {
-      Dialog2_Reset( &( game->dialog2 ), game->mainState );
+      Dialog2_Reset( &( game->dialog2 ) );;
       Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_DOOR );
       Game_OpenDialog2( game );
    }

@@ -8,7 +8,7 @@ void Game_UseHerb( Game_t* game )
    uint8_t restoredHitPoints;
    char msg[64];
 
-   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Dialog2_Reset( &( game->dialog2 ) );;
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
@@ -30,7 +30,7 @@ void Game_UseHerb( Game_t* game )
 
 void Game_UseWing( Game_t* game )
 {
-   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Dialog2_Reset( &( game->dialog2 ) );;
 
    if ( game->tileMap.isDungeon )
    {
@@ -50,7 +50,7 @@ void Game_UseWing( Game_t* game )
 void Game_UseFairyWater( Game_t* game )
 {
    ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 );
-   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Dialog2_Reset( &( game->dialog2 ) );;
    Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYWATER );
 
    if ( game->player.isCursed )
@@ -68,7 +68,7 @@ void Game_UseFairyWater( Game_t* game )
 
 void Game_UseTorch( Game_t* game )
 {
-   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Dialog2_Reset( &( game->dialog2 ) );;
 
    if ( game->tileMap.isDark )
    {
@@ -99,7 +99,10 @@ void Game_UseTorch( Game_t* game )
 
 void Game_UseSilverHarp( Game_t* game )
 {
-   Game_OpenDialog( game, DialogId_Use_SilverHarp );
+   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_SILVERHARP_1 );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_SILVERHARP_2 );
+   Game_OpenDialog2( game );
 }
 
 void Game_UseFairyFlute( Game_t* game )

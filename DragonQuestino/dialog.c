@@ -269,7 +269,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_Sizzle:
          return 1;
       case DialogId_Use_FairyFlute:
-      case DialogId_Use_SilverHarp:
       case DialogId_Use_CursedBelt:
       case DialogId_Spell_OverworldCastGlowCursed:
       case DialogId_Spell_CastRepelCursed:
@@ -344,12 +343,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          {
             case 0: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_1 ); return;
             case 1: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_2 ); return;
-         }
-      case DialogId_Use_SilverHarp:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_ITEMUSE_SILVERHARP_1 ); return;
-            case 1: strcpy( text, STRING_ITEMUSE_SILVERHARP_2 ); return;
          }
       case DialogId_Use_GwaelynsLoveCantUse: strcpy( text, STRING_ITEMUSE_GWAELINSLOVE_CANTUSE ); return;
       case DialogId_Use_GwaelynsLove:
@@ -672,17 +665,18 @@ internal void Dialog_LoadSpellsLearned( Dialog_t* dialog, char* text )
    }
 }
 
-void Dialog2_Init( Dialog2_t* dialog, Screen_t* screen )
+void Dialog2_Init( Dialog2_t* dialog, Screen_t* screen, MainState_t* mainState )
 {
    dialog->screen = screen;
+   dialog->mainState = mainState;
 }
 
-void Dialog2_Reset( Dialog2_t* dialog, MainState_t mainState )
+void Dialog2_Reset( Dialog2_t* dialog )
 {
    dialog->sectionCount = 0;
    dialog->activeSection = 0;
 
-   switch ( mainState )
+   switch ( *( dialog->mainState ) )
    {
       case MainState_Overworld:
          dialog->position.x = 32;

@@ -31,7 +31,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
       Menu_Init( &( game->menus[(MenuId_t)i] ), (MenuId_t)( i ), &( game->screen ), &( game->player ), &( game->tileMap ) );
    }
 
-   Dialog2_Init( &( game->dialog2 ), &( game->screen ) );
+   Dialog2_Init( &( game->dialog2 ), &( game->screen ), &( game->mainState ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
    {

@@ -49,6 +49,7 @@ typedef struct Screen_t Screen_t;
 typedef struct Dialog2_t
 {
    Screen_t* screen;
+   MainState_t* mainState;
 
    char sectionTexts[DIALOG2_MAX_SECTIONS][DIALOG2_SECTION_TEXT_SIZE];
    void ( *sectionCallbacks[DIALOG2_MAX_SECTIONS] )( void* );
@@ -86,8 +87,8 @@ void Dialog_SetInsertionText( Dialog_t* dialog, const char* text );
 //void Dialog_Tic( Dialog_t* dialog );
 //Bool_t Dialog_IsDone( Dialog_t* dialog );
 
-void Dialog2_Init( Dialog2_t* dialog, Screen_t* screen );
-void Dialog2_Reset( Dialog2_t* dialog, MainState_t mainState );
+void Dialog2_Init( Dialog2_t* dialog, Screen_t* screen, MainState_t* mainState );
+void Dialog2_Reset( Dialog2_t* dialog );
 void Dialog2_Start( Dialog2_t* dialog );
 void Dialog2_PushSection( Dialog2_t* dialog, const char* text );
 void Dialog2_PushSectionWithCallback( Dialog2_t* dialog, const char* text, void ( *callback )( void* ), void* callbackData );
