@@ -143,8 +143,6 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 
 internal void Game_HandleOverworldDialogInput( Game_t* game )
 {
-   uint32_t e;
-
    if ( Dialog2_IsDone( &( game->dialog2 ) ) )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
@@ -182,13 +180,6 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                      Player_SetCursed( &( game->player ), True );
                      TileMap_StartGlowTransition( &( game->tileMap ) );
                      game->screen.needsRedraw = True;
-                     break;
-                  case DialogId_Use_GwaelynsLove:
-                     e = Player_GetExperienceRemaining( &( game->player ) );
-                     if ( e == 0 )
-                     {
-                        Dialog2_NextSection( &( game->dialog2 ) );
-                     }
                      break;
                }
                break;

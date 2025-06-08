@@ -115,11 +115,24 @@ void Game_UseFairyFlute( Game_t* game )
 
 void Game_UseGwaelynsLove( Game_t* game )
 {
-   uint32_t px, py, tx, ty;
-   char msg[64];
+   uint32_t px, py, tx, ty, exp;
+   char msg[128], loc[64];
+
+   Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
    {
+      sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_1, game->player.name );
+      Dialog2_PushSection( &( game->dialog2 ), msg );
+
+      exp = Player_GetExperienceRemaining( &( game->player ) );
+
+      if ( exp > 0 )
+      {
+         sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_2, exp );
+         Dialog2_PushSection( &( game->dialog2 ), msg );
+      }
+
       px = game->player.tileIndex % game->tileMap.tilesX;
       py = game->player.tileIndex / game->tileMap.tilesX;
       tx = TILEMAP_TANTEGEL_INDEX % game->tileMap.tilesX;
@@ -127,28 +140,32 @@ void Game_UseGwaelynsLove( Game_t* game )
 
       if ( px == tx && py == ty )
       {
-         sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_3_HOME );
+         strcpy( loc, STRING_ITEMUSE_GWAELINSLOVE_3_HOME );
       }
       else if ( px == tx || py == ty )
       {
-         sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_3_SINGLE,
+         sprintf( loc, STRING_ITEMUSE_GWAELINSLOVE_3_SINGLE,
                   ( py == ty ) ? ( ( px > tx ) ? ( px - tx ) : ( tx - px ) ) : ( ( py > ty ) ? ( py - ty ) : ( ty - py ) ),
                   ( py == ty ) ? ( ( px > tx ) ? STRING_WEST : STRING_EAST ) : ( ( py > ty ) ? STRING_NORTH : STRING_SOUTH ) );
       }
       else
       {
-         sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_3_DOUBLE,
+         sprintf( loc, STRING_ITEMUSE_GWAELINSLOVE_3_DOUBLE,
                   ( py > ty ) ? ( py - ty ) : ( ty - py ), ( py > ty ) ? STRING_NORTH : STRING_SOUTH,
                   ( px > tx ) ? ( px - tx ) : ( tx - px ), ( px > tx ) ? STRING_WEST : STRING_EAST );
       }
 
-      Dialog_SetInsertionText( &( game->dialog ), msg );
-      Game_OpenDialog( game, DialogId_Use_GwaelynsLove );
+      sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_3, loc );
+      Dialog2_PushSection( &( game->dialog2 ), msg );
+      sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_4, game->player.name );
+      Dialog2_PushSection( &( game->dialog2 ), msg );
    }
    else
    {
-      Game_OpenDialog( game, DialogId_Use_GwaelynsLoveCantUse );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_GWAELINSLOVE_CANTUSE );
    }
+
+   Game_OpenDialog2( game );
 }
 
 void Game_UseRainbowDrop( Game_t* game )

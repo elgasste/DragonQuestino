@@ -254,7 +254,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Item_None:
       case DialogId_FullyHealed:
       case DialogId_HolyProtection_Off:
-      case DialogId_Use_GwaelynsLoveCantUse:
       case DialogId_Use_RainbowDropCantUse:
       case DialogId_Use_RainbowDrop:
       case DialogId_Battle_EnemyApproaches:
@@ -287,8 +286,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_Blocked:
       case DialogId_Battle_Spell_Fizzled:
          return 2;
-      case DialogId_Use_GwaelynsLove:
-         return 4;
       case DialogId_Battle_VictoryWithLevelUp:
          return ( dialog->game->battle.previousSpells < dialog->game->player.spells ) ? 6 : 5;
    }
@@ -298,8 +295,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
 
 internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
 {
-   uint32_t e;
-   Player_t* player = &( dialog->game->player );
    Battle_t* battle = &( dialog->game->battle );
 
    switch ( dialog->id )
@@ -337,18 +332,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
-      case DialogId_Use_GwaelynsLoveCantUse: strcpy( text, STRING_ITEMUSE_GWAELINSLOVE_CANTUSE ); return;
-      case DialogId_Use_GwaelynsLove:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_1, player->name ); return;
-            case 1:
-               e = Player_GetExperienceRemaining( player );
-               sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_2, e );
-               return;
-            case 2: sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_3, dialog->insertionText ); return;
-            case 3: sprintf( text, STRING_ITEMUSE_GWAELINSLOVE_4, player->name ); return;
-         }
       case DialogId_Use_RainbowDropCantUse: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
       case DialogId_Use_RainbowDrop: strcpy( text, STRING_ITEMUSE_RAINBOWDROP ); return;
       case DialogId_Use_CursedBelt:
