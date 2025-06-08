@@ -12,7 +12,7 @@ void Game_UseHerb( Game_t* game )
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_FULLYHEALED, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_FULLYHEALED );
    }
    else
    {
@@ -20,9 +20,9 @@ void Game_UseHerb( Game_t* game )
       ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
       restoredHitPoints = Random_u8( ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT );
       game->pendingPayload8u = restoredHitPoints;
-      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_HERB, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_HERB );
       sprintf( msg, STRING_DIALOG_HEAL_RESULT, restoredHitPoints, ( restoredHitPoints == 1 ) ? STRING_POINT : STRING_POINTS );
-      Dialog2_PushSection( &( game->dialog2 ), msg, Game_RestoredHitPointsCallback, game );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_RestoredHitPointsCallback, game );
    }
 
    Game_OpenDialog2( game );
@@ -34,14 +34,14 @@ void Game_UseWing( Game_t* game )
 
    if ( game->tileMap.isDungeon )
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_WING_CANTUSE, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_WING_CANTUSE );
    }
    else
    {
       game->screen.needsRedraw = True;
       ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
       game->targetPortal = &( game->zoomPortals[TILEMAP_TANTEGEL_TOWN_ID] );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_WING, Game_UseWingCallback, game );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_ITEMUSE_WING, Game_UseWingCallback, game );
    }
 
    Game_OpenDialog2( game );
@@ -51,16 +51,16 @@ void Game_UseFairyWater( Game_t* game )
 {
    ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 );
    Dialog2_Reset( &( game->dialog2 ), game->mainState );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYWATER, 0, 0 );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYWATER );
 
    if ( game->player.isCursed )
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_CURSED, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_CURSED );
    }
    else
    {
       Player_SetHolyProtection( &( game->player ), True );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_ON, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_ON );
    }
 
    Game_OpenDialog2( game );
@@ -68,11 +68,13 @@ void Game_UseFairyWater( Game_t* game )
 
 void Game_UseTorch( Game_t* game )
 {
+   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+
    if ( game->tileMap.isDark )
    {
       if ( game->tileMap.torchIsLit )
       {
-         Game_OpenDialog( game, DialogId_Use_TorchAlreadyUsed );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_TORCH_ALREADYUSED );
       }
       else
       {
@@ -84,13 +86,15 @@ void Game_UseTorch( Game_t* game )
          }
 
          ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
-         Game_OpenDialog( game, DialogId_Use_Torch );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_TORCH );
       }
    }
    else
    {
-      Game_OpenDialog( game, DialogId_Use_TorchCantUse );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_TORCH_CANTUSE );
    }
+
+   Game_OpenDialog2( game );
 }
 
 void Game_UseSilverHarp( Game_t* game )

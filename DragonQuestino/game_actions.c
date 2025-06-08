@@ -8,7 +8,7 @@ internal void Game_FoundHiddenStairsCallback( Game_t* game );
 void Game_Talk( Game_t* game )
 {
    Dialog2_Reset( &( game->dialog2 ), game->mainState );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NOBODY_THERE, 0, 0 );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NOBODY_THERE );
    Game_OpenDialog2( game );
 }
 
@@ -22,23 +22,23 @@ void Game_Search( Game_t* game )
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !ITEM_HAS_TOKEN( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_Token );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH );
       sprintf( msg, STRING_DIALOG_SEARCH_FOUND, STRING_FOUNDITEM_TOKEN );
-      Dialog2_PushSection( &( game->dialog2 ), msg, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), msg );
    }
    else if ( game->tileMap.id == TILEMAP_KOL_ID && game->player.tileIndex == TILEMAP_FAIRYFLUTE_INDEX && !ITEM_HAS_FAIRYFLUTE( game->player.items ) )
    {
       Player_CollectItem( &( game->player ), Item_FairyFlute );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH );
       sprintf( msg, STRING_DIALOG_SEARCH_FOUND, STRING_FOUNDITEM_FAIRYFLUTE );
-      Dialog2_PushSection( &( game->dialog2 ), msg, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), msg );
    }
    else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID && game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->gameFlags.foundHiddenStairs )
    {
       game->gameFlags.foundHiddenStairs = True;
       TileMap_LoadHiddenStairs( &( game->tileMap ) );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH, 0, 0 );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_FOUND_HIDDENSTAIRS, Game_FoundHiddenStairsCallback, game );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_FOUND_HIDDENSTAIRS, Game_FoundHiddenStairsCallback, game );
    }
    else
    {
@@ -50,8 +50,8 @@ void Game_Search( Game_t* game )
       }
       else
       {
-         Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH_NOT_FOUND, 0, 0 );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SEARCH_NOT_FOUND );
       }
    }
 
@@ -68,7 +68,7 @@ void Game_OpenDoor( Game_t* game )
       if ( !ITEM_GET_KEYCOUNT( game->player.items ) )
       {
          Dialog2_Reset( &( game->dialog2 ), game->mainState );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_KEYS, 0, 0 );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_KEYS );
          Game_OpenDialog2( game );
       }
       else
@@ -81,7 +81,7 @@ void Game_OpenDoor( Game_t* game )
    else
    {
       Dialog2_Reset( &( game->dialog2 ), game->mainState );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_DOOR, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_DOOR );
       Game_OpenDialog2( game );
    }
 }
@@ -175,8 +175,8 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          {
             game->gameFlags.treasures ^= treasureFlag;
             sprintf( msg, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_DEATHNECKLACE );
-            Dialog2_PushSection( &( game->dialog2 ), msg, 0, 0 );
-            Dialog2_PushSection( &( game->dialog2 ), STRING_CURSED, Game_CursedCallback, game );
+            Dialog2_PushSection( &( game->dialog2 ), msg );
+            Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_CURSED, Game_CursedCallback, game );
             return;
          }
          else
@@ -187,14 +187,14 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       case 0x100:       // Erdrick's Cave, the tablet. this is not an item that can be collected.
          game->gameFlags.treasures ^= treasureFlag;
          sprintf( msg, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_TABLET );
-         Dialog2_PushSection( &( game->dialog2 ), msg, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_1, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_2, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_3, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_4, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_5, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_6, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_7, 0, 0 );
+         Dialog2_PushSection( &( game->dialog2 ), msg );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_1 );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_2 );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_3 );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_4 );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_5 );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_6 );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_TABLET_7 );
          return;
    }
 
@@ -206,18 +206,18 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       if ( collected > 0 )
       {
          game->gameFlags.treasures ^= treasureFlag;
-         Dialog2_PushSection( &( game->dialog2 ), msg, Game_DrawQuickStatus, game );
+         Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_DrawQuickStatus, game );
       }
       else
       {
-         Dialog2_PushSection( &( game->dialog2 ), msg, 0, 0 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_GOLDNOSPACE, 0, 0 );
+         Dialog2_PushSection( &( game->dialog2 ), msg );
+         Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_GOLDNOSPACE );
       }
 
       return;
    }
 
-   Dialog2_PushSection( &( game->dialog2 ), msg, 0, 0 );
+   Dialog2_PushSection( &( game->dialog2 ), msg );
 
    if ( collected )
    {
@@ -225,7 +225,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
    }
    else
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_ITEMNOSPACE, 0, 0 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_ITEMNOSPACE );
    }
 }
 

@@ -254,9 +254,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Item_None:
       case DialogId_FullyHealed:
       case DialogId_HolyProtection_Off:
-      case DialogId_Use_TorchCantUse:
-      case DialogId_Use_TorchAlreadyUsed:
-      case DialogId_Use_Torch:
       case DialogId_Use_GwaelynsLoveCantUse:
       case DialogId_Use_RainbowDropCantUse:
       case DialogId_Use_RainbowDrop:
@@ -342,9 +339,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
-      case DialogId_Use_TorchCantUse: strcpy( text, STRING_ITEMUSE_TORCH_CANTUSE ); return;
-      case DialogId_Use_TorchAlreadyUsed: strcpy( text, STRING_ITEMUSE_TORCH_ALREADYUSED ); return;
-      case DialogId_Use_Torch: strcpy( text, STRING_ITEMUSE_TORCH ); return;
       case DialogId_Use_FairyFlute:
          switch ( dialog->section )
          {
@@ -713,7 +707,12 @@ void Dialog2_Start( Dialog2_t* dialog )
    Dialog2_ResetScroll( dialog );
 }
 
-void Dialog2_PushSection( Dialog2_t* dialog, const char* text, void ( *callback )( void* ), void* callbackData )
+void Dialog2_PushSection( Dialog2_t* dialog, const char* text )
+{
+   Dialog2_PushSectionWithCallback( dialog, text, 0, 0 );
+}
+
+void Dialog2_PushSectionWithCallback( Dialog2_t* dialog, const char* text, void ( *callback )( void* ), void* callbackData )
 {
    strcpy( dialog->sectionTexts[dialog->sectionCount], text );
    dialog->sectionCallbacks[dialog->sectionCount] = callback;
