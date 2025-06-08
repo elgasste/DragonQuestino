@@ -146,36 +146,13 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 
 internal void Game_HandleOverworldDialogInput( Game_t* game )
 {
-   if ( Dialog2_IsDone( &( game->dialog2 ) ) )
+   if ( Dialog2_IsDone( &( game->dialog2 ) ) && Input_AnyButtonPressed( &( game->input ) ) )
    {
-      if ( Input_AnyButtonPressed( &( game->input ) ) )
-      {
-         Game_ChangeToOverworldState( game );
-         Game_DrawOverworld( game );
-         AnimationChain_Reset( &( game->animationChain ) );
-         AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-         AnimationChain_Start( &( game->animationChain ) );
-      }
-   }
-   else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
-   {
-      if ( Dialog2_StepAhead( &( game->dialog2 ) ) )
-      {
-         switch ( game->dialog.section )
-         {
-            case 1:
-               switch ( game->dialog.id )
-               {
-                  case DialogId_Spell_CastHeal1:
-                  case DialogId_Spell_CastHeal2:
-                  case DialogId_Spell_CastMidheal1:
-                  case DialogId_Spell_CastMidheal2:
-                     Game_DrawQuickStatus( game );
-                     break;
-               }
-               break;
-         }
-      }
+      Game_ChangeToOverworldState( game );
+      Game_DrawOverworld( game );
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_Start( &( game->animationChain ) );
    }
 }
 

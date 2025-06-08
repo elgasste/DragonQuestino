@@ -247,7 +247,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
    {
       case DialogId_Spell_None:
       case DialogId_Spell_OverworldCantCast:
-      case DialogId_Spell_OverworldCastGlow:
       case DialogId_Spell_CastEvac:
       case DialogId_Item_None:
       case DialogId_FullyHealed:
@@ -262,15 +261,8 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_Sizz:
       case DialogId_Battle_Spell_Sizzle:
          return 1;
-      case DialogId_Spell_OverworldCastGlowCursed:
-      case DialogId_Spell_CastRepelCursed:
-      case DialogId_Spell_CastRepel:
       case DialogId_Spell_CastEvacCursed:
       case DialogId_Chest_DeathNecklace:
-      case DialogId_Spell_CastHeal1:
-      case DialogId_Spell_CastHeal2:
-      case DialogId_Spell_CastMidheal1:
-      case DialogId_Spell_CastMidheal2:
       case DialogId_Spell_Blocked:
       case DialogId_Battle_AttackAttemptSucceeded:
       case DialogId_Battle_AttackAttemptFailed:
@@ -295,59 +287,16 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
    {
       case DialogId_Spell_None: strcpy( text, STRING_DIALOG_NO_SPELLS ); return;
       case DialogId_Spell_OverworldCantCast: strcpy( text, STRING_DIALOG_SPELLS_OVERWORLD_CANT_CAST ); return;
-      case DialogId_Spell_OverworldCastGlow: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW ); return;
-      case DialogId_Spell_OverworldCastGlowCursed:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW ); return;
-            case 1: strcpy( text, STRING_GLOW_CURSED ); return;
-         }
-      case DialogId_Spell_CastRepelCursed:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_REPEL ); return;
-            case 1: strcpy( text, STRING_HOLYPROTECTION_CURSED ); return;
-         }
       case DialogId_Spell_CastEvacCursed:
          switch ( dialog->section )
          {
             case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC ); return;
             case 1: strcpy( text, STRING_EVAC_CURSED ); return;
          }
-      case DialogId_Spell_CastRepel:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_REPEL ); return;
-            case 1: strcpy( text, STRING_HOLYPROTECTION_ON ); return;
-         }
       case DialogId_Spell_CastEvac: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC ); return;
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
-      case DialogId_Spell_CastHeal1:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_HEAL ); return;
-            //case 1: sprintf( text, STRING_DIALOG_HEAL_RESULT, dialog->insertionText ); return;
-         }
-      case DialogId_Spell_CastHeal2:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_HEAL ); return;
-            //case 1: sprintf( text, STRING_DIALOG_HEAL_RESULT, dialog->insertionText ); return;
-         }
-      case DialogId_Spell_CastMidheal1:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_MIDHEAL ); return;
-            //case 1: sprintf( text, STRING_DIALOG_HEAL_RESULT, dialog->insertionText ); return;
-         }
-      case DialogId_Spell_CastMidheal2:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_MIDHEAL ); return;
-            //case 1: sprintf( text, STRING_DIALOG_HEAL_RESULT, dialog->insertionText ); return;
-         }
       case DialogId_Spell_Blocked:
          switch ( dialog->section )
          {
@@ -429,14 +378,6 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
    {
       switch ( dialog->id )
       {
-         case DialogId_Spell_CastHeal1:
-         case DialogId_Spell_CastHeal2:
-         case DialogId_Spell_CastMidheal1:
-         case DialogId_Spell_CastMidheal2:
-         case DialogId_Spell_OverworldCastGlowCursed:
-         case DialogId_Spell_OverworldCastGlow:
-         case DialogId_Spell_CastRepelCursed:
-         case DialogId_Spell_CastRepel:
          case DialogId_Spell_CastEvacCursed:
          case DialogId_Spell_CastEvac:
          case DialogId_Spell_Blocked:
@@ -500,18 +441,6 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Battle_VictoryWithSpoils:
          case DialogId_Battle_VictoryWithLevelUp:
             Game_DrawQuickStatus( dialog->game );
-            break;
-         case DialogId_Spell_CastHeal1:
-         case DialogId_Spell_CastHeal2:
-         case DialogId_Spell_CastMidheal1:
-         case DialogId_Spell_CastMidheal2:
-            if ( dialog->game->mainState == MainState_Battle )
-            {
-               dialog->game->activeMenu = &( dialog->game->menus[MenuId_Battle] );
-               Menu_Reset( dialog->game->activeMenu );
-               dialog->game->screen.needsRedraw = True;
-               Game_ChangeSubState( dialog->game, SubState_Menu );
-            }
             break;
       }
    }

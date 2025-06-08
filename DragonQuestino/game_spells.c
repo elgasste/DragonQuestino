@@ -15,6 +15,7 @@ internal void Game_SpellHealCallback( Game_t* game );
 internal void Game_SpellHurtCallback( Game_t* game );
 internal void Game_SpellZoomCallback( Game_t* game );
 internal void Game_SpellRepelCallback( Game_t* game );
+internal void Game_SpellGlowCallback( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
@@ -78,29 +79,19 @@ void Game_CastSleep( Game_t* game )
 
 void Game_CastGlow( Game_t* game )
 {
+   char msg[64];
+
    CHECK_CAST_ABILITY( SPELL_GLOW_MP, STRING_SPELL_GLOW );
 
    if ( game->tileMap.isDark )
    {
+      game->screen.needsRedraw = True;
+      Dialog2_Reset( &( game->dialog2 ) );
       game->player.stats.magicPoints -= SPELL_GLOW_MP;
-      Game_DrawQuickStatus( game );
-
-      if ( game->player.isCursed )
-      {
-         game->tileMap.torchIsLit = False;
-         TileMap_SetTargetGlowDiameter( &( game->tileMap ), 1 );
-         Game_OpenDialog( game, DialogId_Spell_OverworldCastGlowCursed );
-      }
-      else
-      {
-         if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
-         {
-            TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
-            game->tileMap.glowTileCount = 0;
-         }
-
-         Game_OpenDialog( game, DialogId_Spell_OverworldCastGlow );
-      }
+      game->pendingSpell = Spell_Glow;
+      sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
+      Game_OpenDialog2( game );
    }
 }
 
@@ -110,6 +101,7 @@ void Game_CastFizzle( Game_t* game )
    UNUSED_PARAM( game );
 }
 
+// MUFFINS: this is the next one
 void Game_CastEvac( Game_t* game )
 {
    CHECK_CAST_ABILITY( SPELL_EVAC_MP, STRING_SPELL_EVAC );
@@ -304,11 +296,9 @@ internal void Game_CastSpellCallback( Game_t* game )
       case Spell_Sizzle:
          AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellHurtCallback, game );
          break;
-      case Spell_Zoom:
-         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellZoomCallback, game );
-         break;
-      case Spell_Repel:
-         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellRepelCallback, game );
+      case Spell_Zoom: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellZoomCallback, game ); break;
+      case Spell_Repel: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellRepelCallback, game ); break;
+      case Spell_Glow: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellGlowCallback, game ); break;
    }
 
    AnimationChain_Start( &( game->animationChain ) );
@@ -380,4 +370,26 @@ internal void Game_SpellRepelCallback( Game_t* game )
    }
 
    Game_OpenDialog2( game );
+}
+
+internal void Game_SpellGlowCallback( Game_t* game )
+{
+   
+
+   if ( game->player.isCursed )
+   {
+      Dialog2_Reset( &( game->dialog2 ) );
+      game->tileMap.torchIsLit = False;
+      TileMap_SetTargetGlowDiameter( &( game->tileMap ), 1 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_GLOW_CURSED );
+      Game_OpenDialog2( game );
+   }
+   else
+   {
+      if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
+      {
+         TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
+         game->tileMap.glowTileCount = 0;
+      }
+   }
 }
