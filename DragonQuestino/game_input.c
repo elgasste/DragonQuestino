@@ -137,7 +137,10 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Animation_Start( &( game->animation ), AnimationId_Pause );
+      Game_ChangeToOverworldState( game );
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_Start( &( game->animationChain ) );
    }
 }
 
