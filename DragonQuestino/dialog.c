@@ -271,8 +271,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_Sizz:
       case DialogId_Battle_Spell_Sizzle:
          return 1;
-      case DialogId_Use_FairyWaterCursed:
-      case DialogId_Use_FairyWater:
       case DialogId_Use_FairyFlute:
       case DialogId_Use_SilverHarp:
       case DialogId_Use_CursedBelt:
@@ -344,18 +342,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
-      case DialogId_Use_FairyWaterCursed:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_ITEMUSE_FAIRYWATER ); return;
-            case 1: strcpy( text, STRING_HOLYPROTECTION_CURSED ); return;
-         }
-      case DialogId_Use_FairyWater:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_ITEMUSE_FAIRYWATER ); return;
-            case 1: strcpy( text, STRING_HOLYPROTECTION_ON ); return;
-         }
       case DialogId_Use_TorchCantUse: strcpy( text, STRING_ITEMUSE_TORCH_CANTUSE ); return;
       case DialogId_Use_TorchAlreadyUsed: strcpy( text, STRING_ITEMUSE_TORCH_ALREADYUSED ); return;
       case DialogId_Use_Torch: strcpy( text, STRING_ITEMUSE_TORCH ); return;

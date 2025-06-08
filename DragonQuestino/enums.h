@@ -188,8 +188,6 @@ typedef enum DialogId_t
    DialogId_FullyHealed,
    DialogId_HolyProtection_Off,
 
-   DialogId_Use_FairyWaterCursed,
-   DialogId_Use_FairyWater,
    DialogId_Use_TorchCantUse,
    DialogId_Use_TorchAlreadyUsed,
    DialogId_Use_Torch,

@@ -50,16 +50,20 @@ void Game_UseWing( Game_t* game )
 void Game_UseFairyWater( Game_t* game )
 {
    ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 );
+   Dialog2_Reset( &( game->dialog2 ), game->mainState );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYWATER, 0, 0 );
 
    if ( game->player.isCursed )
    {
-      Game_OpenDialog( game, DialogId_Use_FairyWaterCursed );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_CURSED, 0, 0 );
    }
    else
    {
       Player_SetHolyProtection( &( game->player ), True );
-      Game_OpenDialog( game, DialogId_Use_FairyWater );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_ON, 0, 0 );
    }
+
+   Game_OpenDialog2( game );
 }
 
 void Game_UseTorch( Game_t* game )
