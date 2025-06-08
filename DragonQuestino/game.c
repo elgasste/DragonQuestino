@@ -3,7 +3,6 @@
 #include "math.h"
 
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
-internal void Game_CursedCallback( Game_t* game );
 internal void Game_FoundHiddenStairsCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
@@ -191,5 +190,12 @@ void Game_OpenDialog2( Game_t* game )
 void Game_RestoredHitPointsCallback( Game_t* game )
 {
    Player_RestoreHitPoints( &( game->player ), game->pendingPayload8u );
+   game->screen.needsRedraw = True;
+}
+
+void Game_CursedCallback( Game_t* game )
+{
+   Player_SetCursed( &( game->player ), True );
+   TileMap_StartGlowTransition( &( game->tileMap ) );
    game->screen.needsRedraw = True;
 }

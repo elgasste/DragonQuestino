@@ -1,5 +1,6 @@
 #include "game.h"
 #include "random.h"
+#include "math.h"
 
 internal void Game_UseWingCallback( Game_t* game );
 internal void Game_UseRainbowDropCallback( Game_t* game );
@@ -10,7 +11,8 @@ void Game_UseHerb( Game_t* game )
    uint8_t restoredHitPoints;
    char msg[64];
 
-   Dialog2_Reset( &( game->dialog2 ) );;
+   game->screen.needsRedraw = True;
+   Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
@@ -18,9 +20,8 @@ void Game_UseHerb( Game_t* game )
    }
    else
    {
-      game->screen.needsRedraw = True;
       ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
-      restoredHitPoints = Random_u8( ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT );
+      restoredHitPoints = MATH_MIN( Random_u8( ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
       game->pendingPayload8u = restoredHitPoints;
       Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_HERB );
       sprintf( msg, STRING_DIALOG_HEAL_RESULT, restoredHitPoints, ( restoredHitPoints == 1 ) ? STRING_POINT : STRING_POINTS );
@@ -70,7 +71,8 @@ void Game_UseFairyWater( Game_t* game )
 
 void Game_UseTorch( Game_t* game )
 {
-   Dialog2_Reset( &( game->dialog2 ) );;
+   game->screen.needsRedraw = True;
+   Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->tileMap.isDark )
    {
@@ -101,6 +103,7 @@ void Game_UseTorch( Game_t* game )
 
 void Game_UseSilverHarp( Game_t* game )
 {
+   game->screen.needsRedraw = True;
    Dialog2_Reset( &( game->dialog2 ) );
    Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_SILVERHARP_1 );
    Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_SILVERHARP_2 );
@@ -109,6 +112,7 @@ void Game_UseSilverHarp( Game_t* game )
 
 void Game_UseFairyFlute( Game_t* game )
 {
+   game->screen.needsRedraw = True;
    Dialog2_Reset( &( game->dialog2 ) );
    Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYFLUTE_1 );
    Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYFLUTE_2 );
@@ -120,6 +124,7 @@ void Game_UseGwaelynsLove( Game_t* game )
    uint32_t px, py, tx, ty, exp;
    char msg[128], loc[64];
 
+   game->screen.needsRedraw = True;
    Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
@@ -190,13 +195,18 @@ void Game_UseRainbowDrop( Game_t* game )
 
 void Game_UseCursedBelt( Game_t* game )
 {
+   game->screen.needsRedraw = True;
    ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
-   Game_OpenDialog( game, DialogId_Use_CursedBelt );
+   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_CURSEDBELT );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_CURSED, Game_CursedCallback, game );
+   Game_OpenDialog2( game );
 }
 
 internal void Game_UseWingCallback( Game_t* game )
 {
    AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_WhiteOut, Game_EnterTargetPortal, game );
    AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToOverworldState, game );

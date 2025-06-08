@@ -2,7 +2,6 @@
 #include "random.h"
 
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
-internal void Game_CursedCallback( Game_t* game );
 internal void Game_FoundHiddenStairsCallback( Game_t* game );
 
 void Game_Talk( Game_t* game )
@@ -227,12 +226,6 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
    {
       Dialog2_PushSection( &( game->dialog2 ), STRING_CHEST_ITEMNOSPACE );
    }
-}
-
-internal void Game_CursedCallback( Game_t* game )
-{
-   Player_SetCursed( &( game->player ), True );
-   TileMap_StartGlowTransition( &( game->tileMap ) );
 }
 
 internal void Game_FoundHiddenStairsCallback( Game_t* game )
