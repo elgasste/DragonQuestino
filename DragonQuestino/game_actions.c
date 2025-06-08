@@ -85,23 +85,6 @@ void Game_OpenDoor( Game_t* game )
    }
 }
 
-// TODO: this is still used when casting spells, I'd like to get rid of it
-void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t dialogId1, DialogId_t dialogId2 )
-{
-   char str[16];
-
-   game->pendingPayload8u = Random_u8( minHp, maxHp );
-
-   if ( ( game->player.stats.maxHitPoints - game->player.stats.hitPoints ) < game->pendingPayload8u )
-   {
-      game->pendingPayload8u = game->player.stats.maxHitPoints - game->player.stats.hitPoints;
-   }
-
-   sprintf( str, "%u", game->pendingPayload8u );
-   Dialog_SetInsertionText( &( game->dialog ), str );
-   Game_OpenDialog( game, ( game->pendingPayload8u == 1 ) ? dialogId1 : dialogId2 );
-}
-
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 {
    uint16_t gold = 0;

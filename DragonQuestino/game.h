@@ -47,6 +47,7 @@ typedef struct Game_t
    Bool_t doAnimation;
 
    uint8_t pendingPayload8u;
+   Spell_t pendingSpell;
 }
 Game_t;
 
@@ -71,7 +72,6 @@ void Game_CursedCallback( Game_t* game );
 void Game_Talk( Game_t* game );
 void Game_Search( Game_t* game );
 void Game_OpenDoor( Game_t* game );
-void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t dialogId1, DialogId_t dialogId2 );
 
 // game_input.c
 void Game_HandleInput( Game_t* game );

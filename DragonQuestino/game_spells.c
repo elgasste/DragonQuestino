@@ -1,32 +1,44 @@
 #include "game.h"
 #include "random.h"
+#include "math.h"
 
 #define CHECK_CAST_ABILITY( m, n ) if ( !Game_CanCastSpell( game, m, n ) ) return;
 
 internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName );
 internal void Game_ResetBattleMenu( Game_t* game );
+internal void Game_SpellBlockedCallback( Game_t* game );
+internal void Game_SpellBlockedMessageCallback( Game_t* game );
+internal void Game_SpellFizzledCallback( Game_t* game );
+internal void Game_SpellFizzledMessageCallback( Game_t* game );
+internal void Game_CastSpellCallback( Game_t* game );
+internal void Game_SpellHealCallback( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
    uint8_t maxEffect;
-   DialogId_t dialogId;
+   char msg[64];
 
    CHECK_CAST_ABILITY( SPELL_HEAL_MP, STRING_SPELL_HEAL );
+
+   game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
+   Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      dialogId = ( game->mainState == MainState_Overworld ) ? DialogId_FullyHealed : DialogId_Battle_FullyHealed;
-      Game_OpenDialog( game, dialogId );
+      Dialog2_PushSection( &( game->dialog2 ), ( game->mainState == MainState_Overworld ) ? STRING_FULLYHEALED : STRING_BATTLE_FULLYHEALED );
    }
    else
    {
-      maxEffect = game->player.isCursed ? ( SPELL_HEAL_MAXEFFECT / 2 ) : SPELL_HEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_HEAL_MP;
-      Game_ApplyHealing( game, SPELL_HEAL_MINEFFECT, maxEffect,
-                         DialogId_Spell_CastHeal1, DialogId_Spell_CastHeal2 );
-      Game_DrawQuickStatus( game );
+      game->pendingSpell = Spell_Heal;
+      maxEffect = game->player.isCursed ? ( SPELL_HEAL_MAXEFFECT / 2 ) : SPELL_HEAL_MAXEFFECT;
+      game->pendingPayload8u = MATH_MIN( Random_u8( SPELL_HEAL_MINEFFECT, maxEffect ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
+      sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, STRING_SPELL_HEAL );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
    }
+
+   Game_OpenDialog2( game );
 }
 
 void Game_CastSizz( Game_t* game )
@@ -163,24 +175,29 @@ void Game_CastRepel( Game_t* game )
 void Game_CastMidheal( Game_t* game )
 {
    uint8_t maxEffect;
-   DialogId_t dialogId;
+   char msg[64];
 
    CHECK_CAST_ABILITY( SPELL_MIDHEAL_MP, STRING_SPELL_MIDHEAL );
+
+   game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
+   Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      dialogId = ( game->mainState == MainState_Overworld ) ? DialogId_FullyHealed : DialogId_Battle_FullyHealed;
-      Game_OpenDialog( game, dialogId );
+      Dialog2_PushSection( &( game->dialog2 ), ( game->mainState == MainState_Overworld ) ? STRING_FULLYHEALED : STRING_BATTLE_FULLYHEALED );
    }
    else
    {
-      maxEffect = game->player.isCursed ? ( SPELL_MIDHEAL_MAXEFFECT / 2 ) : SPELL_MIDHEAL_MAXEFFECT;
       game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
-      Game_ApplyHealing( game, SPELL_MIDHEAL_MINEFFECT, maxEffect,
-                         DialogId_Spell_CastMidheal1, DialogId_Spell_CastMidheal2 );
-      Game_DrawQuickStatus( game );
+      game->pendingSpell = Spell_Midheal;
+      maxEffect = game->player.isCursed ? ( SPELL_MIDHEAL_MAXEFFECT / 2 ) : SPELL_MIDHEAL_MAXEFFECT;
+      game->pendingPayload8u = MATH_MIN( Random_u8( SPELL_MIDHEAL_MINEFFECT, maxEffect ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
+      sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, STRING_SPELL_MIDHEAL );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
    }
+
+   Game_OpenDialog2( game );
 }
 
 void Game_CastSizzle( Game_t* game )
@@ -228,32 +245,33 @@ void Game_ApplySizzle( Game_t* game )
 
 internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName )
 {
-   DialogId_t dialogId;
+   char msg[64];
 
    if ( game->player.stats.magicPoints < requiredMp )
    {
-      dialogId = ( game->mainState == MainState_Overworld ) ? DialogId_Spell_NotEnoughMp : DialogId_Battle_Spell_NotEnoughMp;
-      Game_OpenDialog( game, dialogId );
+      Dialog2_Reset( &( game->dialog2 ) );
+      Dialog2_PushSection( &( game->dialog2 ), ( game->mainState == MainState_Overworld ) ? STRING_NOTENOUGHMP : STRING_BATTLE_NOTENOUGHMP );
+      Game_OpenDialog2( game );
       return False;
    }
 
    if ( game->tileMap.blocksMagic )
    {
-      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
-      Game_DrawQuickStatus( game );
-      Dialog_SetInsertionText( &( game->dialog ), spellName );
-      dialogId = game->mainState == MainState_Overworld ? DialogId_Spell_Blocked : DialogId_Battle_Spell_Blocked;
-      Game_OpenDialog( game, dialogId );
+      Dialog2_Reset( &( game->dialog2 ) );
+      sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, spellName );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_SpellBlockedCallback, game );
+      Game_OpenDialog2( game );
       return False;
    }
-   else if ( game->mainState == MainState_Battle && game->player.stats.isFizzled )
+
+   if ( game->mainState == MainState_Battle && game->player.stats.isFizzled )
    {
-      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
-      Game_DrawQuickStatus( game );
-      Dialog_SetInsertionText( &( game->dialog ), spellName );
-      Game_OpenDialog( game, DialogId_Battle_Spell_Fizzled );
+      Dialog2_Reset( &( game->dialog2 ) );
+      sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, spellName );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_SpellFizzledCallback, game );
+      Game_OpenDialog2( game );
       return False;
    }
 
@@ -270,4 +288,60 @@ internal void Game_ResetBattleMenu( Game_t* game )
       game->screen.needsRedraw = True;
       Game_ChangeSubState( game, SubState_Menu );
    }
+}
+
+internal void Game_SpellBlockedCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_CastSpell, Game_DrawQuickStatus, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellBlockedMessageCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_SpellBlockedMessageCallback( Game_t* game )
+{
+   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_SPELLBLOCKED );
+   Game_OpenDialog2( game );
+}
+
+internal void Game_SpellFizzledCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_CastSpell, Game_DrawQuickStatus, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellFizzledMessageCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_SpellFizzledMessageCallback( Game_t* game )
+{
+   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_BATTLE_SPELLFIZZLED );
+   Game_OpenDialog2( game );
+}
+
+internal void Game_CastSpellCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_CastSpell, Game_DrawQuickStatus, game );
+
+   switch ( game->pendingSpell )
+   {
+      case Spell_Heal:
+      case Spell_Midheal:
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellHealCallback, game );
+         break;
+   }
+
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_SpellHealCallback( Game_t* game )
+{
+   char msg[64];
+
+   Dialog2_Reset( &( game->dialog2 ) );
+   sprintf( msg, STRING_DIALOG_HEAL_RESULT, game->pendingPayload8u, ( game->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_RestoredHitPointsCallback, game );
+   Game_OpenDialog2( game );
 }

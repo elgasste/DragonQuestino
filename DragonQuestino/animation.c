@@ -42,6 +42,7 @@ internal void AnimationChain_Tic_FadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_WhiteOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain );
+internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -636,6 +637,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
       case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
       case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
       case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
+      case AnimationId_CastSpell: AnimationChain_Tic_CastSpell( chain ); break;
    }
 }
 
@@ -666,6 +668,10 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
       case AnimationId_RainbowBridge_WhiteOut:
       case AnimationId_RainbowBridge_FadeIn:
          chain->totalDuration = ANIMATIONCHAIN_RAINBOWBRIDGE_FADE_DURATION;
+         break;
+      case AnimationId_CastSpell:
+         chain->screen->wipeColor = COLOR_WHITE;
+         chain->totalDuration = ANIMATIONCHAIN_CASTSPELL_TOTALDURATION;
          break;
    }
 
@@ -828,5 +834,29 @@ internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain )
       p = 1.0f - ( chain->totalElapsedSeconds / chain->totalDuration );
       increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
       screen->palette[i] = screen->backupPalette[i] + increment;
+   }
+}
+
+internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain )
+{
+   local_persist Bool_t wipeScreen = True;
+
+   chain->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
+   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( chain->totalElapsedSeconds > chain->totalDuration )
+   {
+      AnimationChain_AnimationFinished( chain );
+      chain->screen->needsWipe = False;
+      wipeScreen = True;
+   }
+   else if ( chain->frameElapsedSeconds > ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION )
+   {
+      while ( chain->frameElapsedSeconds > ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION )
+      {
+         chain->frameElapsedSeconds -= ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION;
+         TOGGLE_BOOL( wipeScreen );
+         chain->screen->needsWipe = wipeScreen;
+      }
    }
 }

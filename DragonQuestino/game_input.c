@@ -285,7 +285,8 @@ internal void Game_OpenZoomMenu( Game_t* game )
 
    if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
    {
-      Game_OpenDialog( game, DialogId_Spell_NotEnoughMp );
+      // MUFFINS: come back to this
+      //Game_OpenDialog( game, DialogId_Spell_NotEnoughMp );
    }
    else if ( townCount > 0 )
    {

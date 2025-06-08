@@ -21,12 +21,12 @@ void Game_Draw( Game_t* game )
          if ( activeAnimationId != AnimationId_Pause )
          {
             Game_DrawOverworld( game );
-         }
 
-         /*if ( game->animation.id != AnimationId_CastSpell )
-         {
-            Game_DrawOverworld( game );
-         }*/
+            if ( game->subState == SubState_Dialog )
+            {
+               Dialog2_Draw( &( game->dialog2 ) );
+            }
+         }
       }
       else if ( game->mainState == MainState_Battle )
       {

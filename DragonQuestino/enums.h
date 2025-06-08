@@ -94,6 +94,23 @@ typedef enum Item_t
 }
 Item_t;
 
+typedef enum Spell_t
+{
+   Spell_Heal = 0,
+   Spell_Sizz,
+   Spell_Sleep,
+   Spell_Glow,
+   Spell_Fizzle,
+   Spell_Evac,
+   Spell_Zoom,
+   Spell_Repel,
+   Spell_Midheal,
+   Spell_Sizzle,
+
+   Spell_Count
+}
+Spell_t;
+
 typedef enum SpecialEnemy_t
 {
    SpecialEnemy_None = 0,
@@ -181,7 +198,6 @@ typedef enum DialogId_t
    DialogId_Spell_CastEvacCursed,
    DialogId_Spell_CastEvac,
    DialogId_Spell_CastZoom,
-   DialogId_Spell_NotEnoughMp,
    DialogId_Spell_Blocked,
    DialogId_Item_None,
 
@@ -200,7 +216,6 @@ typedef enum DialogId_t
    DialogId_Battle_VictoryWithLevelUp,
    DialogId_Battle_Spell_None,
    DialogId_Battle_Spell_CantCast,
-   DialogId_Battle_Spell_NotEnoughMp,
    DialogId_Battle_Spell_Blocked,
    DialogId_Battle_Spell_Fizzled,
    DialogId_Battle_FullyHealed,

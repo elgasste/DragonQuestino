@@ -250,7 +250,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Spell_OverworldCastGlow:
       case DialogId_Spell_CastEvac:
       case DialogId_Spell_CastZoom:
-      case DialogId_Spell_NotEnoughMp:
       case DialogId_Item_None:
       case DialogId_FullyHealed:
       case DialogId_HolyProtection_Off:
@@ -258,7 +257,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Victory:
       case DialogId_Battle_Spell_None:
       case DialogId_Battle_Spell_CantCast:
-      case DialogId_Battle_Spell_NotEnoughMp:
       case DialogId_Battle_FullyHealed:
       case DialogId_Battle_Spell_NoEffect:
       case DialogId_Battle_Spell_AttackSucceeded:
@@ -325,7 +323,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          }
       case DialogId_Spell_CastEvac: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC ); return;
       case DialogId_Spell_CastZoom: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_ZOOM ); return;
-      case DialogId_Spell_NotEnoughMp: strcpy( text, STRING_NOTENOUGHMP ); return;
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
@@ -405,7 +402,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          }
       case DialogId_Battle_Spell_None: strcpy( text, STRING_BATTLE_NOSPELLS ); return;
       case DialogId_Battle_Spell_CantCast: strcpy( text, STRING_BATTLE_CANTCASTSPELL ); return;
-      case DialogId_Battle_Spell_NotEnoughMp: strcpy( text, STRING_BATTLE_NOTENOUGHMP ); return;
       case DialogId_Battle_Spell_Blocked:
          switch ( dialog->section )
          {
@@ -464,7 +460,6 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
             break;
          case DialogId_Battle_Spell_None:
          case DialogId_Battle_Spell_CantCast:
-         case DialogId_Battle_Spell_NotEnoughMp:
          case DialogId_Battle_FullyHealed:
          case DialogId_Battle_Spell_NoEffect:
             //Dialog_Draw( dialog );
