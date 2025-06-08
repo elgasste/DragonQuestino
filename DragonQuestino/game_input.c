@@ -153,10 +153,10 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
          }
          else
          {
-            Game_ChangeMainState( game, MainState_Overworld );
+            Game_ChangeToOverworldState( game );
             Game_DrawOverworld( game );
             AnimationChain_Reset( &( game->animationChain ) );
-            AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
+            AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
             AnimationChain_Start( &( game->animationChain ) );
          }  
       }
@@ -243,7 +243,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             game->screen.needsRedraw = True;
             break;
          default:
-            Game_ChangeMainState( game, MainState_Overworld );
+            Game_ChangeToOverworldState( game );
             break;
       }
    }
@@ -315,7 +315,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
          case MenuCommand_Battle_Attack: Battle_AttemptAttack( &( game->battle ) ); break;
          case MenuCommand_Battle_Flee: Battle_AttemptFlee( &( game->battle ) ); break;
          case MenuCommand_Battle_Spell: Game_OpenBattleSpellMenu( game ); break;
-         case MenuCommand_Battle_Item: Game_ChangeMainState( game, MainState_Overworld ); break;
+         case MenuCommand_Battle_Item: Game_ChangeToOverworldState( game ); break;
 
          case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
          case MenuCommand_Spell_Sizz: Game_CastSizz( game ); break;

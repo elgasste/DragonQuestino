@@ -152,12 +152,12 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    if ( portal )
    {
       game->targetPortal = portal;
-      Game_ChangeMainState( game, MainState_Overworld );
+      Game_ChangeToOverworldState( game );
       AnimationChain_Reset( &( game->animationChain ) );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut, 0, 0 );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, Game_EnterTargetPortal, game );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeIn, 0, 0 );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EnterTargetPortal, game );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeIn );
       AnimationChain_Start( &( game->animationChain ) );
       return;
    }
@@ -187,7 +187,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    if ( game->battle.specialEnemy != SpecialEnemy_None )
    {
       Battle_Generate( &( game->battle ) );
-      Game_ChangeMainState( game, MainState_Battle );
+      Game_ChangeToBattleState( game );
    }
    else if ( game->tileMap.hasEncounters )
    {
@@ -233,7 +233,7 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
 
       if ( game->tileMap.isDungeon || !( game->player.hasHolyProtection ) || game->battle.enemy.stats.strength > ( game->player.stats.agility / 2 ) )
       {
-         Game_ChangeMainState( game, MainState_Battle );
+         Game_ChangeToBattleState( game );
       }
    }
    else

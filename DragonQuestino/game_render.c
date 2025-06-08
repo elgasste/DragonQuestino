@@ -12,7 +12,7 @@ void Game_Draw( Game_t* game )
    uint32_t i;
    AnimationId_t activeAnimationId;
 
-   if ( game->animationChain.isRunning )
+   if ( game->animationChain.isRunning && game->doAnimation )
    {
       if ( game->mainState == MainState_Overworld )
       {

@@ -44,6 +44,7 @@ typedef struct Game_t
    Battle_t battle;
 
    float overworldInactivitySeconds;
+   Bool_t doAnimation;
 
    uint8_t pendingPayload8u;
 }
@@ -56,7 +57,8 @@ extern "C" {
 // game.c
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
-void Game_ChangeMainState( Game_t* game, MainState_t newState );
+void Game_ChangeToOverworldState( Game_t* game );
+void Game_ChangeToBattleState( Game_t* game );
 void Game_ChangeSubState( Game_t* game, SubState_t newState );
 void Game_EnterTargetPortal( Game_t* game );
 void Game_OpenMenu( Game_t* game, MenuId_t id );

@@ -39,6 +39,9 @@ internal void AnimationChain_Tic_WhiteOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_WhiteIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_FadeOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_FadeIn( AnimationChain_t* chain );
+internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain );
+internal void AnimationChain_Tic_RainbowBridge_WhiteOut( AnimationChain_t* chain );
+internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -142,7 +145,7 @@ internal void Animation_Stop( Animation_t* animation )
    switch ( animation->id )
    {
       case AnimationId_Pause:
-         Game_ChangeMainState( animation->game, MainState_Overworld );
+         Game_ChangeToOverworldState( animation->game );
          break;
       case AnimationId_FadeIn:
       case AnimationId_WhiteIn:
@@ -150,7 +153,7 @@ internal void Animation_Stop( Animation_t* animation )
          Screen_RestorePalette( &( animation->game->screen ) );
          break;
       case AnimationId_RainbowBridge_Pause:
-         Game_ChangeMainState( animation->game, MainState_Overworld );
+         Game_ChangeToOverworldState( animation->game );
          break;
       case AnimationId_Battle_Checkerboard:
          Game_WipeEnemy( animation->game );
@@ -213,7 +216,7 @@ internal void Animation_Tic_Overworld_Pause( Animation_t* animation )
       }
       else
       {
-         Game_ChangeMainState( animation->game, MainState_Overworld );
+         Game_ChangeToOverworldState( animation->game );
       }
 
       animation->game->dialog.id = DialogId_Count;
@@ -601,7 +604,12 @@ void AnimationChain_Reset( AnimationChain_t* chain )
    chain->animationCount = 0;
 }
 
-void AnimationChain_PushAnimation( AnimationChain_t* chain, AnimationId_t id, void ( *callback )( void* ), void* callbackData )
+void AnimationChain_PushAnimation( AnimationChain_t* chain, AnimationId_t id )
+{
+   AnimationChain_PushAnimationWithCallback( chain, id, 0, 0 );
+}
+
+void AnimationChain_PushAnimationWithCallback( AnimationChain_t* chain, AnimationId_t id, void ( *callback )( void* ), void* callbackData )
 {
    chain->animationIds[chain->animationCount] = id;
    chain->callbacks[chain->animationCount] = callback;
@@ -625,6 +633,9 @@ void AnimationChain_Tic( AnimationChain_t* chain )
       case AnimationId_WhiteIn: AnimationChain_Tic_WhiteIn( chain ); break;
       case AnimationId_FadeOut: AnimationChain_Tic_FadeOut( chain ); break;
       case AnimationId_FadeIn: AnimationChain_Tic_FadeIn( chain ); break;
+      case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
+      case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
+      case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
    }
 }
 
@@ -648,6 +659,14 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          chain->totalDuration = ANIMATIONCHAIN_FADE_DURATION;
          break;
       case AnimationId_FadeIn: chain->totalDuration = ANIMATIONCHAIN_FADE_DURATION; break;
+      case AnimationId_RainbowBridge_Trippy:
+         Screen_BackupPalette( chain->screen );
+         chain->totalDuration = ANIMATIONCHAIN_RAINBOWBRIDGE_TRIPPY_DURATION;
+         break;
+      case AnimationId_RainbowBridge_WhiteOut:
+      case AnimationId_RainbowBridge_FadeIn:
+         chain->totalDuration = ANIMATIONCHAIN_RAINBOWBRIDGE_FADE_DURATION;
+         break;
    }
 
    chain->totalElapsedSeconds = 0.0f;
@@ -660,6 +679,7 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
    {
       case AnimationId_FadeIn:
       case AnimationId_WhiteIn:
+      case AnimationId_RainbowBridge_FadeIn:
          Screen_RestorePalette( chain->screen );
          break;
    }
@@ -763,5 +783,50 @@ internal void AnimationChain_Tic_FadeIn( AnimationChain_t* chain )
       rangeB = screen->backupPalette[i] & 0x1F;
       p = chain->totalElapsedSeconds / chain->totalDuration;
       screen->palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+   }
+}
+
+internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain )
+{
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG, increment;
+   float p;
+   Screen_t* screen = chain->screen;
+
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   for ( i = 0; i < PALETTE_COLORS; i++ )
+   {
+      rangeR = UINT8_MAX - ( screen->backupPalette[i] >> 11 );
+      rangeG = UINT8_MAX - ( ( screen->backupPalette[i] & 0x7E0 ) >> 5 );
+      rangeB = UINT8_MAX - ( screen->backupPalette[i] & 0x1F );
+      p = chain->totalElapsedSeconds / chain->totalDuration;
+      increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      screen->palette[i] = screen->backupPalette[i] + increment;
+   }
+}
+
+internal void AnimationChain_Tic_RainbowBridge_WhiteOut( AnimationChain_t* chain )
+{
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+}
+
+internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain )
+{
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG, increment;
+   float p;
+   Screen_t* screen = chain->screen;
+
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   for ( i = 0; i < PALETTE_COLORS; i++ )
+   {
+      rangeR = 0x1F - ( screen->backupPalette[i] >> 11 );
+      rangeG = 0x3F - ( ( screen->backupPalette[i] & 0x7E0 ) >> 5 );
+      rangeB = 0x1F - ( screen->backupPalette[i] & 0x1F );
+      p = 1.0f - ( chain->totalElapsedSeconds / chain->totalDuration );
+      increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      screen->palette[i] = screen->backupPalette[i] + increment;
    }
 }

@@ -2,6 +2,8 @@
 #include "random.h"
 
 internal void Game_UseWingCallback( Game_t* game );
+internal void Game_UseRainbowDropCallback( Game_t* game );
+internal void Game_RainbowDropTrippyCallback( Game_t* game );
 
 void Game_UseHerb( Game_t* game )
 {
@@ -170,16 +172,20 @@ void Game_UseGwaelynsLove( Game_t* game )
 
 void Game_UseRainbowDrop( Game_t* game )
 {
+   Dialog2_Reset( &( game->dialog2 ) );
+
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID &&
         game->player.tileIndex == ( TILEMAP_RAINBOWBRIDGE_INDEX + 1 ) &&
         game->player.sprite.direction == Direction_Left )
    {
-      Game_OpenDialog( game, DialogId_Use_RainbowDrop );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_ITEMUSE_RAINBOWDROP, Game_UseRainbowDropCallback, game );
    }
    else
    {
-      Game_OpenDialog( game, DialogId_Use_RainbowDropCantUse );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_RAINBOWDROP_CANTUSE );
    }
+
+   Game_OpenDialog2( game );
 }
 
 void Game_UseCursedBelt( Game_t* game )
@@ -190,12 +196,43 @@ void Game_UseCursedBelt( Game_t* game )
 
 internal void Game_UseWingCallback( Game_t* game )
 {
-   Game_ChangeMainState( game, MainState_Overworld );
    AnimationChain_Reset( &( game->animationChain ) );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteOut, Game_EnterTargetPortal, game );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteIn, 0, 0 );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_WhiteOut, Game_EnterTargetPortal, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToOverworldState, game );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteIn );
    AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_UseRainbowDropCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToOverworldState, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_RainbowBridge_Trippy, Game_RainbowDropTrippyCallback, game );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_RainbowBridge_WhiteOut );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_RainbowBridge_FadeIn );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_RainbowDropTrippyCallback( Game_t* game )
+{
+   uint32_t i;
+
+   for ( i = 0; i < PALETTE_COLORS; i++ )
+   {
+      game->screen.palette[i] = COLOR_WHITE;
+   }
+
+   Screen_WipeColor( &( game->screen ), COLOR_WHITE );
+   ITEM_TOGGLE_HASRAINBOWDROP( game->player.items );
+   game->gameFlags.usedRainbowDrop = True;
+   TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
+   TILE_TOGGLE_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX] );
 }

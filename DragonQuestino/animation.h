@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-#define ANIMATION_OVERWORLD_PAUSE_DURATION            0.3f
+#define ANIMATION_OVERWORLD_PAUSE_DURATION            0.2f
 #define ANIMATION_TILEMAP_FADE_DURATION               0.3f
 #define ANIMATION_TILEMAP_FADEPAUSE_DURATION          0.2f
 #define ANIMATION_TILEMAP_WHITE_DURATION              0.5f
@@ -23,11 +23,13 @@
 #define ANIMATION_BATTLE_ENEMYDODGE_DURATION          0.5f
 #define ANIMATION_BATTLE_VICTORYPAUSE_DURATION        0.6f
 
-#define ANIMATIONCHAIN_MAX_LINKS                      8
+#define ANIMATIONCHAIN_MAX_LINKS                         16
 
-#define ANIMATIONCHAIN_PAUSE_DURATION                 0.3f
-#define ANIMATIONCHAIN_WHITE_DURATION                 0.5f
-#define ANIMATIONCHAIN_FADE_DURATION                  0.3f
+#define ANIMATIONCHAIN_PAUSE_DURATION                    0.3f
+#define ANIMATIONCHAIN_WHITE_DURATION                    0.5f
+#define ANIMATIONCHAIN_FADE_DURATION                     0.3f
+#define ANIMATIONCHAIN_RAINBOWBRIDGE_TRIPPY_DURATION     6.0f
+#define ANIMATIONCHAIN_RAINBOWBRIDGE_FADE_DURATION       1.5f
 
 typedef struct Game_t Game_t;
 
@@ -71,7 +73,8 @@ void Animation_Start( Animation_t* animation, AnimationId_t id );
 
 void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen );
 void AnimationChain_Reset( AnimationChain_t* chain );
-void AnimationChain_PushAnimation( AnimationChain_t* chain, AnimationId_t id, void ( *callback )( void* ), void* callbackData );
+void AnimationChain_PushAnimation( AnimationChain_t* chain, AnimationId_t id );
+void AnimationChain_PushAnimationWithCallback( AnimationChain_t* chain, AnimationId_t id, void ( *callback )( void* ), void* callbackData );
 void AnimationChain_Start( AnimationChain_t* chain );
 void AnimationChain_Tic( AnimationChain_t* chain );
 AnimationId_t AnimationChain_GetActiveAnimationId( AnimationChain_t* chain );

@@ -54,10 +54,12 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->subState = SubState_None;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
+   game->doAnimation = False;
 }
 
 void Game_Tic( Game_t* game )
 {
+   game->doAnimation = game->animationChain.isRunning;
    Input_Read( &( game->input ) );
 
    if ( game->animationChain.isRunning )
@@ -108,20 +110,18 @@ void Game_Tic( Game_t* game )
    Screen_RenderBuffer( &( game->screen ) );
 }
 
-void Game_ChangeMainState( Game_t* game, MainState_t newState )
+void Game_ChangeToOverworldState( Game_t* game )
 {
-   game->mainState = newState;
+   game->mainState = MainState_Overworld;
    game->subState = SubState_None;
+   game->overworldInactivitySeconds = 0.0f;
+}
 
-   switch ( newState )
-   {
-      case MainState_Overworld:
-         game->overworldInactivitySeconds = 0.0f;
-         break;
-      case MainState_Battle:
-         Animation_Start( &( game->animation ), AnimationId_Battle_Checkerboard );
-         break;
-   }
+void Game_ChangeToBattleState( Game_t* game )
+{
+   game->mainState = MainState_Overworld;
+   game->subState = SubState_None;
+   // TODO: queue up battle checkerboard animation
 }
 
 void Game_ChangeSubState( Game_t* game, SubState_t newState )
