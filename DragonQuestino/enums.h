@@ -50,9 +50,8 @@ SubState_t;
 typedef enum AnimationId_t
 {
    AnimationId_Pause = 0,
-   AnimationId_TileMap_FadeOut,
-   AnimationId_TileMap_FadePause,
-   AnimationId_TileMap_FadeIn,
+   AnimationId_FadeOut,
+   AnimationId_FadeIn,
    AnimationId_WhiteOut,
    AnimationId_WhitePause,
    AnimationId_WhiteIn,

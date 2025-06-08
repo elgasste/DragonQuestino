@@ -160,11 +160,11 @@ void Game_UseCursedBelt( Game_t* game )
 internal void Game_UseWingCallback( Game_t* game )
 {
    Game_ChangeMainState( game, MainState_Overworld );
-   Dialog2_Draw( &( game->dialog2 ) );
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteOut, Game_EnterTargetPortal, game );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhitePause, 0, 0 );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteIn, 0, 0 );
    AnimationChain_Start( &( game->animationChain ) );
 }

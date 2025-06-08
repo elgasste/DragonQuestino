@@ -26,9 +26,8 @@
 #define ANIMATIONCHAIN_MAX_LINKS                      8
 
 #define ANIMATIONCHAIN_PAUSE_DURATION                 0.3f
-#define ANIMATIONCHAIN_WHITEOUT_DURATION              0.5f
-#define ANIMATIONCHAIN_WHITEPAUSE_DURATION            1.0f
-#define ANIMATIONCHAIN_WHITEIN_DURATION               0.5f
+#define ANIMATIONCHAIN_WHITE_DURATION                 0.5f
+#define ANIMATIONCHAIN_FADE_DURATION                  0.3f
 
 typedef struct Game_t Game_t;
 
@@ -36,7 +35,6 @@ typedef struct Animation_t
 {
    Game_t* game;
 
-   Bool_t isRunning;
    AnimationId_t id;
    float totalElapsedSeconds;
    float frameElapsedSeconds;
@@ -70,7 +68,6 @@ extern "C" {
 
 void Animation_Init( Animation_t* animation, Game_t* game );
 void Animation_Start( Animation_t* animation, AnimationId_t id );
-void Animation_Tic( Animation_t* animation );
 
 void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen );
 void AnimationChain_Reset( AnimationChain_t* chain );

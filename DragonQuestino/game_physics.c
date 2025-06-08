@@ -152,7 +152,13 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    if ( portal )
    {
       game->targetPortal = portal;
-      Animation_Start( &( game->animation ), AnimationId_TileMap_FadeOut );
+      Game_ChangeMainState( game, MainState_Overworld );
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut, 0, 0 );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, Game_EnterTargetPortal, game );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause, 0, 0 );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeIn, 0, 0 );
+      AnimationChain_Start( &( game->animationChain ) );
       return;
    }
 
