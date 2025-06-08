@@ -169,11 +169,6 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
                   case DialogId_Spell_CastMidheal2:
                      Game_DrawQuickStatus( game );
                      break;
-                  case DialogId_Use_CursedBelt:
-                     Player_SetCursed( &( game->player ), True );
-                     TileMap_StartGlowTransition( &( game->tileMap ) );
-                     game->screen.needsRedraw = True;
-                     break;
                }
                break;
          }

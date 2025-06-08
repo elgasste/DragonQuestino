@@ -99,7 +99,6 @@ void Game_CastGlow( Game_t* game )
          {
             TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
             game->tileMap.glowTileCount = 0;
-            TileMap_StartGlowTransition( &( game->tileMap ) );
          }
 
          Game_OpenDialog( game, DialogId_Spell_OverworldCastGlow );

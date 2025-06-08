@@ -87,11 +87,6 @@ void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, uint32_t targetDiameter 
    tileMap->targetGlowDiameter = targetDiameter;
 }
 
-void TileMap_StartGlowTransition( TileMap_t* tileMap )
-{
-   tileMap->glowTransitionSeconds = GLOW_TRANSITION_FRAME_SECONDS; // push one frame immediately
-}
-
 void TileMap_ReduceTargetGlowDiameter( TileMap_t* tileMap )
 {
    if ( tileMap->targetGlowDiameter > 1 )

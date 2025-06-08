@@ -86,7 +86,6 @@ void Game_UseTorch( Game_t* game )
          {
             TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
             game->tileMap.torchIsLit = True;
-            TileMap_StartGlowTransition( &( game->tileMap ) );
          }
 
          ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );

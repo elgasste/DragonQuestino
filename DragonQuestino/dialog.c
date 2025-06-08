@@ -254,8 +254,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Item_None:
       case DialogId_FullyHealed:
       case DialogId_HolyProtection_Off:
-      case DialogId_Use_RainbowDropCantUse:
-      case DialogId_Use_RainbowDrop:
       case DialogId_Battle_EnemyApproaches:
       case DialogId_Battle_Victory:
       case DialogId_Battle_Spell_None:
@@ -267,7 +265,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_Sizz:
       case DialogId_Battle_Spell_Sizzle:
          return 1;
-      case DialogId_Use_CursedBelt:
       case DialogId_Spell_OverworldCastGlowCursed:
       case DialogId_Spell_CastRepelCursed:
       case DialogId_Spell_CastRepel:
@@ -332,14 +329,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
-      case DialogId_Use_RainbowDropCantUse: strcpy( text, STRING_ITEMUSE_RAINBOWDROP_CANTUSE ); return;
-      case DialogId_Use_RainbowDrop: strcpy( text, STRING_ITEMUSE_RAINBOWDROP ); return;
-      case DialogId_Use_CursedBelt:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_ITEMUSE_CURSEDBELT ); return;
-            case 1: strcpy( text, STRING_CURSED ); return;
-         }
       case DialogId_Spell_CastHeal1:
          switch ( dialog->section )
          {

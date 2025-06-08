@@ -196,6 +196,5 @@ void Game_RestoredHitPointsCallback( Game_t* game )
 void Game_CursedCallback( Game_t* game )
 {
    Player_SetCursed( &( game->player ), True );
-   TileMap_StartGlowTransition( &( game->tileMap ) );
    game->screen.needsRedraw = True;
 }
