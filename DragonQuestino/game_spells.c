@@ -14,6 +14,7 @@ internal void Game_CastSpellCallback( Game_t* game );
 internal void Game_SpellHealCallback( Game_t* game );
 internal void Game_SpellHurtCallback( Game_t* game );
 internal void Game_SpellZoomCallback( Game_t* game );
+internal void Game_SpellRepelCallback( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
@@ -146,20 +147,17 @@ void Game_CastZoom( Game_t* game, uint32_t townId )
 
 void Game_CastRepel( Game_t* game )
 {
+   char msg[64];
+
    CHECK_CAST_ABILITY( SPELL_REPEL_MP, STRING_SPELL_REPEL );
 
-   game->player.stats.magicPoints -= SPELL_REPEL_MP;
-   Game_DrawQuickStatus( game );
-
-   if ( game->player.isCursed )
-   {
-      Game_OpenDialog( game, DialogId_Spell_CastRepelCursed );
-   }
-   else
-   {
-      Player_SetHolyProtection( &( game->player ), True );
-      Game_OpenDialog( game, DialogId_Spell_CastRepel );
-   }
+   game->screen.needsRedraw = True;
+   Dialog2_Reset( &( game->dialog2 ) );
+   game->player.stats.magicPoints -= SPELL_ZOOM_MP;
+   game->pendingSpell = Spell_Repel;
+   sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_REPEL );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
+   Game_OpenDialog2( game );
 }
 
 void Game_CastMidheal( Game_t* game )
@@ -217,6 +215,7 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
 
    if ( game->player.stats.magicPoints < requiredMp )
    {
+      game->screen.needsRedraw = True;
       Dialog2_Reset( &( game->dialog2 ) );
       Dialog2_PushSection( &( game->dialog2 ), ( game->mainState == MainState_Overworld ) ? STRING_NOTENOUGHMP : STRING_BATTLE_NOTENOUGHMP );
       Game_OpenDialog2( game );
@@ -225,6 +224,7 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
 
    if ( game->tileMap.blocksMagic )
    {
+      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
       Dialog2_Reset( &( game->dialog2 ) );
       sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, spellName );
@@ -235,6 +235,7 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
 
    if ( game->mainState == MainState_Battle && game->player.stats.isFizzled )
    {
+      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
       Dialog2_Reset( &( game->dialog2 ) );
       sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, spellName );
@@ -306,6 +307,8 @@ internal void Game_CastSpellCallback( Game_t* game )
       case Spell_Zoom:
          AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellZoomCallback, game );
          break;
+      case Spell_Repel:
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellRepelCallback, game );
    }
 
    AnimationChain_Start( &( game->animationChain ) );
@@ -360,4 +363,21 @@ internal void Game_SpellZoomCallback( Game_t* game )
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteIn );
    AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_SpellRepelCallback( Game_t* game )
+{
+   Dialog2_Reset( &( game->dialog2 ) );
+
+   if ( game->player.isCursed )
+   {
+      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_CURSED );
+   }
+   else
+   {
+      Player_SetHolyProtection( &( game->player ), True );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_ON );
+   }
+
+   Game_OpenDialog2( game );
 }

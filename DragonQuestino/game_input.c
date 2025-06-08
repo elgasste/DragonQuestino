@@ -233,6 +233,10 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             game->activeMenu = &( game->menus[MenuId_Overworld] );
             game->screen.needsRedraw = True;
             break;
+         case MenuId_Zoom:
+            game->activeMenu = &( game->menus[MenuId_OverworldSpell] );
+            game->screen.needsRedraw = True;
+            break;
          default:
             Game_ChangeToOverworldState( game );
             break;
@@ -285,8 +289,8 @@ internal void Game_OpenZoomMenu( Game_t* game )
 
    if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
    {
-      // MUFFINS: come back to this
-      //Game_OpenDialog( game, DialogId_Spell_NotEnoughMp );
+      // MUFFINS: test this
+      Game_CastZoom( game, 0 );
    }
    else if ( townCount > 0 )
    {
