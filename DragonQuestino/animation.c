@@ -205,10 +205,6 @@ internal void Animation_Tic_Overworld_Pause( Animation_t* animation )
          animation->game->targetPortal = &( animation->game->tileMap.evacPortal );
          Animation_Start( animation, AnimationId_FadeOut );
       }
-      else if ( animation->game->dialog.id == DialogId_Spell_CastZoom )
-      {
-         Animation_Start( animation, AnimationId_WhiteOut );
-      }
       else
       {
          Game_ChangeToOverworldState( animation->game );

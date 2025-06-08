@@ -13,6 +13,7 @@ internal void Game_SpellFizzledMessageCallback( Game_t* game );
 internal void Game_CastSpellCallback( Game_t* game );
 internal void Game_SpellHealCallback( Game_t* game );
 internal void Game_SpellHurtCallback( Game_t* game );
+internal void Game_SpellZoomCallback( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
@@ -130,12 +131,17 @@ void Game_CastEvac( Game_t* game )
 
 void Game_CastZoom( Game_t* game, uint32_t townId )
 {
+   char msg[64];
+
    CHECK_CAST_ABILITY( SPELL_ZOOM_MP, STRING_SPELL_ZOOM );
 
+   Dialog2_Reset( &( game->dialog2 ) );
    game->player.stats.magicPoints -= SPELL_ZOOM_MP;
+   game->pendingSpell = Spell_Zoom;
    game->targetPortal = &( game->zoomPortals[townId] );
-   Game_DrawQuickStatus( game );
-   Game_OpenDialog( game, DialogId_Spell_CastZoom );
+   sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_ZOOM );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
+   Game_OpenDialog2( game );
 }
 
 void Game_CastRepel( Game_t* game )
@@ -297,6 +303,9 @@ internal void Game_CastSpellCallback( Game_t* game )
       case Spell_Sizzle:
          AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellHurtCallback, game );
          break;
+      case Spell_Zoom:
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellZoomCallback, game );
+         break;
    }
 
    AnimationChain_Start( &( game->animationChain ) );
@@ -338,4 +347,17 @@ internal void Game_SpellHurtCallback( Game_t* game )
       Game_OpenDialog( game, DialogId_Battle_Spell_AttackSucceeded );
    }
    */
+}
+
+internal void Game_SpellZoomCallback( Game_t* game )
+{
+   Game_ChangeToOverworldState( game );
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_WhiteOut, Game_EnterTargetPortal, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToOverworldState, game );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_WhiteIn );
+   AnimationChain_Start( &( game->animationChain ) );
 }

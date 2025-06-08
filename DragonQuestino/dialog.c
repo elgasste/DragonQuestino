@@ -249,7 +249,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Spell_OverworldCantCast:
       case DialogId_Spell_OverworldCastGlow:
       case DialogId_Spell_CastEvac:
-      case DialogId_Spell_CastZoom:
       case DialogId_Item_None:
       case DialogId_FullyHealed:
       case DialogId_HolyProtection_Off:
@@ -322,7 +321,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
             case 1: strcpy( text, STRING_HOLYPROTECTION_ON ); return;
          }
       case DialogId_Spell_CastEvac: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC ); return;
-      case DialogId_Spell_CastZoom: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_ZOOM ); return;
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
@@ -441,7 +439,6 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Spell_CastRepel:
          case DialogId_Spell_CastEvacCursed:
          case DialogId_Spell_CastEvac:
-         case DialogId_Spell_CastZoom:
          case DialogId_Spell_Blocked:
          case DialogId_Battle_Spell_Blocked:
          case DialogId_Battle_Spell_Fizzled:

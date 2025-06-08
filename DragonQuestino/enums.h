@@ -197,7 +197,6 @@ typedef enum DialogId_t
    DialogId_Spell_CastRepel,
    DialogId_Spell_CastEvacCursed,
    DialogId_Spell_CastEvac,
-   DialogId_Spell_CastZoom,
    DialogId_Spell_Blocked,
    DialogId_Item_None,
 

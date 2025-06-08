@@ -33,7 +33,7 @@ void Game_UseHerb( Game_t* game )
 
 void Game_UseWing( Game_t* game )
 {
-   Dialog2_Reset( &( game->dialog2 ) );;
+   Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->tileMap.isDungeon )
    {
@@ -53,7 +53,7 @@ void Game_UseWing( Game_t* game )
 void Game_UseFairyWater( Game_t* game )
 {
    ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 );
-   Dialog2_Reset( &( game->dialog2 ) );;
+   Dialog2_Reset( &( game->dialog2 ) );
    Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYWATER );
 
    if ( game->player.isCursed )
