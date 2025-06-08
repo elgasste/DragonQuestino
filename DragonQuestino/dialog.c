@@ -268,7 +268,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_Sizz:
       case DialogId_Battle_Spell_Sizzle:
          return 1;
-      case DialogId_Use_FairyFlute:
       case DialogId_Use_CursedBelt:
       case DialogId_Spell_OverworldCastGlowCursed:
       case DialogId_Spell_CastRepelCursed:
@@ -338,12 +337,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
-      case DialogId_Use_FairyFlute:
-         switch ( dialog->section )
-         {
-            case 0: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_1 ); return;
-            case 1: strcpy( text, STRING_ITEMUSE_FAIRYFLUTE_2 ); return;
-         }
       case DialogId_Use_GwaelynsLoveCantUse: strcpy( text, STRING_ITEMUSE_GWAELINSLOVE_CANTUSE ); return;
       case DialogId_Use_GwaelynsLove:
          switch ( dialog->section )

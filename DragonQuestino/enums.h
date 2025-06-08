@@ -188,7 +188,6 @@ typedef enum DialogId_t
    DialogId_FullyHealed,
    DialogId_HolyProtection_Off,
 
-   DialogId_Use_FairyFlute,
    DialogId_Use_GwaelynsLoveCantUse,
    DialogId_Use_GwaelynsLove,
    DialogId_Use_RainbowDropCantUse,

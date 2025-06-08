@@ -107,7 +107,10 @@ void Game_UseSilverHarp( Game_t* game )
 
 void Game_UseFairyFlute( Game_t* game )
 {
-   Game_OpenDialog( game, DialogId_Use_FairyFlute );
+   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYFLUTE_1 );
+   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYFLUTE_2 );
+   Game_OpenDialog2( game );
 }
 
 void Game_UseGwaelynsLove( Game_t* game )
