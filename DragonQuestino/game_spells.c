@@ -231,6 +231,7 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
    return True;
 }
 
+// MUFFINS: this could probably be the callback for when a dialog section finishes in battle, maybe?
 internal void Game_ResetBattleMenu( Game_t* game )
 {
    if ( game->mainState == MainState_Battle )

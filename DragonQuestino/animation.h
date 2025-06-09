@@ -32,6 +32,7 @@
 #define ANIMATIONCHAIN_RAINBOWBRIDGE_FADE_DURATION       1.5f
 #define ANIMATIONCHAIN_CASTSPELL_TOTALDURATION           0.2f
 #define ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION           0.005f
+#define ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION     0.011f
 
 typedef struct Game_t Game_t;
 
@@ -48,10 +49,12 @@ typedef struct Animation_t
 Animation_t;
 
 typedef struct Screen_t Screen_t;
+typedef struct TileMap_t TileMap_t;
 
 typedef struct AnimationChain_t
 {
    Screen_t* screen;
+   TileMap_t* tileMap;
 
    AnimationId_t animationIds[ANIMATIONCHAIN_MAX_LINKS];
    void ( *callbacks[ANIMATIONCHAIN_MAX_LINKS] )( void* );
@@ -76,7 +79,7 @@ extern "C" {
 void Animation_Init( Animation_t* animation, Game_t* game );
 void Animation_Start( Animation_t* animation, AnimationId_t id );
 
-void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen );
+void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap );
 void AnimationChain_Reset( AnimationChain_t* chain );
 void AnimationChain_PushAnimation( AnimationChain_t* chain, AnimationId_t id );
 void AnimationChain_PushAnimationWithCallback( AnimationChain_t* chain, AnimationId_t id, void ( *callback )( void* ), void* callbackData );

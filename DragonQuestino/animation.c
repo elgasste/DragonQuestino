@@ -1,5 +1,7 @@
 #include "animation.h"
-#include "game.h"
+#include "game.h" // MUFFINS: remove this eventually
+#include "screen.h"
+#include "tile_map.h"
 #include "vector.h"
 #include "math.h"
 
@@ -43,6 +45,7 @@ internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain )
 internal void AnimationChain_Tic_RainbowBridge_WhiteOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain );
+internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -575,9 +578,10 @@ internal void Animation_Tic_Battle_VictoryPause( Animation_t* animation )
    }
 }
 
-void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen )
+void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap )
 {
    chain->screen = screen;
+   chain->tileMap = tileMap;
 }
 
 void AnimationChain_Reset( AnimationChain_t* chain )
@@ -626,6 +630,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
          case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
          case AnimationId_CastSpell: AnimationChain_Tic_CastSpell( chain ); break;
+         case AnimationId_Battle_Checkerboard: AnimationChain_Tic_Battle_Checkerboard( chain ); break;
       }
    }
 }
@@ -849,6 +854,34 @@ internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain )
          chain->frameElapsedSeconds -= ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION;
          TOGGLE_BOOL( wipeScreen );
          chain->screen->needsWipe = wipeScreen;
+      }
+   }
+}
+
+internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
+{
+   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+   int16_t xOffset = chain->tileMap->isDark ? -24 : 0;
+   int16_t yOffset = chain->tileMap->isDark ? 4 : 0;
+
+   while ( chain->frameElapsedSeconds > ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION )
+   {
+      uint32_t squareIndex = (uint32_t)( chain->totalElapsedSeconds / ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION );
+
+      Screen_DrawRectColor( chain->screen,
+                            (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].x ) + xOffset ),
+                            (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].y ) + yOffset ),
+                            TILE_SIZE, TILE_SIZE, COLOR_BLACK );
+
+      if ( squareIndex == 48 )
+      {
+         AnimationChain_AnimationFinished( chain );
+         break;
+      }
+      else
+      {
+         chain->totalElapsedSeconds += ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION;
+         chain->frameElapsedSeconds -= ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION;
       }
    }
 }

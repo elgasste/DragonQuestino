@@ -15,7 +15,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 1 );
    Animation_Init( &( game->animation ), game );
-   AnimationChain_Init( &( game->animationChain ), &( game->screen ) );
+   AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ) );
    Sprite_LoadPlayer( &( game->player.sprite ) );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
@@ -133,10 +133,11 @@ void Game_ChangeToOverworldState( Game_t* game )
 
 void Game_ChangeToBattleState( Game_t* game )
 {
-   game->mainState = MainState_Overworld;
+   game->mainState = MainState_Battle;
    game->subState = SubState_None;
-   
-   // MUFFINS: this is why it wasn't working, let's make it work.
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_Checkerboard );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 void Game_ChangeSubState( Game_t* game, SubState_t newState )

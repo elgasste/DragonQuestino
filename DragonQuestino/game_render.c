@@ -14,10 +14,10 @@ void Game_Draw( Game_t* game )
 
    if ( game->doAnimation )
    {
+      activeAnimationId = AnimationChain_GetActiveAnimationId( &( game->animationChain ) );
+
       if ( game->mainState == MainState_Overworld )
       {
-         activeAnimationId = AnimationChain_GetActiveAnimationId( &( game->animationChain ) );
-
          if ( activeAnimationId != AnimationId_Pause )
          {
             Game_DrawOverworld( game );
@@ -30,7 +30,7 @@ void Game_Draw( Game_t* game )
       }
       else if ( game->mainState == MainState_Battle )
       {
-         if ( game->screen.needsRedraw )
+         /*if ( game->screen.needsRedraw )
          {
             game->screen.needsRedraw = False;
             Game_DrawTileMap( game );
@@ -38,7 +38,7 @@ void Game_Draw( Game_t* game )
          else if ( game->animation.id == AnimationId_Battle_EnemyFadeIn || game->animation.id == AnimationId_Battle_EnemyFadeOut )
          {
             Game_DrawEnemy( game );
-         }
+         }*/
       }
    }
    else
@@ -47,8 +47,6 @@ void Game_Draw( Game_t* game )
       {
          if ( game->screen.needsRedraw )
          {
-            game->screen.needsRedraw = False;
-
             for ( i = 0; i < MenuId_Count; i++ )
             {
                game->menus[i].hasDrawn = False;
@@ -115,8 +113,6 @@ void Game_Draw( Game_t* game )
                   Dialog2_Draw( &( game->dialog2 ) );
                   break;
             }
-
-            game->screen.needsRedraw = False;
          }
          else
          {
@@ -132,6 +128,8 @@ void Game_Draw( Game_t* game )
          }
       }
    }
+
+   game->screen.needsRedraw = False;
 }
 
 void Game_DrawOverworld( Game_t* game )
