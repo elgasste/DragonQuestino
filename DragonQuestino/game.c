@@ -128,6 +128,16 @@ void Game_ChangeSubState( Game_t* game, SubState_t newState )
    game->subState = newState;
 }
 
+void Game_AnimatePortalEntrance( Game_t* game, TilePortal_t* portal )
+{
+   game->targetPortal = portal;
+   Game_ChangeToOverworldState( game );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EnterTargetPortal, game );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeIn );
+}
+
 void Game_EnterTargetPortal( Game_t* game )
 {
    uint32_t destinationTileIndex = game->targetPortal->destinationTileIndex;

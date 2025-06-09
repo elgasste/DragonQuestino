@@ -266,7 +266,6 @@ internal void Game_OpenZoomMenu( Game_t* game )
 
    if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
    {
-      // MUFFINS: test this
       Game_CastZoom( game, 0 );
    }
    else if ( townCount > 0 )

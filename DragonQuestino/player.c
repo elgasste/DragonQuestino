@@ -50,7 +50,7 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->stats.maxHitPoints = 100;
    player->stats.hitPoints = 2;
    player->stats.maxMagicPoints = 100;
-   player->stats.magicPoints = 00;
+   player->stats.magicPoints = 50;
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )

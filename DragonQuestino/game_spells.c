@@ -16,6 +16,7 @@ internal void Game_SpellHurtCallback( Game_t* game );
 internal void Game_SpellZoomCallback( Game_t* game );
 internal void Game_SpellRepelCallback( Game_t* game );
 internal void Game_SpellGlowCallback( Game_t* game );
+internal void Game_SpellEvacCallback( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
@@ -34,7 +35,6 @@ void Game_CastHeal( Game_t* game )
    }
    else
    {
-      game->player.stats.magicPoints -= SPELL_HEAL_MP;
       game->pendingSpell = Spell_Heal;
       maxEffect = game->player.isCursed ? ( SPELL_HEAL_MAXEFFECT / 2 ) : SPELL_HEAL_MAXEFFECT;
       game->pendingPayload8u = MATH_MIN( Random_u8( SPELL_HEAL_MINEFFECT, maxEffect ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
@@ -87,7 +87,6 @@ void Game_CastGlow( Game_t* game )
    {
       game->screen.needsRedraw = True;
       Dialog2_Reset( &( game->dialog2 ) );
-      game->player.stats.magicPoints -= SPELL_GLOW_MP;
       game->pendingSpell = Spell_Glow;
       sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW );
       Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
@@ -101,24 +100,20 @@ void Game_CastFizzle( Game_t* game )
    UNUSED_PARAM( game );
 }
 
-// MUFFINS: this is the next one
 void Game_CastEvac( Game_t* game )
 {
+   char msg[64];
+
    CHECK_CAST_ABILITY( SPELL_EVAC_MP, STRING_SPELL_EVAC );
 
    if ( game->tileMap.isDungeon )
    {
-      game->player.stats.magicPoints -= SPELL_EVAC_MP;
-      Game_DrawQuickStatus( game );
-
-      if ( game->player.isCursed )
-      {
-         Game_OpenDialog( game, DialogId_Spell_CastEvacCursed );
-      }
-      else
-      {
-         Game_OpenDialog( game, DialogId_Spell_CastEvac );
-      }
+      game->screen.needsRedraw = True;
+      Dialog2_Reset( &( game->dialog2 ) );
+      game->pendingSpell = Spell_Evac;
+      sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
+      Game_OpenDialog2( game );
    }
 }
 
@@ -129,7 +124,6 @@ void Game_CastZoom( Game_t* game, uint32_t townId )
    CHECK_CAST_ABILITY( SPELL_ZOOM_MP, STRING_SPELL_ZOOM );
 
    Dialog2_Reset( &( game->dialog2 ) );
-   game->player.stats.magicPoints -= SPELL_ZOOM_MP;
    game->pendingSpell = Spell_Zoom;
    game->targetPortal = &( game->zoomPortals[townId] );
    sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_ZOOM );
@@ -145,7 +139,6 @@ void Game_CastRepel( Game_t* game )
 
    game->screen.needsRedraw = True;
    Dialog2_Reset( &( game->dialog2 ) );
-   game->player.stats.magicPoints -= SPELL_ZOOM_MP;
    game->pendingSpell = Spell_Repel;
    sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_REPEL );
    Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
@@ -159,7 +152,6 @@ void Game_CastMidheal( Game_t* game )
 
    CHECK_CAST_ABILITY( SPELL_MIDHEAL_MP, STRING_SPELL_MIDHEAL );
 
-   game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
    Dialog2_Reset( &( game->dialog2 ) );
 
@@ -299,6 +291,7 @@ internal void Game_CastSpellCallback( Game_t* game )
       case Spell_Zoom: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellZoomCallback, game ); break;
       case Spell_Repel: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellRepelCallback, game ); break;
       case Spell_Glow: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellGlowCallback, game ); break;
+      case Spell_Evac: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellEvacCallback, game ); break;
    }
 
    AnimationChain_Start( &( game->animationChain ) );
@@ -308,6 +301,16 @@ internal void Game_SpellHealCallback( Game_t* game )
 {
    char msg[64];
 
+   if ( game->pendingSpell == Spell_Heal )
+   {
+      game->player.stats.magicPoints -= SPELL_HEAL_MP;
+   }
+   else
+   {
+      game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
+   }
+
+   Game_DrawQuickStatus( game );
    Dialog2_Reset( &( game->dialog2 ) );
    sprintf( msg, STRING_DIALOG_HEAL_RESULT, game->pendingPayload8u, ( game->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
    Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_RestoredHitPointsCallback, game );
@@ -344,6 +347,7 @@ internal void Game_SpellHurtCallback( Game_t* game )
 
 internal void Game_SpellZoomCallback( Game_t* game )
 {
+   game->player.stats.magicPoints -= SPELL_ZOOM_MP;
    Game_ChangeToOverworldState( game );
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
@@ -357,6 +361,8 @@ internal void Game_SpellZoomCallback( Game_t* game )
 
 internal void Game_SpellRepelCallback( Game_t* game )
 {
+   game->player.stats.magicPoints -= SPELL_ZOOM_MP;
+   Game_DrawQuickStatus( game );
    Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->player.isCursed )
@@ -374,7 +380,8 @@ internal void Game_SpellRepelCallback( Game_t* game )
 
 internal void Game_SpellGlowCallback( Game_t* game )
 {
-   
+   game->player.stats.magicPoints -= SPELL_GLOW_MP;
+   Game_DrawQuickStatus( game );
 
    if ( game->player.isCursed )
    {
@@ -391,5 +398,24 @@ internal void Game_SpellGlowCallback( Game_t* game )
          TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
          game->tileMap.glowTileCount = 0;
       }
+   }
+}
+
+internal void Game_SpellEvacCallback( Game_t* game )
+{
+   game->player.stats.magicPoints -= SPELL_EVAC_MP;
+   Game_DrawQuickStatus( game );
+
+   if ( game->player.isCursed )
+   {
+      Dialog2_Reset( &( game->dialog2 ) );
+      game->tileMap.torchIsLit = False;
+      TileMap_SetTargetGlowDiameter( &( game->tileMap ), 1 );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_EVAC_CURSED );
+      Game_OpenDialog2( game );
+   }
+   else
+   {
+      Game_AnimatePortalEntrance( game, &( game->tileMap.evacPortal ) );
    }
 }

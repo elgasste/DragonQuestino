@@ -151,13 +151,8 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 
    if ( portal )
    {
-      game->targetPortal = portal;
-      Game_ChangeToOverworldState( game );
       AnimationChain_Reset( &( game->animationChain ) );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
-      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EnterTargetPortal, game );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeIn );
+      Game_AnimatePortalEntrance( game, portal );
       AnimationChain_Start( &( game->animationChain ) );
       return;
    }
