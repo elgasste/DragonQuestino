@@ -78,14 +78,7 @@ Dialog2_t;
 extern "C" {
 #endif
 
-//void Dialog_Init( Dialog_t* dialog, Game_t* game );
-//void Dialog_Load( Dialog_t* dialog, DialogId_t id );
 void Dialog_SetInsertionText( Dialog_t* dialog, const char* text );
-//void Dialog_Draw( Dialog_t* dialog );
-//Bool_t Dialog_StepAhead( Dialog_t* dialog );
-//void Dialog_NextSection( Dialog_t* dialog );
-//void Dialog_Tic( Dialog_t* dialog );
-//Bool_t Dialog_IsDone( Dialog_t* dialog );
 
 void Dialog2_Init( Dialog2_t* dialog, Screen_t* screen, MainState_t* mainState );
 void Dialog2_Reset( Dialog2_t* dialog );

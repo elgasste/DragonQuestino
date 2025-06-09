@@ -187,8 +187,6 @@ typedef enum DialogId_t
 {
    DialogId_Spell_None = 0,
    DialogId_Spell_OverworldCantCast,
-   DialogId_Spell_CastEvacCursed,
-   DialogId_Spell_CastEvac,
    DialogId_Spell_Blocked,
    DialogId_Item_None,
 

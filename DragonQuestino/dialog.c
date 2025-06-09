@@ -15,155 +15,10 @@ internal void Dialog2_LoadActiveSectionLines( Dialog2_t* dialog );
 internal void Dialog2_ResetScroll( Dialog2_t* dialog );
 internal void Dialog2_FinishSection( Dialog2_t* dialog );
 
-//void Dialog_Init( Dialog_t* dialog, Game_t* game )
-//{
-//   dialog->game = game;
-//}
-
-//void Dialog_Load( Dialog_t* dialog, DialogId_t id )
-//{
-//   dialog->id = id;
-//   dialog->section = 0;
-//
-//   if ( dialog->game->mainState == MainState_Overworld )
-//   {
-//      dialog->position.x = 32;
-//      dialog->position.y = 144;
-//      dialog->size.x = 24;
-//      dialog->size.y = 8;
-//      dialog->lineWidth = 22;
-//   }
-//   else
-//   {
-//      dialog->position.x = 24;
-//      dialog->position.y = 168;
-//      dialog->size.x = 26;
-//      dialog->size.y = 6;
-//      dialog->lineWidth = 24;
-//   }
-//
-//   Dialog_LoadMessage( dialog );
-//   Dialog_ResetScroll( dialog );
-//}
-
 void Dialog_SetInsertionText( Dialog_t* dialog, const char* text )
 {
    strcpy( dialog->insertionText, text );
 }
-
-//void Dialog_Draw( Dialog_t* dialog )
-//{
-//   uint32_t i, x, y, stopCharIndex, len;
-//   char substr[DIALOG_MAX_LINE_CHARS];
-//   Screen_t* screen = &( dialog->game->screen );
-//
-//   Screen_DrawTextWindow( screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y );
-//
-//   x = dialog->position.x + TEXT_TILE_SIZE;
-//   y = dialog->position.y + TEXT_TILE_SIZE;
-//
-//   if ( dialog->isScrolling )
-//   {
-//      stopCharIndex = (uint32_t)( dialog->scrollSeconds / DIALOG_SCROLL_CHAR_SECONDS );
-//
-//      for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
-//      {
-//         len = (uint32_t)( strlen( dialog->lines[i] ) );
-//
-//         if ( len < stopCharIndex )
-//         {
-//            Screen_DrawText( screen, dialog->lines[i], x, y );
-//            stopCharIndex -= len;
-//         }
-//         else
-//         {
-//            strcpy( substr, dialog->lines[i] );
-//            substr[stopCharIndex] = '\0';
-//            Screen_DrawText( screen, substr, x, y );
-//            break;
-//         }
-//      }
-//   }
-//   else
-//   {
-//      for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
-//      {
-//         Screen_DrawText( screen, dialog->lines[i], x, y );
-//      }
-//
-//      if ( dialog->showCarat && !Dialog_IsDone( dialog ) )
-//      {
-//         Screen_DrawChar( screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y );
-//      }
-//   }
-//}
-
-//Bool_t Dialog_StepAhead( Dialog_t* dialog )
-//{
-//   if ( dialog->isScrolling )
-//   {
-//      Dialog_FinishSection( dialog );
-//   }
-//   else if ( dialog->section < ( dialog->sectionCount - 1 ) )
-//   {
-//      Dialog_NextSection( dialog );
-//      return True;
-//   }
-//
-//   return False;
-//}
-
-//void Dialog_NextSection( Dialog_t* dialog )
-//{
-//   if ( dialog->section == 0 )
-//   {
-//      switch ( dialog->id )
-//      {
-//         case DialogId_Battle_FleeAttemptSucceeded:
-//            Animation_Start( &( dialog->game->animation ), AnimationId_Battle_EnemyFadeOut );
-//            break;
-//         case DialogId_Spell_CastHeal1:
-//         case DialogId_Spell_CastHeal2:
-//         case DialogId_Spell_CastMidheal1:
-//         case DialogId_Spell_CastMidheal2:
-//            Player_RestoreHitPoints( &( dialog->game->player ), dialog->game->pendingPayload8u );
-//            Game_DrawQuickStatus( dialog->game );
-//            break;
-//      }
-//   }
-//
-//   dialog->section++;
-//   Dialog_LoadMessage( dialog );
-//   Dialog_ResetScroll( dialog );
-//}
-
-//void Dialog_Tic( Dialog_t* dialog )
-//{
-//   if ( dialog->isScrolling )
-//   {
-//      dialog->scrollSeconds += CLOCK_FRAME_SECONDS;
-//
-//      if ( dialog->scrollSeconds > dialog->scrollTotalSeconds )
-//      {
-//         Dialog_FinishSection( dialog );
-//      }
-//   }
-//   else if ( !Dialog_IsDone( dialog ) )
-//   {
-//      dialog->blinkSeconds += CLOCK_FRAME_SECONDS;
-//
-//      while ( dialog->blinkSeconds > CARAT_BLINK_RATE_SECONDS )
-//      {
-//         TOGGLE_BOOL( dialog->showCarat );
-//         dialog->blinkSeconds -= CARAT_BLINK_RATE_SECONDS;
-//      }
-//   }
-//}
-
-//Bool_t Dialog_IsDone( Dialog_t* dialog )
-//{
-//   return ( !dialog->isScrolling && ( dialog->section >= ( dialog->sectionCount - 1 ) ) ) ? True : False;
-//}
 
 internal void Dialog_ResetScroll( Dialog_t* dialog )
 {
@@ -247,7 +102,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
    {
       case DialogId_Spell_None:
       case DialogId_Spell_OverworldCantCast:
-      case DialogId_Spell_CastEvac:
       case DialogId_Item_None:
       case DialogId_FullyHealed:
       case DialogId_HolyProtection_Off:
@@ -261,7 +115,6 @@ internal uint32_t Dialog_GetMessageSectionCount( Dialog_t* dialog )
       case DialogId_Battle_Spell_Sizz:
       case DialogId_Battle_Spell_Sizzle:
          return 1;
-      case DialogId_Spell_CastEvacCursed:
       case DialogId_Chest_DeathNecklace:
       case DialogId_Spell_Blocked:
       case DialogId_Battle_AttackAttemptSucceeded:
@@ -287,13 +140,6 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
    {
       case DialogId_Spell_None: strcpy( text, STRING_DIALOG_NO_SPELLS ); return;
       case DialogId_Spell_OverworldCantCast: strcpy( text, STRING_DIALOG_SPELLS_OVERWORLD_CANT_CAST ); return;
-      case DialogId_Spell_CastEvacCursed:
-         switch ( dialog->section )
-         {
-            case 0: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC ); return;
-            case 1: strcpy( text, STRING_EVAC_CURSED ); return;
-         }
-      case DialogId_Spell_CastEvac: sprintf( text, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC ); return;
       case DialogId_Item_None: strcpy( text, STRING_DIALOG_NO_ITEMS ); return;
       case DialogId_FullyHealed: strcpy( text, STRING_FULLYHEALED ); return;
       case DialogId_HolyProtection_Off: strcpy( text, STRING_HOLYPROTECTION_OFF ); return;
@@ -378,8 +224,6 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
    {
       switch ( dialog->id )
       {
-         case DialogId_Spell_CastEvacCursed:
-         case DialogId_Spell_CastEvac:
          case DialogId_Spell_Blocked:
          case DialogId_Battle_Spell_Blocked:
          case DialogId_Battle_Spell_Fizzled:
@@ -400,7 +244,6 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Battle_Spell_CantCast:
          case DialogId_Battle_FullyHealed:
          case DialogId_Battle_Spell_NoEffect:
-            //Dialog_Draw( dialog );
             Menu_Reset( dialog->game->activeMenu );
             Game_ChangeSubState( dialog->game, SubState_Menu );
             break;
@@ -411,7 +254,6 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
       switch ( dialog->id )
       {
          case DialogId_Battle_AttackAttemptSucceeded:
-            //Dialog_Draw( dialog );
             if ( dialog->game->battle.enemy.stats.hitPoints == 0 )
             {
                Animation_Start( &( dialog->game->animation ), AnimationId_Battle_VictoryPause );
@@ -427,7 +269,6 @@ internal void Dialog_FinishSection( Dialog_t* dialog )
          case DialogId_Battle_Spell_Blocked:
          case DialogId_Battle_Spell_Fizzled:
          case DialogId_Battle_Spell_AttackSucceeded:
-            //Dialog_Draw( dialog );
             if ( dialog->game->battle.enemy.stats.hitPoints == 0 )
             {
                Animation_Start( &( dialog->game->animation ), AnimationId_Battle_VictoryPause );

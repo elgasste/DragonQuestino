@@ -199,17 +199,7 @@ internal void Animation_Tic_Overworld_Pause( Animation_t* animation )
    if ( animation->totalElapsedSeconds > ANIMATION_OVERWORLD_PAUSE_DURATION )
    {
       Animation_Stop( animation );
-
-      if ( animation->game->dialog.id == DialogId_Spell_CastEvac )
-      {
-         animation->game->targetPortal = &( animation->game->tileMap.evacPortal );
-         Animation_Start( animation, AnimationId_FadeOut );
-      }
-      else
-      {
-         Game_ChangeToOverworldState( animation->game );
-      }
-
+      Game_ChangeToOverworldState( animation->game );
       animation->game->dialog.id = DialogId_Count;
    }
 }
