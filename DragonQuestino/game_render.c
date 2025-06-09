@@ -30,15 +30,10 @@ void Game_Draw( Game_t* game )
       }
       else if ( game->mainState == MainState_Battle )
       {
-         /*if ( game->screen.needsRedraw )
-         {
-            game->screen.needsRedraw = False;
-            Game_DrawTileMap( game );
-         }
-         else if ( game->animation.id == AnimationId_Battle_EnemyFadeIn || game->animation.id == AnimationId_Battle_EnemyFadeOut )
+         if ( activeAnimationId == AnimationId_Battle_EnemyFadeIn )
          {
             Game_DrawEnemy( game );
-         }*/
+         }
       }
    }
    else

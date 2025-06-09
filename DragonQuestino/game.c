@@ -137,6 +137,7 @@ void Game_ChangeToBattleState( Game_t* game )
    game->subState = SubState_None;
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_Checkerboard );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_EnemyFadeIn );
    AnimationChain_Start( &( game->animationChain ) );
 }
 

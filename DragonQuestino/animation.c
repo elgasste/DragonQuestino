@@ -46,6 +46,7 @@ internal void AnimationChain_Tic_RainbowBridge_WhiteOut( AnimationChain_t* chain
 internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain );
+internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -631,6 +632,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
          case AnimationId_CastSpell: AnimationChain_Tic_CastSpell( chain ); break;
          case AnimationId_Battle_Checkerboard: AnimationChain_Tic_Battle_Checkerboard( chain ); break;
+         case AnimationId_Battle_EnemyFadeIn: AnimationChain_Tic_Battle_EnemyFadeIn( chain ); break;
       }
    }
 }
@@ -669,6 +671,9 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          chain->screen->wipeColor = COLOR_WHITE;
          chain->totalDuration = ANIMATIONCHAIN_CASTSPELL_TOTALDURATION;
          break;
+      case AnimationId_Battle_EnemyFadeIn:
+         chain->totalDuration = ANIMATIONCHAIN_BATTLE_ENEMYFADE_DURATION;
+         break;
    }
 
    chain->totalElapsedSeconds = 0.0f;
@@ -682,7 +687,12 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
       case AnimationId_FadeIn:
       case AnimationId_WhiteIn:
       case AnimationId_RainbowBridge_FadeIn:
+      case AnimationId_Battle_EnemyFadeIn:
          Screen_RestorePalette( chain->screen );
+         break;
+      case AnimationId_Battle_Checkerboard:
+         Screen_BackupPalette( chain->screen );
+         Screen_ClearPalette( chain->screen, COLOR_BLACK );
          break;
    }
 
@@ -883,5 +893,24 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
          chain->totalElapsedSeconds += ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION;
          chain->frameElapsedSeconds -= ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION;
       }
+   }
+}
+
+internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain )
+{
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG;
+   float p;
+   Screen_t* screen = chain->screen;
+
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   for ( i = 0; i < PALETTE_COLORS; i++ )
+   {
+      rangeR = screen->backupPalette[i] >> 11;
+      rangeG = ( screen->backupPalette[i] & 0x7E0 ) >> 5;
+      rangeB = screen->backupPalette[i] & 0x1F;
+      p = chain->totalElapsedSeconds / chain->totalDuration;
+      screen->palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
    }
 }
