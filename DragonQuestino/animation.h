@@ -25,7 +25,7 @@
 
 #define ANIMATIONCHAIN_MAX_LINKS                         16
 
-#define ANIMATIONCHAIN_PAUSE_DURATION                    0.3f
+#define ANIMATIONCHAIN_PAUSE_DURATION                    0.2f
 #define ANIMATIONCHAIN_WHITE_DURATION                    0.5f
 #define ANIMATIONCHAIN_FADE_DURATION                     0.3f
 #define ANIMATIONCHAIN_RAINBOWBRIDGE_TRIPPY_DURATION     6.0f
@@ -56,10 +56,13 @@ typedef struct AnimationChain_t
    AnimationId_t animationIds[ANIMATIONCHAIN_MAX_LINKS];
    void ( *callbacks[ANIMATIONCHAIN_MAX_LINKS] )( void* );
    void* callbackDatas[ANIMATIONCHAIN_MAX_LINKS];
+   void ( *pendingCallback )( void* );
+   void* pendingCallbackData;
    uint32_t animationCount;
    uint32_t activeAnimation;
 
    Bool_t isRunning;
+   Bool_t startNext;
    float totalElapsedSeconds;
    float frameElapsedSeconds;
    float totalDuration;

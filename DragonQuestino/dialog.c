@@ -402,6 +402,7 @@ void Dialog2_Reset( Dialog2_t* dialog )
 {
    dialog->sectionCount = 0;
    dialog->activeSection = 0;
+   dialog->pendingCallback = 0;
 
    switch ( *( dialog->mainState ) )
    {
@@ -616,6 +617,7 @@ internal void Dialog2_FinishSection( Dialog2_t* dialog )
 
    if ( dialog->sectionCallbacks[dialog->activeSection] )
    {
-      dialog->sectionCallbacks[dialog->activeSection]( dialog->sectionCallbackData[dialog->activeSection] );
+      dialog->pendingCallback = dialog->sectionCallbacks[dialog->activeSection];
+      dialog->pendingCallbackData = dialog->sectionCallbackData[dialog->activeSection];
    }
 }

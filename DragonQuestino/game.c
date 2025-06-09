@@ -58,14 +58,29 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
 void Game_Tic( Game_t* game )
 {
+   Bool_t runningCallback;
+
    game->doAnimation = game->animationChain.isRunning;
    Input_Read( &( game->input ) );
+
+   runningCallback = ( game->animationChain.pendingCallback != 0 ) || ( game->dialog2.pendingCallback != 0 );
+
+   if ( game->animationChain.pendingCallback )
+   {
+      game->animationChain.pendingCallback( game->animationChain.pendingCallbackData );
+      game->animationChain.pendingCallback = 0;
+   }
+   else if ( game->dialog2.pendingCallback )
+   {
+      game->dialog2.pendingCallback( game->dialog2.pendingCallbackData );
+      game->dialog2.pendingCallback = 0;
+   }
 
    if ( game->animationChain.isRunning )
    {
       AnimationChain_Tic( &( game->animationChain ) );
    }
-   else
+   else if ( !runningCallback )
    {
       Game_HandleInput( game );
 

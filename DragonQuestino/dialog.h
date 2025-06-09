@@ -54,6 +54,8 @@ typedef struct Dialog2_t
    char sectionTexts[DIALOG2_MAX_SECTIONS][DIALOG2_SECTION_TEXT_SIZE];
    void ( *sectionCallbacks[DIALOG2_MAX_SECTIONS] )( void* );
    void* sectionCallbackData[DIALOG2_MAX_SECTIONS];
+   void ( *pendingCallback )( void* );
+   void* pendingCallbackData;
    uint32_t sectionCount;
    uint32_t activeSection;
 

@@ -583,6 +583,7 @@ void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen )
 void AnimationChain_Reset( AnimationChain_t* chain )
 {
    chain->animationCount = 0;
+   chain->pendingCallback = 0;
 }
 
 void AnimationChain_PushAnimation( AnimationChain_t* chain, AnimationId_t id )
@@ -602,22 +603,30 @@ void AnimationChain_Start( AnimationChain_t* chain )
 {
    chain->activeAnimation = 0;
    chain->isRunning = True;
+   chain->startNext = True;
    AnimationChain_StartAnimation( chain );
 }
 
 void AnimationChain_Tic( AnimationChain_t* chain )
 {
-   switch ( chain->animationIds[chain->activeAnimation] )
+   if ( chain->startNext )
    {
-      case AnimationId_Pause: AnimationChain_Tic_Pause( chain ); break;
-      case AnimationId_WhiteOut: AnimationChain_Tic_WhiteOut( chain ); break;
-      case AnimationId_WhiteIn: AnimationChain_Tic_WhiteIn( chain ); break;
-      case AnimationId_FadeOut: AnimationChain_Tic_FadeOut( chain ); break;
-      case AnimationId_FadeIn: AnimationChain_Tic_FadeIn( chain ); break;
-      case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
-      case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
-      case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
-      case AnimationId_CastSpell: AnimationChain_Tic_CastSpell( chain ); break;
+      AnimationChain_StartAnimation( chain );
+   }
+   else
+   {
+      switch ( chain->animationIds[chain->activeAnimation] )
+      {
+         case AnimationId_Pause: AnimationChain_Tic_Pause( chain ); break;
+         case AnimationId_WhiteOut: AnimationChain_Tic_WhiteOut( chain ); break;
+         case AnimationId_WhiteIn: AnimationChain_Tic_WhiteIn( chain ); break;
+         case AnimationId_FadeOut: AnimationChain_Tic_FadeOut( chain ); break;
+         case AnimationId_FadeIn: AnimationChain_Tic_FadeIn( chain ); break;
+         case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
+         case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
+         case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
+         case AnimationId_CastSpell: AnimationChain_Tic_CastSpell( chain ); break;
+      }
    }
 }
 
@@ -628,6 +637,8 @@ AnimationId_t AnimationChain_GetActiveAnimationId( AnimationChain_t* chain )
 
 internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
 {
+   chain->startNext = False;
+
    switch ( chain->animationIds[chain->activeAnimation] )
    {
       case AnimationId_Pause: chain->totalDuration = ANIMATIONCHAIN_PAUSE_DURATION; break;
@@ -672,7 +683,8 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
 
    if ( chain->callbacks[chain->activeAnimation] )
    {
-      chain->callbacks[chain->activeAnimation]( chain->callbackDatas[chain->activeAnimation] );
+      chain->pendingCallback = chain->callbacks[chain->activeAnimation];
+      chain->pendingCallbackData = chain->callbackDatas[chain->activeAnimation];
    }
 
    chain->activeAnimation++;
@@ -683,7 +695,7 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
    }
    else
    {
-      AnimationChain_StartAnimation( chain );
+      chain->startNext = True;
    }
 }
 
