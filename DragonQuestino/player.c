@@ -44,13 +44,13 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->stats.dodge = 1;
 
    // MUFFINS: for testing
-   SPELL_SET_HASHEAL( player->spells );
+   /*SPELL_SET_HASHEAL( player->spells );
    SPELL_SET_HASMIDHEAL( player->spells );
    SPELL_SET_HASZOOM( player->spells );
    player->stats.maxHitPoints = 100;
    player->stats.hitPoints = 2;
    player->stats.maxMagicPoints = 100;
-   player->stats.magicPoints = 50;
+   player->stats.magicPoints = 50;*/
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )

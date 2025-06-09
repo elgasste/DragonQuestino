@@ -242,7 +242,9 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Game_OpenDialog( game, DialogId_Spell_None );
+      Dialog2_Reset( &( game->dialog2 ) );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_SPELLS );
+      Game_OpenDialog2( game );
    }
    else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells, game->tileMap.isDungeon, game->tileMap.isDark ) )
    {
@@ -250,7 +252,9 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    }
    else
    {
-      Game_OpenDialog( game, DialogId_Spell_OverworldCantCast );
+      Dialog2_Reset( &( game->dialog2 ) );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SPELLS_OVERWORLD_CANT_CAST );
+      Game_OpenDialog2( game );
    }
 }
 
@@ -258,7 +262,9 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 {
    if ( ITEM_GET_MAPUSEABLECOUNT( game->player.items ) == 0 && ITEM_GET_MAPNONUSEABLECOUNT( game->player.items ) == 0 )
    {
-      Game_OpenDialog( game, DialogId_Item_None );
+      Dialog2_Reset( &( game->dialog2 ) );
+      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_ITEMS );
+      Game_OpenDialog2( game );
    }
    else
    {

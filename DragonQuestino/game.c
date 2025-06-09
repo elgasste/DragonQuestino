@@ -135,7 +135,8 @@ void Game_ChangeToBattleState( Game_t* game )
 {
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
-   // TODO: queue up battle checkerboard animation
+   
+   // MUFFINS: this is why it wasn't working, let's make it work.
 }
 
 void Game_ChangeSubState( Game_t* game, SubState_t newState )
