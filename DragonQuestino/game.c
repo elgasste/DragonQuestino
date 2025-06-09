@@ -2,8 +2,7 @@
 #include "random.h"
 #include "math.h"
 
-internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
-internal void Game_FoundHiddenStairsCallback( Game_t* game );
+internal void Game_BattleIntroMessageCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -135,9 +134,12 @@ void Game_ChangeToBattleState( Game_t* game )
 {
    game->mainState = MainState_Battle;
    game->subState = SubState_None;
+   TileMap_UpdateViewport( &( game->tileMap ) );
+   Game_DrawTileMap( game );
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_Checkerboard );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_EnemyFadeIn );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemyFadeIn, Game_DrawEnemy, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_BattleIntroMessageCallback, game );
    AnimationChain_Start( &( game->animationChain ) );
 }
 
@@ -225,4 +227,28 @@ void Game_CursedCallback( Game_t* game )
 {
    Player_SetCursed( &( game->player ), True );
    game->screen.needsRedraw = True;
+}
+
+void Game_ResetBattleMenu( Game_t* game )
+{
+   if ( game->mainState == MainState_Battle )
+   {
+      game->screen.needsRedraw = True;
+      game->activeMenu = &( game->menus[MenuId_Battle] );
+      Menu_Reset( game->activeMenu );
+      game->screen.needsRedraw = True;
+      Game_ChangeSubState( game, SubState_Menu );
+   }
+}
+
+internal void Game_BattleIntroMessageCallback( Game_t* game )
+{
+   char enemyName[24];
+   char msg[64];
+
+   Dialog2_Reset( &( game->dialog2 ) );
+   sprintf( enemyName, "%s %s", game->battle.enemy.indefiniteArticle, game->battle.enemy.name );
+   sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_ResetBattleMenu, game );
+   Game_OpenDialog2( game );
 }

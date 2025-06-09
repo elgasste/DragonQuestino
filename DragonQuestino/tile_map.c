@@ -8,7 +8,6 @@
 #define SPRITE_CHEST_INDEX    0
 #define SPRITE_DOOR_INDEX     1
 
-internal void TileMap_UpdateViewport( TileMap_t* tileMap );
 internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter );
 internal void TileMap_ReduceGlowDiameter( TileMap_t* tileMap );
 internal void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap );
@@ -80,6 +79,36 @@ void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h )
    tileMap->viewportScreenPos.y = ( SCREEN_HEIGHT - h ) / 2;
 
    TileMap_UpdateViewport( tileMap );
+}
+
+void TileMap_UpdateViewport( TileMap_t* tileMap )
+{
+   int32_t anchorX = (int32_t)( tileMap->player->sprite.position.x );
+   int32_t anchorY = (int32_t)( tileMap->player->sprite.position.y );
+   uint32_t anchorW = tileMap->player->hitBoxSize.x;
+   uint32_t anchorH = tileMap->player->hitBoxSize.y;
+   Vector4i32_t* viewport = &( tileMap->viewport );
+
+   viewport->x = anchorX - ( viewport->w / 2 ) + ( anchorW / 2 );
+   viewport->y = anchorY - ( viewport->h / 2 ) + ( anchorH / 2 );
+
+   if ( viewport->x < 0 )
+   {
+      viewport->x = 0;
+   }
+   else if ( ( viewport->x + viewport->w ) > (int32_t)( tileMap->tilesX * TILE_SIZE ) )
+   {
+      viewport->x = ( tileMap->tilesX * TILE_SIZE ) - viewport->w;
+   }
+
+   if ( viewport->y < 0 )
+   {
+      viewport->y = 0;
+   }
+   else if ( ( viewport->y + viewport->h ) > (int32_t)( tileMap->tilesY * TILE_SIZE ) )
+   {
+      viewport->y = ( tileMap->tilesY * TILE_SIZE ) - viewport->h;
+   }
 }
 
 void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, uint32_t targetDiameter )
@@ -200,36 +229,6 @@ void TileMap_Draw( TileMap_t* tileMap )
    }
 
    TileMap_DrawStaticSprites( tileMap );
-}
-
-internal void TileMap_UpdateViewport( TileMap_t* tileMap )
-{
-   int32_t anchorX = (int32_t)( tileMap->player->sprite.position.x );
-   int32_t anchorY = (int32_t)( tileMap->player->sprite.position.y );
-   uint32_t anchorW = tileMap->player->hitBoxSize.x;
-   uint32_t anchorH = tileMap->player->hitBoxSize.y;
-   Vector4i32_t* viewport = &( tileMap->viewport );
-
-   viewport->x = anchorX - ( viewport->w / 2 ) + ( anchorW / 2 );
-   viewport->y = anchorY - ( viewport->h / 2 ) + ( anchorH / 2 );
-
-   if ( viewport->x < 0 )
-   {
-      viewport->x = 0;
-   }
-   else if ( ( viewport->x + viewport->w ) > (int32_t)( tileMap->tilesX * TILE_SIZE ) )
-   {
-      viewport->x = ( tileMap->tilesX * TILE_SIZE ) - viewport->w;
-   }
-
-   if ( viewport->y < 0 )
-   {
-      viewport->y = 0;
-   }
-   else if ( ( viewport->y + viewport->h ) > (int32_t)( tileMap->tilesY * TILE_SIZE ) )
-   {
-      viewport->y = ( tileMap->tilesY * TILE_SIZE ) - viewport->h;
-   }
 }
 
 internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter )

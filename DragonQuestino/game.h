@@ -68,6 +68,7 @@ void Game_OpenDialog( Game_t* game, DialogId_t id );
 void Game_OpenDialog2( Game_t* game );
 void Game_RestoredHitPointsCallback( Game_t* game );
 void Game_CursedCallback( Game_t* game );
+void Game_ResetBattleMenu( Game_t* game );
 
 // game_actions.c
 void Game_Talk( Game_t* game );
@@ -90,6 +91,7 @@ void Game_DrawOverworldItemMenu( Game_t* game );
 void Game_DrawEnemy( Game_t* game );
 void Game_WipeEnemy( Game_t* game );
 void Game_SetTextColor( Game_t* game );
+void Game_DrawTileMap( Game_t* game );
 
 // game_spells.c
 void Game_CastHeal( Game_t* game );

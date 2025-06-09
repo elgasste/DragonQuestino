@@ -3,7 +3,6 @@
 #include "enemy.h"
 #include "math.h"
 
-internal void Game_DrawTileMap( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 
@@ -246,7 +245,23 @@ void Game_WipeEnemy( Game_t* game )
    Screen_DrawRectColor( &( game->screen ), 96, 52, 112, 112, COLOR_BLACK );
 }
 
-internal void Game_DrawTileMap( Game_t* game )
+void Game_SetTextColor( Game_t* game )
+{
+   float percentage;
+   Player_t* player = &( game->player );
+
+   if ( player->isCursed )
+   {
+      game->screen.textColor = COLOR_GROSSYELLOW;
+   }
+   else
+   {
+      percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
+      game->screen.textColor = ( percentage < PLAYER_LOWHEALTH_PERCENTAGE ) ? COLOR_INJUREDRED : COLOR_WHITE;
+   }
+}
+
+void Game_DrawTileMap( Game_t* game )
 {
    if ( game->tileMap.viewportScreenPos.x != 0 || game->tileMap.viewportScreenPos.y != 0 )
    {
@@ -331,21 +346,5 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_2, x, y + TEXT_TILE_SIZE );
       y += ( TEXT_TILE_SIZE * 2 );
-   }
-}
-
-void Game_SetTextColor( Game_t* game )
-{
-   float percentage;
-   Player_t* player = &( game->player );
-
-   if ( player->isCursed )
-   {
-      game->screen.textColor = COLOR_GROSSYELLOW;
-   }
-   else
-   {
-      percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
-      game->screen.textColor = ( percentage < PLAYER_LOWHEALTH_PERCENTAGE ) ? COLOR_INJUREDRED : COLOR_WHITE;
    }
 }

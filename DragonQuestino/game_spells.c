@@ -5,7 +5,6 @@
 #define CHECK_CAST_ABILITY( m, n ) if ( !Game_CanCastSpell( game, m, n ) ) return;
 
 internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName );
-internal void Game_ResetBattleMenu( Game_t* game );
 internal void Game_SpellBlockedCallback( Game_t* game );
 internal void Game_SpellBlockedMessageCallback( Game_t* game );
 internal void Game_SpellFizzledCallback( Game_t* game );
@@ -229,19 +228,6 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
    }
 
    return True;
-}
-
-// MUFFINS: this could probably be the callback for when a dialog section finishes in battle, maybe?
-internal void Game_ResetBattleMenu( Game_t* game )
-{
-   if ( game->mainState == MainState_Battle )
-   {
-      game->screen.needsRedraw = True;
-      game->activeMenu = &( game->menus[MenuId_Battle] );
-      Menu_Reset( game->activeMenu );
-      game->screen.needsRedraw = True;
-      Game_ChangeSubState( game, SubState_Menu );
-   }
 }
 
 internal void Game_SpellBlockedCallback( Game_t* game )
