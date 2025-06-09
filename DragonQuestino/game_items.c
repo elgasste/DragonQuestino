@@ -206,7 +206,7 @@ internal void Game_UseWingCallback( Game_t* game )
 {
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToOverworldState, game );
    AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_WhiteOut, Game_EnterTargetPortal, game );
    AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToOverworldState, game );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
