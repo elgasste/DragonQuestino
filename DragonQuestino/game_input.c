@@ -338,20 +338,9 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         switch ( game->dialog.id )
+         if ( game->battle.isOver )
          {
-            case DialogId_Battle_FleeAttemptSucceeded:
-            case DialogId_Battle_Victory:
-            case DialogId_Battle_VictoryWithSpoils:
-            case DialogId_Battle_VictoryWithLevelUp:
-               Game_DrawOverworld( game );
-               Animation_Start( &( game->animation ), AnimationId_Pause );
-               break;
-            case DialogId_Battle_AttackAttemptSucceeded:
-            case DialogId_Battle_AttackAttemptFailed:
-            case DialogId_Battle_FleeAttemptFailed:
-               Game_ChangeSubState( game, SubState_Menu );
-               break;
+            Game_ChangeToOverworldState( game );
          }
       }
    }

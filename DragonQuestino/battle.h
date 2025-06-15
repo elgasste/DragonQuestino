@@ -14,6 +14,7 @@ typedef struct Battle_t
    SpecialEnemy_t specialEnemy;
 
    Bool_t excellentMove;
+   Bool_t isOver;
 
    uint16_t experienceGained;
    uint16_t goldGained;

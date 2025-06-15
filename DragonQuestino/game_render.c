@@ -29,7 +29,8 @@ void Game_Draw( Game_t* game )
       }
       else if ( game->mainState == MainState_Battle )
       {
-         if ( activeAnimationId == AnimationId_Battle_EnemyFadeIn )
+         if ( activeAnimationId == AnimationId_Battle_EnemyFadeIn ||
+              activeAnimationId == AnimationId_Battle_EnemyFadeOut )
          {
             Game_DrawEnemy( game );
          }

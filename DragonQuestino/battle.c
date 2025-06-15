@@ -5,6 +5,10 @@
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle );
 internal uint8_t Battle_GetAttackDamage( Battle_t* battle );
 internal Bool_t Battle_GetFleeResult( Battle_t* battle );
+internal void Battle_FleeSucceededCallback( Battle_t* battle );
+internal void Battle_FleeSucceededMessageCallback( Battle_t* battle );
+internal void Battle_FleeFailedCallback( Battle_t* battle );
+internal void Battle_FleeFailedMessageCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -22,6 +26,7 @@ void Battle_Generate( Battle_t* battle )
    uint32_t enemyIndex;
    Enemy_t* enemy = &( battle->enemy );
 
+   battle->isOver = False;
    battle->game->player.stats.isFizzled = False;
 
    switch ( battle->specialEnemy )
@@ -67,17 +72,10 @@ void Battle_AttemptFlee( Battle_t* battle )
 {
    Bool_t fleed = Battle_GetFleeResult( battle );
 
-   Dialog_SetInsertionText( &( battle->game->dialog ), battle->enemy.name );
    battle->game->screen.needsRedraw = True;
-
-   if ( fleed )
-   {  
-      Game_OpenDialog( battle->game, DialogId_Battle_FleeAttemptSucceeded );
-   }
-   else
-   {
-      Game_OpenDialog( battle->game, DialogId_Battle_FleeAttemptFailed );
-   }
+   Dialog2_Reset( &( battle->game->dialog2 ) );
+   Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), STRING_BATTLE_FLEEATTEMPT, fleed ? Battle_FleeSucceededCallback : Battle_FleeFailedCallback, battle );
+   Game_OpenDialog2( battle->game );
 }
 
 void Battle_Victory( Battle_t* battle )
@@ -190,4 +188,42 @@ internal Bool_t Battle_GetFleeResult( Battle_t* battle )
    enemyFactor = (uint16_t)( enemyFactor * enemyFleeFactor );
 
    return ( playerFactor < enemyFactor ) ? False : True;
+}
+
+internal void Battle_FleeSucceededCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut, Battle_FleeSucceededMessageCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_FleeSucceededMessageCallback( Battle_t* battle )
+{
+   char msg[64];
+
+   battle->isOver = True;
+   Dialog2_Reset( &( battle->game->dialog2 ) );
+   sprintf( msg, STRING_BATTLE_FLEEATTEMPTSUCCEEDED, battle->enemy.name );
+   Dialog2_PushSection( &( battle->game->dialog2 ), msg );
+   Game_OpenDialog2( battle->game );
+}
+
+internal void Battle_FleeFailedCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_FleeFailedMessageCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
+{
+   char msg[64];
+
+   Dialog2_Reset( &( battle->game->dialog2 ) );
+   sprintf( msg, STRING_BATTLE_FLEEATTEMPTFAILED, battle->enemy.name );
+   Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog2( battle->game );
 }
