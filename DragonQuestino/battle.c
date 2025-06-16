@@ -45,6 +45,7 @@ void Battle_Generate( Battle_t* battle )
    enemy->stats.isFizzled = False;
 }
 
+// MUFFINS: let's do this next
 void Battle_AttemptAttack( Battle_t* battle )
 {
    uint8_t damage = Battle_GetAttackDamage( battle );
@@ -59,7 +60,7 @@ void Battle_AttemptAttack( Battle_t* battle )
                battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKATTEMPTSUCCEEDED,
                battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
       Dialog_SetInsertionText( &( battle->game->dialog ), msg );
-      Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptSucceeded );
+      Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptSucceeded );  
    }
    else
    {
