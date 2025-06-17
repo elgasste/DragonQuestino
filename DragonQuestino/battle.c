@@ -367,5 +367,10 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
       }
    }
 
+   if ( battle->specialEnemy != SpecialEnemy_None )
+   {
+      battle->game->gameFlags.specialEnemies ^= ( 0x1 << battle->specialEnemy );
+   }
+
    Game_OpenDialog( battle->game );
 }

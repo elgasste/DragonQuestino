@@ -249,15 +249,24 @@ internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game )
 
    if ( tileMapId == TILEMAP_GREENDRAGON_MAPID && tileIndex == TILEMAP_GREENDRAGON_TILEINDEX )
    {
-      return SpecialEnemy_GreenDragon;
+      if ( game->gameFlags.specialEnemies & ( 0x1 << SpecialEnemy_GreenDragon ) )
+      {
+         return SpecialEnemy_GreenDragon;
+      }
    }
    else if ( tileMapId == TILEMAP_AXEKNIGHT_MAPID && tileIndex == TILEMAP_AXEKNIGHT_TILEINDEX )
    {
-      return SpecialEnemy_AxeKnight;
+      if ( game->gameFlags.specialEnemies & ( 0x1 << SpecialEnemy_AxeKnight ) )
+      {
+         return SpecialEnemy_AxeKnight;
+      }
    }
    else if ( tileMapId == TILEMAP_GOLEM_MAPID && tileIndex == TILEMAP_GOLEM_TILEINDEX )
    {
-      return SpecialEnemy_Golem;
+      if ( game->gameFlags.specialEnemies & ( 0x1 << SpecialEnemy_Golem ) )
+      {
+         return SpecialEnemy_Golem;
+      }
    }
 
    return SpecialEnemy_None;
