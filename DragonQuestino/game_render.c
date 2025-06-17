@@ -11,6 +11,11 @@ void Game_Draw( Game_t* game )
    uint32_t i;
    AnimationId_t activeAnimationId;
 
+   if ( game->screen.needsRedraw )
+   {
+      Game_SetTextColor( game );
+   }
+
    if ( game->doAnimation )
    {
       activeAnimationId = AnimationChain_GetActiveAnimationId( &( game->animationChain ) );
@@ -36,7 +41,7 @@ void Game_Draw( Game_t* game )
          }
       }
    }
-   else
+   else // not doing animation
    {
       if ( game->mainState == MainState_Overworld )
       {
@@ -48,7 +53,6 @@ void Game_Draw( Game_t* game )
             }
 
             Game_DrawOverworld( game );
-            Game_SetTextColor( game );
 
             switch ( game->subState )
             {
@@ -91,20 +95,19 @@ void Game_Draw( Game_t* game )
          if ( game->screen.needsRedraw )
          {
             Game_DrawTileMap( game );
+            Game_DrawQuickStatus( game );
             Game_WipeEnemy( game );
             Game_DrawEnemy( game );
 
             switch ( game->subState )
             {
                case SubState_Menu:
-                  Game_DrawQuickStatus( game );
                   game->activeMenu->hasDrawn = False;
                   Menu_Draw( game->activeMenu );
                   Dialog_Draw( &( game->dialog ) );
                   break;
                case SubState_None:
                case SubState_Dialog:
-                  Game_DrawQuickStatus( game );
                   Dialog_Draw( &( game->dialog ) );
                   break;
             }

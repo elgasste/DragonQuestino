@@ -65,7 +65,6 @@ void Game_CastSizz( Game_t* game )
    sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SIZZ );
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
    game->pendingSpell = Spell_Sizz;
-   game->player.stats.magicPoints -= SPELL_SIZZ_MP;
 
    if ( ( game->battle.enemy.stats.hurtResist > 0 ) && Random_u8( 1, 15 ) <= game->battle.enemy.stats.hurtResist )
    {
@@ -101,7 +100,6 @@ void Game_CastSleep( Game_t* game )
    sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SLEEP );
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
    game->pendingSpell = Spell_Sleep;
-   game->player.stats.magicPoints -= SPELL_SLEEP_MP;
 
    if ( game->battle.specialEnemy != SpecialEnemy_None )
    {
@@ -154,7 +152,6 @@ void Game_CastFizzle( Game_t* game )
    sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_FIZZLE );
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
    game->pendingSpell = Spell_Fizzle;
-   game->player.stats.magicPoints -= SPELL_FIZZLE_MP;
    game->pendingPayload8u = ( ( game->battle.enemy.stats.stopSpellResist > 0 ) && ( Random_u8( 1, 15 ) <= game->battle.enemy.stats.stopSpellResist ) ) ? 0 : 1;
    Game_OpenDialog( game );
 }
@@ -224,7 +221,6 @@ void Game_CastMidheal( Game_t* game )
    }
    else
    {
-      game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
       game->pendingSpell = Spell_Midheal;
       maxEffect = game->player.isCursed ? ( SPELL_MIDHEAL_MAXEFFECT / 2 ) : SPELL_MIDHEAL_MAXEFFECT;
       game->pendingPayload8u = MATH_MIN( Random_u8( SPELL_MIDHEAL_MINEFFECT, maxEffect ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
@@ -247,7 +243,6 @@ void Game_CastSizzle( Game_t* game )
    sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SIZZLE );
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
    game->pendingSpell = Spell_Sizzle;
-   game->player.stats.magicPoints -= SPELL_SIZZLE_MP;
 
    if ( ( game->battle.enemy.stats.hurtResist > 0 ) && ( Random_u8( 1, 15 ) <= game->battle.enemy.stats.hurtResist ) )
    {
@@ -338,25 +333,53 @@ internal void Game_SpellFizzledMessageCallback( Game_t* game )
 
 internal void Game_CastSpellCallback( Game_t* game )
 {
+   BattleStats_t* stats = &( game->player.stats );
+
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_CastSpell, Game_DrawQuickStatus, game );
 
    switch ( game->pendingSpell )
    {
       case Spell_Heal:
+         stats->magicPoints -= SPELL_HEAL_MP;
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellHealCallback, game );
+         break;
       case Spell_Midheal:
+         stats->magicPoints -= SPELL_MIDHEAL_MP;
          AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellHealCallback, game );
          break;
       case Spell_Sizz:
-      case Spell_Sizzle:
+         stats->magicPoints -= SPELL_SIZZ_MP;
          AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellHurtCallback, game );
          break;
-      case Spell_Fizzle: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellFizzleCallback, game ); break;
-      case Spell_Sleep: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellSleepCallback, game ); break;
-      case Spell_Zoom: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellZoomCallback, game ); break;
-      case Spell_Repel: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellRepelCallback, game ); break;
-      case Spell_Glow: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellGlowCallback, game ); break;
-      case Spell_Evac: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellEvacCallback, game ); break;
+      case Spell_Sizzle:
+         stats->magicPoints -= SPELL_SIZZLE_MP;
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellHurtCallback, game );
+         break;
+      case Spell_Fizzle:
+         stats->magicPoints -= SPELL_FIZZLE_MP;
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellFizzleCallback, game );
+         break;
+      case Spell_Sleep:
+         stats->magicPoints -= SPELL_SLEEP_MP;
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellSleepCallback, game );
+         break;
+      case Spell_Zoom:
+         stats->magicPoints -= SPELL_ZOOM_MP;
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellZoomCallback, game );
+         break;
+      case Spell_Repel:
+         stats->magicPoints -= SPELL_REPEL_MP;
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellRepelCallback, game );
+         break;
+      case Spell_Glow:
+         stats->magicPoints -= SPELL_GLOW_MP;
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellGlowCallback, game );
+         break;
+      case Spell_Evac:
+         stats->magicPoints -= SPELL_EVAC_MP;
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellEvacCallback, game );
+         break;
    }
 
    AnimationChain_Start( &( game->animationChain ) );
@@ -366,16 +389,6 @@ internal void Game_SpellHealCallback( Game_t* game )
 {
    char msg[64];
 
-   if ( game->pendingSpell == Spell_Heal )
-   {
-      game->player.stats.magicPoints -= SPELL_HEAL_MP;
-   }
-   else
-   {
-      game->player.stats.magicPoints -= SPELL_MIDHEAL_MP;
-   }
-
-   Game_DrawQuickStatus( game );
    Dialog_Reset( &( game->dialog ) );
    sprintf( msg, STRING_DIALOG_HEAL_RESULT, game->pendingPayload8u, ( game->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_RestoredHitPointsCallback, game );
@@ -451,7 +464,6 @@ internal void Game_SpellFizzleSuccessCallback( Game_t* game )
 
 internal void Game_SpellZoomCallback( Game_t* game )
 {
-   game->player.stats.magicPoints -= SPELL_ZOOM_MP;
    Game_ChangeToOverworldState( game );
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
@@ -465,8 +477,6 @@ internal void Game_SpellZoomCallback( Game_t* game )
 
 internal void Game_SpellRepelCallback( Game_t* game )
 {
-   game->player.stats.magicPoints -= SPELL_ZOOM_MP;
-   Game_DrawQuickStatus( game );
    Dialog_Reset( &( game->dialog ) );
 
    if ( game->player.isCursed )
@@ -484,9 +494,6 @@ internal void Game_SpellRepelCallback( Game_t* game )
 
 internal void Game_SpellGlowCallback( Game_t* game )
 {
-   game->player.stats.magicPoints -= SPELL_GLOW_MP;
-   Game_DrawQuickStatus( game );
-
    if ( game->player.isCursed )
    {
       Dialog_Reset( &( game->dialog ) );
@@ -507,9 +514,6 @@ internal void Game_SpellGlowCallback( Game_t* game )
 
 internal void Game_SpellEvacCallback( Game_t* game )
 {
-   game->player.stats.magicPoints -= SPELL_EVAC_MP;
-   Game_DrawQuickStatus( game );
-
    if ( game->player.isCursed )
    {
       Dialog_Reset( &( game->dialog ) );
