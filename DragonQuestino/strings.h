@@ -203,6 +203,7 @@
 #define STRING_BATTLE_FLEEATTEMPTSUCCEEDED                           "Success, you have eluded the %s!"
 #define STRING_BATTLE_FLEEATTEMPTFAILED                              "But the %s blocks your escape!"
 #define STRING_BATTLE_ENEMYASLEEP                                    "The %s is asleep! Command?"
+#define STRING_BATTLE_ENEMYFIZZLED                                   "The %s's spells have been blocked!"
 #define STRING_BATTLE_VICTORY                                        "The %s is defeated!"
 #define STRING_BATTLE_EXPERIENCEANDGOLD                              "You have gained %u experience %s and %u gold."
 #define STRING_BATTLE_EXPERIENCEONLY                                 "You have gained %u experience %s."
@@ -222,6 +223,8 @@
 #define STRING_BATTLE_SPELLFIZZLED                                   "But the spell has been blocked!"
 #define STRING_BATTLE_FULLYHEALED                                    "You are already fully healed. Command?"
 #define STRING_BATTLE_SPELL_NOEFFECT                                 "But the spell has no effect on the %s!"
+#define STRING_BATTLE_SPELL_SLEEP_ALREADYASLEEP                      "The %s is already asleep. Command?"
+#define STRING_BATTLE_SPELL_FIZZLE_ALREADYFIZZLED                    "The %s's spells are already blocked. Command?"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"
