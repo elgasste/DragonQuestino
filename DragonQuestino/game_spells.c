@@ -12,6 +12,8 @@ internal void Game_SpellFizzledMessageCallback( Game_t* game );
 internal void Game_CastSpellCallback( Game_t* game );
 internal void Game_SpellHealCallback( Game_t* game );
 internal void Game_SpellHurtCallback( Game_t* game );
+internal void Game_SpellSleepCallback( Game_t* game );
+internal void Game_SpellSleepSuccessCallback( Game_t* game );
 internal void Game_SpellZoomCallback( Game_t* game );
 internal void Game_SpellRepelCallback( Game_t* game );
 internal void Game_SpellGlowCallback( Game_t* game );
@@ -77,8 +79,28 @@ void Game_CastSizz( Game_t* game )
 
 void Game_CastSleep( Game_t* game )
 {
-   // TODO
-   UNUSED_PARAM( game );
+   char msg[64];
+   
+   CHECK_CAST_ABILITY( SPELL_SLEEP_MP, STRING_SPELL_SLEEP );
+
+   game->screen.needsRedraw = True;
+   Game_ResetBattleMenu( game );
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SLEEP );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
+   game->pendingSpell = Spell_Sleep;
+   game->player.stats.magicPoints -= SPELL_SLEEP_MP;
+
+   if ( game->battle.specialEnemy != SpecialEnemy_None )
+   {
+      game->pendingPayload8u = 0;
+   }
+   else
+   {
+      game->pendingPayload8u = ( Random_u8( 0, 15 ) <= game->battle.enemy.stats.sleepResist ) ? 0 : 1;
+   }
+
+   Game_OpenDialog( game );
 }
 
 void Game_CastGlow( Game_t* game )
@@ -296,6 +318,7 @@ internal void Game_CastSpellCallback( Game_t* game )
       case Spell_Sizzle:
          AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellHurtCallback, game );
          break;
+      case Spell_Sleep: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellSleepCallback, game ); break;
       case Spell_Zoom: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellZoomCallback, game ); break;
       case Spell_Repel: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellRepelCallback, game ); break;
       case Spell_Glow: AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellGlowCallback, game ); break;
@@ -340,6 +363,31 @@ internal void Game_SpellHurtCallback( Game_t* game )
       AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemyDamage, Battle_AttackSucceededCallback, &( game->battle ) );
       AnimationChain_Start( &( game->animationChain ) );
    }
+}
+
+internal void Game_SpellSleepCallback( Game_t* game )
+{
+   if ( game->pendingPayload8u == 0 )
+   {
+      Game_SpellAnimateNoEffect( game );
+   }
+   else
+   {
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellSleepSuccessCallback, game );
+      AnimationChain_Start( &( game->animationChain ) );
+   }
+}
+
+internal void Game_SpellSleepSuccessCallback( Game_t* game )
+{
+   char msg[64];
+
+   game->battle.enemy.stats.isAsleep = True;
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMYASLEEP, game->battle.enemy.name );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+   Game_OpenDialog( game );
 }
 
 internal void Game_SpellZoomCallback( Game_t* game )

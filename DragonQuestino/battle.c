@@ -31,6 +31,7 @@ void Battle_Generate( Battle_t* battle )
    Enemy_t* enemy = &( battle->enemy );
 
    battle->isOver = False;
+   battle->game->player.stats.isAsleep = False;
    battle->game->player.stats.isFizzled = False;
 
    switch ( battle->specialEnemy )
@@ -46,6 +47,7 @@ void Battle_Generate( Battle_t* battle )
    enemy->stats.maxHitPoints = Random_u8( enemy->minHitPoints, enemy->maxHitPoints );
    enemy->stats.hitPoints = enemy->stats.maxHitPoints;
    enemy->gold = Random_u8( enemy->minGold, enemy->maxGold );
+   enemy->stats.isAsleep = False;
    enemy->stats.isFizzled = False;
 }
 
@@ -159,6 +161,11 @@ internal Bool_t Battle_GetFleeResult( Battle_t* battle )
    if ( battle->specialEnemy != SpecialEnemy_None )
    {
       return False;
+   }
+
+   if ( battle->enemy.stats.isAsleep )
+   {
+      return True;
    }
 
    enemyFleeFactor = Enemy_GetFleeFactor( enemy );
