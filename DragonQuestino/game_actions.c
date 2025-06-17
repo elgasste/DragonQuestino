@@ -17,7 +17,7 @@ void Game_Search( Game_t* game )
    uint32_t treasureFlag;
    char msg[64];
 
-   Dialog2_Reset( &( game->dialog2 ) );;
+   Dialog2_Reset( &( game->dialog2 ) );
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID && game->player.tileIndex == TILEMAP_TOKEN_INDEX && !ITEM_HAS_TOKEN( game->player.items ) )
    {

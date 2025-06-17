@@ -6,6 +6,7 @@ internal void Game_HandleOverworldInput( Game_t* game );
 internal void Game_HandleOverworldWaitingInput( Game_t* game );
 internal void Game_HandleOverworldDialogInput( Game_t* game );
 internal void Game_HandleOverworldMenuInput( Game_t* game );
+internal void Game_ReturnToOverworldWithPause( Game_t* game );
 internal void Game_OpenOverworldSpellMenu( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
 internal void Game_OpenZoomMenu( Game_t* game );
@@ -137,10 +138,7 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Game_ChangeToOverworldState( game );
-      AnimationChain_Reset( &( game->animationChain ) );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-      AnimationChain_Start( &( game->animationChain ) );
+      Game_ReturnToOverworldWithPause( game );
    }
 }
 
@@ -150,11 +148,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         Game_ChangeToOverworldState( game );
-         Game_DrawOverworld( game );
-         AnimationChain_Reset( &( game->animationChain ) );
-         AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-         AnimationChain_Start( &( game->animationChain ) );
+         Game_ReturnToOverworldWithPause( game );
       }
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
@@ -236,6 +230,15 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
          }
       }
    }
+}
+
+internal void Game_ReturnToOverworldWithPause( Game_t* game )
+{
+   Game_ChangeToOverworldState( game );
+   Game_DrawOverworld( game );
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 internal void Game_OpenOverworldSpellMenu( Game_t* game )
@@ -340,7 +343,7 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
       {
          if ( game->battle.isOver )
          {
-            Game_ChangeToOverworldState( game );
+            Game_ReturnToOverworldWithPause( game );
          }
       }
    }

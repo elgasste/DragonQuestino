@@ -123,21 +123,11 @@ void Game_Tic( Game_t* game )
    Screen_RenderBuffer( &( game->screen ) );
 }
 
-internal void Game_ChangeToOverworldStateCallback( Game_t* game )
+void Game_ChangeToOverworldState( Game_t* game )
 {
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
    game->overworldInactivitySeconds = 0.0f;
-}
-
-void Game_ChangeToOverworldState( Game_t* game )
-{
-   if ( game->mainState != MainState_Overworld )
-   {
-      AnimationChain_Reset( &( game->animationChain ) );
-      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToOverworldStateCallback, game );
-      AnimationChain_Start( &( game->animationChain ) );
-   }
 }
 
 void Game_ChangeToBattleState( Game_t* game )
