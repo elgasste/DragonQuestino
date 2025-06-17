@@ -1,6 +1,5 @@
 #include "game.h"
 #include "random.h"
-#include "animation.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex );

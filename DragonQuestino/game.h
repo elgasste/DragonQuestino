@@ -10,7 +10,7 @@
 #include "player.h"
 #include "menu.h"
 #include "dialog.h"
-#include "animation.h"
+#include "animation_chain.h"
 #include "battle.h"
 
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f

@@ -1,4 +1,4 @@
-#include "animation.h"
+#include "animation_chain.h"
 #include "game.h"
 #include "vector.h"
 #include "math.h"

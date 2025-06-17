@@ -78,7 +78,7 @@
     <ClInclude Include="..\..\DragonQuestino\game_flags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\DragonQuestino\animation.h">
+    <ClInclude Include="..\..\DragonQuestino\animation_chain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\DragonQuestino\battle.h">
@@ -155,7 +155,7 @@
     <ClCompile Include="..\..\DragonQuestino\game_spells.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\DragonQuestino\animation.c">
+    <ClCompile Include="..\..\DragonQuestino\animation_chain.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\DragonQuestino\battle.c">
