@@ -58,7 +58,6 @@ typedef struct AnimationChain_t
 {
    Screen_t* screen;
    TileMap_t* tileMap;
-   // MUFFINS: I don't like this, and I want to figure out how NOT to do this in the future
    Game_t* game;
 
    AnimationId_t animationIds[ANIMATIONCHAIN_MAX_LINKS];

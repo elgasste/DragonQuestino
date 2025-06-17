@@ -183,38 +183,4 @@ typedef enum MenuCommand_t
 }
 MenuCommand_t;
 
-typedef enum DialogId_t
-{
-   DialogId_Spell_None = 0,
-   DialogId_Spell_OverworldCantCast,
-   DialogId_Spell_Blocked,
-   DialogId_Item_None,
-
-   DialogId_FullyHealed,
-   DialogId_HolyProtection_Off,
-
-   DialogId_Chest_DeathNecklace,
-
-   DialogId_Battle_EnemyApproaches,
-   DialogId_Battle_AttackAttemptSucceeded,
-   DialogId_Battle_AttackAttemptFailed,
-   DialogId_Battle_FleeAttemptSucceeded,
-   DialogId_Battle_FleeAttemptFailed,
-   DialogId_Battle_Victory,
-   DialogId_Battle_VictoryWithSpoils,
-   DialogId_Battle_VictoryWithLevelUp,
-   DialogId_Battle_Spell_None,
-   DialogId_Battle_Spell_CantCast,
-   DialogId_Battle_Spell_Blocked,
-   DialogId_Battle_Spell_Fizzled,
-   DialogId_Battle_FullyHealed,
-   DialogId_Battle_Spell_NoEffect,
-   DialogId_Battle_Spell_AttackSucceeded,
-   DialogId_Battle_Spell_Sizz,
-   DialogId_Battle_Spell_Sizzle,
-
-   DialogId_Count
-}
-DialogId_t;
-
 #endif // ENUMS_H

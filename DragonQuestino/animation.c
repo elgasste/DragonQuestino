@@ -125,13 +125,11 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
          animation->totalDuration = ANIMATION_BATTLE_ENEMYFADEINPAUSE_DURATION;
          break;
       case AnimationId_Battle_EnemyDamage:
-         animation->game->dialog.showCarat = False;
          Dialog2_Draw( &( animation->game->dialog2 ) );
          animation->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION;
          animation->flag = False;
          break;
       case AnimationId_Battle_EnemyDodge:
-         animation->game->dialog.showCarat = False;
          Dialog2_Draw( &( animation->game->dialog2 ) );
          animation->totalDuration = ANIMATION_BATTLE_ENEMYDODGE_DURATION;
          break;
@@ -147,8 +145,6 @@ void Animation_Start( Animation_t* animation, AnimationId_t id )
 
 internal void Animation_Stop( Animation_t* animation )
 {
-   char enemyName[32];
-
    switch ( animation->id )
    {
       case AnimationId_Pause:
@@ -165,13 +161,6 @@ internal void Animation_Stop( Animation_t* animation )
       case AnimationId_Battle_Checkerboard:
          Game_WipeEnemy( animation->game );
          Animation_Start( animation, AnimationId_Battle_EnemyFadeIn );
-         break;
-      case AnimationId_Battle_EnemyFadeIn:
-         Screen_RestorePalette( &( animation->game->screen ) );
-         animation->game->screen.needsRedraw = True;
-         sprintf( enemyName, "%s %s", animation->game->battle.enemy.indefiniteArticle, animation->game->battle.enemy.name );
-         Dialog_SetInsertionText( &( animation->game->dialog ), enemyName );
-         Game_OpenDialog( animation->game, DialogId_Battle_EnemyApproaches );
          break;
       case AnimationId_Battle_EnemyFadeOut:
          Screen_RestorePalette( &( animation->game->screen ) );
@@ -202,7 +191,6 @@ internal void Animation_Tic_Overworld_Pause( Animation_t* animation )
    {
       Animation_Stop( animation );
       Game_ChangeToOverworldState( animation->game );
-      animation->game->dialog.id = DialogId_Count;
    }
 }
 

@@ -197,20 +197,11 @@ void Game_EnterTargetPortal( Game_t* game )
    }
 }
 
-// MUFFINS: will this just work, I wonder?
 void Game_OpenMenu( Game_t* game, MenuId_t id )
 {
    game->activeMenu = &( game->menus[(int32_t)id] );
    Menu_Reset( game->activeMenu );
    Game_ChangeSubState( game, SubState_Menu );
-}
-
-void Game_OpenDialog( Game_t* game, DialogId_t id )
-{
-   UNUSED_PARAM( game );
-   UNUSED_PARAM( id );
-   //Dialog_Load( &( game->dialog ), id );
-   //Game_ChangeSubState( game, SubState_Dialog );
 }
 
 void Game_OpenDialog2( Game_t* game )
