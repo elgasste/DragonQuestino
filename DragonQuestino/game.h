@@ -38,7 +38,6 @@ typedef struct Game_t
    Menu_t* activeMenu;
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
-   Animation_t animation;
    AnimationChain_t animationChain;
    Battle_t battle;
 
