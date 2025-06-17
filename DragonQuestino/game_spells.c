@@ -85,6 +85,16 @@ void Game_CastSleep( Game_t* game )
    
    CHECK_CAST_ABILITY( SPELL_SLEEP_MP, STRING_SPELL_SLEEP );
 
+   if ( game->battle.enemy.stats.isAsleep )
+   {
+      game->screen.needsRedraw = True;
+      Dialog_Reset( &( game->dialog ) );
+      sprintf( msg, STRING_BATTLE_SPELL_SLEEP_ALREADYASLEEP, game->battle.enemy.name );
+      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
+      return;
+   }
+
    game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
    Dialog_Reset( &( game->dialog ) );
@@ -127,6 +137,16 @@ void Game_CastFizzle( Game_t* game )
    char msg[64];
 
    CHECK_CAST_ABILITY( SPELL_FIZZLE_MP, STRING_SPELL_FIZZLE );
+
+   if ( game->battle.enemy.stats.isFizzled )
+   {
+      game->screen.needsRedraw = True;
+      Dialog_Reset( &( game->dialog ) );
+      sprintf( msg, STRING_BATTLE_SPELL_FIZZLE_ALREADYFIZZLED, game->battle.enemy.name );
+      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
+      return;
+   }
 
    game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
