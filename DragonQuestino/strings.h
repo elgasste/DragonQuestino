@@ -202,6 +202,7 @@
 #define STRING_BATTLE_FLEEATTEMPT                                    "You make a run for it..."
 #define STRING_BATTLE_FLEEATTEMPTSUCCEEDED                           "Success, you have eluded the %s!"
 #define STRING_BATTLE_FLEEATTEMPTFAILED                              "But the %s blocks your escape!"
+#define STRING_BATTLE_ENEMYASLEEP                                    "The %s is asleep! Command?"
 #define STRING_BATTLE_VICTORY                                        "The %s is defeated!"
 #define STRING_BATTLE_EXPERIENCEANDGOLD                              "You have gained %u experience %s and %u gold."
 #define STRING_BATTLE_EXPERIENCEONLY                                 "You have gained %u experience %s."
