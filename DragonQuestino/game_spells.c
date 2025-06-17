@@ -67,7 +67,7 @@ void Game_CastSizz( Game_t* game )
    game->pendingSpell = Spell_Sizz;
    game->player.stats.magicPoints -= SPELL_SIZZ_MP;
 
-   if ( Random_u8( 0, 15 ) <= game->battle.enemy.stats.hurtResist )
+   if ( ( game->battle.enemy.stats.hurtResist > 0 ) && Random_u8( 1, 15 ) <= game->battle.enemy.stats.hurtResist )
    {
       game->pendingPayload8u = 0;
    }
@@ -109,7 +109,7 @@ void Game_CastSleep( Game_t* game )
    }
    else
    {
-      game->pendingPayload8u = ( Random_u8( 0, 15 ) <= game->battle.enemy.stats.sleepResist ) ? 0 : 1;
+      game->pendingPayload8u = ( ( game->battle.enemy.stats.sleepResist > 0 ) && ( Random_u8( 1, 15 ) <= game->battle.enemy.stats.sleepResist ) ) ? 0 : 1;
    }
 
    Game_OpenDialog( game );
@@ -155,7 +155,7 @@ void Game_CastFizzle( Game_t* game )
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
    game->pendingSpell = Spell_Fizzle;
    game->player.stats.magicPoints -= SPELL_FIZZLE_MP;
-   game->pendingPayload8u = ( Random_u8( 0, 15 ) <= game->battle.enemy.stats.stopSpellResist ) ? 0 : 1;
+   game->pendingPayload8u = ( ( game->battle.enemy.stats.stopSpellResist > 0 ) && ( Random_u8( 1, 15 ) <= game->battle.enemy.stats.stopSpellResist ) ) ? 0 : 1;
    Game_OpenDialog( game );
 }
 
@@ -249,7 +249,7 @@ void Game_CastSizzle( Game_t* game )
    game->pendingSpell = Spell_Sizzle;
    game->player.stats.magicPoints -= SPELL_SIZZLE_MP;
 
-   if ( Random_u8( 0, 15 ) <= game->battle.enemy.stats.hurtResist )
+   if ( ( game->battle.enemy.stats.hurtResist > 0 ) && ( Random_u8( 1, 15 ) <= game->battle.enemy.stats.hurtResist ) )
    {
       game->pendingPayload8u = 0;
    }
