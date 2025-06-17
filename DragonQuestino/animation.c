@@ -110,33 +110,33 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
 
    switch ( chain->animationIds[chain->activeAnimation] )
    {
-      case AnimationId_Pause: chain->totalDuration = ANIMATIONCHAIN_PAUSE_DURATION; break;
+      case AnimationId_Pause: chain->totalDuration = ANIMATION_PAUSE_DURATION; break;
       case AnimationId_WhiteOut:
          Screen_BackupPalette( chain->screen );
-         chain->totalDuration = ANIMATIONCHAIN_WHITE_DURATION;
+         chain->totalDuration = ANIMATION_WHITE_DURATION;
          break;
-      case AnimationId_WhiteIn: chain->totalDuration = ANIMATIONCHAIN_WHITE_DURATION; break;
+      case AnimationId_WhiteIn: chain->totalDuration = ANIMATION_WHITE_DURATION; break;
       case AnimationId_FadeOut:
          Screen_BackupPalette( chain->screen );
-         chain->totalDuration = ANIMATIONCHAIN_FADE_DURATION;
+         chain->totalDuration = ANIMATION_FADE_DURATION;
          break;
-      case AnimationId_FadeIn: chain->totalDuration = ANIMATIONCHAIN_FADE_DURATION; break;
+      case AnimationId_FadeIn: chain->totalDuration = ANIMATION_FADE_DURATION; break;
       case AnimationId_RainbowBridge_Trippy:
          Screen_BackupPalette( chain->screen );
-         chain->totalDuration = ANIMATIONCHAIN_RAINBOWBRIDGE_TRIPPY_DURATION;
+         chain->totalDuration = ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION;
          break;
       case AnimationId_RainbowBridge_WhiteOut:
       case AnimationId_RainbowBridge_FadeIn:
-         chain->totalDuration = ANIMATIONCHAIN_RAINBOWBRIDGE_FADE_DURATION;
+         chain->totalDuration = ANIMATION_RAINBOWBRIDGE_FADE_DURATION;
          break;
       case AnimationId_CastSpell:
          chain->screen->wipeColor = COLOR_WHITE;
-         chain->totalDuration = ANIMATIONCHAIN_CASTSPELL_TOTALDURATION;
+         chain->totalDuration = ANIMATION_CASTSPELL_TOTALDURATION;
          break;
       case AnimationId_Battle_EnemyFadeIn:
-         chain->totalDuration = ANIMATIONCHAIN_BATTLE_ENEMYFADE_DURATION;
+         chain->totalDuration = ANIMATION_BATTLE_ENEMYFADE_DURATION;
          break;
-      case AnimationId_Battle_EnemyDamage: chain->totalDuration = ANIMATIONCHAIN_BATTLE_ENEMYDAMAGE_DURATION; break;
+      case AnimationId_Battle_EnemyDamage: chain->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION; break;
    }
 
    chain->totalElapsedSeconds = 0.0f;
@@ -324,11 +324,11 @@ internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain )
       chain->screen->needsWipe = False;
       wipeScreen = True;
    }
-   else if ( chain->frameElapsedSeconds > ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION )
+   else if ( chain->frameElapsedSeconds > ANIMATION_CASTSPELL_FRAMEDURATION )
    {
-      while ( chain->frameElapsedSeconds > ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION )
+      while ( chain->frameElapsedSeconds > ANIMATION_CASTSPELL_FRAMEDURATION )
       {
-         chain->frameElapsedSeconds -= ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION;
+         chain->frameElapsedSeconds -= ANIMATION_CASTSPELL_FRAMEDURATION;
          TOGGLE_BOOL( wipeScreen );
          chain->screen->needsWipe = wipeScreen;
       }
@@ -341,9 +341,9 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
    int16_t xOffset = chain->tileMap->isDark ? -24 : 0;
    int16_t yOffset = chain->tileMap->isDark ? 4 : 0;
 
-   while ( chain->frameElapsedSeconds > ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION )
+   while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_CHECKERSQUARE_DURATION )
    {
-      uint32_t squareIndex = (uint32_t)( chain->totalElapsedSeconds / ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION );
+      uint32_t squareIndex = (uint32_t)( chain->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION );
 
       Screen_DrawRectColor( chain->screen,
                             (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].x ) + xOffset ),
@@ -357,8 +357,8 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
       }
       else
       {
-         chain->totalElapsedSeconds += ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION;
-         chain->frameElapsedSeconds -= ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION;
+         chain->totalElapsedSeconds += ANIMATION_BATTLE_CHECKERSQUARE_DURATION;
+         chain->frameElapsedSeconds -= ANIMATION_BATTLE_CHECKERSQUARE_DURATION;
       }
    }
 }
@@ -408,9 +408,9 @@ internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain )
 
    chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
 
-   while ( chain->frameElapsedSeconds > ANIMATIONCHAIN_BATTLE_ENEMYDAMAGE_FRAMEDURATION )
+   while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_ENEMYDAMAGE_FRAMEDURATION )
    {
-      chain->frameElapsedSeconds -= ANIMATIONCHAIN_BATTLE_ENEMYDAMAGE_FRAMEDURATION;
+      chain->frameElapsedSeconds -= ANIMATION_BATTLE_ENEMYDAMAGE_FRAMEDURATION;
 
       if ( chain->flag )
       {
