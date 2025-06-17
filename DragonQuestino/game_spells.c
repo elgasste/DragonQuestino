@@ -16,6 +16,8 @@ internal void Game_SpellZoomCallback( Game_t* game );
 internal void Game_SpellRepelCallback( Game_t* game );
 internal void Game_SpellGlowCallback( Game_t* game );
 internal void Game_SpellEvacCallback( Game_t* game );
+internal void Game_SpellAnimateNoEffect( Game_t* game );
+internal void Game_SpellNoEffectCallback( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
@@ -56,7 +58,7 @@ void Game_CastSizz( Game_t* game )
    game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
    Dialog2_Reset( &( game->dialog2 ) );
-   sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, STRING_SPELL_SIZZ );
+   sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SIZZ );
    Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
    game->pendingSpell = Spell_Sizz;
    game->player.stats.magicPoints -= SPELL_SIZZ_MP;
@@ -179,11 +181,17 @@ void Game_CastMidheal( Game_t* game )
 
 void Game_CastSizzle( Game_t* game )
 {
-   CHECK_CAST_ABILITY( SPELL_SIZZLE_MP, STRING_SPELL_SIZZLE );
-   Game_ResetBattleMenu( game );
+   char msg[64];
 
+   CHECK_CAST_ABILITY( SPELL_SIZZLE_MP, STRING_SPELL_SIZZLE );
+
+   game->screen.needsRedraw = True;
+   Game_ResetBattleMenu( game );
+   Dialog2_Reset( &( game->dialog2 ) );
+   sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SIZZLE );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_CastSpellCallback, game );
+   game->pendingSpell = Spell_Sizzle;
    game->player.stats.magicPoints -= SPELL_SIZZLE_MP;
-   Game_DrawQuickStatus( game );
 
    if ( Random_u8( 0, 15 ) <= game->battle.enemy.stats.hurtResist )
    {
@@ -194,8 +202,7 @@ void Game_CastSizzle( Game_t* game )
       game->pendingPayload8u = Random_u8( SPELL_SIZZLE_MINEFFECT, SPELL_SIZZLE_MAXEFFECT );
    }
 
-   Dialog_SetInsertionText( &( game->dialog ), STRING_SPELL_SIZZLE );
-   Game_OpenDialog( game, DialogId_Battle_Spell_Sizzle );
+   Game_OpenDialog2( game );
 }
 
 internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName )
@@ -319,30 +326,19 @@ internal void Game_SpellHealCallback( Game_t* game )
 
 internal void Game_SpellHurtCallback( Game_t* game )
 {
-   UNUSED_PARAM( game );
-
-   // MUFFINS: this is what ApplySizz did, let's re-visit this when we have battle working
-
-   /*
-   char msg[64];
-   uint8_t damage;
-
    if ( game->pendingPayload8u == 0 )
    {
-      Dialog_SetInsertionText( &( game->dialog ), game->battle.enemy.name );
-      Game_OpenDialog( game, DialogId_Battle_Spell_NoEffect );
+      Game_SpellAnimateNoEffect( game );
    }
    else
    {
-      Dialog2_Draw( &( game->dialog2 ) );
-      Animation_Start( &( game->animation ), AnimationId_Battle_EnemyDamage );
-      damage = ( game->battle.enemy.stats.hitPoints > game->pendingPayload8u ) ? game->pendingPayload8u : game->battle.enemy.stats.hitPoints;
-      game->battle.enemy.stats.hitPoints -= damage;
-      sprintf( msg, STRING_BATTLE_ATTACKATTEMPTSUCCEEDED, game->battle.enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
-      Dialog_SetInsertionText( &( game->dialog ), msg );
-      Game_OpenDialog( game, DialogId_Battle_Spell_AttackSucceeded );
+      game->battle.pendingPayload8u = ( game->battle.enemy.stats.hitPoints > game->pendingPayload8u )
+                                      ? game->pendingPayload8u
+                                      : game->battle.enemy.stats.hitPoints;
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemyDamage, Battle_AttackSucceededCallback, &( game->battle ) );
+      AnimationChain_Start( &( game->animationChain ) );
    }
-   */
 }
 
 internal void Game_SpellZoomCallback( Game_t* game )
@@ -418,4 +414,21 @@ internal void Game_SpellEvacCallback( Game_t* game )
    {
       Game_AnimatePortalEntrance( game, &( game->tileMap.evacPortal ) );
    }
+}
+
+internal void Game_SpellAnimateNoEffect( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellNoEffectCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_SpellNoEffectCallback( Game_t* game )
+{
+   char msg[64];
+
+   Dialog2_Reset( &( game->dialog2 ) );
+   sprintf( msg, STRING_BATTLE_SPELL_NOEFFECT, game->battle.enemy.name );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_ResetBattleMenu, game );
+   Game_OpenDialog2( game );
 }

@@ -10,7 +10,6 @@ internal void Battle_FleeSucceededMessageCallback( Battle_t* battle );
 internal void Battle_FleeFailedCallback( Battle_t* battle );
 internal void Battle_FleeFailedMessageCallback( Battle_t* battle );
 internal void Battle_AttemptAttackCallback( Battle_t* battle );
-internal void Battle_AttackSucceededCallback( Battle_t* battle );
 internal void Battle_AttackDodgedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
@@ -65,6 +64,28 @@ void Battle_AttemptFlee( Battle_t* battle )
    battle->game->screen.needsRedraw = True;
    Dialog2_Reset( &( battle->game->dialog2 ) );
    Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), STRING_BATTLE_FLEEATTEMPT, fleed ? Battle_FleeSucceededCallback : Battle_FleeFailedCallback, battle );
+   Game_OpenDialog2( battle->game );
+}
+
+void Battle_AttackSucceededCallback( Battle_t* battle )
+{
+   char msg[64];
+
+   Dialog2_Reset( &( battle->game->dialog2 ) );
+   battle->enemy.stats.hitPoints -= battle->pendingPayload8u;
+   sprintf( msg,
+            battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKSUCCEEDED,
+            battle->enemy.name, battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
+
+   if ( battle->enemy.stats.hitPoints == 0 )
+   {
+      Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Battle_EnemyDefeatedCallback, battle );
+   }
+   else
+   {
+      Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
+   }
+
    Game_OpenDialog2( battle->game );
 }
 
@@ -188,10 +209,10 @@ internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
 
 internal void Battle_AttemptAttackCallback( Battle_t* battle )
 {
-   battle->pendingPayload = Battle_GetAttackDamage( battle );
+   battle->pendingPayload8u = Battle_GetAttackDamage( battle );
    AnimationChain_Reset( &( battle->game->animationChain ) );
 
-   if ( battle->pendingPayload == 0 )
+   if ( battle->pendingPayload8u == 0 )
    {
       AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
       AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_AttackDodgedCallback, battle );
@@ -203,28 +224,6 @@ internal void Battle_AttemptAttackCallback( Battle_t* battle )
    }
 
    AnimationChain_Start( &( battle->game->animationChain ) );
-}
-
-internal void Battle_AttackSucceededCallback( Battle_t* battle )
-{
-   char msg[64];
-
-   Dialog2_Reset( &( battle->game->dialog2 ) );
-   battle->enemy.stats.hitPoints -= battle->pendingPayload;
-   sprintf( msg,
-            battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKSUCCEEDED,
-            battle->enemy.name, battle->pendingPayload, ( battle->pendingPayload == 1 ) ? STRING_POINT : STRING_POINTS );
-
-   if ( battle->enemy.stats.hitPoints == 0 )
-   {
-      Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Battle_EnemyDefeatedCallback, battle );
-   }
-   else
-   {
-      Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
-   }
-
-   Game_OpenDialog2( battle->game );
 }
 
 internal void Battle_AttackDodgedCallback( Battle_t* battle )

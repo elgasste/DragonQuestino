@@ -16,7 +16,7 @@ typedef struct Battle_t
    Bool_t excellentMove;
    Bool_t isOver;
 
-   uint8_t pendingPayload;
+   uint8_t pendingPayload8u;
 
    uint16_t experienceGained;
    uint16_t goldGained;
@@ -36,6 +36,7 @@ void Battle_Init( Battle_t* battle, Game_t* game );
 void Battle_Generate( Battle_t* battle );
 void Battle_AttemptAttack( Battle_t* battle );
 void Battle_AttemptFlee( Battle_t* battle );
+void Battle_AttackSucceededCallback( Battle_t* battle );
 
 #if defined( __cplusplus )
 }
