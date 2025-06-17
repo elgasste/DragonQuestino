@@ -45,6 +45,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
    game->gameFlags.treasures = 0xFFFFFFFF;
    game->gameFlags.doors = 0xFFFFFFFF;
+   game->gameFlags.specialEnemies = 0xFF;
    game->gameFlags.usedRainbowDrop = False;
    game->gameFlags.foundHiddenStairs = False;
    game->mainState = MainState_Overworld;
