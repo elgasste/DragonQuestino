@@ -161,7 +161,7 @@ internal void Dialog_GetMessageText( Dialog_t* dialog, char* text )
          switch ( dialog->section )
          {
             case 0: strcpy( text, STRING_BATTLE_ATTACKATTEMPT ); return;
-            case 1: sprintf( text, STRING_BATTLE_ATTACKATTEMPTFAILED, dialog->insertionText ); return;
+            case 1: sprintf( text, STRING_BATTLE_ATTACKDODGED, dialog->insertionText ); return;
          }
       case DialogId_Battle_FleeAttemptSucceeded:
          switch ( dialog->section )

@@ -9,6 +9,11 @@ internal void Battle_FleeSucceededCallback( Battle_t* battle );
 internal void Battle_FleeSucceededMessageCallback( Battle_t* battle );
 internal void Battle_FleeFailedCallback( Battle_t* battle );
 internal void Battle_FleeFailedMessageCallback( Battle_t* battle );
+internal void Battle_AttemptAttackCallback( Battle_t* battle );
+internal void Battle_AttackSucceededCallback( Battle_t* battle );
+internal void Battle_AttackDodgedCallback( Battle_t* battle );
+internal void Battle_EnemyDefeatedCallback( Battle_t* battle );
+internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -45,28 +50,12 @@ void Battle_Generate( Battle_t* battle )
    enemy->stats.isFizzled = False;
 }
 
-// MUFFINS: let's do this next
 void Battle_AttemptAttack( Battle_t* battle )
 {
-   uint8_t damage = Battle_GetAttackDamage( battle );
-   char msg[64];
-
    battle->game->screen.needsRedraw = True;
-
-   if ( damage > 0 )
-   {
-      battle->enemy.stats.hitPoints -= damage;
-      sprintf( msg,
-               battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKATTEMPTSUCCEEDED,
-               battle->enemy.name, damage, ( damage == 1 ) ? STRING_POINT : STRING_POINTS );
-      Dialog_SetInsertionText( &( battle->game->dialog ), msg );
-      Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptSucceeded );  
-   }
-   else
-   {
-      Dialog_SetInsertionText( &( battle->game->dialog ), battle->enemy.name );
-      Game_OpenDialog( battle->game, DialogId_Battle_AttackAttemptFailed );
-   }
+   Dialog2_Reset( &( battle->game->dialog2 ) );
+   Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), STRING_BATTLE_ATTACKATTEMPT, Battle_AttemptAttackCallback, battle );
+   Game_OpenDialog2( battle->game );
 }
 
 void Battle_AttemptFlee( Battle_t* battle )
@@ -77,38 +66,6 @@ void Battle_AttemptFlee( Battle_t* battle )
    Dialog2_Reset( &( battle->game->dialog2 ) );
    Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), STRING_BATTLE_FLEEATTEMPT, fleed ? Battle_FleeSucceededCallback : Battle_FleeFailedCallback, battle );
    Game_OpenDialog2( battle->game );
-}
-
-void Battle_Victory( Battle_t* battle )
-{
-   Player_t* player = &( battle->game->player );
-   Enemy_t* enemy = &( battle->enemy );
-   DialogId_t dialogId;
-   uint8_t newLevel;
-
-   battle->experienceGained = Player_CollectExperience( player, enemy->experience );
-   battle->goldGained = Player_CollectGold( player, enemy->gold );
-   newLevel = Player_GetLevelFromExperience( player );
-   battle->previousSpells = player->spells;
-
-   if ( newLevel > player->level )
-   {
-      battle->strengthGained =  g_strengthTable[newLevel] - player->stats.strength;
-      battle->agilityGained = g_agilityTable[newLevel] - player->stats.agility;
-      battle->hitPointsGained = g_hitPointsTable[newLevel] - player->stats.maxHitPoints;
-      battle->magicPointsGained = g_magicPointsTable[newLevel] - player->stats.maxMagicPoints;
-      player->stats.strength += battle->strengthGained;
-      player->stats.agility += battle->agilityGained;
-      Player_UpdateSpellsToLevel( player, newLevel );
-      dialogId = DialogId_Battle_VictoryWithLevelUp;
-   }
-   else
-   {
-      dialogId = battle->experienceGained == 0 && battle->goldGained == 0 ? DialogId_Battle_Victory : DialogId_Battle_VictoryWithSpoils;
-   }
-
-   Dialog_SetInsertionText( &( battle->game->dialog ), enemy->name );
-   Game_OpenDialog( battle->game, dialogId );
 }
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
@@ -226,5 +183,183 @@ internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
    Dialog2_Reset( &( battle->game->dialog2 ) );
    sprintf( msg, STRING_BATTLE_FLEEATTEMPTFAILED, battle->enemy.name );
    Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog2( battle->game );
+}
+
+internal void Battle_AttemptAttackCallback( Battle_t* battle )
+{
+   battle->pendingPayload = Battle_GetAttackDamage( battle );
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+
+   if ( battle->pendingPayload == 0 )
+   {
+      AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_AttackDodgedCallback, battle );
+   }
+   else
+   {
+      AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyDamage, Battle_AttackSucceededCallback, battle );
+   }
+
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_AttackSucceededCallback( Battle_t* battle )
+{
+   char msg[64];
+
+   Dialog2_Reset( &( battle->game->dialog2 ) );
+   battle->enemy.stats.hitPoints -= battle->pendingPayload;
+   sprintf( msg,
+            battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKSUCCEEDED,
+            battle->enemy.name, battle->pendingPayload, ( battle->pendingPayload == 1 ) ? STRING_POINT : STRING_POINTS );
+
+   if ( battle->enemy.stats.hitPoints == 0 )
+   {
+      Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Battle_EnemyDefeatedCallback, battle );
+   }
+   else
+   {
+      Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
+   }
+
+   Game_OpenDialog2( battle->game );
+}
+
+internal void Battle_AttackDodgedCallback( Battle_t* battle )
+{
+   char msg[64];
+
+   Dialog2_Reset( &( battle->game->dialog2 ) );
+   sprintf( msg, STRING_BATTLE_ATTACKDODGED, battle->enemy.name );
+   Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog2( battle->game );
+}
+
+internal void Battle_EnemyDefeatedCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut, Battle_EnemyDefeatedMessageCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
+{
+   Player_t* player = &( battle->game->player );
+   Enemy_t* enemy = &( battle->enemy );
+   Dialog2_t* dialog = &( battle->game->dialog2 );
+   uint8_t newLevel;
+   uint16_t i, learnedSpell = 0;
+   char msg[64];
+
+   Dialog2_Reset( dialog );
+   sprintf( msg, STRING_BATTLE_VICTORY, battle->enemy.name );
+   Dialog2_PushSection( dialog, msg );
+
+   battle->isOver = True;
+   battle->experienceGained = Player_CollectExperience( player, enemy->experience );
+   battle->goldGained = Player_CollectGold( player, enemy->gold );
+   newLevel = Player_GetLevelFromExperience( player );
+   battle->previousSpells = player->spells;
+
+   if ( battle->experienceGained > 0 || battle->goldGained > 0 )
+   {
+      if ( battle->experienceGained > 0 && battle->goldGained == 0 )
+      {
+         sprintf( msg, STRING_BATTLE_EXPERIENCEONLY, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS );
+      }
+      else if ( battle->experienceGained == 0 && battle->goldGained > 0 )
+      {
+         sprintf( msg, STRING_BATTLE_GOLDONLY, battle->goldGained );
+      }
+      else
+      {
+         sprintf( msg, STRING_BATTLE_EXPERIENCEANDGOLD,
+                  battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS,
+                  battle->goldGained );
+      }
+
+      Dialog2_PushSection( dialog, msg );
+   }
+
+   if ( newLevel > player->level )
+   {
+      battle->strengthGained =  g_strengthTable[newLevel] - player->stats.strength;
+      battle->agilityGained = g_agilityTable[newLevel] - player->stats.agility;
+      battle->hitPointsGained = g_hitPointsTable[newLevel] - player->stats.maxHitPoints;
+      battle->magicPointsGained = g_magicPointsTable[newLevel] - player->stats.maxMagicPoints;
+      player->stats.strength += battle->strengthGained;
+      player->stats.agility += battle->agilityGained;
+      Player_UpdateSpellsToLevel( player, newLevel );
+      Dialog2_PushSection( dialog, STRING_BATTLE_LEVELUP );
+
+      if ( battle->strengthGained > 0 || battle->agilityGained > 0 )
+      {
+         if ( battle->strengthGained > 0 && battle->agilityGained == 0 )
+         {
+            sprintf( msg, STRING_BATTLE_STRENGTHGAIN, battle->strengthGained );
+         }
+         else if ( battle->strengthGained == 0 && battle->agilityGained > 0 )
+         {
+            sprintf( msg, STRING_BATTLE_AGILITYGAIN, battle->agilityGained );
+         }
+         else
+         {
+            sprintf( msg, STRING_BATTLE_STRENGTHANDAGILITYGAIN, battle->strengthGained, battle->agilityGained );
+         }
+
+         Dialog2_PushSection( dialog, msg );
+      }
+
+      if ( battle->hitPointsGained > 0 || battle->magicPointsGained > 0 )
+      {
+         if ( battle->hitPointsGained > 0 && battle->magicPointsGained == 0 )
+         {
+            sprintf( msg, STRING_BATTLE_HITPOINTSGAIN, battle->hitPointsGained );
+         }
+         else if ( battle->hitPointsGained == 0 && battle->magicPointsGained > 0 )
+         {
+            sprintf( msg, STRING_BATTLE_MAGICPOINTSGAIN, battle->magicPointsGained );
+         }
+         else
+         {
+            sprintf( msg, STRING_BATTLE_HITPOINTSANDMAGICPOINTSGAIN, battle->hitPointsGained, battle->magicPointsGained );
+         }
+
+         Dialog2_PushSection( dialog, msg );
+      }
+
+      if ( player->spells > battle->previousSpells )
+      {
+         for ( i = 0; i < SPELL_TABLE_SIZE; i++ )
+         {
+            if ( ( battle->previousSpells & ( 0x1 << i ) ) != ( player->spells & ( 0x1 << i ) ) )
+            {
+               learnedSpell = i;
+               break;
+            }
+         }
+
+         switch ( i )
+         {
+            case 0: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_HEAL ); break;
+            case 1: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZ ); break;
+            case 2: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SLEEP ); break;
+            case 3: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_GLOW ); break;
+            case 4: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_FIZZLE ); break;
+            case 5: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_EVAC ); break;
+            case 6: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_ZOOM ); break;
+            case 7: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_REPEL ); break;
+            case 8: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_MIDHEAL ); break;
+            case 9: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZLE ); break;
+         }
+
+         Dialog2_PushSection( dialog, msg );
+      }
+   }
+
    Game_OpenDialog2( battle->game );
 }

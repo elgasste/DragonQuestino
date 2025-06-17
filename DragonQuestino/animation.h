@@ -34,6 +34,8 @@
 #define ANIMATIONCHAIN_CASTSPELL_FRAMEDURATION           0.005f
 #define ANIMATIONCHAIN_BATTLE_CHECKERSQUARE_DURATION     0.011f
 #define ANIMATIONCHAIN_BATTLE_ENEMYFADE_DURATION         0.25f
+#define ANIMATIONCHAIN_BATTLE_ENEMYDAMAGE_DURATION       0.6f
+#define ANIMATIONCHAIN_BATTLE_ENEMYDAMAGE_FRAMEDURATION  0.1f
 
 typedef struct Game_t Game_t;
 
@@ -56,6 +58,8 @@ typedef struct AnimationChain_t
 {
    Screen_t* screen;
    TileMap_t* tileMap;
+   // MUFFINS: I don't like this, and I want to figure out how NOT to do this in the future
+   Game_t* game;
 
    AnimationId_t animationIds[ANIMATIONCHAIN_MAX_LINKS];
    void ( *callbacks[ANIMATIONCHAIN_MAX_LINKS] )( void* );
@@ -70,6 +74,7 @@ typedef struct AnimationChain_t
    float totalElapsedSeconds;
    float frameElapsedSeconds;
    float totalDuration;
+   Bool_t flag;
 }
 AnimationChain_t;
 
@@ -80,7 +85,7 @@ extern "C" {
 void Animation_Init( Animation_t* animation, Game_t* game );
 void Animation_Start( Animation_t* animation, AnimationId_t id );
 
-void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap );
+void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap, Game_t* game );
 void AnimationChain_Reset( AnimationChain_t* chain );
 void AnimationChain_PushAnimation( AnimationChain_t* chain, AnimationId_t id );
 void AnimationChain_PushAnimationWithCallback( AnimationChain_t* chain, AnimationId_t id, void ( *callback )( void* ), void* callbackData );
