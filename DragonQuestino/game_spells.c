@@ -524,7 +524,9 @@ internal void Game_SpellEvacCallback( Game_t* game )
    }
    else
    {
+      AnimationChain_Reset( &( game->animationChain ) );
       Game_AnimatePortalEntrance( game, &( game->tileMap.evacPortal ) );
+      AnimationChain_Start( &( game->animationChain ) );
    }
 }
 
