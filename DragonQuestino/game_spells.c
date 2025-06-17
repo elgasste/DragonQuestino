@@ -127,6 +127,7 @@ void Game_CastZoom( Game_t* game, uint32_t townId )
 
    CHECK_CAST_ABILITY( SPELL_ZOOM_MP, STRING_SPELL_ZOOM );
 
+   game->screen.needsRedraw = True;
    Dialog2_Reset( &( game->dialog2 ) );
    game->pendingSpell = Spell_Zoom;
    game->targetPortal = &( game->zoomPortals[townId] );

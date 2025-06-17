@@ -483,8 +483,8 @@ internal void MaxOutStats()
    g_globals.game.player.experience = UINT16_MAX;
    g_globals.game.player.gold = UINT16_MAX;
 
-   Player_RestoreHitPoints( &( g_globals.game.player ), UINT8_MAX );
    g_globals.game.player.stats.maxHitPoints = UINT8_MAX;
+   Player_RestoreHitPoints( &( g_globals.game.player ), UINT8_MAX );
    g_globals.game.player.stats.magicPoints = UINT8_MAX;
    g_globals.game.player.stats.maxMagicPoints = UINT8_MAX;
    g_globals.game.player.stats.strength = UINT8_MAX;

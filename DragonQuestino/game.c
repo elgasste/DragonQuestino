@@ -128,6 +128,7 @@ void Game_ChangeToOverworldState( Game_t* game )
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
    game->overworldInactivitySeconds = 0.0f;
+   game->screen.needsRedraw = True;
 }
 
 void Game_ChangeToBattleState( Game_t* game )
