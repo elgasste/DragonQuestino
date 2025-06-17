@@ -4,11 +4,8 @@
 #include "math.h"
 #include "tables.h"
 
-internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints );
-
-void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
+void Player_Init( Player_t* player, TileMap_t* tileMap )
 {
-   player->screen = screen;
    player->tileMap = tileMap;
 
    player->tileIndex = 148; // sort of in front of King Lorik
@@ -45,8 +42,6 @@ void Player_Init( Player_t* player, Screen_t* screen, TileMap_t* tileMap )
    player->stats.stopSpellResist = 0;
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
-
-   Player_UpdateTextColor( player, UINT8_MAX );
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )
@@ -79,12 +74,17 @@ uint16_t Player_CollectExperience( Player_t* player, uint16_t experience )
    return Math_CollectAmount16u( &( player->experience ), experience );
 }
 
-void Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
+uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
 {
-   uint8_t previousHitPoints = player->stats.hitPoints;
+   uint8_t restoredHitPoints = hitPoints;
 
-   Math_CollectAmount8u( &( player->stats.hitPoints ), hitPoints );
-   Player_UpdateTextColor( player, previousHitPoints );
+   if ( ( player->stats.maxHitPoints - player->stats.hitPoints ) < hitPoints )
+   {
+      restoredHitPoints = player->stats.maxHitPoints - player->stats.hitPoints;
+   }
+
+   player->stats.hitPoints += restoredHitPoints;
+   return restoredHitPoints;
 }
 
 Bool_t Player_CollectItem( Player_t* player, Item_t item )
@@ -162,13 +162,7 @@ void Player_SetCursed( Player_t* player, Bool_t cursed )
 
    if ( cursed )
    {
-      player->screen->textColor = COLOR_GROSSYELLOW;
       TileMap_SetTargetGlowDiameter( player->tileMap, 1 );
-   }
-   else
-   {
-      player->screen->textColor = COLOR_WHITE;
-      Player_UpdateTextColor( player, INT8_MAX );
    }
 }
 
@@ -192,29 +186,5 @@ void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level )
       {
          player->spells |= ( 0x1 << i );
       }
-   }
-}
-
-internal void Player_UpdateTextColor( Player_t* player, uint8_t previousHitPoints )
-{
-   float percentage, previousPercentage;
-
-   if ( player->isCursed )
-   {
-      return;
-   }
-
-   percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
-   previousPercentage = (float)( previousHitPoints ) / player->stats.maxHitPoints;
-
-   if ( percentage < PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage >= PLAYER_LOWHEALTH_PERCENTAGE )
-   {
-      player->screen->textColor = COLOR_INJUREDRED;
-      player->screen->needsRedraw = True;
-   }
-   else if ( percentage >= PLAYER_LOWHEALTH_PERCENTAGE && previousPercentage < PLAYER_LOWHEALTH_PERCENTAGE )
-   {
-      player->screen->textColor = COLOR_WHITE;
-      player->screen->needsRedraw = True;
    }
 }

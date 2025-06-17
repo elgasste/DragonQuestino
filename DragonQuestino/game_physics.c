@@ -1,6 +1,5 @@
 #include "game.h"
 #include "random.h"
-#include "animation.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex );
@@ -151,8 +150,9 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 
    if ( portal )
    {
-      game->targetPortal = portal;
-      Animation_Start( &( game->animation ), AnimationId_TileMap_FadeOut );
+      AnimationChain_Reset( &( game->animationChain ) );
+      Game_AnimatePortalEntrance( game, portal );
+      AnimationChain_Start( &( game->animationChain ) );
       return;
    }
 
@@ -181,7 +181,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
    if ( game->battle.specialEnemy != SpecialEnemy_None )
    {
       Battle_Generate( &( game->battle ) );
-      Game_ChangeMainState( game, MainState_Battle );
+      Game_ChangeToBattleState( game );
    }
    else if ( game->tileMap.hasEncounters )
    {
@@ -227,7 +227,7 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
 
       if ( game->tileMap.isDungeon || !( game->player.hasHolyProtection ) || game->battle.enemy.stats.strength > ( game->player.stats.agility / 2 ) )
       {
-         Game_ChangeMainState( game, MainState_Battle );
+         Game_ChangeToBattleState( game );
       }
    }
    else
@@ -235,7 +235,9 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
       if ( game->player.hasHolyProtection && game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
       {
          game->player.hasHolyProtection = False;
-         Game_OpenDialog( game, DialogId_HolyProtection_Off );
+         Dialog_Reset( &( game->dialog ) );
+         Dialog_PushSection( &( game->dialog ), STRING_HOLYPROTECTION_OFF );
+         Game_OpenDialog( game );
       }
    }
 }

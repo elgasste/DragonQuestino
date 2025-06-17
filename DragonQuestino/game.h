@@ -10,7 +10,7 @@
 #include "player.h"
 #include "menu.h"
 #include "dialog.h"
-#include "animation.h"
+#include "animation_chain.h"
 #include "battle.h"
 
 #define OVERWORLD_INACTIVE_STATUS_SECONDS          1.0f
@@ -38,12 +38,14 @@ typedef struct Game_t
    Menu_t* activeMenu;
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
-   Animation_t animation;
+   AnimationChain_t animationChain;
    Battle_t battle;
 
    float overworldInactivitySeconds;
+   Bool_t doAnimation;
 
    uint8_t pendingPayload8u;
+   Spell_t pendingSpell;
 }
 Game_t;
 
@@ -54,14 +56,21 @@ extern "C" {
 // game.c
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Tic( Game_t* game );
-void Game_ChangeMainState( Game_t* game, MainState_t newState );
+void Game_ChangeToOverworldState( Game_t* game );
+void Game_ChangeToBattleState( Game_t* game );
 void Game_ChangeSubState( Game_t* game, SubState_t newState );
 void Game_EnterTargetPortal( Game_t* game );
+void Game_AnimatePortalEntrance( Game_t* game, TilePortal_t* portal );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
-void Game_OpenDialog( Game_t* game, DialogId_t id );
+void Game_OpenDialog( Game_t* game );
+void Game_RestoredHitPointsCallback( Game_t* game );
+void Game_CursedCallback( Game_t* game );
+void Game_ResetBattleMenu( Game_t* game );
+
+// game_actions.c
+void Game_Talk( Game_t* game );
 void Game_Search( Game_t* game );
 void Game_OpenDoor( Game_t* game );
-void Game_ApplyHealing( Game_t* game, uint8_t minHp, uint8_t maxHp, DialogId_t dialogId1, DialogId_t dialogId2 );
 
 // game_input.c
 void Game_HandleInput( Game_t* game );
@@ -78,11 +87,12 @@ void Game_DrawOverworldDeepStatus( Game_t* game );
 void Game_DrawOverworldItemMenu( Game_t* game );
 void Game_DrawEnemy( Game_t* game );
 void Game_WipeEnemy( Game_t* game );
+void Game_SetTextColor( Game_t* game );
+void Game_DrawTileMap( Game_t* game );
 
 // game_spells.c
 void Game_CastHeal( Game_t* game );
 void Game_CastSizz( Game_t* game );
-void Game_ApplySizz( Game_t* game );
 void Game_CastSleep( Game_t* game );
 void Game_CastGlow( Game_t* game );
 void Game_CastFizzle( Game_t* game );
@@ -91,7 +101,6 @@ void Game_CastZoom( Game_t* game, uint32_t townId );
 void Game_CastRepel( Game_t* game );
 void Game_CastMidheal( Game_t* game );
 void Game_CastSizzle( Game_t* game );
-void Game_ApplySizzle( Game_t* game );
 
 // game_items.c
 void Game_UseHerb( Game_t* game );

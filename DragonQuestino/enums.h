@@ -49,13 +49,12 @@ SubState_t;
 
 typedef enum AnimationId_t
 {
-   AnimationId_Overworld_Pause = 0,
-   AnimationId_TileMap_FadeOut,
-   AnimationId_TileMap_FadePause,
-   AnimationId_TileMap_FadeIn,
-   AnimationId_TileMap_WhiteOut,
-   AnimationId_TileMap_WhitePause,
-   AnimationId_TileMap_WhiteIn,
+   AnimationId_Pause = 0,
+   AnimationId_FadeOut,
+   AnimationId_FadeIn,
+   AnimationId_WhiteOut,
+   AnimationId_WhitePause,
+   AnimationId_WhiteIn,
    AnimationId_CastSpell,
    AnimationId_RainbowBridge_Trippy,
    AnimationId_RainbowBridge_WhiteOut,
@@ -94,6 +93,23 @@ typedef enum Item_t
    Item_Count
 }
 Item_t;
+
+typedef enum Spell_t
+{
+   Spell_Heal = 0,
+   Spell_Sizz,
+   Spell_Sleep,
+   Spell_Glow,
+   Spell_Fizzle,
+   Spell_Evac,
+   Spell_Zoom,
+   Spell_Repel,
+   Spell_Midheal,
+   Spell_Sizzle,
+
+   Spell_Count
+}
+Spell_t;
 
 typedef enum SpecialEnemy_t
 {
@@ -166,80 +182,5 @@ typedef enum MenuCommand_t
    MenuCommand_Count
 }
 MenuCommand_t;
-
-typedef enum DialogId_t
-{
-   DialogId_Talk_NobodyThere = 0,
-   DialogId_Search_NothingFound,
-   DialogId_Search_FoundItem,
-   DialogId_Search_FoundHiddenStairs,
-   DialogId_Spell_None,
-   DialogId_Spell_OverworldCantCast,
-   DialogId_Spell_CastHeal1,
-   DialogId_Spell_CastHeal2,
-   DialogId_Spell_CastMidheal1,
-   DialogId_Spell_CastMidheal2,
-   DialogId_Spell_OverworldCastGlowCursed,
-   DialogId_Spell_OverworldCastGlow,
-   DialogId_Spell_CastRepelCursed,
-   DialogId_Spell_CastRepel,
-   DialogId_Spell_CastEvacCursed,
-   DialogId_Spell_CastEvac,
-   DialogId_Spell_CastZoom,
-   DialogId_Spell_NotEnoughMp,
-   DialogId_Spell_Blocked,
-   DialogId_Item_None,
-   DialogId_Door_None,
-   DialogId_Door_NoKeys,
-
-   DialogId_FullyHealed,
-   DialogId_HolyProtection_Off,
-
-   DialogId_Use_Herb1,
-   DialogId_Use_Herb2,
-   DialogId_Use_WingCantUse,
-   DialogId_Use_Wing,
-   DialogId_Use_FairyWaterCursed,
-   DialogId_Use_FairyWater,
-   DialogId_Use_TorchCantUse,
-   DialogId_Use_TorchAlreadyUsed,
-   DialogId_Use_Torch,
-   DialogId_Use_FairyFlute,
-   DialogId_Use_SilverHarp,
-   DialogId_Use_GwaelynsLoveCantUse,
-   DialogId_Use_GwaelynsLove,
-   DialogId_Use_RainbowDropCantUse,
-   DialogId_Use_RainbowDrop,
-   DialogId_Use_CursedBelt,
-
-   DialogId_Chest_ItemCollected,
-   DialogId_Chest_ItemNoSpace,
-   DialogId_Chest_GoldCollected,
-   DialogId_Chest_GoldNoSpace,
-   DialogId_Chest_Tablet,
-   DialogId_Chest_DeathNecklace,
-
-   DialogId_Battle_EnemyApproaches,
-   DialogId_Battle_AttackAttemptSucceeded,
-   DialogId_Battle_AttackAttemptFailed,
-   DialogId_Battle_FleeAttemptSucceeded,
-   DialogId_Battle_FleeAttemptFailed,
-   DialogId_Battle_Victory,
-   DialogId_Battle_VictoryWithSpoils,
-   DialogId_Battle_VictoryWithLevelUp,
-   DialogId_Battle_Spell_None,
-   DialogId_Battle_Spell_CantCast,
-   DialogId_Battle_Spell_NotEnoughMp,
-   DialogId_Battle_Spell_Blocked,
-   DialogId_Battle_Spell_Fizzled,
-   DialogId_Battle_FullyHealed,
-   DialogId_Battle_Spell_NoEffect,
-   DialogId_Battle_Spell_AttackSucceeded,
-   DialogId_Battle_Spell_Sizz,
-   DialogId_Battle_Spell_Sizzle,
-
-   DialogId_Count
-}
-DialogId_t;
 
 #endif // ENUMS_H

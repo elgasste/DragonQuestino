@@ -3,31 +3,34 @@
 #include "enemy.h"
 #include "math.h"
 
-internal void Game_DrawTileMap( Game_t* game );
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 
 void Game_Draw( Game_t* game )
 {
    uint32_t i;
+   AnimationId_t activeAnimationId;
 
-   if ( game->animation.isRunning )
+   if ( game->doAnimation )
    {
+      activeAnimationId = AnimationChain_GetActiveAnimationId( &( game->animationChain ) );
+
       if ( game->mainState == MainState_Overworld )
       {
-         if ( game->animation.id != AnimationId_CastSpell )
+         if ( activeAnimationId != AnimationId_Pause )
          {
             Game_DrawOverworld( game );
+
+            if ( game->subState == SubState_Dialog )
+            {
+               Dialog_Draw( &( game->dialog ) );
+            }
          }
       }
       else if ( game->mainState == MainState_Battle )
       {
-         if ( game->screen.needsRedraw )
-         {
-            game->screen.needsRedraw = False;
-            Game_DrawTileMap( game );
-         }
-         else if ( game->animation.id == AnimationId_Battle_EnemyFadeIn || game->animation.id == AnimationId_Battle_EnemyFadeOut )
+         if ( activeAnimationId == AnimationId_Battle_EnemyFadeIn ||
+              activeAnimationId == AnimationId_Battle_EnemyFadeOut )
          {
             Game_DrawEnemy( game );
          }
@@ -39,14 +42,13 @@ void Game_Draw( Game_t* game )
       {
          if ( game->screen.needsRedraw )
          {
-            game->screen.needsRedraw = False;
-
             for ( i = 0; i < MenuId_Count; i++ )
             {
                game->menus[i].hasDrawn = False;
             }
 
             Game_DrawOverworld( game );
+            Game_SetTextColor( game );
 
             switch ( game->subState )
             {
@@ -64,24 +66,6 @@ void Game_Draw( Game_t* game )
                   break;
                case SubState_Dialog:
                   Game_DrawQuickStatus( game );
-                  switch ( game->activeMenu->id )
-                  {
-                     case MenuId_Overworld:
-                        Menu_Draw( &( game->menus[MenuId_Overworld] ) );
-                        break;
-                     case MenuId_OverworldItem:
-                        Menu_Draw( &( game->menus[MenuId_Overworld] ) );
-                        Game_DrawOverworldItemMenu( game );
-                        if ( game->dialog.id == DialogId_Use_Herb2 )
-                        {
-                           Game_DrawQuickStatus( game );
-                        }
-                        break;
-                     case MenuId_OverworldSpell:
-                        Menu_Draw( &( game->menus[MenuId_Overworld] ) );
-                        Menu_Draw( &( game->menus[MenuId_OverworldSpell] ) );
-                        break;
-                  }
                   Dialog_Draw( &( game->dialog ) );
                   break;
             }
@@ -124,8 +108,6 @@ void Game_Draw( Game_t* game )
                   Dialog_Draw( &( game->dialog ) );
                   break;
             }
-
-            game->screen.needsRedraw = False;
          }
          else
          {
@@ -141,6 +123,8 @@ void Game_Draw( Game_t* game )
          }
       }
    }
+
+   game->screen.needsRedraw = False;
 }
 
 void Game_DrawOverworld( Game_t* game )
@@ -262,7 +246,23 @@ void Game_WipeEnemy( Game_t* game )
    Screen_DrawRectColor( &( game->screen ), 96, 52, 112, 112, COLOR_BLACK );
 }
 
-internal void Game_DrawTileMap( Game_t* game )
+void Game_SetTextColor( Game_t* game )
+{
+   float percentage;
+   Player_t* player = &( game->player );
+
+   if ( player->isCursed )
+   {
+      game->screen.textColor = COLOR_GROSSYELLOW;
+   }
+   else
+   {
+      percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
+      game->screen.textColor = ( percentage < PLAYER_LOWHEALTH_PERCENTAGE ) ? COLOR_INJUREDRED : COLOR_WHITE;
+   }
+}
+
+void Game_DrawTileMap( Game_t* game )
 {
    if ( game->tileMap.viewportScreenPos.x != 0 || game->tileMap.viewportScreenPos.y != 0 )
    {

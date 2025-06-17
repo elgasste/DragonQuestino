@@ -6,6 +6,7 @@ internal void Game_HandleOverworldInput( Game_t* game );
 internal void Game_HandleOverworldWaitingInput( Game_t* game );
 internal void Game_HandleOverworldDialogInput( Game_t* game );
 internal void Game_HandleOverworldMenuInput( Game_t* game );
+internal void Game_ReturnToOverworldWithPause( Game_t* game );
 internal void Game_OpenOverworldSpellMenu( Game_t* game );
 internal void Game_OpenOverworldItemMenu( Game_t* game );
 internal void Game_OpenZoomMenu( Game_t* game );
@@ -137,62 +138,22 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 {
    if ( Input_AnyButtonPressed( &( game->input ) ) )
    {
-      Animation_Start( &( game->animation ), AnimationId_Overworld_Pause);
+      Game_ReturnToOverworldWithPause( game );
    }
 }
 
 internal void Game_HandleOverworldDialogInput( Game_t* game )
 {
-   uint32_t e;
-
    if ( Dialog_IsDone( &( game->dialog ) ) )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         if ( game->dialog.id == DialogId_Use_RainbowDrop )
-         {
-            Animation_Start( &( game->animation ), AnimationId_RainbowBridge_Trippy );
-         }
-         else
-         {
-            Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
-         }
+         Game_ReturnToOverworldWithPause( game );
       }
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      if ( Dialog_StepAhead( &( game->dialog ) ) )
-      {
-         switch ( game->dialog.section )
-         {
-            case 1:
-               switch ( game->dialog.id )
-               {
-                  case DialogId_Use_Herb1:
-                  case DialogId_Use_Herb2:
-                  case DialogId_Spell_CastHeal1:
-                  case DialogId_Spell_CastHeal2:
-                  case DialogId_Spell_CastMidheal1:
-                  case DialogId_Spell_CastMidheal2:
-                     Game_DrawQuickStatus( game );
-                     break;
-                  case DialogId_Use_CursedBelt:
-                  case DialogId_Chest_DeathNecklace:
-                     Player_SetCursed( &( game->player ), True );
-                     TileMap_StartGlowTransition( &( game->tileMap ) );
-                     game->screen.needsRedraw = True;
-                     break;
-                  case DialogId_Use_GwaelynsLove:
-                     e = Player_GetExperienceRemaining( &( game->player ) );
-                     if ( e == 0 )
-                     {
-                        Dialog_NextSection( &( game->dialog ) );
-                     }
-                     break;
-               }
-               break;
-         }
-      }
+      Dialog_StepAhead( &( game->dialog ) );
    }
 }
 
@@ -206,7 +167,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
 
       switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
-         case MenuCommand_Overworld_Talk: Game_OpenDialog( game, DialogId_Talk_NobodyThere ); break;
+         case MenuCommand_Overworld_Talk: Game_Talk( game ); break;
          case MenuCommand_Overworld_Status:
             Game_DrawOverworldDeepStatus( game );
             Game_ChangeSubState( game, SubState_Waiting );
@@ -250,8 +211,12 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             game->activeMenu = &( game->menus[MenuId_Overworld] );
             game->screen.needsRedraw = True;
             break;
+         case MenuId_Zoom:
+            game->activeMenu = &( game->menus[MenuId_OverworldSpell] );
+            game->screen.needsRedraw = True;
+            break;
          default:
-            Game_ChangeMainState( game, MainState_Overworld );
+            Game_ChangeToOverworldState( game );
             break;
       }
    }
@@ -267,11 +232,22 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
    }
 }
 
+internal void Game_ReturnToOverworldWithPause( Game_t* game )
+{
+   Game_ChangeToOverworldState( game );
+   Game_DrawOverworld( game );
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
 internal void Game_OpenOverworldSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Game_OpenDialog( game, DialogId_Spell_None );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_NO_SPELLS );
+      Game_OpenDialog( game );
    }
    else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells, game->tileMap.isDungeon, game->tileMap.isDark ) )
    {
@@ -279,7 +255,9 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    }
    else
    {
-      Game_OpenDialog( game, DialogId_Spell_OverworldCantCast );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_SPELLS_OVERWORLD_CANT_CAST );
+      Game_OpenDialog( game );
    }
 }
 
@@ -287,7 +265,9 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 {
    if ( ITEM_GET_MAPUSEABLECOUNT( game->player.items ) == 0 && ITEM_GET_MAPNONUSEABLECOUNT( game->player.items ) == 0 )
    {
-      Game_OpenDialog( game, DialogId_Item_None );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_NO_ITEMS );
+      Game_OpenDialog( game );
    }
    else
    {
@@ -302,7 +282,7 @@ internal void Game_OpenZoomMenu( Game_t* game )
 
    if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
    {
-      Game_OpenDialog( game, DialogId_Spell_NotEnoughMp );
+      Game_CastZoom( game, 0 );
    }
    else if ( townCount > 0 )
    {
@@ -323,7 +303,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
          case MenuCommand_Battle_Attack: Battle_AttemptAttack( &( game->battle ) ); break;
          case MenuCommand_Battle_Flee: Battle_AttemptFlee( &( game->battle ) ); break;
          case MenuCommand_Battle_Spell: Game_OpenBattleSpellMenu( game ); break;
-         case MenuCommand_Battle_Item: Game_ChangeMainState( game, MainState_Overworld ); break;
+         case MenuCommand_Battle_Item: Game_ChangeToOverworldState( game ); break;
 
          case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
          case MenuCommand_Spell_Sizz: Game_CastSizz( game ); break;
@@ -361,20 +341,9 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         switch ( game->dialog.id )
+         if ( game->battle.isOver )
          {
-            case DialogId_Battle_FleeAttemptSucceeded:
-            case DialogId_Battle_Victory:
-            case DialogId_Battle_VictoryWithSpoils:
-            case DialogId_Battle_VictoryWithLevelUp:
-               Game_DrawOverworld( game );
-               Animation_Start( &( game->animation ), AnimationId_Overworld_Pause );
-               break;
-            case DialogId_Battle_AttackAttemptSucceeded:
-            case DialogId_Battle_AttackAttemptFailed:
-            case DialogId_Battle_FleeAttemptFailed:
-               Game_ChangeSubState( game, SubState_Menu );
-               break;
+            Game_ReturnToOverworldWithPause( game );
          }
       }
    }
@@ -388,7 +357,9 @@ internal void Game_OpenBattleSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Game_OpenDialog( game, DialogId_Battle_Spell_None );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_NOSPELLS, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
    }
    else if ( SPELL_GET_BATTLEUSEABLECOUNT( game->player.spells ) )
    {
@@ -397,6 +368,8 @@ internal void Game_OpenBattleSpellMenu( Game_t* game )
    else
    {
       // this is impossible in normal gameplay, but we'll account for it anyway
-      Game_OpenDialog( game, DialogId_Battle_Spell_CantCast );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_CANTCASTSPELL, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
    }
 }

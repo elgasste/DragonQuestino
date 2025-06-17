@@ -170,8 +170,8 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags,
 void TileMap_Tic( TileMap_t* tileMap );
 void TileMap_ResetViewport( TileMap_t* tileMap );
 void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );
+void TileMap_UpdateViewport( TileMap_t* tileMap );
 void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, uint32_t targetDiameter );
-void TileMap_StartGlowTransition( TileMap_t* tileMap );
 void TileMap_ReduceTargetGlowDiameter( TileMap_t* tileMap );
 float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
