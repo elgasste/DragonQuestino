@@ -357,7 +357,9 @@ internal void Game_OpenBattleSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Game_OpenDialog( game, DialogId_Battle_Spell_None );
+      Dialog2_Reset( &( game->dialog2 ) );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_BATTLE_NOSPELLS, Game_ResetBattleMenu, game );
+      Game_OpenDialog2( game );
    }
    else if ( SPELL_GET_BATTLEUSEABLECOUNT( game->player.spells ) )
    {
@@ -366,6 +368,8 @@ internal void Game_OpenBattleSpellMenu( Game_t* game )
    else
    {
       // this is impossible in normal gameplay, but we'll account for it anyway
-      Game_OpenDialog( game, DialogId_Battle_Spell_CantCast );
+      Dialog2_Reset( &( game->dialog2 ) );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_BATTLE_CANTCASTSPELL, Game_ResetBattleMenu, game );
+      Game_OpenDialog2( game );
    }
 }

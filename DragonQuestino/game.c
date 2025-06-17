@@ -196,6 +196,7 @@ void Game_EnterTargetPortal( Game_t* game )
    }
 }
 
+// MUFFINS: will this just work, I wonder?
 void Game_OpenMenu( Game_t* game, MenuId_t id )
 {
    game->activeMenu = &( game->menus[(int32_t)id] );
@@ -221,6 +222,7 @@ void Game_RestoredHitPointsCallback( Game_t* game )
 {
    Player_RestoreHitPoints( &( game->player ), game->pendingPayload8u );
    game->screen.needsRedraw = True;
+   Game_ResetBattleMenu( game );
 }
 
 void Game_CursedCallback( Game_t* game )
@@ -236,7 +238,6 @@ void Game_ResetBattleMenu( Game_t* game )
       game->screen.needsRedraw = True;
       game->activeMenu = &( game->menus[MenuId_Battle] );
       Menu_Reset( game->activeMenu );
-      game->screen.needsRedraw = True;
       Game_ChangeSubState( game, SubState_Menu );
    }
 }

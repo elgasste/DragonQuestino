@@ -30,7 +30,10 @@ void Game_CastHeal( Game_t* game )
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Dialog2_PushSection( &( game->dialog2 ), ( game->mainState == MainState_Overworld ) ? STRING_FULLYHEALED : STRING_BATTLE_FULLYHEALED );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ),
+                                       ( game->mainState == MainState_Overworld ) ? STRING_FULLYHEALED : STRING_BATTLE_FULLYHEALED,
+                                       ( game->mainState == MainState_Overworld ) ? 0 : Game_ResetBattleMenu,
+                                       ( game->mainState == MainState_Overworld ) ? 0 : game );
    }
    else
    {
@@ -156,7 +159,10 @@ void Game_CastMidheal( Game_t* game )
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Dialog2_PushSection( &( game->dialog2 ), ( game->mainState == MainState_Overworld ) ? STRING_FULLYHEALED : STRING_BATTLE_FULLYHEALED );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ),
+                                       ( game->mainState == MainState_Overworld ) ? STRING_FULLYHEALED : STRING_BATTLE_FULLYHEALED,
+                                       ( game->mainState == MainState_Overworld ) ? 0 : Game_ResetBattleMenu,
+                                       ( game->mainState == MainState_Overworld ) ? 0 : game );
    }
    else
    {
@@ -200,7 +206,10 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
    {
       game->screen.needsRedraw = True;
       Dialog2_Reset( &( game->dialog2 ) );
-      Dialog2_PushSection( &( game->dialog2 ), ( game->mainState == MainState_Overworld ) ? STRING_NOTENOUGHMP : STRING_BATTLE_NOTENOUGHMP );
+      Dialog2_PushSectionWithCallback( &( game->dialog2 ),
+                                       ( game->mainState == MainState_Overworld ) ? STRING_NOTENOUGHMP : STRING_BATTLE_NOTENOUGHMP,
+                                       ( game->mainState == MainState_Overworld ) ? 0 : Game_ResetBattleMenu,
+                                       ( game->mainState == MainState_Overworld ) ? 0 : game );
       Game_OpenDialog2( game );
       return False;
    }
@@ -241,7 +250,9 @@ internal void Game_SpellBlockedCallback( Game_t* game )
 internal void Game_SpellBlockedMessageCallback( Game_t* game )
 {
    Dialog2_Reset( &( game->dialog2 ) );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_SPELLBLOCKED );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_SPELLBLOCKED,
+                                    ( game->mainState == MainState_Overworld ) ? 0 : Game_ResetBattleMenu,
+                                    ( game->mainState == MainState_Overworld ) ? 0 : game );
    Game_OpenDialog2( game );
 }
 
@@ -256,7 +267,9 @@ internal void Game_SpellFizzledCallback( Game_t* game )
 internal void Game_SpellFizzledMessageCallback( Game_t* game )
 {
    Dialog2_Reset( &( game->dialog2 ) );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_BATTLE_SPELLFIZZLED );
+   Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_BATTLE_SPELLFIZZLED,
+                                    ( game->mainState == MainState_Overworld ) ? 0 : Game_ResetBattleMenu,
+                                    ( game->mainState == MainState_Overworld ) ? 0 : game );
    Game_OpenDialog2( game );
 }
 
