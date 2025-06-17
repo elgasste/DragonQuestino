@@ -36,7 +36,7 @@ typedef struct Game_t
    Player_t player;
    Menu_t menus[MenuId_Count];
    Menu_t* activeMenu;
-   Dialog2_t dialog2;
+   Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    Animation_t animation;
    AnimationChain_t animationChain;
@@ -63,7 +63,7 @@ void Game_ChangeSubState( Game_t* game, SubState_t newState );
 void Game_EnterTargetPortal( Game_t* game );
 void Game_AnimatePortalEntrance( Game_t* game, TilePortal_t* portal );
 void Game_OpenMenu( Game_t* game, MenuId_t id );
-void Game_OpenDialog2( Game_t* game );
+void Game_OpenDialog( Game_t* game );
 void Game_RestoredHitPointsCallback( Game_t* game );
 void Game_CursedCallback( Game_t* game );
 void Game_ResetBattleMenu( Game_t* game );

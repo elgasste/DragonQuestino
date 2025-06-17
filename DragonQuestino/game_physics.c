@@ -236,9 +236,9 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
       if ( game->player.hasHolyProtection && game->player.holyProtectionSteps >= HOLY_PROTECTION_MAX_STEPS )
       {
          game->player.hasHolyProtection = False;
-         Dialog2_Reset( &( game->dialog2 ) );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_OFF );
-         Game_OpenDialog2( game );
+         Dialog_Reset( &( game->dialog ) );
+         Dialog_PushSection( &( game->dialog ), STRING_HOLYPROTECTION_OFF );
+         Game_OpenDialog( game );
       }
    }
 }

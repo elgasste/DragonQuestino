@@ -52,9 +52,9 @@ void Battle_Generate( Battle_t* battle )
 void Battle_AttemptAttack( Battle_t* battle )
 {
    battle->game->screen.needsRedraw = True;
-   Dialog2_Reset( &( battle->game->dialog2 ) );
-   Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), STRING_BATTLE_ATTACKATTEMPT, Battle_AttemptAttackCallback, battle );
-   Game_OpenDialog2( battle->game );
+   Dialog_Reset( &( battle->game->dialog ) );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_ATTACKATTEMPT, Battle_AttemptAttackCallback, battle );
+   Game_OpenDialog( battle->game );
 }
 
 void Battle_AttemptFlee( Battle_t* battle )
@@ -62,16 +62,16 @@ void Battle_AttemptFlee( Battle_t* battle )
    Bool_t fleed = Battle_GetFleeResult( battle );
 
    battle->game->screen.needsRedraw = True;
-   Dialog2_Reset( &( battle->game->dialog2 ) );
-   Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), STRING_BATTLE_FLEEATTEMPT, fleed ? Battle_FleeSucceededCallback : Battle_FleeFailedCallback, battle );
-   Game_OpenDialog2( battle->game );
+   Dialog_Reset( &( battle->game->dialog ) );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_FLEEATTEMPT, fleed ? Battle_FleeSucceededCallback : Battle_FleeFailedCallback, battle );
+   Game_OpenDialog( battle->game );
 }
 
 void Battle_AttackSucceededCallback( Battle_t* battle )
 {
    char msg[64];
 
-   Dialog2_Reset( &( battle->game->dialog2 ) );
+   Dialog_Reset( &( battle->game->dialog ) );
    battle->enemy.stats.hitPoints -= battle->pendingPayload8u;
    sprintf( msg,
             battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKSUCCEEDED,
@@ -79,14 +79,14 @@ void Battle_AttackSucceededCallback( Battle_t* battle )
 
    if ( battle->enemy.stats.hitPoints == 0 )
    {
-      Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Battle_EnemyDefeatedCallback, battle );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyDefeatedCallback, battle );
    }
    else
    {
-      Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
    }
 
-   Game_OpenDialog2( battle->game );
+   Game_OpenDialog( battle->game );
 }
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
@@ -183,10 +183,10 @@ internal void Battle_FleeSucceededMessageCallback( Battle_t* battle )
    char msg[64];
 
    battle->isOver = True;
-   Dialog2_Reset( &( battle->game->dialog2 ) );
+   Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_FLEEATTEMPTSUCCEEDED, battle->enemy.name );
-   Dialog2_PushSection( &( battle->game->dialog2 ), msg );
-   Game_OpenDialog2( battle->game );
+   Dialog_PushSection( &( battle->game->dialog ), msg );
+   Game_OpenDialog( battle->game );
 }
 
 internal void Battle_FleeFailedCallback( Battle_t* battle )
@@ -201,10 +201,10 @@ internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
 {
    char msg[64];
 
-   Dialog2_Reset( &( battle->game->dialog2 ) );
+   Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_FLEEATTEMPTFAILED, battle->enemy.name );
-   Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
-   Game_OpenDialog2( battle->game );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog( battle->game );
 }
 
 internal void Battle_AttemptAttackCallback( Battle_t* battle )
@@ -230,10 +230,10 @@ internal void Battle_AttackDodgedCallback( Battle_t* battle )
 {
    char msg[64];
 
-   Dialog2_Reset( &( battle->game->dialog2 ) );
+   Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_ATTACKDODGED, battle->enemy.name );
-   Dialog2_PushSectionWithCallback( &( battle->game->dialog2 ), msg, Game_ResetBattleMenu, battle->game );
-   Game_OpenDialog2( battle->game );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog( battle->game );
 }
 
 internal void Battle_EnemyDefeatedCallback( Battle_t* battle )
@@ -249,14 +249,14 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
 {
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
-   Dialog2_t* dialog = &( battle->game->dialog2 );
+   Dialog_t* dialog = &( battle->game->dialog );
    uint8_t newLevel;
    uint16_t i, learnedSpell = 0;
    char msg[64];
 
-   Dialog2_Reset( dialog );
+   Dialog_Reset( dialog );
    sprintf( msg, STRING_BATTLE_VICTORY, battle->enemy.name );
-   Dialog2_PushSection( dialog, msg );
+   Dialog_PushSection( dialog, msg );
 
    battle->isOver = True;
    battle->experienceGained = Player_CollectExperience( player, enemy->experience );
@@ -281,7 +281,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
                   battle->goldGained );
       }
 
-      Dialog2_PushSection( dialog, msg );
+      Dialog_PushSection( dialog, msg );
    }
 
    if ( newLevel > player->level )
@@ -293,7 +293,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
       player->stats.strength += battle->strengthGained;
       player->stats.agility += battle->agilityGained;
       Player_UpdateSpellsToLevel( player, newLevel );
-      Dialog2_PushSection( dialog, STRING_BATTLE_LEVELUP );
+      Dialog_PushSection( dialog, STRING_BATTLE_LEVELUP );
 
       if ( battle->strengthGained > 0 || battle->agilityGained > 0 )
       {
@@ -310,7 +310,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
             sprintf( msg, STRING_BATTLE_STRENGTHANDAGILITYGAIN, battle->strengthGained, battle->agilityGained );
          }
 
-         Dialog2_PushSection( dialog, msg );
+         Dialog_PushSection( dialog, msg );
       }
 
       if ( battle->hitPointsGained > 0 || battle->magicPointsGained > 0 )
@@ -328,7 +328,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
             sprintf( msg, STRING_BATTLE_HITPOINTSANDMAGICPOINTSGAIN, battle->hitPointsGained, battle->magicPointsGained );
          }
 
-         Dialog2_PushSection( dialog, msg );
+         Dialog_PushSection( dialog, msg );
       }
 
       if ( player->spells > battle->previousSpells )
@@ -356,9 +356,9 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
             case 9: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZLE ); break;
          }
 
-         Dialog2_PushSection( dialog, msg );
+         Dialog_PushSection( dialog, msg );
       }
    }
 
-   Game_OpenDialog2( battle->game );
+   Game_OpenDialog( battle->game );
 }

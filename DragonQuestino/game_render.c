@@ -23,7 +23,7 @@ void Game_Draw( Game_t* game )
 
             if ( game->subState == SubState_Dialog )
             {
-               Dialog2_Draw( &( game->dialog2 ) );
+               Dialog_Draw( &( game->dialog ) );
             }
          }
       }
@@ -66,7 +66,7 @@ void Game_Draw( Game_t* game )
                   break;
                case SubState_Dialog:
                   Game_DrawQuickStatus( game );
-                  Dialog2_Draw( &( game->dialog2 ) );
+                  Dialog_Draw( &( game->dialog ) );
                   break;
             }
          }
@@ -81,7 +81,7 @@ void Game_Draw( Game_t* game )
                   Menu_Draw( game->activeMenu );
                   break;
                case SubState_Dialog:
-                  Dialog2_Draw( &( game->dialog2 ) );
+                  Dialog_Draw( &( game->dialog ) );
                   break;
             }
          }
@@ -100,12 +100,12 @@ void Game_Draw( Game_t* game )
                   Game_DrawQuickStatus( game );
                   game->activeMenu->hasDrawn = False;
                   Menu_Draw( game->activeMenu );
-                  Dialog2_Draw( &( game->dialog2 ) );
+                  Dialog_Draw( &( game->dialog ) );
                   break;
                case SubState_None:
                case SubState_Dialog:
                   Game_DrawQuickStatus( game );
-                  Dialog2_Draw( &( game->dialog2 ) );
+                  Dialog_Draw( &( game->dialog ) );
                   break;
             }
          }
@@ -117,7 +117,7 @@ void Game_Draw( Game_t* game )
                   Menu_Draw( game->activeMenu );
                   break;
                case SubState_Dialog:
-                  Dialog2_Draw( &( game->dialog2 ) );
+                  Dialog_Draw( &( game->dialog ) );
                   break;
             }
          }

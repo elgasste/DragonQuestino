@@ -29,7 +29,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
       Menu_Init( &( game->menus[(MenuId_t)i] ), (MenuId_t)( i ), &( game->screen ), &( game->player ), &( game->tileMap ) );
    }
 
-   Dialog2_Init( &( game->dialog2 ), &( game->screen ), &( game->mainState ) );
+   Dialog_Init( &( game->dialog ), &( game->screen ), &( game->mainState ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
    {
@@ -62,17 +62,17 @@ void Game_Tic( Game_t* game )
    game->doAnimation = game->animationChain.isRunning;
    Input_Read( &( game->input ) );
 
-   runningCallback = ( game->animationChain.pendingCallback != 0 ) || ( game->dialog2.pendingCallback != 0 );
+   runningCallback = ( game->animationChain.pendingCallback != 0 ) || ( game->dialog.pendingCallback != 0 );
 
    if ( game->animationChain.pendingCallback )
    {
       game->animationChain.pendingCallback( game->animationChain.pendingCallbackData );
       game->animationChain.pendingCallback = 0;
    }
-   else if ( game->dialog2.pendingCallback )
+   else if ( game->dialog.pendingCallback )
    {
-      game->dialog2.pendingCallback( game->dialog2.pendingCallbackData );
-      game->dialog2.pendingCallback = 0;
+      game->dialog.pendingCallback( game->dialog.pendingCallbackData );
+      game->dialog.pendingCallback = 0;
    }
 
    if ( game->animationChain.isRunning )
@@ -97,7 +97,7 @@ void Game_Tic( Game_t* game )
                Menu_Tic( game->activeMenu );
                break;
             case SubState_Dialog:
-               Dialog2_Tic( &( game->dialog2 ) );
+               Dialog_Tic( &( game->dialog ) );
                break;
          }
       }
@@ -204,9 +204,9 @@ void Game_OpenMenu( Game_t* game, MenuId_t id )
    Game_ChangeSubState( game, SubState_Menu );
 }
 
-void Game_OpenDialog2( Game_t* game )
+void Game_OpenDialog( Game_t* game )
 {
-   Dialog2_Start( &( game->dialog2 ) );
+   Dialog_Start( &( game->dialog ) );
    Game_ChangeSubState( game, SubState_Dialog );
 }
 
@@ -239,9 +239,9 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
    char enemyName[24];
    char msg[64];
 
-   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog_Reset( &( game->dialog ) );
    sprintf( enemyName, "%s %s", game->battle.enemy.indefiniteArticle, game->battle.enemy.name );
    sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
-   Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_ResetBattleMenu, game );
-   Game_OpenDialog2( game );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+   Game_OpenDialog( game );
 }

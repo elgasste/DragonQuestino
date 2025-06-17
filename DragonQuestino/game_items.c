@@ -12,73 +12,73 @@ void Game_UseHerb( Game_t* game )
    char msg[64];
 
    game->screen.needsRedraw = True;
-   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog_Reset( &( game->dialog ) );
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_FULLYHEALED );
+      Dialog_PushSection( &( game->dialog ), STRING_FULLYHEALED );
    }
    else
    {
       ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
       restoredHitPoints = MATH_MIN( Random_u8( ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
       game->pendingPayload8u = restoredHitPoints;
-      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_HERB );
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_HERB );
       sprintf( msg, STRING_DIALOG_HEAL_RESULT, restoredHitPoints, ( restoredHitPoints == 1 ) ? STRING_POINT : STRING_POINTS );
-      Dialog2_PushSectionWithCallback( &( game->dialog2 ), msg, Game_RestoredHitPointsCallback, game );
+      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_RestoredHitPointsCallback, game );
    }
 
-   Game_OpenDialog2( game );
+   Game_OpenDialog( game );
 }
 
 void Game_UseWing( Game_t* game )
 {
-   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog_Reset( &( game->dialog ) );
 
    if ( game->tileMap.isDungeon )
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_WING_CANTUSE );
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_WING_CANTUSE );
    }
    else
    {
       game->screen.needsRedraw = True;
       ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
       game->targetPortal = &( game->zoomPortals[TILEMAP_TANTEGEL_TOWN_ID] );
-      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_ITEMUSE_WING, Game_UseWingCallback, game );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMUSE_WING, Game_UseWingCallback, game );
    }
 
-   Game_OpenDialog2( game );
+   Game_OpenDialog( game );
 }
 
 void Game_UseFairyWater( Game_t* game )
 {
    ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 );
-   Dialog2_Reset( &( game->dialog2 ) );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYWATER );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_FAIRYWATER );
 
    if ( game->player.isCursed )
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_CURSED );
+      Dialog_PushSection( &( game->dialog ), STRING_HOLYPROTECTION_CURSED );
    }
    else
    {
       Player_SetHolyProtection( &( game->player ), True );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_HOLYPROTECTION_ON );
+      Dialog_PushSection( &( game->dialog ), STRING_HOLYPROTECTION_ON );
    }
 
-   Game_OpenDialog2( game );
+   Game_OpenDialog( game );
 }
 
 void Game_UseTorch( Game_t* game )
 {
    game->screen.needsRedraw = True;
-   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog_Reset( &( game->dialog ) );
 
    if ( game->tileMap.isDark )
    {
       if ( game->tileMap.torchIsLit )
       {
-         Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_TORCH_ALREADYUSED );
+         Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_TORCH_ALREADYUSED );
       }
       else
       {
@@ -89,33 +89,33 @@ void Game_UseTorch( Game_t* game )
          }
 
          ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
-         Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_TORCH );
+         Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_TORCH );
       }
    }
    else
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_TORCH_CANTUSE );
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_TORCH_CANTUSE );
    }
 
-   Game_OpenDialog2( game );
+   Game_OpenDialog( game );
 }
 
 void Game_UseSilverHarp( Game_t* game )
 {
    game->screen.needsRedraw = True;
-   Dialog2_Reset( &( game->dialog2 ) );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_SILVERHARP_1 );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_SILVERHARP_2 );
-   Game_OpenDialog2( game );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_SILVERHARP_1 );
+   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_SILVERHARP_2 );
+   Game_OpenDialog( game );
 }
 
 void Game_UseFairyFlute( Game_t* game )
 {
    game->screen.needsRedraw = True;
-   Dialog2_Reset( &( game->dialog2 ) );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYFLUTE_1 );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_FAIRYFLUTE_2 );
-   Game_OpenDialog2( game );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_FAIRYFLUTE_1 );
+   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_FAIRYFLUTE_2 );
+   Game_OpenDialog( game );
 }
 
 void Game_UseGwaelynsLove( Game_t* game )
@@ -124,19 +124,19 @@ void Game_UseGwaelynsLove( Game_t* game )
    char msg[128], loc[64];
 
    game->screen.needsRedraw = True;
-   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog_Reset( &( game->dialog ) );
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
    {
       sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_1, game->player.name );
-      Dialog2_PushSection( &( game->dialog2 ), msg );
+      Dialog_PushSection( &( game->dialog ), msg );
 
       exp = Player_GetExperienceRemaining( &( game->player ) );
 
       if ( exp > 0 )
       {
          sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_2, exp );
-         Dialog2_PushSection( &( game->dialog2 ), msg );
+         Dialog_PushSection( &( game->dialog ), msg );
       }
 
       px = game->player.tileIndex % game->tileMap.tilesX;
@@ -162,44 +162,44 @@ void Game_UseGwaelynsLove( Game_t* game )
       }
 
       sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_3, loc );
-      Dialog2_PushSection( &( game->dialog2 ), msg );
+      Dialog_PushSection( &( game->dialog ), msg );
       sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_4, game->player.name );
-      Dialog2_PushSection( &( game->dialog2 ), msg );
+      Dialog_PushSection( &( game->dialog ), msg );
    }
    else
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_GWAELINSLOVE_CANTUSE );
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_GWAELINSLOVE_CANTUSE );
    }
 
-   Game_OpenDialog2( game );
+   Game_OpenDialog( game );
 }
 
 void Game_UseRainbowDrop( Game_t* game )
 {
-   Dialog2_Reset( &( game->dialog2 ) );
+   Dialog_Reset( &( game->dialog ) );
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID &&
         game->player.tileIndex == ( TILEMAP_RAINBOWBRIDGE_INDEX + 1 ) &&
         game->player.sprite.direction == Direction_Left )
    {
-      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_ITEMUSE_RAINBOWDROP, Game_UseRainbowDropCallback, game );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMUSE_RAINBOWDROP, Game_UseRainbowDropCallback, game );
    }
    else
    {
-      Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_RAINBOWDROP_CANTUSE );
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_RAINBOWDROP_CANTUSE );
    }
 
-   Game_OpenDialog2( game );
+   Game_OpenDialog( game );
 }
 
 void Game_UseCursedBelt( Game_t* game )
 {
    game->screen.needsRedraw = True;
    ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
-   Dialog2_Reset( &( game->dialog2 ) );
-   Dialog2_PushSection( &( game->dialog2 ), STRING_ITEMUSE_CURSEDBELT );
-   Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_CURSED, Game_CursedCallback, game );
-   Game_OpenDialog2( game );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_CURSEDBELT );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_CURSED, Game_CursedCallback, game );
+   Game_OpenDialog( game );
 }
 
 internal void Game_UseWingCallback( Game_t* game )

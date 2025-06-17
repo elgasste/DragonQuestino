@@ -4,22 +4,22 @@
 #include "common.h"
 #include "vector.h"
 
-#define DIALOG2_MAX_SECTIONS           16
-#define DIALOG2_SECTION_TEXT_SIZE      224
-#define DIALOG2_LINE_TEXT_SIZE         32
-#define DIALOG2_MAX_LINES              7
-#define DIALOG2_SCROLL_CHAR_SECONDS    0.015f
+#define DIALOG_MAX_SECTIONS           16
+#define DIALOG_SECTION_TEXT_SIZE      224
+#define DIALOG_LINE_TEXT_SIZE         32
+#define DIALOG_MAX_LINES              7
+#define DIALOG_SCROLL_CHAR_SECONDS    0.015f
 
 typedef struct Screen_t Screen_t;
 
-typedef struct Dialog2_t
+typedef struct Dialog_t
 {
    Screen_t* screen;
    MainState_t* mainState;
 
-   char sectionTexts[DIALOG2_MAX_SECTIONS][DIALOG2_SECTION_TEXT_SIZE];
-   void ( *sectionCallbacks[DIALOG2_MAX_SECTIONS] )( void* );
-   void* sectionCallbackData[DIALOG2_MAX_SECTIONS];
+   char sectionTexts[DIALOG_MAX_SECTIONS][DIALOG_SECTION_TEXT_SIZE];
+   void ( *sectionCallbacks[DIALOG_MAX_SECTIONS] )( void* );
+   void* sectionCallbackData[DIALOG_MAX_SECTIONS];
    void ( *pendingCallback )( void* );
    void* pendingCallbackData;
    uint32_t sectionCount;
@@ -29,7 +29,7 @@ typedef struct Dialog2_t
    Vector2u16_t size;      // in characters
    uint32_t lineWidth;     // in characters
 
-   char lines[DIALOG2_MAX_LINES][DIALOG2_LINE_TEXT_SIZE];
+   char lines[DIALOG_MAX_LINES][DIALOG_LINE_TEXT_SIZE];
    uint32_t lineCount;
    uint32_t charCount;
 
@@ -40,22 +40,22 @@ typedef struct Dialog2_t
    Bool_t showCarat;
    float blinkSeconds;
 }
-Dialog2_t;
+Dialog_t;
 
 #if defined( __cplusplus )
 extern "C" {
 #endif
 
-void Dialog2_Init( Dialog2_t* dialog, Screen_t* screen, MainState_t* mainState );
-void Dialog2_Reset( Dialog2_t* dialog );
-void Dialog2_Start( Dialog2_t* dialog );
-void Dialog2_PushSection( Dialog2_t* dialog, const char* text );
-void Dialog2_PushSectionWithCallback( Dialog2_t* dialog, const char* text, void ( *callback )( void* ), void* callbackData );
-void Dialog2_NextSection( Dialog2_t* dialog );
-Bool_t Dialog2_StepAhead( Dialog2_t* dialog );
-Bool_t Dialog2_IsDone( Dialog2_t* dialog );
-void Dialog2_Tic( Dialog2_t* dialog );
-void Dialog2_Draw( Dialog2_t* dialog );
+void Dialog_Init( Dialog_t* dialog, Screen_t* screen, MainState_t* mainState );
+void Dialog_Reset( Dialog_t* dialog );
+void Dialog_Start( Dialog_t* dialog );
+void Dialog_PushSection( Dialog_t* dialog, const char* text );
+void Dialog_PushSectionWithCallback( Dialog_t* dialog, const char* text, void ( *callback )( void* ), void* callbackData );
+void Dialog_NextSection( Dialog_t* dialog );
+Bool_t Dialog_StepAhead( Dialog_t* dialog );
+Bool_t Dialog_IsDone( Dialog_t* dialog );
+void Dialog_Tic( Dialog_t* dialog );
+void Dialog_Draw( Dialog_t* dialog );
 
 #if defined( __cplusplus )
 }

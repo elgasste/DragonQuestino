@@ -144,7 +144,7 @@ internal void Game_HandleOverworldWaitingInput( Game_t* game )
 
 internal void Game_HandleOverworldDialogInput( Game_t* game )
 {
-   if ( Dialog2_IsDone( &( game->dialog2 ) ) )
+   if ( Dialog_IsDone( &( game->dialog ) ) )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
@@ -153,7 +153,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      Dialog2_StepAhead( &( game->dialog2 ) );
+      Dialog_StepAhead( &( game->dialog ) );
    }
 }
 
@@ -245,9 +245,9 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Dialog2_Reset( &( game->dialog2 ) );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_SPELLS );
-      Game_OpenDialog2( game );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_NO_SPELLS );
+      Game_OpenDialog( game );
    }
    else if ( SPELL_GET_MAPUSEABLECOUNT( game->player.spells, game->tileMap.isDungeon, game->tileMap.isDark ) )
    {
@@ -255,9 +255,9 @@ internal void Game_OpenOverworldSpellMenu( Game_t* game )
    }
    else
    {
-      Dialog2_Reset( &( game->dialog2 ) );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_SPELLS_OVERWORLD_CANT_CAST );
-      Game_OpenDialog2( game );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_SPELLS_OVERWORLD_CANT_CAST );
+      Game_OpenDialog( game );
    }
 }
 
@@ -265,9 +265,9 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 {
    if ( ITEM_GET_MAPUSEABLECOUNT( game->player.items ) == 0 && ITEM_GET_MAPNONUSEABLECOUNT( game->player.items ) == 0 )
    {
-      Dialog2_Reset( &( game->dialog2 ) );
-      Dialog2_PushSection( &( game->dialog2 ), STRING_DIALOG_NO_ITEMS );
-      Game_OpenDialog2( game );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_NO_ITEMS );
+      Game_OpenDialog( game );
    }
    else
    {
@@ -337,7 +337,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
 
 internal void Game_HandleBattleDialogInput( Game_t* game )
 {
-   if ( Dialog2_IsDone( &( game->dialog2 ) ) )
+   if ( Dialog_IsDone( &( game->dialog ) ) )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
@@ -349,7 +349,7 @@ internal void Game_HandleBattleDialogInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_A].pressed || game->input.buttonStates[Button_B].pressed )
    {
-      Dialog2_StepAhead( &( game->dialog2 ) );
+      Dialog_StepAhead( &( game->dialog ) );
    }
 }
 
@@ -357,9 +357,9 @@ internal void Game_OpenBattleSpellMenu( Game_t* game )
 {
    if ( !game->player.spells )
    {
-      Dialog2_Reset( &( game->dialog2 ) );
-      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_BATTLE_NOSPELLS, Game_ResetBattleMenu, game );
-      Game_OpenDialog2( game );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_NOSPELLS, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
    }
    else if ( SPELL_GET_BATTLEUSEABLECOUNT( game->player.spells ) )
    {
@@ -368,8 +368,8 @@ internal void Game_OpenBattleSpellMenu( Game_t* game )
    else
    {
       // this is impossible in normal gameplay, but we'll account for it anyway
-      Dialog2_Reset( &( game->dialog2 ) );
-      Dialog2_PushSectionWithCallback( &( game->dialog2 ), STRING_BATTLE_CANTCASTSPELL, Game_ResetBattleMenu, game );
-      Game_OpenDialog2( game );
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_CANTCASTSPELL, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
    }
 }

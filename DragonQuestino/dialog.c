@@ -1,17 +1,17 @@
 #include "game.h"
 #include "tables.h"
 
-internal void Dialog2_LoadActiveSectionLines( Dialog2_t* dialog );
-internal void Dialog2_ResetScroll( Dialog2_t* dialog );
-internal void Dialog2_FinishSection( Dialog2_t* dialog );
+internal void Dialog_LoadActiveSectionLines( Dialog_t* dialog );
+internal void Dialog_ResetScroll( Dialog_t* dialog );
+internal void Dialog_FinishSection( Dialog_t* dialog );
 
-void Dialog2_Init( Dialog2_t* dialog, Screen_t* screen, MainState_t* mainState )
+void Dialog_Init( Dialog_t* dialog, Screen_t* screen, MainState_t* mainState )
 {
    dialog->screen = screen;
    dialog->mainState = mainState;
 }
 
-void Dialog2_Reset( Dialog2_t* dialog )
+void Dialog_Reset( Dialog_t* dialog )
 {
    dialog->sectionCount = 0;
    dialog->activeSection = 0;
@@ -36,18 +36,18 @@ void Dialog2_Reset( Dialog2_t* dialog )
    }
 }
 
-void Dialog2_Start( Dialog2_t* dialog )
+void Dialog_Start( Dialog_t* dialog )
 {
-   Dialog2_LoadActiveSectionLines( dialog );
-   Dialog2_ResetScroll( dialog );
+   Dialog_LoadActiveSectionLines( dialog );
+   Dialog_ResetScroll( dialog );
 }
 
-void Dialog2_PushSection( Dialog2_t* dialog, const char* text )
+void Dialog_PushSection( Dialog_t* dialog, const char* text )
 {
-   Dialog2_PushSectionWithCallback( dialog, text, 0, 0 );
+   Dialog_PushSectionWithCallback( dialog, text, 0, 0 );
 }
 
-void Dialog2_PushSectionWithCallback( Dialog2_t* dialog, const char* text, void ( *callback )( void* ), void* callbackData )
+void Dialog_PushSectionWithCallback( Dialog_t* dialog, const char* text, void ( *callback )( void* ), void* callbackData )
 {
    strcpy( dialog->sectionTexts[dialog->sectionCount], text );
    dialog->sectionCallbacks[dialog->sectionCount] = callback;
@@ -55,31 +55,31 @@ void Dialog2_PushSectionWithCallback( Dialog2_t* dialog, const char* text, void 
    dialog->sectionCount++;
 }
 
-void Dialog2_NextSection( Dialog2_t* dialog )
+void Dialog_NextSection( Dialog_t* dialog )
 {
    dialog->activeSection++;
-   Dialog2_LoadActiveSectionLines( dialog );
-   Dialog2_ResetScroll( dialog );
+   Dialog_LoadActiveSectionLines( dialog );
+   Dialog_ResetScroll( dialog );
 }
 
-Bool_t Dialog2_StepAhead( Dialog2_t* dialog )
+Bool_t Dialog_StepAhead( Dialog_t* dialog )
 {
    if ( dialog->isScrolling )
    {
-      Dialog2_FinishSection( dialog );
+      Dialog_FinishSection( dialog );
       return False;
    }
 
-   Dialog2_NextSection( dialog );
+   Dialog_NextSection( dialog );
    return True;
 }
 
-Bool_t Dialog2_IsDone( Dialog2_t* dialog )
+Bool_t Dialog_IsDone( Dialog_t* dialog )
 {
    return ( !dialog->isScrolling && ( dialog->activeSection >= ( dialog->sectionCount - 1 ) ) ) ? True : False;
 }
 
-void Dialog2_Tic( Dialog2_t* dialog )
+void Dialog_Tic( Dialog_t* dialog )
 {
    if ( dialog->isScrolling )
    {
@@ -87,10 +87,10 @@ void Dialog2_Tic( Dialog2_t* dialog )
 
       if ( dialog->scrollSeconds > dialog->scrollTotalSeconds )
       {
-         Dialog2_FinishSection( dialog );
+         Dialog_FinishSection( dialog );
       }
    }
-   else if ( !Dialog2_IsDone( dialog ) )
+   else if ( !Dialog_IsDone( dialog ) )
    {
       dialog->blinkSeconds += CLOCK_FRAME_SECONDS;
 
@@ -102,10 +102,10 @@ void Dialog2_Tic( Dialog2_t* dialog )
    }
 }
 
-void Dialog2_Draw( Dialog2_t* dialog )
+void Dialog_Draw( Dialog_t* dialog )
 {
    uint32_t i, x, y, stopCharIndex, len;
-   char substr[DIALOG2_LINE_TEXT_SIZE];
+   char substr[DIALOG_LINE_TEXT_SIZE];
    Screen_t* screen = dialog->screen;
 
    Screen_DrawTextWindow( screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y );
@@ -115,7 +115,7 @@ void Dialog2_Draw( Dialog2_t* dialog )
 
    if ( dialog->isScrolling )
    {
-      stopCharIndex = (uint32_t)( dialog->scrollSeconds / DIALOG2_SCROLL_CHAR_SECONDS );
+      stopCharIndex = (uint32_t)( dialog->scrollSeconds / DIALOG_SCROLL_CHAR_SECONDS );
 
       for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
       {
@@ -142,14 +142,14 @@ void Dialog2_Draw( Dialog2_t* dialog )
          Screen_DrawText( screen, dialog->lines[i], x, y );
       }
 
-      if ( dialog->showCarat && !Dialog2_IsDone( dialog ) )
+      if ( dialog->showCarat && !Dialog_IsDone( dialog ) )
       {
          Screen_DrawChar( screen, DOWNWARD_CARAT, x + ( ( dialog->lineWidth / 2 ) * TEXT_TILE_SIZE ), y );
       }
    }
 }
 
-internal void Dialog2_LoadActiveSectionLines( Dialog2_t* dialog )
+internal void Dialog_LoadActiveSectionLines( Dialog_t* dialog )
 {
    uint32_t textIndex, lineIndex, lastSpaceIndex, currentLine;
    uint32_t strLen;
@@ -215,16 +215,16 @@ internal void Dialog2_LoadActiveSectionLines( Dialog2_t* dialog )
    }
 }
 
-internal void Dialog2_ResetScroll( Dialog2_t* dialog )
+internal void Dialog_ResetScroll( Dialog_t* dialog )
 {
    dialog->isScrolling = True;
    dialog->scrollSeconds = 0.0f;
-   dialog->scrollTotalSeconds = dialog->charCount * DIALOG2_SCROLL_CHAR_SECONDS;
+   dialog->scrollTotalSeconds = dialog->charCount * DIALOG_SCROLL_CHAR_SECONDS;
    dialog->showCarat = True;
    dialog->blinkSeconds = 0.0f;
 }
 
-internal void Dialog2_FinishSection( Dialog2_t* dialog )
+internal void Dialog_FinishSection( Dialog_t* dialog )
 {
    dialog->isScrolling = False;
 
