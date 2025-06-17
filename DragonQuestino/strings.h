@@ -200,7 +200,7 @@
 #define STRING_BATTLE_ATTACKEXCELLENTMOVE                            "Excellent move! The %s has lost %u hit %s."
 #define STRING_BATTLE_ATTACKDODGED                                   "But the %s dodges your attack!"
 #define STRING_BATTLE_FLEEATTEMPT                                    "You make a run for it..."
-#define STRING_BATTLE_FLEEATTEMPTSUCCEEDED                           "Success, you have eluded the %s!"
+#define STRING_BATTLE_FLEEATTEMPTSUCCEEDED                           "You have eluded the %s!"
 #define STRING_BATTLE_FLEEATTEMPTFAILED                              "But the %s blocks your escape!"
 #define STRING_BATTLE_ENEMYASLEEP                                    "The %s is asleep! Command?"
 #define STRING_BATTLE_ENEMYFIZZLED                                   "The %s's spells have been blocked!"
