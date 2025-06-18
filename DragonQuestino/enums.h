@@ -132,6 +132,7 @@ typedef enum MenuId_t
 
    MenuId_Battle,
    MenuId_BattleSpell,
+   MenuId_BattleItem,
 
    MenuId_Count
 }
