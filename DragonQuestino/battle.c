@@ -259,8 +259,10 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    Dialog_t* dialog = &( battle->game->dialog );
    uint8_t newLevel;
    uint16_t i, learnedSpell = 0;
-   char msg[64];
+   char msg[96];
 
+   Game_DrawTileMap( battle->game );
+   Game_WipeEnemy( battle->game );
    Dialog_Reset( dialog );
    sprintf( msg, STRING_BATTLE_VICTORY, battle->enemy.name );
    Dialog_PushSection( dialog, msg );
@@ -293,12 +295,17 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
 
    if ( newLevel > player->level )
    {
+      player->level = newLevel;
       battle->strengthGained =  g_strengthTable[newLevel] - player->stats.strength;
       battle->agilityGained = g_agilityTable[newLevel] - player->stats.agility;
       battle->hitPointsGained = g_hitPointsTable[newLevel] - player->stats.maxHitPoints;
       battle->magicPointsGained = g_magicPointsTable[newLevel] - player->stats.maxMagicPoints;
       player->stats.strength += battle->strengthGained;
       player->stats.agility += battle->agilityGained;
+      player->stats.maxHitPoints += battle->hitPointsGained;
+      player->stats.maxMagicPoints += battle->magicPointsGained;
+      player->stats.hitPoints = player->stats.maxHitPoints;
+      player->stats.magicPoints = player->stats.maxMagicPoints;
       Player_UpdateSpellsToLevel( player, newLevel );
       Dialog_PushSection( dialog, STRING_BATTLE_LEVELUP );
 
