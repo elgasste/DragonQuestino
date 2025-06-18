@@ -312,6 +312,8 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
          case MenuCommand_Spell_Fizzle: Game_CastFizzle( game ); break;
          case MenuCommand_Spell_Midheal: Game_CastMidheal( game ); break;
          case MenuCommand_Spell_Sizzle: Game_CastSizzle( game ); break;
+
+         case MenuCommand_Item_Herb: Game_UseHerb( game ); break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )

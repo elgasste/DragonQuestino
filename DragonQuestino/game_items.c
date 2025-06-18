@@ -17,7 +17,10 @@ void Game_UseHerb( Game_t* game )
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
    {
-      Dialog_PushSection( &( game->dialog ), STRING_FULLYHEALED );
+      Dialog_PushSectionWithCallback( &( game->dialog ),
+                                      ( game->mainState == MainState_Overworld ) ? STRING_FULLYHEALED : STRING_BATTLE_FULLYHEALED,
+                                      ( game->mainState == MainState_Overworld ) ? 0 : Game_ResetBattleMenu,
+                                      ( game->mainState == MainState_Overworld ) ? 0 : game );
    }
    else
    {
