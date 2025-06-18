@@ -5,6 +5,7 @@
 internal void Game_UseWingCallback( Game_t* game );
 internal void Game_UseRainbowDropCallback( Game_t* game );
 internal void Game_RainbowDropTrippyCallback( Game_t* game );
+internal void Game_UseSilverHarpCallback( Game_t* game );
 
 void Game_UseHerb( Game_t* game )
 {
@@ -105,7 +106,7 @@ void Game_UseSilverHarp( Game_t* game )
    game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_SILVERHARP_1 );
-   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_SILVERHARP_2 );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMUSE_SILVERHARP_2, Game_UseSilverHarpCallback, game );
    Game_OpenDialog( game );
 }
 
@@ -244,4 +245,20 @@ internal void Game_RainbowDropTrippyCallback( Game_t* game )
    game->gameFlags.usedRainbowDrop = True;
    TILE_SET_TEXTUREINDEX( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );
    TILE_TOGGLE_PASSABLE( game->tileMap.tiles[TILEMAP_RAINBOWBRIDGE_INDEX] );
+}
+
+internal void Game_UseSilverHarpCallback( Game_t* game )
+{
+   if ( game->tileMap.hasEncounters )
+   {
+      Battle_Generate( &( game->battle ) );
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToBattleState, game );
+      AnimationChain_Start( &( game->animationChain ) );
+   }
 }
