@@ -6,6 +6,8 @@ internal void Game_UseWingCallback( Game_t* game );
 internal void Game_UseRainbowDropCallback( Game_t* game );
 internal void Game_RainbowDropTrippyCallback( Game_t* game );
 internal void Game_UseSilverHarpCallback( Game_t* game );
+internal void Game_UseFairyFluteCallback( Game_t* game );
+internal void Game_UseFairyFluteMessageCallback( Game_t* game );
 
 void Game_UseHerb( Game_t* game )
 {
@@ -118,7 +120,16 @@ void Game_UseFairyFlute( Game_t* game )
    game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_FAIRYFLUTE_1 );
-   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_FAIRYFLUTE_2 );
+
+   if ( game->mainState == MainState_Battle )
+   {
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMUSE_FAIRYFLUTE_2, Game_UseFairyFluteCallback, game );
+   }
+   else
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_FAIRYFLUTE_2 );
+   }
+
    Game_OpenDialog( game );
 }
 
@@ -263,5 +274,31 @@ internal void Game_UseSilverHarpCallback( Game_t* game )
       AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
       AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToBattleState, game );
       AnimationChain_Start( &( game->animationChain ) );
+   }
+}
+
+internal void Game_UseFairyFluteCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_UseFairyFluteMessageCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_UseFairyFluteMessageCallback( Game_t* game )
+{
+   if ( game->battle.specialEnemy == SpecialEnemy_Golem && !game->battle.enemy.stats.isAsleep )
+   {
+      Game_SpellSleepSuccessCallback( game );
+   }
+   else
+   {
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BUTNOTHINGHAPPENS, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
    }
 }

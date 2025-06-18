@@ -101,6 +101,7 @@ void Game_CastZoom( Game_t* game, uint32_t townId );
 void Game_CastRepel( Game_t* game );
 void Game_CastMidheal( Game_t* game );
 void Game_CastSizzle( Game_t* game );
+void Game_SpellSleepSuccessCallback( Game_t* game );
 
 // game_items.c
 void Game_UseHerb( Game_t* game );

@@ -314,6 +314,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
          case MenuCommand_Spell_Sizzle: Game_CastSizzle( game ); break;
 
          case MenuCommand_Item_Herb: Game_UseHerb( game ); break;
+         case MenuCommand_Item_FairyFlute: Game_UseFairyFlute( game ); break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
