@@ -13,7 +13,6 @@ internal void Game_CastSpellCallback( Game_t* game );
 internal void Game_SpellHealCallback( Game_t* game );
 internal void Game_SpellHurtCallback( Game_t* game );
 internal void Game_SpellSleepCallback( Game_t* game );
-internal void Game_SpellSleepSuccessCallback( Game_t* game );
 internal void Game_SpellFizzleCallback( Game_t* game );
 internal void Game_SpellFizzleSuccessCallback( Game_t* game );
 internal void Game_SpellZoomCallback( Game_t* game );
@@ -256,6 +255,17 @@ void Game_CastSizzle( Game_t* game )
    Game_OpenDialog( game );
 }
 
+void Game_SpellSleepSuccessCallback( Game_t* game )
+{
+   char msg[64];
+
+   game->battle.enemy.stats.isAsleep = True;
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMYASLEEP, game->battle.enemy.name );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+   Game_OpenDialog( game );
+}
+
 internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName )
 {
    char msg[64];
@@ -424,17 +434,6 @@ internal void Game_SpellSleepCallback( Game_t* game )
       AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_SpellSleepSuccessCallback, game );
       AnimationChain_Start( &( game->animationChain ) );
    }
-}
-
-internal void Game_SpellSleepSuccessCallback( Game_t* game )
-{
-   char msg[64];
-
-   game->battle.enemy.stats.isAsleep = True;
-   Dialog_Reset( &( game->dialog ) );
-   sprintf( msg, STRING_BATTLE_ENEMYASLEEP, game->battle.enemy.name );
-   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
-   Game_OpenDialog( game );
 }
 
 internal void Game_SpellFizzleCallback( Game_t* game )

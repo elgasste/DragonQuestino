@@ -225,6 +225,8 @@
 #define STRING_BATTLE_SPELL_NOEFFECT                                 "But the spell has no effect on the %s!"
 #define STRING_BATTLE_SPELL_SLEEP_ALREADYASLEEP                      "The %s is already asleep. Command?"
 #define STRING_BATTLE_SPELL_FIZZLE_ALREADYFIZZLED                    "The %s's spells are already blocked. Command?"
+#define STRING_BATTLE_NOITEMS                                        "You do not have any items. Command?"
+#define STRING_BATTLE_CANTUSEITEM                                    "You do not have any items that can be used in battle. Command?"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

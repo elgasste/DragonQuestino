@@ -12,6 +12,7 @@ internal void Menu_UpdateOverworldSpell( Menu_t* menu );
 internal void Menu_UpdateOverworldItem( Menu_t* menu );
 internal void Menu_UpdateZoom( Menu_t* menu );
 internal void Menu_UpdateBattleSpell( Menu_t* menu );
+internal void Menu_UpdateBattleItem( Menu_t* menu );
 
 void Menu_Init( Menu_t* menu, MenuId_t id, Screen_t* screen, Player_t* player, TileMap_t* tileMap )
 {
@@ -155,6 +156,7 @@ internal void Menu_Update( Menu_t* menu )
       case MenuId_OverworldItem: Menu_UpdateOverworldItem( menu ); break;
       case MenuId_Zoom: Menu_UpdateZoom( menu ); break;
       case MenuId_BattleSpell: Menu_UpdateBattleSpell( menu ); break;
+      case MenuId_BattleItem: Menu_UpdateBattleItem( menu ); break;
    }
 }
 
@@ -522,5 +524,43 @@ internal void Menu_UpdateBattleSpell( Menu_t* menu )
    {
       sprintf( menu->items[i].text, STRING_SPELL_SIZZLE );
       menu->items[i].command = MenuCommand_Spell_Sizzle;
+   }
+}
+
+internal void Menu_UpdateBattleItem( Menu_t* menu )
+{
+   uint32_t i;
+   uint32_t items = menu->player->items;
+
+   strcpy( menu->title, STRING_BATTLE_MENU_ITEM );
+
+   menu->itemCount = ITEM_GET_BATTLEUSEABLECOUNT( items );
+   menu->itemsPerColumn = menu->itemCount;
+   menu->selectedIndex = 0;
+   menu->position.x = 136;
+   menu->position.y = 32;
+   menu->borderSize.x = 12;
+   menu->borderSize.y = (uint16_t)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderPadding.x = 1;
+   menu->borderPadding.y = 1;
+   menu->columnWidth = 10;
+   menu->itemPadding = 1;
+   menu->caratOffset = 1;
+
+   i = 0;
+
+   if ( ITEM_GET_HERBCOUNT( items ) )
+   {
+      menu->items[i].twoLineText = False;
+      sprintf( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_HERB, ITEM_GET_HERBCOUNT( items ) );
+      menu->items[i].command = MenuCommand_Item_Herb;
+      i++;
+   }
+   if ( ITEM_HAS_FAIRYFLUTE( items ) )
+   {
+      menu->items[i].twoLineText = True;
+      strcpy( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_FAIRYFLUTE_1 );
+      strcpy( menu->items[i].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_FAIRYFLUTE_2 );
+      menu->items[i].command = MenuCommand_Item_FairyFlute;
    }
 }

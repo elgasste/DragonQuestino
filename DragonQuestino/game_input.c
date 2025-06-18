@@ -13,6 +13,7 @@ internal void Game_OpenZoomMenu( Game_t* game );
 internal void Game_HandleBattleMenuInput( Game_t* game );
 internal void Game_HandleBattleDialogInput( Game_t* game );
 internal void Game_OpenBattleSpellMenu( Game_t* game );
+internal void Game_OpenBattleItemMenu( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -303,7 +304,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
          case MenuCommand_Battle_Attack: Battle_AttemptAttack( &( game->battle ) ); break;
          case MenuCommand_Battle_Flee: Battle_AttemptFlee( &( game->battle ) ); break;
          case MenuCommand_Battle_Spell: Game_OpenBattleSpellMenu( game ); break;
-         case MenuCommand_Battle_Item: Game_ChangeToOverworldState( game ); break;
+         case MenuCommand_Battle_Item: Game_OpenBattleItemMenu( game ); break;
 
          case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
          case MenuCommand_Spell_Sizz: Game_CastSizz( game ); break;
@@ -311,6 +312,9 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
          case MenuCommand_Spell_Fizzle: Game_CastFizzle( game ); break;
          case MenuCommand_Spell_Midheal: Game_CastMidheal( game ); break;
          case MenuCommand_Spell_Sizzle: Game_CastSizzle( game ); break;
+
+         case MenuCommand_Item_Herb: Game_UseHerb( game ); break;
+         case MenuCommand_Item_FairyFlute: Game_UseFairyFlute( game ); break;
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
@@ -318,6 +322,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
       switch ( game->activeMenu->id )
       {
          case MenuId_BattleSpell:
+         case MenuId_BattleItem:
             game->activeMenu = &( game->menus[MenuId_Battle] );
             game->screen.needsRedraw = True;
             break;
@@ -370,6 +375,26 @@ internal void Game_OpenBattleSpellMenu( Game_t* game )
       // this is impossible in normal gameplay, but we'll account for it anyway
       Dialog_Reset( &( game->dialog ) );
       Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_CANTCASTSPELL, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
+   }
+}
+
+internal void Game_OpenBattleItemMenu( Game_t* game )
+{
+   if ( !game->player.items )
+   {
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_NOITEMS, Game_ResetBattleMenu, game );
+      Game_OpenDialog( game );
+   }
+   else if ( ITEM_GET_BATTLEUSEABLECOUNT( game->player.items ) )
+   {
+      Game_OpenMenu( game, MenuId_BattleItem );
+   }
+   else
+   {
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_CANTUSEITEM, Game_ResetBattleMenu, game );
       Game_OpenDialog( game );
    }
 }
