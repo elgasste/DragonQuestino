@@ -16,6 +16,9 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
 internal void Battle_NewLevelCallback( Battle_t* battle );
 internal void Battle_GainedPointsCallback( Battle_t* battle );
 internal void Battle_SwitchTurnCallback( Battle_t* battle );
+internal void Battle_EnemyTurn( Battle_t* battle );
+internal void Battle_EnemyWokeUpCallback( Battle_t* battle );
+internal void Battle_EnemyInitiateBehavior( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -411,10 +414,72 @@ internal void Battle_SwitchTurnCallback( Battle_t* battle )
 {
    if ( battle->turn == BattleTurn_Player )
    {
-      // MUFFINS: show a "command?" message
+      if ( battle->game->player.stats.isAsleep )
+      {
+         Dialog_Reset( &( battle->game->dialog ) );
+
+         if ( Random_u8( 1, 2 ) == 1 )
+         {
+            Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_PLAYERWOKEUP, Game_ResetBattleMenu, battle->game );
+         }
+         else
+         {
+            Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_PLAYERSTILLASLEEP, Battle_SwitchTurn, battle );
+         }
+
+         Game_OpenDialog( battle->game );
+      }
+      else
+      {
+         Dialog_Reset( &( battle->game->dialog ) );
+         Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_COMMAND, Game_ResetBattleMenu, battle->game );
+         Game_OpenDialog( battle->game );
+      }
    }
    else
    {
-      // MUFFINS: trigger the enemy's behavior
+      Battle_EnemyTurn( battle );
    }
+}
+
+internal void Battle_EnemyTurn( Battle_t* battle )
+{
+   char msg[64];
+
+   if ( battle->enemy.stats.isAsleep )
+   {
+      if ( Random_u8( 1, 3 ) == 1 )
+      {
+         Dialog_Reset( &( battle->game->dialog ) );
+         sprintf( msg, STRING_BATTLE_ENEMYWOKEUP, battle->enemy.name );
+         Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyWokeUpCallback, battle );
+         Game_OpenDialog( battle->game );
+      }
+      else
+      {
+         battle->turn = BattleTurn_Player;
+         Dialog_Reset( &( battle->game->dialog ) );
+         sprintf( msg, STRING_BATTLE_ENEMYSTILLASLEEP, battle->enemy.name );
+         Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+         Game_OpenDialog( battle->game );
+      }
+   }
+   else
+   {
+      Battle_EnemyInitiateBehavior( battle );
+   }
+}
+
+internal void Battle_EnemyWokeUpCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyInitiateBehavior, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_EnemyInitiateBehavior( Battle_t* battle )
+{
+   // TODO
+   UNUSED_PARAM( battle );
 }

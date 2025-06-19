@@ -262,7 +262,7 @@ void Game_SpellSleepSuccessCallback( Game_t* game )
    game->battle.enemy.stats.isAsleep = True;
    Dialog_Reset( &( game->dialog ) );
    sprintf( msg, STRING_BATTLE_ENEMYASLEEP, game->battle.enemy.name );
-   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_SwitchTurn, &( game->battle ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
    Game_OpenDialog( game );
 }
 

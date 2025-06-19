@@ -194,6 +194,7 @@
 #define STRING_ENEMY_REDDRAGON                                       "red dragon"
 #define STRING_ENEMY_DRAGONLORD                                      "dragonlord"
 
+#define STRING_BATTLE_COMMAND                                        "Command?"
 #define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches! Command?"
 #define STRING_BATTLE_ATTACKATTEMPT                                  "You attack!"
 #define STRING_BATTLE_ATTACKSUCCEEDED                                "The %s has lost %u hit %s."
@@ -205,6 +206,10 @@
 #define STRING_BATTLE_ENEMYASLEEP                                    "The %s is asleep! Command?"
 #define STRING_BATTLE_ENEMYFIZZLED                                   "The %s's spells have been blocked!"
 #define STRING_BATTLE_VICTORY                                        "The %s is defeated!"
+#define STRING_BATTLE_PLAYERSTILLASLEEP                              "You are still asleep!"
+#define STRING_BATTLE_PLAYERWOKEUP                                   "You have awaken! Command?"
+#define STRING_BATTLE_ENEMYSTILLASLEEP                               "The %s is still asleep. Command?"
+#define STRING_BATTLE_ENEMYWOKEUP                                    "The %s woke up!"
 #define STRING_BATTLE_EXPERIENCEANDGOLD                              "You have gained %u experience %s and %u gold."
 #define STRING_BATTLE_EXPERIENCEONLY                                 "You have gained %u experience %s."
 #define STRING_BATTLE_GOLDONLY                                       "You have gained %u gold."
