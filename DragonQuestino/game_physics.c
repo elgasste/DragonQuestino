@@ -212,13 +212,12 @@ internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
    uint32_t encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[tileIndex] );
    Bool_t spawnEncounter = False;
 
+   // TODO: account for zone 0
    switch( encounterRate )
    {
-      case 0: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_LOW; break;
-      case 1: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_MEDIUM; break;
-      case 2: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_HIGH; break;
-      case 3: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_EXTREME; break;
-      default: return;
+      case 0: spawnEncounter = ( Random_u8( 1, ENCOUNTERRATE_LOW ) == 1 ) ? True : False; break;
+      case 1: spawnEncounter = ( Random_u8( 1, ENCOUNTERRATE_MEDIUM ) == 1 ) ? True : False; break;
+      case 2: spawnEncounter = ( Random_u8( 1, ENCOUNTERRATE_HIGH ) == 1 ) ? True : False; break;
    }
 
    if ( spawnEncounter )
