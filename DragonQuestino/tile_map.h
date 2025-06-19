@@ -64,6 +64,11 @@
 #define TILEMAP_HIDDENSTAIRS_DESTINATION_INDEX  398
 #define TILEMAP_HIDDENSTAIRS_DESTINATION_DIR    Direction_Right
 
+#define TILEMAP_ZONEZERO_STARTROW               37
+#define TILEMAP_ZONEZERO_ENDROW                 51
+#define TILEMAP_ZONEZERO_STARTCOL               40
+#define TILEMAP_ZONEZERO_ENDCOL                 69
+
 #define TILEMAP_TOWN_COUNT                      6
 
 #define TILEMAP_TANTEGEL_TOWN_ID                0

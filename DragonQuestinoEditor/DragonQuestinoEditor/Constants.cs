@@ -89,13 +89,13 @@ namespace DragonQuestinoEditor
          0,       // grass
          0x100,   // trees
          0x200,   // hills
-         0x100,   // desert
-         0x300,   // swamp
+         0x200,   // desert
+         0x100,   // swamp
          0,       // mountains
          0,       // stone wall
-         0,       // brick path
+         0x100,   // brick path
          0,       // void
-         0,       // barrier
+         0x100,   // barrier
          0,       // counter
          0,       // metal wall
          0,       // water, no shore

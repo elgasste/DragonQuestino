@@ -210,15 +210,26 @@ internal void Game_UpdatePlayerTileIndex( Game_t* game )
 internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
 {
    uint32_t encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[tileIndex] );
-   Bool_t spawnEncounter = False;
+   Bool_t spawnEncounter = False, zoneZero = False;
+   uint32_t row, col;
+
+   if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
+   {
+      row = tileIndex / game->tileMap.tilesX;
+      col = tileIndex % game->tileMap.tilesX;
+
+      if ( row >= TILEMAP_ZONEZERO_STARTROW && row <= TILEMAP_ZONEZERO_ENDROW &&
+           col >= TILEMAP_ZONEZERO_STARTCOL && col <= TILEMAP_ZONEZERO_ENDCOL )
+      {
+         zoneZero = True;
+      }
+   }
 
    switch( encounterRate )
    {
-      case 0: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_LOW; break;
-      case 1: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_MEDIUM; break;
-      case 2: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_HIGH; break;
-      case 3: spawnEncounter = Random_Percent() <= ENCOUNTERRATE_EXTREME; break;
-      default: return;
+      case 0: spawnEncounter = ( Random_u8( 1, zoneZero ? ENCOUNTERRATE_LOW * 2 : ENCOUNTERRATE_LOW ) == 1 ) ? True : False; break;
+      case 1: spawnEncounter = ( Random_u8( 1, zoneZero ? ENCOUNTERRATE_MEDIUM * 2 : ENCOUNTERRATE_MEDIUM ) == 1 ) ? True : False; break;
+      case 2: spawnEncounter = ( Random_u8( 1, zoneZero ? ENCOUNTERRATE_HIGH * 2 : ENCOUNTERRATE_HIGH ) == 1 ) ? True : False; break;
    }
 
    if ( spawnEncounter )

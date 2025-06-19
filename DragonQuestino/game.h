@@ -17,10 +17,9 @@
 
 #define COLLISION_THETA                            0.001f
 
-#define ENCOUNTERRATE_LOW                          2
-#define ENCOUNTERRATE_MEDIUM                       4
-#define ENCOUNTERRATE_HIGH                         6
-#define ENCOUNTERRATE_EXTREME                      10
+#define ENCOUNTERRATE_LOW                          24
+#define ENCOUNTERRATE_MEDIUM                       16
+#define ENCOUNTERRATE_HIGH                         8
 
 typedef struct Game_t
 {
