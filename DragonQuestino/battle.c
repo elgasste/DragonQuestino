@@ -300,6 +300,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
       battle->agilityGained = g_agilityTable[battle->newLevel] - player->stats.agility;
       battle->hitPointsGained = g_hitPointsTable[battle->newLevel] - player->stats.maxHitPoints;
       battle->magicPointsGained = g_magicPointsTable[battle->newLevel] - player->stats.maxMagicPoints;
+      Player_UpdateSpellsToLevel( &( battle->game->player ), battle->newLevel );
 
       player->stats.strength += battle->strengthGained;
       player->stats.agility += battle->agilityGained;
