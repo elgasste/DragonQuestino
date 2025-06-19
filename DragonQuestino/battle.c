@@ -13,6 +13,8 @@ internal void Battle_AttemptAttackCallback( Battle_t* battle );
 internal void Battle_AttackDodgedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
+internal void Battle_NewLevelCallback( Battle_t* battle );
+internal void Battle_GainedPointsCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -257,12 +259,9 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
    Dialog_t* dialog = &( battle->game->dialog );
-   uint8_t newLevel;
    uint16_t i, learnedSpell = 0;
    char msg[96];
 
-   Game_DrawTileMap( battle->game );
-   Game_WipeEnemy( battle->game );
    Dialog_Reset( dialog );
    sprintf( msg, STRING_BATTLE_VICTORY, battle->enemy.name );
    Dialog_PushSection( dialog, msg );
@@ -270,7 +269,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    battle->isOver = True;
    battle->experienceGained = Player_CollectExperience( player, enemy->experience );
    battle->goldGained = Player_CollectGold( player, enemy->gold );
-   newLevel = Player_GetLevelFromExperience( player );
+   battle->newLevel = Player_GetLevelFromExperience( player );
    battle->previousSpells = player->spells;
 
    if ( battle->experienceGained > 0 || battle->goldGained > 0 )
@@ -290,24 +289,20 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
                   battle->goldGained );
       }
 
-      Dialog_PushSection( dialog, msg );
+      Dialog_PushSectionWithCallback( dialog, msg, Game_DrawQuickStatus, battle->game );
    }
 
-   if ( newLevel > player->level )
+   if ( battle->newLevel > player->level )
    {
-      player->level = newLevel;
-      battle->strengthGained =  g_strengthTable[newLevel] - player->stats.strength;
-      battle->agilityGained = g_agilityTable[newLevel] - player->stats.agility;
-      battle->hitPointsGained = g_hitPointsTable[newLevel] - player->stats.maxHitPoints;
-      battle->magicPointsGained = g_magicPointsTable[newLevel] - player->stats.maxMagicPoints;
+      Dialog_PushSectionWithCallback( dialog, STRING_BATTLE_LEVELUP, Battle_NewLevelCallback, battle );
+
+      battle->strengthGained =  g_strengthTable[battle->newLevel] - player->stats.strength;
+      battle->agilityGained = g_agilityTable[battle->newLevel] - player->stats.agility;
+      battle->hitPointsGained = g_hitPointsTable[battle->newLevel] - player->stats.maxHitPoints;
+      battle->magicPointsGained = g_magicPointsTable[battle->newLevel] - player->stats.maxMagicPoints;
+
       player->stats.strength += battle->strengthGained;
       player->stats.agility += battle->agilityGained;
-      player->stats.maxHitPoints += battle->hitPointsGained;
-      player->stats.maxMagicPoints += battle->magicPointsGained;
-      player->stats.hitPoints = player->stats.maxHitPoints;
-      player->stats.magicPoints = player->stats.maxMagicPoints;
-      Player_UpdateSpellsToLevel( player, newLevel );
-      Dialog_PushSection( dialog, STRING_BATTLE_LEVELUP );
 
       if ( battle->strengthGained > 0 || battle->agilityGained > 0 )
       {
@@ -342,7 +337,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
             sprintf( msg, STRING_BATTLE_HITPOINTSANDMAGICPOINTSGAIN, battle->hitPointsGained, battle->magicPointsGained );
          }
 
-         Dialog_PushSection( dialog, msg );
+         Dialog_PushSectionWithCallback( dialog, msg, Battle_GainedPointsCallback, battle );
       }
 
       if ( player->spells > battle->previousSpells )
@@ -381,3 +376,20 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
 
    Game_OpenDialog( battle->game );
 }
+
+internal void Battle_NewLevelCallback( Battle_t* battle )
+{
+   battle->game->player.level = battle->newLevel;
+   Game_DrawQuickStatus( battle->game );
+}
+
+internal void Battle_GainedPointsCallback( Battle_t* battle )
+{
+   battle->game->player.stats.maxHitPoints += battle->hitPointsGained;
+   battle->game->player.stats.maxMagicPoints += battle->magicPointsGained;
+   battle->game->player.stats.hitPoints = battle->game->player.stats.maxHitPoints;
+   battle->game->player.stats.magicPoints = battle->game->player.stats.maxMagicPoints;
+
+   Game_DrawQuickStatus( battle->game );
+}
+
