@@ -15,6 +15,7 @@ internal void Battle_EnemyDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
 internal void Battle_NewLevelCallback( Battle_t* battle );
 internal void Battle_GainedPointsCallback( Battle_t* battle );
+internal void Battle_SwitchTurnCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -35,6 +36,7 @@ void Battle_Generate( Battle_t* battle )
    battle->isOver = False;
    battle->game->player.stats.isAsleep = False;
    battle->game->player.stats.isFizzled = False;
+   battle->turn = BattleTurn_Player;
 
    switch ( battle->specialEnemy )
    {
@@ -87,10 +89,21 @@ void Battle_AttackSucceededCallback( Battle_t* battle )
    }
    else
    {
-      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    }
 
    Game_OpenDialog( battle->game );
+}
+
+void Battle_SwitchTurn( Battle_t* battle )
+{
+   battle->turn = ( battle->turn == BattleTurn_Player ) ? BattleTurn_Enemy : BattleTurn_Player;
+
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_SwitchTurnCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
@@ -212,7 +225,7 @@ internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
 
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_FLEEATTEMPTFAILED, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    Game_OpenDialog( battle->game );
 }
 
@@ -241,7 +254,7 @@ internal void Battle_AttackDodgedCallback( Battle_t* battle )
 
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_ATTACKDODGED, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    Game_OpenDialog( battle->game );
 }
 
@@ -394,3 +407,14 @@ internal void Battle_GainedPointsCallback( Battle_t* battle )
    Game_DrawQuickStatus( battle->game );
 }
 
+internal void Battle_SwitchTurnCallback( Battle_t* battle )
+{
+   if ( battle->turn == BattleTurn_Player )
+   {
+      // MUFFINS: show a "command?" message
+   }
+   else
+   {
+      // MUFFINS: trigger the enemy's behavior
+   }
+}

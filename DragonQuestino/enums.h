@@ -184,4 +184,13 @@ typedef enum MenuCommand_t
 }
 MenuCommand_t;
 
+typedef enum BattleTurn_t
+{
+   BattleTurn_Player = 0,
+   BattleTurn_Enemy,
+
+   BattleTurn_Count
+}
+BattleTurn_t;
+
 #endif // ENUMS_H

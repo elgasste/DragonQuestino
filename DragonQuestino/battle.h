@@ -12,6 +12,7 @@ typedef struct Battle_t
 
    Enemy_t enemy;
    SpecialEnemy_t specialEnemy;
+   BattleTurn_t turn;
 
    Bool_t excellentMove;
    Bool_t isOver;
@@ -38,6 +39,7 @@ void Battle_Generate( Battle_t* battle );
 void Battle_AttemptAttack( Battle_t* battle );
 void Battle_AttemptFlee( Battle_t* battle );
 void Battle_AttackSucceededCallback( Battle_t* battle );
+void Battle_SwitchTurn( Battle_t* battle );
 
 #if defined( __cplusplus )
 }
