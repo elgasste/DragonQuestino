@@ -25,6 +25,7 @@ typedef struct Battle_t
    uint8_t hitPointsGained;
    uint8_t magicPointsGained;
    uint16_t previousSpells;
+   uint8_t newLevel;
 }
 Battle_t;
 
