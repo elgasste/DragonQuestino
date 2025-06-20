@@ -207,7 +207,7 @@
 #define STRING_BATTLE_ENEMYFIZZLED                                   "The %s's spells have been blocked!"
 #define STRING_BATTLE_VICTORY                                        "The %s is defeated!"
 #define STRING_BATTLE_PLAYERSTILLASLEEP                              "You are still asleep!"
-#define STRING_BATTLE_PLAYERWOKEUP                                   "You have awaken! Command?"
+#define STRING_BATTLE_PLAYERWOKEUP                                   "You have awoken! Command?"
 #define STRING_BATTLE_ENEMYSTILLASLEEP                               "The %s is still asleep. Command?"
 #define STRING_BATTLE_ENEMYWOKEUP                                    "The %s woke up!"
 #define STRING_BATTLE_EXPERIENCEANDGOLD                              "You have gained %u experience %s and %u gold."
@@ -239,6 +239,9 @@
 #define STRING_BATTLE_ENEMY_ATTACKDEATH                              "You have lost %u hit %s."
 #define STRING_BATTLE_ENEMY_SPELLCAST                                "The %s casts %s!"
 #define STRING_BATTLE_ENEMY_RECOVERED                                "The %s has recovered some hit points. Command?"
+#define STRING_BATTLE_PLAYER_FIZZLED                                 "Your spell has been blocked! Command?"
+#define STRING_BATTLE_PLAYER_ASLEEP                                  "You are asleep!"
+#define STRING_BATTLE_PLAYER_SPELL_NOEFFECT                          "But the spell has no effect! Command?"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

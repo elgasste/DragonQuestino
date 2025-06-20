@@ -319,7 +319,7 @@ internal void Game_SpellBlockedMessageCallback( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSectionWithCallback( &( game->dialog ), STRING_SPELLBLOCKED,
-                                    ( game->mainState == MainState_Overworld ) ? 0 : Battle_SwitchToEnemyTurn,
+                                    ( game->mainState == MainState_Overworld ) ? 0 : Battle_SwitchTurn,
                                     ( game->mainState == MainState_Overworld ) ? 0 : &( game->battle ) );
    Game_OpenDialog( game );
 }
@@ -336,7 +336,7 @@ internal void Game_SpellFizzledMessageCallback( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_SPELLFIZZLED,
-                                    ( game->mainState == MainState_Overworld ) ? 0 : Battle_SwitchToEnemyTurn,
+                                    ( game->mainState == MainState_Overworld ) ? 0 : Battle_SwitchTurn,
                                     ( game->mainState == MainState_Overworld ) ? 0 : &( game->battle ) );
    Game_OpenDialog( game );
 }
@@ -457,7 +457,7 @@ internal void Game_SpellFizzleSuccessCallback( Game_t* game )
    game->battle.enemy.stats.isFizzled = True;
    Dialog_Reset( &( game->dialog ) );
    sprintf( msg, STRING_BATTLE_ENEMYFIZZLED, game->battle.enemy.name );
-   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_SwitchToEnemyTurn, &( game->battle ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_SwitchTurn, &( game->battle ) );
    Game_OpenDialog( game );
 }
 
@@ -542,6 +542,6 @@ internal void Game_SpellNoEffectCallback( Game_t* game )
 
    Dialog_Reset( &( game->dialog ) );
    sprintf( msg, STRING_BATTLE_SPELL_NOEFFECT, game->battle.enemy.name );
-   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_SwitchToEnemyTurn, &( game->battle ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_SwitchTurn, &( game->battle ) );
    Game_OpenDialog( game );
 }

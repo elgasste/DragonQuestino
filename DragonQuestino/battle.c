@@ -16,7 +16,7 @@ internal void Battle_EnemyDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
 internal void Battle_NewLevelCallback( Battle_t* battle );
 internal void Battle_GainedPointsCallback( Battle_t* battle );
-internal void Battle_SwitchToEnemyTurnCallback( Battle_t* battle );
+internal void Battle_SwitchTurnCallback( Battle_t* battle );
 internal void Battle_EnemyTurn( Battle_t* battle );
 internal void Battle_EnemyWokeUpCallback( Battle_t* battle );
 internal void Battle_EnemyInitiateBehavior( Battle_t* battle );
@@ -40,13 +40,19 @@ internal void Battle_EnemyCastSizz( Battle_t* battle );
 internal void Battle_EnemyCastSizzCallback( Battle_t* battle );
 internal void Battle_EnemyCastSizzle( Battle_t* battle );
 internal void Battle_EnemyCastSizzleCallback( Battle_t* battle );
+internal void Battle_EnemyAnimateSpellWithCallback( Battle_t* battle, void ( *callback )( Battle_t* battle ) );
 internal void Battle_EnemyCastHeal( Battle_t* battle );
 internal void Battle_EnemyCastHealCallback( Battle_t* battle );
 internal void Battle_EnemyHealMessageCallback( Battle_t* battle );
 internal void Battle_EnemyCastMidheal( Battle_t* battle );
 internal void Battle_EnemyCastMidhealCallback( Battle_t* battle );
 internal void Battle_EnemyCastFizzle( Battle_t* battle );
+internal void Battle_EnemyCastFizzleCallback( Battle_t* battle );
+internal void Battle_EnemyCastFizzleMessageCallback( Battle_t* battle );
 internal void Battle_EnemyCastSleep( Battle_t* battle );
+internal void Battle_EnemyCastSleepCallback( Battle_t* battle );
+internal void Battle_EnemyCastSleepMessageCallback( Battle_t* battle );
+internal void Battle_EnemyCastSleepAnimation( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -120,20 +126,20 @@ void Battle_AttackSucceededCallback( Battle_t* battle )
    }
    else
    {
-      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchToEnemyTurn, battle );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    }
 
    Game_OpenDialog( battle->game );
 }
 
-void Battle_SwitchToEnemyTurn( Battle_t* battle )
+void Battle_SwitchTurn( Battle_t* battle )
 {
-   battle->turn = BattleTurn_Enemy;
+   battle->turn = ( battle->turn == BattleTurn_Player ) ? BattleTurn_Enemy : BattleTurn_Player;
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_SwitchToEnemyTurnCallback, battle );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_SwitchTurnCallback, battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
@@ -256,7 +262,7 @@ internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
 
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_FLEEATTEMPTFAILED, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchToEnemyTurn, battle );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    Game_OpenDialog( battle->game );
 }
 
@@ -284,7 +290,7 @@ internal void Battle_AttackDodgedCallback( Battle_t* battle )
 
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_ATTACKDODGED, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchToEnemyTurn, battle );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    Game_OpenDialog( battle->game );
 }
 
@@ -437,7 +443,7 @@ internal void Battle_GainedPointsCallback( Battle_t* battle )
    Game_DrawQuickStatus( battle->game );
 }
 
-internal void Battle_SwitchToEnemyTurnCallback( Battle_t* battle )
+internal void Battle_SwitchTurnCallback( Battle_t* battle )
 {
    if ( battle->turn == BattleTurn_Player )
    {
@@ -451,7 +457,7 @@ internal void Battle_SwitchToEnemyTurnCallback( Battle_t* battle )
          }
          else
          {
-            Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_PLAYERSTILLASLEEP, Battle_SwitchToEnemyTurn, battle );
+            Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_PLAYERSTILLASLEEP, Battle_SwitchTurn, battle );
          }
 
          Game_OpenDialog( battle->game );
@@ -769,6 +775,14 @@ internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
+internal void Battle_EnemyAnimateSpellWithCallback( Battle_t* battle, void ( *callback )( Battle_t* battle ) )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, callback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
 internal void Battle_EnemyCastHeal( Battle_t* battle )
 {
    Battle_EnemyCastSpell( battle, STRING_SPELL_HEAL, Battle_EnemyCastHealCallback );
@@ -779,11 +793,7 @@ internal void Battle_EnemyCastHealCallback( Battle_t* battle )
    uint8_t payload = Random_u8( ENEMY_HEAL_MIN_RECOVERY, ENEMY_HEAL_MAX_RECOVERY );
    payload = MATH_MIN( payload, battle->enemy.stats.maxHitPoints - battle->enemy.stats.hitPoints );
    battle->enemy.stats.hitPoints += payload;
-
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyHealMessageCallback, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemyHealMessageCallback );
 }
 
 internal void Battle_EnemyHealMessageCallback( Battle_t* battle )
@@ -806,21 +816,52 @@ internal void Battle_EnemyCastMidhealCallback( Battle_t* battle )
    uint8_t payload = Random_u8( ENEMY_MIDHEAL_MIN_RECOVERY, ENEMY_MIDHEAL_MAX_RECOVERY );
    payload = MATH_MIN( payload, battle->enemy.stats.maxHitPoints - battle->enemy.stats.hitPoints );
    battle->enemy.stats.hitPoints += payload;
-
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyHealMessageCallback, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemyHealMessageCallback );
 }
 
 internal void Battle_EnemyCastFizzle( Battle_t* battle )
 {
-   // TODO
-   UNUSED_PARAM( battle );
+   Battle_EnemyCastSpell( battle, STRING_SPELL_FIZZLE, Battle_EnemyCastFizzleCallback );
+}
+
+internal void Battle_EnemyCastFizzleCallback( Battle_t* battle )
+{
+   battle->game->player.stats.isFizzled = ( Random_u8( 1, 2 ) == 1 ) ? True : False;
+   Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemyCastFizzleMessageCallback );
+}
+
+internal void Battle_EnemyCastFizzleMessageCallback( Battle_t* battle )
+{
+   battle->turn = BattleTurn_Player;
+   Dialog_Reset( &( battle->game->dialog ) );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ),
+                                   battle->game->player.stats.isFizzled ? STRING_BATTLE_PLAYER_FIZZLED : STRING_BATTLE_PLAYER_SPELL_NOEFFECT,
+                                   Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog( battle->game );
 }
 
 internal void Battle_EnemyCastSleep( Battle_t* battle )
 {
-   // TODO
-   UNUSED_PARAM( battle );
+   Battle_EnemyCastSpell( battle, STRING_SPELL_SLEEP, Battle_EnemyCastSleepCallback );
+}
+
+internal void Battle_EnemyCastSleepCallback( Battle_t* battle )
+{
+   battle->game->player.stats.isAsleep = True;
+   Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemyCastSleepMessageCallback );
+}
+
+internal void Battle_EnemyCastSleepMessageCallback( Battle_t* battle )
+{
+   Dialog_Reset( &( battle->game->dialog ) );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_PLAYER_ASLEEP, Battle_EnemyCastSleepAnimation, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyCastSleepAnimation( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyTurn, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
 }

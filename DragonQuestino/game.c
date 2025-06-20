@@ -217,7 +217,7 @@ void Game_RestoredHitPointsCallback( Game_t* game )
 
    if ( game->mainState == MainState_Battle )
    {
-      Battle_SwitchToEnemyTurn( &( game->battle ) );
+      Battle_SwitchTurn( &( game->battle ) );
    }
 }
 

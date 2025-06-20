@@ -52,7 +52,7 @@ void Battle_Generate( Battle_t* battle );
 void Battle_Attack( Battle_t* battle );
 void Battle_Flee( Battle_t* battle );
 void Battle_AttackSucceededCallback( Battle_t* battle );
-void Battle_SwitchToEnemyTurn( Battle_t* battle );
+void Battle_SwitchTurn( Battle_t* battle );
 
 #if defined( __cplusplus )
 }
