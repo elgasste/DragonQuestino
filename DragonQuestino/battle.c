@@ -1,6 +1,7 @@
 #include "game.h"
 #include "random.h"
 #include "tables.h"
+#include "math.h"
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle );
 internal uint8_t Battle_GetAttackDamage( Battle_t* battle );
@@ -30,7 +31,9 @@ internal void Battle_EnemyAttackDodgedCallback( Battle_t* battle );
 internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle );
 internal void Battle_PlayerDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheFire( Battle_t* battle );
+internal void Battle_EnemyBreatheFireCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFire( Battle_t* battle );
+internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle );
 internal void Battle_EnemyCastSizz( Battle_t* battle );
 internal void Battle_EnemyCastSizzle( Battle_t* battle );
 internal void Battle_EnemyCastHeal( Battle_t* battle );
@@ -675,14 +678,46 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
 
 internal void Battle_EnemyBreatheFire( Battle_t* battle )
 {
-   // TODO
-   UNUSED_PARAM( battle );
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMY_BREATHEFIRE, battle->enemy.name );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyBreatheFireCallback, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyBreatheFireCallback( Battle_t* battle )
+{
+   battle->pendingPayload8u = MATH_MIN( Random_u8( FIRE_BREATH_MIN_DAMAGE, FIRE_BREATH_MAX_DAMAGE ), battle->game->player.stats.hitPoints );
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ),
+                                             battle->game->player.stats.hitPoints > battle->pendingPayload8u
+                                             ? AnimationId_Battle_PlayerDamage
+                                             : AnimationId_Battle_PlayerDeath,
+                                             Battle_EnemyAttackSucceededCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
 internal void Battle_EnemyBreatheStrongFire( Battle_t* battle )
 {
-   // TODO
-   UNUSED_PARAM( battle );
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMY_BREATHEFIRE, battle->enemy.name );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyBreatheStrongFireCallback, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle )
+{
+   battle->pendingPayload8u = MATH_MIN( Random_u8( STRONG_FIRE_BREATH_MIN_DAMAGE, STRONG_FIRE_BREATH_MAX_DAMAGE ), battle->game->player.stats.hitPoints );
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ),
+                                             battle->game->player.stats.hitPoints > battle->pendingPayload8u
+                                             ? AnimationId_Battle_PlayerDamage
+                                             : AnimationId_Battle_PlayerDeath,
+                                             Battle_EnemyAttackSucceededCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
 internal void Battle_EnemyCastSizz( Battle_t* battle )

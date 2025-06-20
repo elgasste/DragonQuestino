@@ -233,6 +233,7 @@
 #define STRING_BATTLE_NOITEMS                                        "You do not have any items. Command?"
 #define STRING_BATTLE_CANTUSEITEM                                    "You do not have any items that can be used in battle. Command?"
 #define STRING_BATTLE_ENEMY_ATTACKATTEMPT                            "The %s attacks!"
+#define STRING_BATTLE_ENEMY_BREATHEFIRE                              "The %s breathes fire!"
 #define STRING_BATTLE_ENEMY_ATTACKDODGED                             "But you dodge the attack! Command?"
 #define STRING_BATTLE_ENEMY_ATTACKSUCCEEDED                          "You have lost %u hit %s. Command?"
 #define STRING_BATTLE_ENEMY_ATTACKDEATH                              "You have lost %u hit %s."

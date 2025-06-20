@@ -4,6 +4,11 @@
 #include "common.h"
 #include "enemy.h"
 
+#define FIRE_BREATH_MIN_DAMAGE            16
+#define FIRE_BREATH_MAX_DAMAGE            23
+#define STRONG_FIRE_BREATH_MIN_DAMAGE     65
+#define STRONG_FIRE_BREATH_MAX_DAMAGE     72
+
 typedef struct Game_t Game_t;
 
 typedef struct Battle_t
