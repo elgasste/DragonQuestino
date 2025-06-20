@@ -31,6 +31,7 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle );
 internal void Battle_EnemyAttackDodgedCallback( Battle_t* battle );
 internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle );
 internal void Battle_PlayerDefeatedCallback( Battle_t* battle );
+internal void Battle_PlayerDefeatedCallbackMessage( Battle_t* battle );
 internal void Battle_EnemyBreatheFire( Battle_t* battle );
 internal void Battle_EnemyBreatheFireCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFire( Battle_t* battle );
@@ -667,8 +668,26 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
 
 internal void Battle_PlayerDefeatedCallback( Battle_t* battle )
 {
-   // TODO: implement death
-   UNUSED_PARAM( battle );
+   // TODO: actually implement death
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_PlayerDefeatedCallbackMessage, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_PlayerDefeatedCallbackMessage( Battle_t* battle )
+{
+   battle->game->player.stats.hitPoints = battle->game->player.stats.maxHitPoints;
+   battle->game->player.stats.magicPoints = battle->game->player.stats.maxMagicPoints;
+   battle->game->screen.needsRedraw = True;
+   battle->turn = BattleTurn_Player;
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), "Now you're pissed off! Command?", Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog( battle->game );
 }
 
 internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
