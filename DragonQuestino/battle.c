@@ -9,13 +9,13 @@ internal void Battle_FleeSucceededCallback( Battle_t* battle );
 internal void Battle_FleeSucceededMessageCallback( Battle_t* battle );
 internal void Battle_FleeFailedCallback( Battle_t* battle );
 internal void Battle_FleeFailedMessageCallback( Battle_t* battle );
-internal void Battle_AttemptAttackCallback( Battle_t* battle );
+internal void Battle_AttackCallback( Battle_t* battle );
 internal void Battle_AttackDodgedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
 internal void Battle_NewLevelCallback( Battle_t* battle );
 internal void Battle_GainedPointsCallback( Battle_t* battle );
-internal void Battle_SwitchTurnCallback( Battle_t* battle );
+internal void Battle_SwitchToEnemyTurnCallback( Battle_t* battle );
 internal void Battle_EnemyTurn( Battle_t* battle );
 internal void Battle_EnemyWokeUpCallback( Battle_t* battle );
 internal void Battle_EnemyInitiateBehavior( Battle_t* battle );
@@ -24,6 +24,11 @@ internal Bool_t Battle_EnemyTryHeal( Battle_t* battle, Bool_t midHeal, uint32_t 
 internal Bool_t Battle_EnemyTryFizzle( Battle_t* battle, uint32_t chance );
 internal Bool_t Battle_EnemyTrySleep( Battle_t* battle, uint32_t chance );
 internal void Battle_EnemyAttack( Battle_t* battle );
+internal void Battle_EnemyAttackCallback( Battle_t* battle );
+internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle );
+internal void Battle_EnemyAttackDodgedCallback( Battle_t* battle );
+internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle );
+internal void Battle_PlayerDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheFire( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFire( Battle_t* battle );
 internal void Battle_EnemyCastSizz( Battle_t* battle );
@@ -71,15 +76,15 @@ void Battle_Generate( Battle_t* battle )
    enemy->stats.isFizzled = False;
 }
 
-void Battle_AttemptAttack( Battle_t* battle )
+void Battle_Attack( Battle_t* battle )
 {
    battle->game->screen.needsRedraw = True;
    Dialog_Reset( &( battle->game->dialog ) );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_ATTACKATTEMPT, Battle_AttemptAttackCallback, battle );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_ATTACKATTEMPT, Battle_AttackCallback, battle );
    Game_OpenDialog( battle->game );
 }
 
-void Battle_AttemptFlee( Battle_t* battle )
+void Battle_Flee( Battle_t* battle )
 {
    Bool_t fleed = Battle_GetFleeResult( battle );
 
@@ -105,20 +110,20 @@ void Battle_AttackSucceededCallback( Battle_t* battle )
    }
    else
    {
-      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchToEnemyTurn, battle );
    }
 
    Game_OpenDialog( battle->game );
 }
 
-void Battle_SwitchTurn( Battle_t* battle )
+void Battle_SwitchToEnemyTurn( Battle_t* battle )
 {
-   battle->turn = ( battle->turn == BattleTurn_Player ) ? BattleTurn_Enemy : BattleTurn_Player;
+   battle->turn = BattleTurn_Enemy;
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_SwitchTurnCallback, battle );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_SwitchToEnemyTurnCallback, battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
@@ -241,23 +246,22 @@ internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
 
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_FLEEATTEMPTFAILED, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchToEnemyTurn, battle );
    Game_OpenDialog( battle->game );
 }
 
-internal void Battle_AttemptAttackCallback( Battle_t* battle )
+internal void Battle_AttackCallback( Battle_t* battle )
 {
    battle->pendingPayload8u = Battle_GetAttackDamage( battle );
    AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
 
    if ( battle->pendingPayload8u == 0 )
    {
-      AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
       AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_AttackDodgedCallback, battle );
    }
    else
    {
-      AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
       AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyDamage, Battle_AttackSucceededCallback, battle );
    }
 
@@ -270,7 +274,7 @@ internal void Battle_AttackDodgedCallback( Battle_t* battle )
 
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_ATTACKDODGED, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchToEnemyTurn, battle );
    Game_OpenDialog( battle->game );
 }
 
@@ -423,7 +427,7 @@ internal void Battle_GainedPointsCallback( Battle_t* battle )
    Game_DrawQuickStatus( battle->game );
 }
 
-internal void Battle_SwitchTurnCallback( Battle_t* battle )
+internal void Battle_SwitchToEnemyTurnCallback( Battle_t* battle )
 {
    if ( battle->turn == BattleTurn_Player )
    {
@@ -437,7 +441,7 @@ internal void Battle_SwitchTurnCallback( Battle_t* battle )
          }
          else
          {
-            Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_PLAYERSTILLASLEEP, Battle_SwitchTurn, battle );
+            Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_PLAYERSTILLASLEEP, Battle_SwitchToEnemyTurn, battle );
          }
 
          Game_OpenDialog( battle->game );
@@ -577,8 +581,93 @@ internal Bool_t Battle_EnemyTrySleep( Battle_t* battle, uint32_t chance )
 
 internal void Battle_EnemyAttack( Battle_t* battle )
 {
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMY_ATTACKATTEMPT, battle->enemy.name );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyAttackCallback, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyAttackCallback( Battle_t* battle )
+{
+   battle->pendingPayload8u = Battle_GetEnemyAttackDamage( battle );
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+
+   if ( battle->pendingPayload8u == 0 )
+   {
+      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyAttackDodgedCallback, battle );
+   }
+   else
+   {
+      // TODO: add a player-takes-damage animation
+      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyAttackSucceededCallback, battle );
+   }
+
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_EnemyAttackDodgedCallback( Battle_t* battle )
+{
+   battle->turn = BattleTurn_Player;
+   Dialog_Reset( &( battle->game->dialog ) );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_ENEMY_ATTACKDODGED, Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
+{
+   Player_t* player = &( battle->game->player );
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   player->stats.hitPoints -= battle->pendingPayload8u;
+   battle->game->screen.needsRedraw = True;
+   sprintf( msg,
+            ( player->stats.hitPoints > 0 ) ? STRING_BATTLE_ENEMY_ATTACKSUCCEEDED : STRING_BATTLE_ENEMY_ATTACKDEATH,
+            battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
+
+   if ( battle->enemy.stats.hitPoints == 0 )
+   {
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_PlayerDefeatedCallback, battle );
+   }
+   else
+   {
+      battle->turn = BattleTurn_Player;
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+   }
+
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_PlayerDefeatedCallback( Battle_t* battle )
+{
    // TODO
    UNUSED_PARAM( battle );
+}
+
+internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
+{
+   uint8_t defense, damage, minDamage = 0, maxDamage = 0;
+   Enemy_t* enemy = &( battle->enemy );
+   Player_t* player = &( battle->game->player );
+
+   defense = player->stats.agility / 2;
+
+   if ( enemy->stats.strength > defense )
+   {
+      minDamage = ( enemy->stats.strength - defense ) / 4;
+      maxDamage = ( enemy->stats.strength - defense ) / 2;
+   }
+   else
+   {
+      maxDamage = ( enemy->stats.strength + 4 ) / 6;
+   }
+
+   damage = Random_u8( minDamage, maxDamage );
+
+   return ( damage < player->stats.hitPoints ) ? damage : player->stats.hitPoints;
 }
 
 internal void Battle_EnemyBreatheFire( Battle_t* battle )

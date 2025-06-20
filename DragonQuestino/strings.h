@@ -232,6 +232,10 @@
 #define STRING_BATTLE_SPELL_FIZZLE_ALREADYFIZZLED                    "The %s's spells are already blocked. Command?"
 #define STRING_BATTLE_NOITEMS                                        "You do not have any items. Command?"
 #define STRING_BATTLE_CANTUSEITEM                                    "You do not have any items that can be used in battle. Command?"
+#define STRING_BATTLE_ENEMY_ATTACKATTEMPT                            "The %s attacks!"
+#define STRING_BATTLE_ENEMY_ATTACKDODGED                             "But you dodge the attack! Command?"
+#define STRING_BATTLE_ENEMY_ATTACKSUCCEEDED                          "You have lost %u hit %s. Command?"
+#define STRING_BATTLE_ENEMY_ATTACKDEATH                              "You have lost %u hit %s."
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

@@ -298,7 +298,7 @@ internal void Game_UseFairyFluteMessageCallback( Game_t* game )
    else
    {
       Dialog_Reset( &( game->dialog ) );
-      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BUTNOTHINGHAPPENS, Battle_SwitchTurn, &( game->battle ) );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BUTNOTHINGHAPPENS, Battle_SwitchToEnemyTurn, &( game->battle ) );
       Game_OpenDialog( game );
    }
 }
