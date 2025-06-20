@@ -18,6 +18,8 @@
 #define ANIMATION_BATTLE_ENEMYDAMAGE_FRAMEDURATION       0.08f
 #define ANIMATION_BATTLE_PLAYERDAMAGE_DURATION           0.6f
 #define ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION      0.08f
+#define ANIMATION_BATTLE_PLAYERDEATH_TOTALDURATION       0.6f
+#define ANIMATION_BATTLE_PLAYERDEATH_FRAMEDURATION       0.08f
 
 typedef struct Screen_t Screen_t;
 typedef struct TileMap_t TileMap_t;
@@ -42,6 +44,7 @@ typedef struct AnimationChain_t
    float totalElapsedSeconds;
    float frameElapsedSeconds;
    float totalDuration;
+   float frameDuration;
    Bool_t flag;
 }
 AnimationChain_t;

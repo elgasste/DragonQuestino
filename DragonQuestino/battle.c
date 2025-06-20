@@ -601,8 +601,11 @@ internal void Battle_EnemyAttackCallback( Battle_t* battle )
    }
    else
    {
-      // TODO: add player-has-died animation
-      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_PlayerDamage, Battle_EnemyAttackSucceededCallback, battle );
+      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ),
+                                                battle->game->player.stats.hitPoints > battle->pendingPayload8u
+                                                   ? AnimationId_Battle_PlayerDamage
+                                                   : AnimationId_Battle_PlayerDeath,
+                                                Battle_EnemyAttackSucceededCallback, battle );
    }
 
    AnimationChain_Start( &( battle->game->animationChain ) );
@@ -628,7 +631,7 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
             ( player->stats.hitPoints > 0 ) ? STRING_BATTLE_ENEMY_ATTACKSUCCEEDED : STRING_BATTLE_ENEMY_ATTACKDEATH,
             battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
 
-   if ( battle->enemy.stats.hitPoints == 0 )
+   if ( player->stats.hitPoints == 0 )
    {
       Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_PlayerDefeatedCallback, battle );
    }

@@ -65,6 +65,7 @@ typedef enum AnimationId_t
    AnimationId_Battle_EnemyDamage,
    AnimationId_Battle_EnemyDodge,
    AnimationId_Battle_PlayerDamage,
+   AnimationId_Battle_PlayerDeath,
 
    AnimationId_Count
 }
