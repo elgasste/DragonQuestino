@@ -46,5 +46,9 @@ internal uint32_t Convert565To32( uint16_t color )
 internal void Screen_Wipe( Screen_t* screen )
 {
    uint32_t color = Convert565To32( screen->wipeColor );
-   memset( g_globals.screenBuffer.memory32, color, sizeof(uint32_t) * SCREEN_PIXELS );
+
+   for ( int i = 0; i < SCREEN_PIXELS; i++ )
+   {
+      g_globals.screenBuffer.memory32[i] = color;
+   }
 }

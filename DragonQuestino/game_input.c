@@ -301,8 +301,8 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
 
       switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
-         case MenuCommand_Battle_Attack: Battle_AttemptAttack( &( game->battle ) ); break;
-         case MenuCommand_Battle_Flee: Battle_AttemptFlee( &( game->battle ) ); break;
+         case MenuCommand_Battle_Attack: Battle_Attack( &( game->battle ) ); break;
+         case MenuCommand_Battle_Flee: Battle_Flee( &( game->battle ) ); break;
          case MenuCommand_Battle_Spell: Game_OpenBattleSpellMenu( game ); break;
          case MenuCommand_Battle_Item: Game_OpenBattleItemMenu( game ); break;
 

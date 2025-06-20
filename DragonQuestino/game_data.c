@@ -2799,6 +2799,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
    switch( index )
    {
    case 0:
+      enemy->id = 0;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_SLIME );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -2869,6 +2870,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[14] = 0x0D0D0D0D;
       break;
    case 1:
+      enemy->id = 1;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_REDSLIME );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -2938,6 +2940,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[14] = 0x07070707;
       break;
    case 2:
+      enemy->id = 2;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_DRAKEE );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -3052,6 +3055,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x020F020F;
       break;
    case 3:
+      enemy->id = 3;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_GHOST );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -3231,6 +3235,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x02020212;
       break;
    case 4:
+      enemy->id = 4;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_MAGICIAN );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -3446,6 +3451,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[15] = 0x05050505;
       break;
    case 5:
+      enemy->id = 5;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_MAGIDRAKEE );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -3560,6 +3566,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x020E020E;
       break;
    case 6:
+      enemy->id = 6;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_SCORPION );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -3754,6 +3761,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[0] = 0x02121202;
       break;
    case 7:
+      enemy->id = 7;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_DRUIN );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -3981,6 +3989,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x02150315;
       break;
    case 8:
+      enemy->id = 8;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_POLTERGEIST );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -4160,6 +4169,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x02020218;
       break;
    case 9:
+      enemy->id = 9;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_DROLL );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -4436,6 +4446,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020219;
       break;
    case 10:
+      enemy->id = 10;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_DRAKEEMA );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -4550,6 +4561,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x02130213;
       break;
    case 11:
+      enemy->id = 11;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_SKELETON );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -4818,6 +4830,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[2] = 0x0D0D0D0D;
       break;
    case 12:
+      enemy->id = 12;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_WARLOCK );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -5060,6 +5073,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[3] = 0x1D1D0202;
       break;
    case 13:
+      enemy->id = 13;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_METALSCORPION );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -5254,6 +5268,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x06060202;
       break;
    case 14:
+      enemy->id = 14;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_WOLF );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -5564,6 +5579,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[15] = 0x02021C1C;
       break;
    case 15:
+      enemy->id = 15;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_WRAITH );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -5844,6 +5860,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x1F1F1F1F;
       break;
    case 16:
+      enemy->id = 16;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_METALSLIME );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -5913,6 +5930,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[14] = 0x05050505;
       break;
    case 17:
+      enemy->id = 17;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_SPECTER );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -6093,6 +6111,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x020D0D0D;
       break;
    case 18:
+      enemy->id = 18;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_WOLFLORD );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -6423,6 +6442,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x02020E0E;
       break;
    case 19:
+      enemy->id = 19;
       enemy->groupId = 0;
       strcpy( enemy->name, STRING_ENEMY_DRUINLORD );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -6650,6 +6670,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[2] = 0x0202021E;
       break;
    case 20:
+      enemy->id = 20;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_DROLLMAGI );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -6926,6 +6947,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020206;
       break;
    case 21:
+      enemy->id = 21;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_WYVERN );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -7186,6 +7208,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x02110202;
       break;
    case 22:
+      enemy->id = 22;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_ROGUESCORPION );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -7380,6 +7403,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[0] = 0x020D0D02;
       break;
    case 23:
+      enemy->id = 23;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_WRAITHKNIGHT );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -7655,6 +7679,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[2] = 0x1A1A1A1A;
       break;
    case 24:
+      enemy->id = 24;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_GOLEM );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -8091,6 +8116,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02021212;
       break;
    case 25:
+      enemy->id = 25;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_GOLDMAN );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -8528,6 +8554,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[0] = 0x02020203;
       break;
    case 26:
+      enemy->id = 26;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_KNIGHT );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -8888,6 +8915,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x02020E0E;
       break;
    case 27:
+      enemy->id = 27;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_MAGIWYVERN );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -9148,6 +9176,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x021C0202;
       break;
    case 28:
+      enemy->id = 28;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_DEMONKNIGHT );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -9416,6 +9445,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[2] = 0x21212121;
       break;
    case 29:
+      enemy->id = 29;
       enemy->groupId = 1;
       strcpy( enemy->name, STRING_ENEMY_WEREWOLF );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -9729,6 +9759,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[15] = 0x02021C1C;
       break;
    case 30:
+      enemy->id = 30;
       enemy->groupId = 2;
       strcpy( enemy->name, STRING_ENEMY_GREENDRAGON );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -10094,6 +10125,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[15] = 0x02020207;
       break;
    case 31:
+      enemy->id = 31;
       enemy->groupId = 2;
       strcpy( enemy->name, STRING_ENEMY_STARWYVERN );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -10352,6 +10384,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[2] = 0x0202020E;
       break;
    case 32:
+      enemy->id = 32;
       enemy->groupId = 2;
       strcpy( enemy->name, STRING_ENEMY_WIZARD );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -10598,6 +10631,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[2] = 0x02020505;
       break;
    case 33:
+      enemy->id = 33;
       enemy->groupId = 2;
       strcpy( enemy->name, STRING_ENEMY_AXEKNIGHT );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_AN );
@@ -11015,6 +11049,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x05050224;
       break;
    case 34:
+      enemy->id = 34;
       enemy->groupId = 2;
       strcpy( enemy->name, STRING_ENEMY_BLUEDRAGON );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -11380,6 +11415,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[15] = 0x02020207;
       break;
    case 35:
+      enemy->id = 35;
       enemy->groupId = 3;
       strcpy( enemy->name, STRING_ENEMY_STONEMAN );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -11816,6 +11852,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[0] = 0x02020205;
       break;
    case 36:
+      enemy->id = 36;
       enemy->groupId = 3;
       strcpy( enemy->name, STRING_ENEMY_ARMOREDKNIGHT );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_AN );
@@ -12276,6 +12313,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x02020303;
       break;
    case 37:
+      enemy->id = 37;
       enemy->groupId = 3;
       strcpy( enemy->name, STRING_ENEMY_REDDRAGON );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -12641,6 +12679,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[15] = 0x02020207;
       break;
    case 38:
+      enemy->id = 38;
       enemy->groupId = 3;
       strcpy( enemy->name, STRING_ENEMY_DRAGONLORD );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );
@@ -12921,6 +12960,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x02020212;
       break;
    case 39:
+      enemy->id = 39;
       enemy->groupId = 3;
       strcpy( enemy->name, STRING_ENEMY_DRAGONLORD );
       strcpy( enemy->indefiniteArticle, STRING_INDEFINITE_ARTICLE_A );

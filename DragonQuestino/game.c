@@ -214,7 +214,11 @@ void Game_RestoredHitPointsCallback( Game_t* game )
 {
    Player_RestoreHitPoints( &( game->player ), game->pendingPayload8u );
    game->screen.needsRedraw = True;
-   Game_ResetBattleMenu( game );
+
+   if ( game->mainState == MainState_Battle )
+   {
+      Battle_SwitchTurn( &( game->battle ) );
+   }
 }
 
 void Game_CursedCallback( Game_t* game )

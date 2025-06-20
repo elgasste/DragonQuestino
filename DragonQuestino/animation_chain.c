@@ -21,11 +21,12 @@ internal void AnimationChain_Tic_FadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_WhiteOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain );
-internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain );
+internal void AnimationChain_Tic_Flash( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain );
+internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -90,11 +91,15 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
          case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
          case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
-         case AnimationId_CastSpell: AnimationChain_Tic_CastSpell( chain ); break;
+         case AnimationId_CastSpell:
+         case AnimationId_Battle_PlayerDeath:
+            AnimationChain_Tic_Flash( chain );
+            break;
          case AnimationId_Battle_Checkerboard: AnimationChain_Tic_Battle_Checkerboard( chain ); break;
          case AnimationId_Battle_EnemyFadeIn: AnimationChain_Tic_Battle_EnemyFadeIn( chain ); break;
          case AnimationId_Battle_EnemyFadeOut: AnimationChain_Tic_Battle_EnemyFadeOut( chain ); break;
          case AnimationId_Battle_EnemyDamage: AnimationChain_Tic_Battle_EnemyDamage( chain ); break;
+         case AnimationId_Battle_PlayerDamage: AnimationChain_Tic_Battle_PlayerDamage( chain ); break;
       }
    }
 }
@@ -132,11 +137,24 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
       case AnimationId_CastSpell:
          chain->screen->wipeColor = COLOR_WHITE;
          chain->totalDuration = ANIMATION_CASTSPELL_TOTALDURATION;
+         chain->frameDuration = ANIMATION_CASTSPELL_FRAMEDURATION;
          break;
       case AnimationId_Battle_EnemyFadeIn:
          chain->totalDuration = ANIMATION_BATTLE_ENEMYFADE_DURATION;
          break;
-      case AnimationId_Battle_EnemyDamage: chain->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION; break;
+      case AnimationId_Battle_EnemyDamage:
+         chain->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION;
+         chain->flag = True;
+         break;
+      case AnimationId_Battle_PlayerDamage:
+         chain->totalDuration = ANIMATION_BATTLE_PLAYERDAMAGE_DURATION;
+         chain->flag = True;
+         break;
+      case AnimationId_Battle_PlayerDeath:
+         chain->screen->wipeColor = COLOR_DEEPRED;
+         chain->totalDuration = ANIMATION_BATTLE_PLAYERDEATH_TOTALDURATION;
+         chain->frameDuration = ANIMATION_BATTLE_PLAYERDEATH_FRAMEDURATION;
+         break;
    }
 
    chain->totalElapsedSeconds = 0.0f;
@@ -159,6 +177,12 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
          Screen_ClearPalette( chain->screen, COLOR_BLACK );
          break;
       case AnimationId_Battle_EnemyDamage:
+         Game_DrawEnemy( chain->game );
+         break;
+      case AnimationId_Battle_PlayerDamage:
+         Game_DrawQuickStatus( chain->game );
+         Dialog_Draw( &( chain->game->dialog ) );
+         Game_WipeEnemy( chain->game );
          Game_DrawEnemy( chain->game );
          break;
    }
@@ -311,7 +335,7 @@ internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain )
    }
 }
 
-internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain )
+internal void AnimationChain_Tic_Flash( AnimationChain_t* chain )
 {
    local_persist Bool_t wipeScreen = True;
 
@@ -324,11 +348,11 @@ internal void AnimationChain_Tic_CastSpell( AnimationChain_t* chain )
       chain->screen->needsWipe = False;
       wipeScreen = True;
    }
-   else if ( chain->frameElapsedSeconds > ANIMATION_CASTSPELL_FRAMEDURATION )
+   else if ( chain->frameElapsedSeconds > chain->frameDuration )
    {
-      while ( chain->frameElapsedSeconds > ANIMATION_CASTSPELL_FRAMEDURATION )
+      while ( chain->frameElapsedSeconds > chain->frameDuration )
       {
-         chain->frameElapsedSeconds -= ANIMATION_CASTSPELL_FRAMEDURATION;
+         chain->frameElapsedSeconds -= chain->frameDuration;
          TOGGLE_BOOL( wipeScreen );
          chain->screen->needsWipe = wipeScreen;
       }
@@ -419,6 +443,32 @@ internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain )
       else
       {
          Game_WipeEnemy( chain->game );
+      }
+
+      TOGGLE_BOOL( chain->flag );
+   }
+}
+
+internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain )
+{
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION )
+   {
+      chain->frameElapsedSeconds -= ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION;
+
+      if ( chain->flag )
+      {
+         Game_DrawQuickStatus( chain->game );
+         Dialog_Draw( &( chain->game->dialog ) );
+      }
+      else
+      {
+         Game_DrawTileMap( chain->game );
+         Game_WipeEnemy( chain->game );
+         Game_DrawEnemy( chain->game );
       }
 
       TOGGLE_BOOL( chain->flag );
