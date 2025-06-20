@@ -71,7 +71,10 @@ void GigaShield::wipeScreen( uint16_t color )
 {
    if ( !_isWiping && _wipeBuffer[0] != color )
    {
-      memset( _wipeBuffer, color, sizeof( uint16_t ) * SCREEN_PIXELS );
+      for ( uint16_t i = 0; i < SCREEN_PIXELS; i++ )
+      {
+         _wipeBuffer[i] = color;
+      }
    }
 
    _isWiping = true;
