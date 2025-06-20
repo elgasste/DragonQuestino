@@ -238,6 +238,7 @@
 #define STRING_BATTLE_ENEMY_ATTACKSUCCEEDED                          "You have lost %u hit %s. Command?"
 #define STRING_BATTLE_ENEMY_ATTACKDEATH                              "You have lost %u hit %s."
 #define STRING_BATTLE_ENEMY_SPELLCAST                                "The %s casts %s!"
+#define STRING_BATTLE_ENEMY_RECOVERED                                "The %s has recovered some hit points. Command?"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

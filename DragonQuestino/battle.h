@@ -4,14 +4,18 @@
 #include "common.h"
 #include "enemy.h"
 
-#define SIZZ_MIN_DAMAGE                   3
-#define SIZZ_MAX_DAMAGE                   10
-#define SIZZLE_MIN_DAMAGE                 30
-#define SIZZLE_MAX_DAMAGE                 45
-#define FIRE_BREATH_MIN_DAMAGE            16
-#define FIRE_BREATH_MAX_DAMAGE            23
-#define STRONG_FIRE_BREATH_MIN_DAMAGE     65
-#define STRONG_FIRE_BREATH_MAX_DAMAGE     72
+#define ENEMY_SIZZ_MIN_DAMAGE                   3
+#define ENEMY_SIZZ_MAX_DAMAGE                   10
+#define ENEMY_SIZZLE_MIN_DAMAGE                 30
+#define ENEMY_SIZZLE_MAX_DAMAGE                 45
+#define ENEMY_HEAL_MIN_RECOVERY                 20
+#define ENEMY_HEAL_MAX_RECOVERY                 27
+#define ENEMY_MIDHEAL_MIN_RECOVERY              85
+#define ENEMY_MIDHEAL_MAX_RECOVERY              100
+#define FIRE_BREATH_MIN_DAMAGE                  16
+#define FIRE_BREATH_MAX_DAMAGE                  23
+#define STRONG_FIRE_BREATH_MIN_DAMAGE           65
+#define STRONG_FIRE_BREATH_MAX_DAMAGE           72
 
 typedef struct Game_t Game_t;
 

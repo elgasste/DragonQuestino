@@ -35,12 +35,16 @@ internal void Battle_EnemyBreatheFire( Battle_t* battle );
 internal void Battle_EnemyBreatheFireCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFire( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle );
+internal void Battle_EnemyCastSpell( Battle_t* battle, const char* spellName, void ( *callback )( Battle_t* ) );
 internal void Battle_EnemyCastSizz( Battle_t* battle );
 internal void Battle_EnemyCastSizzCallback( Battle_t* battle );
 internal void Battle_EnemyCastSizzle( Battle_t* battle );
 internal void Battle_EnemyCastSizzleCallback( Battle_t* battle );
 internal void Battle_EnemyCastHeal( Battle_t* battle );
+internal void Battle_EnemyCastHealCallback( Battle_t* battle );
+internal void Battle_EnemyHealMessageCallback( Battle_t* battle );
 internal void Battle_EnemyCastMidheal( Battle_t* battle );
+internal void Battle_EnemyCastMidhealCallback( Battle_t* battle );
 internal void Battle_EnemyCastFizzle( Battle_t* battle );
 internal void Battle_EnemyCastSleep( Battle_t* battle );
 
@@ -723,19 +727,24 @@ internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle )
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
-internal void Battle_EnemyCastSizz( Battle_t* battle )
+internal void Battle_EnemyCastSpell( Battle_t* battle, const char* spellName, void ( *callback )( Battle_t* ) )
 {
    char msg[64];
 
    Dialog_Reset( &( battle->game->dialog ) );
-   sprintf( msg, STRING_BATTLE_ENEMY_SPELLCAST, battle->enemy.name, STRING_SPELL_SIZZ );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyCastSizzCallback, battle );
+   sprintf( msg, STRING_BATTLE_ENEMY_SPELLCAST, battle->enemy.name, spellName );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, callback, battle );
    Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyCastSizz( Battle_t* battle )
+{
+   Battle_EnemyCastSpell( battle, STRING_SPELL_SIZZ, Battle_EnemyCastSizzCallback );
 }
 
 internal void Battle_EnemyCastSizzCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Random_u8( SIZZ_MIN_DAMAGE, SIZZ_MAX_DAMAGE );
+   battle->pendingPayload8u = Random_u8( ENEMY_SIZZ_MIN_DAMAGE, ENEMY_SIZZ_MAX_DAMAGE );
    battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
@@ -746,17 +755,12 @@ internal void Battle_EnemyCastSizzCallback( Battle_t* battle )
 
 internal void Battle_EnemyCastSizzle( Battle_t* battle )
 {
-   char msg[64];
-
-   Dialog_Reset( &( battle->game->dialog ) );
-   sprintf( msg, STRING_BATTLE_ENEMY_SPELLCAST, battle->enemy.name, STRING_SPELL_SIZZLE );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyCastSizzleCallback, battle );
-   Game_OpenDialog( battle->game );
+   Battle_EnemyCastSpell( battle, STRING_SPELL_SIZZLE, Battle_EnemyCastSizzleCallback );
 }
 
 internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Random_u8( SIZZLE_MIN_DAMAGE, SIZZLE_MAX_DAMAGE );
+   battle->pendingPayload8u = Random_u8( ENEMY_SIZZLE_MIN_DAMAGE, ENEMY_SIZZLE_MAX_DAMAGE );
    battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
@@ -767,14 +771,46 @@ internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
 
 internal void Battle_EnemyCastHeal( Battle_t* battle )
 {
-   // TODO
-   UNUSED_PARAM( battle );
+   Battle_EnemyCastSpell( battle, STRING_SPELL_HEAL, Battle_EnemyCastHealCallback );
+}
+
+internal void Battle_EnemyCastHealCallback( Battle_t* battle )
+{
+   uint8_t payload = Random_u8( ENEMY_HEAL_MIN_RECOVERY, ENEMY_HEAL_MAX_RECOVERY );
+   payload = MATH_MIN( payload, battle->enemy.stats.maxHitPoints - battle->enemy.stats.hitPoints );
+   battle->enemy.stats.hitPoints += payload;
+
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyHealMessageCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_EnemyHealMessageCallback( Battle_t* battle )
+{
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMY_RECOVERED, battle->enemy.name );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+   Game_OpenDialog( battle->game );
 }
 
 internal void Battle_EnemyCastMidheal( Battle_t* battle )
 {
-   // TODO
-   UNUSED_PARAM( battle );
+   Battle_EnemyCastSpell( battle, STRING_SPELL_MIDHEAL, Battle_EnemyCastMidhealCallback );
+}
+
+internal void Battle_EnemyCastMidhealCallback( Battle_t* battle )
+{
+   uint8_t payload = Random_u8( ENEMY_MIDHEAL_MIN_RECOVERY, ENEMY_MIDHEAL_MAX_RECOVERY );
+   payload = MATH_MIN( payload, battle->enemy.stats.maxHitPoints - battle->enemy.stats.hitPoints );
+   battle->enemy.stats.hitPoints += payload;
+
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyHealMessageCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
 internal void Battle_EnemyCastFizzle( Battle_t* battle )
