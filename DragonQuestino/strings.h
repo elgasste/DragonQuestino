@@ -237,6 +237,7 @@
 #define STRING_BATTLE_ENEMY_ATTACKDODGED                             "But you dodge the attack! Command?"
 #define STRING_BATTLE_ENEMY_ATTACKSUCCEEDED                          "You have lost %u hit %s. Command?"
 #define STRING_BATTLE_ENEMY_ATTACKDEATH                              "You have lost %u hit %s."
+#define STRING_BATTLE_ENEMY_SPELLCAST                                "The %s casts %s!"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

@@ -4,6 +4,10 @@
 #include "common.h"
 #include "enemy.h"
 
+#define SIZZ_MIN_DAMAGE                   3
+#define SIZZ_MAX_DAMAGE                   10
+#define SIZZLE_MIN_DAMAGE                 30
+#define SIZZLE_MAX_DAMAGE                 45
 #define FIRE_BREATH_MIN_DAMAGE            16
 #define FIRE_BREATH_MAX_DAMAGE            23
 #define STRONG_FIRE_BREATH_MIN_DAMAGE     65

@@ -25,6 +25,7 @@ internal Bool_t Battle_EnemyTryHeal( Battle_t* battle, Bool_t midHeal, uint32_t 
 internal Bool_t Battle_EnemyTryFizzle( Battle_t* battle, uint32_t chance );
 internal Bool_t Battle_EnemyTrySleep( Battle_t* battle, uint32_t chance );
 internal void Battle_EnemyAttack( Battle_t* battle );
+internal void Battle_PushPlayerHurtAnimation( Battle_t* battle );
 internal void Battle_EnemyAttackCallback( Battle_t* battle );
 internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle );
 internal void Battle_EnemyAttackDodgedCallback( Battle_t* battle );
@@ -35,7 +36,9 @@ internal void Battle_EnemyBreatheFireCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFire( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle );
 internal void Battle_EnemyCastSizz( Battle_t* battle );
+internal void Battle_EnemyCastSizzCallback( Battle_t* battle );
 internal void Battle_EnemyCastSizzle( Battle_t* battle );
+internal void Battle_EnemyCastSizzleCallback( Battle_t* battle );
 internal void Battle_EnemyCastHeal( Battle_t* battle );
 internal void Battle_EnemyCastMidheal( Battle_t* battle );
 internal void Battle_EnemyCastFizzle( Battle_t* battle );
@@ -592,6 +595,15 @@ internal void Battle_EnemyAttack( Battle_t* battle )
    Game_OpenDialog( battle->game );
 }
 
+internal void Battle_PushPlayerHurtAnimation( Battle_t* battle )
+{
+   AnimationChain_PushAnimation( &( battle->game->animationChain ),
+                                 battle->game->player.stats.hitPoints > battle->pendingPayload8u
+                                    ? AnimationId_Battle_PlayerDamage
+                                    : AnimationId_Battle_PlayerDeath );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyAttackSucceededCallback, battle );
+}
+
 internal void Battle_EnemyAttackCallback( Battle_t* battle )
 {
    battle->pendingPayload8u = Battle_GetEnemyAttackDamage( battle );
@@ -604,11 +616,7 @@ internal void Battle_EnemyAttackCallback( Battle_t* battle )
    }
    else
    {
-      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ),
-                                                battle->game->player.stats.hitPoints > battle->pendingPayload8u
-                                                   ? AnimationId_Battle_PlayerDamage
-                                                   : AnimationId_Battle_PlayerDeath,
-                                                Battle_EnemyAttackSucceededCallback, battle );
+      Battle_PushPlayerHurtAnimation( battle );
    }
 
    AnimationChain_Start( &( battle->game->animationChain ) );
@@ -688,13 +696,10 @@ internal void Battle_EnemyBreatheFire( Battle_t* battle )
 
 internal void Battle_EnemyBreatheFireCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = MATH_MIN( Random_u8( FIRE_BREATH_MIN_DAMAGE, FIRE_BREATH_MAX_DAMAGE ), battle->game->player.stats.hitPoints );
+   battle->pendingPayload8u = Random_u8( FIRE_BREATH_MIN_DAMAGE, FIRE_BREATH_MAX_DAMAGE );
+   battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
    AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ),
-                                             battle->game->player.stats.hitPoints > battle->pendingPayload8u
-                                             ? AnimationId_Battle_PlayerDamage
-                                             : AnimationId_Battle_PlayerDeath,
-                                             Battle_EnemyAttackSucceededCallback, battle );
+   Battle_PushPlayerHurtAnimation( battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
@@ -710,26 +715,54 @@ internal void Battle_EnemyBreatheStrongFire( Battle_t* battle )
 
 internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = MATH_MIN( Random_u8( STRONG_FIRE_BREATH_MIN_DAMAGE, STRONG_FIRE_BREATH_MAX_DAMAGE ), battle->game->player.stats.hitPoints );
+   battle->pendingPayload8u = Random_u8( STRONG_FIRE_BREATH_MIN_DAMAGE, STRONG_FIRE_BREATH_MAX_DAMAGE );
+   battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
+
    AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ),
-                                             battle->game->player.stats.hitPoints > battle->pendingPayload8u
-                                             ? AnimationId_Battle_PlayerDamage
-                                             : AnimationId_Battle_PlayerDeath,
-                                             Battle_EnemyAttackSucceededCallback, battle );
+   Battle_PushPlayerHurtAnimation( battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
 internal void Battle_EnemyCastSizz( Battle_t* battle )
 {
-   // TODO
-   UNUSED_PARAM( battle );
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMY_SPELLCAST, battle->enemy.name, STRING_SPELL_SIZZ );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyCastSizzCallback, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyCastSizzCallback( Battle_t* battle )
+{
+   battle->pendingPayload8u = Random_u8( SIZZ_MIN_DAMAGE, SIZZ_MAX_DAMAGE );
+   battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
+
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
+   Battle_PushPlayerHurtAnimation( battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
 internal void Battle_EnemyCastSizzle( Battle_t* battle )
 {
-   // TODO
-   UNUSED_PARAM( battle );
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMY_SPELLCAST, battle->enemy.name, STRING_SPELL_SIZZLE );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyCastSizzleCallback, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
+{
+   battle->pendingPayload8u = Random_u8( SIZZLE_MIN_DAMAGE, SIZZLE_MAX_DAMAGE );
+   battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
+
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
+   Battle_PushPlayerHurtAnimation( battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
 internal void Battle_EnemyCastHeal( Battle_t* battle )
