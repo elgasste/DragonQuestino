@@ -601,8 +601,8 @@ internal void Battle_EnemyAttackCallback( Battle_t* battle )
    }
    else
    {
-      // TODO: add a player-takes-damage animation
-      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyAttackSucceededCallback, battle );
+      // TODO: add player-has-died animation
+      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_PlayerDamage, Battle_EnemyAttackSucceededCallback, battle );
    }
 
    AnimationChain_Start( &( battle->game->animationChain ) );
@@ -643,7 +643,7 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
 
 internal void Battle_PlayerDefeatedCallback( Battle_t* battle )
 {
-   // TODO
+   // TODO: implement death
    UNUSED_PARAM( battle );
 }
 

@@ -53,20 +53,18 @@ typedef enum AnimationId_t
    AnimationId_FadeOut,
    AnimationId_FadeIn,
    AnimationId_WhiteOut,
-   AnimationId_WhitePause,
    AnimationId_WhiteIn,
    AnimationId_CastSpell,
    AnimationId_RainbowBridge_Trippy,
    AnimationId_RainbowBridge_WhiteOut,
    AnimationId_RainbowBridge_FadeIn,
-   AnimationId_RainbowBridge_Pause,
    AnimationId_Battle_Checkerboard,
    AnimationId_Battle_EnemyFadeIn,
    AnimationId_Battle_EnemyFadeOut,
    AnimationId_Battle_EnemyFadeInPause,
    AnimationId_Battle_EnemyDamage,
    AnimationId_Battle_EnemyDodge,
-   AnimationId_Battle_VictoryPause,
+   AnimationId_Battle_PlayerDamage,
 
    AnimationId_Count
 }

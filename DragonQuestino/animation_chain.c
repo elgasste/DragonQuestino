@@ -26,6 +26,7 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain );
+internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -95,6 +96,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_Battle_EnemyFadeIn: AnimationChain_Tic_Battle_EnemyFadeIn( chain ); break;
          case AnimationId_Battle_EnemyFadeOut: AnimationChain_Tic_Battle_EnemyFadeOut( chain ); break;
          case AnimationId_Battle_EnemyDamage: AnimationChain_Tic_Battle_EnemyDamage( chain ); break;
+         case AnimationId_Battle_PlayerDamage: AnimationChain_Tic_Battle_PlayerDamage( chain ); break;
       }
    }
 }
@@ -136,7 +138,14 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
       case AnimationId_Battle_EnemyFadeIn:
          chain->totalDuration = ANIMATION_BATTLE_ENEMYFADE_DURATION;
          break;
-      case AnimationId_Battle_EnemyDamage: chain->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION; break;
+      case AnimationId_Battle_EnemyDamage:
+         chain->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION;
+         chain->flag = True;
+         break;
+      case AnimationId_Battle_PlayerDamage:
+         chain->totalDuration = ANIMATION_BATTLE_PLAYERDAMAGE_DURATION;
+         chain->flag = True;
+         break;
    }
 
    chain->totalElapsedSeconds = 0.0f;
@@ -159,6 +168,12 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
          Screen_ClearPalette( chain->screen, COLOR_BLACK );
          break;
       case AnimationId_Battle_EnemyDamage:
+         Game_DrawEnemy( chain->game );
+         break;
+      case AnimationId_Battle_PlayerDamage:
+         Game_DrawQuickStatus( chain->game );
+         Dialog_Draw( &( chain->game->dialog ) );
+         Game_WipeEnemy( chain->game );
          Game_DrawEnemy( chain->game );
          break;
    }
@@ -419,6 +434,32 @@ internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain )
       else
       {
          Game_WipeEnemy( chain->game );
+      }
+
+      TOGGLE_BOOL( chain->flag );
+   }
+}
+
+internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain )
+{
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION )
+   {
+      chain->frameElapsedSeconds -= ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION;
+
+      if ( chain->flag )
+      {
+         Game_DrawQuickStatus( chain->game );
+         Dialog_Draw( &( chain->game->dialog ) );
+      }
+      else
+      {
+         Game_DrawTileMap( chain->game );
+         Game_WipeEnemy( chain->game );
+         Game_DrawEnemy( chain->game );
       }
 
       TOGGLE_BOOL( chain->flag );
