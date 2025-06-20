@@ -19,6 +19,15 @@ internal void Battle_SwitchTurnCallback( Battle_t* battle );
 internal void Battle_EnemyTurn( Battle_t* battle );
 internal void Battle_EnemyWokeUpCallback( Battle_t* battle );
 internal void Battle_EnemyInitiateBehavior( Battle_t* battle );
+internal void Battle_EnemyAttack( Battle_t* battle );
+internal void Battle_EnemyCastSizzOrAttack( Battle_t* battle, uint32_t chance );
+internal void Battle_EnemyCastSizzleOrAttack( Battle_t* battle, uint32_t chance );
+internal void Battle_EnemyBreatheFireOrAttack( Battle_t* battle, uint32_t chance );
+internal void Battle_EnemyBreatheStrongFireOrAttack( Battle_t* battle, uint32_t chance );
+internal Bool_t Battle_EnemyTryCastHeal( Battle_t* battle, uint32_t chance );
+internal Bool_t Battle_EnemyTryCastMidHeal( Battle_t* battle, uint32_t chance );
+internal Bool_t Battle_EnemyTryCastFizzle( Battle_t* battle, uint32_t chance );
+internal Bool_t Battle_EnemyTryCastSleep( Battle_t* battle, uint32_t chance );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -43,9 +52,9 @@ void Battle_Generate( Battle_t* battle )
 
    switch ( battle->specialEnemy )
    {
-      case SpecialEnemy_GreenDragon: enemyIndex = ENEMY_GREENDRAGON_INDEX; break;
-      case SpecialEnemy_AxeKnight: enemyIndex = ENEMY_AXEKNIGHT_INDEX; break;
-      case SpecialEnemy_Golem: enemyIndex = ENEMY_GOLEM_INDEX; break;
+      case SpecialEnemy_GreenDragon: enemyIndex = ENEMY_GREENDRAGON_ID; break;
+      case SpecialEnemy_AxeKnight: enemyIndex = ENEMY_AXEKNIGHT_ID; break;
+      case SpecialEnemy_Golem: enemyIndex = ENEMY_GOLEM_ID; break;
       default: enemyIndex = Battle_GenerateEnemyIndex( battle ); break;
    }
 
@@ -480,6 +489,101 @@ internal void Battle_EnemyWokeUpCallback( Battle_t* battle )
 
 internal void Battle_EnemyInitiateBehavior( Battle_t* battle )
 {
+   switch ( battle->enemy.id )
+   {
+      case ENEMY_MAGICIAN_ID:
+      case ENEMY_MAGIDRAKEE_ID: Battle_EnemyCastSizzOrAttack( battle, 50 ); break;
+      case ENEMY_POLTERGEIST_ID:
+      case ENEMY_METALSLIME_ID: Battle_EnemyCastSizzOrAttack( battle, 75 ); break;
+      case ENEMY_DRAKEEMA_ID: if ( !Battle_EnemyTryCastHeal( battle, 25 ) ) Battle_EnemyCastSizzOrAttack( battle, 50 ); break;
+      case ENEMY_WARLOCK_ID: if ( !Battle_EnemyTryCastSleep( battle, 25 ) ) Battle_EnemyCastSizzOrAttack( battle, 50 ); break;
+      case ENEMY_WRAITH_ID: if ( !Battle_EnemyTryCastHeal( battle, 25 ) ) Battle_EnemyAttack( battle ); break;
+      case ENEMY_SPECTER_ID: if ( !Battle_EnemyTryCastSleep( battle, 25 ) ) Battle_EnemyCastSizzOrAttack( battle, 75 ); break;
+      case ENEMY_WOLFLORD_ID:
+      case ENEMY_DROLLMAGI_ID:
+      case ENEMY_KNIGHT_ID: if ( !Battle_EnemyTryCastFizzle( battle, 50 ) ) Battle_EnemyAttack( battle ); break;
+      case ENEMY_DRUINLORD_ID: if ( !Battle_EnemyTryCastHeal( battle, 75 ) ) Battle_EnemyCastSizzOrAttack( battle, 25 ); break;
+      case ENEMY_WRAITHKNIGHT_ID: if ( !Battle_EnemyTryCastHeal( battle, 75 ) ) Battle_EnemyAttack( battle ); break;
+      case ENEMY_MAGIWYVERN_ID: if ( !Battle_EnemyTryCastSleep( battle, 50 ) ) Battle_EnemyAttack( battle ); break;
+      case ENEMY_GREENDRAGON_ID:
+      case ENEMY_BLUEDRAGON_ID: Battle_EnemyBreatheFireOrAttack( battle, 25 ); break;
+      case ENEMY_STARWYVERN_ID: if ( !Battle_EnemyTryCastMidHeal( battle, 75 ) ) Battle_EnemyBreatheFireOrAttack( battle, 25 ); break;
+      case ENEMY_WIZARD_ID: Battle_EnemyCastSizzleOrAttack( battle, 50 ); break;
+      case ENEMY_AXEKNIGHT_ID: if ( !Battle_EnemyTryCastSleep( battle, 25 ) ) Battle_EnemyAttack( battle ); break;
+      case ENEMY_ARMOREDKNIGHT_ID: if ( !Battle_EnemyTryCastMidHeal( battle, 75 ) ) Battle_EnemyCastSizzleOrAttack( battle, 25 ); break;
+      case ENEMY_REDDRAGON_ID: if ( !Battle_EnemyTryCastSleep( battle, 25 ) ) Battle_EnemyBreatheFireOrAttack( battle, 25 ); break;
+      case ENEMY_DRAGONLORDWIZARD_ID: if ( !Battle_EnemyTryCastFizzle( battle, 25 ) ) Battle_EnemyCastSizzleOrAttack( battle, 75 ); break;
+      case ENEMY_DRAGONLORDDRAGON_ID: Battle_EnemyBreatheStrongFireOrAttack( battle, 50 ); break;
+      default: Battle_EnemyAttack( battle );
+   }
+}
+
+internal void Battle_EnemyAttack( Battle_t* battle )
+{
    // TODO
    UNUSED_PARAM( battle );
+}
+
+internal void Battle_EnemyCastSizzOrAttack( Battle_t* battle, uint32_t chance )
+{
+   // TODO
+   UNUSED_PARAM( battle );
+   UNUSED_PARAM( chance );
+}
+
+internal void Battle_EnemyCastSizzleOrAttack( Battle_t* battle, uint32_t chance )
+{
+   // TODO
+   UNUSED_PARAM( battle );
+   UNUSED_PARAM( chance );
+}
+
+internal void Battle_EnemyBreatheFireOrAttack( Battle_t* battle, uint32_t chance )
+{
+   // TODO
+   UNUSED_PARAM( battle );
+   UNUSED_PARAM( chance );
+}
+
+internal void Battle_EnemyBreatheStrongFireOrAttack( Battle_t* battle, uint32_t chance )
+{
+   // TODO
+   UNUSED_PARAM( battle );
+   UNUSED_PARAM( chance );
+}
+
+internal Bool_t Battle_EnemyTryCastHeal( Battle_t* battle, uint32_t chance )
+{
+   // TODO
+   UNUSED_PARAM( battle );
+   UNUSED_PARAM( chance );
+
+   return False;
+}
+
+internal Bool_t Battle_EnemyTryCastMidHeal( Battle_t* battle, uint32_t chance )
+{
+   // TODO
+   UNUSED_PARAM( battle );
+   UNUSED_PARAM( chance );
+
+   return False;
+}
+
+internal Bool_t Battle_EnemyTryCastFizzle( Battle_t* battle, uint32_t chance )
+{
+   // TODO
+   UNUSED_PARAM( battle );
+   UNUSED_PARAM( chance );
+
+   return False;
+}
+
+internal Bool_t Battle_EnemyTryCastSleep( Battle_t* battle, uint32_t chance )
+{
+   // TODO
+   UNUSED_PARAM( battle );
+   UNUSED_PARAM( chance );
+
+   return False;
 }
