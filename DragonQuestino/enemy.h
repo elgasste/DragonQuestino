@@ -17,6 +17,7 @@
 
 typedef struct Enemy_t
 {
+   uint32_t id;
    uint32_t groupId;
    char name[16];
    char indefiniteArticle[3];

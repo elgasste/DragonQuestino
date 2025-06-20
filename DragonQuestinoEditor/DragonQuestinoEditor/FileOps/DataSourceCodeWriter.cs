@@ -209,6 +209,7 @@ namespace DragonQuestinoEditor.FileOps
          {
             int groupId = enemy.Index < 20 ? 0 : enemy.Index < 30 ? 1 : enemy.Index < 35 ? 2 : 3;
             WriteToFileStream( fs, string.Format( "   case {0}:\n", enemy.Index ) );
+            WriteToFileStream( fs, string.Format( "      enemy->id = {0};\n", enemy.Index ) );
             WriteToFileStream( fs, string.Format( "      enemy->groupId = {0};\n", groupId ) );
             WriteToFileStream( fs, string.Format( "      strcpy( enemy->name, {0} );\n", enemy.NameMacro ) );
             WriteToFileStream( fs, string.Format( "      strcpy( enemy->indefiniteArticle, {0} );\n", enemy.IndefiniteArticle == "An" ? "STRING_INDEFINITE_ARTICLE_AN" : "STRING_INDEFINITE_ARTICLE_A" ) );
