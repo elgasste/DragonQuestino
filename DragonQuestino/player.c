@@ -55,6 +55,8 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    ITEM_SET_WINGCOUNT( player->items, 1 );
    ITEM_TOGGLE_HASGWAELYNSLOVE( player->items );
    ITEM_TOGGLE_HASRAINBOWDROP( player->items );
+
+   player->townsVisited = 0xFF;
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )

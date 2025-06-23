@@ -8,6 +8,8 @@ internal void Game_RainbowDropTrippyCallback( Game_t* game );
 internal void Game_UseSilverHarpCallback( Game_t* game );
 internal void Game_UseFairyFluteCallback( Game_t* game );
 internal void Game_UseFairyFluteMessageCallback( Game_t* game );
+internal void Game_UseTorchCallback( Game_t* game );
+internal void Game_UseTorchResultCallback( Game_t* game );
 
 void Game_UseHerb( Game_t* game )
 {
@@ -88,14 +90,7 @@ void Game_UseTorch( Game_t* game )
       }
       else
       {
-         if ( game->tileMap.glowDiameter <= TORCH_DIAMETER )
-         {
-            TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
-            game->tileMap.torchIsLit = True;
-         }
-
-         ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
-         Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_TORCH );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMUSE_TORCH, Game_UseTorchCallback, game );
       }
    }
    else
@@ -301,4 +296,25 @@ internal void Game_UseFairyFluteMessageCallback( Game_t* game )
       Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BUTNOTHINGHAPPENS, Battle_SwitchTurn, &( game->battle ) );
       Game_OpenDialog( game );
    }
+}
+
+internal void Game_UseTorchCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_UseTorchResultCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_UseTorchResultCallback( Game_t* game )
+{
+   if ( game->tileMap.glowDiameter <= TORCH_DIAMETER )
+   {
+      TileMap_SetTargetGlowDiameter( &( game->tileMap ), TORCH_DIAMETER );
+      game->tileMap.torchIsLit = True;
+   }
+
+   ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 );
+   game->subState = SubState_None;
 }

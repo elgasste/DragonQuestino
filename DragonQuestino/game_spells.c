@@ -18,6 +18,7 @@ internal void Game_SpellFizzleSuccessCallback( Game_t* game );
 internal void Game_SpellZoomCallback( Game_t* game );
 internal void Game_SpellRepelCallback( Game_t* game );
 internal void Game_SpellGlowCallback( Game_t* game );
+internal void Game_GlowResultCallback( Game_t* game );
 internal void Game_SpellEvacCallback( Game_t* game );
 internal void Game_SpellAnimateNoEffect( Game_t* game );
 internal void Game_SpellNoEffectCallback( Game_t* game );
@@ -503,11 +504,22 @@ internal void Game_SpellGlowCallback( Game_t* game )
    }
    else
    {
-      if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
-      {
-         TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
-         game->tileMap.glowTileCount = 0;
-      }
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_GlowResultCallback, game );
+      AnimationChain_Start( &( game->animationChain ) );
+   }
+}
+
+internal void Game_GlowResultCallback( Game_t* game )
+{
+   game->subState = SubState_None;
+
+   if ( game->tileMap.glowDiameter <= GLOW_SPELL_DIAMETER )
+   {
+      TileMap_SetTargetGlowDiameter( &( game->tileMap ), GLOW_SPELL_DIAMETER );
+      game->tileMap.glowTileCount = 0;
    }
 }
 
