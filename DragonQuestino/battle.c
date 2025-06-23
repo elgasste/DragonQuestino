@@ -206,7 +206,14 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
 
    if ( damage == 0 )
    {
-      damage = Random_u8( 0, 1 );
+      if ( enemy->stats.isAsleep )
+      {
+         damage = 1;
+      }
+      else
+      {
+         damage = Random_u8( 0, 1 );
+      }
    }
 
    return ( damage > enemy->stats.hitPoints ) ? enemy->stats.hitPoints : damage;
@@ -653,20 +660,24 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
    Player_t* player = &( battle->game->player );
    char msg[64];
 
-   Dialog_Reset( &( battle->game->dialog ) );
    player->stats.hitPoints -= battle->pendingPayload8u;
    battle->game->screen.needsRedraw = True;
-   sprintf( msg,
-            ( player->stats.hitPoints > 0 ) ? STRING_BATTLE_ENEMY_ATTACKSUCCEEDED : STRING_BATTLE_ENEMY_ATTACKDEATH,
-            battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
+   Dialog_Reset( &( battle->game->dialog ) );
 
    if ( player->stats.hitPoints == 0 )
    {
+      sprintf( msg, STRING_BATTLE_ENEMY_ATTACKDEATH, battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
       Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_PlayerDefeatedCallback, battle );
+   }
+   else if ( player->stats.isAsleep )
+   {
+      sprintf( msg, STRING_BATTLE_ENEMY_ATTACKSUCCEEDEDASLEEP, battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    }
    else
    {
       battle->turn = BattleTurn_Player;
+      sprintf( msg, STRING_BATTLE_ENEMY_ATTACKSUCCEEDED, battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
       Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
    }
 
@@ -721,6 +732,11 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
    }
 
    damage = Random_u8( minDamage, maxDamage );
+
+   if ( damage == 0 && player->stats.isAsleep )
+   {
+      damage = 1;
+   }
 
    return ( damage < player->stats.hitPoints ) ? damage : player->stats.hitPoints;
 }
@@ -842,8 +858,19 @@ internal void Battle_EnemyHealMessageCallback( Battle_t* battle )
    char msg[64];
 
    Dialog_Reset( &( battle->game->dialog ) );
-   sprintf( msg, STRING_BATTLE_ENEMY_RECOVERED, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+
+   if ( battle->game->player.stats.isAsleep )
+   {
+      sprintf( msg, STRING_BATTLE_ENEMY_RECOVEREDASLEEP, battle->enemy.name );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
+   }
+   else
+   {
+      battle->turn = BattleTurn_Player;
+      sprintf( msg, STRING_BATTLE_ENEMY_RECOVERED, battle->enemy.name );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+   }
+
    Game_OpenDialog( battle->game );
 }
 
@@ -877,11 +904,22 @@ internal void Battle_EnemyCastFizzleCallback( Battle_t* battle )
 
 internal void Battle_EnemyCastFizzleMessageCallback( Battle_t* battle )
 {
-   battle->turn = BattleTurn_Player;
    Dialog_Reset( &( battle->game->dialog ) );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ),
-                                   battle->game->player.stats.isFizzled ? STRING_BATTLE_PLAYER_FIZZLED : STRING_BATTLE_PLAYER_SPELL_NOEFFECT,
-                                   Game_ResetBattleMenu, battle->game );
+
+   if ( battle->game->player.stats.isAsleep )
+   {
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ),
+                                      battle->game->player.stats.isFizzled ? STRING_BATTLE_PLAYER_FIZZLEDASLEEP : STRING_BATTLE_PLAYER_SPELL_NOEFFECTASLEEP,
+                                      Battle_SwitchTurn, battle );
+   }
+   else
+   {
+      battle->turn = BattleTurn_Player;
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ),
+                                      battle->game->player.stats.isFizzled ? STRING_BATTLE_PLAYER_FIZZLED : STRING_BATTLE_PLAYER_SPELL_NOEFFECT,
+                                      Game_ResetBattleMenu, battle->game );
+   }
+
    Game_OpenDialog( battle->game );
 }
 
