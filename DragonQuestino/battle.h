@@ -5,9 +5,13 @@
 #include "enemy.h"
 
 #define ENEMY_SIZZ_MIN_DAMAGE                   3
+#define ENEMY_SIZZ_REDUCEDMIN_DAMAGE            2
 #define ENEMY_SIZZ_MAX_DAMAGE                   10
+#define ENEMY_SIZZ_REDUCEDMAX_DAMAGE            6
 #define ENEMY_SIZZLE_MIN_DAMAGE                 30
+#define ENEMY_SIZZLE_REDUCEDMIN_DAMAGE          20
 #define ENEMY_SIZZLE_MAX_DAMAGE                 45
+#define ENEMY_SIZZLE_REDUCEDMAX_DAMAGE          30
 #define ENEMY_HEAL_MIN_RECOVERY                 20
 #define ENEMY_HEAL_MAX_RECOVERY                 27
 #define ENEMY_MIDHEAL_MIN_RECOVERY              85

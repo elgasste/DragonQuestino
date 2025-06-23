@@ -703,7 +703,12 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
    Enemy_t* enemy = &( battle->enemy );
    Player_t* player = &( battle->game->player );
 
-   defense = player->stats.agility / 2;
+   defense = ( player->stats.agility / 2 ) + player->armor.effect + player->shield.effect;
+
+   if ( defense < ( player->stats.agility / 2 ) ) // overflow
+   {
+      defense = UINT8_MAX;
+   }
 
    if ( enemy->stats.strength > defense )
    {
@@ -776,7 +781,12 @@ internal void Battle_EnemyCastSizz( Battle_t* battle )
 
 internal void Battle_EnemyCastSizzCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Random_u8( ENEMY_SIZZ_MIN_DAMAGE, ENEMY_SIZZ_MAX_DAMAGE );
+   uint8_t minDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+                          ? ENEMY_SIZZ_REDUCEDMIN_DAMAGE : ENEMY_SIZZ_MIN_DAMAGE;
+   uint8_t maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+                          ? ENEMY_SIZZ_REDUCEDMAX_DAMAGE : ENEMY_SIZZ_MAX_DAMAGE;
+
+   battle->pendingPayload8u = Random_u8( minDamage, maxDamage );
    battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
@@ -792,7 +802,12 @@ internal void Battle_EnemyCastSizzle( Battle_t* battle )
 
 internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Random_u8( ENEMY_SIZZLE_MIN_DAMAGE, ENEMY_SIZZLE_MAX_DAMAGE );
+   uint8_t minDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+                          ? ENEMY_SIZZLE_REDUCEDMIN_DAMAGE : ENEMY_SIZZLE_MIN_DAMAGE;
+   uint8_t maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+                          ? ENEMY_SIZZLE_REDUCEDMAX_DAMAGE : ENEMY_SIZZLE_MAX_DAMAGE;
+
+   battle->pendingPayload8u = Random_u8( minDamage, maxDamage );
    battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
@@ -852,7 +867,11 @@ internal void Battle_EnemyCastFizzle( Battle_t* battle )
 
 internal void Battle_EnemyCastFizzleCallback( Battle_t* battle )
 {
-   battle->game->player.stats.isFizzled = ( Random_u8( 1, 2 ) == 1 ) ? True : False;
+   if ( battle->game->player.armor.id != ARMOR_ERDRICKSARMOR_ID )
+   {
+      battle->game->player.stats.isFizzled = ( Random_u8( 1, 2 ) == 1 ) ? True : False;
+   }
+
    Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemyCastFizzleMessageCallback );
 }
 
