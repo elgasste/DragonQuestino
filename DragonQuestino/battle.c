@@ -751,6 +751,11 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
 
    defense = ( player->stats.agility / 2 ) + player->armor.effect + player->shield.effect;
 
+   if ( ITEM_HAS_DRAGONSCALE( player->items ) )
+   {
+      defense += 2;
+   }
+
    if ( defense < ( player->stats.agility / 2 ) ) // overflow
    {
       defense = UINT8_MAX;
