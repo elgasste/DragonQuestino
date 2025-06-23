@@ -25,8 +25,7 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->holyProtectionSteps = 0;
    player->townsVisited = 0;
 
-   // MUFFINS: just for fun
-   player->experience = 22001;
+   player->experience = 0;
    player->gold = 0;
    player->items = 0;
    player->spells = 0;
@@ -44,19 +43,9 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
 
-   Player_LoadWeapon( player, WEAPON_BROADSWORD_ID );
-   Player_LoadArmor( player, ARMOR_FULLPLATE_ID );
-   Player_LoadShield( player, SHIELD_LARGESHIELD_ID );
-
-   ITEM_SET_HERBCOUNT( player->items, 3 );
-   ITEM_SET_FAIRYWATERCOUNT( player->items, 2 );
-   ITEM_SET_KEYCOUNT( player->items, ITEM_MAXKEYS );
-   ITEM_SET_TORCHCOUNT( player->items, 4 );
-   ITEM_SET_WINGCOUNT( player->items, 1 );
-   ITEM_TOGGLE_HASGWAELYNSLOVE( player->items );
-   ITEM_TOGGLE_HASRAINBOWDROP( player->items );
-
-   player->townsVisited = 0xFF;
+   Player_LoadWeapon( player, WEAPON_NONE_ID );
+   Player_LoadArmor( player, ARMOR_NONE_ID );
+   Player_LoadShield( player, SHIELD_NONE_ID );
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )
