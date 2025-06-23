@@ -249,7 +249,14 @@ void Game_DrawEnemy( Game_t* game )
 
 void Game_WipeEnemy( Game_t* game )
 {
-   Screen_DrawRectColor( &( game->screen ), 96, 52, 112, 112, COLOR_BLACK );
+   if ( game->tileMap.isDark )
+   {
+      Screen_DrawRectColor( &( game->screen ), 72, 56, 112, 112, COLOR_BLACK );
+   }
+   else
+   {
+      Screen_DrawRectColor( &( game->screen ), 96, 52, 112, 112, COLOR_BLACK );
+   }
 }
 
 void Game_SetTextColor( Game_t* game )
