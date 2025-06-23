@@ -3,13 +3,16 @@
 
 #include "common.h"
 
-#define MATH_MIN( l, r ) ( ( l ) < ( r ) ? ( l ) : ( r ) )
-#define MATH_MAX( l, r ) ( ( l ) > ( r ) ? ( l ) : ( r ) )
-
 #if defined( __cplusplus )
 extern "C" {
 #endif
 
+uint8_t Math_Min8u( uint8_t l, uint8_t r);
+uint16_t Math_Min16u( uint16_t l, uint16_t r);
+uint32_t Math_Min32u( uint32_t l, uint32_t r);
+uint8_t Math_Max8u( uint8_t l, uint8_t r);
+uint16_t Math_Max16u( uint16_t l, uint16_t r);
+uint32_t Math_Max32u( uint32_t l, uint32_t r);
 Bool_t Math_RectsIntersect32i( int32_t x1, int32_t y1, int32_t w1, int32_t h1, int32_t x2, int32_t y2, int32_t w2, int32_t h2 );
 uint8_t Math_CollectAmount8u( uint8_t* dest, uint8_t src );
 uint16_t Math_CollectAmount16u( uint16_t* dest, uint16_t src );

@@ -27,7 +27,7 @@ void Game_UseHerb( Game_t* game )
    else
    {
       ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 );
-      restoredHitPoints = MATH_MIN( Random_u8( ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
+      restoredHitPoints = Math_Min8u( Random_u8( ITEM_HERB_MINEFFECT, ITEM_HERB_MAXEFFECT ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
       game->pendingPayload8u = restoredHitPoints;
       Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_HERB );
       sprintf( msg, STRING_DIALOG_HEAL_RESULT, restoredHitPoints, ( restoredHitPoints == 1 ) ? STRING_POINT : STRING_POINTS );

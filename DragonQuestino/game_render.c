@@ -148,7 +148,7 @@ void Game_DrawQuickStatus( Game_t* game )
    uint8_t level = game->player.level + 1;
    char line[9];
 
-   memSize = MATH_MIN( (uint32_t)( strlen( game->player.name ) ), 4 );
+   memSize = Math_Min32u( (uint32_t)( strlen( game->player.name ) ), 4 );
    memcpy( line, game->player.name, sizeof( char ) * memSize );
    line[memSize] = '\0';
    Screen_DrawTextWindowWithTitle( &( game->screen ), 16 + xOffset, 16, 8, 12, line );

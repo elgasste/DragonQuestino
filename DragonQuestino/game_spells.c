@@ -44,7 +44,7 @@ void Game_CastHeal( Game_t* game )
    {
       game->pendingSpell = Spell_Heal;
       maxEffect = game->player.isCursed ? ( SPELL_HEAL_MAXEFFECT / 2 ) : SPELL_HEAL_MAXEFFECT;
-      game->pendingPayload8u = MATH_MIN( Random_u8( SPELL_HEAL_MINEFFECT, maxEffect ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
+      game->pendingPayload8u = Math_Min8u( Random_u8( SPELL_HEAL_MINEFFECT, maxEffect ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
       sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, STRING_SPELL_HEAL );
       Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
    }
@@ -222,7 +222,7 @@ void Game_CastMidheal( Game_t* game )
    {
       game->pendingSpell = Spell_Midheal;
       maxEffect = game->player.isCursed ? ( SPELL_MIDHEAL_MAXEFFECT / 2 ) : SPELL_MIDHEAL_MAXEFFECT;
-      game->pendingPayload8u = MATH_MIN( Random_u8( SPELL_MIDHEAL_MINEFFECT, maxEffect ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
+      game->pendingPayload8u = Math_Min8u( Random_u8( SPELL_MIDHEAL_MINEFFECT, maxEffect ), game->player.stats.maxHitPoints - game->player.stats.hitPoints );
       sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, STRING_SPELL_MIDHEAL );
       Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
    }
