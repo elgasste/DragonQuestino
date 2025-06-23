@@ -170,28 +170,35 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
 {
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
-   uint8_t defense, damage, minDamage = 0, maxDamage = 0;
+   uint8_t power, defense, damage, minDamage = 0, maxDamage = 0;
 
    if ( enemy->stats.dodge > 0 && Random_u8( 1, 64 ) <= enemy->stats.dodge )
    {
       return 0;
    }
 
+   power = player->stats.strength + player->weapon.effect;
+
+   if ( power < player->stats.strength ) // overflow
+   {
+      power = UINT8_MAX;
+   }
+
    if ( battle->specialEnemy != SpecialEnemy_Dragonlord && Random_u8( 1, 32 ) == 1 )
    {
       battle->excellentMove = True;
-      minDamage = player->stats.strength / 2;
-      maxDamage = player->stats.strength;
+      minDamage = power / 2;
+      maxDamage = power;
    }
    else
    {
       battle->excellentMove = False;
       defense = enemy->stats.agility / 2;
 
-      if ( defense < player->stats.strength )
+      if ( defense < power )
       {
-         minDamage = ( player->stats.strength - defense ) / 4;
-         maxDamage = ( player->stats.strength - defense ) / 2;
+         minDamage = ( power - defense ) / 4;
+         maxDamage = ( power - defense ) / 2;
       }
    }
 
