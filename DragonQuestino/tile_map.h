@@ -50,6 +50,7 @@
 #define TILEMAP_TANTEGEL_ID                     3
 #define TILEMAP_BRECCONARY_ID                   4
 #define TILEMAP_GARINHAM_ID                     7
+#define TILEMAP_HAUKSNESS_ID                    9
 #define TILEMAP_KOL_ID                          12
 #define TILEMAP_CANTLIN_ID                      10
 #define TILEMAP_RIMULDAR_ID                     13
@@ -58,6 +59,7 @@
 #define TILEMAP_TANTEGEL_INDEX                  7053
 #define TILEMAP_TOKEN_INDEX                     16893
 #define TILEMAP_FAIRYFLUTE_INDEX                192
+#define TILEMAP_ERDRICKSARMOR_INDEX             305
 #define TILEMAP_RAINBOWBRIDGE_INDEX             7914
 #define TILEMAP_HIDDENSTAIRS_INDEX              55
 #define TILEMAP_HIDDENSTAIRS_DESTINATION_ID     26

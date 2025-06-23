@@ -189,14 +189,17 @@ void Game_DrawOverworldDeepStatus( Game_t* game )
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXMP, game->player.stats.maxMagicPoints );
    Screen_DrawText( &( game->screen ), line, 112, 104 );
 
-   sprintf( line, STRING_OVERWORLD_DEEPSTATS_WEAPON, STRING_OVERWORLD_DEEPSTATS_NONE );
-   Screen_DrawText( &( game->screen ), line, 96, 120 );
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_WEAPON, 96, 120 );
+   Screen_DrawText( &( game->screen ), game->player.weapon.name1, 160, 120 );
+   Screen_DrawText( &( game->screen ), game->player.weapon.name2, 168, 128 );
 
-   sprintf( line, STRING_OVERWORLD_DEEPSTATS_ARMOR, STRING_OVERWORLD_DEEPSTATS_NONE );
-   Screen_DrawText( &( game->screen ), line, 104, 136 );
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_ARMOR, 104, 136 );
+   Screen_DrawText( &( game->screen ), game->player.armor.name1, 160, 136 );
+   Screen_DrawText( &( game->screen ), game->player.armor.name2, 168, 144 );
 
-   sprintf( line, STRING_OVERWORLD_DEEPSTATS_SHIELD, STRING_OVERWORLD_DEEPSTATS_NONE );
-   Screen_DrawText( &( game->screen ), line, 96, 152 );
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_SHIELD, 96, 152 );
+   Screen_DrawText( &( game->screen ), game->player.shield.name1, 160, 152 );
+   Screen_DrawText( &( game->screen ), game->player.shield.name2, 168, 160 );
 }
 
 void Game_DrawOverworldItemMenu( Game_t* game )

@@ -33,6 +33,14 @@ void Game_Search( Game_t* game )
       sprintf( msg, STRING_DIALOG_SEARCH_FOUND, STRING_FOUNDITEM_FAIRYFLUTE );
       Dialog_PushSection( &( game->dialog ), msg );
    }
+   else if ( game->tileMap.id == TILEMAP_HAUKSNESS_ID && game->player.tileIndex == TILEMAP_ERDRICKSARMOR_INDEX && game->player.armor.id != ARMOR_ERDRICKSARMOR_ID )
+   {
+      // MUFFINS: test this
+      Player_LoadArmor( &( game->player ), ARMOR_ERDRICKSARMOR_ID );
+      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_SEARCH );
+      sprintf( msg, STRING_DIALOG_SEARCH_FOUND, STRING_FOUNDITEM_ERDRICKSARMOR );
+      Dialog_PushSection( &( game->dialog ), msg );
+   }
    else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID && game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->gameFlags.foundHiddenStairs )
    {
       game->gameFlags.foundHiddenStairs = True;
@@ -90,7 +98,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 {
    uint16_t gold = 0;
    Bool_t collected = False;
-   char msg[64];
+   char msg[64], itemMsg[24];
 
    switch ( treasureFlag )
    {
@@ -149,8 +157,11 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       case 0x80000:     // Garin's Grave B1, center chest
          gold = Random_u16( 5, 20 ); break;
       case 0x800000:    // Charlock B2
-         // TODO: should be Erdrick's Sword
-         gold = 1000; break;
+         collected = True;
+         Player_LoadWeapon( &( game->player ), WEAPON_ERDRICKSSWORD_ID );
+         sprintf( itemMsg, "%s %s", STRING_WEAPON_ERDRICKSSWORD1, STRING_WEAPON_ERDRICKSSWORD2 );
+         sprintf( msg, STRING_CHEST_ITEMFOUND, itemMsg );
+         break;
       case 0x2000000:   // Charlock B7, center-left chest
          gold = Random_u16( 500, 755 ); break;
       case 0x2000:      // Rocky Mountain Cave B2, center-left chest

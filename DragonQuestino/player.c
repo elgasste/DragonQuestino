@@ -42,6 +42,10 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->stats.stopSpellResist = 0;
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
+
+   Player_LoadWeapon( player, WEAPON_NONE_ID );
+   Player_LoadArmor( player, ARMOR_NONE_ID );
+   Player_LoadShield( player, SHIELD_NONE_ID );
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )
@@ -186,5 +190,55 @@ void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level )
       {
          player->spells |= ( 0x1 << i );
       }
+   }
+}
+
+void Player_LoadWeapon( Player_t* player, uint32_t weaponId )
+{
+   player->weapon.id = weaponId;
+   player->weapon.effect = g_weaponEffectTable[weaponId];
+
+   switch ( weaponId )
+   {
+      case WEAPON_NONE_ID: strcpy( player->weapon.name1, STRING_ACCESSORY_NONE ); player->weapon.name2[0] = 0; break;
+      case WEAPON_BAMBOOPOLE_ID: strcpy( player->weapon.name1, STRING_WEAPON_BAMBOOPOLE1 ); strcpy( player->weapon.name2, STRING_WEAPON_BAMBOOPOLE2 ); break;
+      case WEAPON_CLUB_ID: strcpy( player->weapon.name1, STRING_WEAPON_CLUB ); player->weapon.name2[0] = 0; break;
+      case WEAPON_COPPERSWORD_ID: strcpy( player->weapon.name1, STRING_WEAPON_COPPERSWORD1 ); strcpy( player->weapon.name2, STRING_WEAPON_COPPERSWORD2 ); break;
+      case WEAPON_HANDAXE_ID: strcpy( player->weapon.name1, STRING_WEAPON_HANDAXE ); player->weapon.name2[0] = 0; break;
+      case WEAPON_BROADSWORD_ID: strcpy( player->weapon.name1, STRING_WEAPON_BROADSWORD1 ); strcpy( player->weapon.name2, STRING_WEAPON_BROADSWORD2 ); break;
+      case WEAPON_FLAMESWORD_ID: strcpy( player->weapon.name1, STRING_WEAPON_FLAMESWORD1 ); strcpy( player->weapon.name2, STRING_WEAPON_FLAMESWORD2 ); break;
+      case WEAPON_ERDRICKSSWORD_ID: strcpy( player->weapon.name1, STRING_WEAPON_ERDRICKSSWORD1 ); strcpy( player->weapon.name2, STRING_WEAPON_ERDRICKSSWORD2 ); break;
+   }
+}
+
+void Player_LoadArmor( Player_t* player, uint32_t armorId )
+{
+   player->armor.id = armorId;
+   player->armor.effect = g_armorEffectTable[armorId];
+
+   switch ( armorId )
+   {
+      case ARMOR_NONE_ID: strcpy( player->armor.name1, STRING_ACCESSORY_NONE ); player->armor.name2[0] = 0; break;
+      case ARMOR_CLOTHES_ID: strcpy( player->armor.name1, STRING_ARMOR_CLOTHES ); player->armor.name2[0] = 0; break;
+      case ARMOR_LEATHERARMOR_ID: strcpy( player->armor.name1, STRING_ARMOR_LEATHERARMOR1 ); strcpy( player->armor.name2, STRING_ARMOR_LEATHERARMOR2 ); break;
+      case ARMOR_CHAINMAIL_ID: strcpy( player->armor.name1, STRING_ARMOR_CHAINMAIL1 ); strcpy( player->armor.name2, STRING_ARMOR_CHAINMAIL2 ); break;
+      case ARMOR_HALFPLATE_ID: strcpy( player->armor.name1, STRING_ARMOR_HALFPLATE1 ); strcpy( player->armor.name2, STRING_ARMOR_HALFPLATE2 ); break;
+      case ARMOR_FULLPLATE_ID: strcpy( player->armor.name1, STRING_ARMOR_FULLPLATE1 ); strcpy( player->armor.name2, STRING_ARMOR_FULLPLATE2 ); break;
+      case ARMOR_MAGICARMOR_ID: strcpy( player->armor.name1, STRING_ARMOR_MAGICARMOR1 ); strcpy( player->armor.name2, STRING_ARMOR_MAGICARMOR2 ); break;
+      case ARMOR_ERDRICKSARMOR_ID: strcpy( player->armor.name1, STRING_ARMOR_ERDRICKSARMOR1 ); strcpy( player->armor.name2, STRING_ARMOR_ERDRICKSARMOR2 ); break;
+   }
+}
+
+void Player_LoadShield( Player_t* player, uint32_t shieldId )
+{
+   player->shield.id = shieldId;
+   player->shield.effect = g_shieldEffectTable[shieldId];
+
+   switch ( shieldId )
+   {
+      case SHIELD_NONE_ID: strcpy( player->shield.name1, STRING_ACCESSORY_NONE ); player->shield.name2[0] = 0; break;
+      case SHIELD_SMALLSHIELD_ID: strcpy( player->shield.name1, STRING_SHIELD_SMALL1 ); strcpy( player->shield.name2, STRING_SHIELD_SMALL2 ); break;
+      case SHIELD_LARGESHIELD_ID: strcpy( player->shield.name1, STRING_SHIELD_LARGE1 ); strcpy( player->shield.name2, STRING_SHIELD_LARGE2 ); break;
+      case SHIELD_SILVERSHIELD_ID: strcpy( player->shield.name1, STRING_SHIELD_SILVER1 ); strcpy( player->shield.name2, STRING_SHIELD_SILVER2 ); break;
    }
 }

@@ -170,28 +170,35 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
 {
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
-   uint8_t defense, damage, minDamage = 0, maxDamage = 0;
+   uint8_t power, defense, damage, minDamage = 0, maxDamage = 0;
 
    if ( enemy->stats.dodge > 0 && Random_u8( 1, 64 ) <= enemy->stats.dodge )
    {
       return 0;
    }
 
+   power = player->stats.strength + player->weapon.effect;
+
+   if ( power < player->stats.strength ) // overflow
+   {
+      power = UINT8_MAX;
+   }
+
    if ( battle->specialEnemy != SpecialEnemy_Dragonlord && Random_u8( 1, 32 ) == 1 )
    {
       battle->excellentMove = True;
-      minDamage = player->stats.strength / 2;
-      maxDamage = player->stats.strength;
+      minDamage = power / 2;
+      maxDamage = power;
    }
    else
    {
       battle->excellentMove = False;
       defense = enemy->stats.agility / 2;
 
-      if ( defense < player->stats.strength )
+      if ( defense < power )
       {
-         minDamage = ( player->stats.strength - defense ) / 4;
-         maxDamage = ( player->stats.strength - defense ) / 2;
+         minDamage = ( power - defense ) / 4;
+         maxDamage = ( power - defense ) / 2;
       }
    }
 
@@ -199,7 +206,14 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
 
    if ( damage == 0 )
    {
-      damage = Random_u8( 0, 1 );
+      if ( enemy->stats.isAsleep )
+      {
+         damage = 1;
+      }
+      else
+      {
+         damage = Random_u8( 0, 1 );
+      }
    }
 
    return ( damage > enemy->stats.hitPoints ) ? enemy->stats.hitPoints : damage;
@@ -646,20 +660,24 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
    Player_t* player = &( battle->game->player );
    char msg[64];
 
-   Dialog_Reset( &( battle->game->dialog ) );
    player->stats.hitPoints -= battle->pendingPayload8u;
    battle->game->screen.needsRedraw = True;
-   sprintf( msg,
-            ( player->stats.hitPoints > 0 ) ? STRING_BATTLE_ENEMY_ATTACKSUCCEEDED : STRING_BATTLE_ENEMY_ATTACKDEATH,
-            battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
+   Dialog_Reset( &( battle->game->dialog ) );
 
    if ( player->stats.hitPoints == 0 )
    {
+      sprintf( msg, STRING_BATTLE_ENEMY_ATTACKDEATH, battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
       Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_PlayerDefeatedCallback, battle );
+   }
+   else if ( player->stats.isAsleep )
+   {
+      sprintf( msg, STRING_BATTLE_ENEMY_ATTACKSUCCEEDEDASLEEP, battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    }
    else
    {
       battle->turn = BattleTurn_Player;
+      sprintf( msg, STRING_BATTLE_ENEMY_ATTACKSUCCEEDED, battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
       Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
    }
 
@@ -696,7 +714,12 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
    Enemy_t* enemy = &( battle->enemy );
    Player_t* player = &( battle->game->player );
 
-   defense = player->stats.agility / 2;
+   defense = ( player->stats.agility / 2 ) + player->armor.effect + player->shield.effect;
+
+   if ( defense < ( player->stats.agility / 2 ) ) // overflow
+   {
+      defense = UINT8_MAX;
+   }
 
    if ( enemy->stats.strength > defense )
    {
@@ -709,6 +732,11 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
    }
 
    damage = Random_u8( minDamage, maxDamage );
+
+   if ( damage == 0 && player->stats.isAsleep )
+   {
+      damage = 1;
+   }
 
    return ( damage < player->stats.hitPoints ) ? damage : player->stats.hitPoints;
 }
@@ -769,7 +797,12 @@ internal void Battle_EnemyCastSizz( Battle_t* battle )
 
 internal void Battle_EnemyCastSizzCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Random_u8( ENEMY_SIZZ_MIN_DAMAGE, ENEMY_SIZZ_MAX_DAMAGE );
+   uint8_t minDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+                          ? ENEMY_SIZZ_REDUCEDMIN_DAMAGE : ENEMY_SIZZ_MIN_DAMAGE;
+   uint8_t maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+                          ? ENEMY_SIZZ_REDUCEDMAX_DAMAGE : ENEMY_SIZZ_MAX_DAMAGE;
+
+   battle->pendingPayload8u = Random_u8( minDamage, maxDamage );
    battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
@@ -785,7 +818,12 @@ internal void Battle_EnemyCastSizzle( Battle_t* battle )
 
 internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Random_u8( ENEMY_SIZZLE_MIN_DAMAGE, ENEMY_SIZZLE_MAX_DAMAGE );
+   uint8_t minDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+                          ? ENEMY_SIZZLE_REDUCEDMIN_DAMAGE : ENEMY_SIZZLE_MIN_DAMAGE;
+   uint8_t maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+                          ? ENEMY_SIZZLE_REDUCEDMAX_DAMAGE : ENEMY_SIZZLE_MAX_DAMAGE;
+
+   battle->pendingPayload8u = Random_u8( minDamage, maxDamage );
    battle->pendingPayload8u = MATH_MIN( battle->pendingPayload8u, battle->game->player.stats.hitPoints );
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
@@ -820,8 +858,19 @@ internal void Battle_EnemyHealMessageCallback( Battle_t* battle )
    char msg[64];
 
    Dialog_Reset( &( battle->game->dialog ) );
-   sprintf( msg, STRING_BATTLE_ENEMY_RECOVERED, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+
+   if ( battle->game->player.stats.isAsleep )
+   {
+      sprintf( msg, STRING_BATTLE_ENEMY_RECOVEREDASLEEP, battle->enemy.name );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
+   }
+   else
+   {
+      battle->turn = BattleTurn_Player;
+      sprintf( msg, STRING_BATTLE_ENEMY_RECOVERED, battle->enemy.name );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Game_ResetBattleMenu, battle->game );
+   }
+
    Game_OpenDialog( battle->game );
 }
 
@@ -845,17 +894,32 @@ internal void Battle_EnemyCastFizzle( Battle_t* battle )
 
 internal void Battle_EnemyCastFizzleCallback( Battle_t* battle )
 {
-   battle->game->player.stats.isFizzled = ( Random_u8( 1, 2 ) == 1 ) ? True : False;
+   if ( battle->game->player.armor.id != ARMOR_ERDRICKSARMOR_ID )
+   {
+      battle->game->player.stats.isFizzled = ( Random_u8( 1, 2 ) == 1 ) ? True : False;
+   }
+
    Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemyCastFizzleMessageCallback );
 }
 
 internal void Battle_EnemyCastFizzleMessageCallback( Battle_t* battle )
 {
-   battle->turn = BattleTurn_Player;
    Dialog_Reset( &( battle->game->dialog ) );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ),
-                                   battle->game->player.stats.isFizzled ? STRING_BATTLE_PLAYER_FIZZLED : STRING_BATTLE_PLAYER_SPELL_NOEFFECT,
-                                   Game_ResetBattleMenu, battle->game );
+
+   if ( battle->game->player.stats.isAsleep )
+   {
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ),
+                                      battle->game->player.stats.isFizzled ? STRING_BATTLE_PLAYER_FIZZLEDASLEEP : STRING_BATTLE_PLAYER_SPELL_NOEFFECTASLEEP,
+                                      Battle_SwitchTurn, battle );
+   }
+   else
+   {
+      battle->turn = BattleTurn_Player;
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ),
+                                      battle->game->player.stats.isFizzled ? STRING_BATTLE_PLAYER_FIZZLED : STRING_BATTLE_PLAYER_SPELL_NOEFFECT,
+                                      Game_ResetBattleMenu, battle->game );
+   }
+
    Game_OpenDialog( battle->game );
 }
 
