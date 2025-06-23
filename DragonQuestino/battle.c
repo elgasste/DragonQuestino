@@ -58,6 +58,8 @@ internal void Battle_EnemyCastSleepMessageCallback( Battle_t* battle );
 internal void Battle_EnemyCastSleepAnimation( Battle_t* battle );
 internal void Battle_EnemyFlee( Battle_t* battle );
 internal void Battle_EnemyFleeCallback( Battle_t* battle );
+internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,
+                                                AnimationId_t finalAnimationId, void ( *callback )( Battle_t* ) );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -174,11 +176,7 @@ Bool_t Battle_RollEnemyFlee( Battle_t* battle )
 
 void Battle_EnemyInitiativeFlee( Battle_t* battle )
 {
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyFlee, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 2, AnimationId_Pause, Battle_EnemyFlee );
 }
 
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
@@ -280,11 +278,7 @@ internal Bool_t Battle_GetFleeResult( Battle_t* battle )
 
 internal void Battle_FleeSucceededCallback( Battle_t* battle )
 {
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut, Battle_FleeSucceededMessageCallback, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 2, AnimationId_Battle_EnemyFadeOut, Battle_FleeSucceededMessageCallback );
 }
 
 internal void Battle_FleeSucceededMessageCallback( Battle_t* battle )
@@ -300,10 +294,7 @@ internal void Battle_FleeSucceededMessageCallback( Battle_t* battle )
 
 internal void Battle_FleeFailedCallback( Battle_t* battle )
 {
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_FleeFailedMessageCallback, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 1, AnimationId_Pause, Battle_FleeFailedMessageCallback );
 }
 
 internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
@@ -346,11 +337,7 @@ internal void Battle_AttackDodgedCallback( Battle_t* battle )
 
 internal void Battle_EnemyDefeatedCallback( Battle_t* battle )
 {
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut, Battle_EnemyDefeatedMessageCallback, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 2, AnimationId_Battle_EnemyFadeOut, Battle_EnemyDefeatedMessageCallback );
 }
 
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
@@ -537,11 +524,7 @@ internal void Battle_EnemyInitiativeCallback( Battle_t* battle )
 
 internal void Battle_EnemyInitiativeMessageCallback( Battle_t* battle )
 {
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyTurn, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 2, AnimationId_Pause, Battle_EnemyTurn );
 }
 
 internal void Battle_EnemyTurn( Battle_t* battle )
@@ -581,10 +564,7 @@ internal void Battle_EnemyTurn( Battle_t* battle )
 
 internal void Battle_EnemyWokeUpCallback( Battle_t* battle )
 {
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyInitiateBehavior, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 1, AnimationId_Pause, Battle_EnemyInitiateBehavior );
 }
 
 internal void Battle_EnemyInitiateBehavior( Battle_t* battle )
@@ -748,13 +728,7 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
 internal void Battle_PlayerDefeatedCallback( Battle_t* battle )
 {
    // TODO: actually implement death
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_PlayerDefeatedCallbackMessage, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 4, AnimationId_Pause, Battle_PlayerDefeatedCallbackMessage );
 }
 
 internal void Battle_PlayerDefeatedCallbackMessage( Battle_t* battle )
@@ -995,10 +969,7 @@ internal void Battle_EnemyCastSleepMessageCallback( Battle_t* battle )
 
 internal void Battle_EnemyCastSleepAnimation( Battle_t* battle )
 {
-   AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyTurn, battle );
-   AnimationChain_Start( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 1, AnimationId_Pause, Battle_EnemyTurn );
 }
 
 internal void Battle_EnemyFlee( Battle_t* battle )
@@ -1017,5 +988,21 @@ internal void Battle_EnemyFleeCallback( Battle_t* battle )
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,
+                                                AnimationId_t finalAnimationId, void ( *callback )( Battle_t* ) )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+
+   for ( i = 0; i < numPauses; i++ )
+   {
+      AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), finalAnimationId, callback, battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
