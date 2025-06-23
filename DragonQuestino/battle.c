@@ -17,6 +17,8 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
 internal void Battle_NewLevelCallback( Battle_t* battle );
 internal void Battle_GainedPointsCallback( Battle_t* battle );
 internal void Battle_SwitchTurnCallback( Battle_t* battle );
+internal void Battle_EnemyInitiativeCallback( Battle_t* battle );
+internal void Battle_EnemyInitiativeMessageCallback( Battle_t* battle );
 internal void Battle_EnemyTurn( Battle_t* battle );
 internal void Battle_EnemyWokeUpCallback( Battle_t* battle );
 internal void Battle_EnemyInitiateBehavior( Battle_t* battle );
@@ -69,12 +71,13 @@ void Battle_Init( Battle_t* battle, Game_t* game )
 void Battle_Generate( Battle_t* battle )
 {
    uint32_t enemyIndex;
+   uint32_t playerFactor, enemyFactor;
+   Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
 
    battle->isOver = False;
    battle->game->player.stats.isAsleep = False;
    battle->game->player.stats.isFizzled = False;
-   battle->turn = BattleTurn_Player;
 
    switch ( battle->specialEnemy )
    {
@@ -91,6 +94,10 @@ void Battle_Generate( Battle_t* battle )
    enemy->gold = Random_u8( enemy->minGold, enemy->maxGold );
    enemy->stats.isAsleep = False;
    enemy->stats.isFizzled = False;
+
+   playerFactor = (uint32_t)( player->stats.agility ) * Random_u32( 0, 255 );
+   enemyFactor = (uint32_t)( (uint32_t)( enemy->stats.agility ) * Random_u32( 0, 255 ) * 0.25f );
+   battle->turn = ( playerFactor < enemyFactor ) ? BattleTurn_Enemy : BattleTurn_Player;
 }
 
 void Battle_Attack( Battle_t* battle )
@@ -141,6 +148,15 @@ void Battle_SwitchTurn( Battle_t* battle )
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_SwitchTurnCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+void Battle_EnemyInitiative( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyInitiativeCallback, battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
@@ -221,9 +237,9 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
 
 internal Bool_t Battle_GetFleeResult( Battle_t* battle )
 {
+   uint32_t playerFactor, enemyFactor;
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
-   float enemyFleeFactor;
 
    if ( battle->specialEnemy != SpecialEnemy_None )
    {
@@ -235,10 +251,8 @@ internal Bool_t Battle_GetFleeResult( Battle_t* battle )
       return True;
    }
 
-   enemyFleeFactor = Enemy_GetFleeFactor( enemy );
-   uint16_t playerFactor = (uint16_t)( player->stats.agility ) * Random_u8( 0, UINT8_MAX );
-   uint16_t enemyFactor = (uint16_t)( enemy->stats.agility ) * Random_u8( 0, UINT8_MAX );
-   enemyFactor = (uint16_t)( enemyFactor * enemyFleeFactor );
+   playerFactor = (uint32_t)( player->stats.agility ) * Random_u32( 0, 255 );
+   enemyFactor = (uint32_t)( (uint32_t)( enemy->stats.agility ) * Random_u32( 0, 255 ) * Enemy_GetFleeFactor( enemy ) );
 
    return ( playerFactor < enemyFactor ) ? False : True;
 }
@@ -488,6 +502,25 @@ internal void Battle_SwitchTurnCallback( Battle_t* battle )
    {
       Battle_EnemyTurn( battle );
    }
+}
+
+internal void Battle_EnemyInitiativeCallback( Battle_t* battle )
+{
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMYINITIATIVE, battle->enemy.name );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyInitiativeMessageCallback, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyInitiativeMessageCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyTurn, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
 internal void Battle_EnemyTurn( Battle_t* battle )

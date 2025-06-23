@@ -245,7 +245,17 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
 
    Dialog_Reset( &( game->dialog ) );
    sprintf( enemyName, "%s %s", game->battle.enemy.indefiniteArticle, game->battle.enemy.name );
-   sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
-   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+
+   if ( game->battle.turn == BattleTurn_Player )
+   {
+      sprintf( msg, STRING_BATTLE_ENEMYAPPROACHESINITIATIVE, enemyName );
+      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+   }
+   else
+   {
+      sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
+      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiative, &( game->battle ) );
+   }
+   
    Game_OpenDialog( game );
 }
