@@ -42,6 +42,16 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->stats.stopSpellResist = 0;
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
+
+   strcpy( player->weapon.name1, STRING_ACCESSORY_NONE );
+   player->weapon.name2[0] = 0;
+   player->weapon.effect = 0;
+   strcpy( player->armor.name1, STRING_ACCESSORY_NONE );
+   player->armor.name2[0] = 0;
+   player->armor.effect = 0;
+   strcpy( player->shield.name1, STRING_ACCESSORY_NONE );
+   player->shield.name2[0] = 0;
+   player->shield.effect = 0;
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )

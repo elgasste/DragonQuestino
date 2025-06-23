@@ -155,6 +155,15 @@ typedef struct TileMap_t TileMap_t;
 
 #define HOLY_PROTECTION_MAX_STEPS               127
 
+typedef struct Accessory_t
+{
+   char name1[12];
+   char name2[12];
+   uint8_t effect;
+   uint8_t cost;
+}
+Accessory_t;
+
 typedef struct Player_t
 {
    TileMap_t* tileMap;
@@ -170,6 +179,9 @@ typedef struct Player_t
    uint32_t holyProtectionSteps;
    char name[9];
    BattleStats_t stats;
+   Accessory_t weapon;
+   Accessory_t armor;
+   Accessory_t shield;
    uint8_t level;
    uint16_t experience;
    uint16_t gold;
