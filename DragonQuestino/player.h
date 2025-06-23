@@ -155,12 +155,35 @@ typedef struct TileMap_t TileMap_t;
 
 #define HOLY_PROTECTION_MAX_STEPS               127
 
+#define WEAPON_NONE_ID                          0
+#define WEAPON_BAMBOOPOLE_ID                    1
+#define WEAPON_CLUB_ID                          2
+#define WEAPON_COPPERSWORD_ID                   3
+#define WEAPON_HANDAXE_ID                       4
+#define WEAPON_BROADSWORD_ID                    5
+#define WEAPON_FLAMESWORD_ID                    6
+#define WEAPON_ERDRICKSSWORD_ID                 7
+
+#define ARMOR_NONE_ID                           0
+#define ARMOR_CLOTHES_ID                        1
+#define ARMOR_LEATHERARMOR_ID                   2
+#define ARMOR_CHAINMAIL_ID                      3
+#define ARMOR_HALFPLATE_ID                      4
+#define ARMOR_FULLPLATE_ID                      5
+#define ARMOR_MAGICARMOR_ID                     6
+#define ARMOR_ERDRICKSARMOR_ID                  7
+
+#define SHIELD_NONE_ID                          0
+#define SHIELD_SMALLSHIELD_ID                   1
+#define SHIELD_LARGESHIELD_ID                   2
+#define SHIELD_SILVERSHIELD_ID                  3
+
 typedef struct Accessory_t
 {
+   uint32_t id;
    char name1[12];
    char name2[12];
    uint8_t effect;
-   uint8_t cost;
 }
 Accessory_t;
 
@@ -239,6 +262,9 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item );
 void Player_SetCursed( Player_t* player, Bool_t cursed );
 void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection );
 void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level );
+void Player_LoadWeapon( Player_t* player, uint32_t weaponId );
+void Player_LoadArmor( Player_t* player, uint32_t armorId );
+void Player_LoadShield( Player_t* player, uint32_t shieldId );
 
 #if defined( __cplusplus )
 }
