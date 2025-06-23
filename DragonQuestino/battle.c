@@ -162,6 +162,25 @@ void Battle_EnemyInitiative( Battle_t* battle )
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
 
+Bool_t Battle_RollEnemyFlee( Battle_t* battle )
+{
+   if ( battle->specialEnemy != SpecialEnemy_None )
+   {
+      return False;
+   }
+
+   return ( ( battle->game->player.stats.strength >= ( battle->enemy.stats.strength * 2 ) ) && ( Random_u8( 1, 4 ) == 1 ) ) ? True : False;
+}
+
+void Battle_EnemyInitiativeFlee( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyFlee, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
 internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
 {
    TileMap_t* tileMap = &( battle->game->tileMap );
@@ -549,7 +568,7 @@ internal void Battle_EnemyTurn( Battle_t* battle )
    }
    else
    {
-      if ( ( battle->game->player.stats.strength >= ( battle->enemy.stats.strength * 2 ) ) && ( Random_u8( 1, 4 ) == 1 ) )
+      if ( Battle_RollEnemyFlee( battle ) )
       {
          Battle_EnemyFlee( battle );
       }
@@ -996,7 +1015,6 @@ internal void Battle_EnemyFleeCallback( Battle_t* battle )
 {
    battle->isOver = True;
    AnimationChain_Reset( &( battle->game->animationChain ) );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut );
    AnimationChain_Start( &( battle->game->animationChain ) );
