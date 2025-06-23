@@ -56,6 +56,8 @@ internal void Battle_EnemyCastSleep( Battle_t* battle );
 internal void Battle_EnemyCastSleepCallback( Battle_t* battle );
 internal void Battle_EnemyCastSleepMessageCallback( Battle_t* battle );
 internal void Battle_EnemyCastSleepAnimation( Battle_t* battle );
+internal void Battle_EnemyFlee( Battle_t* battle );
+internal void Battle_EnemyFleeCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -547,7 +549,14 @@ internal void Battle_EnemyTurn( Battle_t* battle )
    }
    else
    {
-      Battle_EnemyInitiateBehavior( battle );
+      if ( ( battle->game->player.stats.strength >= ( battle->enemy.stats.strength * 2 ) ) && ( Random_u8( 1, 4 ) == 1 ) )
+      {
+         Battle_EnemyFlee( battle );
+      }
+      else
+      {
+         Battle_EnemyInitiateBehavior( battle );
+      }
    }
 }
 
@@ -970,5 +979,25 @@ internal void Battle_EnemyCastSleepAnimation( Battle_t* battle )
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemyTurn, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_EnemyFlee( Battle_t* battle )
+{
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ENEMY_FLEE, battle->enemy.name );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyFleeCallback, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemyFleeCallback( Battle_t* battle )
+{
+   battle->isOver = True;
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
