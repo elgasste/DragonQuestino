@@ -57,6 +57,9 @@ void Battle_Attack( Battle_t* battle );
 void Battle_Flee( Battle_t* battle );
 void Battle_AttackSucceededCallback( Battle_t* battle );
 void Battle_SwitchTurn( Battle_t* battle );
+void Battle_EnemyInitiative( Battle_t* battle );
+Bool_t Battle_RollEnemyFlee( Battle_t* battle );
+void Battle_EnemyInitiativeFlee( Battle_t* battle );
 
 #if defined( __cplusplus )
 }

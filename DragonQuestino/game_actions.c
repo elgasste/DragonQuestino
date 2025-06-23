@@ -35,7 +35,6 @@ void Game_Search( Game_t* game )
    }
    else if ( game->tileMap.id == TILEMAP_HAUKSNESS_ID && game->player.tileIndex == TILEMAP_ERDRICKSARMOR_INDEX && game->player.armor.id != ARMOR_ERDRICKSARMOR_ID )
    {
-      // MUFFINS: test this
       Player_LoadArmor( &( game->player ), ARMOR_ERDRICKSARMOR_ID );
       Dialog_PushSection( &( game->dialog ), STRING_DIALOG_SEARCH );
       sprintf( msg, STRING_DIALOG_SEARCH_FOUND, STRING_FOUNDITEM_ERDRICKSARMOR );

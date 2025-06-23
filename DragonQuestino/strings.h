@@ -231,7 +231,9 @@
 #define STRING_ENEMY_DRAGONLORD                                      "dragonlord"
 
 #define STRING_BATTLE_COMMAND                                        "Command?"
-#define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches! Command?"
+#define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches!"
+#define STRING_BATTLE_ENEMYAPPROACHESINITIATIVE                      "%s approaches! Command?"
+#define STRING_BATTLE_ENEMYINITIATIVE                                "The %s gets the jump on you!"
 #define STRING_BATTLE_ATTACKATTEMPT                                  "You attack!"
 #define STRING_BATTLE_ATTACKSUCCEEDED                                "The %s has lost %u hit %s."
 #define STRING_BATTLE_ATTACKEXCELLENTMOVE                            "Excellent move! The %s has lost %u hit %s."
@@ -282,6 +284,7 @@
 #define STRING_BATTLE_PLAYER_ASLEEP                                  "You are asleep!"
 #define STRING_BATTLE_PLAYER_SPELL_NOEFFECT                          "But the spell has no effect! Command?"
 #define STRING_BATTLE_PLAYER_SPELL_NOEFFECTASLEEP                    "But the spell has no effect!"
+#define STRING_BATTLE_ENEMY_FLEE                                     "The %s turns and runs away!"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"
