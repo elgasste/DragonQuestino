@@ -46,13 +46,6 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    Player_LoadWeapon( player, WEAPON_NONE_ID );
    Player_LoadArmor( player, ARMOR_NONE_ID );
    Player_LoadShield( player, SHIELD_NONE_ID );
-
-   // MUFFINS:
-   // 
-   // - apply Erdrick's Armor and Magic Armor special effects when being attacked (see tech guide)
-   // 
-   // - Erdrick's Armor is under the Axe knight
-   // - Erdrick's Sword is in Charlock
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )
