@@ -1,9 +1,11 @@
 #include "game.h"
 #include "random.h"
+#include "math.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
+internal void Game_ApplyTileDamage( Game_t* game, uint32_t tileIndex );
 
 void Game_TicPhysics( Game_t* game )
 {
@@ -144,6 +146,14 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
 {
    TilePortal_t* portal;
 
+   Game_ApplyTileDamage( game, tileIndex );
+
+   if ( game->player.stats.hitPoints == 0 )
+   {
+      // must have stepped on a damage tile and died
+      return;
+   }
+
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
    game->player.tileIndex = tileIndex;
    portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
@@ -281,4 +291,26 @@ internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game )
    }
 
    return SpecialEnemy_None;
+}
+
+internal void Game_ApplyTileDamage( Game_t* game, uint32_t tileIndex )
+{
+   uint8_t damage;
+   uint32_t adjustedTileIndex = tileIndex + ( ( tileIndex / game->tileMap.tilesX ) * ( TILE_COUNT_X - game->tileMap.tilesX ) );
+   uint16_t damageRate = TILE_GET_DAMAGERATE( game->tileMap.tiles[adjustedTileIndex] );
+
+   if ( damageRate == 0 )
+   {
+      return;
+   }
+
+   game->screen.needsRedraw = True;
+   damage = ( damageRate == 1 ) ? TILEMAP_SWAMP_DAMAGE : TILEMAP_BARRIER_DAMAGE;
+   game->player.stats.hitPoints -= Math_Min8u( damage, game->player.stats.hitPoints );
+
+   // TODO: this is temporary, it can be changed when we implement death
+   if ( game->player.stats.hitPoints == 0 )
+   {
+      game->player.stats.hitPoints = 1;
+   }
 }

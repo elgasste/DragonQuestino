@@ -94,6 +94,9 @@
 #define TILEMAP_GOLEM_MAPID                     0
 #define TILEMAP_GOLEM_TILEINDEX                 15063
 
+#define TILEMAP_SWAMP_DAMAGE                    2
+#define TILEMAP_BARRIER_DAMAGE                  15
+
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
 typedef struct Player_t Player_t;
