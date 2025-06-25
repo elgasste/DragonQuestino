@@ -793,6 +793,13 @@ internal void Battle_EnemyBreatheFire( Battle_t* battle )
 internal void Battle_EnemyBreatheFireCallback( Battle_t* battle )
 {
    battle->pendingPayload8u = Math_Min8u( Random_u8( FIRE_BREATH_MIN_DAMAGE, FIRE_BREATH_MAX_DAMAGE ), battle->game->player.stats.hitPoints );
+
+   if ( battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+   {
+      battle->pendingPayload8u /= 3;
+      battle->pendingPayload8u *= 2;
+   }
+
    AnimationChain_Reset( &( battle->game->animationChain ) );
    Battle_PushPlayerHurtAnimation( battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
@@ -811,6 +818,13 @@ internal void Battle_EnemyBreatheStrongFire( Battle_t* battle )
 internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle )
 {
    battle->pendingPayload8u = Math_Min8u( Random_u8( STRONG_FIRE_BREATH_MIN_DAMAGE, STRONG_FIRE_BREATH_MAX_DAMAGE ), battle->game->player.stats.hitPoints );
+
+   if ( battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+   {
+      battle->pendingPayload8u /= 3;
+      battle->pendingPayload8u *= 2;
+   }
+
    AnimationChain_Reset( &( battle->game->animationChain ) );
    Battle_PushPlayerHurtAnimation( battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
