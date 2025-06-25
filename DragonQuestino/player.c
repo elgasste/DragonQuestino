@@ -9,6 +9,7 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->tileMap = tileMap;
 
    player->tileIndex = 148; // sort of in front of King Lorik
+   Player_SetCanonicalTileIndex( player );
    player->sprite.position.x = (float)( TILE_SIZE * 8 );
    player->sprite.position.y = (float)( TILE_SIZE * 7 );
    player->velocity.x = 0.0f;
@@ -19,14 +20,14 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->spriteOffset.x = -2;
    player->spriteOffset.y = -4;
    player->sprite.direction = Direction_Down;
+   player->sprite.isFlickering = False;
    strcpy( player->name, "Ed209" );
    player->isCursed = False;
    player->hasHolyProtection = False;
    player->holyProtectionSteps = 0;
    player->townsVisited = 0;
 
-   // MUFFINS: for testing
-   player->experience = 30001;
+   player->experience = 0;
    player->gold = 0;
    player->items = 0;
    player->spells = 0;
@@ -44,19 +45,9 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
 
-   Player_LoadWeapon( player, WEAPON_BROADSWORD_ID );
-   Player_LoadArmor( player, ARMOR_HALFPLATE_ID );
-   Player_LoadShield( player, SHIELD_LARGESHIELD_ID );
-
-   player->townsVisited = 0xFF;
-
-   ITEM_SET_HERBCOUNT( player->items, 3 );
-   ITEM_SET_KEYCOUNT( player->items, ITEM_MAXKEYS );
-   ITEM_SET_TORCHCOUNT( player->items, ITEM_MAXTORCHES );
-   ITEM_SET_FAIRYWATERCOUNT( player->items, 2 );
-   ITEM_SET_WINGCOUNT( player->items, 2 );
-   ITEM_TOGGLE_HASGWAELYNSLOVE( player->items );
-   ITEM_TOGGLE_HASRAINBOWDROP( player->items );
+   Player_LoadWeapon( player, WEAPON_NONE_ID );
+   Player_LoadArmor( player, ARMOR_NONE_ID );
+   Player_LoadShield( player, SHIELD_NONE_ID );
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )
@@ -252,4 +243,9 @@ void Player_LoadShield( Player_t* player, uint32_t shieldId )
       case SHIELD_LARGESHIELD_ID: strcpy( player->shield.name1, STRING_SHIELD_LARGE1 ); strcpy( player->shield.name2, STRING_SHIELD_LARGE2 ); break;
       case SHIELD_SILVERSHIELD_ID: strcpy( player->shield.name1, STRING_SHIELD_SILVER1 ); strcpy( player->shield.name2, STRING_SHIELD_SILVER2 ); break;
    }
+}
+
+void Player_SetCanonicalTileIndex( Player_t* player )
+{
+   player->canonicalTileIndex = player->tileIndex + ( ( player->tileIndex / player->tileMap->tilesX ) * ( TILE_COUNT_X - player->tileMap->tilesX ) );
 }

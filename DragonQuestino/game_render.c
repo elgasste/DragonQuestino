@@ -133,7 +133,11 @@ void Game_Draw( Game_t* game )
 void Game_DrawOverworld( Game_t* game )
 {
    Game_DrawTileMap( game );
-   Game_DrawPlayer( game );
+
+   if ( !( game->player.sprite.flickerOff ) )
+   {
+      Game_DrawPlayer( game );
+   }
 
    if ( game->subState == SubState_None && game->overworldInactivitySeconds > OVERWORLD_INACTIVE_STATUS_SECONDS )
    {

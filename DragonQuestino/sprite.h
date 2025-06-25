@@ -10,6 +10,7 @@
 #define ACTIVE_SPRITE_TEXTURES         8  // two for each direction
 #define ACTIVE_SPRITE_FRAMES           2
 #define ACTIVE_SPRITE_FRAME_SECONDS    0.3f
+#define ACTIVE_SPRITE_FLICKER_SECONDS  0.03f
 
 typedef struct SpriteTexture_t
 {
@@ -31,6 +32,10 @@ typedef struct ActiveSprite_t
    Direction_t direction;
    uint32_t currentFrame;
    float elapsedFrameSeconds;
+
+   Bool_t isFlickering;
+   Bool_t flickerOff;
+   float elapsedFlickerSeconds;
 }
 ActiveSprite_t;
 
@@ -40,6 +45,8 @@ extern "C" {
 
 void Sprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction );
 void Sprite_Tic( ActiveSprite_t* sprite );
+void Sprite_Flicker( ActiveSprite_t* sprite );
+void Sprite_StopFlickering( ActiveSprite_t* sprite );
 
 // game_data.c
 void Sprite_LoadPlayer( ActiveSprite_t* sprite );

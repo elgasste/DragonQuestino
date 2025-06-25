@@ -76,7 +76,7 @@ void Game_HandleInput( Game_t* game );
 
 // game_physics.c
 void Game_TicPhysics( Game_t* game );
-void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex );
+void Game_PlayerSteppedOnTile( Game_t* game );
 
 // game_render.c
 void Game_Draw( Game_t* game );
