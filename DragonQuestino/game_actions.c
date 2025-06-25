@@ -236,5 +236,5 @@ internal void Game_FoundHiddenStairsCallback( Game_t* game )
 
 internal void Game_TakeHiddenStairsCallback( Game_t* game )
 {
-   Game_PlayerSteppedOnTile( game, TILEMAP_HIDDENSTAIRS_INDEX );
+   Game_PlayerSteppedOnTile( game );
 }

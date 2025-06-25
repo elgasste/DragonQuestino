@@ -26,3 +26,29 @@ void Sprite_Tic( ActiveSprite_t* sprite )
       }
    }
 }
+
+void Sprite_Flicker( ActiveSprite_t* sprite )
+{
+   if ( sprite->isFlickering )
+   {
+      sprite->elapsedFlickerSeconds += CLOCK_FRAME_SECONDS;
+
+      while ( sprite->elapsedFlickerSeconds > ACTIVE_SPRITE_FLICKER_SECONDS )
+      {
+         sprite->elapsedFlickerSeconds -= ACTIVE_SPRITE_FLICKER_SECONDS;
+         TOGGLE_BOOL( sprite->flickerOff );
+      }
+   }
+   else
+   {
+      sprite->isFlickering = True;
+      sprite->flickerOff = True;
+      sprite->elapsedFlickerSeconds = 0.0f;
+   }
+}
+
+void Sprite_StopFlickering( ActiveSprite_t* sprite )
+{
+   sprite->isFlickering = False;
+   sprite->flickerOff = False;
+}

@@ -1,21 +1,25 @@
 #include "game.h"
 #include "random.h"
+#include "math.h"
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
-internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex );
+internal void Game_RollEncounter( Game_t* game );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
+internal void Game_ApplyTileDamage( Game_t* game );
 
 void Game_TicPhysics( Game_t* game )
 {
-   Vector2f_t newPos;
+   Vector2f_t prevPos, newPos;
    uint32_t tileRowStartIndex, tileRowEndIndex, tileColStartIndex, tileColEndIndex, row, col, tile, tileIndex;
    Player_t* player = &( game->player );
 
    if ( player->velocity.x == 0.0f && player->velocity.y == 0.0f )
    {
+      Sprite_StopFlickering( &( game->player.sprite ) );
       return;
    }
 
+   prevPos = player->sprite.position;
    newPos.x = player->sprite.position.x + ( player->velocity.x * CLOCK_FRAME_SECONDS );
    newPos.y = player->sprite.position.y + ( player->velocity.y * CLOCK_FRAME_SECONDS );
 
@@ -138,15 +142,34 @@ void Game_TicPhysics( Game_t* game )
    player->velocity.y = 0;
 
    Game_UpdatePlayerTileIndex( game );
+
+   if ( TILE_GET_DAMAGERATE( game->tileMap.tiles[player->canonicalTileIndex] ) > 0 )
+   {
+      if ( ( prevPos.x != newPos.x ) || ( prevPos.y != newPos.y ) )
+      {
+         Sprite_Flicker( &( player->sprite ) );
+      }
+   }
+   else
+   {
+      Sprite_StopFlickering( &( player->sprite ) );
+   }
 }
 
-void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
+void Game_PlayerSteppedOnTile( Game_t* game )
 {
    TilePortal_t* portal;
 
-   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), tileIndex );
-   game->player.tileIndex = tileIndex;
-   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), tileIndex );
+   Game_ApplyTileDamage( game );
+
+   if ( game->player.stats.hitPoints == 0 )
+   {
+      // must have stepped on a damage tile and died
+      return;
+   }
+
+   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), game->player.tileIndex );
+   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), game->player.tileIndex );
 
    if ( portal )
    {
@@ -190,7 +213,7 @@ void Game_PlayerSteppedOnTile( Game_t* game, uint32_t tileIndex )
          game->player.holyProtectionSteps++;
       }
 
-      Game_RollEncounter( game, tileIndex );
+      Game_RollEncounter( game );
    }
 }
 
@@ -203,20 +226,21 @@ internal void Game_UpdatePlayerTileIndex( Game_t* game )
    if ( newTileIndex != game->player.tileIndex )
    {
       game->player.tileIndex = newTileIndex;
-      Game_PlayerSteppedOnTile( game, newTileIndex );
+      Player_SetCanonicalTileIndex( &( game->player ) );
+      Game_PlayerSteppedOnTile( game );
    }
 }
 
-internal void Game_RollEncounter( Game_t* game, uint32_t tileIndex )
+internal void Game_RollEncounter( Game_t* game )
 {
-   uint32_t encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[tileIndex] );
+   uint32_t encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[game->player.canonicalTileIndex] );
    Bool_t spawnEncounter = False, zoneZero = False;
    uint32_t row, col;
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
    {
-      row = tileIndex / game->tileMap.tilesX;
-      col = tileIndex % game->tileMap.tilesX;
+      row = game->player.tileIndex / game->tileMap.tilesX;
+      col = game->player.tileIndex % game->tileMap.tilesX;
 
       if ( row >= TILEMAP_ZONEZERO_STARTROW && row <= TILEMAP_ZONEZERO_ENDROW &&
            col >= TILEMAP_ZONEZERO_STARTCOL && col <= TILEMAP_ZONEZERO_ENDCOL )
@@ -281,4 +305,25 @@ internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game )
    }
 
    return SpecialEnemy_None;
+}
+
+internal void Game_ApplyTileDamage( Game_t* game )
+{
+   uint8_t damage;
+   uint16_t damageRate = TILE_GET_DAMAGERATE( game->tileMap.tiles[game->player.canonicalTileIndex] );
+
+   if ( damageRate == 0 )
+   {
+      return;
+   }
+
+   game->screen.needsRedraw = True;
+   damage = ( damageRate == 1 ) ? TILEMAP_SWAMP_DAMAGE : TILEMAP_BARRIER_DAMAGE;
+   game->player.stats.hitPoints -= Math_Min8u( damage, game->player.stats.hitPoints );
+
+   // TODO: this is temporary, it can be changed when we implement death
+   if ( game->player.stats.hitPoints == 0 )
+   {
+      game->player.stats.hitPoints = 1;
+   }
 }

@@ -197,6 +197,7 @@ typedef struct Player_t
    float maxVelocity;
    Vector2u32_t hitBoxSize;
    uint32_t tileIndex;
+   uint32_t canonicalTileIndex;
    Bool_t isCursed;
    Bool_t hasHolyProtection;
    uint32_t holyProtectionSteps;
@@ -265,6 +266,7 @@ void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level );
 void Player_LoadWeapon( Player_t* player, uint32_t weaponId );
 void Player_LoadArmor( Player_t* player, uint32_t armorId );
 void Player_LoadShield( Player_t* player, uint32_t shieldId );
+void Player_SetCanonicalTileIndex( Player_t* player );
 
 #if defined( __cplusplus )
 }

@@ -9,6 +9,7 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->tileMap = tileMap;
 
    player->tileIndex = 148; // sort of in front of King Lorik
+   Player_SetCanonicalTileIndex( player );
    player->sprite.position.x = (float)( TILE_SIZE * 8 );
    player->sprite.position.y = (float)( TILE_SIZE * 7 );
    player->velocity.x = 0.0f;
@@ -19,6 +20,7 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->spriteOffset.x = -2;
    player->spriteOffset.y = -4;
    player->sprite.direction = Direction_Down;
+   player->sprite.isFlickering = False;
    strcpy( player->name, "Ed209" );
    player->isCursed = False;
    player->hasHolyProtection = False;
@@ -241,4 +243,9 @@ void Player_LoadShield( Player_t* player, uint32_t shieldId )
       case SHIELD_LARGESHIELD_ID: strcpy( player->shield.name1, STRING_SHIELD_LARGE1 ); strcpy( player->shield.name2, STRING_SHIELD_LARGE2 ); break;
       case SHIELD_SILVERSHIELD_ID: strcpy( player->shield.name1, STRING_SHIELD_SILVER1 ); strcpy( player->shield.name2, STRING_SHIELD_SILVER2 ); break;
    }
+}
+
+void Player_SetCanonicalTileIndex( Player_t* player )
+{
+   player->canonicalTileIndex = player->tileIndex + ( ( player->tileIndex / player->tileMap->tilesX ) * ( TILE_COUNT_X - player->tileMap->tilesX ) );
 }

@@ -183,8 +183,7 @@ internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
 {
    TileMap_t* tileMap = &( battle->game->tileMap );
    Player_t* player = &( battle->game->player );
-   uint32_t adjustedTileIndex = player->tileIndex + ( ( player->tileIndex / tileMap->tilesX ) * ( TILE_COUNT_X - tileMap->tilesX ) );
-   uint32_t enemyPoolIndex = TILE_GET_ENEMYPOOLINDEX( tileMap->tiles[adjustedTileIndex] );
+   uint32_t enemyPoolIndex = TILE_GET_ENEMYPOOLINDEX( tileMap->tiles[player->canonicalTileIndex] );
    uint32_t i, enemyIndex;
 
    if ( tileMap->isDungeon )
