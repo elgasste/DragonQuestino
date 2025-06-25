@@ -206,7 +206,7 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
    Enemy_t* enemy = &( battle->enemy );
    uint8_t power, defense, damage, minDamage = 0, maxDamage = 0;
 
-   if ( enemy->stats.dodge > 0 && Random_u8( 1, 64 ) <= enemy->stats.dodge )
+   if ( !enemy->stats.isAsleep && enemy->stats.dodge > 0 && Random_u8( 1, 64 ) <= enemy->stats.dodge )
    {
       return 0;
    }
