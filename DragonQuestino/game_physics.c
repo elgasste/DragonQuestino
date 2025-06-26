@@ -143,24 +143,44 @@ void Game_TicPhysics( Game_t* game )
 
    Game_UpdatePlayerTileIndex( game );
 
-   if ( TILE_GET_DAMAGERATE( game->tileMap.tiles[player->canonicalTileIndex] ) > 0 )
-   {
-      if ( ( prevPos.x != newPos.x ) || ( prevPos.y != newPos.y ) )
+#if defined( VISUAL_STUDIO_DEV )
+   if ( !g_debugFlags.noTileDamage ) {
+#endif
+
+      if ( TILE_GET_DAMAGERATE( game->tileMap.tiles[player->canonicalTileIndex] ) > 0 )
       {
-         Sprite_Flicker( &( player->sprite ) );
+         if ( ( prevPos.x != newPos.x ) || ( prevPos.y != newPos.y ) )
+         {
+            Sprite_Flicker( &( player->sprite ) );
+         }
       }
+      else
+      {
+         Sprite_StopFlickering( &( player->sprite ) );
+      }
+
+#if defined( VISUAL_STUDIO_DEV )
    }
    else
    {
-      Sprite_StopFlickering( &( player->sprite ) );
+      Sprite_StopFlickering( &( game->player.sprite ) );
    }
+#endif
 }
 
 void Game_PlayerSteppedOnTile( Game_t* game )
 {
    TilePortal_t* portal;
 
-   Game_ApplyTileDamage( game );
+#if defined VISUAL_STUDIO_DEV
+   if ( !g_debugFlags.noTileDamage ) {
+#endif
+
+      Game_ApplyTileDamage( game );
+
+#if defined VISUAL_STUDIO_DEV
+   }
+#endif
 
    if ( game->player.stats.hitPoints == 0 )
    {

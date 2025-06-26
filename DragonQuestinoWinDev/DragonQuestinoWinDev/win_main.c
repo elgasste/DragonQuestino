@@ -13,6 +13,7 @@ internal void DrawDiagnostics( HDC* dcMem );
 internal void ToggleFastWalk();
 internal void ToggleNoDark();
 internal void ToggleNoEncounters();
+internal void ToggleTileDamage();
 internal void GetAllItems();
 internal void MaxOutStats();
 
@@ -107,6 +108,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_debugFlags.fastWalk = False;
    g_debugFlags.noDark = False;
    g_debugFlags.noEncounters = False;
+   g_debugFlags.noTileDamage = False;
 
    while ( 1 )
    {
@@ -238,6 +240,9 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
                break;
             case VK_TOGGLEENCOUNTERS:
                ToggleNoEncounters();
+               break;
+            case VK_TOGGLETILEDAMAGE:
+               ToggleTileDamage();
                break;
          }
       }
@@ -393,7 +398,12 @@ internal void DrawDiagnostics( HDC* dcMem )
    r.top += 16;
 
    SetTextColor( *dcMem, g_debugFlags.noEncounters ? 0x00FFFFFF : 0x00333333 );
-   sprintf_s( str, STRING_SIZE_DEFAULT, "7: No Encounters" );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "7: No encounters" );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
+   SetTextColor( *dcMem, g_debugFlags.noTileDamage ? 0x00FFFFFF : 0x00333333 );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "7: No tile damage" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
@@ -421,6 +431,11 @@ internal void ToggleNoDark()
 internal void ToggleNoEncounters()
 {
    TOGGLE_BOOL( g_debugFlags.noEncounters );
+}
+
+internal void ToggleTileDamage()
+{
+   TOGGLE_BOOL( g_debugFlags.noTileDamage );
 }
 
 internal void GetAllItems()
