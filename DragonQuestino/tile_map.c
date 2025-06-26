@@ -34,6 +34,8 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags,
 
 void TileMap_Tic( TileMap_t* tileMap )
 {
+   uint32_t i;
+
    if ( tileMap->isDark && tileMap->glowDiameter != tileMap->targetGlowDiameter )
    {
       tileMap->glowTransitionSeconds += CLOCK_FRAME_SECONDS;
@@ -51,6 +53,11 @@ void TileMap_Tic( TileMap_t* tileMap )
             TileMap_ReduceGlowDiameter( tileMap );
          }
       }
+   }
+
+   for ( i = 0; i < tileMap->activeSpriteCount; i++ )
+   {
+      Sprite_Tic( &( tileMap->activeSprites[i] ) );
    }
 
    TileMap_UpdateViewport( tileMap );
