@@ -249,3 +249,12 @@ void Player_SetCanonicalTileIndex( Player_t* player )
 {
    player->canonicalTileIndex = player->tileIndex + ( ( player->tileIndex / player->tileMap->tilesX ) * ( TILE_COUNT_X - player->tileMap->tilesX ) );
 }
+
+void Player_CenterOnTile( Player_t* player )
+{
+   uint32_t tileX = ( player->tileIndex % player->tileMap->tilesX ) * TILE_SIZE;
+   uint32_t tileY = ( player->tileIndex / player->tileMap->tilesX ) * TILE_SIZE;
+
+   player->sprite.position.x = (float)( tileX + ( ( TILE_SIZE / 2 ) - ( player->hitBoxSize.x / 2 ) ) );
+   player->sprite.position.y = (float)( tileY + ( ( TILE_SIZE / 2 ) - ( player->hitBoxSize.y / 2 ) ) );
+}

@@ -84,9 +84,10 @@ void Game_CastSleep( Game_t* game )
    
    CHECK_CAST_ABILITY( SPELL_SLEEP_MP, STRING_SPELL_SLEEP );
 
+   game->screen.needsRedraw = True;
+
    if ( game->battle.enemy.stats.isAsleep )
    {
-      game->screen.needsRedraw = True;
       Dialog_Reset( &( game->dialog ) );
       sprintf( msg, STRING_BATTLE_SPELL_SLEEP_ALREADYASLEEP, game->battle.enemy.name );
       Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
@@ -94,21 +95,12 @@ void Game_CastSleep( Game_t* game )
       return;
    }
 
-   game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
    Dialog_Reset( &( game->dialog ) );
    sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SLEEP );
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
    game->pendingSpell = Spell_Sleep;
-
-   if ( game->battle.specialEnemy != SpecialEnemy_None )
-   {
-      game->pendingPayload8u = 0;
-   }
-   else
-   {
-      game->pendingPayload8u = ( ( game->battle.enemy.stats.sleepResist > 0 ) && ( Random_u8( 1, 15 ) <= game->battle.enemy.stats.sleepResist ) ) ? 0 : 1;
-   }
+   game->pendingPayload8u = ( ( game->battle.enemy.stats.sleepResist > 0 ) && ( Random_u8( 1, 15 ) <= game->battle.enemy.stats.sleepResist ) ) ? 0 : 1;
 
    Game_OpenDialog( game );
 }

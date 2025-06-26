@@ -267,6 +267,7 @@ void Player_LoadWeapon( Player_t* player, uint32_t weaponId );
 void Player_LoadArmor( Player_t* player, uint32_t armorId );
 void Player_LoadShield( Player_t* player, uint32_t shieldId );
 void Player_SetCanonicalTileIndex( Player_t* player );
+void Player_CenterOnTile( Player_t* player );
 
 #if defined( __cplusplus )
 }

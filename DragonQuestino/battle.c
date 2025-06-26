@@ -8,6 +8,7 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle );
 internal Bool_t Battle_GetFleeResult( Battle_t* battle );
 internal void Battle_FleeSucceededCallback( Battle_t* battle );
 internal void Battle_FleeSucceededMessageCallback( Battle_t* battle );
+internal void Battle_FleeSucceededSpecialEnemyCheck( Battle_t* battle );
 internal void Battle_FleeFailedCallback( Battle_t* battle );
 internal void Battle_FleeFailedMessageCallback( Battle_t* battle );
 internal void Battle_AttackCallback( Battle_t* battle );
@@ -259,11 +260,6 @@ internal Bool_t Battle_GetFleeResult( Battle_t* battle )
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
 
-   if ( battle->specialEnemy != SpecialEnemy_None )
-   {
-      return False;
-   }
-
    if ( battle->enemy.stats.isAsleep )
    {
       return True;
@@ -287,8 +283,30 @@ internal void Battle_FleeSucceededMessageCallback( Battle_t* battle )
    battle->isOver = True;
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_FLEEATTEMPTSUCCEEDED, battle->enemy.name );
-   Dialog_PushSection( &( battle->game->dialog ), msg );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_FleeSucceededSpecialEnemyCheck, battle );
    Game_OpenDialog( battle->game );
+}
+
+internal void Battle_FleeSucceededSpecialEnemyCheck( Battle_t* battle )
+{
+   if ( battle->specialEnemy != SpecialEnemy_None && battle->specialEnemy != SpecialEnemy_Dragonlord )
+   {
+      switch ( battle->specialEnemy )
+      {
+         case SpecialEnemy_GreenDragon:
+            battle->game->player.tileIndex = TILEMAP_GREENDRAGON_TILEINDEX - battle->game->tileMap.tilesX;
+            break;
+         case SpecialEnemy_AxeKnight:
+            battle->game->player.tileIndex = TILEMAP_AXEKNIGHT_TILEINDEX - 1;
+            break;
+         case SpecialEnemy_Golem:
+            battle->game->player.tileIndex = TILEMAP_GOLEM_TILEINDEX - battle->game->tileMap.tilesX;
+            break;
+      }
+
+      Player_SetCanonicalTileIndex( &( battle->game->player ) );
+      Player_CenterOnTile( &( battle->game->player ) );
+   }
 }
 
 internal void Battle_FleeFailedCallback( Battle_t* battle )
