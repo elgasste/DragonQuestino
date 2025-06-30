@@ -15,7 +15,7 @@ void Game_TicPhysics( Game_t* game )
 
    if ( player->velocity.x == 0.0f && player->velocity.y == 0.0f )
    {
-      Sprite_StopFlickering( &( game->player.sprite ) );
+      ActiveSprite_StopFlickering( &( game->player.sprite ) );
       return;
    }
 
@@ -151,19 +151,19 @@ void Game_TicPhysics( Game_t* game )
       {
          if ( ( prevPos.x != newPos.x ) || ( prevPos.y != newPos.y ) )
          {
-            Sprite_Flicker( &( player->sprite ) );
+            ActiveSprite_Flicker( &( player->sprite ) );
          }
       }
       else
       {
-         Sprite_StopFlickering( &( player->sprite ) );
+         ActiveSprite_StopFlickering( &( player->sprite ) );
       }
 
 #if defined( VISUAL_STUDIO_DEV )
    }
    else
    {
-      Sprite_StopFlickering( &( game->player.sprite ) );
+      ActiveSprite_StopFlickering( &( game->player.sprite ) );
    }
 #endif
 }

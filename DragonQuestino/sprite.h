@@ -43,10 +43,11 @@ ActiveSprite_t;
 extern "C" {
 #endif
 
-void Sprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction );
-void Sprite_Tic( ActiveSprite_t* sprite );
-void Sprite_Flicker( ActiveSprite_t* sprite );
-void Sprite_StopFlickering( ActiveSprite_t* sprite );
+void ActiveSprite_Reset( ActiveSprite_t* sprite );
+void ActiveSprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction );
+void ActiveSprite_Tic( ActiveSprite_t* sprite );
+void ActiveSprite_Flicker( ActiveSprite_t* sprite );
+void ActiveSprite_StopFlickering( ActiveSprite_t* sprite );
 
 // game_data.c
 void Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index );

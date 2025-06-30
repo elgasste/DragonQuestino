@@ -74,7 +74,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
          {
-            Sprite_SetDirection( playerSprite, Direction_Left );
+            ActiveSprite_SetDirection( playerSprite, Direction_Left );
          }
 
          if ( upIsDown || downIsDown )
@@ -89,7 +89,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
          if ( !( upIsDown && playerSprite->direction == Direction_Up ) &&
               !( downIsDown && playerSprite->direction == Direction_Down ) )
          {
-            Sprite_SetDirection( playerSprite, Direction_Right );
+            ActiveSprite_SetDirection( playerSprite, Direction_Right );
          }
 
          if ( upIsDown || downIsDown )
@@ -105,7 +105,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
          {
-            Sprite_SetDirection( playerSprite, Direction_Up );
+            ActiveSprite_SetDirection( playerSprite, Direction_Up );
          }
 
          if ( leftIsDown || rightIsDown )
@@ -120,7 +120,7 @@ internal void Game_HandleOverworldInput( Game_t* game )
          if ( !( leftIsDown && playerSprite->direction == Direction_Left ) &&
               !( rightIsDown && playerSprite->direction == Direction_Right ) )
          {
-            Sprite_SetDirection( playerSprite, Direction_Down );
+            ActiveSprite_SetDirection( playerSprite, Direction_Down );
          }
 
          if ( leftIsDown || rightIsDown )

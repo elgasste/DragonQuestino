@@ -86,7 +86,7 @@ void Game_Tic( Game_t* game )
       if ( game->mainState == MainState_Overworld && game->subState == SubState_None )
       {
          Game_TicPhysics( game );
-         Sprite_Tic( &( game->player.sprite ) );
+         ActiveSprite_Tic( &( game->player.sprite ) );
          TileMap_Tic( &(game->tileMap ) );
       }
       else
@@ -183,7 +183,7 @@ void Game_EnterTargetPortal( Game_t* game )
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
    game->targetPortal = 0;
 
-   Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+   ActiveSprite_SetDirection( &( game->player.sprite ), arrivalDirection );
 
    if ( game->tileMap.isDark )
    {

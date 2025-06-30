@@ -1,7 +1,14 @@
 #include "sprite.h"
 #include "clock.h"
 
-void Sprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction )
+void ActiveSprite_Reset( ActiveSprite_t* sprite )
+{
+   sprite->currentFrame = 0;
+   sprite->elapsedFrameSeconds = 0.0f;
+   sprite->isFlickering = False;
+}
+
+void ActiveSprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction )
 {
    if ( direction != sprite->direction )
    {
@@ -11,7 +18,7 @@ void Sprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction )
    }
 }
 
-void Sprite_Tic( ActiveSprite_t* sprite )
+void ActiveSprite_Tic( ActiveSprite_t* sprite )
 {
    sprite->elapsedFrameSeconds += CLOCK_FRAME_SECONDS;
 
@@ -27,7 +34,7 @@ void Sprite_Tic( ActiveSprite_t* sprite )
    }
 }
 
-void Sprite_Flicker( ActiveSprite_t* sprite )
+void ActiveSprite_Flicker( ActiveSprite_t* sprite )
 {
    if ( sprite->isFlickering )
    {
@@ -47,7 +54,7 @@ void Sprite_Flicker( ActiveSprite_t* sprite )
    }
 }
 
-void Sprite_StopFlickering( ActiveSprite_t* sprite )
+void ActiveSprite_StopFlickering( ActiveSprite_t* sprite )
 {
    sprite->isFlickering = False;
    sprite->flickerOff = False;
