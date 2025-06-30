@@ -303,7 +303,6 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, string.Format( "         tileMap->evacPortal.destinationTileIndex = {0};\n", tileMap.EvacPortal.DestinationTileIndex ) );
             WriteToFileStream( fs, string.Format( "         tileMap->evacPortal.arrivalDirection = (Direction_t){0};\n", (int)( tileMap.EvacPortal.ArrivalDirection ) ) );
 
-            WriteToFileStream( fs, "         tileMap->activeSpriteCount = 0;\n" );
             WriteToFileStream( fs, string.Format( "         tileMap->staticSpriteCount = {0};\n", tileMap.StaticSprites.Count ) );
 
             for ( int i = 0; i < tileMap.StaticSprites.Count; i++ )
@@ -315,6 +314,25 @@ namespace DragonQuestinoEditor.FileOps
                WriteToFileStream( fs, string.Format( "         Sprite_LoadStatic( &( tileMap->staticSprites[{0}] ), {1} );\n", i, sprite.TextureIndex ) );
                WriteToFileStream( fs, string.Format( "         tileMap->staticSprites[{0}].position.x = {1};\n", i, xPos ) );
                WriteToFileStream( fs, string.Format( "         tileMap->staticSprites[{0}].position.y = {1};\n", i, yPos ) );
+            }
+
+            WriteToFileStream( fs, string.Format( "         tileMap->activeSpriteCount = {0};\n", tileMap.ActiveSprites.Count ) );
+
+            if ( tileMap.ActiveSprites.Count > 0 )
+            {
+               WriteToFileStream( fs, "         for ( i = 0; i < (int32_t)( tileMap->activeSpriteCount ); i++ ) ActiveSprite_Reset( &( tileMap->activeSprites[i] ) );\n" );
+
+               for ( int i = 0; i < tileMap.ActiveSprites.Count; i++ )
+               {
+                  var sprite = tileMap.ActiveSprites[i];
+                  int xPos = ( sprite.TileIndex % tileMap.TilesX ) * Constants.SpriteFrameSize;
+                  int yPos = ( sprite.TileIndex / tileMap.TilesX ) * Constants.SpriteFrameSize;
+
+                  WriteToFileStream( fs, string.Format( "         Sprite_LoadActive( &( tileMap->activeSprites[{0}] ), {1} );\n", i, sprite.SpriteSheetIndex ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].position.x = {1};\n", i, xPos ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].position.y = {1};\n", i, yPos ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].direction = (Direction_t){1};\n", i, (int)sprite.Direction ) );
+               }
             }
 
             var packedTiles = new List<UInt32>( ( tileMap.TilesX / 2 ) * tileMap.TilesY );

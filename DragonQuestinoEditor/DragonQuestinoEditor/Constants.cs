@@ -16,7 +16,8 @@ namespace DragonQuestinoEditor
       public static readonly string[] ActiveSpriteSheetPaths = [
          AssetsBasePath + "player_sprite.png",
          AssetsBasePath + "king_sprite.png",
-         AssetsBasePath + "princess_sprite.png"
+         AssetsBasePath + "princess_sprite.png",
+         AssetsBasePath + "soldier_sprite.png"
       ];
 
       public const string GameDataSourceFilePath = SourceBasePath + "game_data.c";
