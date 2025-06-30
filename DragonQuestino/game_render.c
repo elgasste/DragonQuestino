@@ -5,6 +5,7 @@
 
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
+internal void Game_DrawActiveSprites( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -133,6 +134,7 @@ void Game_Draw( Game_t* game )
 void Game_DrawOverworld( Game_t* game )
 {
    Game_DrawTileMap( game );
+   Game_DrawActiveSprites( game );
 
    if ( !( game->player.sprite.flickerOff ) )
    {
@@ -364,5 +366,35 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_2, x, y + TEXT_TILE_SIZE );
       y += ( TEXT_TILE_SIZE * 2 );
+   }
+}
+
+internal void Game_DrawActiveSprites( Game_t* game )
+{
+   uint32_t i, tx, ty, tw, th, sxu, syu, textureIndex;
+   int32_t sx, sy;
+   ActiveSprite_t* sprite;
+   Vector4i32_t* viewport = &( game->tileMap.viewport );
+
+   for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
+   {
+      sprite = &( game->tileMap.activeSprites[i] );
+      sx = (int32_t)( sprite->position.x - viewport->x );
+      sy = (int32_t)( sprite->position.y - viewport->y );
+
+      if ( Math_RectsIntersect32i( (int32_t)( sprite->position.x ), (int32_t)( sprite->position.y ), SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
+                                   viewport->x, viewport->y, viewport->w, viewport->h ) )
+      {
+         tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
+         ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
+         tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > viewport->w ) ? ( viewport->w - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
+         th = ( ( sy + SPRITE_TEXTURE_SIZE ) > viewport->h ) ? ( viewport->h - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
+         sxu = ( sx < 0 ) ? 0 : sx;
+         syu = ( sy < 0 ) ? 0 : sy;
+         textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
+
+         Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
+                                   sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
+      }
    }
 }

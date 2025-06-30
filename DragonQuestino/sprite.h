@@ -49,7 +49,6 @@ void Sprite_Flicker( ActiveSprite_t* sprite );
 void Sprite_StopFlickering( ActiveSprite_t* sprite );
 
 // game_data.c
-void Sprite_LoadPlayer( ActiveSprite_t* sprite );
 void Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index );
 void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index );
 

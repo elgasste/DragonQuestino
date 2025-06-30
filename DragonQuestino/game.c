@@ -14,7 +14,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 1 );
    AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ), game );
-   Sprite_LoadPlayer( &( game->player.sprite ) );
+   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ), &( game->tileMap ) );
