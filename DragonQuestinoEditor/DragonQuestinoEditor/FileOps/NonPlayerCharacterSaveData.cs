@@ -8,6 +8,8 @@ namespace DragonQuestinoEditor.FileOps
       public int TileIndex { get; set; }
       public ActiveSpriteSaveData? ActiveSprite { get; set; }
       public Direction Direction { get; set; }
+      public bool Wanders { get; set; }
+      public SimpleRect? WanderBounds { get; set; }
 
       public NonPlayerCharacterSaveData() { }
 
@@ -16,6 +18,8 @@ namespace DragonQuestinoEditor.FileOps
          Id = viewModel.Id;
          TileIndex = viewModel.TileIndex;
          Direction = viewModel.Direction;
+         Wanders = viewModel.Wanders;
+         WanderBounds = viewModel.WanderBounds;
 
          if ( viewModel.ActiveSprite != null )
          {

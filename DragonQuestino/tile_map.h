@@ -97,6 +97,9 @@
 #define TILEMAP_SWAMP_DAMAGE                    2
 #define TILEMAP_BARRIER_DAMAGE                  15
 
+#define TILEMAP_NPC_MAXPAUSESECONDS             2
+#define TILEMAP_NPC_MAXWANDERSECONDS            2
+
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
 typedef struct Player_t Player_t;
@@ -127,6 +130,14 @@ typedef struct NonPlayerCharacter_t
    uint32_t id;
    uint32_t tileIndex;
    ActiveSprite_t sprite;
+
+   Bool_t wanders;
+   Bool_t isWandering;
+   Vector4u32_t wanderBounds;
+   float totalPauseDuration;
+   float pausedDuration;
+   float totalWanderDistance;
+   float wanderedDistance;
 }
 NonPlayerCharacter_t;
 
@@ -185,6 +196,7 @@ extern "C" {
 #endif
 
 void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags, Player_t* player );
+void TileMap_ResetNpcs( TileMap_t* tileMap );
 void TileMap_Tic( TileMap_t* tileMap );
 void TileMap_ResetViewport( TileMap_t* tileMap );
 void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );

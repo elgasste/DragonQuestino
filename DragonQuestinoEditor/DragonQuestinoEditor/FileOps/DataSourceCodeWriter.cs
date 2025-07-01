@@ -338,6 +338,16 @@ namespace DragonQuestinoEditor.FileOps
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.offset.y = {1};\n", i, npc.ActiveSprite?.Offset.Y ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.hitBoxSize.x = {1};\n", i, npc.ActiveSprite?.HitBoxSize.X ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.hitBoxSize.y = {1};\n", i, npc.ActiveSprite?.HitBoxSize.Y ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].wanders = {1};\n", i, npc.Wanders ) );
+
+                  if ( npc.Wanders )
+                  {
+                     WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].isWandering = False;\n", i ) );
+                     WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].wanderBounds.x = {1};\n", i, npc.WanderBounds?.X ) );
+                     WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].wanderBounds.y = {1};\n", i, npc.WanderBounds?.Y ) );
+                     WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].wanderBounds.w = {1};\n", i, npc.WanderBounds?.W ) );
+                     WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].wanderBounds.h = {1};\n", i, npc.WanderBounds?.H ) );
+                  }
                }
             }
 
@@ -455,7 +465,9 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   if ( id == TILEMAP_CHARLOCK_ID && tileMap->gameFlags->foundHiddenStairs )\n" );
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      TileMap_LoadHiddenStairs( tileMap );\n" );
-         WriteToFileStream( fs, "   }\n" );
+         WriteToFileStream( fs, "   }\n\n" );
+
+         WriteToFileStream( fs, "   TileMap_ResetNpcs( tileMap );\n" );
 
          WriteToFileStream( fs, "}\n" );
       }

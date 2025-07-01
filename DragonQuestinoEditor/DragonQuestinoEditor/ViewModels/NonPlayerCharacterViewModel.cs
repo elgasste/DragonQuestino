@@ -32,12 +32,33 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _direction, value );
       }
 
-      public NonPlayerCharacterViewModel( int id, int tileIndex, ActiveSpriteViewModel activeSprite, Direction direction )
+      private bool _wanders;
+      public bool Wanders
+      {
+         get => _wanders;
+         set => SetProperty( ref _wanders, value );
+      }
+
+      private SimpleRect? _wanderBounds;
+      public SimpleRect? WanderBounds
+      {
+         get => _wanderBounds;
+         set => SetProperty( ref _wanderBounds, value );
+      }
+
+      public NonPlayerCharacterViewModel( int id,
+                                          int tileIndex,
+                                          ActiveSpriteViewModel activeSprite,
+                                          Direction direction,
+                                          bool wanders,
+                                          SimpleRect wanderBounds )
       {
          Id = id;
          TileIndex = tileIndex;
          ActiveSprite = activeSprite;
          Direction = direction;
+         Wanders = wanders;
+         WanderBounds = wanderBounds;
       }
 
       public NonPlayerCharacterViewModel( NonPlayerCharacterSaveData saveData )
@@ -45,6 +66,8 @@ namespace DragonQuestinoEditor.ViewModels
          Id = saveData.Id;
          TileIndex = saveData.TileIndex;
          Direction = saveData.Direction;
+         Wanders = saveData.Wanders;
+         WanderBounds = saveData.WanderBounds;
 
          if ( saveData.ActiveSprite != null )
          {

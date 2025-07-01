@@ -18199,6 +18199,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->npcs[0].sprite.offset.y = 0;
          tileMap->npcs[0].sprite.hitBoxSize.x = 16;
          tileMap->npcs[0].sprite.hitBoxSize.y = 16;
+         tileMap->npcs[0].wanders = False;
          tileMap->npcs[1].id = 1;
          tileMap->npcs[1].tileIndex = 111;
          Sprite_LoadActive( &( tileMap->npcs[1].sprite ), 2 );
@@ -18209,6 +18210,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->npcs[1].sprite.offset.y = 0;
          tileMap->npcs[1].sprite.hitBoxSize.x = 16;
          tileMap->npcs[1].sprite.hitBoxSize.y = 16;
+         tileMap->npcs[1].wanders = False;
          tileMap->npcs[2].id = 2;
          tileMap->npcs[2].tileIndex = 168;
          Sprite_LoadActive( &( tileMap->npcs[2].sprite ), 3 );
@@ -18219,6 +18221,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->npcs[2].sprite.offset.y = 0;
          tileMap->npcs[2].sprite.hitBoxSize.x = 12;
          tileMap->npcs[2].sprite.hitBoxSize.y = 16;
+         tileMap->npcs[2].wanders = False;
          tileMap->npcs[3].id = 3;
          tileMap->npcs[3].tileIndex = 170;
          Sprite_LoadActive( &( tileMap->npcs[3].sprite ), 3 );
@@ -18229,6 +18232,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->npcs[3].sprite.offset.y = 0;
          tileMap->npcs[3].sprite.hitBoxSize.x = 12;
          tileMap->npcs[3].sprite.hitBoxSize.y = 16;
+         tileMap->npcs[3].wanders = False;
          for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x000B000B;
          tiles32[142] = 0x0006000B;
          for ( i = 143; i < 147; i++ ) tiles32[i] = 0x00060006;
@@ -24162,6 +24166,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
    {
       TileMap_LoadHiddenStairs( tileMap );
    }
+
+   TileMap_ResetNpcs( tileMap );
 }
 
 void TileMap_LoadHiddenStairs( TileMap_t* tileMap )
