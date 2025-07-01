@@ -3,6 +3,7 @@
 #include "math.h"
 
 internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t* newPos );
+internal uint32_t Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite );
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
@@ -317,11 +318,16 @@ internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clip
    }
 }
 
+internal uint32_t Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite )
+{
+   uint32_t centerX = (uint32_t)( sprite->position.x + ( sprite->hitBoxSize.x / 2 ) );
+   uint32_t centerY = (uint32_t)( sprite->position.y + ( sprite->hitBoxSize.y / 2 ) );
+   return ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
+}
+
 internal void Game_UpdatePlayerTileIndex( Game_t* game )
 {
-   uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.sprite.hitBoxSize.x / 2 ) );
-   uint32_t centerY = (uint32_t)( game->player.sprite.position.y + ( game->player.sprite.hitBoxSize.y / 2 ) );
-   uint32_t newTileIndex = ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
+   uint32_t newTileIndex = Game_GetSpriteTileIndex( game, &( game->player.sprite ) );
 
    if ( newTileIndex != game->player.tileIndex )
    {
@@ -454,7 +460,7 @@ internal void Game_MoveNpcs( Game_t* game )
 
          Game_ClipSprites( &( npc->sprite ), &( game->player.sprite), &newPos );
 
-         // MUFFINS: now we clip to the wander bounds
+         // MUFFINS: need to update the tile index as well
          npc->sprite.position.x = newPos.x;
          npc->sprite.position.y = newPos.y;
          leftBound = (float)( npc->wanderBounds.x * TILE_SIZE );
@@ -483,6 +489,8 @@ internal void Game_MoveNpcs( Game_t* game )
             npc->sprite.position.y = bottomBound - SPRITE_TEXTURE_SIZE;
             TileMap_StopNpc( npc );
          }
+
+         npc->tileIndex = Game_GetSpriteTileIndex( game, &( npc->sprite ) );
       }
    }
 }
