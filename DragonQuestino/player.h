@@ -192,10 +192,8 @@ typedef struct Player_t
    TileMap_t* tileMap;
 
    ActiveSprite_t sprite;
-   Vector2i32_t spriteOffset;
    Vector2f_t velocity;
    float maxVelocity;
-   Vector2u32_t hitBoxSize;
    uint32_t tileIndex;
    uint32_t canonicalTileIndex;
    Bool_t isCursed;

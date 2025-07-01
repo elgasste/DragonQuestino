@@ -294,8 +294,8 @@ void Game_DrawTileMap( Game_t* game )
 internal void Game_DrawPlayer( Game_t* game )
 {
    ActiveSprite_t* sprite = &( game->player.sprite );
-   int32_t wx = (int32_t)( sprite->position.x ) + game->player.spriteOffset.x;
-   int32_t wy = (int32_t)( sprite->position.y ) + game->player.spriteOffset.y;
+   int32_t wx = (int32_t)( sprite->position.x ) + game->player.sprite.offset.x;
+   int32_t wy = (int32_t)( sprite->position.y ) + game->player.sprite.offset.y;
    int32_t sx = wx - game->tileMap.viewport.x;
    int32_t sy = wy - game->tileMap.viewport.y;
    uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;

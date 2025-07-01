@@ -15,10 +15,11 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->velocity.x = 0.0f;
    player->velocity.y = 0.0f;
    player->maxVelocity = TILE_WALKSPEED_NORMAL;
-   player->hitBoxSize.x = TILE_SIZE - 4;
-   player->hitBoxSize.y = TILE_SIZE - 4;
-   player->spriteOffset.x = -2;
-   player->spriteOffset.y = -4;
+   // MUFFINS: these values will be loaded in game_data.c
+   player->sprite.hitBox.x = TILE_SIZE - 4;
+   player->sprite.hitBox.y = TILE_SIZE - 4;
+   player->sprite.offset.x = -2;
+   player->sprite.offset.y = -4;
    player->sprite.direction = Direction_Down;
    player->sprite.isFlickering = False;
    strcpy( player->name, "Ed209" );
@@ -267,6 +268,6 @@ void Player_CenterOnTile( Player_t* player )
    uint32_t tileX = ( player->tileIndex % player->tileMap->tilesX ) * TILE_SIZE;
    uint32_t tileY = ( player->tileIndex / player->tileMap->tilesX ) * TILE_SIZE;
 
-   player->sprite.position.x = (float)( tileX + ( ( TILE_SIZE / 2 ) - ( player->hitBoxSize.x / 2 ) ) );
-   player->sprite.position.y = (float)( tileY + ( ( TILE_SIZE / 2 ) - ( player->hitBoxSize.y / 2 ) ) );
+   player->sprite.position.x = (float)( tileX + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBox.x / 2 ) ) );
+   player->sprite.position.y = (float)( tileY + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBox.y / 2 ) ) );
 }
