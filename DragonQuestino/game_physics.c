@@ -414,6 +414,7 @@ internal void Game_ApplyTileDamage( Game_t* game )
       return;
    }
 
+   
    game->screen.needsRedraw = True;
    damage = ( damageRate == 1 ) ? TILEMAP_SWAMP_DAMAGE : TILEMAP_BARRIER_DAMAGE;
    game->player.stats.hitPoints -= Math_Min8u( damage, game->player.stats.hitPoints );
