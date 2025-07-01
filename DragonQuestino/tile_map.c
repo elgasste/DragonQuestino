@@ -12,7 +12,6 @@ internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter );
 internal void TileMap_ReduceGlowDiameter( TileMap_t* tileMap );
 internal void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap );
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
-internal void TileMap_DrawActiveSprites( TileMap_t* tileMap );
 
 void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags, Player_t* player )
 {

@@ -184,7 +184,8 @@ void Game_PlayerSteppedOnTile( Game_t* game )
    TilePortal_t* portal;
 
 #if defined VISUAL_STUDIO_DEV
-   if ( !g_debugFlags.noTileDamage ) {
+   if ( !g_debugFlags.noTileDamage )
+   {
 #endif
 
       Game_ApplyTileDamage( game );
