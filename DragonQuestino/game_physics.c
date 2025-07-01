@@ -2,6 +2,8 @@
 #include "random.h"
 #include "math.h"
 
+internal void Game_ClipSpriteToSprite( Vector2f_t* mainPos, float mainHitBoxX, float mainHitBoxY,
+                                       Vector2f_t* clipPos, float clipHitBoxX, float clipHitBoxY );
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
@@ -9,6 +11,7 @@ internal void Game_ApplyTileDamage( Game_t* game );
 
 void Game_TicPhysics( Game_t* game )
 {
+   uint32_t i;
    Vector2f_t prevPos, newPos;
    uint32_t tileRowStartIndex, tileRowEndIndex, tileColStartIndex, tileColEndIndex, row, col, tile, tileIndex;
    Player_t* player = &( game->player );
@@ -22,6 +25,12 @@ void Game_TicPhysics( Game_t* game )
    prevPos = player->sprite.position;
    newPos.x = player->sprite.position.x + ( player->velocity.x * CLOCK_FRAME_SECONDS );
    newPos.y = player->sprite.position.y + ( player->velocity.y * CLOCK_FRAME_SECONDS );
+
+   for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
+   {
+      Game_ClipSpriteToSprite( &newPos, (float)( player->hitBoxSize.x ), (float)( player->hitBoxSize.y ),
+                               &( game->tileMap.activeSprites[i].position ), SPRITE_TEXTURE_SIZEF, SPRITE_TEXTURE_SIZEF );
+   }
 
    if ( newPos.x < 0 )
    {
@@ -234,6 +243,62 @@ void Game_PlayerSteppedOnTile( Game_t* game )
       }
 
       Game_RollEncounter( game );
+   }
+}
+
+internal void Game_ClipSpriteToSprite( Vector2f_t* mainPos, float mainHitBoxX, float mainHitBoxY,
+                                       Vector2f_t* clipPos, float clipHitBoxX, float clipHitBoxY )
+{
+   if ( Math_RectsIntersectF( mainPos->x, mainPos->y, mainHitBoxX, mainHitBoxY, clipPos->x, clipPos->y, clipHitBoxX, clipHitBoxY ) )
+   {
+      if ( Math_PointInRectF( mainPos->x, mainPos->y, clipPos->x, clipPos->y, clipHitBoxX, clipHitBoxY ) )
+      {
+         // upper-left corner is colliding
+         if ( ( mainPos->x - clipPos->x ) > ( mainPos->y - clipPos->y ) )
+         {
+            mainPos->x = clipPos->x + clipHitBoxX + COLLISION_THETA;
+         }
+         else
+         {
+            mainPos->y = clipPos->y + clipHitBoxY + COLLISION_THETA;
+         }
+      }
+      else if ( Math_PointInRectF( mainPos->x + mainHitBoxX, mainPos->y, clipPos->x, clipPos->y, clipHitBoxX, clipHitBoxY ) )
+      {
+         // upper-right corner is colliding
+         if ( ( clipPos->x - mainPos->x ) > ( mainPos->y - clipPos->y ) )
+         {
+            mainPos->x = clipPos->x - mainHitBoxX - COLLISION_THETA;
+         }
+         else
+         {
+            mainPos->y = clipPos->y + clipHitBoxY + COLLISION_THETA;
+         }
+      }
+      else if ( Math_PointInRectF( mainPos->x, mainPos->y + mainHitBoxY, clipPos->x, clipPos->y, clipHitBoxX, clipHitBoxY ) )
+      {
+         // lower-left corner is colliding
+         if ( ( mainPos->x - clipPos->x ) > ( clipPos->y - mainPos->y ) )
+         {
+            mainPos->x = clipPos->x + clipHitBoxX + COLLISION_THETA;
+         }
+         else
+         {
+            mainPos->y = clipPos->y - mainHitBoxY - COLLISION_THETA;
+         }
+      }
+      else if ( Math_PointInRectF( mainPos->x + mainHitBoxX, mainPos->y + mainHitBoxY, clipPos->x, clipPos->y, clipHitBoxX, clipHitBoxY ) )
+      {
+         // lower-right corner is colliding
+         if ( ( clipPos->x - mainPos->x ) > ( clipPos->y - mainPos->y ) )
+         {
+            mainPos->x = clipPos->x - mainHitBoxX - COLLISION_THETA;
+         }
+         else
+         {
+            mainPos->y = clipPos->y - mainHitBoxY - COLLISION_THETA;
+         }
+      }
    }
 }
 

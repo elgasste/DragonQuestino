@@ -5,6 +5,7 @@
 #include "vector.h"
 
 #define SPRITE_TEXTURE_SIZE            16
+#define SPRITE_TEXTURE_SIZEF           16.0f
 #define SPRITE_TEXTURE_BYTES           256
 
 #define ACTIVE_SPRITE_TEXTURES         8  // two for each direction
