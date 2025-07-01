@@ -134,10 +134,8 @@ typedef struct NonPlayerCharacter_t
    Bool_t wanders;
    Bool_t isWandering;
    Vector4u32_t wanderBounds;
-   float totalPauseDuration;
-   float pausedDuration;
-   float totalWanderDistance;
-   float wanderedDistance;
+   float totalDuration;
+   float duration;
 }
 NonPlayerCharacter_t;
 
@@ -207,6 +205,7 @@ float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex )
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
 uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction );
 void TileMap_Draw( TileMap_t* tileMap );
+void TileMap_StopNpc( NonPlayerCharacter_t* npc );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );
