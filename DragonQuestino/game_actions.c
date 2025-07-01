@@ -7,9 +7,30 @@ internal void Game_TakeHiddenStairsCallback( Game_t* game );
 
 void Game_Talk( Game_t* game )
 {
-   Dialog_Reset( &( game->dialog ) );;
-   Dialog_PushSection( &( game->dialog ), STRING_DIALOG_NOBODY_THERE );
-   Game_OpenDialog( game );
+   uint32_t i, tileIndex;
+   Bool_t canTalk = False;
+
+   if ( game->tileMap.npcCount > 0 )
+   {
+      tileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
+
+      for ( i = 0; i < game->tileMap.npcCount; i++ )
+      {
+         if ( game->tileMap.npcs[i].tileIndex == tileIndex )
+         {
+            canTalk = True;
+            Game_RunNpcDialog( game, game->tileMap.npcs[i].id );
+            break;
+         }
+      }
+   }
+
+   if ( !canTalk )
+   {
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_NOBODY_THERE );
+      Game_OpenDialog( game );
+   }
 }
 
 void Game_Search( Game_t* game )
