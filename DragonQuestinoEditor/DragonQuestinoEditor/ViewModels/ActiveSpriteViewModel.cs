@@ -12,20 +12,6 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _spriteSheetIndex, value );
       }
 
-      private int _tileIndex;
-      public int TileIndex
-      {
-         get => _tileIndex;
-         set => SetProperty( ref _tileIndex, value );
-      }
-
-      private Direction _direction;
-      public Direction Direction
-      {
-         get => _direction;
-         set => SetProperty( ref _direction, value );
-      }
-
       private Point _offset;
       public Point Offset
       {
@@ -40,11 +26,9 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _hitBoxSize, value );
       }
 
-      public ActiveSpriteViewModel( int spriteSheetIndex, int tileIndex, Direction direction, Point offset, Point hitBoxSize )
+      public ActiveSpriteViewModel( int spriteSheetIndex, Point offset, Point hitBoxSize )
       {
          _spriteSheetIndex = spriteSheetIndex;
-         _tileIndex = tileIndex;
-         _direction = direction;
          _offset = offset;
          _hitBoxSize = hitBoxSize;
       }
@@ -52,8 +36,6 @@ namespace DragonQuestinoEditor.ViewModels
       public ActiveSpriteViewModel( ActiveSpriteSaveData saveData )
       {
          SpriteSheetIndex = saveData.SpriteSheetIndex;
-         TileIndex = saveData.TileIndex;
-         Direction = saveData.Direction;
          Offset = saveData.Offset;
          HitBoxSize = saveData.HitBoxSize;
       }

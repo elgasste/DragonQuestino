@@ -6,7 +6,8 @@ namespace DragonQuestinoEditor.FileOps
    {
       public int Id { get; set; }
       public int TileIndex { get; set; }
-      public int ActiveSpriteSheetIndex { get; set; }
+      public ActiveSpriteSaveData? ActiveSprite { get; set; }
+      public Direction Direction { get; set; }
 
       public NonPlayerCharacterSaveData() { }
 
@@ -14,7 +15,12 @@ namespace DragonQuestinoEditor.FileOps
       {
          Id = viewModel.Id;
          TileIndex = viewModel.TileIndex;
-         ActiveSpriteSheetIndex = viewModel.ActiveSpriteSheetIndex;
+         Direction = viewModel.Direction;
+
+         if ( viewModel.ActiveSprite != null )
+         {
+            ActiveSprite = new( viewModel.ActiveSprite );
+         }
       }
    }
 }

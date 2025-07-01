@@ -29,9 +29,9 @@ void Game_TicPhysics( Game_t* game )
    if ( g_debugFlags.noClip == False ) {
 #endif
 
-      for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
+      for ( i = 0; i < game->tileMap.npcCount; i++ )
       {
-         Game_ClipSprites( &( player->sprite ), &( game->tileMap.activeSprites[i] ), &newPos );
+         Game_ClipSprites( &( player->sprite ), &( game->tileMap.npcs[i].sprite ), &newPos );
       }
 
 #if defined( VISUAL_STUDIO_DEV )

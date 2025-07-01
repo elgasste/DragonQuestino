@@ -18,25 +18,38 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _tileIndex, value );
       }
 
-      private int _activeSpriteSheetIndex;
-      public int ActiveSpriteSheetIndex
+      private ActiveSpriteViewModel? _activeSprite;
+      public ActiveSpriteViewModel? ActiveSprite
       {
-         get => _activeSpriteSheetIndex;
-         set => SetProperty( ref _activeSpriteSheetIndex, value );
+         get => _activeSprite;
+         set => SetProperty( ref _activeSprite, value );
       }
 
-      public NonPlayerCharacterViewModel( int id, int tileIndex, int activeSpriteIndex )
+      private Direction _direction;
+      public Direction Direction
+      {
+         get => _direction;
+         set => SetProperty( ref _direction, value );
+      }
+
+      public NonPlayerCharacterViewModel( int id, int tileIndex, ActiveSpriteViewModel activeSprite, Direction direction )
       {
          Id = id;
          TileIndex = tileIndex;
-         ActiveSpriteSheetIndex = activeSpriteIndex;
+         ActiveSprite = activeSprite;
+         Direction = direction;
       }
 
       public NonPlayerCharacterViewModel( NonPlayerCharacterSaveData saveData )
       {
          Id = saveData.Id;
          TileIndex = saveData.TileIndex;
-         ActiveSpriteSheetIndex= saveData.ActiveSpriteSheetIndex;
+         Direction = saveData.Direction;
+
+         if ( saveData.ActiveSprite != null )
+         {
+            ActiveSprite = new( saveData.ActiveSprite );
+         }
       }
    }
 }

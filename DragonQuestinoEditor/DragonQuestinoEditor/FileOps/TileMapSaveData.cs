@@ -16,7 +16,6 @@ namespace DragonQuestinoEditor.FileOps
       public List<TilePortalSaveData> Portals { get; set; } = [];
       public TilePortalSaveData EvacPortal { get; set; } = new();
       public List<StaticSpriteSaveData> StaticSprites { get; set; } = [];
-      public List<ActiveSpriteSaveData> ActiveSprites { get; set; } = [];
       public List<NonPlayerCharacterSaveData> NonPlayerCharacters { get; set; } = [];
 
       public TileMapSaveData() { }
@@ -46,11 +45,6 @@ namespace DragonQuestinoEditor.FileOps
          foreach ( var staticSprite in tileMap.StaticSprites )
          {
             StaticSprites.Add( new( staticSprite ) );
-         }
-
-         foreach ( var activeSprite in tileMap.ActiveSprites )
-         {
-            ActiveSprites.Add( new( activeSprite ) );
          }
 
          foreach ( var npc in tileMap.NonPlayerCharacters )
