@@ -25,10 +25,18 @@ void Game_TicPhysics( Game_t* game )
    newPos.x = player->sprite.position.x + ( player->velocity.x * CLOCK_FRAME_SECONDS );
    newPos.y = player->sprite.position.y + ( player->velocity.y * CLOCK_FRAME_SECONDS );
 
-   for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
-   {
-      Game_ClipSprites( &( player->sprite ), &( game->tileMap.activeSprites[i] ), &newPos );
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.noClip == False ) {
+#endif
+
+      for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
+      {
+         Game_ClipSprites( &( player->sprite ), &( game->tileMap.activeSprites[i] ), &newPos );
+      }
+
+#if defined( VISUAL_STUDIO_DEV )
    }
+#endif
 
    if ( newPos.x < 0 )
    {
@@ -406,6 +414,7 @@ internal void Game_ApplyTileDamage( Game_t* game )
       return;
    }
 
+   
    game->screen.needsRedraw = True;
    damage = ( damageRate == 1 ) ? TILEMAP_SWAMP_DAMAGE : TILEMAP_BARRIER_DAMAGE;
    game->player.stats.hitPoints -= Math_Min8u( damage, game->player.stats.hitPoints );

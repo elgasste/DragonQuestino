@@ -96,19 +96,21 @@ void Game_Draw( Game_t* game )
          if ( game->screen.needsRedraw )
          {
             Game_DrawTileMap( game );
-            Game_DrawQuickStatus( game );
-            Game_WipeEnemy( game );
-            Game_DrawEnemy( game );
 
             switch ( game->subState )
             {
                case SubState_Menu:
                   game->activeMenu->hasDrawn = False;
+                  Game_DrawQuickStatus( game );
+                  Game_WipeEnemy( game );
+                  Game_DrawEnemy( game );
                   Menu_Draw( game->activeMenu );
                   Dialog_Draw( &( game->dialog ) );
                   break;
-               case SubState_None:
                case SubState_Dialog:
+                  Game_DrawQuickStatus( game );
+                  Game_WipeEnemy( game );
+                  Game_DrawEnemy( game );
                   Dialog_Draw( &( game->dialog ) );
                   break;
             }
