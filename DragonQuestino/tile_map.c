@@ -93,8 +93,8 @@ void TileMap_UpdateViewport( TileMap_t* tileMap )
 {
    int32_t anchorX = (int32_t)( tileMap->player->sprite.position.x );
    int32_t anchorY = (int32_t)( tileMap->player->sprite.position.y );
-   uint32_t anchorW = tileMap->player->sprite.hitBox.x;
-   uint32_t anchorH = tileMap->player->sprite.hitBox.y;
+   uint32_t anchorW = tileMap->player->sprite.hitBoxSize.x;
+   uint32_t anchorH = tileMap->player->sprite.hitBoxSize.y;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
    viewport->x = anchorX - ( viewport->w / 2 ) + ( anchorW / 2 );

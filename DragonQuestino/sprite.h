@@ -31,7 +31,7 @@ typedef struct ActiveSprite_t
    SpriteTexture_t textures[ACTIVE_SPRITE_TEXTURES];
    Vector2f_t position;
    Vector2i32_t offset;
-   Vector2u32_t hitBox;
+   Vector2u32_t hitBoxSize;
    Direction_t direction;
    uint32_t currentFrame;
    float elapsedFrameSeconds;

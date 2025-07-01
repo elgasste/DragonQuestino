@@ -332,6 +332,10 @@ namespace DragonQuestinoEditor.FileOps
                   WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].position.x = {1};\n", i, xPos ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].position.y = {1};\n", i, yPos ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].direction = (Direction_t){1};\n", i, (int)sprite.Direction ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].offset.x = {1};\n", i, sprite.Offset.X ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].offset.y = {1};\n", i, sprite.Offset.Y ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].hitBoxSize.x = {1};\n", i, sprite.HitBoxSize.X ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].hitBoxSize.y = {1};\n", i, sprite.HitBoxSize.Y ) );
                }
             }
 

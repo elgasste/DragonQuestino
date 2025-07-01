@@ -1,5 +1,5 @@
 ﻿using DragonQuestinoEditor.FileOps;
-using DragonQuestinoEditor.Graphics;
+using System.Windows;
 
 namespace DragonQuestinoEditor.ViewModels
 {
@@ -26,11 +26,27 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _direction, value );
       }
 
-      public ActiveSpriteViewModel( int spriteSheetIndex, int tileIndex, Direction direction )
+      private Point _offset;
+      public Point Offset
+      {
+         get => _offset;
+         set => SetProperty( ref _offset, value );
+      }
+
+      private Point _hitBoxSize;
+      public Point HitBoxSize
+      {
+         get => _hitBoxSize;
+         set => SetProperty( ref _hitBoxSize, value );
+      }
+
+      public ActiveSpriteViewModel( int spriteSheetIndex, int tileIndex, Direction direction, Point offset, Point hitBoxSize )
       {
          _spriteSheetIndex = spriteSheetIndex;
          _tileIndex = tileIndex;
          _direction = direction;
+         _offset = offset;
+         _hitBoxSize = hitBoxSize;
       }
 
       public ActiveSpriteViewModel( ActiveSpriteSaveData saveData )
@@ -38,6 +54,8 @@ namespace DragonQuestinoEditor.ViewModels
          SpriteSheetIndex = saveData.SpriteSheetIndex;
          TileIndex = saveData.TileIndex;
          Direction = saveData.Direction;
+         Offset = saveData.Offset;
+         HitBoxSize = saveData.HitBoxSize;
       }
    }
 }

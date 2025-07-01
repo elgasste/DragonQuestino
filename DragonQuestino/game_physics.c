@@ -14,6 +14,7 @@ void Game_TicPhysics( Game_t* game )
    uint32_t i;
    Vector2f_t prevPos, newPos;
    uint32_t tileRowStartIndex, tileRowEndIndex, tileColStartIndex, tileColEndIndex, row, col, tile, tileIndex;
+   ActiveSprite_t* sprite;
    Player_t* player = &( game->player );
 
    if ( player->velocity.x == 0.0f && player->velocity.y == 0.0f )
@@ -28,26 +29,27 @@ void Game_TicPhysics( Game_t* game )
 
    for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
    {
-      Game_ClipSpriteToSprite( &newPos, (float)( player->sprite.hitBox.x ), (float)( player->sprite.hitBox.y ),
-                               &( game->tileMap.activeSprites[i].position ), SPRITE_TEXTURE_SIZEF, SPRITE_TEXTURE_SIZEF );
+      sprite = &( game->tileMap.activeSprites[i] );
+      Game_ClipSpriteToSprite( &newPos, (float)( player->sprite.hitBoxSize.x ), (float)( player->sprite.hitBoxSize.y ),
+                               &( sprite->position ), (float)( sprite->hitBoxSize.x ), (float)( sprite->hitBoxSize.y ) );
    }
 
    if ( newPos.x < 0 )
    {
       newPos.x = COLLISION_THETA;
    }
-   else if ( ( newPos.x + player->sprite.hitBox.x ) >= ( game->tileMap.tilesX * TILE_SIZE ) )
+   else if ( ( newPos.x + player->sprite.hitBoxSize.x ) >= ( game->tileMap.tilesX * TILE_SIZE ) )
    {
-      newPos.x = ( game->tileMap.tilesX * TILE_SIZE ) - player->sprite.hitBox.x - COLLISION_THETA;
+      newPos.x = ( game->tileMap.tilesX * TILE_SIZE ) - player->sprite.hitBoxSize.x - COLLISION_THETA;
    }
 
    if ( newPos.y < 0 )
    {
       newPos.y = COLLISION_THETA;
    }
-   else if ( ( newPos.y + player->sprite.hitBox.y ) >= ( game->tileMap.tilesY * TILE_SIZE ) )
+   else if ( ( newPos.y + player->sprite.hitBoxSize.y ) >= ( game->tileMap.tilesY * TILE_SIZE ) )
    {
-      newPos.y = ( game->tileMap.tilesY * TILE_SIZE ) - player->sprite.hitBox.y - COLLISION_THETA;
+      newPos.y = ( game->tileMap.tilesY * TILE_SIZE ) - player->sprite.hitBoxSize.y - COLLISION_THETA;
    }
 
 #if defined( VISUAL_STUDIO_DEV )
@@ -58,7 +60,7 @@ void Game_TicPhysics( Game_t* game )
       if ( newPos.x != player->sprite.position.x )
       {
          tileRowStartIndex = (uint32_t)( player->sprite.position.y / TILE_SIZE );
-         tileRowEndIndex = (uint32_t)( ( player->sprite.position.y + player->sprite.hitBox.y ) / TILE_SIZE );
+         tileRowEndIndex = (uint32_t)( ( player->sprite.position.y + player->sprite.hitBoxSize.y ) / TILE_SIZE );
 
          if ( newPos.x < player->sprite.position.x )
          {
@@ -81,7 +83,7 @@ void Game_TicPhysics( Game_t* game )
          else
          {
             // moving right, check rightward tiles
-            col = (uint32_t )( ( newPos.x + player->sprite.hitBox.x ) / TILE_SIZE );
+            col = (uint32_t )( ( newPos.x + player->sprite.hitBoxSize.x ) / TILE_SIZE );
 
             for ( row = tileRowStartIndex; row <= tileRowEndIndex; row++ )
             {
@@ -91,7 +93,7 @@ void Game_TicPhysics( Game_t* game )
                if ( !TILE_GET_PASSABLE( tile ) ||
                     ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->gameFlags.doors ) )
                {
-                  newPos.x = ( col * TILE_SIZE ) - player->sprite.hitBox.x - COLLISION_THETA;
+                  newPos.x = ( col * TILE_SIZE ) - player->sprite.hitBoxSize.x - COLLISION_THETA;
                   break;
                }
             }
@@ -102,7 +104,7 @@ void Game_TicPhysics( Game_t* game )
       if ( newPos.y != player->sprite.position.y )
       {
          tileColStartIndex = ( uint32_t )( player->sprite.position.x / TILE_SIZE );
-         tileColEndIndex = (uint32_t)( ( player->sprite.position.x + player->sprite.hitBox.x ) / TILE_SIZE );
+         tileColEndIndex = (uint32_t)( ( player->sprite.position.x + player->sprite.hitBoxSize.x ) / TILE_SIZE );
 
          if ( newPos.y < player->sprite.position.y )
          {
@@ -125,7 +127,7 @@ void Game_TicPhysics( Game_t* game )
          else
          {
             // moving down, check downward tiles
-            row = (uint32_t)( ( newPos.y + player->sprite.hitBox.y ) / TILE_SIZE );
+            row = (uint32_t)( ( newPos.y + player->sprite.hitBoxSize.y ) / TILE_SIZE );
 
             for ( col = tileColStartIndex; col <= tileColEndIndex; col++ )
             {
@@ -135,7 +137,7 @@ void Game_TicPhysics( Game_t* game )
                if ( !TILE_GET_PASSABLE( tile ) ||
                     ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->gameFlags.doors ) )
                {
-                  newPos.y = ( row * TILE_SIZE ) - player->sprite.hitBox.y - COLLISION_THETA;
+                  newPos.y = ( row * TILE_SIZE ) - player->sprite.hitBoxSize.y - COLLISION_THETA;
                   break;
                }
             }
@@ -304,8 +306,8 @@ internal void Game_ClipSpriteToSprite( Vector2f_t* mainPos, float mainHitBoxX, f
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game )
 {
-   uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.sprite.hitBox.x / 2 ) );
-   uint32_t centerY = (uint32_t)( game->player.sprite.position.y + ( game->player.sprite.hitBox.y / 2 ) );
+   uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.sprite.hitBoxSize.x / 2 ) );
+   uint32_t centerY = (uint32_t)( game->player.sprite.position.y + ( game->player.sprite.hitBoxSize.y / 2 ) );
    uint32_t newTileIndex = ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
 
    if ( newTileIndex != game->player.tileIndex )

@@ -308,6 +308,16 @@ internal void Game_DrawPlayer( Game_t* game )
 
    Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
                              sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
+
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.showHitBoxes )
+   {
+      Screen_DrawRectColor( &( game->screen ),
+                            sx - sprite->offset.x, sy - sprite->offset.y,
+                            (uint32_t)( sprite->hitBoxSize.x ), (uint32_t)( sprite->hitBoxSize.y ),
+                            COLOR_RED );
+   }
+#endif
 }
 
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
@@ -379,10 +389,11 @@ internal void Game_DrawActiveSprites( Game_t* game )
    for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
    {
       sprite = &( game->tileMap.activeSprites[i] );
-      sx = (int32_t)( sprite->position.x - viewport->x );
-      sy = (int32_t)( sprite->position.y - viewport->y );
+      sx = (int32_t)( sprite->position.x - viewport->x + sprite->offset.x );
+      sy = (int32_t)( sprite->position.y - viewport->y + sprite->offset.y );
 
-      if ( Math_RectsIntersect32i( (int32_t)( sprite->position.x ), (int32_t)( sprite->position.y ), SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
+      if ( Math_RectsIntersect32i( (int32_t)( sprite->position.x - sprite->offset.x ), (int32_t)( sprite->position.y - sprite->offset.y ),
+                                   SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
                                    viewport->x, viewport->y, viewport->w, viewport->h ) )
       {
          tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
@@ -394,7 +405,19 @@ internal void Game_DrawActiveSprites( Game_t* game )
          textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
 
          Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
-                                   sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
+                                   sxu + game->tileMap.viewportScreenPos.x - sprite->offset.x,
+                                   syu + game->tileMap.viewportScreenPos.y - sprite->offset.y,
+                                   True );
+
+#if defined( VISUAL_STUDIO_DEV )
+         if ( g_debugFlags.showHitBoxes )
+         {
+            Screen_DrawRectColor( &( game->screen ),
+                                  sx - sprite->offset.x, sy - sprite->offset.y,
+                                  (uint32_t)( sprite->hitBoxSize.x ), (uint32_t)( sprite->hitBoxSize.y ),
+                                  COLOR_RED );
+         }
+#endif
       }
    }
 }
