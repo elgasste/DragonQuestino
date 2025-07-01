@@ -2,8 +2,8 @@
 #include "random.h"
 #include "math.h"
 
-internal void Game_ClipSpriteToSprite( Vector2f_t* mainPos, float mainHitBoxX, float mainHitBoxY,
-                                       Vector2f_t* clipPos, float clipHitBoxX, float clipHitBoxY );
+internal void Game_ClipSprites( Vector2f_t* mainPos, float mainHitBoxX, float mainHitBoxY,
+                                Vector2f_t* clipPos, float clipHitBoxX, float clipHitBoxY );
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
@@ -30,8 +30,8 @@ void Game_TicPhysics( Game_t* game )
    for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
    {
       sprite = &( game->tileMap.activeSprites[i] );
-      Game_ClipSpriteToSprite( &newPos, (float)( player->sprite.hitBoxSize.x ), (float)( player->sprite.hitBoxSize.y ),
-                               &( sprite->position ), (float)( sprite->hitBoxSize.x ), (float)( sprite->hitBoxSize.y ) );
+      Game_ClipSprites( &newPos, (float)( player->sprite.hitBoxSize.x ), (float)( player->sprite.hitBoxSize.y ),
+                        &( sprite->position ), (float)( sprite->hitBoxSize.x ), (float)( sprite->hitBoxSize.y ) );
    }
 
    if ( newPos.x < 0 )
@@ -249,8 +249,8 @@ void Game_PlayerSteppedOnTile( Game_t* game )
    }
 }
 
-internal void Game_ClipSpriteToSprite( Vector2f_t* mainPos, float mainHitBoxX, float mainHitBoxY,
-                                       Vector2f_t* clipPos, float clipHitBoxX, float clipHitBoxY )
+internal void Game_ClipSprites( Vector2f_t* mainPos, float mainHitBoxX, float mainHitBoxY,
+                                Vector2f_t* clipPos, float clipHitBoxX, float clipHitBoxY )
 {
    if ( Math_RectsIntersectF( mainPos->x, mainPos->y, mainHitBoxX, mainHitBoxY, clipPos->x, clipPos->y, clipHitBoxX, clipHitBoxY ) )
    {
