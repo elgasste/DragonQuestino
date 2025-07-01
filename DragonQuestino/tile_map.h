@@ -28,6 +28,7 @@
 #define TILEMAP_MAX_PORTALS                     256
 #define TILEMAP_MAX_ACTIVESPRITES               24
 #define TILEMAP_MAX_STATICSPRITES               16
+#define TILEMAP_MAX_NPCS                        32
 
 #define TILE_GET_TEXTUREINDEX( t )              ( ( t ) & 0x1F )
 #define TILE_GET_PASSABLE( t )                  ( ( ( t ) & 0x20 ) >> 5 )
@@ -122,6 +123,14 @@ typedef struct EnemyIndexPool_t
 }
 EnemyIndexPool_t;
 
+typedef struct NonPlayerCharacter_t
+{
+   uint32_t id;
+   uint32_t tileIndex;
+   ActiveSprite_t* sprite;
+}
+NonPlayerCharacter_t;
+
 typedef struct TileMap_t
 {
    Screen_t* screen;
@@ -166,6 +175,9 @@ typedef struct TileMap_t
 
    StaticSprite_t staticSprites[TILEMAP_MAX_STATICSPRITES];
    uint32_t staticSpriteCount;
+
+   NonPlayerCharacter_t npcs[TILEMAP_MAX_NPCS];
+   uint32_t npcCount;
 
    StaticSprite_t chestSprite;
    StaticSprite_t doorSprite;

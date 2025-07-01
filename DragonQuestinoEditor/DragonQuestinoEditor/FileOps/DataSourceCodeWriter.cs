@@ -339,6 +339,15 @@ namespace DragonQuestinoEditor.FileOps
                }
             }
 
+            WriteToFileStream( fs, string.Format( "         tileMap->npcCount = {0};\n", tileMap.NonPlayerCharacters.Count ) );
+
+            for ( int i = 0; i <  tileMap.NonPlayerCharacters.Count; i++ )
+            {
+               WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].id = {1};\n", i, tileMap.NonPlayerCharacters[i].Id ) );
+               WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].tileIndex = {1};\n", i, tileMap.NonPlayerCharacters[i].TileIndex ) );
+               WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite = &( tileMap->activeSprites[{1}] );\n", i, tileMap.NonPlayerCharacters[i].ActiveSpriteSheetIndex ) );
+            }
+
             var packedTiles = new List<UInt32>( ( tileMap.TilesX / 2 ) * tileMap.TilesY );
             var indexCounts = new Dictionary<UInt32, int>();
 
