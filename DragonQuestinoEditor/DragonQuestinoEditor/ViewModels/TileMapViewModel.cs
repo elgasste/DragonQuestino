@@ -8,7 +8,7 @@ namespace DragonQuestinoEditor.ViewModels
    {
       public ObservableCollection<TileViewModel> Tiles { get; } = [];
       public ObservableCollection<StaticSpriteViewModel> StaticSprites { get; } = [];
-      public ObservableCollection<ActiveSpriteViewModel> ActiveSprites { get; } = [];
+      public ObservableCollection<NonPlayerCharacterViewModel> NonPlayerCharacters { get; } = [];
 
       public ObservableCollection<TilePortalViewModel> Portals { get; } = [];
 
@@ -126,9 +126,9 @@ namespace DragonQuestinoEditor.ViewModels
             StaticSprites.Add( new( staticSprite ) );
          }
 
-         foreach ( var activeSprite in saveData.ActiveSprites )
+         foreach ( var npc in saveData.NonPlayerCharacters )
          {
-            ActiveSprites.Add( new( activeSprite ) );
+            NonPlayerCharacters.Add( new( npc ) );
          }
       }
    }

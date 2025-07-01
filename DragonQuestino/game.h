@@ -113,6 +113,9 @@ void Game_UseGwaelynsLove( Game_t* game );
 void Game_UseRainbowDrop( Game_t* game );
 void Game_UseCursedBelt( Game_t* game );
 
+// game_npcs.c
+void Game_RunNpcDialog( Game_t* game, uint32_t npcId );
+
 #if defined( __cplusplus )
 }
 #endif

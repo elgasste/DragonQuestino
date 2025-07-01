@@ -316,26 +316,28 @@ namespace DragonQuestinoEditor.FileOps
                WriteToFileStream( fs, string.Format( "         tileMap->staticSprites[{0}].position.y = {1};\n", i, yPos ) );
             }
 
-            WriteToFileStream( fs, string.Format( "         tileMap->activeSpriteCount = {0};\n", tileMap.ActiveSprites.Count ) );
+            WriteToFileStream( fs, string.Format( "         tileMap->npcCount = {0};\n", tileMap.NonPlayerCharacters.Count ) );
 
-            if ( tileMap.ActiveSprites.Count > 0 )
+            if ( tileMap.NonPlayerCharacters.Count > 0 )
             {
-               WriteToFileStream( fs, "         for ( i = 0; i < (int32_t)( tileMap->activeSpriteCount ); i++ ) ActiveSprite_Reset( &( tileMap->activeSprites[i] ) );\n" );
+               WriteToFileStream( fs, "         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );\n" );
 
-               for ( int i = 0; i < tileMap.ActiveSprites.Count; i++ )
+               for ( int i = 0; i < tileMap.NonPlayerCharacters.Count; i++ )
                {
-                  var sprite = tileMap.ActiveSprites[i];
-                  int xPos = ( sprite.TileIndex % tileMap.TilesX ) * Constants.SpriteFrameSize;
-                  int yPos = ( sprite.TileIndex / tileMap.TilesX ) * Constants.SpriteFrameSize;
+                  var npc = tileMap.NonPlayerCharacters[i];
+                  int xPos = ( npc.TileIndex % tileMap.TilesX ) * Constants.SpriteFrameSize;
+                  int yPos = ( npc.TileIndex / tileMap.TilesX ) * Constants.SpriteFrameSize;
 
-                  WriteToFileStream( fs, string.Format( "         Sprite_LoadActive( &( tileMap->activeSprites[{0}] ), {1} );\n", i, sprite.SpriteSheetIndex ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].position.x = {1};\n", i, xPos ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].position.y = {1};\n", i, yPos ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].direction = (Direction_t){1};\n", i, (int)sprite.Direction ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].offset.x = {1};\n", i, sprite.Offset.X ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].offset.y = {1};\n", i, sprite.Offset.Y ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].hitBoxSize.x = {1};\n", i, sprite.HitBoxSize.X ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].hitBoxSize.y = {1};\n", i, sprite.HitBoxSize.Y ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].id = {1};\n", i, npc.Id ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].tileIndex = {1};\n", i, npc.TileIndex ) );
+                  WriteToFileStream( fs, string.Format( "         Sprite_LoadActive( &( tileMap->npcs[{0}].sprite ), {1} );\n", i, npc.ActiveSprite?.SpriteSheetIndex ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.position.x = {1};\n", i, xPos ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.position.y = {1};\n", i, yPos ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.direction = (Direction_t){1};\n", i, (int)npc.Direction ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.offset.x = {1};\n", i, npc.ActiveSprite?.Offset.X ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.offset.y = {1};\n", i, npc.ActiveSprite?.Offset.Y ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.hitBoxSize.x = {1};\n", i, npc.ActiveSprite?.HitBoxSize.X ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.hitBoxSize.y = {1};\n", i, npc.ActiveSprite?.HitBoxSize.Y ) );
                }
             }
 

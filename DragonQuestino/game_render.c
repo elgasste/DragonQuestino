@@ -5,7 +5,7 @@
 
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
-internal void Game_DrawActiveSprites( Game_t* game );
+internal void Game_DrawNonPlayerCharacters( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -136,7 +136,7 @@ void Game_Draw( Game_t* game )
 void Game_DrawOverworld( Game_t* game )
 {
    Game_DrawTileMap( game );
-   Game_DrawActiveSprites( game );
+   Game_DrawNonPlayerCharacters( game );
 
    if ( !( game->player.sprite.flickerOff ) )
    {
@@ -381,16 +381,16 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
    }
 }
 
-internal void Game_DrawActiveSprites( Game_t* game )
+internal void Game_DrawNonPlayerCharacters( Game_t* game )
 {
    uint32_t i, tx, ty, tw, th, sxu, syu, textureIndex;
    int32_t sx, sy;
    ActiveSprite_t* sprite;
    Vector4i32_t* viewport = &( game->tileMap.viewport );
 
-   for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
+   for ( i = 0; i < game->tileMap.npcCount; i++ )
    {
-      sprite = &( game->tileMap.activeSprites[i] );
+      sprite = &( game->tileMap.npcs[i].sprite );
       sx = (int32_t)( sprite->position.x - viewport->x );
       sy = (int32_t)( sprite->position.y - viewport->y );
 

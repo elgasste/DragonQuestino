@@ -55,9 +55,9 @@ void TileMap_Tic( TileMap_t* tileMap )
       }
    }
 
-   for ( i = 0; i < tileMap->activeSpriteCount; i++ )
+   for ( i = 0; i < tileMap->npcCount; i++ )
    {
-      ActiveSprite_Tic( &( tileMap->activeSprites[i] ) );
+      ActiveSprite_Tic( &( tileMap->npcs[i].sprite ) );
    }
 
    TileMap_UpdateViewport( tileMap );
