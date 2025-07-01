@@ -7,6 +7,7 @@ internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
 internal void Game_ApplyTileDamage( Game_t* game );
+internal void Game_MoveNpcs( Game_t* game );
 
 void Game_TicPhysics( Game_t* game )
 {
@@ -18,6 +19,7 @@ void Game_TicPhysics( Game_t* game )
    if ( player->velocity.x == 0.0f && player->velocity.y == 0.0f )
    {
       ActiveSprite_StopFlickering( &( game->player.sprite ) );
+      Game_MoveNpcs( game );
       return;
    }
 
@@ -157,6 +159,7 @@ void Game_TicPhysics( Game_t* game )
    player->velocity.y = 0;
 
    Game_UpdatePlayerTileIndex( game );
+   Game_MoveNpcs( game );
 
 #if defined( VISUAL_STUDIO_DEV )
    if ( !g_debugFlags.noTileDamage ) {
@@ -423,5 +426,63 @@ internal void Game_ApplyTileDamage( Game_t* game )
    if ( game->player.stats.hitPoints == 0 )
    {
       game->player.stats.hitPoints = 1;
+   }
+}
+
+internal void Game_MoveNpcs( Game_t* game )
+{
+   uint32_t i;
+   NonPlayerCharacter_t* npc;
+   Vector2f_t newPos;
+   float leftBound, topBound, rightBound, bottomBound;
+
+   for ( i = 0; i < game->tileMap.npcCount; i++ )
+   {
+      npc = &( game->tileMap.npcs[i] );
+      newPos.x = npc->sprite.position.x;
+      newPos.y = npc->sprite.position.y;
+
+      if ( npc->isWandering )
+      {
+         switch ( npc->sprite.direction )
+         {
+            case Direction_Left: newPos.x -= ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
+            case Direction_Up: newPos.y -= ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
+            case Direction_Right: newPos.x += ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
+            case Direction_Down: newPos.y += ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
+         }
+
+         Game_ClipSprites( &( npc->sprite ), &( game->player.sprite), &newPos );
+
+         // MUFFINS: now we clip to the wander bounds
+         npc->sprite.position.x = newPos.x;
+         npc->sprite.position.y = newPos.y;
+         leftBound = (float)( npc->wanderBounds.x * TILE_SIZE );
+         topBound = (float)( npc->wanderBounds.y * TILE_SIZE );
+         rightBound = (float)( ( npc->wanderBounds.x + npc->wanderBounds.w ) * TILE_SIZE );
+         bottomBound = (float)( ( npc->wanderBounds.y + npc->wanderBounds.h ) * TILE_SIZE );
+
+         if ( newPos.x < leftBound )
+         {
+            npc->sprite.position.x = leftBound;
+            TileMap_StopNpc( npc );
+         }
+         else if ( ( newPos.x + SPRITE_TEXTURE_SIZE ) > rightBound )
+         {
+            npc->sprite.position.x = rightBound - SPRITE_TEXTURE_SIZE;
+            TileMap_StopNpc( npc );
+         }
+
+         if ( newPos.y < topBound )
+         {
+            npc->sprite.position.y = topBound;
+            TileMap_StopNpc( npc );
+         }
+         else if ( ( newPos.y + SPRITE_TEXTURE_SIZE ) > bottomBound )
+         {
+            npc->sprite.position.y = bottomBound - SPRITE_TEXTURE_SIZE;
+            TileMap_StopNpc( npc );
+         }
+      }
    }
 }

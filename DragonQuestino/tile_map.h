@@ -17,6 +17,7 @@
 #define TILE_WALKSPEED_SLOW                     56.0f
 #define TILE_WALKSPEED_VERYSLOW                 44.0f
 #define TILE_WALKSPEED_CRAWL                    36.0f
+#define TILE_WALKSPEED_NPC                      36.0f
 
 #define TILE_ENEMY_POOL_ENEMY_INDEX_COUNT       5
 
