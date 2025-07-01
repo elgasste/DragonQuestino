@@ -48,6 +48,16 @@ Bool_t Math_RectsIntersect32i( int32_t x1, int32_t y1, int32_t w1, int32_t h1, i
    return ( x1 < ( x2 + w2 ) && ( x1 + w1 ) > x2 && y1 < ( y2 + h2 ) && ( y1 + h1 ) > y2 ) ? True : False;
 }
 
+Bool_t Math_RectsIntersectF( float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2 )
+{
+   return ( x1 < ( x2 + w2 ) && ( x1 + w1 ) > x2 && y1 < ( y2 + h2 ) && ( y1 + h1 ) > y2 ) ? True : False;
+}
+
+Bool_t Math_PointInRectF( float px, float py, float rx, float ry, float rw, float rh )
+{
+   return ( px >= rx ) && ( px < ( rx + rw ) ) && ( py >= ry ) && py < ( ry + rh ) ? True : False;
+}
+
 uint8_t Math_CollectAmount8u( uint8_t* dest, uint8_t src )
 {
    uint8_t returnAmount;

@@ -5,6 +5,7 @@
 
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
+internal void Game_DrawActiveSprites( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -133,6 +134,7 @@ void Game_Draw( Game_t* game )
 void Game_DrawOverworld( Game_t* game )
 {
    Game_DrawTileMap( game );
+   Game_DrawActiveSprites( game );
 
    if ( !( game->player.sprite.flickerOff ) )
    {
@@ -292,8 +294,8 @@ void Game_DrawTileMap( Game_t* game )
 internal void Game_DrawPlayer( Game_t* game )
 {
    ActiveSprite_t* sprite = &( game->player.sprite );
-   int32_t wx = (int32_t)( sprite->position.x ) + game->player.spriteOffset.x;
-   int32_t wy = (int32_t)( sprite->position.y ) + game->player.spriteOffset.y;
+   int32_t wx = (int32_t)( sprite->position.x ) + game->player.sprite.offset.x;
+   int32_t wy = (int32_t)( sprite->position.y ) + game->player.sprite.offset.y;
    int32_t sx = wx - game->tileMap.viewport.x;
    int32_t sy = wy - game->tileMap.viewport.y;
    uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
@@ -306,6 +308,16 @@ internal void Game_DrawPlayer( Game_t* game )
 
    Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
                              sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
+
+#if defined( VISUAL_STUDIO_DEV )
+   if ( g_debugFlags.showHitBoxes )
+   {
+      Screen_DrawRectColor( &( game->screen ),
+                            sx - sprite->offset.x, sy - sprite->offset.y,
+                            (uint32_t)( sprite->hitBoxSize.x ), (uint32_t)( sprite->hitBoxSize.y ),
+                            COLOR_RED );
+   }
+#endif
 }
 
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
@@ -364,5 +376,48 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_1, x, y );
       Screen_DrawText( &( game->screen ), STRING_OVERWORLD_ITEMMENU_SPHEREOFLIGHT_2, x, y + TEXT_TILE_SIZE );
       y += ( TEXT_TILE_SIZE * 2 );
+   }
+}
+
+internal void Game_DrawActiveSprites( Game_t* game )
+{
+   uint32_t i, tx, ty, tw, th, sxu, syu, textureIndex;
+   int32_t sx, sy;
+   ActiveSprite_t* sprite;
+   Vector4i32_t* viewport = &( game->tileMap.viewport );
+
+   for ( i = 0; i < game->tileMap.activeSpriteCount; i++ )
+   {
+      sprite = &( game->tileMap.activeSprites[i] );
+      sx = (int32_t)( sprite->position.x - viewport->x + sprite->offset.x );
+      sy = (int32_t)( sprite->position.y - viewport->y + sprite->offset.y );
+
+      if ( Math_RectsIntersect32i( (int32_t)( sprite->position.x - sprite->offset.x ), (int32_t)( sprite->position.y - sprite->offset.y ),
+                                   SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
+                                   viewport->x, viewport->y, viewport->w, viewport->h ) )
+      {
+         tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
+         ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
+         tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > viewport->w ) ? ( viewport->w - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
+         th = ( ( sy + SPRITE_TEXTURE_SIZE ) > viewport->h ) ? ( viewport->h - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
+         sxu = ( sx < 0 ) ? 0 : sx;
+         syu = ( sy < 0 ) ? 0 : sy;
+         textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
+
+         Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
+                                   sxu + game->tileMap.viewportScreenPos.x - sprite->offset.x,
+                                   syu + game->tileMap.viewportScreenPos.y - sprite->offset.y,
+                                   True );
+
+#if defined( VISUAL_STUDIO_DEV )
+         if ( g_debugFlags.showHitBoxes )
+         {
+            Screen_DrawRectColor( &( game->screen ),
+                                  sx - sprite->offset.x, sy - sprite->offset.y,
+                                  (uint32_t)( sprite->hitBoxSize.x ), (uint32_t)( sprite->hitBoxSize.y ),
+                                  COLOR_RED );
+         }
+#endif
+      }
    }
 }

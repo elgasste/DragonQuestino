@@ -14,7 +14,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    TileMap_LoadTextures( &( game->tileMap ) );
    TileMap_Load( &( game->tileMap ), 1 );
    AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ), game );
-   Sprite_LoadPlayer( &( game->player.sprite ) );
+   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ), &( game->tileMap ) );
@@ -86,7 +86,7 @@ void Game_Tic( Game_t* game )
       if ( game->mainState == MainState_Overworld && game->subState == SubState_None )
       {
          Game_TicPhysics( game );
-         Sprite_Tic( &( game->player.sprite ) );
+         ActiveSprite_Tic( &( game->player.sprite ) );
          TileMap_Tic( &(game->tileMap ) );
       }
       else
@@ -176,14 +176,14 @@ void Game_EnterTargetPortal( Game_t* game )
 
    TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
 
-   game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.spriteOffset.x ) + COLLISION_THETA;
+   game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.sprite.offset.x ) + COLLISION_THETA;
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
-   game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.spriteOffset.y ) - COLLISION_THETA;
+   game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.sprite.offset.y ) - COLLISION_THETA;
    game->player.tileIndex = destinationTileIndex;
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
    game->targetPortal = 0;
 
-   Sprite_SetDirection( &( game->player.sprite ), arrivalDirection );
+   ActiveSprite_SetDirection( &( game->player.sprite ), arrivalDirection );
 
    if ( game->tileMap.isDark )
    {

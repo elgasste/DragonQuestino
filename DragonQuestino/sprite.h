@@ -5,6 +5,7 @@
 #include "vector.h"
 
 #define SPRITE_TEXTURE_SIZE            16
+#define SPRITE_TEXTURE_SIZEF           16.0f
 #define SPRITE_TEXTURE_BYTES           256
 
 #define ACTIVE_SPRITE_TEXTURES         8  // two for each direction
@@ -29,6 +30,8 @@ typedef struct ActiveSprite_t
 {
    SpriteTexture_t textures[ACTIVE_SPRITE_TEXTURES];
    Vector2f_t position;
+   Vector2i32_t offset;
+   Vector2u32_t hitBoxSize;
    Direction_t direction;
    uint32_t currentFrame;
    float elapsedFrameSeconds;
@@ -43,13 +46,13 @@ ActiveSprite_t;
 extern "C" {
 #endif
 
-void Sprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction );
-void Sprite_Tic( ActiveSprite_t* sprite );
-void Sprite_Flicker( ActiveSprite_t* sprite );
-void Sprite_StopFlickering( ActiveSprite_t* sprite );
+void ActiveSprite_Reset( ActiveSprite_t* sprite );
+void ActiveSprite_SetDirection( ActiveSprite_t* sprite, Direction_t direction );
+void ActiveSprite_Tic( ActiveSprite_t* sprite );
+void ActiveSprite_Flicker( ActiveSprite_t* sprite );
+void ActiveSprite_StopFlickering( ActiveSprite_t* sprite );
 
 // game_data.c
-void Sprite_LoadPlayer( ActiveSprite_t* sprite );
 void Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index );
 void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index );
 

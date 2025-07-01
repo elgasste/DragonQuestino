@@ -13,14 +13,14 @@ namespace DragonQuestinoEditor.FileOps
                                       TileSet tileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
                                       ObservableCollection<EnemyViewModel> enemies,
-                                      ActiveSpriteSheet activeSpriteSheet,
+                                      ObservableCollection<ActiveSpriteSheet> activeSpriteSheets,
                                       StaticSpriteSheet staticSpriteSheet )
    {
       private readonly Palette _palette = palette;
       private readonly TileSet _tileSet = tileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
       private readonly ObservableCollection<EnemyViewModel> _enemies = enemies;
-      private readonly ActiveSpriteSheet _activeSpriteSheet = activeSpriteSheet;
+      private readonly ObservableCollection<ActiveSpriteSheet> _activeSpriteSheets = activeSpriteSheets;
       private readonly StaticSpriteSheet _staticSpriteSheet = staticSpriteSheet;
 
       private readonly List<List<int>> _overworldEnemyIndexPools =
@@ -86,7 +86,9 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, string.Format( "#define TILE_MAX_ENEMY_INDEX_POOL_ENEMIES {0}\n", highestCount ) );
 
          WriteToFileStream( fs, string.Format( "#define TILE_OVERWORLD_ENEMY_INDEX_POOLS {0}\n", _overworldEnemyIndexPools.Count ) );
-         WriteToFileStream( fs, string.Format( "#define TILE_DUNGEON_ENEMY_INDEX_POOLS {0}\n\n", _dungeonEnemyIndexPools.Count ) );
+         WriteToFileStream( fs, string.Format( "#define TILE_DUNGEON_ENEMY_INDEX_POOLS {0}\n", _dungeonEnemyIndexPools.Count ) );
+         WriteToFileStream( fs, string.Format( "#define ACTIVE_SPRITE_PLAYER_ID {0}\n\n", Constants.PlayerActiveSpriteIndex ) );
+
          WriteToFileStream( fs, "#endif // GENERATED_DEFINES_H\n" );
       }
 
@@ -301,7 +303,6 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, string.Format( "         tileMap->evacPortal.destinationTileIndex = {0};\n", tileMap.EvacPortal.DestinationTileIndex ) );
             WriteToFileStream( fs, string.Format( "         tileMap->evacPortal.arrivalDirection = (Direction_t){0};\n", (int)( tileMap.EvacPortal.ArrivalDirection ) ) );
 
-            WriteToFileStream( fs, "         tileMap->activeSpriteCount = 0;\n" );
             WriteToFileStream( fs, string.Format( "         tileMap->staticSpriteCount = {0};\n", tileMap.StaticSprites.Count ) );
 
             for ( int i = 0; i < tileMap.StaticSprites.Count; i++ )
@@ -313,6 +314,29 @@ namespace DragonQuestinoEditor.FileOps
                WriteToFileStream( fs, string.Format( "         Sprite_LoadStatic( &( tileMap->staticSprites[{0}] ), {1} );\n", i, sprite.TextureIndex ) );
                WriteToFileStream( fs, string.Format( "         tileMap->staticSprites[{0}].position.x = {1};\n", i, xPos ) );
                WriteToFileStream( fs, string.Format( "         tileMap->staticSprites[{0}].position.y = {1};\n", i, yPos ) );
+            }
+
+            WriteToFileStream( fs, string.Format( "         tileMap->activeSpriteCount = {0};\n", tileMap.ActiveSprites.Count ) );
+
+            if ( tileMap.ActiveSprites.Count > 0 )
+            {
+               WriteToFileStream( fs, "         for ( i = 0; i < (int32_t)( tileMap->activeSpriteCount ); i++ ) ActiveSprite_Reset( &( tileMap->activeSprites[i] ) );\n" );
+
+               for ( int i = 0; i < tileMap.ActiveSprites.Count; i++ )
+               {
+                  var sprite = tileMap.ActiveSprites[i];
+                  int xPos = ( sprite.TileIndex % tileMap.TilesX ) * Constants.SpriteFrameSize;
+                  int yPos = ( sprite.TileIndex / tileMap.TilesX ) * Constants.SpriteFrameSize;
+
+                  WriteToFileStream( fs, string.Format( "         Sprite_LoadActive( &( tileMap->activeSprites[{0}] ), {1} );\n", i, sprite.SpriteSheetIndex ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].position.x = {1};\n", i, xPos ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].position.y = {1};\n", i, yPos ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].direction = (Direction_t){1};\n", i, (int)sprite.Direction ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].offset.x = {1};\n", i, sprite.Offset.X ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].offset.y = {1};\n", i, sprite.Offset.Y ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].hitBoxSize.x = {1};\n", i, sprite.HitBoxSize.X ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->activeSprites[{0}].hitBoxSize.y = {1};\n", i, sprite.HitBoxSize.Y ) );
+               }
             }
 
             var packedTiles = new List<UInt32>( ( tileMap.TilesX / 2 ) * tileMap.TilesY );
@@ -452,11 +476,28 @@ namespace DragonQuestinoEditor.FileOps
 
       private void WriteActiveSpritesFunctions( FileStream fs )
       {
-         WriteToFileStream( fs, "\nvoid Sprite_LoadPlayer( ActiveSprite_t* sprite )\n" );
+         WriteToFileStream( fs, "\nvoid Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )\n" );
          WriteToFileStream( fs, "{\n" );
          WriteToFileStream( fs, "   int32_t i;\n" );
          WriteToFileStream( fs, "   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );\n\n" );
 
+         WriteToFileStream( fs, "   switch( index )\n" );
+         WriteToFileStream( fs, "   {\n" );
+
+         for ( int i = 0; i < _activeSpriteSheets.Count; i++ )
+         {
+            WriteToFileStream( fs, string.Format( "      case {0}:\n", i ) );
+            WriteActiveSpriteData( fs, _activeSpriteSheets[i] );
+            WriteToFileStream( fs, "         break;\n" );
+         }
+
+         WriteToFileStream( fs, "   }\n" );
+
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteActiveSpriteData( FileStream fs, ActiveSpriteSheet spriteSheet )
+      {
          var indexCounts = new Dictionary<UInt32, int>();
          var packedIndexes = new List<UInt32>();
 
@@ -464,7 +505,7 @@ namespace DragonQuestinoEditor.FileOps
          {
             for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
-               var pixelIndexes = _activeSpriteSheet.FramePaletteIndexes[i][j];
+               var pixelIndexes = spriteSheet.FramePaletteIndexes[i][j];
 
                for ( int k = 0; k < Constants.SpriteFramePixels; k += 4 )
                {
@@ -500,32 +541,23 @@ namespace DragonQuestinoEditor.FileOps
             }
          }
 
-         WriteToFileStream( fs, string.Format( "   for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
+         WriteToFileStream( fs, string.Format( "         for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) {{ mem32[i] = 0x{0}; }}\n", mostCommonValue.ToString( "X8" ) ) );
 
          for ( int i = 0, packedIndex = 0; i < Constants.ActiveSpritePositionCount; i++ )
          {
             for ( int j = 0; j < Constants.ActiveSpriteFrameCount; j++ )
             {
-               WriteToFileStream( fs, string.Format( "   mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.ActiveSpriteFrameCount ) + j ) );
+               WriteToFileStream( fs, string.Format( "         mem32 = (uint32_t*)( sprite->textures[{0}].memory );\n", ( i * Constants.ActiveSpriteFrameCount ) + j ) );
 
                for ( int k = 0, memoryIndex = 0; k < Constants.SpriteFramePixels; k += 4, memoryIndex++, packedIndex++ )
                {
                   if ( packedIndexes[packedIndex] != mostCommonValue )
                   {
-                     WriteToFileStream( fs, string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packedIndexes[packedIndex].ToString( "X8" ) ) );
+                     WriteToFileStream( fs, string.Format( "         mem32[{0}] = 0x{1};\n", memoryIndex, packedIndexes[packedIndex].ToString( "X8" ) ) );
                   }
                }
             }
          }
-
-         WriteToFileStream( fs, "}\n" );
-
-         // TODO
-         WriteToFileStream( fs, "\nvoid Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )\n" );
-         WriteToFileStream( fs, "{\n" );
-         WriteToFileStream( fs, "   UNUSED_PARAM( sprite );\n" );
-         WriteToFileStream( fs, "   UNUSED_PARAM( index );\n" );
-         WriteToFileStream( fs, "}\n" );
       }
 
       private void WriteStaticSpritesFunction( FileStream fs )

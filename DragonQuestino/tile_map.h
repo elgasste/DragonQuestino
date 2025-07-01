@@ -26,7 +26,7 @@
 #define TILEMAP_VIEWPORT_TILES_Y                14
 
 #define TILEMAP_MAX_PORTALS                     256
-#define TILEMAP_MAX_ACTIVESPRITES               16
+#define TILEMAP_MAX_ACTIVESPRITES               24
 #define TILEMAP_MAX_STATICSPRITES               16
 
 #define TILE_GET_TEXTUREINDEX( t )              ( ( t ) & 0x1F )

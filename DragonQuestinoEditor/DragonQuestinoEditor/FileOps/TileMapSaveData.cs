@@ -16,6 +16,7 @@ namespace DragonQuestinoEditor.FileOps
       public List<TilePortalSaveData> Portals { get; set; } = [];
       public TilePortalSaveData EvacPortal { get; set; } = new();
       public List<StaticSpriteSaveData> StaticSprites { get; set; } = [];
+      public List<ActiveSpriteSaveData> ActiveSprites { get; set; } = [];
 
       public TileMapSaveData() { }
 
@@ -44,6 +45,11 @@ namespace DragonQuestinoEditor.FileOps
          foreach ( var staticSprite in tileMap.StaticSprites )
          {
             StaticSprites.Add( new( staticSprite ) );
+         }
+
+         foreach ( var activeSprite in tileMap.ActiveSprites )
+         {
+            ActiveSprites.Add( new( activeSprite ) );
          }
 
          // NOTE: this is how I originally initialized the enemy pool indexes for the Overworld,

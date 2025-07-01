@@ -34,6 +34,8 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags,
 
 void TileMap_Tic( TileMap_t* tileMap )
 {
+   uint32_t i;
+
    if ( tileMap->isDark && tileMap->glowDiameter != tileMap->targetGlowDiameter )
    {
       tileMap->glowTransitionSeconds += CLOCK_FRAME_SECONDS;
@@ -51,6 +53,11 @@ void TileMap_Tic( TileMap_t* tileMap )
             TileMap_ReduceGlowDiameter( tileMap );
          }
       }
+   }
+
+   for ( i = 0; i < tileMap->activeSpriteCount; i++ )
+   {
+      ActiveSprite_Tic( &( tileMap->activeSprites[i] ) );
    }
 
    TileMap_UpdateViewport( tileMap );
@@ -85,8 +92,8 @@ void TileMap_UpdateViewport( TileMap_t* tileMap )
 {
    int32_t anchorX = (int32_t)( tileMap->player->sprite.position.x );
    int32_t anchorY = (int32_t)( tileMap->player->sprite.position.y );
-   uint32_t anchorW = tileMap->player->hitBoxSize.x;
-   uint32_t anchorH = tileMap->player->hitBoxSize.y;
+   uint32_t anchorW = tileMap->player->sprite.hitBoxSize.x;
+   uint32_t anchorH = tileMap->player->sprite.hitBoxSize.y;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
    viewport->x = anchorX - ( viewport->w / 2 ) + ( anchorW / 2 );

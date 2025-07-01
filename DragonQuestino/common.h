@@ -55,6 +55,7 @@ typedef struct DebugFlags_t
    Bool_t noDark;
    Bool_t noEncounters;
    Bool_t noTileDamage;
+   Bool_t showHitBoxes;
 }
 DebugFlags_t;
 

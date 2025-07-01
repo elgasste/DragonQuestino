@@ -10,9 +10,15 @@ namespace DragonQuestinoEditor
       public const string ShieldBackgroundFilePath = AssetsBasePath + "shield_background.png";
       public const string TileTexturesFilePath = AssetsBasePath + "tile_textures.png";
       public const string EditorSaveDataFilePath = AssetsBasePath + "editor_save.json";
-      public const string PlayerSpriteFilePath = AssetsBasePath + "player_sprite.png";
       public const string StaticSpriteSheetFilePath = AssetsBasePath + "static_sprites.png";
       public const string TextTileSetFilePath = AssetsBasePath + "text_tileset.png";
+
+      public static readonly string[] ActiveSpriteSheetPaths = [
+         AssetsBasePath + "player_sprite.png",
+         AssetsBasePath + "king_sprite.png",
+         AssetsBasePath + "princess_sprite.png",
+         AssetsBasePath + "soldier_sprite.png"
+      ];
 
       public const string GameDataSourceFilePath = SourceBasePath + "game_data.c";
       public const string ShieldBackgroundSourceFilePath = SourceBasePath + "giga_shield_background_data.c";
@@ -50,6 +56,8 @@ namespace DragonQuestinoEditor
       public const int EnemyTileSize = 8;
       public const int EnemyTileStride = 10;
       public const int EnemyTileCount = 120;   // keep this in parity with ENEMY_TILE_COUNT
+
+      public const int PlayerActiveSpriteIndex = 0;
 
       // bits 6-7
       public static readonly UInt32[] TileSetIndexWalkSpeeds = [

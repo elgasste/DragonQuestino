@@ -15,10 +15,11 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->velocity.x = 0.0f;
    player->velocity.y = 0.0f;
    player->maxVelocity = TILE_WALKSPEED_NORMAL;
-   player->hitBoxSize.x = TILE_SIZE - 4;
-   player->hitBoxSize.y = TILE_SIZE - 4;
-   player->spriteOffset.x = -2;
-   player->spriteOffset.y = -4;
+   player->sprite.hitBoxSize.x = TILE_SIZE - 4;
+   player->sprite.hitBoxSize.y = TILE_SIZE - 4;
+   player->sprite.offset.x = -2;
+   player->sprite.offset.y = -4;
+   Sprite_LoadActive( &( player->sprite ), ACTIVE_SPRITE_PLAYER_ID );
    player->sprite.direction = Direction_Down;
    player->sprite.isFlickering = False;
    strcpy( player->name, "Ed209" );
@@ -27,7 +28,8 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->holyProtectionSteps = 0;
    player->townsVisited = 0;
 
-   player->experience = 0;
+   // MUFFINS: bunch of goodies for testing purposes
+   player->experience = 30001;
    player->gold = 0;
    player->items = 0;
    player->spells = 0;
@@ -45,9 +47,20 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
 
-   Player_LoadWeapon( player, WEAPON_NONE_ID );
-   Player_LoadArmor( player, ARMOR_NONE_ID );
-   Player_LoadShield( player, SHIELD_NONE_ID );
+   Player_LoadWeapon( player, WEAPON_BROADSWORD_ID );
+   Player_LoadArmor( player, ARMOR_HALFPLATE_ID );
+   Player_LoadShield( player, SHIELD_LARGESHIELD_ID );
+
+   player->townsVisited = 0xFF;
+
+   ITEM_SET_KEYCOUNT( player->items, ITEM_MAXKEYS );
+   ITEM_SET_TORCHCOUNT( player->items, 2 );
+   ITEM_SET_FAIRYWATERCOUNT( player->items, 1 );
+   ITEM_SET_HERBCOUNT( player->items, 4 );
+   ITEM_TOGGLE_HASDRAGONSCALE( player->items );
+   ITEM_TOGGLE_HASFAIRYFLUTE( player->items );
+   ITEM_TOGGLE_HASSILVERHARP( player->items );
+   ITEM_TOGGLE_HASRAINBOWDROP( player->items );
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )
@@ -255,6 +268,6 @@ void Player_CenterOnTile( Player_t* player )
    uint32_t tileX = ( player->tileIndex % player->tileMap->tilesX ) * TILE_SIZE;
    uint32_t tileY = ( player->tileIndex / player->tileMap->tilesX ) * TILE_SIZE;
 
-   player->sprite.position.x = (float)( tileX + ( ( TILE_SIZE / 2 ) - ( player->hitBoxSize.x / 2 ) ) );
-   player->sprite.position.y = (float)( tileY + ( ( TILE_SIZE / 2 ) - ( player->hitBoxSize.y / 2 ) ) );
+   player->sprite.position.x = (float)( tileX + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.x / 2 ) ) );
+   player->sprite.position.y = (float)( tileY + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.y / 2 ) ) );
 }
