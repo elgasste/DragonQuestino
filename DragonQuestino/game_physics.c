@@ -263,8 +263,12 @@ internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clip
    float clipHitBoxY = clipSprite->position.y;
    float clipHitBoxW = (float)( clipSprite->hitBoxSize.x );
    float clipHitBoxH = (float)( clipSprite->hitBoxSize.y );
+   float clipHitBoxR = clipHitBoxX + clipHitBoxW;
+   float clipHitBoxB = clipHitBoxY + clipHitBoxH;
    float mainHitBoxW = (float)( mainSprite->hitBoxSize.x );
    float mainHitBoxH = (float)( mainSprite->hitBoxSize.y );
+   float mainHitBoxR = newPos->x + mainHitBoxW;
+   float mainHitBoxB = newPos->y + mainHitBoxH;
 
    if ( Math_PointInRectF( newPos->x, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
    {
@@ -273,35 +277,35 @@ internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clip
       {
          if ( newPos->y < prevPos.y )
          {
-            if ( ( ( clipHitBoxX + clipHitBoxW ) - newPos->x ) > ( ( clipHitBoxY + clipHitBoxH ) - newPos->y ) )
+            if ( ( clipHitBoxR - newPos->x ) > ( clipHitBoxB - newPos->y ) )
             {
-               newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
+               newPos->y = clipHitBoxB + COLLISION_THETA;
             }
             else
             {
-               newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
+               newPos->x = clipHitBoxR + COLLISION_THETA;
             }
          }
          else
          {
-            newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
+            newPos->x = clipHitBoxR + COLLISION_THETA;
          }
       }
       else
       {
-         newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
+         newPos->y = clipHitBoxB + COLLISION_THETA;
       }
    }
-   else if ( Math_PointInRectF( newPos->x + mainHitBoxW, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   else if ( Math_PointInRectF( mainHitBoxR, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
    {
       // upper-right corner is colliding
       if ( newPos->x > prevPos.x )
       {
          if ( newPos->y < prevPos.y )
          {
-            if ( ( ( newPos->x + mainHitBoxW ) - clipHitBoxX ) > ( ( clipHitBoxY + clipHitBoxH ) - newPos->y ) )
+            if ( ( mainHitBoxR - clipHitBoxX ) > ( clipHitBoxB - newPos->y ) )
             {
-               newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
+               newPos->y = clipHitBoxB + COLLISION_THETA;
             }
             else
             {
@@ -318,25 +322,25 @@ internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clip
          newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
       }
    }
-   else if ( Math_PointInRectF( newPos->x, newPos->y + mainHitBoxH, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   else if ( Math_PointInRectF( newPos->x, mainHitBoxB, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
    {
       // lower-left corner is colliding
       if ( newPos->x < prevPos.x )
       {
          if ( newPos->y > prevPos.y )
          {
-            if ( ( ( clipHitBoxX + clipHitBoxW ) - newPos->x ) > ( ( newPos->y + mainHitBoxH ) - clipHitBoxY ) )
+            if ( ( clipHitBoxR - newPos->x ) > ( mainHitBoxB - clipHitBoxY ) )
             {
                newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA;
             }
             else
             {
-               newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
+               newPos->x = clipHitBoxR + COLLISION_THETA;
             }
          }
          else
          {
-            newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
+            newPos->x = clipHitBoxR + COLLISION_THETA;
          }
       }
       else
@@ -344,14 +348,14 @@ internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clip
          newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA;
       }
    }
-   else if ( Math_PointInRectF( newPos->x + mainHitBoxW, newPos->y + mainHitBoxH, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   else if ( Math_PointInRectF( mainHitBoxR, mainHitBoxB, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
    {
       // lower-right corner is colliding
       if ( newPos->x > prevPos.x )
       {
          if ( newPos->y > prevPos.y )
          {
-            if ( ( ( newPos->x + mainHitBoxW ) - clipHitBoxX ) > ( ( newPos->y + mainHitBoxH ) - clipHitBoxY ) )
+            if ( ( mainHitBoxR - clipHitBoxX ) > ( mainHitBoxB - clipHitBoxY ) )
             {
                newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA;
             }
