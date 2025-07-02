@@ -2,7 +2,7 @@
 #include "random.h"
 #include "math.h"
 
-internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t* newPos );
+internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t prevPos, Vector2f_t* newPos );
 internal uint32_t Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite );
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
@@ -34,7 +34,7 @@ void Game_TicPhysics( Game_t* game )
 
       for ( i = 0; i < game->tileMap.npcCount; i++ )
       {
-         Game_ClipSprites( &( player->sprite ), &( game->tileMap.npcs[i].sprite ), &newPos );
+         Game_ClipSprites( &( player->sprite ), &( game->tileMap.npcs[i].sprite ), prevPos, &newPos );
       }
 
 #if defined( VISUAL_STUDIO_DEV )
@@ -202,118 +202,172 @@ void Game_PlayerSteppedOnTile( Game_t* game )
    }
 #endif
 
-   if ( game->player.stats.hitPoints == 0 )
+if ( game->player.stats.hitPoints == 0 )
+{
+   // must have stepped on a damage tile and died
+   return;
+}
+
+game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), game->player.tileIndex );
+portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), game->player.tileIndex );
+
+if ( portal )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   Game_AnimatePortalEntrance( game, portal );
+   AnimationChain_Start( &( game->animationChain ) );
+   return;
+}
+
+if ( game->tileMap.isDark && game->tileMap.glowDiameter > 1 )
+{
+   game->tileMap.glowTileCount++;
+
+   if ( ( game->tileMap.glowDiameter == 7 && game->tileMap.glowTileCount > GLOW_THREERADIUS_TILES ) ||
+        ( game->tileMap.glowDiameter == 5 && game->tileMap.glowTileCount > GLOW_TWORADIUS_TILES ) ||
+        ( game->tileMap.glowDiameter == 3 && game->tileMap.glowTileCount > GLOW_ONERADIUS_TILES ) )
    {
-      // must have stepped on a damage tile and died
-      return;
-   }
-
-   game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), game->player.tileIndex );
-   portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), game->player.tileIndex );
-
-   if ( portal )
-   {
-      AnimationChain_Reset( &( game->animationChain ) );
-      Game_AnimatePortalEntrance( game, portal );
-      AnimationChain_Start( &( game->animationChain ) );
-      return;
-   }
-
-   if ( game->tileMap.isDark && game->tileMap.glowDiameter > 1 )
-   {
-      game->tileMap.glowTileCount++;
-
-      if ( ( game->tileMap.glowDiameter == 7 && game->tileMap.glowTileCount > GLOW_THREERADIUS_TILES ) ||
-           ( game->tileMap.glowDiameter == 5 && game->tileMap.glowTileCount > GLOW_TWORADIUS_TILES ) ||
-           ( game->tileMap.glowDiameter == 3 && game->tileMap.glowTileCount > GLOW_ONERADIUS_TILES ) )
-      {
-         game->tileMap.glowTileCount = 0;
-         TileMap_ReduceTargetGlowDiameter( &( game->tileMap ) );
-      }
-   }
-
-#if defined( VISUAL_STUDIO_DEV )
-   if ( g_debugFlags.noEncounters )
-   {
-      return;
-   }
-#endif
-
-   game->battle.specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
-
-   if ( game->battle.specialEnemy != SpecialEnemy_None )
-   {
-      Battle_Generate( &( game->battle ) );
-      Game_ChangeToBattleState( game );
-   }
-   else if ( game->tileMap.hasEncounters )
-   {
-      if ( !( game->tileMap.isDungeon ) && game->player.hasHolyProtection )
-      {
-         game->player.holyProtectionSteps++;
-      }
-
-      Game_RollEncounter( game );
+      game->tileMap.glowTileCount = 0;
+      TileMap_ReduceTargetGlowDiameter( &( game->tileMap ) );
    }
 }
 
-internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t* newPos )
+#if defined( VISUAL_STUDIO_DEV )
+if ( g_debugFlags.noEncounters )
+{
+   return;
+}
+#endif
+
+game->battle.specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
+
+if ( game->battle.specialEnemy != SpecialEnemy_None )
+{
+   Battle_Generate( &( game->battle ) );
+   Game_ChangeToBattleState( game );
+}
+else if ( game->tileMap.hasEncounters )
+{
+   if ( !( game->tileMap.isDungeon ) && game->player.hasHolyProtection )
+   {
+      game->player.holyProtectionSteps++;
+   }
+
+   Game_RollEncounter( game );
+}
+}
+
+internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t prevPos, Vector2f_t* newPos )
 {
    float clipHitBoxX = clipSprite->position.x;
    float clipHitBoxY = clipSprite->position.y;
    float clipHitBoxW = (float)( clipSprite->hitBoxSize.x );
    float clipHitBoxH = (float)( clipSprite->hitBoxSize.y );
+   float mainHitBoxW = (float)( mainSprite->hitBoxSize.x );
+   float mainHitBoxH = (float)( mainSprite->hitBoxSize.y );
 
-   if ( Math_RectsIntersectF( newPos->x, newPos->y, (float)( mainSprite->hitBoxSize.x ), (float)( mainSprite->hitBoxSize.y ),
-                              clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   if ( Math_PointInRectF( newPos->x, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
    {
-      if ( Math_PointInRectF( newPos->x, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      // upper-left corner is colliding
+      if ( newPos->x < prevPos.x )
       {
-         // upper-left corner is colliding
-         if ( ( newPos->x - clipHitBoxX ) > ( newPos->y - clipHitBoxY ) )
+         if ( newPos->y < prevPos.y )
+         {
+            if ( ( ( clipHitBoxX + clipHitBoxW ) - newPos->x ) > ( ( clipHitBoxY + clipHitBoxH ) - newPos->y ) )
+            {
+               newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
+            }
+            else
+            {
+               newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
+            }
+         }
+         else
          {
             newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
          }
+      }
+      else
+      {
+         newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
+      }
+   }
+   else if ( Math_PointInRectF( newPos->x + mainHitBoxW, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   {
+      // upper-right corner is colliding
+      if ( newPos->x > prevPos.x )
+      {
+         if ( newPos->y < prevPos.y )
+         {
+            if ( ( ( newPos->x + mainHitBoxW ) - clipHitBoxX ) > ( ( clipHitBoxY + clipHitBoxH ) - newPos->y ) )
+            {
+               newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
+            }
+            else
+            {
+               newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA;
+            }
+         }
          else
          {
-            newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
+            newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA;
          }
       }
-      else if ( Math_PointInRectF( newPos->x + mainSprite->hitBoxSize.x, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      else
       {
-         // upper-right corner is colliding
-         if ( ( clipHitBoxX - newPos->x ) > ( newPos->y - clipHitBoxY ) )
+         newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
+      }
+   }
+   else if ( Math_PointInRectF( newPos->x, newPos->y + mainHitBoxH, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   {
+      // lower-left corner is colliding
+      if ( newPos->x < prevPos.x )
+      {
+         if ( newPos->y > prevPos.y )
          {
-            newPos->x = clipHitBoxX - mainSprite->hitBoxSize.x - COLLISION_THETA;
+            if ( ( ( clipHitBoxX + clipHitBoxW ) - newPos->x ) > ( ( newPos->y + mainHitBoxH ) - clipHitBoxY ) )
+            {
+               newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA;
+            }
+            else
+            {
+               newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
+            }
          }
          else
-         {
-            newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
-         }
-      }
-      else if ( Math_PointInRectF( newPos->x, newPos->y + mainSprite->hitBoxSize.y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
-      {
-         // lower-left corner is colliding
-         if ( ( newPos->x - clipHitBoxX ) > ( clipHitBoxY - newPos->y ) )
          {
             newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
          }
+      }
+      else
+      {
+         newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA;
+      }
+   }
+   else if ( Math_PointInRectF( newPos->x + mainHitBoxW, newPos->y + mainHitBoxH, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   {
+      // lower-right corner is colliding
+      if ( newPos->x > prevPos.x )
+      {
+         if ( newPos->y > prevPos.y )
+         {
+            if ( ( ( newPos->x + mainHitBoxW ) - clipHitBoxX ) > ( ( newPos->y + mainHitBoxH ) - clipHitBoxY ) )
+            {
+               newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA;
+            }
+            else
+            {
+               newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA;
+            }
+         }
          else
          {
-            newPos->y = clipHitBoxY - mainSprite->hitBoxSize.y - COLLISION_THETA;
+            newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA;
          }
       }
-      else if ( Math_PointInRectF( newPos->x + mainSprite->hitBoxSize.x, newPos->y + mainSprite->hitBoxSize.y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      else
       {
-         // lower-right corner is colliding
-         if ( ( clipHitBoxX - newPos->x ) > ( clipHitBoxY - newPos->y ) )
-         {
-            newPos->x = clipHitBoxX - mainSprite->hitBoxSize.x - COLLISION_THETA;
-         }
-         else
-         {
-            newPos->y = clipHitBoxY - mainSprite->hitBoxSize.y - COLLISION_THETA;
-         }
+         newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA;
       }
    }
 }
@@ -458,7 +512,7 @@ internal void Game_MoveNpcs( Game_t* game )
             case Direction_Down: newPos.y += ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
          }
 
-         Game_ClipSprites( &( npc->sprite ), &( game->player.sprite ), &newPos );
+         Game_ClipSprites( &( npc->sprite ), &( game->player.sprite ), npc->sprite.position, &newPos );
 
          npc->sprite.position.x = newPos.x;
          npc->sprite.position.y = newPos.y;
