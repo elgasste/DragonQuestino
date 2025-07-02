@@ -259,8 +259,8 @@ void Game_PlayerSteppedOnTile( Game_t* game )
 
 internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t* newPos )
 {
-   float clipHitBoxX = clipSprite->position.x - (float)( clipSprite->offset.x );
-   float clipHitBoxY = clipSprite->position.y - (float)( clipSprite->offset.y );
+   float clipHitBoxX = clipSprite->position.x;
+   float clipHitBoxY = clipSprite->position.y;
    float clipHitBoxW = (float)( clipSprite->hitBoxSize.x );
    float clipHitBoxH = (float)( clipSprite->hitBoxSize.y );
 
@@ -458,9 +458,8 @@ internal void Game_MoveNpcs( Game_t* game )
             case Direction_Down: newPos.y += ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
          }
 
-         Game_ClipSprites( &( npc->sprite ), &( game->player.sprite), &newPos );
+         Game_ClipSprites( &( npc->sprite ), &( game->player.sprite ), &newPos );
 
-         // MUFFINS: need to update the tile index as well
          npc->sprite.position.x = newPos.x;
          npc->sprite.position.y = newPos.y;
          leftBound = (float)( npc->wanderBounds.x * TILE_SIZE );

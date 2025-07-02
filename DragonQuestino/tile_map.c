@@ -257,7 +257,7 @@ void TileMap_StopNpc( NonPlayerCharacter_t* npc )
 {
    npc->isWandering = False;
    npc->duration = 0.0f;
-   npc->totalDuration = (float)( Random_u8( 0, TILEMAP_NPC_MAXPAUSESECONDS ) );
+   npc->totalDuration = (float)( Random_u8( TILEMAP_NPC_MINPAUSESECONDS, TILEMAP_NPC_MAXPAUSESECONDS ) );
 }
 
 internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter )
@@ -333,7 +333,7 @@ internal void TileMap_TicNpc( NonPlayerCharacter_t* npc )
          {
             npc->duration = 0.0f;
             npc->isWandering = True;
-            npc->totalDuration = (float)( Random_u8( 0, TILEMAP_NPC_MAXWANDERSECONDS ) );
+            npc->totalDuration = (float)( Random_u8( TILEMAP_NPC_MINWANDERSECONDS, TILEMAP_NPC_MAXWANDERSECONDS ) );
             ActiveSprite_SetDirection( &( npc->sprite ), (Direction_t)( Random_u8( 0, (uint8_t)( Direction_Count - 1 ) ) ) );
          }
       }

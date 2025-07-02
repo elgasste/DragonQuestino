@@ -331,8 +331,8 @@ namespace DragonQuestinoEditor.FileOps
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].id = {1};\n", i, npc.Id ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].tileIndex = {1};\n", i, npc.TileIndex ) );
                   WriteToFileStream( fs, string.Format( "         Sprite_LoadActive( &( tileMap->npcs[{0}].sprite ), {1} );\n", i, npc.ActiveSprite?.SpriteSheetIndex ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.position.x = {1};\n", i, xPos ) );
-                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.position.y = {1};\n", i, yPos ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.position.x = {1};\n", i, xPos - npc.ActiveSprite?.Offset.X ) );
+                  WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.position.y = {1};\n", i, yPos - npc.ActiveSprite?.Offset.Y ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.direction = (Direction_t){1};\n", i, (int)npc.Direction ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.offset.x = {1};\n", i, npc.ActiveSprite?.Offset.X ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].sprite.offset.y = {1};\n", i, npc.ActiveSprite?.Offset.Y ) );

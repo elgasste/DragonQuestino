@@ -391,8 +391,8 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game )
    for ( i = 0; i < game->tileMap.npcCount; i++ )
    {
       sprite = &( game->tileMap.npcs[i].sprite );
-      sx = (int32_t)( sprite->position.x - viewport->x );
-      sy = (int32_t)( sprite->position.y - viewport->y );
+      sx = (int32_t)( sprite->position.x - viewport->x + sprite->offset.x );
+      sy = (int32_t)( sprite->position.y - viewport->y + sprite->offset.y );
 
       if ( Math_RectsIntersect32i( (int32_t)( sprite->position.x ), (int32_t)( sprite->position.y ),
                                    SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,

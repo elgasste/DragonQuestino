@@ -17,7 +17,7 @@
 #define TILE_WALKSPEED_SLOW                     56.0f
 #define TILE_WALKSPEED_VERYSLOW                 44.0f
 #define TILE_WALKSPEED_CRAWL                    36.0f
-#define TILE_WALKSPEED_NPC                      36.0f
+#define TILE_WALKSPEED_NPC                      20.0f
 
 #define TILE_ENEMY_POOL_ENEMY_INDEX_COUNT       5
 
@@ -98,8 +98,10 @@
 #define TILEMAP_SWAMP_DAMAGE                    2
 #define TILEMAP_BARRIER_DAMAGE                  15
 
-#define TILEMAP_NPC_MAXPAUSESECONDS             2
-#define TILEMAP_NPC_MAXWANDERSECONDS            2
+#define TILEMAP_NPC_MINPAUSESECONDS             2
+#define TILEMAP_NPC_MAXPAUSESECONDS             4
+#define TILEMAP_NPC_MINWANDERSECONDS            1
+#define TILEMAP_NPC_MAXWANDERSECONDS            3
 
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
