@@ -9,6 +9,7 @@ void Game_Talk( Game_t* game )
 {
    uint32_t i, tileIndex;
    Bool_t canTalk = False;
+   NonPlayerCharacter_t* npc;
 
    if ( game->tileMap.npcCount > 0 )
    {
@@ -16,11 +17,25 @@ void Game_Talk( Game_t* game )
 
       for ( i = 0; i < game->tileMap.npcCount; i++ )
       {
-         if ( game->tileMap.npcs[i].tileIndex == tileIndex )
+         npc = &( game->tileMap.npcs[i] );
+
+         if ( npc->tileIndex == tileIndex )
          {
-            // TODO: if it's a wandering sprite, make the sprite turn toward you, and stop it moving
+            if ( npc->wanders )
+            {
+               TileMap_StopNpc( npc );
+               
+               switch ( game->player.sprite.direction )
+               {
+                  case Direction_Left: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Right ); break;
+                  case Direction_Up: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Down ); break;
+                  case Direction_Right: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Left ); break;
+                  case Direction_Down: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Up ); break;
+               }
+            }
+
             canTalk = True;
-            Game_RunNpcDialog( game, game->tileMap.npcs[i].id );
+            Game_RunNpcDialog( game, npc->id );
             break;
          }
       }
