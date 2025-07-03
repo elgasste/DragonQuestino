@@ -2,11 +2,13 @@
 #include "random.h"
 #include "math.h"
 
-internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t* newPos );
+internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t prevPos, Vector2f_t* newPos );
+internal uint32_t Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite );
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
 internal void Game_ApplyTileDamage( Game_t* game );
+internal void Game_MoveNpcs( Game_t* game );
 
 void Game_TicPhysics( Game_t* game )
 {
@@ -18,6 +20,7 @@ void Game_TicPhysics( Game_t* game )
    if ( player->velocity.x == 0.0f && player->velocity.y == 0.0f )
    {
       ActiveSprite_StopFlickering( &( game->player.sprite ) );
+      Game_MoveNpcs( game );
       return;
    }
 
@@ -31,7 +34,7 @@ void Game_TicPhysics( Game_t* game )
 
       for ( i = 0; i < game->tileMap.npcCount; i++ )
       {
-         Game_ClipSprites( &( player->sprite ), &( game->tileMap.npcs[i].sprite ), &newPos );
+         Game_ClipSprites( &( player->sprite ), &( game->tileMap.npcs[i].sprite ), prevPos, &newPos );
       }
 
 #if defined( VISUAL_STUDIO_DEV )
@@ -157,6 +160,7 @@ void Game_TicPhysics( Game_t* game )
    player->velocity.y = 0;
 
    Game_UpdatePlayerTileIndex( game );
+   Game_MoveNpcs( game );
 
 #if defined( VISUAL_STUDIO_DEV )
    if ( !g_debugFlags.noTileDamage ) {
@@ -253,72 +257,100 @@ void Game_PlayerSteppedOnTile( Game_t* game )
    }
 }
 
-internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t* newPos )
+#define PHYSICS_CLIPSPRITE_TOPLEFT() if ( newPos->x < prevPos.x ) if ( newPos->y < prevPos.y ) if ( ( clipHitBoxR - newPos->x ) > ( clipHitBoxB - newPos->y ) ) newPos->y = clipHitBoxB + COLLISION_THETA; else newPos->x = clipHitBoxR + COLLISION_THETA; else newPos->x = clipHitBoxR + COLLISION_THETA; else newPos->y = clipHitBoxB + COLLISION_THETA
+#define PHYSICS_CLIPSPRITE_TOPRIGHT() if ( newPos->x > prevPos.x ) if ( newPos->y < prevPos.y ) if ( ( mainHitBoxR - clipHitBoxX ) > ( clipHitBoxB - newPos->y ) ) newPos->y = clipHitBoxB + COLLISION_THETA; else newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA; else newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA; else newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA
+#define PHYSICS_CLIPSPRITE_BOTTOMLEFT() if ( newPos->x < prevPos.x ) if ( newPos->y > prevPos.y ) if ( ( clipHitBoxR - newPos->x ) > ( mainHitBoxB - clipHitBoxY ) ) newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA; else newPos->x = clipHitBoxR + COLLISION_THETA; else newPos->x = clipHitBoxR + COLLISION_THETA; else newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA
+#define PHYSICS_CLIPSPRITE_BOTTOMRIGHT() if ( newPos->x > prevPos.x ) if ( newPos->y > prevPos.y ) if ( ( mainHitBoxR - clipHitBoxX ) > ( mainHitBoxB - clipHitBoxY ) ) newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA; else newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA; else newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA; else newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA
+
+internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t prevPos, Vector2f_t* newPos )
 {
-   float clipHitBoxX = clipSprite->position.x - (float)( clipSprite->offset.x );
-   float clipHitBoxY = clipSprite->position.y - (float)( clipSprite->offset.y );
+   float clipHitBoxX = clipSprite->position.x;
+   float clipHitBoxY = clipSprite->position.y;
    float clipHitBoxW = (float)( clipSprite->hitBoxSize.x );
    float clipHitBoxH = (float)( clipSprite->hitBoxSize.y );
+   float clipHitBoxR = clipHitBoxX + clipHitBoxW;
+   float clipHitBoxB = clipHitBoxY + clipHitBoxH;
+   float mainHitBoxW = (float)( mainSprite->hitBoxSize.x );
+   float mainHitBoxH = (float)( mainSprite->hitBoxSize.y );
+   float mainHitBoxR = newPos->x + mainHitBoxW;
+   float mainHitBoxB = newPos->y + mainHitBoxH;
 
-   if ( Math_RectsIntersectF( newPos->x, newPos->y, (float)( mainSprite->hitBoxSize.x ), (float)( mainSprite->hitBoxSize.y ),
-                              clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   if ( newPos->x < clipHitBoxR && newPos->x > clipHitBoxX && newPos->y < clipHitBoxB && mainHitBoxB > clipHitBoxY )
    {
+      // left side is colliding
       if ( Math_PointInRectF( newPos->x, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
       {
-         // upper-left corner is colliding
-         if ( ( newPos->x - clipHitBoxX ) > ( newPos->y - clipHitBoxY ) )
-         {
-            newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
-         }
-         else
-         {
-            newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
-         }
+         PHYSICS_CLIPSPRITE_TOPLEFT();
       }
-      else if ( Math_PointInRectF( newPos->x + mainSprite->hitBoxSize.x, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      else if ( Math_PointInRectF( newPos->x, mainHitBoxB, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
       {
-         // upper-right corner is colliding
-         if ( ( clipHitBoxX - newPos->x ) > ( newPos->y - clipHitBoxY ) )
-         {
-            newPos->x = clipHitBoxX - mainSprite->hitBoxSize.x - COLLISION_THETA;
-         }
-         else
-         {
-            newPos->y = clipHitBoxY + clipHitBoxH + COLLISION_THETA;
-         }
+         PHYSICS_CLIPSPRITE_BOTTOMLEFT();
       }
-      else if ( Math_PointInRectF( newPos->x, newPos->y + mainSprite->hitBoxSize.y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      else
       {
-         // lower-left corner is colliding
-         if ( ( newPos->x - clipHitBoxX ) > ( clipHitBoxY - newPos->y ) )
-         {
-            newPos->x = clipHitBoxX + clipHitBoxW + COLLISION_THETA;
-         }
-         else
-         {
-            newPos->y = clipHitBoxY - mainSprite->hitBoxSize.y - COLLISION_THETA;
-         }
+         newPos->x = clipHitBoxR + COLLISION_THETA;
       }
-      else if ( Math_PointInRectF( newPos->x + mainSprite->hitBoxSize.x, newPos->y + mainSprite->hitBoxSize.y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+   }
+   else if ( newPos->y < clipHitBoxB && newPos->y > clipHitBoxY && newPos->x < clipHitBoxR && mainHitBoxR > clipHitBoxX )
+   {
+      // top side is colliding
+      if ( Math_PointInRectF( newPos->x, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
       {
-         // lower-right corner is colliding
-         if ( ( clipHitBoxX - newPos->x ) > ( clipHitBoxY - newPos->y ) )
-         {
-            newPos->x = clipHitBoxX - mainSprite->hitBoxSize.x - COLLISION_THETA;
-         }
-         else
-         {
-            newPos->y = clipHitBoxY - mainSprite->hitBoxSize.y - COLLISION_THETA;
-         }
+         PHYSICS_CLIPSPRITE_TOPLEFT();
+      }
+      else if ( Math_PointInRectF( mainHitBoxR, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      {
+         PHYSICS_CLIPSPRITE_TOPRIGHT();
+      }
+      else
+      {
+         newPos->y = clipHitBoxB + COLLISION_THETA;
+      }
+   }
+   else if ( mainHitBoxR > clipHitBoxX && mainHitBoxR < clipHitBoxR && newPos->y < clipHitBoxB && mainHitBoxB > clipHitBoxY )
+   {
+      // right side is colliding
+      if ( Math_PointInRectF( mainHitBoxR, newPos->y, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      {
+         PHYSICS_CLIPSPRITE_TOPRIGHT();
+      }
+      else if ( Math_PointInRectF( mainHitBoxR, mainHitBoxB, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      {
+         PHYSICS_CLIPSPRITE_BOTTOMRIGHT();
+      }
+      else
+      {
+         newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA;
+      }
+   }
+   else if ( mainHitBoxB > clipHitBoxY && mainHitBoxB < clipHitBoxB && newPos->x < clipHitBoxR && mainHitBoxR > clipHitBoxX )
+   {
+      // bottom side is colliding
+      if ( Math_PointInRectF( newPos->x, mainHitBoxB, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      {
+         PHYSICS_CLIPSPRITE_BOTTOMLEFT();
+      }
+      else if ( Math_PointInRectF( mainHitBoxR, mainHitBoxB, clipHitBoxX, clipHitBoxY, clipHitBoxW, clipHitBoxH ) )
+      {
+         PHYSICS_CLIPSPRITE_BOTTOMRIGHT();
+      }
+      else
+      {
+         newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA;
       }
    }
 }
 
+internal uint32_t Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite )
+{
+   uint32_t centerX = (uint32_t)( sprite->position.x + ( sprite->hitBoxSize.x / 2 ) );
+   uint32_t centerY = (uint32_t)( sprite->position.y + ( sprite->hitBoxSize.y / 2 ) );
+   return ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
+}
+
 internal void Game_UpdatePlayerTileIndex( Game_t* game )
 {
-   uint32_t centerX = (uint32_t)( game->player.sprite.position.x + ( game->player.sprite.hitBoxSize.x / 2 ) );
-   uint32_t centerY = (uint32_t)( game->player.sprite.position.y + ( game->player.sprite.hitBoxSize.y / 2 ) );
-   uint32_t newTileIndex = ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
+   uint32_t newTileIndex = Game_GetSpriteTileIndex( game, &( game->player.sprite ) );
 
    if ( newTileIndex != game->player.tileIndex )
    {
@@ -423,5 +455,64 @@ internal void Game_ApplyTileDamage( Game_t* game )
    if ( game->player.stats.hitPoints == 0 )
    {
       game->player.stats.hitPoints = 1;
+   }
+}
+
+internal void Game_MoveNpcs( Game_t* game )
+{
+   uint32_t i;
+   NonPlayerCharacter_t* npc;
+   Vector2f_t newPos;
+   float leftBound, topBound, rightBound, bottomBound;
+
+   for ( i = 0; i < game->tileMap.npcCount; i++ )
+   {
+      npc = &( game->tileMap.npcs[i] );
+      newPos.x = npc->sprite.position.x;
+      newPos.y = npc->sprite.position.y;
+
+      if ( npc->isWandering )
+      {
+         switch ( npc->sprite.direction )
+         {
+            case Direction_Left: newPos.x -= ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
+            case Direction_Up: newPos.y -= ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
+            case Direction_Right: newPos.x += ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
+            case Direction_Down: newPos.y += ( TILE_WALKSPEED_NPC * CLOCK_FRAME_SECONDS ); break;
+         }
+
+         Game_ClipSprites( &( npc->sprite ), &( game->player.sprite ), npc->sprite.position, &newPos );
+
+         npc->sprite.position.x = newPos.x;
+         npc->sprite.position.y = newPos.y;
+         leftBound = (float)( npc->wanderBounds.x * TILE_SIZE );
+         topBound = (float)( npc->wanderBounds.y * TILE_SIZE );
+         rightBound = (float)( ( npc->wanderBounds.x + npc->wanderBounds.w ) * TILE_SIZE );
+         bottomBound = (float)( ( npc->wanderBounds.y + npc->wanderBounds.h ) * TILE_SIZE );
+
+         if ( newPos.x < leftBound )
+         {
+            npc->sprite.position.x = leftBound;
+            TileMap_StopNpc( npc );
+         }
+         else if ( ( newPos.x + SPRITE_TEXTURE_SIZE ) > rightBound )
+         {
+            npc->sprite.position.x = rightBound - SPRITE_TEXTURE_SIZE;
+            TileMap_StopNpc( npc );
+         }
+
+         if ( newPos.y < topBound )
+         {
+            npc->sprite.position.y = topBound;
+            TileMap_StopNpc( npc );
+         }
+         else if ( ( newPos.y + SPRITE_TEXTURE_SIZE ) > bottomBound )
+         {
+            npc->sprite.position.y = bottomBound - SPRITE_TEXTURE_SIZE;
+            TileMap_StopNpc( npc );
+         }
+
+         npc->tileIndex = Game_GetSpriteTileIndex( game, &( npc->sprite ) );
+      }
    }
 }

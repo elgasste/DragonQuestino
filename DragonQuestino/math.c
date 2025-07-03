@@ -18,7 +18,7 @@ uint32_t Math_Min32u( uint32_t l, uint32_t r )
    MIN_FORMULA( l, r );
 }
 
-int32_t Math_Min32( int32_t l, int32_t r )
+int32_t Math_Min32i( int32_t l, int32_t r )
 {
    MIN_FORMULA( l, r );
 }
@@ -38,7 +38,7 @@ uint32_t Math_Max32u( uint32_t l, uint32_t r )
    MAX_FORMULA( l, r );
 }
 
-int32_t Math_Max32( int32_t l, int32_t r )
+int32_t Math_Max32i( int32_t l, int32_t r )
 {
    MAX_FORMULA( l, r );
 }
@@ -55,7 +55,7 @@ Bool_t Math_RectsIntersectF( float x1, float y1, float w1, float h1, float x2, f
 
 Bool_t Math_PointInRectF( float px, float py, float rx, float ry, float rw, float rh )
 {
-   return ( px >= rx ) && ( px < ( rx + rw ) ) && ( py >= ry ) && py < ( ry + rh ) ? True : False;
+   return ( px > rx ) && ( px < ( rx + rw ) ) && ( py > ry ) && py < ( ry + rh ) ? True : False;
 }
 
 uint8_t Math_CollectAmount8u( uint8_t* dest, uint8_t src )

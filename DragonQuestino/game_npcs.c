@@ -21,6 +21,9 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 3: // Tantegel throne room right guard
          Dialog_PushSection( &( game->dialog ), "I took this job to stab civilians, now I'm stuck on guard duty? How??" );
          break;
+      default:
+         Dialog_PushSection( &( game->dialog ), "No response. How rude." );
+         break;
    }
 
    Game_OpenDialog( game );

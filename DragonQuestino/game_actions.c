@@ -18,6 +18,7 @@ void Game_Talk( Game_t* game )
       {
          if ( game->tileMap.npcs[i].tileIndex == tileIndex )
          {
+            // TODO: if it's a wandering sprite, make the sprite turn toward you, and stop it moving
             canTalk = True;
             Game_RunNpcDialog( game, game->tileMap.npcs[i].id );
             break;
