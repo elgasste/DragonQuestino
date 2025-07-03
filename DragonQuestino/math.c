@@ -18,7 +18,7 @@ uint32_t Math_Min32u( uint32_t l, uint32_t r )
    MIN_FORMULA( l, r );
 }
 
-int32_t Math_Min32( int32_t l, int32_t r )
+int32_t Math_Min32i( int32_t l, int32_t r )
 {
    MIN_FORMULA( l, r );
 }
@@ -34,6 +34,11 @@ uint16_t Math_Max16u( uint16_t l, uint16_t r )
 }
 
 uint32_t Math_Max32u( uint32_t l, uint32_t r )
+{
+   MAX_FORMULA( l, r );
+}
+
+int32_t Math_Max32i( int32_t l, int32_t r )
 {
    MAX_FORMULA( l, r );
 }

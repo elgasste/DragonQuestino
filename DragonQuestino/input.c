@@ -67,10 +67,10 @@ void Input_Read( Input_t* input )
    // - Y is between 0 and restingState: up
    // - Y is between restingState and max: down
 
-   input->analogIntensity[Button_Left] = leftIsDown ? (float)( Math_Min32( xValue, INPUT_ANALOG_CUTOFF_HIGH ) - INPUT_ANALOG_THRESHOLD - input->analogRestingState.x ) / input->analogHighRange.x : 0.0f;
-   input->analogIntensity[Button_Right] = rightIsDown ? 1.0f - ( (float)( Math_Max32( xValue, INPUT_ANALOG_CUTOFF_LOW ) - INPUT_ANALOG_CUTOFF_LOW ) / input->analogLowRange.x ) : 0.0f;
-   input->analogIntensity[Button_Up] = upIsDown ? 1.0f - ( (float)( Math_Max32( yValue, INPUT_ANALOG_CUTOFF_LOW ) - INPUT_ANALOG_CUTOFF_LOW ) / input->analogLowRange.y ) : 0.0f;
-   input->analogIntensity[Button_Down] = downIsDown ? (float)( Math_Min32( yValue, INPUT_ANALOG_CUTOFF_HIGH ) - INPUT_ANALOG_THRESHOLD - input->analogRestingState.y ) / input->analogHighRange.y : 0.0f;
+   input->analogIntensity[Button_Left] = leftIsDown ? (float)( Math_Min32i( xValue, INPUT_ANALOG_CUTOFF_HIGH ) - INPUT_ANALOG_THRESHOLD - input->analogRestingState.x ) / input->analogHighRange.x : 0.0f;
+   input->analogIntensity[Button_Right] = rightIsDown ? 1.0f - ( (float)( Math_Max32i( xValue, INPUT_ANALOG_CUTOFF_LOW ) - INPUT_ANALOG_CUTOFF_LOW ) / input->analogLowRange.x ) : 0.0f;
+   input->analogIntensity[Button_Up] = upIsDown ? 1.0f - ( (float)( Math_Max32i( yValue, INPUT_ANALOG_CUTOFF_LOW ) - INPUT_ANALOG_CUTOFF_LOW ) / input->analogLowRange.y ) : 0.0f;
+   input->analogIntensity[Button_Down] = downIsDown ? (float)( Math_Min32i( yValue, INPUT_ANALOG_CUTOFF_HIGH ) - INPUT_ANALOG_THRESHOLD - input->analogRestingState.y ) / input->analogHighRange.y : 0.0f;
 
    Input_UpdateButtonState( &( input->buttonStates[Button_A] ), digitalRead( PIN_A_BUTTON ) == LOW );
    Input_UpdateButtonState( &( input->buttonStates[Button_B] ), digitalRead( PIN_B_BUTTON ) == LOW );
