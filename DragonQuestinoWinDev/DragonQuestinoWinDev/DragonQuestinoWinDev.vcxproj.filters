@@ -170,5 +170,8 @@
     <ClCompile Include="..\..\DragonQuestino\game_npcs.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\game_password.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

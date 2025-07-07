@@ -21,6 +21,8 @@
 #define ENCOUNTERRATE_MEDIUM                       16
 #define ENCOUNTERRATE_HIGH                         8
 
+#define PASSWORD_LENGTH                            30
+
 typedef struct Game_t
 {
    TilePortal_t* targetPortal;
@@ -65,6 +67,9 @@ void Game_OpenDialog( Game_t* game );
 void Game_RestoredHitPointsCallback( Game_t* game );
 void Game_CursedCallback( Game_t* game );
 void Game_ResetBattleMenu( Game_t* game );
+
+// game_password.c
+void Game_LoadFromPassword( Game_t* game, const char* password );
 
 // game_actions.c
 void Game_Talk( Game_t* game );
