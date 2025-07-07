@@ -69,6 +69,7 @@ void Game_CursedCallback( Game_t* game );
 void Game_ResetBattleMenu( Game_t* game );
 
 // game_password.c
+void Game_GetPassword( Game_t* game, char* password );
 void Game_LoadFromPassword( Game_t* game, const char* password );
 
 // game_actions.c

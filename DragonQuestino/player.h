@@ -72,8 +72,8 @@ typedef struct TileMap_t TileMap_t;
 
 #define ITEM_MAXKEYS                            7
 #define ITEM_MAXHERBS                           7
-#define ITEM_MAXWINGS                           3
-#define ITEM_MAXFAIRYWATERS                     3
+#define ITEM_MAXWINGS                           5
+#define ITEM_MAXFAIRYWATERS                     5
 #define ITEM_MAXTORCHES                         7
 
 #define ITEM_GET_KEYCOUNT( x )                  ( ( x ) & 0x7 )

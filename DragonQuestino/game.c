@@ -54,6 +54,11 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
    game->doAnimation = False;
+
+   // MUFFINS: for testing
+   char password[31];
+   Game_GetPassword( game, password );
+   password[30] = 0;
 }
 
 void Game_Tic( Game_t* game )
