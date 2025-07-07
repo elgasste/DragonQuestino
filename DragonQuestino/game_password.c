@@ -1,7 +1,9 @@
 #include "game.h"
+#include "tables.h"
 
 internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits );
 internal char Password_GetCharFromBits( uint32_t bits );
+internal uint32_t Password_GetBitsFromChar( char c );
 internal Bool_t Password_Validate( const char* password );
 
 void Game_GetPassword( Game_t* game, char* password )
@@ -9,7 +11,6 @@ void Game_GetPassword( Game_t* game, char* password )
    Player_t* player = &( game->player );
 
    uint32_t encodedBits[6] = {
-
       ( game->gameFlags.doors << 16 ) |                           // doors not opened (16 bits)
       ( player->experience ),                                     // experience (16 bits)
 
@@ -24,7 +25,7 @@ void Game_GetPassword( Game_t* game, char* password )
       ( ( player->weapon.id & 0x7 ) << 13 ) |                     // weapon (3 bits)
       ( ( player->armor.id & 0x7 ) << 10 ) |                      // armor (3 bits)
       ( ( player->shield.id & 0x3 ) << 8 ) |                      // shield (2 bits)
-      ( game->gameFlags.specialEnemies & 0x7 << 5 ) |             // special enemies defeated (3 bits)
+      ( game->gameFlags.specialEnemies & 0x7 << 5 ) |             // special enemies not defeated (3 bits)
       ( game->gameFlags.rescuedPrincess ? 0x1 << 4 : 0x0 ) |      // rescued princess (1 bit)
       ( game->gameFlags.foundHiddenStairs ? 0x1 << 3 : 0x0 ) |    // found hidden stairs (1 bit)
       ( game->gameFlags.usedRainbowDrop ? 0x1 << 2 : 0x0 )        // used rainbow drop (1 bit)
@@ -67,20 +68,84 @@ void Game_GetPassword( Game_t* game, char* password )
    password[30] = 0;
 }
 
-void Game_LoadFromPassword( Game_t* game, const char* password )
+Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
 {
-   UNUSED_PARAM( game );
+   uint32_t encodedBits[6];
+   Player_t* player = &( game->player );
 
    if ( !Password_Validate( password ) )
    {
-      return;
+      return False;
    }
+
+   encodedBits[0] = ( Password_GetBitsFromChar( password[0] ) << 26 ) |
+                    ( Password_GetBitsFromChar( password[1] ) << 20 ) |
+                    ( Password_GetBitsFromChar( password[2] ) << 14 ) |
+                    ( Password_GetBitsFromChar( password[3] ) << 8 ) |
+                    ( Password_GetBitsFromChar( password[4] ) << 2 ) |
+                    ( Password_GetBitsFromChar( password[5] ) >> 4 );
+   encodedBits[1] = ( Password_GetBitsFromChar( password[5] ) << 28 ) |
+                    ( Password_GetBitsFromChar( password[6] ) << 22 ) |
+                    ( Password_GetBitsFromChar( password[7] ) << 16 ) |
+                    ( Password_GetBitsFromChar( password[8] ) << 10 ) |
+                    ( Password_GetBitsFromChar( password[9] ) << 4 ) |
+                    ( Password_GetBitsFromChar( password[10] ) >> 2 );
+   encodedBits[2] = ( Password_GetBitsFromChar( password[10] ) << 30 ) |
+                    ( Password_GetBitsFromChar( password[11] ) << 24 ) |
+                    ( Password_GetBitsFromChar( password[12] ) << 18 ) |
+                    ( Password_GetBitsFromChar( password[13] ) << 12 ) |
+                    ( Password_GetBitsFromChar( password[14] ) << 6 ) |
+                    ( Password_GetBitsFromChar( password[15] ) );
+   encodedBits[3] = ( Password_GetBitsFromChar( password[16] ) << 26 ) |
+                    ( Password_GetBitsFromChar( password[17] ) << 20 ) |
+                    ( Password_GetBitsFromChar( password[18] ) << 14 ) |
+                    ( Password_GetBitsFromChar( password[19] ) << 8 ) |
+                    ( Password_GetBitsFromChar( password[20] ) << 2 ) |
+                    ( Password_GetBitsFromChar( password[21] ) >> 4 );
+   encodedBits[4] = ( Password_GetBitsFromChar( password[21] ) << 28 ) |
+                    ( Password_GetBitsFromChar( password[22] ) << 22 ) |
+                    ( Password_GetBitsFromChar( password[23] ) << 16 ) |
+                    ( Password_GetBitsFromChar( password[24] ) << 10 ) |
+                    ( Password_GetBitsFromChar( password[25] ) << 4 ) |
+                    ( Password_GetBitsFromChar( password[26] ) >> 2 );
+   encodedBits[5] = ( Password_GetBitsFromChar( password[26] ) << 30 ) |
+                    ( Password_GetBitsFromChar( password[27] ) << 24 ) |
+                    ( Password_GetBitsFromChar( password[28] ) << 18 ) |
+                    ( Password_GetBitsFromChar( password[29] ) << 12 );
+
+   game->gameFlags.doors = 0xFFFF | ( encodedBits[0] >> 16 );
+   game->gameFlags.treasures = encodedBits[1];
+   game->gameFlags.specialEnemies = (uint8_t)( ( encodedBits[3] >> 5 ) & 0x7 );
+   game->gameFlags.rescuedPrincess = (Bool_t)( ( encodedBits[3] >> 4 ) & 0x1 );
+   game->gameFlags.foundHiddenStairs = (Bool_t)( ( encodedBits[3] >> 3 ) & 0x1 );
+   game->gameFlags.usedRainbowDrop = (Bool_t)( ( encodedBits[3] >> 2 ) & 0x1 );
+
+   player->experience = (uint16_t)( encodedBits[0] & 0xFFFF );
+   player->gold = (uint16_t)( encodedBits[3] >> 16 );
+   player->items = ( encodedBits[2] >> 7 ) & 0x1FFFFFF;
+   player->townsVisited = (uint8_t)( ( encodedBits[2] >> 1 ) & 0x3F );
+   player->isCursed = (Bool_t)( encodedBits[2] & 0x1 );
+
+   player->level = Player_GetLevelFromExperience( player );
+   Player_UpdateSpellsToLevel( player, player->level );
+
+   player->stats.strength = g_strengthTable[player->level];
+   player->stats.agility = g_agilityTable[player->level];
+   player->stats.hitPoints = g_hitPointsTable[player->level];
+   player->stats.maxHitPoints = g_hitPointsTable[player->level];
+   player->stats.magicPoints = g_magicPointsTable[player->level];
+   player->stats.maxMagicPoints = g_magicPointsTable[player->level];
+
+   Player_LoadWeapon( player, ( encodedBits[3] >> 13 ) & 0x7 );
+   Player_LoadArmor( player, ( encodedBits[3] >> 10 ) & 0x7 );
+   Player_LoadShield( player, ( encodedBits[3] >> 8 ) & 0x3 );
+
+   return True;
 }
 
 internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits )
 {
    uint32_t i, encodedChars[8];
-   char c;
    size_t length = strlen( player->name );
 
    if ( length <= 0 )
@@ -91,21 +156,8 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
 
    for ( i = 0; i < 8; i++ )
    {
-      if ( i < length )
-      {
-         c = player->name[i];
-
-         encodedChars[i] = ( c >= 65 && c <= 90 ) ? (uint32_t)( c - 65 ) :        // A-Z
-                           ( c >= 97 && c <= 122 ) ? (uint32_t)( c - 97 + 26 ) :  // a-z
-                           ( c >= 48 && c <= 57 ) ? (uint32_t)( c - 48 + 52 ) :   // 0-9
-                           ( c == 46 ) ? 62 :                                     // dash
-                           63;                                                    // space
-      }
-      else
-      {
-         // pad unused chars with spaces
-         encodedChars[i] = 0x3F;
-      }
+      // pad unused chars with spaces
+      encodedChars[i] = ( i < length ) ? Password_GetBitsFromChar( player->name[i] ) : 0x3F;
    }
 
    // start in slot 4, write out all 8 characters in 6-bit increments, followed by the length
@@ -123,22 +175,20 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
 
 internal char Password_GetCharFromBits( uint32_t bits )
 {
-   if ( bits < 26 )
-   {
-      return (char)( bits + 65 );    // A-Z
-   }
-   else if ( bits < 52 )
-   {
-      return (char)( bits - 26 + 97 );    // a-z
-   }
-   else if ( bits < 62 )
-   {
-      return (char)( bits - 52 + 48 );    // 0-9
-   }
-   else
-   {
-      return ( bits == 62 ) ? '-' : '.';
-   }
+   return ( bits < 26 ) ? (char)( bits + 65 ) :    // A-Z
+      ( bits < 52 ) ? (char)( bits - 26 + 97 ) :   // a-z
+      ( bits < 62 ) ? (char)( bits - 52 + 48 ) :   // 0-9
+      ( bits == 62 ) ? '-' :                       // dash
+      '.';                                         // dot
+}
+
+internal uint32_t Password_GetBitsFromChar( char c )
+{
+   return ( c >= 65 && c <= 90 ) ? (uint32_t)( c - 65 ) :        // A-Z
+          ( c >= 97 && c <= 122 ) ? (uint32_t)( c - 97 + 26 ) :  // a-z
+          ( c >= 48 && c <= 57 ) ? (uint32_t)( c - 48 + 52 ) :   // 0-9
+          ( c == '-' ) ? 62 :                                    // dash
+          63;                                                    // dot
 }
 
 internal Bool_t Password_Validate( const char* password )
