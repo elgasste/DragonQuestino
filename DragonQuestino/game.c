@@ -92,18 +92,22 @@ void Game_Tic( Game_t* game )
                case SubState_None:
                   Game_TicPhysics( game );
                   Game_TicActiveSprites( game );
-                  TileMap_Tic( &(game->tileMap ) );
+                  TileMap_Tic( &( game->tileMap ) );
                   break;
                case SubState_Menu:
                   Game_TicActiveSprites( game );
-                  TileMap_Tic( &(game->tileMap ) );
+                  TileMap_Tic( &( game->tileMap ) );
                   Menu_Tic( game->activeMenu );
                   break;
                case SubState_Dialog:
                   Game_TicActiveSprites( game );
-                  TileMap_Tic( &(game->tileMap ) );
+                  TileMap_Tic( &( game->tileMap ) );
                   Dialog_Tic( &( game->dialog ) );
                   break;
+               case SubState_Status:
+               case SubState_NonUseableItems:
+                  Game_TicActiveSprites( game );
+                  TileMap_Tic( &( game->tileMap ) );
             }
             break;
          case MainState_Battle:

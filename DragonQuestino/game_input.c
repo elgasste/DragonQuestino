@@ -24,7 +24,8 @@ void Game_HandleInput( Game_t* game )
          case SubState_None:
             Game_HandleOverworldInput( game );
             break;
-         case SubState_Waiting:
+         case SubState_NonUseableItems:
+         case SubState_Status:
             Game_HandleOverworldWaitingInput( game );
             break;
          case SubState_Menu:
@@ -169,11 +170,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
       switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
          case MenuCommand_Overworld_Talk: Game_Talk( game ); break;
-         case MenuCommand_Overworld_Status:
-            Game_DrawOverworldDeepStatus( game );
-            // MUFFINS: this is the issue, there is no sub state for "show deep status".
-            Game_ChangeSubState( game, SubState_Waiting );
-            break;
+         case MenuCommand_Overworld_Status: Game_ChangeSubState( game, SubState_Status ); break;
          case MenuCommand_Overworld_Search: Game_Search( game ); break;
          case MenuCommand_Overworld_Spell: Game_OpenOverworldSpellMenu( game ); break;
          case MenuCommand_Overworld_Item: Game_OpenOverworldItemMenu( game ); break;
