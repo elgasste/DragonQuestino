@@ -39,9 +39,10 @@ MainState_t;
 typedef enum SubState_t
 {
    SubState_None = 0,
-   SubState_Waiting,
    SubState_Menu,
    SubState_Dialog,
+   SubState_Status,
+   SubState_NonUseableItems,
 
    SubState_Count
 }

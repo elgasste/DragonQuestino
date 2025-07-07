@@ -48,7 +48,7 @@ void Game_Draw( Game_t* game )
          {
             case SubState_Menu:
                Game_DrawQuickStatus( game );
-               Menu_Draw( game->activeMenu );
+               Menu_Draw( &( game->menus[MenuId_Overworld] ) );
                if ( game->activeMenu->id == MenuId_OverworldItem )
                {
                   Game_DrawOverworldItemMenu( game );
@@ -61,6 +61,15 @@ void Game_Draw( Game_t* game )
             case SubState_Dialog:
                Game_DrawQuickStatus( game );
                Dialog_Draw( &( game->dialog ) );
+               break;
+            case SubState_Status:
+               Game_DrawQuickStatus( game );
+               Game_DrawOverworldDeepStatus( game );
+               break;
+            case SubState_NonUseableItems:
+               Game_DrawQuickStatus( game );
+               Menu_Draw( &( game->menus[MenuId_Overworld] ) );
+               Game_DrawNonUseableItems( game, False );
                break;
          }
       }
@@ -134,35 +143,35 @@ void Game_DrawQuickStatus( Game_t* game )
 
 void Game_DrawOverworldDeepStatus( Game_t* game )
 {
-   Screen_DrawTextWindow( &( game->screen ), 80, 32, 20, 18 );
+   Screen_DrawTextWindow( &( game->screen ), 80, 16, 20, 18 );
    char line[18];
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_NAME, game->player.name );
-   Screen_DrawText( &( game->screen ), line, 104 + ( ( 4 - ( (uint32_t)( ( strlen( game->player.name ) + 1 ) / 2 ) ) ) * TEXT_TILE_SIZE ), 40 );
+   Screen_DrawText( &( game->screen ), line, 104 + ( ( 4 - ( (uint32_t)( ( strlen( game->player.name ) + 1 ) / 2 ) ) ) * TEXT_TILE_SIZE ), 24 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_STRENGTH, game->player.stats.strength );
-   Screen_DrawText( &( game->screen ), line, 96, 56 );
+   Screen_DrawText( &( game->screen ), line, 96, 40 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_AGILITY, game->player.stats.agility );
-   Screen_DrawText( &( game->screen ), line, 104, 72 );
+   Screen_DrawText( &( game->screen ), line, 104, 56 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXHP, game->player.stats.maxHitPoints );
-   Screen_DrawText( &( game->screen ), line, 112, 88 );
+   Screen_DrawText( &( game->screen ), line, 112, 72 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXMP, game->player.stats.maxMagicPoints );
-   Screen_DrawText( &( game->screen ), line, 112, 104 );
+   Screen_DrawText( &( game->screen ), line, 112, 88 );
 
-   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_WEAPON, 96, 120 );
-   Screen_DrawText( &( game->screen ), game->player.weapon.name1, 160, 120 );
-   Screen_DrawText( &( game->screen ), game->player.weapon.name2, 168, 128 );
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_WEAPON, 96, 104 );
+   Screen_DrawText( &( game->screen ), game->player.weapon.name1, 160, 104 );
+   Screen_DrawText( &( game->screen ), game->player.weapon.name2, 168, 112 );
 
-   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_ARMOR, 104, 136 );
-   Screen_DrawText( &( game->screen ), game->player.armor.name1, 160, 136 );
-   Screen_DrawText( &( game->screen ), game->player.armor.name2, 168, 144 );
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_ARMOR, 104, 120 );
+   Screen_DrawText( &( game->screen ), game->player.armor.name1, 160, 120 );
+   Screen_DrawText( &( game->screen ), game->player.armor.name2, 168, 128 );
 
-   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_SHIELD, 96, 152 );
-   Screen_DrawText( &( game->screen ), game->player.shield.name1, 160, 152 );
-   Screen_DrawText( &( game->screen ), game->player.shield.name2, 168, 160 );
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_SHIELD, 96, 136 );
+   Screen_DrawText( &( game->screen ), game->player.shield.name1, 160, 136 );
+   Screen_DrawText( &( game->screen ), game->player.shield.name2, 168, 144 );
 }
 
 void Game_DrawOverworldItemMenu( Game_t* game )
@@ -180,7 +189,7 @@ void Game_DrawOverworldItemMenu( Game_t* game )
    }
    else
    {
-      Game_ChangeSubState( game, SubState_Waiting );
+      Game_ChangeSubState( game, SubState_NonUseableItems );
    }
 }
 
