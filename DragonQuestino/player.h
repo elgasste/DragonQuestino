@@ -254,8 +254,6 @@ extern "C" {
 void Player_Init( Player_t* player, TileMap_t* tileMap );
 uint8_t Player_GetLevelFromExperience( Player_t* player );
 uint16_t Player_GetExperienceRemaining( Player_t* player );
-uint16_t Player_CollectGold( Player_t* player, uint16_t gold );
-uint16_t Player_CollectExperience( Player_t* player, uint16_t experience );
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
 void Player_SetCursed( Player_t* player, Bool_t cursed );

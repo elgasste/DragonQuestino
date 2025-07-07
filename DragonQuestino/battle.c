@@ -15,6 +15,7 @@ internal void Battle_AttackCallback( Battle_t* battle );
 internal void Battle_AttackDodgedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
+internal void Battle_EnemyDefeatedSpoilsCallback( Battle_t* battle );
 internal void Battle_NewLevelCallback( Battle_t* battle );
 internal void Battle_GainedPointsCallback( Battle_t* battle );
 internal void Battle_SwitchTurnCallback( Battle_t* battle );
@@ -368,9 +369,8 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    Dialog_PushSection( dialog, msg );
 
    battle->isOver = True;
-   // MUFFINS: move these
-   battle->experienceGained = Player_CollectExperience( player, enemy->experience );
-   battle->goldGained = Player_CollectGold( player, enemy->gold );
+   Math_CollectAmount16u( &( battle->experienceGained ), enemy->experience );
+   Math_CollectAmount16u( &( battle->goldGained ), enemy->gold);
    battle->newLevel = Player_GetLevelFromExperience( player );
    battle->previousSpells = player->spells;
 
@@ -391,7 +391,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
                   battle->goldGained );
       }
 
-      Dialog_PushSectionWithCallback( dialog, msg, Game_DrawQuickStatus, battle->game );
+      Dialog_PushSectionWithCallback( dialog, msg, Battle_EnemyDefeatedSpoilsCallback, battle );
    }
 
    if ( battle->newLevel > player->level )
@@ -484,6 +484,12 @@ internal void Battle_NewLevelCallback( Battle_t* battle )
 {
    battle->game->player.level = battle->newLevel;
    Game_DrawQuickStatus( battle->game );
+}
+
+internal void Battle_EnemyDefeatedSpoilsCallback( Battle_t* battle )
+{
+   battle->game->player.experience += battle->experienceGained;
+   battle->game->player.gold += battle->goldGained;
 }
 
 internal void Battle_GainedPointsCallback( Battle_t* battle )

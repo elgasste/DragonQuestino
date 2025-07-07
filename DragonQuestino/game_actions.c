@@ -1,5 +1,6 @@
 #include "game.h"
 #include "random.h"
+#include "math.h"
 
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 internal void Game_FoundHiddenStairsCallback( Game_t* game );
@@ -230,7 +231,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 
    if ( gold > 0 )
    {
-      collected = ( Player_CollectGold( &( game->player ), gold ) > 0 ) ? True : False;
+      collected = ( Math_CollectAmount16u( &( game->player.gold ), gold ) > 0 ) ? True : False;
       sprintf( msg, STRING_CHEST_GOLDFOUND, gold );
 
       if ( collected > 0 )
