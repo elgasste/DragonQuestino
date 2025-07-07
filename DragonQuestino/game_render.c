@@ -49,13 +49,18 @@ void Game_Draw( Game_t* game )
             case SubState_Menu:
                Game_DrawQuickStatus( game );
                Menu_Draw( &( game->menus[MenuId_Overworld] ) );
-               if ( game->activeMenu->id == MenuId_OverworldItem )
+               switch ( game->activeMenu->id )
                {
-                  Game_DrawOverworldItemMenu( game );
-               }
-               else
-               {
-                  Menu_Draw( game->activeMenu );
+                  case MenuId_OverworldItem:
+                     Game_DrawOverworldItemMenu( game );
+                     break;
+                  case MenuId_Zoom:
+                     Menu_Draw( &( game->menus[MenuId_OverworldSpell] ) );
+                     Menu_Draw( game->activeMenu );
+                     break;
+                  default:
+                     Menu_Draw( game->activeMenu );
+                     break;
                }
                break;
             case SubState_Dialog:

@@ -46,8 +46,8 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->zoomPortals[TILEMAP_RIMULDAR_TOWN_ID].destinationTileIndex = TILEMAP_RIMULDAR_ZOOM_INDEX;
 
    // MUFFINS: switch this for a bunch of goodies
-   Game_Load( game, "" );
-   //Game_Load( game, "..91Mf....9Q0RP-E4iy4BHdtPf..6" );
+   //Game_Load( game, "" );
+   Game_Load( game, "..91Mf....9Q0RP-E4iy4BHdtPf..6" );
 }
 
 void Game_Load( Game_t* game, const char* password )
