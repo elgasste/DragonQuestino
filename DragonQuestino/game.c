@@ -1,6 +1,7 @@
 #include "game.h"
 #include "random.h"
 #include "math.h"
+#include "tables.h"
 
 internal void Game_BattleIntroMessageCallback( Game_t* game );
 internal void Game_TicActiveSprites( Game_t* game );
@@ -44,16 +45,38 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->zoomPortals[TILEMAP_CANTLIN_TOWN_ID].destinationTileIndex = TILEMAP_CANTLIN_ZOOM_INDEX;
    game->zoomPortals[TILEMAP_RIMULDAR_TOWN_ID].destinationTileIndex = TILEMAP_RIMULDAR_ZOOM_INDEX;
 
-   game->gameFlags.treasures = 0xFFFFFFFF;
-   game->gameFlags.doors = 0xFFFFFFFF;
-   game->gameFlags.specialEnemies = 0xFF;
-   game->gameFlags.usedRainbowDrop = False;
-   game->gameFlags.foundHiddenStairs = False;
+   // MUFFINS: switch this for a bunch of goodies
+   //Game_Load( game, "" );
+   Game_Load( game, "..91Mf....9Q0RP-E4iy4BHdtPf..6" );
+}
+
+void Game_Load( Game_t* game, const char* password )
+{
+   Player_t* player = &( game->player );
+
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
    game->doAnimation = False;
+
+   player->tileIndex = 148; // sort of in front of King Lorik
+   Player_SetCanonicalTileIndex( player );
+   player->sprite.position.x = (float)( TILE_SIZE * 8 );
+   player->sprite.position.y = (float)( TILE_SIZE * 7 );
+   player->sprite.direction = Direction_Down;
+   strcpy( player->name, "Ed209" );
+
+   if ( ( strlen( password ) > 0 ) && Game_LoadFromPassword( game, password ) )
+   {
+      return;
+   }
+
+   game->gameFlags.treasures = 0xFFFFFFFF;
+   game->gameFlags.doors = 0xFFFFFFFF;
+   game->gameFlags.specialEnemies = 0xFF;
+   game->gameFlags.usedRainbowDrop = False;
+   game->gameFlags.foundHiddenStairs = False;
 }
 
 void Game_Tic( Game_t* game )
