@@ -30,7 +30,6 @@ void Game_CastHeal( Game_t* game )
 
    CHECK_CAST_ABILITY( SPELL_HEAL_MP, STRING_SPELL_HEAL );
 
-   game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
    Dialog_Reset( &( game->dialog ) );
 
@@ -59,7 +58,6 @@ void Game_CastSizz( Game_t* game )
 
    CHECK_CAST_ABILITY( SPELL_SIZZ_MP, STRING_SPELL_SIZZ );
 
-   game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
    Dialog_Reset( &( game->dialog ) );
    sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SIZZ );
@@ -83,8 +81,6 @@ void Game_CastSleep( Game_t* game )
    char msg[64];
    
    CHECK_CAST_ABILITY( SPELL_SLEEP_MP, STRING_SPELL_SLEEP );
-
-   game->screen.needsRedraw = True;
 
    if ( game->battle.enemy.stats.isAsleep )
    {
@@ -113,7 +109,6 @@ void Game_CastGlow( Game_t* game )
 
    if ( game->tileMap.isDark )
    {
-      game->screen.needsRedraw = True;
       Dialog_Reset( &( game->dialog ) );
       game->pendingSpell = Spell_Glow;
       sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW );
@@ -130,7 +125,6 @@ void Game_CastFizzle( Game_t* game )
 
    if ( game->battle.enemy.stats.isFizzled )
    {
-      game->screen.needsRedraw = True;
       Dialog_Reset( &( game->dialog ) );
       sprintf( msg, STRING_BATTLE_SPELL_FIZZLE_ALREADYFIZZLED, game->battle.enemy.name );
       Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
@@ -138,7 +132,6 @@ void Game_CastFizzle( Game_t* game )
       return;
    }
 
-   game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
    Dialog_Reset( &( game->dialog ) );
    sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_FIZZLE );
@@ -156,7 +149,6 @@ void Game_CastEvac( Game_t* game )
 
    if ( game->tileMap.isDungeon )
    {
-      game->screen.needsRedraw = True;
       Dialog_Reset( &( game->dialog ) );
       game->pendingSpell = Spell_Evac;
       sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_EVAC );
@@ -171,7 +163,6 @@ void Game_CastZoom( Game_t* game, uint32_t townId )
 
    CHECK_CAST_ABILITY( SPELL_ZOOM_MP, STRING_SPELL_ZOOM );
 
-   game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
    game->pendingSpell = Spell_Zoom;
    game->targetPortal = &( game->zoomPortals[townId] );
@@ -186,7 +177,6 @@ void Game_CastRepel( Game_t* game )
 
    CHECK_CAST_ABILITY( SPELL_REPEL_MP, STRING_SPELL_REPEL );
 
-   game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
    game->pendingSpell = Spell_Repel;
    sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_REPEL );
@@ -229,7 +219,6 @@ void Game_CastSizzle( Game_t* game )
 
    CHECK_CAST_ABILITY( SPELL_SIZZLE_MP, STRING_SPELL_SIZZLE );
 
-   game->screen.needsRedraw = True;
    Game_ResetBattleMenu( game );
    Dialog_Reset( &( game->dialog ) );
    sprintf( msg, STRING_BATTLE_SPELLCAST, STRING_SPELL_SIZZLE );
@@ -265,7 +254,6 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
 
    if ( game->player.stats.magicPoints < requiredMp )
    {
-      game->screen.needsRedraw = True;
       Dialog_Reset( &( game->dialog ) );
       Dialog_PushSectionWithCallback( &( game->dialog ),
                                        ( game->mainState == MainState_Overworld ) ? STRING_NOTENOUGHMP : STRING_BATTLE_NOTENOUGHMP,
@@ -277,7 +265,6 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
 
    if ( game->tileMap.blocksMagic )
    {
-      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
       Dialog_Reset( &( game->dialog ) );
       sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, spellName );
@@ -288,7 +275,6 @@ internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char*
 
    if ( game->mainState == MainState_Battle && game->player.stats.isFizzled )
    {
-      game->screen.needsRedraw = True;
       game->player.stats.magicPoints -= requiredMp;
       Dialog_Reset( &( game->dialog ) );
       sprintf( msg, ( game->mainState == MainState_Overworld ) ? STRING_DIALOG_SPELLS_OVERWORLD_CAST : STRING_BATTLE_SPELLCAST, spellName );

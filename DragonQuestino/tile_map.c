@@ -13,7 +13,6 @@ internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter );
 internal void TileMap_ReduceGlowDiameter( TileMap_t* tileMap );
 internal void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap );
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
-internal void TileMap_TicNpc( NonPlayerCharacter_t* npc );
 
 void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags, Player_t* player )
 {
@@ -49,8 +48,6 @@ void TileMap_ResetNpcs( TileMap_t* tileMap )
 
 void TileMap_Tic( TileMap_t* tileMap )
 {
-   uint32_t i;
-
    if ( tileMap->isDark && tileMap->glowDiameter != tileMap->targetGlowDiameter )
    {
       tileMap->glowTransitionSeconds += CLOCK_FRAME_SECONDS;
@@ -68,11 +65,6 @@ void TileMap_Tic( TileMap_t* tileMap )
             TileMap_ReduceGlowDiameter( tileMap );
          }
       }
-   }
-
-   for ( i = 0; i < tileMap->npcCount; i++ )
-   {
-      TileMap_TicNpc( &( tileMap->npcs[i] ) );
    }
 
    TileMap_UpdateViewport( tileMap );
@@ -260,6 +252,29 @@ void TileMap_StopNpc( NonPlayerCharacter_t* npc )
    npc->totalDuration = (float)( Random_u8( TILEMAP_NPC_MINPAUSESECONDS, TILEMAP_NPC_MAXPAUSESECONDS ) );
 }
 
+void TileMap_TicNpcWander( NonPlayerCharacter_t* npc )
+{
+   if ( npc->wanders )
+   {
+      npc->duration += CLOCK_FRAME_SECONDS;
+
+      if ( npc->duration > npc->totalDuration )
+      {
+         if ( npc->isWandering )
+         {
+            TileMap_StopNpc( npc );
+         }
+         else
+         {
+            npc->duration = 0.0f;
+            npc->isWandering = True;
+            npc->totalDuration = (float)( Random_u8( TILEMAP_NPC_MINWANDERSECONDS, TILEMAP_NPC_MAXWANDERSECONDS ) );
+            ActiveSprite_SetDirection( &( npc->sprite ), (Direction_t)( Random_u8( 0, (uint8_t)( Direction_Count - 1 ) ) ) );
+         }
+      }
+   }
+}
+
 internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter )
 {
    tileMap->glowDiameter = diameter;
@@ -311,31 +326,6 @@ internal void TileMap_DrawStaticSprites( TileMap_t* tileMap )
 
          Screen_DrawMemorySection( tileMap->screen, sprite->texture.memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
                                    sxu + tileMap->viewportScreenPos.x, syu + tileMap->viewportScreenPos.y, True );
-      }
-   }
-}
-
-internal void TileMap_TicNpc( NonPlayerCharacter_t* npc )
-{
-   ActiveSprite_Tic( &( npc->sprite ) );
-
-   if ( npc->wanders )
-   {
-      npc->duration += CLOCK_FRAME_SECONDS;
-
-      if ( npc->duration > npc->totalDuration )
-      {
-         if ( npc->isWandering )
-         {
-            TileMap_StopNpc( npc );
-         }
-         else
-         {
-            npc->duration = 0.0f;
-            npc->isWandering = True;
-            npc->totalDuration = (float)( Random_u8( TILEMAP_NPC_MINWANDERSECONDS, TILEMAP_NPC_MAXWANDERSECONDS ) );
-            ActiveSprite_SetDirection( &( npc->sprite ), (Direction_t)( Random_u8( 0, (uint8_t)( Direction_Count - 1 ) ) ) );
-         }
       }
    }
 }

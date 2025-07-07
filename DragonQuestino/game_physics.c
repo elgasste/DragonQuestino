@@ -446,8 +446,6 @@ internal void Game_ApplyTileDamage( Game_t* game )
       return;
    }
 
-   
-   game->screen.needsRedraw = True;
    damage = ( damageRate == 1 ) ? TILEMAP_SWAMP_DAMAGE : TILEMAP_BARRIER_DAMAGE;
    game->player.stats.hitPoints -= Math_Min8u( damage, game->player.stats.hitPoints );
 
@@ -468,6 +466,8 @@ internal void Game_MoveNpcs( Game_t* game )
    for ( i = 0; i < game->tileMap.npcCount; i++ )
    {
       npc = &( game->tileMap.npcs[i] );
+
+      TileMap_TicNpcWander( npc );
       newPos.x = npc->sprite.position.x;
       newPos.y = npc->sprite.position.y;
 

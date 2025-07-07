@@ -3,6 +3,7 @@
 #include "math.h"
 
 internal void Game_BattleIntroMessageCallback( Game_t* game );
+internal void Game_TicActiveSprites( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -83,23 +84,39 @@ void Game_Tic( Game_t* game )
    {
       Game_HandleInput( game );
 
-      if ( game->mainState == MainState_Overworld && game->subState == SubState_None )
+      switch ( game->mainState )
       {
-         Game_TicPhysics( game );
-         ActiveSprite_Tic( &( game->player.sprite ) );
-         TileMap_Tic( &(game->tileMap ) );
-      }
-      else
-      {
-         switch ( game->subState )
-         {
-            case SubState_Menu:
-               Menu_Tic( game->activeMenu );
-               break;
-            case SubState_Dialog:
-               Dialog_Tic( &( game->dialog ) );
-               break;
-         }
+         case MainState_Overworld:
+            switch ( game->subState )
+            {
+               case SubState_None:
+                  Game_TicPhysics( game );
+                  Game_TicActiveSprites( game );
+                  TileMap_Tic( &(game->tileMap ) );
+                  break;
+               case SubState_Menu:
+                  Game_TicActiveSprites( game );
+                  TileMap_Tic( &(game->tileMap ) );
+                  Menu_Tic( game->activeMenu );
+                  break;
+               case SubState_Dialog:
+                  Game_TicActiveSprites( game );
+                  TileMap_Tic( &(game->tileMap ) );
+                  Dialog_Tic( &( game->dialog ) );
+                  break;
+            }
+            break;
+         case MainState_Battle:
+            switch ( game->subState )
+            {
+               case SubState_Menu:
+                  Menu_Tic( game->activeMenu );
+                  break;
+               case SubState_Dialog:
+                  Dialog_Tic( &( game->dialog ) );
+                  break;
+            }
+            break;
       }
    }
 
@@ -128,7 +145,6 @@ void Game_ChangeToOverworldState( Game_t* game )
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
    game->overworldInactivitySeconds = 0.0f;
-   game->screen.needsRedraw = True;
 }
 
 void Game_ChangeToBattleState( Game_t* game )
@@ -176,8 +192,9 @@ void Game_EnterTargetPortal( Game_t* game )
 
    TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
 
-   game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.sprite.offset.x );
-   game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.sprite.offset.y );
+   game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.sprite.offset.x ) + COLLISION_THETA;
+   // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
+   game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.sprite.offset.y ) - COLLISION_THETA;
    game->player.tileIndex = destinationTileIndex;
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
    game->targetPortal = 0;
@@ -212,7 +229,6 @@ void Game_OpenDialog( Game_t* game )
 void Game_RestoredHitPointsCallback( Game_t* game )
 {
    Player_RestoreHitPoints( &( game->player ), game->pendingPayload8u );
-   game->screen.needsRedraw = True;
 
    if ( game->mainState == MainState_Battle )
    {
@@ -223,14 +239,12 @@ void Game_RestoredHitPointsCallback( Game_t* game )
 void Game_CursedCallback( Game_t* game )
 {
    Player_SetCursed( &( game->player ), True );
-   game->screen.needsRedraw = True;
 }
 
 void Game_ResetBattleMenu( Game_t* game )
 {
    if ( game->mainState == MainState_Battle )
    {
-      game->screen.needsRedraw = True;
       game->activeMenu = &( game->menus[MenuId_Battle] );
       Menu_Reset( game->activeMenu );
       Game_ChangeSubState( game, SubState_Menu );
@@ -262,4 +276,16 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
    }
    
    Game_OpenDialog( game );
+}
+
+internal void Game_TicActiveSprites( Game_t* game )
+{
+   uint32_t i;
+
+   ActiveSprite_Tic( &( game->player.sprite ) );
+
+   for ( i = 0; i < game->tileMap.npcCount; i++ )
+   {
+      ActiveSprite_Tic( &( game->tileMap.npcs[i].sprite ) );
+   }
 }

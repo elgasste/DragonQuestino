@@ -16,7 +16,6 @@ void Game_UseHerb( Game_t* game )
    uint8_t restoredHitPoints;
    char msg[64];
 
-   game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
 
    if ( game->player.stats.hitPoints == game->player.stats.maxHitPoints )
@@ -49,7 +48,6 @@ void Game_UseWing( Game_t* game )
    }
    else
    {
-      game->screen.needsRedraw = True;
       ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 );
       game->targetPortal = &( game->zoomPortals[TILEMAP_TANTEGEL_TOWN_ID] );
       Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMUSE_WING, Game_UseWingCallback, game );
@@ -79,7 +77,6 @@ void Game_UseFairyWater( Game_t* game )
 
 void Game_UseTorch( Game_t* game )
 {
-   game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
 
    if ( game->tileMap.isDark )
@@ -103,7 +100,6 @@ void Game_UseTorch( Game_t* game )
 
 void Game_UseSilverHarp( Game_t* game )
 {
-   game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_SILVERHARP_1 );
    Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMUSE_SILVERHARP_2, Game_UseSilverHarpCallback, game );
@@ -112,7 +108,6 @@ void Game_UseSilverHarp( Game_t* game )
 
 void Game_UseFairyFlute( Game_t* game )
 {
-   game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_FAIRYFLUTE_1 );
 
@@ -133,7 +128,6 @@ void Game_UseGwaelynsLove( Game_t* game )
    uint32_t px, py, tx, ty, exp;
    char msg[128], loc[64];
 
-   game->screen.needsRedraw = True;
    Dialog_Reset( &( game->dialog ) );
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
@@ -204,7 +198,6 @@ void Game_UseRainbowDrop( Game_t* game )
 
 void Game_UseCursedBelt( Game_t* game )
 {
-   game->screen.needsRedraw = True;
    ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_CURSEDBELT );

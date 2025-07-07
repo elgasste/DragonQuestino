@@ -37,7 +37,6 @@ void Menu_Init( Menu_t* menu, MenuId_t id, Screen_t* screen, Player_t* player, T
 
 void Menu_Reset( Menu_t* menu )
 {
-   menu->hasDrawn = False;
    menu->selectedIndex = 0;
    Menu_Update( menu );
    Menu_ResetCarat( menu );
@@ -50,24 +49,19 @@ void Menu_Draw( Menu_t* menu )
    uint32_t startX = menu->position.x + ( ( menu->borderPadding.x + 1 ) * ( TEXT_TILE_SIZE ) );
    uint32_t startY = menu->position.y + ( ( menu->borderPadding.y + 1 ) * ( TEXT_TILE_SIZE ) );
 
-   if ( !menu->hasDrawn )
+   Screen_DrawTextWindowWithTitle( menu->screen, menu->position.x, menu->position.y, menu->borderSize.x, menu->borderSize.y, menu->title );
+
+   for ( i = 0; i < menu->itemCount; i++ )
    {
-      Screen_DrawTextWindowWithTitle( menu->screen, menu->position.x, menu->position.y, menu->borderSize.x, menu->borderSize.y, menu->title );
+      x = startX + ( ( i / menu->itemsPerColumn ) * ( menu->columnWidth * TEXT_TILE_SIZE ) );
+      y = startY + ( ( i % menu->itemsPerColumn ) * ( TEXT_TILE_SIZE * ( menu->itemPadding + 1 ) ) );
 
-      for ( i = 0; i < menu->itemCount; i++ )
+      Screen_DrawText( menu->screen, menu->items[i].text, x, y );
+
+      if ( menu->items[i].twoLineText )
       {
-         x = startX + ( ( i / menu->itemsPerColumn ) * ( menu->columnWidth * TEXT_TILE_SIZE ) );
-         y = startY + ( ( i % menu->itemsPerColumn ) * ( TEXT_TILE_SIZE * ( menu->itemPadding + 1 ) ) );
-
-         Screen_DrawText( menu->screen, menu->items[i].text, x, y );
-
-         if ( menu->items[i].twoLineText )
-         {
-            Screen_DrawText( menu->screen, menu->items[i].text + MENU_LINE_LENGTH, x, y + TEXT_TILE_SIZE );
-         }
+         Screen_DrawText( menu->screen, menu->items[i].text + MENU_LINE_LENGTH, x, y + TEXT_TILE_SIZE );
       }
-
-      menu->hasDrawn = True;
    }
 
    Menu_DrawCarat( menu );

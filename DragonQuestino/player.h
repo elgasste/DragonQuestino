@@ -70,10 +70,10 @@ typedef struct TileMap_t TileMap_t;
 #define ITEM_HERB_MINEFFECT                     23
 #define ITEM_HERB_MAXEFFECT                     30
 
-#define ITEM_MAXKEYS                            6
+#define ITEM_MAXKEYS                            7
 #define ITEM_MAXHERBS                           7
-#define ITEM_MAXWINGS                           4
-#define ITEM_MAXFAIRYWATERS                     4
+#define ITEM_MAXWINGS                           3
+#define ITEM_MAXFAIRYWATERS                     3
 #define ITEM_MAXTORCHES                         7
 
 #define ITEM_GET_KEYCOUNT( x )                  ( ( x ) & 0x7 )
@@ -254,8 +254,6 @@ extern "C" {
 void Player_Init( Player_t* player, TileMap_t* tileMap );
 uint8_t Player_GetLevelFromExperience( Player_t* player );
 uint16_t Player_GetExperienceRemaining( Player_t* player );
-uint16_t Player_CollectGold( Player_t* player, uint16_t gold );
-uint16_t Player_CollectExperience( Player_t* player, uint16_t experience );
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
 void Player_SetCursed( Player_t* player, Bool_t cursed );
