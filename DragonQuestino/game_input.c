@@ -171,6 +171,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
          case MenuCommand_Overworld_Talk: Game_Talk( game ); break;
          case MenuCommand_Overworld_Status:
             Game_DrawOverworldDeepStatus( game );
+            // MUFFINS: this is the issue, there is no sub state for "show deep status".
             Game_ChangeSubState( game, SubState_Waiting );
             break;
          case MenuCommand_Overworld_Search: Game_Search( game ); break;

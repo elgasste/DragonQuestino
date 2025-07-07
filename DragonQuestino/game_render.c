@@ -48,7 +48,7 @@ void Game_Draw( Game_t* game )
          {
             case SubState_Menu:
                Game_DrawQuickStatus( game );
-               Menu_Draw( game->activeMenu );
+               Menu_Draw( &( game->menus[MenuId_Overworld] ) );
                if ( game->activeMenu->id == MenuId_OverworldItem )
                {
                   Game_DrawOverworldItemMenu( game );
