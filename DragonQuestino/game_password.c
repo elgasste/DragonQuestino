@@ -10,15 +10,16 @@ void Game_GetPassword( Game_t* game, char* password )
 
    uint32_t encodedBits[6] = {
 
-      game->gameFlags.treasures,                                  // treasures remaining (32 bits)
-
       ( game->gameFlags.doors << 16 ) |                           // doors not opened (16 bits)
       ( player->experience ),                                     // experience (16 bits)
+
+      game->gameFlags.treasures,                                  // treasures remaining (32 bits)
 
       ( player->items << 7 ) |                                    // items (25 bits)
       ( (uint32_t)( player->townsVisited ) << 1 ) |               // towns visited (6 bits)
       ( player->isCursed ? 0x1 : 0x0 ),                           // is cursed (1 bit)
 
+      // last two bits of this section are unused
       ( (uint32_t)( player->gold ) << 16 ) |                      // gold (16 bits)
       ( ( player->weapon.id & 0x7 ) << 13 ) |                     // weapon (3 bits)
       ( ( player->armor.id & 0x7 ) << 10 ) |                      // armor (3 bits)
@@ -29,10 +30,10 @@ void Game_GetPassword( Game_t* game, char* password )
       ( game->gameFlags.usedRainbowDrop ? 0x1 << 2 : 0x0 )        // used rainbow drop (1 bit)
    };
 
-   // the player's encoded name goes on the end, followed by its length, the last 15 bits are unused
+   // the player's encoded name goes on the end, followed by its length, the last 13 bits are unused
    Password_InjectPlayerName( player, encodedBits );
 
-   // since the last 15 bits are unused, we only need 30 characters, not 32
+   // since the last 13 bits are unused, we only need 30 characters, not 32
    password[0] = Password_GetCharFromBits( encodedBits[0] >> 26 );
    password[1] = Password_GetCharFromBits( ( encodedBits[0] >> 20 ) & 0x3F );
    password[2] = Password_GetCharFromBits( ( encodedBits[0] >> 14 ) & 0x3F );
@@ -107,19 +108,17 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
       }
    }
 
-   // store the name starting with the last two bits of slot 3, and stop after the
-   // first 14 bits of slot 5, followed by the length of the name
-   encodedBits[3] |= ( encodedChars[0] >> 4 );
-   encodedBits[4] = ( ( encodedChars[0] & 0xF ) << 28 ) |
-                    ( encodedChars[1] << 22 ) |
-                    ( encodedChars[2] << 16 ) |
-                    ( encodedChars[3] << 10 ) |
-                    ( encodedChars[4] << 4 ) |
-                    ( encodedChars[5] >> 2 );
-   encodedBits[5] = ( ( encodedChars[5] & 0x3 ) << 30 ) |
-                    ( encodedChars[6] << 24 ) |
-                    ( encodedChars[7] << 18 ) |
-                    ( ( length & 0x7 ) << 15 );
+   // start in slot 4, write out all 8 characters in 6-bit increments, followed by the length
+   encodedBits[4] = ( encodedChars[0] << 26 ) |
+                    ( encodedChars[1] << 20 ) |
+                    ( encodedChars[2] << 14 ) |
+                    ( encodedChars[3] << 8 ) |
+                    ( encodedChars[4] << 2 ) |
+                    ( encodedChars[5] >> 4 );
+   encodedBits[5] = ( ( encodedChars[5] & 0xF ) << 28 ) |
+                    ( encodedChars[6] << 22 ) |
+                    ( encodedChars[7] << 16 ) |
+                    ( ( length & 0x7 ) << 13 );
 }
 
 internal char Password_GetCharFromBits( uint32_t bits )
