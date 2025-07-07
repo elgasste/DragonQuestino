@@ -37,13 +37,14 @@ void Game_Draw( Game_t* game )
             Game_DrawEnemy( game );
          }
       }
-   }
-   else // not doing animation
-   {
-      if ( game->mainState == MainState_Overworld )
-      {
-         Game_DrawOverworld( game );
 
+      return;
+   }
+
+   switch ( game->mainState )
+   {
+      case MainState_Overworld:
+         Game_DrawOverworld( game );
          switch ( game->subState )
          {
             case SubState_Menu:
@@ -77,11 +78,9 @@ void Game_Draw( Game_t* game )
                Game_DrawNonUseableItems( game, False );
                break;
          }
-      }
-      else if ( game->mainState == MainState_Battle )
-      {
+         break;
+      case MainState_Battle:
          Game_DrawTileMap( game );
-
          switch ( game->subState )
          {
             case SubState_Menu:
@@ -98,7 +97,7 @@ void Game_Draw( Game_t* game )
                Dialog_Draw( &( game->dialog ) );
                break;
          }
-      }
+         break;
    }
 }
 
