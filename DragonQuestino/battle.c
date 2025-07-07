@@ -107,7 +107,6 @@ void Battle_Generate( Battle_t* battle )
 
 void Battle_Attack( Battle_t* battle )
 {
-   battle->game->screen.needsRedraw = True;
    Dialog_Reset( &( battle->game->dialog ) );
    Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_ATTACKATTEMPT, Battle_AttackCallback, battle );
    Game_OpenDialog( battle->game );
@@ -117,7 +116,6 @@ void Battle_Flee( Battle_t* battle )
 {
    Bool_t fleed = Battle_GetFleeResult( battle );
 
-   battle->game->screen.needsRedraw = True;
    Dialog_Reset( &( battle->game->dialog ) );
    Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_FLEEATTEMPT, fleed ? Battle_FleeSucceededCallback : Battle_FleeFailedCallback, battle );
    Game_OpenDialog( battle->game );
@@ -370,6 +368,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    Dialog_PushSection( dialog, msg );
 
    battle->isOver = True;
+   // MUFFINS: move these
    battle->experienceGained = Player_CollectExperience( player, enemy->experience );
    battle->goldGained = Player_CollectGold( player, enemy->gold );
    battle->newLevel = Player_GetLevelFromExperience( player );
@@ -719,7 +718,6 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
    char msg[64];
 
    player->stats.hitPoints -= battle->pendingPayload8u;
-   battle->game->screen.needsRedraw = True;
    Dialog_Reset( &( battle->game->dialog ) );
 
    if ( player->stats.hitPoints == 0 )
@@ -752,7 +750,6 @@ internal void Battle_PlayerDefeatedCallbackMessage( Battle_t* battle )
 {
    battle->game->player.stats.hitPoints = battle->game->player.stats.maxHitPoints;
    battle->game->player.stats.magicPoints = battle->game->player.stats.maxMagicPoints;
-   battle->game->screen.needsRedraw = True;
    battle->turn = BattleTurn_Player;
 
    Dialog_Reset( &( battle->game->dialog ) );

@@ -210,11 +210,9 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
          case MenuId_OverworldItem:
          case MenuId_OverworldSpell:
             game->activeMenu = &( game->menus[MenuId_Overworld] );
-            game->screen.needsRedraw = True;
             break;
          case MenuId_Zoom:
             game->activeMenu = &( game->menus[MenuId_OverworldSpell] );
-            game->screen.needsRedraw = True;
             break;
          default:
             Game_ChangeToOverworldState( game );
@@ -324,7 +322,6 @@ internal void Game_HandleBattleMenuInput( Game_t* game )
          case MenuId_BattleSpell:
          case MenuId_BattleItem:
             game->activeMenu = &( game->menus[MenuId_Battle] );
-            game->screen.needsRedraw = True;
             break;
       }
    }

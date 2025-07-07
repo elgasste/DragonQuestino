@@ -40,7 +40,6 @@ typedef struct Menu_t
    uint32_t itemPadding;         // individual menu item top padding, in characters
    uint32_t caratOffset;         // how far to the left to draw the carat, in characters
 
-   Bool_t hasDrawn;
    Bool_t showCarat;
    float blinkSeconds;
 }

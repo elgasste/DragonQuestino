@@ -238,7 +238,6 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
                break;
             case VK_TOGGLECURSED:
                Player_SetCursed( &( g_globals.game.player ), g_globals.game.player.isCursed ? False : True );
-               g_globals.game.screen.needsRedraw = True;
                break;
             case VK_TOGGLEENCOUNTERS:
                ToggleNoEncounters();
@@ -408,12 +407,12 @@ internal void DrawDiagnostics( HDC* dcMem )
    r.top += 16;
 
    SetTextColor( *dcMem, g_debugFlags.noTileDamage ? 0x00FFFFFF : 0x00333333 );
-   sprintf_s( str, STRING_SIZE_DEFAULT, "7: No tile damage" );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "8: No tile damage" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
    SetTextColor( *dcMem, g_debugFlags.showHitBoxes ? 0x00FFFFFF : 0x00333333 );
-   sprintf_s( str, STRING_SIZE_DEFAULT, "7: Show hit boxes" );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "9: Show hit boxes" );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    SelectObject( *dcMem, oldFont );
@@ -501,8 +500,6 @@ internal void GetAllItems()
    {
       ITEM_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
    }
-
-   g_globals.game.screen.needsRedraw = True;
 }
 
 internal void MaxOutStats()
@@ -531,6 +528,4 @@ internal void MaxOutStats()
    {
       Menu_Reset( &( g_globals.game.menus[i] ) );
    }
-
-   g_globals.game.screen.needsRedraw = True;
 }

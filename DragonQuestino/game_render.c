@@ -9,13 +9,9 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
-   uint32_t i;
    AnimationId_t activeAnimationId;
 
-   if ( game->screen.needsRedraw )
-   {
-      Game_SetTextColor( game );
-   }
+   Game_SetTextColor( game );
 
    if ( game->doAnimation )
    {
@@ -46,91 +42,50 @@ void Game_Draw( Game_t* game )
    {
       if ( game->mainState == MainState_Overworld )
       {
-         if ( game->screen.needsRedraw )
-         {
-            for ( i = 0; i < MenuId_Count; i++ )
-            {
-               game->menus[i].hasDrawn = False;
-            }
+         Game_DrawOverworld( game );
 
-            Game_DrawOverworld( game );
-
-            switch ( game->subState )
-            {
-               case SubState_Menu:
-                  Game_DrawQuickStatus( game );
-                  Menu_Draw( &( game->menus[MenuId_Overworld] ) );
-                  if ( game->activeMenu->id == MenuId_OverworldItem )
-                  {
-                     Game_DrawOverworldItemMenu( game );
-                  }
-                  else
-                  {
-                     Menu_Draw( game->activeMenu );
-                  }
-                  break;
-               case SubState_Dialog:
-                  Game_DrawQuickStatus( game );
-                  Dialog_Draw( &( game->dialog ) );
-                  break;
-            }
-         }
-         else
+         switch ( game->subState )
          {
-            switch ( game->subState )
-            {
-               case SubState_None:
-                  Game_DrawOverworld( game );
-                  break;
-               case SubState_Menu:
+            case SubState_Menu:
+               Game_DrawQuickStatus( game );
+               Menu_Draw( game->activeMenu );
+               if ( game->activeMenu->id == MenuId_OverworldItem )
+               {
+                  Game_DrawOverworldItemMenu( game );
+               }
+               else
+               {
                   Menu_Draw( game->activeMenu );
-                  break;
-               case SubState_Dialog:
-                  Dialog_Draw( &( game->dialog ) );
-                  break;
-            }
+               }
+               break;
+            case SubState_Dialog:
+               Game_DrawQuickStatus( game );
+               Dialog_Draw( &( game->dialog ) );
+               break;
          }
       }
-      else // main state is battle
+      else if ( game->mainState == MainState_Battle )
       {
-         if ( game->screen.needsRedraw )
-         {
-            Game_DrawTileMap( game );
+         Game_DrawTileMap( game );
 
-            switch ( game->subState )
-            {
-               case SubState_Menu:
-                  game->activeMenu->hasDrawn = False;
-                  Game_DrawQuickStatus( game );
-                  Game_WipeEnemy( game );
-                  Game_DrawEnemy( game );
-                  Menu_Draw( game->activeMenu );
-                  Dialog_Draw( &( game->dialog ) );
-                  break;
-               case SubState_Dialog:
-                  Game_DrawQuickStatus( game );
-                  Game_WipeEnemy( game );
-                  Game_DrawEnemy( game );
-                  Dialog_Draw( &( game->dialog ) );
-                  break;
-            }
-         }
-         else
+         switch ( game->subState )
          {
-            switch ( game->subState )
-            {
-               case SubState_Menu:
-                  Menu_Draw( game->activeMenu );
-                  break;
-               case SubState_Dialog:
-                  Dialog_Draw( &( game->dialog ) );
-                  break;
-            }
+            case SubState_Menu:
+               Game_DrawQuickStatus( game );
+               Game_WipeEnemy( game );
+               Game_DrawEnemy( game );
+               Menu_Draw( game->activeMenu );
+               Dialog_Draw( &( game->dialog ) );
+               break;
+            case SubState_Dialog:
+               Game_DrawQuickStatus( game );
+               Game_WipeEnemy( game );
+               Game_DrawEnemy( game );
+               Dialog_Draw( &( game->dialog ) );
+               break;
          }
       }
    }
-
-   game->screen.needsRedraw = False;
 }
 
 void Game_DrawOverworld( Game_t* game )
@@ -235,22 +190,25 @@ void Game_DrawEnemy( Game_t* game )
    uint16_t screenOffsetX, screenOffsetY;
    Enemy_t* enemy = &( game->battle.enemy );
 
-   x = 112;
-   y = 68;
-
-   for ( i = 0; i < ENEMY_TILE_COUNT; i++ )
+   if ( !game->battle.isOver )
    {
-      if ( enemy->tileTextureIndexes[i] >= 0 )
+      x = 112;
+      y = 68;
+
+      for ( i = 0; i < ENEMY_TILE_COUNT; i++ )
       {
-         uint8_t* texture = enemy->tileTextures[enemy->tileTextureIndexes[i]];
+         if ( enemy->tileTextureIndexes[i] >= 0 )
+         {
+            uint8_t* texture = enemy->tileTextures[enemy->tileTextureIndexes[i]];
 
-         screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
-         screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
+            screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
+            screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
 
-         Screen_DrawMemorySection( &( game->screen ), texture, ENEMY_TILE_SIZE,
-                                   0, 0,
-                                   ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,
-                                   x + screenOffsetX, y + screenOffsetY, False );
+            Screen_DrawMemorySection( &( game->screen ), texture, ENEMY_TILE_SIZE,
+                                      0, 0,
+                                      ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,
+                                      x + screenOffsetX, y + screenOffsetY, False );
+         }
       }
    }
 }

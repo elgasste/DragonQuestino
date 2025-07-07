@@ -261,7 +261,6 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 
 internal void Game_FoundHiddenStairsCallback( Game_t* game )
 {
-   game->screen.needsRedraw = True;
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
