@@ -2,6 +2,7 @@
 
 #define DIAGONAL_SCALAR    0.707f
 
+internal void Game_HandleStartupMenuInput( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
 internal void Game_HandleOverworldWaitingInput( Game_t* game );
 internal void Game_HandleOverworldDialogInput( Game_t* game );
@@ -17,35 +18,70 @@ internal void Game_OpenBattleItemMenu( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
-   if ( game->mainState == MainState_Overworld )
+   switch ( game->mainState )
    {
-      switch ( game->subState )
+      case MainState_Startup:
+         Game_HandleStartupMenuInput( game );
+         break;
+      case MainState_Overworld:
+         switch ( game->subState )
+         {
+            case SubState_None:
+               Game_HandleOverworldInput( game );
+               break;
+            case SubState_NonUseableItems:
+            case SubState_Status:
+               Game_HandleOverworldWaitingInput( game );
+               break;
+            case SubState_Menu:
+               Game_HandleOverworldMenuInput( game );
+               break;
+            case SubState_Dialog:
+               Game_HandleOverworldDialogInput( game );
+               break;
+         }
+         break;
+      case MainState_Battle:
+         switch ( game->subState )
+         {
+            case SubState_Menu:
+               Game_HandleBattleMenuInput( game );
+               break;
+            case SubState_Dialog:
+               Game_HandleBattleDialogInput( game );
+               break;
+         }
+         break;
+   }
+}
+
+internal void Game_HandleStartupMenuInput( Game_t* game )
+{
+   uint32_t i;
+
+   if ( game->input.buttonStates[Button_A].pressed )
+   {
+      Menu_ResetCarat( game->activeMenu );
+
+      switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
-         case SubState_None:
-            Game_HandleOverworldInput( game );
+         case MenuCommand_Startup_NewGame:
+            Game_Load( game, "" );
             break;
-         case SubState_NonUseableItems:
-         case SubState_Status:
-            Game_HandleOverworldWaitingInput( game );
-            break;
-         case SubState_Menu:
-            Game_HandleOverworldMenuInput( game );
-            break;
-         case SubState_Dialog:
-            Game_HandleOverworldDialogInput( game );
+         case MenuCommand_Startup_EnterPassword:
+            // MUFFINS: show the enter password screen. enter this for a bunch of goodies:
+            //Game_Load( game, "..91Mf....9Q0RP-E4iy4BHdtPf..6" );
             break;
       }
    }
-   else if ( game->mainState == MainState_Battle )
+   else
    {
-      switch ( game->subState )
+      for ( i = 0; i < Direction_Count; i++ )
       {
-         case SubState_Menu:
-            Game_HandleBattleMenuInput( game );
-            break;
-         case SubState_Dialog:
-            Game_HandleBattleDialogInput( game );
-            break;
+         if ( game->input.buttonStates[i].pressed )
+         {
+            Menu_MoveSelection( game->activeMenu, (Direction_t)i );
+         }
       }
    }
 }

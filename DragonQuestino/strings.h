@@ -6,6 +6,9 @@
 #define STRING_POINT                                                 "point"
 #define STRING_POINTS                                                "points"
 
+#define STRING_STARTUP_MENU_START                                    "Venture Forth"
+#define STRING_STARTUP_MENU_PASSWORD                                 "Enter Password"
+
 #define STRING_OVERWORLD_MENU_TITLE                                  "COMMAND"
 #define STRING_OVERWORLD_MENU_TALK                                   "TALK"
 #define STRING_OVERWORLD_MENU_STATUS                                 "STATUS"

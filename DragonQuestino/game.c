@@ -45,9 +45,9 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->zoomPortals[TILEMAP_CANTLIN_TOWN_ID].destinationTileIndex = TILEMAP_CANTLIN_ZOOM_INDEX;
    game->zoomPortals[TILEMAP_RIMULDAR_TOWN_ID].destinationTileIndex = TILEMAP_RIMULDAR_ZOOM_INDEX;
 
-   // MUFFINS: switch this for a bunch of goodies
-   //Game_Load( game, "" );
-   Game_Load( game, "..91Mf....9Q0RP-E4iy4BHdtPf..6" );
+   game->mainState = MainState_Startup;
+   game->subState = SubState_Menu;
+   Game_OpenMenu( game, MenuId_Startup );
 }
 
 void Game_Load( Game_t* game, const char* password )
@@ -109,6 +109,14 @@ void Game_Tic( Game_t* game )
 
       switch ( game->mainState )
       {
+         case MainState_Startup:
+            switch ( game->subState )
+            {
+               case SubState_Menu:
+                  Menu_Tic( game->activeMenu );
+                  break;
+            }
+            break;
          case MainState_Overworld:
             switch ( game->subState )
             {

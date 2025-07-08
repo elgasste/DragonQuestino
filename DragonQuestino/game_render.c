@@ -43,6 +43,9 @@ void Game_Draw( Game_t* game )
 
    switch ( game->mainState )
    {
+      case MainState_Startup:
+         Menu_Draw( game->activeMenu );
+         break;
       case MainState_Overworld:
          Game_DrawOverworld( game );
          switch ( game->subState )
