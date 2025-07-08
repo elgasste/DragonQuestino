@@ -9,6 +9,7 @@
 #include "input.h"
 #include "player.h"
 #include "menu.h"
+#include "alpha_picker.h"
 #include "dialog.h"
 #include "animation_chain.h"
 #include "battle.h"
@@ -37,6 +38,7 @@ typedef struct Game_t
    Player_t player;
    Menu_t menus[MenuId_Count];
    Menu_t* activeMenu;
+   AlphaPicker_t alphaPicker;
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    AnimationChain_t animationChain;
@@ -58,6 +60,7 @@ extern "C" {
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Load( Game_t* game, const char* password );
 void Game_Tic( Game_t* game );
+void Game_ChangeToEnterNameState( Game_t* game );
 void Game_ChangeToOverworldState( Game_t* game );
 void Game_ChangeToBattleState( Game_t* game );
 void Game_ChangeSubState( Game_t* game, SubState_t newState );

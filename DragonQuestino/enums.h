@@ -30,6 +30,7 @@ Direction_t;
 typedef enum MainState_t
 {
    MainState_Startup = 0,
+   MainState_EnterName,
    MainState_Overworld,
    MainState_Battle,
 

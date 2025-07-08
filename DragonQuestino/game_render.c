@@ -46,6 +46,9 @@ void Game_Draw( Game_t* game )
       case MainState_Startup:
          Menu_Draw( game->activeMenu );
          break;
+      case MainState_EnterName:
+         AlphaPicker_Draw( &( game->alphaPicker ) );
+         break;
       case MainState_Overworld:
          Game_DrawOverworld( game );
          switch ( game->subState )

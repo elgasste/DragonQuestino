@@ -15,6 +15,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game );
 internal void Game_HandleBattleDialogInput( Game_t* game );
 internal void Game_OpenBattleSpellMenu( Game_t* game );
 internal void Game_OpenBattleItemMenu( Game_t* game );
+internal void Game_HandleAlphaPickerInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -22,6 +23,9 @@ void Game_HandleInput( Game_t* game )
    {
       case MainState_Startup:
          Game_HandleStartupMenuInput( game );
+         break;
+      case MainState_EnterName:
+         Game_HandleAlphaPickerInput( game );
          break;
       case MainState_Overworld:
          switch ( game->subState )
@@ -66,11 +70,11 @@ internal void Game_HandleStartupMenuInput( Game_t* game )
       switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
          case MenuCommand_Startup_NewGame:
-            Game_Load( game, "" );
+            Game_ChangeToEnterNameState( game );
             break;
          case MenuCommand_Startup_EnterPassword:
             // MUFFINS: show the enter password screen. enter this for a bunch of goodies:
-            //Game_Load( game, "..91Mf....9Q0RP-E4iy4BHdtPf..6" );
+            Game_Load( game, "..91Mf....9Q0RP-E4iy4BHdtPf..6" );
             break;
       }
    }
@@ -427,5 +431,18 @@ internal void Game_OpenBattleItemMenu( Game_t* game )
       Dialog_Reset( &( game->dialog ) );
       Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_CANTUSEITEM, Game_ResetBattleMenu, game );
       Game_OpenDialog( game );
+   }
+}
+
+internal void Game_HandleAlphaPickerInput( Game_t* game )
+{
+   uint32_t i;
+
+   for ( i = 0; i < Direction_Count; i++ )
+   {
+      if ( game->input.buttonStates[i].pressed )
+      {
+         AlphaPicker_MoveSelection( &( game->alphaPicker ), (Direction_t)i );
+      }
    }
 }

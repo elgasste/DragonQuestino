@@ -30,6 +30,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
       Menu_Init( &( game->menus[(MenuId_t)i] ), (MenuId_t)( i ), &( game->screen ), &( game->player ), &( game->tileMap ) );
    }
 
+   AlphaPicker_Init( &( game->alphaPicker ), &( game->screen ) );
    Dialog_Init( &( game->dialog ), &( game->screen ), &( game->mainState ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
@@ -117,6 +118,14 @@ void Game_Tic( Game_t* game )
                   break;
             }
             break;
+         case MainState_EnterName:
+            switch ( game->subState )
+            {
+               case SubState_None:
+                  AlphaPicker_Tic( &( game->alphaPicker ) );
+                  break;
+            }
+            break;
          case MainState_Overworld:
             switch ( game->subState )
             {
@@ -180,6 +189,16 @@ void Game_ChangeToOverworldState( Game_t* game )
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
    game->overworldInactivitySeconds = 0.0f;
+}
+
+void Game_ChangeToEnterNameState( Game_t* game )
+{
+   game->mainState = MainState_EnterName;
+   game->subState = SubState_None;
+   game->alphaPicker.position.x = 28;
+   game->alphaPicker.position.y = 28;
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_NAME_TITLE, False );
 }
 
 void Game_ChangeToBattleState( Game_t* game )
