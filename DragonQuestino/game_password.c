@@ -2,6 +2,7 @@
 #include "tables.h"
 
 internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits );
+internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBits );
 internal char Password_GetCharFromBits( uint32_t bits );
 internal uint32_t Password_GetBitsFromChar( char c );
 internal Bool_t Password_Validate( const char* password );
@@ -113,6 +114,8 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
                     ( Password_GetBitsFromChar( password[28] ) << 18 ) |
                     ( Password_GetBitsFromChar( password[29] ) << 12 );
 
+   Password_ExtractPlayerName( player, encodedBits );
+
    game->gameFlags.doors = 0xFFFF | ( encodedBits[0] >> 16 );
    game->gameFlags.treasures = encodedBits[1];
    game->gameFlags.specialEnemies = (uint8_t)( ( encodedBits[3] >> 5 ) & 0x7 );
@@ -139,8 +142,6 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    Player_LoadWeapon( player, ( encodedBits[3] >> 13 ) & 0x7 );
    Player_LoadArmor( player, ( encodedBits[3] >> 10 ) & 0x7 );
    Player_LoadShield( player, ( encodedBits[3] >> 8 ) & 0x3 );
-
-   // TODO: we're not loading the player's name
 
    return True;
 }
@@ -172,7 +173,57 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
    encodedBits[5] = ( ( encodedChars[5] & 0xF ) << 28 ) |
                     ( encodedChars[6] << 22 ) |
                     ( encodedChars[7] << 16 ) |
-                    ( ( length & 0x7 ) << 13 );
+                    ( ( ( length - 1 ) & 0x7 ) << 13 );
+}
+
+internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBits )
+{
+   uint32_t length;
+   char* name = player->name;
+
+   name[0] = 0;
+   length = ( ( encodedBits[5] >> 13 ) & 0x7 ) + 1;
+
+   if ( length > 0 )
+   {
+      name[0] = Password_GetCharFromBits( ( encodedBits[4] >> 26 ) & 0x3F );
+      name[1] = 0;
+   }
+   if ( length > 1 )
+   {
+      name[1] = Password_GetCharFromBits( ( encodedBits[4] >> 20 ) & 0x3F );
+      name[2] = 0;
+   }
+   if ( length > 2 )
+   {
+      name[2] = Password_GetCharFromBits( ( encodedBits[4] >> 14 ) & 0x3F );
+      name[3] = 0;
+   }
+   if ( length > 3 )
+   {
+      name[3] = Password_GetCharFromBits( ( encodedBits[4] >> 8 ) & 0x3F );
+      name[4] = 0;
+   }
+   if ( length > 4 )
+   {
+      name[4] = Password_GetCharFromBits( ( encodedBits[4] >> 2 ) & 0x3F );
+      name[5] = 0;
+   }
+   if ( length > 5 )
+   {
+      name[5] = Password_GetCharFromBits( ( ( ( encodedBits[4] & 0x3 ) << 2 ) | ( encodedBits[5] >> 28 ) ) & 0xF );
+      name[6] = 0;
+   }
+   if ( length > 6 )
+   {
+      name[6] = Password_GetCharFromBits( ( encodedBits[5] >> 22 ) & 0x3F );
+      name[7] = 0;
+   }
+   if ( length > 7 )
+   {
+      name[7] = Password_GetCharFromBits( ( encodedBits[5] >> 16 ) & 0x3F );
+      name[8] = 0;
+   }
 }
 
 internal char Password_GetCharFromBits( uint32_t bits )

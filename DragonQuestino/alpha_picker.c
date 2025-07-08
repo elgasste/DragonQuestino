@@ -92,7 +92,14 @@ void AlphaPicker_MoveSelection( AlphaPicker_t* picker, Direction_t direction )
 
    if ( direction == Direction_Left )
    {
-      picker->selectedIndex = ( col == 0 ) ? ( picker->selectedIndex + ALPHA_PICKER_COLS - 1 ) : ( picker->selectedIndex - 1 );
+      if ( ( col == 0 ) && ( row == ( ALPHA_PICKER_ROWS - 1 ) ) )
+      {
+         picker->selectedIndex = 64;
+      }
+      else
+      {
+         picker->selectedIndex = ( col == 0 ) ? ( picker->selectedIndex + ALPHA_PICKER_COLS - 1 ) : ( picker->selectedIndex - 1 );
+      }
    }
    else if ( direction == Direction_Right )
    {
