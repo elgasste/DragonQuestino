@@ -6,6 +6,7 @@
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 internal void Game_DrawNonPlayerCharacters( Game_t* game );
+internal void Game_DrawPlayerNameEntry( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -48,6 +49,7 @@ void Game_Draw( Game_t* game )
          break;
       case MainState_EnterName:
          AlphaPicker_Draw( &( game->alphaPicker ) );
+         Game_DrawPlayerNameEntry( game );
          break;
       case MainState_Overworld:
          Game_DrawOverworld( game );
@@ -392,6 +394,30 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game )
             Screen_DrawRectColor( &( game->screen ), sxu - sprite->offset.x, syu - sprite->offset.y, sprite->hitBoxSize.x, sprite->hitBoxSize.y, COLOR_RED );
          }
 #endif
+      }
+   }
+}
+
+internal void Game_DrawPlayerNameEntry( Game_t* game )
+{
+   uint32_t i;
+   uint32_t x = 80;
+   uint32_t y = 146;
+   uint32_t textX = x + ( TEXT_TILE_SIZE * 2 );
+   uint32_t textY = y + ( TEXT_TILE_SIZE * 2 );
+   size_t length = strlen( game->player.name );
+
+   Screen_DrawTextWindow( &( game->screen ), x, y, 12, 5 );
+
+   for ( i = 0; i < 8; i++ )
+   {
+      if ( i < length )
+      {
+         Screen_DrawChar( &( game->screen ), game->player.name[i], textX + ( i * TEXT_TILE_SIZE ), textY );
+      }
+      else
+      {
+         Screen_DrawChar( &( game->screen ), '*', textX + ( i * TEXT_TILE_SIZE ), textY );
       }
    }
 }

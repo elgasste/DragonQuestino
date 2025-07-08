@@ -453,6 +453,7 @@ internal void Game_HandleEnterNameInput( Game_t* game )
       {
          game->player.name[length] = AlphaPicker_GetSelectedChar( &( game->alphaPicker ) );
          game->player.name[length + 1] = 0;
+         AlphaPicker_ResetCarat( &( game->alphaPicker ) );
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
