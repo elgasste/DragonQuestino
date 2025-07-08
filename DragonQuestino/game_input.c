@@ -16,6 +16,7 @@ internal void Game_HandleBattleDialogInput( Game_t* game );
 internal void Game_OpenBattleSpellMenu( Game_t* game );
 internal void Game_OpenBattleItemMenu( Game_t* game );
 internal void Game_HandleEnterNameInput( Game_t* game );
+internal void Game_HandleEnterPasswordInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -26,6 +27,9 @@ void Game_HandleInput( Game_t* game )
          break;
       case MainState_EnterName:
          Game_HandleEnterNameInput( game );
+         break;
+      case MainState_EnterPassword:
+         Game_HandleEnterPasswordInput( game );
          break;
       case MainState_Overworld:
          switch ( game->subState )
@@ -73,8 +77,7 @@ internal void Game_HandleStartupMenuInput( Game_t* game )
             Game_ChangeToEnterNameState( game );
             break;
          case MenuCommand_Startup_EnterPassword:
-            // MUFFINS: show the enter password screen. enter this for a bunch of goodies:
-            Game_Load( game, "..91Mf....9Q0RP-E4iy4BHdtPf..6" );
+            Game_ChangeToEnterPasswordState( game );
             break;
       }
    }
@@ -461,6 +464,47 @@ internal void Game_HandleEnterNameInput( Game_t* game )
       if ( length > 0 )
       {
          name[length - 1] = 0;
+      }
+   }
+   else
+   {
+      for ( i = 0; i < Direction_Count; i++ )
+      {
+         if ( game->input.buttonStates[i].pressed )
+         {
+            AlphaPicker_MoveSelection( &( game->alphaPicker ), (Direction_t)i );
+         }
+      }
+   }
+}
+
+internal void Game_HandleEnterPasswordInput( Game_t* game )
+{
+   uint32_t i;
+   char* password = game->password;
+   size_t length = strlen( password );
+
+   if ( game->input.buttonStates[Button_A].pressed )
+   {
+      if ( game->alphaPicker.selectedIndex == 64 )
+      {
+         if ( length == PASSWORD_LENGTH )
+         {
+            Game_Load( game, password );
+         }
+      }
+      else if ( length < PASSWORD_LENGTH )
+      {
+         password[length] = AlphaPicker_GetSelectedChar( &( game->alphaPicker ) );
+         password[length + 1] = 0;
+         AlphaPicker_ResetCarat( &( game->alphaPicker ) );
+      }
+   }
+   else if ( game->input.buttonStates[Button_B].pressed )
+   {
+      if ( length > 0 )
+      {
+         password[length - 1] = 0;
       }
    }
    else

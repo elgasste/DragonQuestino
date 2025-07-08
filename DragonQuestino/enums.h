@@ -31,6 +31,7 @@ typedef enum MainState_t
 {
    MainState_Startup = 0,
    MainState_EnterName,
+   MainState_EnterPassword,
    MainState_Overworld,
    MainState_Battle,
 

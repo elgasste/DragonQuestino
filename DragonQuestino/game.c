@@ -118,13 +118,9 @@ void Game_Tic( Game_t* game )
             }
             break;
          case MainState_EnterName:
-            switch ( game->subState )
-            {
-               case SubState_None:
-                  AlphaPicker_Tic( &( game->alphaPicker ) );
-                  break;
-            }
-            break;
+         case MainState_EnterPassword:
+               AlphaPicker_Tic( &( game->alphaPicker ) );
+               break;
          case MainState_Overworld:
             switch ( game->subState )
             {
@@ -193,11 +189,19 @@ void Game_ChangeToOverworldState( Game_t* game )
 void Game_ChangeToEnterNameState( Game_t* game )
 {
    game->mainState = MainState_EnterName;
-   game->subState = SubState_None;
    game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
    Screen_WipeColor( &( game->screen ), COLOR_BLACK );
    AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_NAME_TITLE, False );
+}
+
+void Game_ChangeToEnterPasswordState( Game_t* game )
+{
+   game->mainState = MainState_EnterPassword;
+   game->alphaPicker.position.x = 28;
+   game->alphaPicker.position.y = 28;
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
 }
 
 void Game_ChangeToBattleState( Game_t* game )

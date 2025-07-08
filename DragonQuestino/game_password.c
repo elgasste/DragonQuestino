@@ -140,6 +140,8 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    Player_LoadArmor( player, ( encodedBits[3] >> 10 ) & 0x7 );
    Player_LoadShield( player, ( encodedBits[3] >> 8 ) & 0x3 );
 
+   // TODO: we're not loading the player's name
+
    return True;
 }
 

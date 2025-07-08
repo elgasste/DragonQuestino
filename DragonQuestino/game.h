@@ -49,6 +49,8 @@ typedef struct Game_t
 
    uint8_t pendingPayload8u;
    Spell_t pendingSpell;
+
+   char password[PASSWORD_LENGTH + 1];
 }
 Game_t;
 
@@ -61,6 +63,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Load( Game_t* game, const char* password );
 void Game_Tic( Game_t* game );
 void Game_ChangeToEnterNameState( Game_t* game );
+void Game_ChangeToEnterPasswordState( Game_t* game );
 void Game_ChangeToOverworldState( Game_t* game );
 void Game_ChangeToBattleState( Game_t* game );
 void Game_ChangeSubState( Game_t* game, SubState_t newState );

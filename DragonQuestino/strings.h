@@ -9,6 +9,7 @@
 #define STRING_STARTUP_MENU_START                                    "Venture Forth"
 #define STRING_STARTUP_MENU_PASSWORD                                 "Enter Password"
 #define STRING_ALPHAPICKER_NAME_TITLE                                "NAME"
+#define STRING_ALPHAPICKER_PASSWORD_TITLE                            "PASSWORD"
 #define STRING_ALPHAPICKER_NAME_END                                  "END"
 
 #define STRING_OVERWORLD_MENU_TITLE                                  "COMMAND"
