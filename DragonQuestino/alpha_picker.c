@@ -138,6 +138,11 @@ void AlphaPicker_Tic( AlphaPicker_t* picker )
    }
 }
 
+char AlphaPicker_GetSelectedChar( AlphaPicker_t* picker )
+{
+   return ( picker->selectedIndex < 64 ) ? picker->chars[picker->selectedIndex] : ' ';
+}
+
 internal void AlphaPicker_DrawCarat( AlphaPicker_t* picker )
 {
    UNUSED_PARAM( picker );

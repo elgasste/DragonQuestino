@@ -15,7 +15,7 @@ internal void Game_HandleBattleMenuInput( Game_t* game );
 internal void Game_HandleBattleDialogInput( Game_t* game );
 internal void Game_OpenBattleSpellMenu( Game_t* game );
 internal void Game_OpenBattleItemMenu( Game_t* game );
-internal void Game_HandleAlphaPickerInput( Game_t* game );
+internal void Game_HandleEnterNameInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -25,7 +25,7 @@ void Game_HandleInput( Game_t* game )
          Game_HandleStartupMenuInput( game );
          break;
       case MainState_EnterName:
-         Game_HandleAlphaPickerInput( game );
+         Game_HandleEnterNameInput( game );
          break;
       case MainState_Overworld:
          switch ( game->subState )
@@ -434,15 +434,42 @@ internal void Game_OpenBattleItemMenu( Game_t* game )
    }
 }
 
-internal void Game_HandleAlphaPickerInput( Game_t* game )
+internal void Game_HandleEnterNameInput( Game_t* game )
 {
    uint32_t i;
+   char* name = game->player.name;
+   size_t length = strlen( name );
 
-   for ( i = 0; i < Direction_Count; i++ )
+   if ( game->input.buttonStates[Button_A].pressed )
    {
-      if ( game->input.buttonStates[i].pressed )
+      if ( game->alphaPicker.selectedIndex == 64 )
       {
-         AlphaPicker_MoveSelection( &( game->alphaPicker ), (Direction_t)i );
+         if ( length > 0 )
+         {
+            Game_Load( game, "" );
+         }
+      }
+      else if ( length < 8 )
+      {
+         game->player.name[length] = AlphaPicker_GetSelectedChar( &( game->alphaPicker ) );
+         game->player.name[length + 1] = 0;
+      }
+   }
+   else if ( game->input.buttonStates[Button_B].pressed )
+   {
+      if ( length > 0 )
+      {
+         name[length - 1] = 0;
+      }
+   }
+   else
+   {
+      for ( i = 0; i < Direction_Count; i++ )
+      {
+         if ( game->input.buttonStates[i].pressed )
+         {
+            AlphaPicker_MoveSelection( &( game->alphaPicker ), (Direction_t)i );
+         }
       }
    }
 }

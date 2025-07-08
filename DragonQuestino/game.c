@@ -66,7 +66,6 @@ void Game_Load( Game_t* game, const char* password )
    player->sprite.position.x = (float)( TILE_SIZE * 8 );
    player->sprite.position.y = (float)( TILE_SIZE * 7 );
    player->sprite.direction = Direction_Down;
-   strcpy( player->name, "Ed209" );
 
    if ( ( strlen( password ) > 0 ) && Game_LoadFromPassword( game, password ) )
    {

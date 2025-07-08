@@ -34,6 +34,7 @@ void AlphaPicker_Draw( AlphaPicker_t* picker );
 void AlphaPicker_ResetCarat( AlphaPicker_t* picker );
 void AlphaPicker_MoveSelection( AlphaPicker_t* picker, Direction_t direction );
 void AlphaPicker_Tic( AlphaPicker_t* picker );
+char AlphaPicker_GetSelectedChar( AlphaPicker_t* picker );
 
 #if defined( __cplusplus )
 }
