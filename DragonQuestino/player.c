@@ -8,6 +8,7 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
 {
    player->tileMap = tileMap;
 
+   player->name[0] = 0;
    player->velocity.x = 0.0f;
    player->velocity.y = 0.0f;
    player->maxVelocity = TILE_WALKSPEED_NORMAL;

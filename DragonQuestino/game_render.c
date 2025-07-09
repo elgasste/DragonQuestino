@@ -6,6 +6,8 @@
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 internal void Game_DrawNonPlayerCharacters( Game_t* game );
+internal void Game_DrawPlayerNameEntry( Game_t* game );
+internal void Game_DrawPasswordEntry( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -37,13 +39,25 @@ void Game_Draw( Game_t* game )
             Game_DrawEnemy( game );
          }
       }
-   }
-   else // not doing animation
-   {
-      if ( game->mainState == MainState_Overworld )
-      {
-         Game_DrawOverworld( game );
 
+      return;
+   }
+
+   switch ( game->mainState )
+   {
+      case MainState_Startup:
+         Menu_Draw( game->activeMenu );
+         break;
+      case MainState_EnterName:
+         AlphaPicker_Draw( &( game->alphaPicker ) );
+         Game_DrawPlayerNameEntry( game );
+         break;
+      case MainState_EnterPassword:
+         AlphaPicker_Draw( &( game->alphaPicker ) );
+         Game_DrawPasswordEntry( game );
+         break;
+      case MainState_Overworld:
+         Game_DrawOverworld( game );
          switch ( game->subState )
          {
             case SubState_Menu:
@@ -77,11 +91,9 @@ void Game_Draw( Game_t* game )
                Game_DrawNonUseableItems( game, False );
                break;
          }
-      }
-      else if ( game->mainState == MainState_Battle )
-      {
+         break;
+      case MainState_Battle:
          Game_DrawTileMap( game );
-
          switch ( game->subState )
          {
             case SubState_Menu:
@@ -98,7 +110,7 @@ void Game_Draw( Game_t* game )
                Dialog_Draw( &( game->dialog ) );
                break;
          }
-      }
+         break;
    }
 }
 
@@ -387,6 +399,66 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game )
             Screen_DrawRectColor( &( game->screen ), sxu - sprite->offset.x, syu - sprite->offset.y, sprite->hitBoxSize.x, sprite->hitBoxSize.y, COLOR_RED );
          }
 #endif
+      }
+   }
+}
+
+internal void Game_DrawPlayerNameEntry( Game_t* game )
+{
+   uint32_t i;
+   uint32_t x = 80;
+   uint32_t y = 146;
+   uint32_t textX = x + ( TEXT_TILE_SIZE * 2 );
+   uint32_t textY = y + ( TEXT_TILE_SIZE * 2 );
+   size_t length = strlen( game->player.name );
+
+   Screen_DrawTextWindow( &( game->screen ), x, y, 12, 5 );
+
+   for ( i = 0; i < 8; i++ )
+   {
+      if ( i < length )
+      {
+         Screen_DrawChar( &( game->screen ), game->player.name[i], textX + ( i * TEXT_TILE_SIZE ), textY );
+      }
+      else
+      {
+         Screen_DrawChar( &( game->screen ), '*', textX + ( i * TEXT_TILE_SIZE ), textY );
+      }
+   }
+}
+
+internal void Game_DrawPasswordEntry( Game_t* game )
+{
+   uint32_t i;
+   uint32_t x = 52;
+   uint32_t y = 146;
+   uint32_t textX = x + ( TEXT_TILE_SIZE * 2 );
+   uint32_t textY = y + ( TEXT_TILE_SIZE * 2 );
+   size_t length = strlen( game->password );
+
+   Screen_DrawTextWindow( &( game->screen ), x, y, 19, 7 );
+
+   for ( i = 0; i < 15; i++ )
+   {
+      if ( i < length )
+      {
+         Screen_DrawChar( &( game->screen ), game->password[i], textX + ( i * TEXT_TILE_SIZE ), textY);
+      }
+      else
+      {
+         Screen_DrawChar( &( game->screen ), '*', textX + ( i * TEXT_TILE_SIZE ), textY);
+      }
+   }
+
+   for ( i = 15; i < 30; i++ )
+   {
+      if ( i < length )
+      {
+         Screen_DrawChar( &( game->screen ), game->password[i], textX + ( ( i - 15 ) * TEXT_TILE_SIZE ), textY + 16);
+      }
+      else
+      {
+         Screen_DrawChar( &( game->screen ), '*', textX + ( ( i - 15 ) * TEXT_TILE_SIZE ), textY + 16);
       }
    }
 }

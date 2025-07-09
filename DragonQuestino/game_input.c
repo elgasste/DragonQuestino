@@ -2,6 +2,7 @@
 
 #define DIAGONAL_SCALAR    0.707f
 
+internal void Game_HandleStartupMenuInput( Game_t* game );
 internal void Game_HandleOverworldInput( Game_t* game );
 internal void Game_HandleOverworldWaitingInput( Game_t* game );
 internal void Game_HandleOverworldDialogInput( Game_t* game );
@@ -14,38 +15,80 @@ internal void Game_HandleBattleMenuInput( Game_t* game );
 internal void Game_HandleBattleDialogInput( Game_t* game );
 internal void Game_OpenBattleSpellMenu( Game_t* game );
 internal void Game_OpenBattleItemMenu( Game_t* game );
+internal void Game_HandleEnterNameInput( Game_t* game );
+internal void Game_HandleEnterPasswordInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
-   if ( game->mainState == MainState_Overworld )
+   switch ( game->mainState )
    {
-      switch ( game->subState )
+      case MainState_Startup:
+         Game_HandleStartupMenuInput( game );
+         break;
+      case MainState_EnterName:
+         Game_HandleEnterNameInput( game );
+         break;
+      case MainState_EnterPassword:
+         Game_HandleEnterPasswordInput( game );
+         break;
+      case MainState_Overworld:
+         switch ( game->subState )
+         {
+            case SubState_None:
+               Game_HandleOverworldInput( game );
+               break;
+            case SubState_NonUseableItems:
+            case SubState_Status:
+               Game_HandleOverworldWaitingInput( game );
+               break;
+            case SubState_Menu:
+               Game_HandleOverworldMenuInput( game );
+               break;
+            case SubState_Dialog:
+               Game_HandleOverworldDialogInput( game );
+               break;
+         }
+         break;
+      case MainState_Battle:
+         switch ( game->subState )
+         {
+            case SubState_Menu:
+               Game_HandleBattleMenuInput( game );
+               break;
+            case SubState_Dialog:
+               Game_HandleBattleDialogInput( game );
+               break;
+         }
+         break;
+   }
+}
+
+internal void Game_HandleStartupMenuInput( Game_t* game )
+{
+   uint32_t i;
+
+   if ( game->input.buttonStates[Button_A].pressed )
+   {
+      Menu_ResetCarat( game->activeMenu );
+
+      switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
       {
-         case SubState_None:
-            Game_HandleOverworldInput( game );
+         case MenuCommand_Startup_NewGame:
+            Game_ChangeToEnterNameState( game );
             break;
-         case SubState_NonUseableItems:
-         case SubState_Status:
-            Game_HandleOverworldWaitingInput( game );
-            break;
-         case SubState_Menu:
-            Game_HandleOverworldMenuInput( game );
-            break;
-         case SubState_Dialog:
-            Game_HandleOverworldDialogInput( game );
+         case MenuCommand_Startup_EnterPassword:
+            Game_ChangeToEnterPasswordState( game );
             break;
       }
    }
-   else if ( game->mainState == MainState_Battle )
+   else
    {
-      switch ( game->subState )
+      for ( i = 0; i < Direction_Count; i++ )
       {
-         case SubState_Menu:
-            Game_HandleBattleMenuInput( game );
-            break;
-         case SubState_Dialog:
-            Game_HandleBattleDialogInput( game );
-            break;
+         if ( game->input.buttonStates[i].pressed )
+         {
+            Menu_MoveSelection( game->activeMenu, (Direction_t)i );
+         }
       }
    }
 }
@@ -391,5 +434,87 @@ internal void Game_OpenBattleItemMenu( Game_t* game )
       Dialog_Reset( &( game->dialog ) );
       Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_CANTUSEITEM, Game_ResetBattleMenu, game );
       Game_OpenDialog( game );
+   }
+}
+
+internal void Game_HandleEnterNameInput( Game_t* game )
+{
+   uint32_t i;
+   char* name = game->player.name;
+   size_t length = strlen( name );
+
+   if ( game->input.buttonStates[Button_A].pressed )
+   {
+      if ( game->alphaPicker.selectedIndex == 64 )
+      {
+         if ( length > 0 )
+         {
+            Game_Load( game, "" );
+         }
+      }
+      else if ( length < 8 )
+      {
+         game->player.name[length] = AlphaPicker_GetSelectedChar( &( game->alphaPicker ) );
+         game->player.name[length + 1] = 0;
+         AlphaPicker_ResetCarat( &( game->alphaPicker ) );
+      }
+   }
+   else if ( game->input.buttonStates[Button_B].pressed )
+   {
+      if ( length > 0 )
+      {
+         name[length - 1] = 0;
+      }
+   }
+   else
+   {
+      for ( i = 0; i < Direction_Count; i++ )
+      {
+         if ( game->input.buttonStates[i].pressed )
+         {
+            AlphaPicker_MoveSelection( &( game->alphaPicker ), (Direction_t)i );
+         }
+      }
+   }
+}
+
+internal void Game_HandleEnterPasswordInput( Game_t* game )
+{
+   uint32_t i;
+   char* password = game->password;
+   size_t length = strlen( password );
+
+   if ( game->input.buttonStates[Button_A].pressed )
+   {
+      if ( game->alphaPicker.selectedIndex == 64 )
+      {
+         if ( length == PASSWORD_LENGTH )
+         {
+            Game_Load( game, password );
+         }
+      }
+      else if ( length < PASSWORD_LENGTH )
+      {
+         password[length] = AlphaPicker_GetSelectedChar( &( game->alphaPicker ) );
+         password[length + 1] = 0;
+         AlphaPicker_ResetCarat( &( game->alphaPicker ) );
+      }
+   }
+   else if ( game->input.buttonStates[Button_B].pressed )
+   {
+      if ( length > 0 )
+      {
+         password[length - 1] = 0;
+      }
+   }
+   else
+   {
+      for ( i = 0; i < Direction_Count; i++ )
+      {
+         if ( game->input.buttonStates[i].pressed )
+         {
+            AlphaPicker_MoveSelection( &( game->alphaPicker ), (Direction_t)i );
+         }
+      }
    }
 }

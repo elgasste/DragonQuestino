@@ -29,7 +29,10 @@ Direction_t;
 
 typedef enum MainState_t
 {
-   MainState_Overworld = 0,
+   MainState_Startup = 0,
+   MainState_EnterName,
+   MainState_EnterPassword,
+   MainState_Overworld,
    MainState_Battle,
 
    MainState_Count
@@ -125,7 +128,8 @@ SpecialEnemy_t;
 
 typedef enum MenuId_t
 {
-   MenuId_Overworld = 0,
+   MenuId_Startup = 0,
+   MenuId_Overworld,
    MenuId_OverworldSpell,
    MenuId_OverworldItem,
    MenuId_Zoom,
@@ -140,7 +144,10 @@ MenuId_t;
 
 typedef enum MenuCommand_t
 {
-   MenuCommand_Overworld_Talk = 0,
+   MenuCommand_Startup_NewGame = 0,
+   MenuCommand_Startup_EnterPassword,
+
+   MenuCommand_Overworld_Talk,
    MenuCommand_Overworld_Status,
    MenuCommand_Overworld_Search,
    MenuCommand_Overworld_Spell,

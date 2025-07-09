@@ -5,6 +5,7 @@
 #include "tile_map.h"
 
 internal void Menu_DrawCarat( Menu_t* menu );
+internal void Menu_InitStartup( Menu_t* menu );
 internal void Menu_InitOverworld( Menu_t* menu );
 internal void Menu_InitBattle( Menu_t* menu );
 internal void Menu_Update( Menu_t* menu );
@@ -23,6 +24,9 @@ void Menu_Init( Menu_t* menu, MenuId_t id, Screen_t* screen, Player_t* player, T
 
    switch ( id )
    {
+      case MenuId_Startup:
+         Menu_InitStartup( menu );
+         break;
       case MenuId_Overworld:
          Menu_InitOverworld( menu );
          break;
@@ -175,6 +179,27 @@ internal void Menu_DrawCarat( Menu_t* menu )
          Screen_DrawChar( menu->screen, ' ', x - ( TEXT_TILE_SIZE * menu->caratOffset ), y );
       }
    }
+}
+
+internal void Menu_InitStartup( Menu_t* menu )
+{
+   strcpy( menu->items[0].text, STRING_STARTUP_MENU_START );
+   strcpy( menu->items[1].text, STRING_STARTUP_MENU_PASSWORD );
+   menu->items[0].command = MenuCommand_Startup_NewGame;
+   menu->items[1].command = MenuCommand_Startup_EnterPassword;
+   menu->itemCount = 2;
+   menu->itemsPerColumn = 2;
+   menu->selectedIndex = 0;
+
+   menu->position.x = 48;
+   menu->position.y = 80;
+   menu->borderSize.x = 20;
+   menu->borderSize.y = 7;
+   menu->borderPadding.x = 3;
+   menu->borderPadding.y = 1;
+   menu->columnWidth = 8;
+   menu->itemPadding = 1;
+   menu->caratOffset = 2;
 }
 
 internal void Menu_InitOverworld( Menu_t* menu )
