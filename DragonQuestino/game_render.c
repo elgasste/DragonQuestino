@@ -21,7 +21,13 @@ void Game_Draw( Game_t* game )
 
       if ( game->mainState == MainState_Overworld )
       {
-         if ( activeAnimationId != AnimationId_Pause )
+         if ( activeAnimationId == AnimationId_CastSpell )
+         {
+            Game_DrawOverworld( game );
+            Game_DrawQuickStatus( game );
+            Dialog_Draw( &( game->dialog ) );
+         }
+         else if ( activeAnimationId != AnimationId_Pause )
          {
             Game_DrawOverworld( game );
 

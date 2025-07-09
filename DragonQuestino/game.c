@@ -197,11 +197,15 @@ void Game_ChangeToEnterNameState( Game_t* game )
 
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
-   game->mainState = MainState_EnterPassword;
+   // MUFFINS: this gives us some goodies for testing
+   Game_Load( game, "..91Mf....9Q0RP-E4iyABHdtPf..4" );
+   Game_ChangeToOverworldState( game );
+
+   /*game->mainState = MainState_EnterPassword;
    game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
    Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
 }
 
 void Game_ChangeToBattleState( Game_t* game )
