@@ -2,7 +2,7 @@
 
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
-   char msg[32];
+   char msg[128];
    char password[32];
    char passwordMsg[34];
 
@@ -11,27 +11,32 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
    switch ( npcId )
    {
       case 0: // King Lorik
-         sprintf( msg, "\"Hello %s!\"", game->player.name );
+         sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_1, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
-         Dialog_PushSection( &( game->dialog ), "..." );
-         Dialog_PushSection( &( game->dialog ), "King Lorik suddenly convulses grotesquely..." );
-         Dialog_PushSection( &( game->dialog ), "\"Your progress... remember...\"" );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_3 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_4 );
          Game_GetPassword( game, password );
-         sprintf( passwordMsg, "\"%s\"", password );
+         sprintf( passwordMsg, STRING_NPC_TANTEGEL_THRONEROOM_KING_5, password );
          Dialog_PushSection( &( game->dialog ), passwordMsg );
-         Dialog_PushSection( &( game->dialog ), "..." );
-         Dialog_PushSection( &( game->dialog ), "He snaps out of it and can't remember a thing. What did he mean??" );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_6 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_7 );
          break;
       case 1: // Gwaelin
-         Dialog_PushSection( &( game->dialog ), "\"My dad is getting older, lately he's been prone to rambling.\"" );
-         Dialog_PushSection( &( game->dialog ), "\"Sometimes he just spouts gibberish, we don't know what to make of it.\"" );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_1 );
+         sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_2, game->player.name );
+         Dialog_PushSection( &( game->dialog ), msg );
          break;
-      case 2: // Tantegel throne room left guard
-         Dialog_PushSection( &( game->dialog ), "\"I know I should say something useful, but I'm not ready yet.\"" );
-         Dialog_PushSection( &( game->dialog ), "\"Come back later when you've got the final dialogue.\"" );
+      case 2: // Tantegel throne room left soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_2 );
          break;
-      case 3: // Tantegel throne room right guard
-         Dialog_PushSection( &( game->dialog ), "\"I took this job to stab civilians, now I'm stuck on guard duty? How??\"" );
+      case 3: // Tantegel throne room right soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_RIGHTSOLDIER );
+         break;
+      case 4: // Tantegel throne room moving solder
+         sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_MOVINGSOLDIER, game->player.name );
+         Dialog_PushSection( &( game->dialog ), msg );
          break;
       default:
          Dialog_PushSection( &( game->dialog ), "No response. How rude." );
