@@ -211,7 +211,7 @@ internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBit
    }
    if ( length > 5 )
    {
-      name[5] = Password_GetCharFromBits( ( ( ( encodedBits[4] & 0x3 ) << 2 ) | ( encodedBits[5] >> 28 ) ) & 0xF );
+      name[5] = Password_GetCharFromBits( ( ( encodedBits[4] & 0x3 ) << 4 ) | ( ( encodedBits[5] >> 28 ) & 0xF ) );
       name[6] = 0;
    }
    if ( length > 6 )
