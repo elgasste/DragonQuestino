@@ -298,4 +298,18 @@
 #define STRING_BATTLE_MENU_SPELL                                     "SPELL"
 #define STRING_BATTLE_MENU_ITEM                                      "ITEM"
 
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_1                        "\"Hello %s!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_2                        "\"...\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_3                        "King Lorik suddenly convulses grotesquely..."
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_4                        "\"Your progress... remember...\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_5                        "\"%s!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_6                        "\"...\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_7                        "The king snaps out of it and can't remember a thing. What did he mean??"
+#define STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_1                    "\"My savior, my champion, you who have stolen my heart...\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_2                    "\"I love you, %s!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_1                 "\"If I may offer a word of advice...\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_2                 "\"Save your money for more expensive armor!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_RIGHTSOLDIER                  "\"It's best to try and listen to what people say, it could be of great help!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_MOVINGSOLDIER                 "\"It's good to see you again %s, may good fortune always be with you!\""
+
 #endif // STRINGS_H
