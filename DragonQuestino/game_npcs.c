@@ -88,6 +88,16 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 19: // Tantegel ground floor right area moving soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER );
          break;
+      case 20: // Tantegel ground floor moving wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD );
+         break;
+      case 21: // Tantegel ground floor soldier on the other side of the barrier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_2 );
+         break;
+      case 22: // Tantegel basement wizard
+         Dialog_PushSection( &( game->dialog ), ( game->gameFlags.treasures & 0x80 ) ? STRING_NPC_TANTEGEL_BASEMENT_WIZARD_1 : STRING_NPC_TANTEGEL_BASEMENT_WIZARD_2 );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;

@@ -334,5 +334,10 @@
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_2        "\"...but for the hero tasked with saving the world, I suppose extra supplies can't hurt.\""
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER                 "\"Doors won't open without a key.\""
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER           "\"I've been looking for the castle cellar for over an hour, I heard it's difficult to find!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD                 "\"Let us all wish the warrior well on his journey, may the light be your strength!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_1         "\"Garin's grave is said to be located in Garinham.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_2         "\"Rumor has it that you must push on a wall of darkness to find it.\""
+#define STRING_NPC_TANTEGEL_BASEMENT_WIZARD_1                        "\"I have waited a long time for one such as you to arrive. Take this treasure so that I may finally rest.\""
+#define STRING_NPC_TANTEGEL_BASEMENT_WIZARD_2                        "\"If your business here is finished, please leave me at peace.\""
 
 #endif // STRINGS_H
