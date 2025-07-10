@@ -39,7 +39,7 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), msg );
          break;
       default:
-         Dialog_PushSection( &( game->dialog ), "No response. How rude." );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
    }
 

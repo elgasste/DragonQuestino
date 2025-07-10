@@ -298,6 +298,7 @@
 #define STRING_BATTLE_MENU_SPELL                                     "SPELL"
 #define STRING_BATTLE_MENU_ITEM                                      "ITEM"
 
+#define STRING_NPC_DEFAULT                                           "No response. How rude."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_1                        "\"Hello %s!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_2                        "\"...\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_3                        "King Lorik suddenly convulses grotesquely..."
