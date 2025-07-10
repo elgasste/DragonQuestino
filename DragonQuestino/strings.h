@@ -312,5 +312,8 @@
 #define STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_2                 "\"Save your money for more expensive armor!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_RIGHTSOLDIER                  "\"It's best to try and listen to what people say, it could be of great help!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_MOVINGSOLDIER                 "\"It's good to see you again %s, may good fortune always be with you!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_1         "\"King Lorik has recently been heard speaking what seems to be gibberish.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_2         "\"Some say only the descendants of Erdrick can understand him.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSLOWERSOLDIER           "\"Guard duty is quite boring.\""
 
 #endif // STRINGS_H

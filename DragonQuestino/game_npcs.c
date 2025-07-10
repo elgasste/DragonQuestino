@@ -38,6 +38,13 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_MOVINGSOLDIER, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
          break;
+      case 5: // Tantegel ground floor top soldier next to throne room stairs
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_2 );
+         break;
+      case 6: // Tantegel ground floor bottom soldier next to throne room stairs
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSLOWERSOLDIER );
+         break;
       default:
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
