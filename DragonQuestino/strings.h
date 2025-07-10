@@ -339,5 +339,12 @@
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_2         "\"Rumor has it that you must push on a wall of darkness to find it.\""
 #define STRING_NPC_TANTEGEL_BASEMENT_WIZARD_1                        "\"I have waited a long time for one such as you to arrive. Take this treasure so that I may finally rest.\""
 #define STRING_NPC_TANTEGEL_BASEMENT_WIZARD_2                        "\"If your business here is finished, please leave me at peace.\""
+#define STRING_NPC_BRECCONARY_WESTENTRANCEBLUEMAN                    "\"Welcome to the town of Brecconary!\""
+#define STRING_NPC_BRECCONARY_WEAPONSHOPBLUEWOMAN                    "\"Welcome! To purchase weapons, speak to my father across the desk.\""
+#define STRING_NPC_BRECCONARY_LEFTROOMBLUEMAN                        "\"Somewhere in Alefgard there is a shop that sells magic keys. I hope to go there one day!\""
+#define STRING_NPC_BRECCONARY_RIGHTROOMWIZARD                        "\"Should you find yourself cursed, come and see me.\""
+#define STRING_NPC_BRECCONARY_INNSTATICSOLDIER                       "\"Who's touching me?! I can neither see nor hear!\""
+#define STRING_NPC_BRECCONARY_LOWERRIGHTSTATICBLUEMAN                "\"Our door is always open, come on in!\""
+#define STRING_NPC_BRECCONARY_UPPERRIGHTSOLDIER                      "\"Beware of bridges, danger tends to increase when crossing them!\""
 
 #endif // STRINGS_H

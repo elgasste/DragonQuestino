@@ -98,6 +98,27 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 22: // Tantegel basement wizard
          Dialog_PushSection( &( game->dialog ), ( game->gameFlags.treasures & 0x80 ) ? STRING_NPC_TANTEGEL_BASEMENT_WIZARD_1 : STRING_NPC_TANTEGEL_BASEMENT_WIZARD_2 );
          break;
+      case 23: // Brecconary west entrance blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_WESTENTRANCEBLUEMAN );
+         break;
+      case 24: // Brecconary weapon shop blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_WEAPONSHOPBLUEWOMAN );
+         break;
+      case 25: // Brecconary left room blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LEFTROOMBLUEMAN );
+         break;
+      case 26: // Brecconary right room wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD );
+         break;
+      case 27: // Brecconary inn static soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNSTATICSOLDIER );
+         break;
+      case 28: // Brecconary lower-right area static blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTSTATICBLUEMAN );
+         break;
+      case 29: // Brecconary upper-right soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERRIGHTSOLDIER );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
