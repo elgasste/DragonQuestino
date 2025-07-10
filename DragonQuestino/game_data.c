@@ -19216,7 +19216,13 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.destinationTileMapIndex = 0;
          tileMap->evacPortal.destinationTileIndex = 0;
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
-         tileMap->staticSpriteCount = 0;
+         tileMap->staticSpriteCount = 2;
+         Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 5 );
+         tileMap->staticSprites[0].position.x = 112;
+         tileMap->staticSprites[0].position.y = 128;
+         Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 4 );
+         tileMap->staticSprites[1].position.x = 128;
+         tileMap->staticSprites[1].position.y = 320;
          tileMap->npcCount = 7;
          for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 23;
@@ -19373,7 +19379,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tiles32[505] = 0x00200006;
          tiles32[560] = 0x00060020;
          tiles32[561] = 0x00200161;
-         tiles32[563] = 0x00200127;
+         tiles32[563] = 0x00000127;
          for ( i = 565; i < 567; i++ ) tiles32[i] = 0x02630263;
          tiles32[567] = 0x01270020;
          tiles32[568] = 0x02630127;
@@ -19492,7 +19498,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tiles32[1345] = 0x0020000C;
          tiles32[1400] = 0x00060020;
          tiles32[1403] = 0x00060020;
-         tiles32[1404] = 0x01270020;
+         tiles32[1404] = 0x01270000;
          tiles32[1405] = 0x00200006;
          tiles32[1408] = 0x00200127;
          tiles32[1409] = 0x00200161;
