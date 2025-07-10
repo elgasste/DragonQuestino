@@ -234,7 +234,7 @@
 #define STRING_ENEMY_GREENDRAGON                                     "green dragon"
 #define STRING_ENEMY_BLUEDRAGON                                      "blue dragon"
 #define STRING_ENEMY_REDDRAGON                                       "red dragon"
-#define STRING_ENEMY_DRAGONLORD                                      "dragonlord"
+#define STRING_ENEMY_DRAGONLORD                                      "Dragonlord"
 
 #define STRING_BATTLE_COMMAND                                        "Command?"
 #define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches!"
@@ -327,5 +327,12 @@
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSBLUEMAN                "\"There was a time when Brecconary was a paradise. Then the Dragonlord's minions came.\""
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_1         "\"I hope and pray each day that the Princess is returned safely!\""
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_2         "\"You have my eternal gratitude for rescuing the Princess, you are a true hero!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_1     "\"We are merchants who have traveled all over the land of Alefgard.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_2     "\"Many of our colleagues have been killed by servants of the Dragonlord.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT        "\"Rumor has it that entire towns have been destroyed by the Dragonlord's servants.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_1        "\"I've always been told that brave men never steal.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_2        "\"...but for the hero tasked with saving the world, I suppose extra supplies can't hurt.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER                 "\"Doors won't open without a key.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER           "\"I've been looking for the castle cellar for over an hour, I heard it's difficult to find!\""
 
 #endif // STRINGS_H
