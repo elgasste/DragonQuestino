@@ -315,5 +315,14 @@
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_1         "\"King Lorik has recently been heard speaking what seems to be gibberish.\""
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_2         "\"Some say only the descendants of Erdrick can understand him.\""
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSLOWERSOLDIER           "\"Guard duty is quite boring.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_1   "\"One day, I will have Princess Gwaelin's hand in marriage, you'll see!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_2   "\"Gwaelin, my love..... please just get out of my sight!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER             "\"Welcome to Tantegel Castle!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_1          "\"Bienvenido al castillo de Tantegel!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_2          "\"...I've been practicing, how did I do?\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN       "\"If you face enough foes, you'll become strong enough to battle fierce enemies.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_1  "\"When the sun and rain meet, a rainbow bridge shall appear.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_2  "\"At least, that's what legends say. I wonder what it means?\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_STATICBARRIERSOLDIER         "\"I wouldn't go in there if your hit points are low.\""
 
 #endif // STRINGS_H

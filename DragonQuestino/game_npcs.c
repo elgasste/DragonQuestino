@@ -45,6 +45,26 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 6: // Tantegel ground floor bottom soldier next to throne room stairs
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSLOWERSOLDIER );
          break;
+      case 7: // Tantegel ground floor bottom right static soldier
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_2 : STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_1 );
+         break;
+      case 8: // Tantegel ground floor entry left soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER );
+         break;
+      case 9: // Tantegel ground floor entry right soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_2 );
+         break;
+      case 10: // Tantegel ground floor upper-left static blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN );
+         break;
+      case 11: // Tantegel ground floor upper-right static blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_2 );
+         break;
+      case 12: // Tantegel ground floor static barrier soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STATICBARRIERSOLDIER );
+         break;
       default:
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
