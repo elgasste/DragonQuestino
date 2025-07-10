@@ -17,7 +17,12 @@ namespace DragonQuestinoEditor
          AssetsBasePath + "player_sprite.png",
          AssetsBasePath + "king_sprite.png",
          AssetsBasePath + "princess_sprite.png",
-         AssetsBasePath + "soldier_sprite.png"
+         AssetsBasePath + "soldier_sprite.png",
+         AssetsBasePath + "blue_hair_man_sprite.png",
+         AssetsBasePath + "blue_dress_woman_sprite.png",
+         AssetsBasePath + "green_man_sprite.png",
+         AssetsBasePath + "brown_soldier_sprite.png",
+         AssetsBasePath + "wizard_sprite.png"
       ];
 
       public const string GameDataSourceFilePath = SourceBasePath + "game_data.c";

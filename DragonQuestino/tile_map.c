@@ -314,8 +314,7 @@ internal void TileMap_DrawStaticSprites( TileMap_t* tileMap )
       sx = sprite->position.x - viewport->x;
       sy = sprite->position.y - viewport->y;
 
-      if ( Math_RectsIntersect32i( sprite->position.x, sprite->position.y, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
-                                   viewport->x, viewport->y, viewport->w, viewport->h ) )
+      if ( Math_RectsIntersect32i( sx, sy, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, 0, 0, viewport->w, viewport->h ) )
       {
          tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
          ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;

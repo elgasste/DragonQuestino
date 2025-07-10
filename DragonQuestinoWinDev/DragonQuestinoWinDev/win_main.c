@@ -345,6 +345,10 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
+   sprintf_s( str, STRING_SIZE_DEFAULT, "   Tile Index: %u", g_globals.game.player.tileIndex );
+   DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
+   r.top += 16;
+
    sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
    SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Up].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
