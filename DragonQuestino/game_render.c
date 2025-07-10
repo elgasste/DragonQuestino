@@ -384,9 +384,7 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game )
       sx = (int32_t)( sprite->position.x - viewport->x + sprite->offset.x );
       sy = (int32_t)( sprite->position.y - viewport->y + sprite->offset.y );
 
-      if ( Math_RectsIntersect32i( (int32_t)( sprite->position.x ), (int32_t)( sprite->position.y ),
-                                   SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE,
-                                   viewport->x, viewport->y, viewport->w, viewport->h ) )
+      if ( Math_RectsIntersect32i( sx, sy, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, 0, 0, viewport->w, viewport->h ) )
       {
          tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
          ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
@@ -402,7 +400,18 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game )
 #if defined( VISUAL_STUDIO_DEV )
          if ( g_debugFlags.showHitBoxes )
          {
-            Screen_DrawRectColor( &( game->screen ), sxu - sprite->offset.x, syu - sprite->offset.y, sprite->hitBoxSize.x, sprite->hitBoxSize.y, COLOR_RED );
+            sx = (int32_t)( sprite->position.x - viewport->x );
+            sy = (int32_t)( sprite->position.y - viewport->y );
+            if ( Math_RectsIntersect32i( sx, sy, sprite->hitBoxSize.x, sprite->hitBoxSize.y, 0, 0, viewport->w, viewport->h ) )
+            {
+               tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
+               ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
+               tw = ( ( sx + (int32_t)( sprite->hitBoxSize.x ) ) > viewport->w ) ? ( viewport->w - sx ) : ( (int32_t)( sprite->hitBoxSize.x ) - tx );
+               th = ( ( sy + (int32_t)( sprite->hitBoxSize.y ) ) > viewport->h ) ? ( viewport->h - sy ) : ( (int32_t)( sprite->hitBoxSize.y ) - ty );
+               sxu = ( sx < 0 ) ? 0 : sx;
+               syu = ( sy < 0 ) ? 0 : sy;
+               Screen_DrawRectColor( &( game->screen ), sxu, syu, tw, th, COLOR_RED );
+            }
          }
 #endif
       }

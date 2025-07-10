@@ -65,6 +65,12 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 12: // Tantegel ground floor static barrier soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STATICBARRIERSOLDIER );
          break;
+      case 13: // Tantegel ground floor blue man by the stairs
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSBLUEMAN );
+         break;
+      case 14: // Tantegel ground floor blue woman in the courtyard
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_2 : STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_2 );
+         break;
       default:
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;

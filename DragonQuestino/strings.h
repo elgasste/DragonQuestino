@@ -324,5 +324,8 @@
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_1  "\"When the sun and rain meet, a rainbow bridge shall appear.\""
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_2  "\"At least, that's what legends say. I wonder what it means?\""
 #define STRING_NPC_TANTEGEL_GROUNDFLOOR_STATICBARRIERSOLDIER         "\"I wouldn't go in there if your hit points are low.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSBLUEMAN                "\"There was a time when Brecconary was a paradise. Then the Dragonlord's minions came.\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_1         "\"I hope and pray each day that the Princess is returned safely!\""
+#define STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_2         "\"You have my eternal gratitude for rescuing the Princess, you are a true hero!\""
 
 #endif // STRINGS_H
