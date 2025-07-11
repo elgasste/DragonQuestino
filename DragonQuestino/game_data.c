@@ -28480,6 +28480,7 @@ uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 453 ) return 0x00020000;
          break;
       case 4:
+         if ( tileIndex == 246 ) return 0x02000000;
          if ( tileIndex == 774 ) return 0x00000002;
          break;
       case 7:
