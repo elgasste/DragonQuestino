@@ -98,6 +98,55 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 22: // Tantegel basement wizard
          Dialog_PushSection( &( game->dialog ), ( game->gameFlags.treasures & 0x80 ) ? STRING_NPC_TANTEGEL_BASEMENT_WIZARD_1 : STRING_NPC_TANTEGEL_BASEMENT_WIZARD_2 );
          break;
+      case 23: // Brecconary west entrance blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_WESTENTRANCEBLUEMAN );
+         break;
+      case 24: // Brecconary weapon shop blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_WEAPONSHOPBLUEWOMAN );
+         break;
+      case 25: // Brecconary left room blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LEFTROOMBLUEMAN );
+         break;
+      case 26: // Brecconary right room wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD );
+         break;
+      case 27: // Brecconary inn static soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNSTATICSOLDIER );
+         break;
+      case 28: // Brecconary lower-right area static blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTSTATICBLUEMAN );
+         break;
+      case 29: // Brecconary upper-right soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERRIGHTSOLDIER );
+         break;
+      case 30: // Brecconary upper wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERWIZARD );
+         break;
+      case 31: // Brecconary upper green man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERGREENMAN );
+         break;
+      case 32: // Brecconary center blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERBLUEMAN );
+         break;
+      case 33: // Brecconary center red soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERREDSOLDIER_1 );
+         sprintf( msg, STRING_NPC_BRECCONARY_CENTERREDSOLDIER_2, game->player.name );
+         Dialog_PushSection( &( game->dialog ), msg );
+         break;
+      case 34: // Brecconary east of the inn blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_EASTOFINNBLUEWOMAN );
+         break;
+      case 35: // Brecconary right soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTSOLDIER );
+         break;
+      case 36: // Brecconary active blue man in the lower right
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTACTIVEBLUEMAN_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTACTIVEBLUEMAN_2 );
+         break;
+      case 37 : // Brecconary active soldier in the inn:
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNACTIVESOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNACTIVESOLDIER_2 );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;

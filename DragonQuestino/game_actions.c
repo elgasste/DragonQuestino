@@ -5,38 +5,38 @@
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 internal void Game_FoundHiddenStairsCallback( Game_t* game );
 internal void Game_TakeHiddenStairsCallback( Game_t* game );
+internal void Game_TalkToNpc( Game_t* game, NonPlayerCharacter_t* npc );
 
 void Game_Talk( Game_t* game )
 {
-   uint32_t i, tileIndex;
+   uint32_t i, facingTileIndex;
    Bool_t canTalk = False;
    NonPlayerCharacter_t* npc;
+   ActiveSprite_t* playerSprite = &( game->player.sprite );
 
    if ( game->tileMap.npcCount > 0 )
    {
-      tileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
+      facingTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
 
       for ( i = 0; i < game->tileMap.npcCount; i++ )
       {
          npc = &( game->tileMap.npcs[i] );
 
-         if ( npc->tileIndex == tileIndex )
+         if ( npc->tileIndex == game->player.tileIndex )
          {
-            if ( npc->wanders )
+            if ( ( playerSprite->direction == Direction_Left && ( npc->sprite.position.x < playerSprite->position.x ) ) ||
+                 ( playerSprite->direction == Direction_Right && ( npc->sprite.position.x > playerSprite->position.x ) ) ||
+                 ( playerSprite->direction == Direction_Up && ( npc->sprite.position.y < playerSprite->position.y ) ) ||
+                 ( playerSprite->direction == Direction_Down && ( npc->sprite.position.y > playerSprite->position.y ) ) )
             {
-               TileMap_StopNpc( npc );
-               
-               switch ( game->player.sprite.direction )
-               {
-                  case Direction_Left: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Right ); break;
-                  case Direction_Up: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Down ); break;
-                  case Direction_Right: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Left ); break;
-                  case Direction_Down: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Up ); break;
-               }
+               canTalk = True;
+               Game_TalkToNpc( game, npc );
             }
-
+         }
+         else if ( npc->tileIndex == facingTileIndex )
+         {
             canTalk = True;
-            Game_RunNpcDialog( game, npc->id );
+            Game_TalkToNpc( game, npc );
             break;
          }
       }
@@ -274,4 +274,22 @@ internal void Game_FoundHiddenStairsCallback( Game_t* game )
 internal void Game_TakeHiddenStairsCallback( Game_t* game )
 {
    Game_PlayerSteppedOnTile( game );
+}
+
+internal void Game_TalkToNpc( Game_t* game, NonPlayerCharacter_t* npc )
+{
+   if ( npc->wanders )
+   {
+      TileMap_StopNpc( npc );
+
+      switch ( game->player.sprite.direction )
+      {
+         case Direction_Left: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Right ); break;
+         case Direction_Up: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Down ); break;
+         case Direction_Right: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Left ); break;
+         case Direction_Down: ActiveSprite_SetDirection( &( npc->sprite ), Direction_Up ); break;
+      }
+   }
+
+   Game_RunNpcDialog( game, npc->id );
 }
