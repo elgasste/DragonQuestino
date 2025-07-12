@@ -394,6 +394,9 @@
 #define STRING_NPC_CANTLIN_NESTER_2                                  "\"...where the heck are we? No, don't tell me!\""
 #define STRING_NPC_CANTLIN_RIGHTGREENMAN_1                           "\"My grandfather used to talk all the time about his friend, Wynn.\""
 #define STRING_NPC_CANTLIN_RIGHTGREENMAN_2                           "\"He said Wynn came across something of great value, and buried it beneath the foot of a tree behind his shop.\""
-#define STRING_NPC_CANTLIN_BARRIERWIZARD                             "\"I think I'm probably supposed to tell you where to get the rainbow drop!\""
+#define STRING_NPC_CANTLIN_BARRIERWIZARD_1                           "\"Seek from the King's home, and ye shall find...\""
+#define STRING_NPC_CANTLIN_BARRIERWIZARD_2                           "\"70 leagues to the south, 40 leagues to the east...\""
+#define STRING_NPC_CANTLIN_BARRIERWIZARD_3                           "\"The token of Erdrick, his descendent awaiteth!\""
+#define STRING_NPC_CANTLINCOURTYARD_WIZARD                           "\"I've heard tell that someone in this very town knows where to find Erdrick's token!\""
 
 #endif // STRINGS_H

@@ -239,7 +239,12 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_RIGHTGREENMAN_2 );
          break;
       case 66: // Cantlin barrier wizard
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_BARRIERWIZARD );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_BARRIERWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_BARRIERWIZARD_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_BARRIERWIZARD_3 );
+         break;
+      case 67: // Cantlin courtyard wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLINCOURTYARD_WIZARD );
          break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
