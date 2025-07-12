@@ -212,6 +212,40 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 58: // Kol lower-left green man
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LOWERLEFTGREENMAN );
          break;
+      case 59: // Cantlin upper-left soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_UPPERLEFTSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_UPPERLEFTSOLDIER_2 );
+         break;
+      case 60: // Cantlin upper soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_UPPERSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_UPPERSOLDIER_2 );
+         break;
+      case 61: // Cantlin upper-right soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_UPPERRIGHTSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_UPPERRIGHTSOLDIER_2 );
+         break;
+      case 62: // Cantlin left-upper blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_LEFTUPPERBLUEWOMAN );
+         break;
+      case 63: // Cantlin left-lower blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_LEFTLOWERBLUEWOMAN );
+         break;
+      case 64: // Cantlin Nester
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_NESTER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_NESTER_2 );
+         break;
+      case 65: // Cantlin right green man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_RIGHTGREENMAN_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_RIGHTGREENMAN_2 );
+         break;
+      case 66: // Cantlin barrier wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_BARRIERWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_BARRIERWIZARD_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_BARRIERWIZARD_3 );
+         break;
+      case 67: // Cantlin courtyard wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLINCOURTYARD_WIZARD );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
