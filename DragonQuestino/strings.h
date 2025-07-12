@@ -370,5 +370,17 @@
 #define STRING_NPC_GARINHAMINSIDE_WIZARD_1                           "\"They say Erdrick wore a suit of armor that could withstand even a dragon's flame.\""
 #define STRING_NPC_GARINHAMINSIDE_WIZARD_2                           "\"The armor was lost over time, hidden away somewhere.\""
 #define STRING_NPC_GARINHAMINSIDE_BLUEWOMAN                          "\"I hate people, get away from me!\""
+#define STRING_NPC_KOL_STATICRIGHTSOLDIER                            "\"To the east of Hauksness I've heard there's a town where one can find weapons of very fine quality!\""
+#define STRING_NPC_KOL_STATICBLUEWOMAN                               "\"This bath cures rheumatism.\""
+#define STRING_NPC_KOL_STATICLEFTSOLDIER                             "\"If you're looking for keys, Rimuldar is the place to go.\""
+#define STRING_NPC_KOL_ENTRANCEWIZARD                                "\"Welcome to the village of Kol!\""
+#define STRING_NPC_KOL_ENTRANCEBLUEMAN                               "\"The island to the south is quite dreadful, unless you have great strength I would stay away!\""
+#define STRING_NPC_KOL_COURTYARDBLUEWOMAN                            "\"Every day I pray for us all to be saved from the minions of the Dragonlord.\""
+#define STRING_NPC_KOL_COURTYARDSOLDIER_1                            "\"A friend of mine from Cantlin told me a secret...\""
+#define STRING_NPC_KOL_COURTYARDSOLDIER_2                            "\"He said the Golem is afraid of the Fairy's music.\""
+#define STRING_NPC_KOL_COURTYARDBROWNSOLDIER                         "\"Have you seen Nester lately, by any chance? I think he might need help!\""
+#define STRING_NPC_KOL_LEFTWIZARD_1                                  "\"Howard used to have the Fairy Flute, but he went to Rimuldar and never returned.\""
+#define STRING_NPC_KOL_LEFTWIZARD_2                                  "\"Oh, I see you have the Fairy Flute, I'm glad Howard returned it!\""
+#define STRING_NPC_KOL_LOWERLEFTGREENMAN                             "\"The town of Rimuldar is to the south of here, or so I've heard.\""
 
 #endif // STRINGS_H

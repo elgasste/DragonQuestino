@@ -181,6 +181,38 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 48: // Garinham inside blue woman
          Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_BLUEWOMAN );
          break;
+      case 49: // Kol right-side static soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_STATICRIGHTSOLDIER );
+         break;
+      case 50: // Kol static blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_STATICBLUEWOMAN );
+         break;
+      case 51: // Kol left-side static soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_STATICLEFTSOLDIER );
+         break;
+      case 52: // Kol wizard at the entrance
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEWIZARD );
+         break;
+      case 53: // Kol blue man at the entrance
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEBLUEMAN );
+         break;
+      case 54: // Kol blue woman in the courtyard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBLUEWOMAN );
+         break;
+      case 55: // Kol soldier in the courtyard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDSOLDIER_2 );
+         break;
+      case 56: // Kol brown soldier in the courtyard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBROWNSOLDIER );
+         break;
+      case 57: // Kol left-side wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LEFTWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LEFTWIZARD_1 );
+         break;
+      case 58: // Kol lower-left green man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LOWERLEFTGREENMAN );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
