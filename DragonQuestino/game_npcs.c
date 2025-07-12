@@ -207,8 +207,7 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBROWNSOLDIER );
          break;
       case 57: // Kol left-side wizard
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LEFTWIZARD_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LEFTWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), ITEM_HAS_FAIRYFLUTE( game->player.items ) ? STRING_NPC_KOL_LEFTWIZARD_2 : STRING_NPC_KOL_LEFTWIZARD_1 );
          break;
       case 58: // Kol lower-left green man
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LOWERLEFTGREENMAN );
