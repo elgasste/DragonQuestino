@@ -13951,7 +13951,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
    int32_t i, j;
    uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
 
-   tileMap->gameFlags->doors = ( 0xFFFF0000 | ( tileMap->gameFlags->doors & 0xFFFF ) );
+   if ( id == TILEMAP_OVERWORLD_ID ) tileMap->gameFlags->doors = ( 0xFFFF0000 | ( tileMap->gameFlags->doors & 0xFFFF ) );
 
    Random_Seed();
 
