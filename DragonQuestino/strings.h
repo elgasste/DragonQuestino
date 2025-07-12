@@ -382,5 +382,18 @@
 #define STRING_NPC_KOL_LEFTWIZARD_1                                  "\"Howard used to have the Fairy Flute, but he went to Rimuldar and never returned.\""
 #define STRING_NPC_KOL_LEFTWIZARD_2                                  "\"Oh, I see you have the Fairy Flute, I'm glad Howard returned it!\""
 #define STRING_NPC_KOL_LOWERLEFTGREENMAN                             "\"The town of Rimuldar is to the south of here, or so I've heard.\""
+#define STRING_NPC_CANTLIN_UPPERLEFTSOLDIER_1                        "\"It's said that the Dragonlord has claws that can cleave iron and fiery breath that can melt stone!\""
+#define STRING_NPC_CANTLIN_UPPERLEFTSOLDIER_2                        "\"If you still plan to face him, you must be a true hero!\""
+#define STRING_NPC_CANTLIN_UPPERSOLDIER_1                            "\"Welcome to the castle town of Cantlin!\""
+#define STRING_NPC_CANTLIN_UPPERSOLDIER_2                            "\"...wait, how did you get in here?\""
+#define STRING_NPC_CANTLIN_UPPERRIGHTSOLDIER_1                       "\"Apparently Erdrick's Armor passed down from generation to generation.\""
+#define STRING_NPC_CANTLIN_UPPERRIGHTSOLDIER_2                       "\"Eventually it wound up in Wynn's hands, and he hid it away somewhere.\""
+#define STRING_NPC_CANTLIN_LEFTUPPERBLUEWOMAN                        "\"I can't decide what to eat for dinner...\""
+#define STRING_NPC_CANTLIN_LEFTLOWERBLUEWOMAN                        "\"I'm sorry, but I can't help you, I've never left this town.\""
+#define STRING_NPC_CANTLIN_NESTER_1                                  "\"Hey there, I'm Nester!\""
+#define STRING_NPC_CANTLIN_NESTER_2                                  "\"...where the heck are we? No, don't tell me!\""
+#define STRING_NPC_CANTLIN_RIGHTGREENMAN_1                           "\"My grandfather used to talk all the time about his friend, Wynn.\""
+#define STRING_NPC_CANTLIN_RIGHTGREENMAN_2                           "\"He said Wynn came across something of great value, and buried it beneath the foot of a tree behind his shop.\""
+#define STRING_NPC_CANTLIN_BARRIERWIZARD                             "\"I think I'm probably supposed to tell you where to get the rainbow drop!\""
 
 #endif // STRINGS_H
