@@ -147,6 +147,21 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNACTIVESOLDIER_1 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNACTIVESOLDIER_2 );
          break;
+      case 38: // Garinham outside lower-left wizard
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_GARINHAMOUTSIDE_LOWERLEFTWIZARD_2 : STRING_NPC_GARINHAMOUTSIDE_LOWERLEFTWIZARD_1 );
+         break;
+      case 39: // Garinham outside left wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_LEFTWIZARD );
+         break;
+      case 40: // Garinham outside soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER );
+         break;
+      case 41: // Garinham outside blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEWOMAN );
+         break;
+      case 42: // Garinham outside blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEMAN );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;

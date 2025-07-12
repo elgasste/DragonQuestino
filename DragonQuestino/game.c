@@ -77,6 +77,7 @@ void Game_Load( Game_t* game, const char* password )
    game->gameFlags.specialEnemies = 0xFF;
    game->gameFlags.usedRainbowDrop = False;
    game->gameFlags.foundHiddenStairs = False;
+   game->gameFlags.rescuedPrincess = False;
 }
 
 void Game_Tic( Game_t* game )
