@@ -357,5 +357,18 @@
 #define STRING_NPC_BRECCONARY_LOWERRIGHTACTIVEBLUEMAN_2              "\"That is the fortress of the Dragonlord, I would steer clear!\""
 #define STRING_NPC_BRECCONARY_INNACTIVESOLDIER_1                     "\"Some say that Garin is buried in a deep grave somewhere in Alefgard...\""
 #define STRING_NPC_BRECCONARY_INNACTIVESOLDIER_2                     "\"And though the grave is infested with the Dragonlord's minions, the Silver Harp is buried somewhere within.\""
+#define STRING_NPC_GARINHAMOUTSIDE_LOWERLEFTWIZARD_1                 "\"Many believe that Princess Gwaelin is hidden away in a cave.\""
+#define STRING_NPC_GARINHAMOUTSIDE_LOWERLEFTWIZARD_2                 "\"The rumors were true, Princess Gwaelin was indeed hidden away in a cave.\""
+#define STRING_NPC_GARINHAMOUTSIDE_LEFTWIZARD                        "\"Garin is a wandering minstrel of legendary fame. He is said to have built this town.\""
+#define STRING_NPC_GARINHAMOUTSIDE_SOLDIER                           "\"Have you met Nester? Great guy, you should meet him!\""
+#define STRING_NPC_GARINHAMOUTSIDE_BLUEWOMAN                         "\"Welcome to Garinham, enjoy your stay here!\""
+#define STRING_NPC_GARINHAMOUTSIDE_BLUEMAN                           "\"I've heard rumors that the Princess was kidnapped and taken eastward.\""
+#define STRING_NPC_GARINHAMINSIDE_LEFTGUARD                          "\"I'm a little busy over here, could you ask the other guard?\""
+#define STRING_NPC_GARINHAMINSIDE_RIGHTGUARD                         "\"I have no idea, try asking the other guard.\""
+#define STRING_NPC_GARINHAMINSIDE_BLUEMAN                            "\"Once there was a town called Hauksness far to the south, I wonder if it's still there?\""
+#define STRING_NPC_GARINHAMINSIDE_GREENMAN                           "\"I've learned that if I find myself in a dark place, it helps to make a map.\""
+#define STRING_NPC_GARINHAMINSIDE_WIZARD_1                           "\"They say Erdrick wore a suit of armor that could withstand even a dragon's flame.\""
+#define STRING_NPC_GARINHAMINSIDE_WIZARD_2                           "\"The armor was lost over time, hidden away somewhere.\""
+#define STRING_NPC_GARINHAMINSIDE_BLUEWOMAN                          "\"I hate people, get away from me!\""
 
 #endif // STRINGS_H

@@ -147,6 +147,40 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNACTIVESOLDIER_1 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNACTIVESOLDIER_2 );
          break;
+      case 38: // Garinham outside lower-left wizard
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_GARINHAMOUTSIDE_LOWERLEFTWIZARD_2 : STRING_NPC_GARINHAMOUTSIDE_LOWERLEFTWIZARD_1 );
+         break;
+      case 39: // Garinham outside left wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_LEFTWIZARD );
+         break;
+      case 40: // Garinham outside soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER );
+         break;
+      case 41: // Garinham outside blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEWOMAN );
+         break;
+      case 42: // Garinham outside blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEMAN );
+         break;
+      case 43: // Garinham inside left guard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_LEFTGUARD );
+         break;
+      case 44: // Garinham inside right guard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_RIGHTGUARD );
+         break;
+      case 45: // Garinham inside blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_BLUEMAN );
+         break;
+      case 46: // Garinham inside green man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_GREENMAN );
+         break;
+      case 47: // Garinham inside wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_WIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_WIZARD_2 );
+         break;
+      case 48: // Garinham inside blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_BLUEWOMAN );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
