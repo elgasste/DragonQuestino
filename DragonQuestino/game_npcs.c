@@ -162,6 +162,25 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 42: // Garinham outside blue man
          Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEMAN );
          break;
+      case 43: // Garinham inside left guard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_LEFTGUARD );
+         break;
+      case 44: // Garinham inside right guard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_RIGHTGUARD );
+         break;
+      case 45: // Garinham inside blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_BLUEMAN );
+         break;
+      case 46: // Garinham inside green man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_GREENMAN );
+         break;
+      case 47: // Garinham inside wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_WIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_WIZARD_2 );
+         break;
+      case 48: // Garinham inside blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_BLUEWOMAN );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
