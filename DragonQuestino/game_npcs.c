@@ -246,6 +246,27 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 67: // Cantlin courtyard wizard
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLINCOURTYARD_WIZARD );
          break;
+      case 68: // Rimuldar inn wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNWIZARD_2 );
+         break;
+      case 69: // Rimuldar upper static blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_UPPERSTATICBLUEWOMAN );
+         break;
+      case 70: // Rimuldar left static wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_2 );
+         break;
+      case 71: // Rimuldar upper-right edge of town blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_UPPERRIGHTEDGEBLUEMAN );
+         break;
+      case 72: // Rimuldar lower-left edge of town blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_LOWERLEFTEDGEBLUEWOMAN );
+         break;
+      case 73: // Rimuldar upper-left static green man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_UPPERLEFTSTATICGREENMAN );
+         break;
+
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;

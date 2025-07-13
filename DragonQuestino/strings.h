@@ -398,5 +398,15 @@
 #define STRING_NPC_CANTLIN_BARRIERWIZARD_2                           "\"70 leagues to the south, 40 leagues to the east...\""
 #define STRING_NPC_CANTLIN_BARRIERWIZARD_3                           "\"The token of Erdrick, his descendent awaiteth!\""
 #define STRING_NPC_CANTLINCOURTYARD_WIZARD                           "\"I've heard tell that someone in this very town knows where to find Erdrick's token!\""
+#define STRING_NPC_RIMULDAR_INNWIZARD_1                              "\"Good day to you, my name is Howard!\""
+#define STRING_NPC_RIMULDAR_INNWIZARD_2                              "\"I'll let you in on a secret... take a look four paces south of the bath in Kol.\""
+#define STRING_NPC_RIMULDAR_UPPERSTATICBLUEWOMAN                     "\"Who are you? Please leave me alone, or I'll call my friends over!\""
+#define STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_1                       "\"Legends say that Erdrick once created a rainbow bridge over the western part of this island.\""
+#define STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_2                       "\"It's also said that he descended into the darkness from a hidden entrance in the throne room of the Dragonlord.\""
+#define STRING_NPC_RIMULDAR_UPPERRIGHTEDGEBLUEMAN                    "\"Hi, I'm Orwick! I'm just waiting here for my girlfriend to arrive.\""
+#define STRING_NPC_RIMULDAR_LOWERLEFTEDGEBLUEWOMAN                   "\"Ugh, Orwick is late again, as usual. I'm starving!\""
+#define STRING_NPC_RIMULDAR_UPPERLEFTSTATICGREENMAN                  "\"Welcome!\""
+
+#define STRING_NPC_RIMULDAR_ENTRANCEBLUEWOMAN                        "\"No, I have no tomatoes. I have no tomatoes today.\""
 
 #endif // STRINGS_H
