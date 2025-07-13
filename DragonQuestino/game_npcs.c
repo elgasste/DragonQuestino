@@ -246,6 +246,57 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 67: // Cantlin courtyard wizard
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLINCOURTYARD_WIZARD );
          break;
+      case 68: // Rimuldar inn wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNWIZARD_2 );
+         break;
+      case 69: // Rimuldar upper static blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_UPPERSTATICBLUEWOMAN );
+         break;
+      case 70: // Rimuldar left static wizard
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_2 );
+         break;
+      case 71: // Rimuldar upper-right edge of town blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_UPPERRIGHTEDGEBLUEMAN );
+         break;
+      case 72: // Rimuldar lower-left edge of town blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_LOWERLEFTEDGEBLUEWOMAN );
+         break;
+      case 73: // Rimuldar upper-left static green man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_UPPERLEFTSTATICGREENMAN );
+         break;
+      case 74: // Rimuldar entrance blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_ENTRANCEBLUEWOMAN );
+         break;
+      case 75: // Rimuldar center blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_CENTERBLUEMAN );
+         break;
+      case 76: // Rimuldar inn soldier
+         sprintf( msg, STRING_NPC_RIMULDAR_INNSOLDIER, game->player.name );
+         Dialog_PushSection( &( game->dialog ), msg );
+         break;
+      case 77: // Rimuldar weapon shop soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_WEAPONSHOPSOLDIER );
+         break;
+      case 78: // Rimuldar upper room blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_UPPERROOMBLUEMAN );
+         break;
+      case 79: // Rimuldar lower-left soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_LOWERLEFTSOLDIER );
+         break;
+      case 80: // Rimuldar lower soldier
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_RIMULDAR_LOWERSOLDIER_2 : STRING_NPC_RIMULDAR_LOWERSOLDIER_1 );
+         break;
+      case 81: // Rimuldar center building upper-left blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDARBUILDING_UPPERLEFTBLUEWOMAN );
+         break;
+      case 82: // Rimuldar center building lower-left blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDARBUILDING_LOWERLEFTBLUEMAN );
+         break;
+      case 83: // Rimuldar center building lower-right soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDARBUILDING_LOWERRIGHTSOLDIER );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
