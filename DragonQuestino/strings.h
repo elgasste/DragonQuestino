@@ -402,11 +402,17 @@
 #define STRING_NPC_RIMULDAR_INNWIZARD_2                              "\"I'll let you in on a secret... take a look four paces south of the bath in Kol.\""
 #define STRING_NPC_RIMULDAR_UPPERSTATICBLUEWOMAN                     "\"Who are you? Please leave me alone, or I'll call my friends over!\""
 #define STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_1                       "\"Legends say that Erdrick once created a rainbow bridge over the western part of this island.\""
-#define STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_2                       "\"It's also said that he descended into the darkness from a hidden entrance in the throne room of the Dragonlord.\""
+#define STRING_NPC_RIMULDAR_LEFTSTATICWIZARD_2                       "\"They also say he entered the darkness from a hidden stairway in the throne room of the Dragonlord.\""
 #define STRING_NPC_RIMULDAR_UPPERRIGHTEDGEBLUEMAN                    "\"Hi, I'm Orwick! I'm just waiting here for my girlfriend to arrive.\""
 #define STRING_NPC_RIMULDAR_LOWERLEFTEDGEBLUEWOMAN                   "\"Ugh, Orwick is late again, as usual. I'm starving!\""
 #define STRING_NPC_RIMULDAR_UPPERLEFTSTATICGREENMAN                  "\"Welcome!\""
-
 #define STRING_NPC_RIMULDAR_ENTRANCEBLUEWOMAN                        "\"No, I have no tomatoes. I have no tomatoes today.\""
+#define STRING_NPC_RIMULDAR_CENTERBLUEMAN                            "\"Welcome to the town of Rimuldar!\""
+#define STRING_NPC_RIMULDAR_INNSOLDIER                               "\"Well if it isn't %s, I haven't seen you in quite some time!\""
+#define STRING_NPC_RIMULDAR_WEAPONSHOPSOLDIER                        "\"The scales of the Dragonlord are hard as steel, only the sword of Erdrick stands a chance against them!\""
+#define STRING_NPC_RIMULDAR_UPPERROOMBLUEMAN                         "\"The woman in the other room isn't very nice, I was only trying to say hello.\""
+#define STRING_NPC_RIMULDAR_LOWERLEFTSOLDIER                         "\"I've heard the Stone of Sunlight can be found in Tantegel castle, though not easily.\""
+#define STRING_NPC_RIMULDAR_LOWERSOLDIER_1                           "\"Ahh, it's a lovely feeling to be single, isn't it? I feel so free!\""
+#define STRING_NPC_RIMULDAR_LOWERSOLDIER_2                           "\"Is that a wedding ring on your finger? You seem pretty young to be married!\""
 
 #endif // STRINGS_H
