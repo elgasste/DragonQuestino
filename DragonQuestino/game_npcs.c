@@ -288,6 +288,15 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 80: // Rimuldar lower soldier
          Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_RIMULDAR_LOWERSOLDIER_2 : STRING_NPC_RIMULDAR_LOWERSOLDIER_1 );
          break;
+      case 81: // Rimuldar center building upper-left blue woman
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDARBUILDING_UPPERLEFTBLUEWOMAN );
+         break;
+      case 82: // Rimuldar center building lower-left blue man
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDARBUILDING_LOWERLEFTBLUEMAN );
+         break;
+      case 83: // Rimuldar center building lower-right soldier
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDARBUILDING_LOWERRIGHTSOLDIER );
+         break;
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
