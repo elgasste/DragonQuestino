@@ -359,8 +359,6 @@ internal void Game_StaffOfRainNpcCallback( Game_t* game )
    {
       ITEM_TOGGLE_HASSTAFFOFRAIN( game->player.items );
    }
-
-   game->tileMap.staticSpriteCount = 1;
 }
 
 internal void Game_RainbowDropNpcCallback( Game_t* game )
