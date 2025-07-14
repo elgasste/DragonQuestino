@@ -340,7 +340,14 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
             Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_1 );
             Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_2 );
          }
-
+      case 86: // Dragonlord
+         // TODO: show a yes/no dialog
+         sprintf( msg, STRING_NPC_CHARLOCK_DRAGONLORD_1_1, game->player.name );
+         Dialog_PushSection( &( game->dialog ), msg );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_3 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_4 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_5 );
          break;
 
       default: // should never happen, but it's nice to have a catch-all

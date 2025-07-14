@@ -433,5 +433,14 @@
 #define STRING_NPC_SOUTHERNSHRINE_WIZARD_3_2                         "\"And lo, the Goddess presents to us the most wondrous spectrum of colors...\""
 #define STRING_NPC_SOUTHERNSHRINE_WIZARD_3_3                         "\"I have used all the magic in my being to capture these colors in a vial, please take this Rainbow Drop!\""
 #define STRING_NPC_SOUTHERNSHRINE_WIZARD_4                           "\"Descendent of Erdrick, the Goddess smiles upon you!\""
+#define STRING_NPC_CHARLOCK_DRAGONLORD_1_1                           "\"Well met, %s! I am the Dragonlord, King of Kings!\""
+#define STRING_NPC_CHARLOCK_DRAGONLORD_1_2                           "\"I have been waiting for you, the descendent of Erdrick...\""
+#define STRING_NPC_CHARLOCK_DRAGONLORD_1_3                           "\"I acknowledge your strength and your bravery, and as such will offer you a choice.\""
+#define STRING_NPC_CHARLOCK_DRAGONLORD_1_4                           "\"Stand beside me, and share my power over Alefgard!\""
+#define STRING_NPC_CHARLOCK_DRAGONLORD_1_5                           "\"What say you? Will the great descendent of Erdrick stand with me?\""
+#define STRING_NPC_CHARLOCK_DRAGONLORD_2_1                           "\"Hahaha... I knew I sensed the evil within, such bravery and such destructive intent...\""
+#define STRING_NPC_CHARLOCK_DRAGONLORD_2_2                           "\"We shall rule this land and see its demise, %s!\""
+#define STRING_NPC_CHARLOCK_DRAGONLORD_2_3                           "Thus the hero became the ultimate villain, joining the Dragonlord to destroy Alefgard."
+#define STRING_NPC_CHARLOCK_DRAGONLORD_2_4                           "With no true heroes left, the entire kingdom was laid to waste."
 
 #endif // STRINGS_H
