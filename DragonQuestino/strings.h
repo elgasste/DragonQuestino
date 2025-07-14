@@ -423,5 +423,15 @@
 #define STRING_NPC_NORTHERNSHRINE_WIZARD_2_1                         "\"You have brought the harp, excellent! I have waited a long time for one such as you.\""
 #define STRING_NPC_NORTHERNSHRINE_WIZARD_2_2                         "\"As promised, I award your bravery with the Staff of Rain!\""
 #define STRING_NPC_NORTHERNSHRINE_WIZARD_3                           "\"My brethren dwell in Tantegel castle, and a shrine far to the south, I suggest you seek them out.\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_1_1                         "\"Long ago, Erdrick predicted a great evil would return to Alefgard.\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_1_2                         "\"He also said a brave hero of his own bloodline would rise to challenge him.\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_1_3                         "\"You indeed appear brave, but I cannot help you without proof that you are Erdrick's descendent!\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_1_4                         "\"Present to me the Token of Erdrick, and I will show you the way forward.\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_2_1                         "\"You have proven yourself as Erdrick's descendent, how wonderful!\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_2_2                         "\"Bring to me now the Stone of Sunlight and the Staff of Rain!\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_3_1                         "\"It is now time for the sun and the rain to meet...\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_3_2                         "\"And lo, the Goddess presents to us the most wondrous spectrum of colors...\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_3_3                         "\"I have used all the magic in my being to capture these colors in a vial, please take this Rainbow Drop!\""
+#define STRING_NPC_SOUTHERNSHRINE_WIZARD_4                           "\"Descendent of Erdrick, the Goddess smiles upon you!\""
 
 #endif // STRINGS_H

@@ -25488,19 +25488,16 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.destinationTileMapIndex = 0;
          tileMap->evacPortal.destinationTileIndex = 0;
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
-         tileMap->staticSpriteCount = 2;
+         tileMap->staticSpriteCount = 1;
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 144;
          tileMap->staticSprites[0].position.y = 192;
-         Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 0 );
-         tileMap->staticSprites[1].position.x = 128;
-         tileMap->staticSprites[1].position.y = 112;
          tileMap->npcCount = 1;
          for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 84;
-         tileMap->npcs[0].tileIndex = 149;
+         tileMap->npcs[0].tileIndex = 148;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
-         tileMap->npcs[0].sprite.position.x = 144;
+         tileMap->npcs[0].sprite.position.x = 128;
          tileMap->npcs[0].sprite.position.y = 112;
          tileMap->npcs[0].sprite.direction = (Direction_t)2;
          tileMap->npcs[0].sprite.offset.x = 0;
@@ -25558,14 +25555,23 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.destinationTileMapIndex = 0;
          tileMap->evacPortal.destinationTileIndex = 0;
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
-         tileMap->staticSpriteCount = 2;
+         tileMap->staticSpriteCount = 1;
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 64;
          tileMap->staticSprites[0].position.y = 96;
-         Sprite_LoadStatic( &( tileMap->staticSprites[1] ), 0 );
-         tileMap->staticSprites[1].position.x = 144;
-         tileMap->staticSprites[1].position.y = 112;
-         tileMap->npcCount = 0;
+         tileMap->npcCount = 1;
+         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         tileMap->npcs[0].id = 85;
+         tileMap->npcs[0].tileIndex = 129;
+         Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
+         tileMap->npcs[0].sprite.position.x = 144;
+         tileMap->npcs[0].sprite.position.y = 96;
+         tileMap->npcs[0].sprite.direction = (Direction_t)3;
+         tileMap->npcs[0].sprite.offset.x = 0;
+         tileMap->npcs[0].sprite.offset.y = 0;
+         tileMap->npcs[0].sprite.hitBoxSize.x = 16;
+         tileMap->npcs[0].sprite.hitBoxSize.y = 16;
+         tileMap->npcs[0].wanders = False;
          for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x00060006;
          tiles32[142] = 0x01270006;
          for ( i = 143; i < 147; i++ ) tiles32[i] = 0x01270127;
@@ -25663,11 +25669,6 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
    if ( id == TILEMAP_CHARLOCK_ID && tileMap->gameFlags->foundHiddenStairs )
    {
       TileMap_LoadHiddenStairs( tileMap );
-   }
-
-   if ( id == TILEMAP_NORTHERNSHRINE_ID && tileMap->gameFlags->gotStaffOfRain )
-   {
-      tileMap->staticSpriteCount = 1;
    }
 
    TileMap_ResetNpcs( tileMap );

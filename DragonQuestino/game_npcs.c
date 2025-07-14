@@ -1,6 +1,7 @@
 #include "game.h"
 
 internal void Game_StaffOfRainNpcCallback( Game_t* game );
+internal void Game_RainbowDropNpcCallback( Game_t* game );
 
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
@@ -316,6 +317,31 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
             Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_1_3 );
          }
          break;
+      case 85: // Southern shrine wizard
+         if ( game->gameFlags.gotRainbowDrop )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_4 );
+         }
+         else if ( !ITEM_HAS_TOKEN( game->player.items ) )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_1_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_1_2 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_1_3 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_1_4 );
+         }
+         else if ( ITEM_HAS_STAFFOFRAIN( game->player.items ) && ITEM_HAS_STONEOFSUNLIGHT( game->player.items ) )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_3_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_3_2 );
+            Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_3_3, Game_RainbowDropNpcCallback, game );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_2 );
+         }
+
+         break;
 
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
@@ -333,6 +359,24 @@ internal void Game_StaffOfRainNpcCallback( Game_t* game )
    {
       ITEM_TOGGLE_HASSTAFFOFRAIN( game->player.items );
    }
+}
 
-   game->tileMap.staticSpriteCount = 1;
+internal void Game_RainbowDropNpcCallback( Game_t* game )
+{
+   game->gameFlags.gotRainbowDrop = True;
+
+   if ( ITEM_HAS_STAFFOFRAIN( game->player.items ) )
+   {
+      ITEM_TOGGLE_HASSTAFFOFRAIN( game->player.items );
+   }
+
+   if ( ITEM_HAS_STONEOFSUNLIGHT( game->player.items ) )
+   {
+      ITEM_TOGGLE_HASSTONEOFSUNLIGHT( game->player.items );
+   }
+
+   if ( !ITEM_HAS_RAINBOWDROP( game->player.items ) )
+   {
+      ITEM_TOGGLE_HASRAINBOWDROP( game->player.items );
+   }
 }

@@ -13,6 +13,7 @@ typedef struct GameFlags_t
    uint8_t specialEnemies;
 
    Bool_t gotStaffOfRain;
+   Bool_t gotRainbowDrop;
    Bool_t usedRainbowDrop;
    Bool_t foundHiddenStairs;
    Bool_t rescuedPrincess;
