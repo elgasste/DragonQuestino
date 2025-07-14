@@ -422,6 +422,6 @@
 #define STRING_NPC_NORTHERNSHRINE_WIZARD_1_3                         "\"Show this harp to me and I will reward you with the Staff of Rain!\""
 #define STRING_NPC_NORTHERNSHRINE_WIZARD_2_1                         "\"You have brought the harp, excellent! I have waited a long time for one such as you.\""
 #define STRING_NPC_NORTHERNSHRINE_WIZARD_2_2                         "\"As promised, I award your bravery with the Staff of Rain!\""
-#define STRING_NPC_NORTHERNSHRINE_WIZARD_3                           "\"My brethren dwell in Tantegel castle and far to the south, I suggest you seek them out.\""
+#define STRING_NPC_NORTHERNSHRINE_WIZARD_3                           "\"My brethren dwell in Tantegel castle, and a shrine far to the south, I suggest you seek them out.\""
 
 #endif // STRINGS_H

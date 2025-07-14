@@ -25665,6 +25665,11 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
       TileMap_LoadHiddenStairs( tileMap );
    }
 
+   if ( id == TILEMAP_NORTHERNSHRINE_ID && tileMap->gameFlags->gotStaffOfRain )
+   {
+      tileMap->staticSpriteCount = 1;
+   }
+
    TileMap_ResetNpcs( tileMap );
 }
 

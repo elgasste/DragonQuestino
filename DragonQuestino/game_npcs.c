@@ -1,5 +1,7 @@
 #include "game.h"
 
+internal void Game_StaffOfRainNpcCallback( Game_t* game );
+
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
    char msg[128];
@@ -305,8 +307,7 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          else if ( ITEM_HAS_SILVERHARP( game->player.items ) )
          {
             Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_2_1 );
-            // MUFFINS: add a callback to collect the staff of rain and remove the treasure chest
-            Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_2_2 );
+            Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_2_2, Game_StaffOfRainNpcCallback, game );
          }
          else
          {
@@ -322,4 +323,16 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
    }
 
    Game_OpenDialog( game );
+}
+
+internal void Game_StaffOfRainNpcCallback( Game_t* game )
+{
+   game->gameFlags.gotStaffOfRain = True;
+
+   if ( !ITEM_HAS_STAFFOFRAIN( game->player.items ) )
+   {
+      ITEM_TOGGLE_HASSTAFFOFRAIN( game->player.items );
+   }
+
+   game->tileMap.staticSpriteCount = 1;
 }
