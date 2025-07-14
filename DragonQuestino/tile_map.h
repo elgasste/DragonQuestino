@@ -57,6 +57,7 @@
 #define TILEMAP_RIMULDAR_ID                     13
 #define TILEMAP_KOL_ID                          12
 #define TILEMAP_CHARLOCK_ID                     25
+#define TILEMAP_NORTHERNSHRINE_ID               34
 #define TILEMAP_TANTEGEL_INDEX                  7053
 #define TILEMAP_TOKEN_INDEX                     16893
 #define TILEMAP_FAIRYFLUTE_INDEX                192

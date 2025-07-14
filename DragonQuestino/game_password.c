@@ -21,7 +21,7 @@ void Game_GetPassword( Game_t* game, char* password )
       ( (uint32_t)( player->townsVisited ) << 1 ) |               // towns visited (6 bits)
       ( player->isCursed ? 0x1 : 0x0 ),                           // is cursed (1 bit)
 
-      // last two bits of this section are unused
+      // last bit of this section is unused
       ( (uint32_t)( player->gold ) << 16 ) |                      // gold (16 bits)
       ( ( player->weapon.id & 0x7 ) << 13 ) |                     // weapon (3 bits)
       ( ( player->armor.id & 0x7 ) << 10 ) |                      // armor (3 bits)
@@ -29,7 +29,8 @@ void Game_GetPassword( Game_t* game, char* password )
       ( game->gameFlags.specialEnemies & 0x7 << 5 ) |             // special enemies not defeated (3 bits)
       ( game->gameFlags.rescuedPrincess ? 0x1 << 4 : 0x0 ) |      // rescued princess (1 bit)
       ( game->gameFlags.foundHiddenStairs ? 0x1 << 3 : 0x0 ) |    // found hidden stairs (1 bit)
-      ( game->gameFlags.usedRainbowDrop ? 0x1 << 2 : 0x0 )        // used rainbow drop (1 bit)
+      ( game->gameFlags.usedRainbowDrop ? 0x1 << 2 : 0x0 ) |      // used rainbow drop (1 bit)
+      ( game->gameFlags.gotStaffOfRain ? 0x1 << 1 : 0x0 )         // got the staff of rain (1 bit)
    };
 
    // the player's encoded name goes on the end, followed by its length, the last 13 bits are unused
@@ -122,6 +123,7 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    game->gameFlags.rescuedPrincess = (Bool_t)( ( encodedBits[3] >> 4 ) & 0x1 );
    game->gameFlags.foundHiddenStairs = (Bool_t)( ( encodedBits[3] >> 3 ) & 0x1 );
    game->gameFlags.usedRainbowDrop = (Bool_t)( ( encodedBits[3] >> 2 ) & 0x1 );
+   game->gameFlags.gotStaffOfRain = (Bool_t)( ( encodedBits[3] >> 1 ) & 0x1 );
 
    player->experience = (uint16_t)( encodedBits[0] & 0xFFFF );
    player->gold = (uint16_t)( encodedBits[3] >> 16 );

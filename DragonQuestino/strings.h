@@ -417,5 +417,11 @@
 #define STRING_NPC_RIMULDARBUILDING_UPPERLEFTBLUEWOMAN               "\"Every day I get a more foreboding feeling, like the enemy is closing in.\""
 #define STRING_NPC_RIMULDARBUILDING_LOWERLEFTBLUEMAN                 "\"If you plan on traveling south, I would advise against it, the enemies are terrifying!\""
 #define STRING_NPC_RIMULDARBUILDING_LOWERRIGHTSOLDIER                "\"Does a sword exist in this world that can pierce the Dragonlord's scales?\""
+#define STRING_NPC_NORTHERNSHRINE_WIZARD_1_1                         "\"Bravery is often touted, but rarely tested. It is the latter that must be done here.\""
+#define STRING_NPC_NORTHERNSHRINE_WIZARD_1_2                         "\"It is said there is a harp made of silver that beckons to the creatures of the Dragonlord.\""
+#define STRING_NPC_NORTHERNSHRINE_WIZARD_1_3                         "\"Show this harp to me and I will reward you with the Staff of Rain!\""
+#define STRING_NPC_NORTHERNSHRINE_WIZARD_2_1                         "\"You have brought the harp, excellent! I have waited a long time for one such as you.\""
+#define STRING_NPC_NORTHERNSHRINE_WIZARD_2_2                         "\"As promised, I award your bravery with the Staff of Rain!\""
+#define STRING_NPC_NORTHERNSHRINE_WIZARD_3                           "\"My brethren dwell in Tantegel castle, and a shrine far to the south, I suggest you seek them out.\""
 
 #endif // STRINGS_H

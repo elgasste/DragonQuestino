@@ -467,6 +467,11 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "      TileMap_LoadHiddenStairs( tileMap );\n" );
          WriteToFileStream( fs, "   }\n\n" );
 
+         WriteToFileStream( fs, "   if ( id == TILEMAP_NORTHERNSHRINE_ID && tileMap->gameFlags->gotStaffOfRain )\n" );
+         WriteToFileStream( fs, "   {\n" );
+         WriteToFileStream( fs, "      tileMap->staticSpriteCount = 1;\n" );
+         WriteToFileStream( fs, "   }\n\n" );
+
          WriteToFileStream( fs, "   TileMap_ResetNpcs( tileMap );\n" );
 
          WriteToFileStream( fs, "}\n" );
