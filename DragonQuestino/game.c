@@ -75,6 +75,7 @@ void Game_Load( Game_t* game, const char* password )
    game->gameFlags.treasures = 0xFFFFFFFF;
    game->gameFlags.doors = 0xFFFFFFFF;
    game->gameFlags.specialEnemies = 0xFF;
+   game->gameFlags.gotStaffOfRain = False;
    game->gameFlags.usedRainbowDrop = False;
    game->gameFlags.foundHiddenStairs = False;
    game->gameFlags.rescuedPrincess = False;

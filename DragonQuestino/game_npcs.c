@@ -297,6 +297,25 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 83: // Rimuldar center building lower-right soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDARBUILDING_LOWERRIGHTSOLDIER );
          break;
+      case 84: // Northern shrine wizard
+         if ( game->gameFlags.gotStaffOfRain )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_3 );
+         }
+         else if ( ITEM_HAS_SILVERHARP( game->player.items ) )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_2_1 );
+            // MUFFINS: add a callback to collect the staff of rain and remove the treasure chest
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_2_2 );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_1_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_1_2 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_NORTHERNSHRINE_WIZARD_1_3 );
+         }
+         break;
+
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
          break;
