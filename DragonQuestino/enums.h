@@ -46,6 +46,7 @@ typedef enum SubState_t
    SubState_Dialog,
    SubState_Status,
    SubState_NonUseableItems,
+   SubState_BinaryChoice,
 
    SubState_Count
 }

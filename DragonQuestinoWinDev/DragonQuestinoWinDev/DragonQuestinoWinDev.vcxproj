@@ -23,6 +23,7 @@
     <ClInclude Include="..\..\DragonQuestino\animation_chain.h" />
     <ClInclude Include="..\..\DragonQuestino\battle.h" />
     <ClInclude Include="..\..\DragonQuestino\battle_stats.h" />
+    <ClInclude Include="..\..\DragonQuestino\binary_picker.h" />
     <ClInclude Include="..\..\DragonQuestino\clock.h" />
     <ClInclude Include="..\..\DragonQuestino\common.h" />
     <ClInclude Include="..\..\DragonQuestino\enemy.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="..\..\DragonQuestino\alpha_picker.c" />
     <ClCompile Include="..\..\DragonQuestino\animation_chain.c" />
     <ClCompile Include="..\..\DragonQuestino\battle.c" />
+    <ClCompile Include="..\..\DragonQuestino\binary_picker.c" />
     <ClCompile Include="..\..\DragonQuestino\enemy.c" />
     <ClCompile Include="..\..\DragonQuestino\game.c" />
     <ClCompile Include="..\..\DragonQuestino\game_actions.c" />

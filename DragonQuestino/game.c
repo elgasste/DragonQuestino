@@ -31,6 +31,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    }
 
    AlphaPicker_Init( &( game->alphaPicker ), &( game->screen ) );
+   BinaryPicker_Init( &( game->binaryPicker ), &( game->screen ) );
    Dialog_Init( &( game->dialog ), &( game->screen ), &( game->mainState ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
@@ -146,6 +147,10 @@ void Game_Tic( Game_t* game )
                case SubState_NonUseableItems:
                   Game_TicActiveSprites( game );
                   TileMap_Tic( &( game->tileMap ) );
+               case SubState_BinaryChoice:
+                  BinaryPicker_Tic( &( game->binaryPicker ) );
+                  TileMap_Tic( &( game->tileMap ) );
+                  break;
             }
             break;
          case MainState_Battle:

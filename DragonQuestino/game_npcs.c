@@ -2,6 +2,9 @@
 
 internal void Game_StaffOfRainNpcCallback( Game_t* game );
 internal void Game_RainbowDropNpcCallback( Game_t* game );
+internal void Game_DragonlordChoicePresentationCallback( Game_t* game );
+internal void Game_DragonlordJoinCallback( Game_t* game );
+internal void Game_DragonlordRefuseCallback( Game_t* game );
 
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
@@ -341,13 +344,12 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
             Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_2 );
          }
       case 86: // Dragonlord
-         // TODO: show a yes/no dialog
          sprintf( msg, STRING_NPC_CHARLOCK_DRAGONLORD_1_1, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_2 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_3 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_4 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_5 );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_5, Game_DragonlordChoicePresentationCallback, game );
          break;
 
       default: // should never happen, but it's nice to have a catch-all
@@ -386,4 +388,25 @@ internal void Game_RainbowDropNpcCallback( Game_t* game )
    {
       ITEM_TOGGLE_HASRAINBOWDROP( game->player.items );
    }
+}
+
+internal void Game_DragonlordChoicePresentationCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_DragonlordJoinCallback, Game_DragonlordRefuseCallback,
+                      game, game );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_DragonlordJoinCallback( Game_t* game )
+{
+   // TODO
+   UNUSED_PARAM( game );
+}
+
+internal void Game_DragonlordRefuseCallback( Game_t* game )
+{
+   // TODO
+   UNUSED_PARAM( game );
 }

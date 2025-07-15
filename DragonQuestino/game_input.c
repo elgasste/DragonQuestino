@@ -17,6 +17,7 @@ internal void Game_OpenBattleSpellMenu( Game_t* game );
 internal void Game_OpenBattleItemMenu( Game_t* game );
 internal void Game_HandleEnterNameInput( Game_t* game );
 internal void Game_HandleEnterPasswordInput( Game_t* game );
+internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -46,6 +47,9 @@ void Game_HandleInput( Game_t* game )
                break;
             case SubState_Dialog:
                Game_HandleOverworldDialogInput( game );
+               break;
+            case SubState_BinaryChoice:
+               Game_HandleOverworldBinaryChoiceInput( game );
                break;
          }
          break;
@@ -514,6 +518,31 @@ internal void Game_HandleEnterPasswordInput( Game_t* game )
          if ( game->input.buttonStates[i].pressed )
          {
             AlphaPicker_MoveSelection( &( game->alphaPicker ), (Direction_t)i );
+         }
+      }
+   }
+}
+
+internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game )
+{
+   uint32_t i;
+
+   if ( game->input.buttonStates[Button_A].pressed )
+   {
+      BinaryPicker_ResetCarat( &( game->binaryPicker ) );
+      BinaryPicker_Select( &( game->binaryPicker ) );
+   }
+   else if ( game->input.buttonStates[Button_B].pressed )
+   {
+      BinaryPicker_Select2( &( game->binaryPicker ) );
+   }
+   else
+   {
+      for ( i = 0; i < Direction_Count; i++ )
+      {
+         if ( game->input.buttonStates[i].pressed )
+         {
+            BinaryPicker_MoveSelection( &( game->binaryPicker ), (Direction_t)i );
          }
       }
    }

@@ -5,6 +5,8 @@
 #define STRING_INDEFINITE_ARTICLE_AN                                 "An"
 #define STRING_POINT                                                 "point"
 #define STRING_POINTS                                                "points"
+#define STRING_YES                                                   "YES"
+#define STRING_NO                                                    "NO"
 
 #define STRING_STARTUP_MENU_START                                    "Venture Forth"
 #define STRING_STARTUP_MENU_PASSWORD                                 "Enter Password"

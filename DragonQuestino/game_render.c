@@ -96,6 +96,11 @@ void Game_Draw( Game_t* game )
                Menu_Draw( &( game->menus[MenuId_Overworld] ) );
                Game_DrawNonUseableItems( game, False );
                break;
+            case SubState_BinaryChoice:
+               Game_DrawQuickStatus( game );
+               Dialog_Draw( &( game->dialog ) );
+               BinaryPicker_Draw( &( game->binaryPicker ) );
+               break;
          }
          break;
       case MainState_Battle:

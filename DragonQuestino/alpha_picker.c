@@ -152,8 +152,6 @@ char AlphaPicker_GetSelectedChar( AlphaPicker_t* picker )
 
 internal void AlphaPicker_DrawCarat( AlphaPicker_t* picker )
 {
-   UNUSED_PARAM( picker );
-
    uint32_t i, j, x, y, index;
    uint32_t startX = picker->position.x + TEXT_TILE_SIZE;
    uint32_t startY = picker->position.y + ( TEXT_TILE_SIZE * 2 );
