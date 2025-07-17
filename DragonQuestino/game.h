@@ -65,6 +65,7 @@ extern "C" {
 // game.c
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Load( Game_t* game, const char* password );
+void Game_Reset( Game_t* game );
 void Game_Tic( Game_t* game );
 void Game_ChangeToEnterNameState( Game_t* game );
 void Game_ChangeToEnterPasswordState( Game_t* game );
@@ -103,7 +104,7 @@ void Game_DrawOverworldDeepStatus( Game_t* game );
 void Game_DrawOverworldItemMenu( Game_t* game );
 void Game_DrawEnemy( Game_t* game );
 void Game_WipeEnemy( Game_t* game );
-void Game_SetTextColor( Game_t* game );
+void Game_UpdateTextColor( Game_t* game );
 void Game_DrawTileMap( Game_t* game );
 
 // game_spells.c

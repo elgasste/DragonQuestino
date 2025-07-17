@@ -17,6 +17,7 @@ internal void AnimationChain_Tic_Pause( AnimationChain_t* chain );
 internal void AnimationChain_Tic_WhiteOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_WhiteIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_FadeOut( AnimationChain_t* chain );
+internal void AnimationChain_Tic_SlowFadeOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_FadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain );
 internal void AnimationChain_Tic_RainbowBridge_WhiteOut( AnimationChain_t* chain );
@@ -88,6 +89,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_WhiteOut: AnimationChain_Tic_WhiteOut( chain ); break;
          case AnimationId_WhiteIn: AnimationChain_Tic_WhiteIn( chain ); break;
          case AnimationId_FadeOut: AnimationChain_Tic_FadeOut( chain ); break;
+         case AnimationId_SlowFadeOut: AnimationChain_Tic_SlowFadeOut( chain ); break;
          case AnimationId_FadeIn: AnimationChain_Tic_FadeIn( chain ); break;
          case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
          case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
@@ -125,6 +127,10 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
       case AnimationId_FadeOut:
          Screen_BackupPalette( chain->screen );
          chain->totalDuration = ANIMATION_FADE_DURATION;
+         break;
+      case AnimationId_SlowFadeOut:
+         Screen_BackupPalette( chain->screen );
+         chain->totalDuration = ANIMATION_SLOWFADE_DURATION;
          break;
       case AnimationId_FadeIn: chain->totalDuration = ANIMATION_FADE_DURATION; break;
       case AnimationId_RainbowBridge_Trippy:
@@ -265,6 +271,25 @@ internal void AnimationChain_Tic_FadeOut( AnimationChain_t* chain )
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
    
+   for ( i = 0; i < PALETTE_COLORS; i++ )
+   {
+      rangeR = screen->backupPalette[i] >> 11;
+      rangeG = ( screen->backupPalette[i] & 0x7E0 ) >> 5;
+      rangeB = screen->backupPalette[i] & 0x1F;
+      p =  1.0f - ( chain->totalElapsedSeconds / chain->totalDuration ), 0.0f;
+      screen->palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+   }
+}
+
+internal void AnimationChain_Tic_SlowFadeOut( AnimationChain_t* chain )
+{
+   uint32_t i;
+   uint16_t rangeR, rangeB, rangeG;
+   float p;
+   Screen_t* screen = chain->screen;
+
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
    for ( i = 0; i < PALETTE_COLORS; i++ )
    {
       rangeR = screen->backupPalette[i] >> 11;

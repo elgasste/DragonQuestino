@@ -13,7 +13,7 @@ void Game_Draw( Game_t* game )
 {
    AnimationId_t activeAnimationId;
 
-   Game_SetTextColor( game );
+   Game_UpdateTextColor( game );
 
    if ( game->doAnimation )
    {
@@ -262,12 +262,17 @@ void Game_WipeEnemy( Game_t* game )
    }
 }
 
-void Game_SetTextColor( Game_t* game )
+void Game_UpdateTextColor( Game_t* game )
 {
    float percentage;
    Player_t* player = &( game->player );
 
-   if ( player->isCursed )
+   if ( game->gameFlags.joinedDragonlord )
+   {
+      // MUFFINS: pick a slightly brighter color
+      game->screen.textColor = COLOR_DARKRED;
+   }
+   else if ( player->isCursed )
    {
       game->screen.textColor = COLOR_GROSSYELLOW;
    }

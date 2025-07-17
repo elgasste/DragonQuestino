@@ -3,11 +3,12 @@
 
 #include "common.h"
 
-#define ANIMATIONCHAIN_MAX_LINKS                         16
+#define ANIMATIONCHAIN_MAX_LINKS                         32
 
 #define ANIMATION_PAUSE_DURATION                         0.2f
 #define ANIMATION_WHITE_DURATION                         0.5f
 #define ANIMATION_FADE_DURATION                          0.3f
+#define ANIMATION_SLOWFADE_DURATION                      6.0f
 #define ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION          6.0f
 #define ANIMATION_RAINBOWBRIDGE_FADE_DURATION            1.5f
 #define ANIMATION_CASTSPELL_TOTALDURATION                0.2f

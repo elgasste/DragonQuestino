@@ -7,40 +7,12 @@
 void Player_Init( Player_t* player, TileMap_t* tileMap )
 {
    player->tileMap = tileMap;
-
-   player->name[0] = 0;
-   player->velocity.x = 0.0f;
-   player->velocity.y = 0.0f;
    player->maxVelocity = TILE_WALKSPEED_NORMAL;
    player->sprite.hitBoxSize.x = TILE_SIZE - 4;
    player->sprite.hitBoxSize.y = TILE_SIZE - 4;
    player->sprite.offset.x = -2;
    player->sprite.offset.y = -4;
    Sprite_LoadActive( &( player->sprite ), ACTIVE_SPRITE_PLAYER_ID );
-   player->sprite.isFlickering = False;
-   player->isCursed = False;
-   player->hasHolyProtection = False;
-   player->holyProtectionSteps = 0;
-   player->townsVisited = 0;
-   player->experience = 0;
-   player->level = 0;
-   player->gold = 0;
-   player->items = 0;
-   player->spells = 0;
-   player->stats.sleepResist = 0;
-   player->stats.stopSpellResist = 0;
-   player->stats.hurtResist = 0;
-   player->stats.dodge = 1;
-   player->stats.strength = g_strengthTable[0];
-   player->stats.agility = g_agilityTable[0];
-   player->stats.hitPoints = g_hitPointsTable[0];
-   player->stats.maxHitPoints = g_hitPointsTable[0];
-   player->stats.magicPoints = g_magicPointsTable[0];
-   player->stats.maxMagicPoints = g_magicPointsTable[0];
-
-   Player_LoadWeapon( player, WEAPON_NONE_ID );
-   Player_LoadArmor( player, ARMOR_NONE_ID );
-   Player_LoadShield( player, SHIELD_NONE_ID );
 }
 
 uint8_t Player_GetLevelFromExperience( Player_t* player )

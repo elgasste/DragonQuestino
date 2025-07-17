@@ -56,6 +56,7 @@ typedef enum AnimationId_t
 {
    AnimationId_Pause = 0,
    AnimationId_FadeOut,
+   AnimationId_SlowFadeOut,
    AnimationId_FadeIn,
    AnimationId_WhiteOut,
    AnimationId_WhiteIn,

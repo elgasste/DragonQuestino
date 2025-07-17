@@ -14,6 +14,7 @@
 #define COLOR_BLUE                     0x001F
 #define COLOR_GROSSYELLOW              0x7BA1
 #define COLOR_INJUREDRED               0xDA8A
+#define COLOR_DARKRED                  0xB0E4
 #define COLOR_DEEPRED                  0x7800
 
 #define TEXT_TILE_COUNT                85

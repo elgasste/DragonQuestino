@@ -4,6 +4,11 @@ internal void Game_StaffOfRainNpcCallback( Game_t* game );
 internal void Game_RainbowDropNpcCallback( Game_t* game );
 internal void Game_DragonlordChoicePresentationCallback( Game_t* game );
 internal void Game_DragonlordJoinCallback( Game_t* game );
+internal void Game_DragonlordJoinTransferCallback( Game_t* game );
+internal void Game_DragonlordJoinedCallback( Game_t* game );
+internal void Game_DragonlordJoinFadeCallback( Game_t* game );
+internal void Game_DragonlordJoinPreFadeCallback( Game_t* game );
+internal void Game_DragonlordJoinPostFadeCallback( Game_t* game );
 internal void Game_DragonlordRefuseCallback( Game_t* game );
 internal void Game_DragonlordRefuseMessageCallback( Game_t* game );
 internal void Game_DragonlordInitiateFightCallback( Game_t* game );
@@ -404,21 +409,66 @@ internal void Game_DragonlordChoicePresentationCallback( Game_t* game )
 internal void Game_DragonlordJoinCallback( Game_t* game )
 {
    char msg[128];
-   Game_ChangeSubState( game, SubState_Dialog );
 
-   // TODO:
-   //
-   // - change the text color to red
-   // - fade out
-   // - pause
-   // - restart the whole game
+   Game_ChangeSubState( game, SubState_Dialog );
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_2_1 );
    sprintf( msg, STRING_NPC_CHARLOCK_DRAGONLORD_2_2, game->player.name );
-   Dialog_PushSection( &( game->dialog ), msg );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_DragonlordJoinTransferCallback, game );
    Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_2_3 );
-   Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_2_4 );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_2_4, Game_DragonlordJoinFadeCallback, game );
    Game_OpenDialog( game );
+}
+
+internal void Game_DragonlordJoinTransferCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_DragonlordJoinedCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_DragonlordJoinedCallback( Game_t* game )
+{
+   game->gameFlags.joinedDragonlord = True;
+}
+
+internal void Game_DragonlordJoinFadeCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 18; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_DragonlordJoinPreFadeCallback, game );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_SlowFadeOut );
+
+   for ( i = 0; i < 10; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_DragonlordJoinPostFadeCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_DragonlordJoinPreFadeCallback( Game_t* game )
+{
+   game->mainState = MainState_Overworld;
+   game->subState = SubState_None;
+}
+
+internal void Game_DragonlordJoinPostFadeCallback( Game_t* game )
+{
+   Screen_RestorePalette( &( game->screen ) );
+   game->gameFlags.joinedDragonlord = False;
+   Game_Reset( game );
 }
 
 internal void Game_DragonlordRefuseCallback( Game_t* game )
