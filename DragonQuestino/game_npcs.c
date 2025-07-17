@@ -5,6 +5,8 @@ internal void Game_RainbowDropNpcCallback( Game_t* game );
 internal void Game_DragonlordChoicePresentationCallback( Game_t* game );
 internal void Game_DragonlordJoinCallback( Game_t* game );
 internal void Game_DragonlordRefuseCallback( Game_t* game );
+internal void Game_DragonlordRefuseMessageCallback( Game_t* game );
+internal void Game_DragonlordInitiateFightCallback( Game_t* game );
 
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
@@ -401,12 +403,46 @@ internal void Game_DragonlordChoicePresentationCallback( Game_t* game )
 
 internal void Game_DragonlordJoinCallback( Game_t* game )
 {
-   // TODO
-   UNUSED_PARAM( game );
+   char msg[128];
+   Game_ChangeSubState( game, SubState_Dialog );
+
+   // TODO:
+   //
+   // - change the text color to red
+   // - fade out
+   // - pause
+   // - restart the whole game
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_2_1 );
+   sprintf( msg, STRING_NPC_CHARLOCK_DRAGONLORD_2_2, game->player.name );
+   Dialog_PushSection( &( game->dialog ), msg );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_2_3 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_2_4 );
+   Game_OpenDialog( game );
 }
 
 internal void Game_DragonlordRefuseCallback( Game_t* game )
 {
-   // TODO
-   UNUSED_PARAM( game );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_3, Game_DragonlordRefuseMessageCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_DragonlordRefuseMessageCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_DragonlordInitiateFightCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_DragonlordInitiateFightCallback( Game_t* game )
+{
+   game->battle.specialEnemy = SpecialEnemy_Dragonlord;
+   Battle_Generate( &( game->battle ) );
+   game->postRenderCallback = Game_ChangeToBattleState;
+   game->postRenderCallbackData = game;
 }

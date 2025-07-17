@@ -38,6 +38,7 @@ internal Vector2u16_t g_battleCheckerboardPos[49] =
    { 112, 148 }, { 96,  148 }, { 96,  132 }, { 96,  116 }, { 96,  100 }, { 96,  84  }, { 96,  68  },
    { 96,  52  }, { 112, 52  }, { 128, 52  }, { 144, 52  }, { 160, 52  }, { 176, 52  }, { 192, 52  }
 };
+internal uint32_t g_squaresDrawn;
 
 void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap, Game_t* game )
 {
@@ -133,6 +134,9 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
       case AnimationId_RainbowBridge_WhiteOut:
       case AnimationId_RainbowBridge_FadeIn:
          chain->totalDuration = ANIMATION_RAINBOWBRIDGE_FADE_DURATION;
+         break;
+      case AnimationId_Battle_Checkerboard:
+         g_squaresDrawn = 0;
          break;
       case AnimationId_CastSpell:
          chain->screen->wipeColor = COLOR_WHITE;
@@ -364,17 +368,27 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
    chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
    int16_t xOffset = chain->tileMap->isDark ? -24 : 0;
    int16_t yOffset = chain->tileMap->isDark ? 4 : 0;
+   uint32_t squaresToDraw;
 
    while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_CHECKERSQUARE_DURATION )
    {
-      uint32_t squareIndex = (uint32_t)( chain->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION );
+      squaresToDraw = (uint32_t)( chain->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION ) + 1;
 
-      Screen_DrawRectColor( chain->screen,
-                            (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].x ) + xOffset ),
-                            (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].y ) + yOffset ),
-                            TILE_SIZE, TILE_SIZE, COLOR_BLACK );
+      while ( g_squaresDrawn <= squaresToDraw )
+      {
+         Screen_DrawRectColor( chain->screen,
+                               (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
+                               (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
+                               TILE_SIZE, TILE_SIZE, COLOR_BLACK );
+         g_squaresDrawn++;
 
-      if ( squareIndex == 48 )
+         if ( g_squaresDrawn > 48 )
+         {
+            break;
+         }
+      }
+
+      if ( g_squaresDrawn > 48 )
       {
          AnimationChain_AnimationFinished( chain );
          break;

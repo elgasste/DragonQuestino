@@ -45,6 +45,8 @@ typedef struct Game_t
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    AnimationChain_t animationChain;
    Battle_t battle;
+   void ( *postRenderCallback )( void* );
+   void* postRenderCallbackData;
 
    float overworldInactivitySeconds;
    Bool_t doAnimation;

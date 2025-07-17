@@ -23,6 +23,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Battle_Init( &( game->battle ), game );
    Game_SetTextColor( game );
 
+   game->postRenderCallback = 0;
    game->activeMenu = 0;
 
    for ( i = 0; i < MenuId_Count; i++ )
@@ -185,6 +186,12 @@ void Game_Tic( Game_t* game )
 
    Game_Draw( game );
    Screen_RenderBuffer( &( game->screen ) );
+
+   if ( game->postRenderCallback )
+   {
+      game->postRenderCallback( game->postRenderCallbackData );
+      game->postRenderCallback = 0;
+   }
 }
 
 void Game_ChangeToOverworldState( Game_t* game )

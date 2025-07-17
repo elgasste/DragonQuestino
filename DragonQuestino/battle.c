@@ -90,6 +90,7 @@ void Battle_Generate( Battle_t* battle )
       case SpecialEnemy_GreenDragon: enemyIndex = ENEMY_GREENDRAGON_ID; break;
       case SpecialEnemy_AxeKnight: enemyIndex = ENEMY_AXEKNIGHT_ID; break;
       case SpecialEnemy_Golem: enemyIndex = ENEMY_GOLEM_ID; break;
+      case SpecialEnemy_Dragonlord: enemyIndex = ENEMY_DRAGONLORDWIZARD_ID; break;
       default: enemyIndex = Battle_GenerateEnemyIndex( battle ); break;
    }
 

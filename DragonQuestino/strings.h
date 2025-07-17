@@ -444,5 +444,6 @@
 #define STRING_NPC_CHARLOCK_DRAGONLORD_2_2                           "\"We shall rule this land and see its demise, %s!\""
 #define STRING_NPC_CHARLOCK_DRAGONLORD_2_3                           "Thus the hero became the ultimate villain, joining the Dragonlord to destroy Alefgard."
 #define STRING_NPC_CHARLOCK_DRAGONLORD_2_4                           "With no true heroes left, the entire kingdom was laid to waste."
+#define STRING_NPC_CHARLOCK_DRAGONLORD_3                             "\"Then you are a FOOL!\""
 
 #endif // STRINGS_H
