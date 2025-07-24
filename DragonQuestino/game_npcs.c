@@ -491,7 +491,7 @@ internal void Game_DragonlordRefuseMessageCallback( Game_t* game )
 
 internal void Game_DragonlordInitiateFightCallback( Game_t* game )
 {
-   game->battle.specialEnemy = SpecialEnemy_Dragonlord;
+   game->battle.specialEnemy = SpecialEnemy_DragonlordWizard;
    Battle_Generate( &( game->battle ) );
    game->postRenderCallback = Game_ChangeToBattleState;
    game->postRenderCallbackData = game;

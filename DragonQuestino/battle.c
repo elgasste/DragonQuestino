@@ -62,6 +62,10 @@ internal void Battle_EnemyFlee( Battle_t* battle );
 internal void Battle_EnemyFleeCallback( Battle_t* battle );
 internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,
                                                 AnimationId_t finalAnimationId, void ( *callback )( Battle_t* ) );
+internal void Battle_DefeatedWizardDragonlordPauseCallback( Battle_t* battle );
+internal void Battle_DefeatedWizardDragonlordCallback( Battle_t* battle );
+internal void Battle_StartFinalDragonlordBattleCallback( Battle_t* battle );
+internal void Battle_FadeFinalDragonlordBattleInCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -90,7 +94,8 @@ void Battle_Generate( Battle_t* battle )
       case SpecialEnemy_GreenDragon: enemyIndex = ENEMY_GREENDRAGON_ID; break;
       case SpecialEnemy_AxeKnight: enemyIndex = ENEMY_AXEKNIGHT_ID; break;
       case SpecialEnemy_Golem: enemyIndex = ENEMY_GOLEM_ID; break;
-      case SpecialEnemy_Dragonlord: enemyIndex = ENEMY_DRAGONLORDWIZARD_ID; break;
+      case SpecialEnemy_DragonlordWizard: enemyIndex = ENEMY_DRAGONLORDWIZARD_ID; break;
+      case SpecialEnemy_DragonlordDragon: enemyIndex = ENEMY_DRAGONLORDDRAGON_ID; break;
       default: enemyIndex = Battle_GenerateEnemyIndex( battle ); break;
    }
 
@@ -219,7 +224,9 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
       power = UINT8_MAX;
    }
 
-   if ( battle->specialEnemy != SpecialEnemy_Dragonlord && Random_u8( 1, 32 ) == 1 )
+   if ( ( battle->specialEnemy != SpecialEnemy_DragonlordWizard ) &&
+        ( battle->specialEnemy != SpecialEnemy_DragonlordDragon ) &&
+        ( Random_u8(1, 32) == 1 ) )
    {
       battle->excellentMove = True;
       minDamage = power / 2;
@@ -289,7 +296,9 @@ internal void Battle_FleeSucceededMessageCallback( Battle_t* battle )
 
 internal void Battle_FleeSucceededSpecialEnemyCheck( Battle_t* battle )
 {
-   if ( battle->specialEnemy != SpecialEnemy_None && battle->specialEnemy != SpecialEnemy_Dragonlord )
+   if ( ( battle->specialEnemy != SpecialEnemy_None ) &&
+        ( battle->specialEnemy != SpecialEnemy_DragonlordWizard ) &&
+        ( battle->specialEnemy != SpecialEnemy_DragonlordDragon ) )
    {
       switch ( battle->specialEnemy )
       {
@@ -364,118 +373,130 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    Dialog_t* dialog = &( battle->game->dialog );
    uint16_t i, learnedSpell = 0;
    char msg[96];
-
+      
    Dialog_Reset( dialog );
    sprintf( msg, STRING_BATTLE_VICTORY, battle->enemy.name );
-   Dialog_PushSection( dialog, msg );
-
    battle->isOver = True;
-   Math_CollectAmount16u( &( battle->experienceGained ), enemy->experience );
-   Math_CollectAmount16u( &( battle->goldGained ), enemy->gold);
-   battle->newLevel = Player_GetLevelFromExperience( player );
-   battle->previousSpells = player->spells;
 
-   if ( battle->experienceGained > 0 || battle->goldGained > 0 )
+   if ( battle->enemy.id == ENEMY_DRAGONLORDWIZARD_ID )
    {
-      if ( battle->experienceGained > 0 && battle->goldGained == 0 )
-      {
-         sprintf( msg, STRING_BATTLE_EXPERIENCEONLY, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS );
-      }
-      else if ( battle->experienceGained == 0 && battle->goldGained > 0 )
-      {
-         sprintf( msg, STRING_BATTLE_GOLDONLY, battle->goldGained );
-      }
-      else
-      {
-         sprintf( msg, STRING_BATTLE_EXPERIENCEANDGOLD,
-                  battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS,
-                  battle->goldGained );
-      }
-
-      Dialog_PushSectionWithCallback( dialog, msg, Battle_EnemyDefeatedSpoilsCallback, battle );
+      Dialog_PushSectionWithCallback( dialog, msg, Battle_DefeatedWizardDragonlordPauseCallback, battle );
    }
-
-   if ( battle->newLevel > player->level )
+   else if ( battle->enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
    {
-      Dialog_PushSectionWithCallback( dialog, STRING_BATTLE_LEVELUP, Battle_NewLevelCallback, battle );
+      // TODO: end-of-game stuff
+      Dialog_PushSection( dialog, msg );
+   }
+   else
+   {
+      Dialog_PushSection( dialog, msg );
+      Math_CollectAmount16u( &( battle->experienceGained ), enemy->experience );
+      Math_CollectAmount16u( &( battle->goldGained ), enemy->gold );
+      battle->newLevel = Player_GetLevelFromExperience( player );
+      battle->previousSpells = player->spells;
 
-      battle->strengthGained =  g_strengthTable[battle->newLevel] - player->stats.strength;
-      battle->agilityGained = g_agilityTable[battle->newLevel] - player->stats.agility;
-      battle->hitPointsGained = g_hitPointsTable[battle->newLevel] - player->stats.maxHitPoints;
-      battle->magicPointsGained = g_magicPointsTable[battle->newLevel] - player->stats.maxMagicPoints;
-      Player_UpdateSpellsToLevel( &( battle->game->player ), battle->newLevel );
-
-      player->stats.strength += battle->strengthGained;
-      player->stats.agility += battle->agilityGained;
-
-      if ( battle->strengthGained > 0 || battle->agilityGained > 0 )
+      if ( battle->experienceGained > 0 || battle->goldGained > 0 )
       {
-         if ( battle->strengthGained > 0 && battle->agilityGained == 0 )
+         if ( battle->experienceGained > 0 && battle->goldGained == 0 )
          {
-            sprintf( msg, STRING_BATTLE_STRENGTHGAIN, battle->strengthGained );
+            sprintf( msg, STRING_BATTLE_EXPERIENCEONLY, battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS );
          }
-         else if ( battle->strengthGained == 0 && battle->agilityGained > 0 )
+         else if ( battle->experienceGained == 0 && battle->goldGained > 0 )
          {
-            sprintf( msg, STRING_BATTLE_AGILITYGAIN, battle->agilityGained );
+            sprintf( msg, STRING_BATTLE_GOLDONLY, battle->goldGained );
          }
          else
          {
-            sprintf( msg, STRING_BATTLE_STRENGTHANDAGILITYGAIN, battle->strengthGained, battle->agilityGained );
+            sprintf( msg, STRING_BATTLE_EXPERIENCEANDGOLD,
+                     battle->experienceGained, ( battle->experienceGained == 1 ) ? STRING_POINT : STRING_POINTS,
+                     battle->goldGained );
          }
 
-         Dialog_PushSection( dialog, msg );
+         Dialog_PushSectionWithCallback( dialog, msg, Battle_EnemyDefeatedSpoilsCallback, battle );
       }
 
-      if ( battle->hitPointsGained > 0 || battle->magicPointsGained > 0 )
+      if ( battle->newLevel > player->level )
       {
-         if ( battle->hitPointsGained > 0 && battle->magicPointsGained == 0 )
-         {
-            sprintf( msg, STRING_BATTLE_HITPOINTSGAIN, battle->hitPointsGained );
-         }
-         else if ( battle->hitPointsGained == 0 && battle->magicPointsGained > 0 )
-         {
-            sprintf( msg, STRING_BATTLE_MAGICPOINTSGAIN, battle->magicPointsGained );
-         }
-         else
-         {
-            sprintf( msg, STRING_BATTLE_HITPOINTSANDMAGICPOINTSGAIN, battle->hitPointsGained, battle->magicPointsGained );
-         }
+         Dialog_PushSectionWithCallback( dialog, STRING_BATTLE_LEVELUP, Battle_NewLevelCallback, battle );
 
-         Dialog_PushSectionWithCallback( dialog, msg, Battle_GainedPointsCallback, battle );
-      }
+         battle->strengthGained = g_strengthTable[battle->newLevel] - player->stats.strength;
+         battle->agilityGained = g_agilityTable[battle->newLevel] - player->stats.agility;
+         battle->hitPointsGained = g_hitPointsTable[battle->newLevel] - player->stats.maxHitPoints;
+         battle->magicPointsGained = g_magicPointsTable[battle->newLevel] - player->stats.maxMagicPoints;
+         Player_UpdateSpellsToLevel( &( battle->game->player ), battle->newLevel );
 
-      if ( player->spells > battle->previousSpells )
-      {
-         for ( i = 0; i < SPELL_TABLE_SIZE; i++ )
+         player->stats.strength += battle->strengthGained;
+         player->stats.agility += battle->agilityGained;
+
+         if ( battle->strengthGained > 0 || battle->agilityGained > 0 )
          {
-            if ( ( battle->previousSpells & ( 0x1 << i ) ) != ( player->spells & ( 0x1 << i ) ) )
+            if ( battle->strengthGained > 0 && battle->agilityGained == 0 )
             {
-               learnedSpell = i;
-               break;
+               sprintf( msg, STRING_BATTLE_STRENGTHGAIN, battle->strengthGained );
             }
+            else if ( battle->strengthGained == 0 && battle->agilityGained > 0 )
+            {
+               sprintf( msg, STRING_BATTLE_AGILITYGAIN, battle->agilityGained );
+            }
+            else
+            {
+               sprintf( msg, STRING_BATTLE_STRENGTHANDAGILITYGAIN, battle->strengthGained, battle->agilityGained );
+            }
+
+            Dialog_PushSection( dialog, msg );
          }
 
-         switch ( i )
+         if ( battle->hitPointsGained > 0 || battle->magicPointsGained > 0 )
          {
-            case 0: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_HEAL ); break;
-            case 1: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZ ); break;
-            case 2: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SLEEP ); break;
-            case 3: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_GLOW ); break;
-            case 4: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_FIZZLE ); break;
-            case 5: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_EVAC ); break;
-            case 6: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_ZOOM ); break;
-            case 7: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_REPEL ); break;
-            case 8: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_MIDHEAL ); break;
-            case 9: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZLE ); break;
+            if ( battle->hitPointsGained > 0 && battle->magicPointsGained == 0 )
+            {
+               sprintf( msg, STRING_BATTLE_HITPOINTSGAIN, battle->hitPointsGained );
+            }
+            else if ( battle->hitPointsGained == 0 && battle->magicPointsGained > 0 )
+            {
+               sprintf( msg, STRING_BATTLE_MAGICPOINTSGAIN, battle->magicPointsGained );
+            }
+            else
+            {
+               sprintf( msg, STRING_BATTLE_HITPOINTSANDMAGICPOINTSGAIN, battle->hitPointsGained, battle->magicPointsGained );
+            }
+
+            Dialog_PushSectionWithCallback( dialog, msg, Battle_GainedPointsCallback, battle );
          }
 
-         Dialog_PushSection( dialog, msg );
-      }
-   }
+         if ( player->spells > battle->previousSpells )
+         {
+            for ( i = 0; i < SPELL_TABLE_SIZE; i++ )
+            {
+               if ( ( battle->previousSpells & ( 0x1 << i ) ) != ( player->spells & ( 0x1 << i ) ) )
+               {
+                  learnedSpell = i;
+                  break;
+               }
+            }
 
-   if ( battle->specialEnemy != SpecialEnemy_None )
-   {
-      battle->game->gameFlags.specialEnemies ^= ( 0x1 << battle->specialEnemy );
+            switch ( i )
+            {
+               case 0: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_HEAL ); break;
+               case 1: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZ ); break;
+               case 2: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SLEEP ); break;
+               case 3: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_GLOW ); break;
+               case 4: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_FIZZLE ); break;
+               case 5: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_EVAC ); break;
+               case 6: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_ZOOM ); break;
+               case 7: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_REPEL ); break;
+               case 8: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_MIDHEAL ); break;
+               case 9: sprintf( msg, STRING_BATTLE_LEARNEDSPELL, STRING_SPELL_SIZZLE ); break;
+            }
+
+            Dialog_PushSection( dialog, msg );
+         }
+      }
+
+      if ( battle->specialEnemy != SpecialEnemy_None )
+      {
+         battle->game->gameFlags.specialEnemies ^= ( 0x1 << battle->specialEnemy );
+      }
    }
 
    Game_OpenDialog( battle->game );
@@ -1045,4 +1066,36 @@ internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPa
 
    AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), finalAnimationId, callback, battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_DefeatedWizardDragonlordPauseCallback( Battle_t* battle )
+{
+   Battle_MultiPauseBeforeAnimation( battle, 7, AnimationId_Pause, Battle_DefeatedWizardDragonlordCallback );
+}
+
+internal void Battle_DefeatedWizardDragonlordCallback( Battle_t* battle )
+{
+   Game_ChangeToOverworldState( battle->game );
+   Battle_MultiPauseBeforeAnimation( battle, 5, AnimationId_Pause, Battle_StartFinalDragonlordBattleCallback );
+}
+
+internal void Battle_StartFinalDragonlordBattleCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_MidFadeOut );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_FadeFinalDragonlordBattleInCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_FadeFinalDragonlordBattleInCallback( Battle_t* battle )
+{
+   Screen_RestorePalette( &( battle->game->screen ) );
+   Screen_WipeColor( &( battle->game->screen ), COLOR_BLACK );
+
+   battle->specialEnemy = SpecialEnemy_DragonlordDragon;
+   Battle_Generate( battle );
+   Game_ChangeToBattleState( battle->game );
 }

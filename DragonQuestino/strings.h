@@ -293,6 +293,8 @@
 #define STRING_BATTLE_PLAYER_SPELL_NOEFFECT                          "But the spell has no effect! Command?"
 #define STRING_BATTLE_PLAYER_SPELL_NOEFFECTASLEEP                    "But the spell has no effect!"
 #define STRING_BATTLE_ENEMY_FLEE                                     "The %s turns and runs away!"
+#define STRING_BATTLE_DRAGONLORD_WIZARDINTRO                         "The Dragonlord prepares for battle!"
+#define STRING_BATTLE_DRAGONLORD_DRAGONINTRO                         "The Dragonlord reveals its true form!"
 
 #define STRING_BATTLE_MENU_TITLE                                     "COMMAND"
 #define STRING_BATTLE_MENU_ATTACK                                    "ATTACK"

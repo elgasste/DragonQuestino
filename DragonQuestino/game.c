@@ -259,12 +259,23 @@ void Game_ChangeToBattleState( Game_t* game )
 {
    game->mainState = MainState_Battle;
    game->subState = SubState_None;
-   TileMap_UpdateViewport( &( game->tileMap ) );
-   Game_DrawTileMap( game );
    AnimationChain_Reset( &( game->animationChain ) );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_Checkerboard );
-   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemyFadeIn, Game_DrawEnemy, game );
-   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_BattleIntroMessageCallback, game );
+
+   if ( game->battle.specialEnemy == SpecialEnemy_DragonlordDragon )
+   {
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemySlowFadeIn, Game_DrawEnemy, game );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_BattleIntroMessageCallback, game );
+   }
+   else
+   {
+      TileMap_UpdateViewport( &( game->tileMap ) );
+      Game_DrawTileMap( game );
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_Checkerboard );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemyFadeIn, Game_DrawEnemy, game );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_BattleIntroMessageCallback, game );
+   }
+
    AnimationChain_Start( &( game->animationChain ) );
 }
 
@@ -365,22 +376,36 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
    char msg[64];
 
    Dialog_Reset( &( game->dialog ) );
-   sprintf( enemyName, "%s %s", game->battle.enemy.indefiniteArticle, game->battle.enemy.name );
 
-   if ( Battle_RollEnemyFlee( &( game->battle ) ) )
+   if ( game->battle.specialEnemy == SpecialEnemy_DragonlordWizard )
    {
-      sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
-      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiativeFlee, &( game->battle ) );
+      sprintf( msg, STRING_BATTLE_DRAGONLORD_WIZARDINTRO );
+      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
    }
-   if ( game->battle.turn == BattleTurn_Player )
+   else if ( game->battle.specialEnemy == SpecialEnemy_DragonlordDragon )
    {
-      sprintf( msg, STRING_BATTLE_ENEMYAPPROACHESINITIATIVE, enemyName );
+      sprintf( msg, STRING_BATTLE_DRAGONLORD_DRAGONINTRO );
       Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
    }
    else
    {
-      sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
-      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiative, &( game->battle ) );
+      sprintf( enemyName, "%s %s", game->battle.enemy.indefiniteArticle, game->battle.enemy.name );
+
+      if ( Battle_RollEnemyFlee( &( game->battle ) ) )
+      {
+         sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiativeFlee, &( game->battle ) );
+      }
+      if ( game->battle.turn == BattleTurn_Player )
+      {
+         sprintf( msg, STRING_BATTLE_ENEMYAPPROACHESINITIATIVE, enemyName );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+      }
+      else
+      {
+         sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiative, &( game->battle ) );
+      }
    }
    
    Game_OpenDialog( game );

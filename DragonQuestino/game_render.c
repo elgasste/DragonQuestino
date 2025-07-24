@@ -40,6 +40,7 @@ void Game_Draw( Game_t* game )
       else if ( game->mainState == MainState_Battle )
       {
          if ( activeAnimationId == AnimationId_Battle_EnemyFadeIn ||
+              activeAnimationId == AnimationId_Battle_EnemySlowFadeIn ||
               activeAnimationId == AnimationId_Battle_EnemyFadeOut )
          {
             Game_DrawEnemy( game );
@@ -104,7 +105,14 @@ void Game_Draw( Game_t* game )
          }
          break;
       case MainState_Battle:
-         Game_DrawTileMap( game );
+         if ( game->battle.enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
+         {
+            Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+         }
+         else
+         {
+            Game_DrawTileMap( game );
+         }
          switch ( game->subState )
          {
             case SubState_Menu:
@@ -269,7 +277,6 @@ void Game_UpdateTextColor( Game_t* game )
 
    if ( game->gameFlags.joinedDragonlord )
    {
-      // MUFFINS: pick a slightly brighter color
       game->screen.textColor = COLOR_DARKRED;
    }
    else if ( player->isCursed )

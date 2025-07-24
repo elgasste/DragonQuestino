@@ -56,6 +56,7 @@ typedef enum AnimationId_t
 {
    AnimationId_Pause = 0,
    AnimationId_FadeOut,
+   AnimationId_MidFadeOut,
    AnimationId_SlowFadeOut,
    AnimationId_FadeIn,
    AnimationId_WhiteOut,
@@ -66,6 +67,7 @@ typedef enum AnimationId_t
    AnimationId_RainbowBridge_FadeIn,
    AnimationId_Battle_Checkerboard,
    AnimationId_Battle_EnemyFadeIn,
+   AnimationId_Battle_EnemySlowFadeIn,
    AnimationId_Battle_EnemyFadeOut,
    AnimationId_Battle_EnemyFadeInPause,
    AnimationId_Battle_EnemyDamage,
@@ -122,7 +124,8 @@ typedef enum SpecialEnemy_t
    SpecialEnemy_GreenDragon,
    SpecialEnemy_AxeKnight,
    SpecialEnemy_Golem,
-   SpecialEnemy_Dragonlord,
+   SpecialEnemy_DragonlordWizard,
+   SpecialEnemy_DragonlordDragon,
 
    SpecialEnemy_Count
 }
