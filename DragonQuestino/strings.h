@@ -246,6 +246,7 @@
 #define STRING_BATTLE_ATTACKSUCCEEDED                                "The %s has lost %u hit %s."
 #define STRING_BATTLE_ATTACKEXCELLENTMOVE                            "Excellent move! The %s has lost %u hit %s."
 #define STRING_BATTLE_ATTACKDODGED                                   "But the %s dodges your attack!"
+#define STRING_BATTLE_ATTACKINEFFECTIVE                              "Your weapon is ineffective against the %s!"
 #define STRING_BATTLE_FLEEATTEMPT                                    "You make a run for it..."
 #define STRING_BATTLE_FLEEATTEMPTSUCCEEDED                           "You have eluded the %s!"
 #define STRING_BATTLE_FLEEATTEMPTFAILED                              "But the %s blocks your escape!"
