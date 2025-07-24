@@ -13,6 +13,7 @@ internal void Battle_FleeFailedCallback( Battle_t* battle );
 internal void Battle_FleeFailedMessageCallback( Battle_t* battle );
 internal void Battle_AttackCallback( Battle_t* battle );
 internal void Battle_AttackDodgedCallback( Battle_t* battle );
+internal void Battle_AttackIneffectiveCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle );
 internal void Battle_EnemyDefeatedSpoilsCallback( Battle_t* battle );
@@ -335,17 +336,25 @@ internal void Battle_FleeFailedMessageCallback( Battle_t* battle )
 
 internal void Battle_AttackCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Battle_GetAttackDamage( battle );
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
 
-   if ( battle->pendingPayload8u == 0 )
+   if ( battle->enemy.id == ENEMY_DRAGONLORDDRAGON_ID && battle->game->player.weapon.id != WEAPON_ERDRICKSSWORD_ID )
    {
-      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_AttackDodgedCallback, battle );
+      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_AttackIneffectiveCallback, battle );
    }
    else
    {
-      AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyDamage, Battle_AttackSucceededCallback, battle );
+      battle->pendingPayload8u = Battle_GetAttackDamage( battle );
+
+      if ( battle->pendingPayload8u == 0 )
+      {
+         AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_AttackDodgedCallback, battle );
+      }
+      else
+      {
+         AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyDamage, Battle_AttackSucceededCallback, battle );
+      }
    }
 
    AnimationChain_Start( &( battle->game->animationChain ) );
@@ -357,6 +366,16 @@ internal void Battle_AttackDodgedCallback( Battle_t* battle )
 
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_ATTACKDODGED, battle->enemy.name );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_AttackIneffectiveCallback( Battle_t* battle )
+{
+   char msg[64];
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   sprintf( msg, STRING_BATTLE_ATTACKINEFFECTIVE, battle->enemy.name );
    Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_SwitchTurn, battle );
    Game_OpenDialog( battle->game );
 }
