@@ -14,16 +14,13 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ), &( game->player ) );
    TileMap_LoadTextures( &( game->tileMap ) );
-   TileMap_Load( &( game->tileMap ), 1 );
    AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ), game );
    Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ), &( game->tileMap ) );
    Battle_Init( &( game->battle ), game );
-   Game_SetTextColor( game );
-
-   game->activeMenu = 0;
+   Game_UpdateTextColor( game );
 
    for ( i = 0; i < MenuId_Count; i++ )
    {
@@ -31,6 +28,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    }
 
    AlphaPicker_Init( &( game->alphaPicker ), &( game->screen ) );
+   BinaryPicker_Init( &( game->binaryPicker ), &( game->screen ) );
    Dialog_Init( &( game->dialog ), &( game->screen ), &( game->mainState ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
@@ -46,40 +44,76 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    game->zoomPortals[TILEMAP_CANTLIN_TOWN_ID].destinationTileIndex = TILEMAP_CANTLIN_ZOOM_INDEX;
    game->zoomPortals[TILEMAP_RIMULDAR_TOWN_ID].destinationTileIndex = TILEMAP_RIMULDAR_ZOOM_INDEX;
 
+   Game_Reset( game );
+}
+
+void Game_Reset( Game_t* game )
+{
+   Player_t* player = &( game->player );
+
+   game->postRenderCallback = 0;
+   game->activeMenu = 0;
    game->mainState = MainState_Startup;
    game->subState = SubState_Menu;
+   game->doAnimation = False;
+   game->targetPortal = 0;
+   game->overworldInactivitySeconds = 0.0f;
+
+   TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
+
+   player->name[0] = 0;
+   player->tileIndex = 128; // in front of King Lorik
+   Player_SetCanonicalTileIndex( player );
+   player->sprite.position.x = (float)( TILE_SIZE * 8 ) + 2.0f;
+   player->sprite.position.y = (float)( TILE_SIZE * 6 ) + 4.0f;
+   player->sprite.direction = Direction_Up;
+   player->velocity.x = 0.0f;
+   player->velocity.y = 0.0f;
+   player->sprite.isFlickering = False;
+   player->hasHolyProtection = False;
+   player->holyProtectionSteps = 0;
+   player->townsVisited = 0;
+   player->experience = 0;
+   player->level = 0;
+   player->gold = 0;
+   player->items = 0;
+   player->spells = 0;
+   player->stats.sleepResist = 0;
+   player->stats.stopSpellResist = 0;
+   player->stats.hurtResist = 0;
+   player->stats.dodge = 1;
+   player->stats.strength = g_strengthTable[0];
+   player->stats.agility = g_agilityTable[0];
+   player->stats.hitPoints = g_hitPointsTable[0];
+   player->stats.maxHitPoints = g_hitPointsTable[0];
+   player->stats.magicPoints = g_magicPointsTable[0];
+   player->stats.maxMagicPoints = g_magicPointsTable[0];
+   player->isCursed = False;
+
+   Player_LoadWeapon( player, WEAPON_NONE_ID );
+   Player_LoadArmor( player, ARMOR_NONE_ID );
+   Player_LoadShield( player, SHIELD_NONE_ID );
+
    Game_OpenMenu( game, MenuId_Startup );
 }
 
 void Game_Load( Game_t* game, const char* password )
 {
-   Player_t* player = &( game->player );
-
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
-   game->targetPortal = 0;
-   game->overworldInactivitySeconds = 0.0f;
-   game->doAnimation = False;
 
-   player->tileIndex = 148; // sort of in front of King Lorik
-   Player_SetCanonicalTileIndex( player );
-   player->sprite.position.x = (float)( TILE_SIZE * 8 );
-   player->sprite.position.y = (float)( TILE_SIZE * 7 );
-   player->sprite.direction = Direction_Down;
-
-   if ( ( strlen( password ) > 0 ) && Game_LoadFromPassword( game, password ) )
+   if ( ( strlen( password ) <= 0 ) || !Game_LoadFromPassword( game, password ) )
    {
-      return;
+      game->gameFlags.treasures = 0xFFFFFFFF;
+      game->gameFlags.doors = 0xFFFFFFFF;
+      game->gameFlags.specialEnemies = 0xFF;
+      game->gameFlags.gotStaffOfRain = False;
+      game->gameFlags.gotRainbowDrop = False;
+      game->gameFlags.usedRainbowDrop = False;
+      game->gameFlags.foundHiddenStairs = False;
+      game->gameFlags.rescuedPrincess = False;
+      game->gameFlags.joinedDragonlord = False;
    }
-
-   game->gameFlags.treasures = 0xFFFFFFFF;
-   game->gameFlags.doors = 0xFFFFFFFF;
-   game->gameFlags.specialEnemies = 0xFF;
-   game->gameFlags.gotStaffOfRain = False;
-   game->gameFlags.gotRainbowDrop = False;
-   game->gameFlags.usedRainbowDrop = False;
-   game->gameFlags.foundHiddenStairs = False;
-   game->gameFlags.rescuedPrincess = False;
 }
 
 void Game_Tic( Game_t* game )
@@ -146,6 +180,10 @@ void Game_Tic( Game_t* game )
                case SubState_NonUseableItems:
                   Game_TicActiveSprites( game );
                   TileMap_Tic( &( game->tileMap ) );
+               case SubState_BinaryChoice:
+                  BinaryPicker_Tic( &( game->binaryPicker ) );
+                  TileMap_Tic( &( game->tileMap ) );
+                  break;
             }
             break;
          case MainState_Battle:
@@ -180,6 +218,12 @@ void Game_Tic( Game_t* game )
 
    Game_Draw( game );
    Screen_RenderBuffer( &( game->screen ) );
+
+   if ( game->postRenderCallback )
+   {
+      game->postRenderCallback( game->postRenderCallbackData );
+      game->postRenderCallback = 0;
+   }
 }
 
 void Game_ChangeToOverworldState( Game_t* game )
@@ -215,12 +259,23 @@ void Game_ChangeToBattleState( Game_t* game )
 {
    game->mainState = MainState_Battle;
    game->subState = SubState_None;
-   TileMap_UpdateViewport( &( game->tileMap ) );
-   Game_DrawTileMap( game );
    AnimationChain_Reset( &( game->animationChain ) );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_Checkerboard );
-   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemyFadeIn, Game_DrawEnemy, game );
-   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_BattleIntroMessageCallback, game );
+
+   if ( game->battle.specialEnemy == SpecialEnemy_DragonlordDragon )
+   {
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemySlowFadeIn, Game_DrawEnemy, game );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_BattleIntroMessageCallback, game );
+   }
+   else
+   {
+      TileMap_UpdateViewport( &( game->tileMap ) );
+      Game_DrawTileMap( game );
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Battle_Checkerboard );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemyFadeIn, Game_DrawEnemy, game );
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_BattleIntroMessageCallback, game );
+   }
+
    AnimationChain_Start( &( game->animationChain ) );
 }
 
@@ -321,22 +376,36 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
    char msg[64];
 
    Dialog_Reset( &( game->dialog ) );
-   sprintf( enemyName, "%s %s", game->battle.enemy.indefiniteArticle, game->battle.enemy.name );
 
-   if ( Battle_RollEnemyFlee( &( game->battle ) ) )
+   if ( game->battle.specialEnemy == SpecialEnemy_DragonlordWizard )
    {
-      sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
-      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiativeFlee, &( game->battle ) );
+      sprintf( msg, STRING_BATTLE_DRAGONLORD_WIZARDINTRO );
+      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
    }
-   if ( game->battle.turn == BattleTurn_Player )
+   else if ( game->battle.specialEnemy == SpecialEnemy_DragonlordDragon )
    {
-      sprintf( msg, STRING_BATTLE_ENEMYAPPROACHESINITIATIVE, enemyName );
+      sprintf( msg, STRING_BATTLE_DRAGONLORD_DRAGONINTRO );
       Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
    }
    else
    {
-      sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
-      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiative, &( game->battle ) );
+      sprintf( enemyName, "%s %s", game->battle.enemy.indefiniteArticle, game->battle.enemy.name );
+
+      if ( Battle_RollEnemyFlee( &( game->battle ) ) )
+      {
+         sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiativeFlee, &( game->battle ) );
+      }
+      if ( game->battle.turn == BattleTurn_Player )
+      {
+         sprintf( msg, STRING_BATTLE_ENEMYAPPROACHESINITIATIVE, enemyName );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+      }
+      else
+      {
+         sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiative, &( game->battle ) );
+      }
    }
    
    Game_OpenDialog( game );

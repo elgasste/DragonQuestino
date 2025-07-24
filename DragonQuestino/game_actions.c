@@ -144,7 +144,6 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          collected = Player_CollectItem( &( game->player ), Item_Key );
          sprintf( msg, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_KEY );
          break;
-      case 0x4:         // Tantegel throne room, lower-right chest
       case 0x400:       // Rocky Mountain Cave B1
       case 0x20000:     // Garinham, bottom-left chest
       case 0x40000:     // Garin's Grave B1, left chest
@@ -158,6 +157,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          collected = Player_CollectItem( &( game->player ), Item_Wing );
          sprintf( msg, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_WING );
          break;
+      case 0x4:         // Tantegel throne room, lower-right chest
       case 0x1000:      // Rocky Mountain Cave B2, upper-left area, right chest
       case 0x10000:     // Garinham, top-right chest
          collected = Player_CollectItem( &( game->player ), Item_Torch );

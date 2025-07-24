@@ -17,6 +17,7 @@ typedef struct GameFlags_t
    Bool_t usedRainbowDrop;
    Bool_t foundHiddenStairs;
    Bool_t rescuedPrincess;
+   Bool_t joinedDragonlord;
 }
 GameFlags_t;
 

@@ -3,17 +3,20 @@
 
 #include "common.h"
 
-#define ANIMATIONCHAIN_MAX_LINKS                         16
+#define ANIMATIONCHAIN_MAX_LINKS                         32
 
 #define ANIMATION_PAUSE_DURATION                         0.2f
 #define ANIMATION_WHITE_DURATION                         0.5f
 #define ANIMATION_FADE_DURATION                          0.3f
+#define ANIMATION_MIDFADE_DURATION                       2.0f
+#define ANIMATION_SLOWFADE_DURATION                      6.0f
 #define ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION          6.0f
 #define ANIMATION_RAINBOWBRIDGE_FADE_DURATION            1.5f
 #define ANIMATION_CASTSPELL_TOTALDURATION                0.2f
 #define ANIMATION_CASTSPELL_FRAMEDURATION                0.005f
 #define ANIMATION_BATTLE_CHECKERSQUARE_DURATION          0.011f
 #define ANIMATION_BATTLE_ENEMYFADE_DURATION              0.25f
+#define ANIMATION_BATTLE_ENEMYFADE_SLOWDURATION          2.0f
 #define ANIMATION_BATTLE_ENEMYDAMAGE_DURATION            0.6f
 #define ANIMATION_BATTLE_ENEMYDAMAGE_FRAMEDURATION       0.08f
 #define ANIMATION_BATTLE_PLAYERDAMAGE_DURATION           0.6f

@@ -126,6 +126,7 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    game->gameFlags.usedRainbowDrop = (Bool_t)( ( encodedBits[3] >> 2 ) & 0x1 );
    game->gameFlags.gotStaffOfRain = (Bool_t)( ( encodedBits[3] >> 1 ) & 0x1 );
    game->gameFlags.gotRainbowDrop = (Bool_t)( ( encodedBits[3] ) & 0x1 );
+   game->gameFlags.joinedDragonlord = False;
 
    player->experience = (uint16_t)( encodedBits[0] & 0xFFFF );
    player->gold = (uint16_t)( encodedBits[3] >> 16 );

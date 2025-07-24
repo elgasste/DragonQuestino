@@ -38,6 +38,7 @@ internal Vector2u16_t g_battleCheckerboardPos[49] =
    { 112, 148 }, { 96,  148 }, { 96,  132 }, { 96,  116 }, { 96,  100 }, { 96,  84  }, { 96,  68  },
    { 96,  52  }, { 112, 52  }, { 128, 52  }, { 144, 52  }, { 160, 52  }, { 176, 52  }, { 192, 52  }
 };
+internal uint32_t g_squaresDrawn;
 
 void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap, Game_t* game )
 {
@@ -86,7 +87,11 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_Pause: AnimationChain_Tic_Pause( chain ); break;
          case AnimationId_WhiteOut: AnimationChain_Tic_WhiteOut( chain ); break;
          case AnimationId_WhiteIn: AnimationChain_Tic_WhiteIn( chain ); break;
-         case AnimationId_FadeOut: AnimationChain_Tic_FadeOut( chain ); break;
+         case AnimationId_FadeOut:
+         case AnimationId_MidFadeOut:
+         case AnimationId_SlowFadeOut:
+            AnimationChain_Tic_FadeOut( chain );
+            break;
          case AnimationId_FadeIn: AnimationChain_Tic_FadeIn( chain ); break;
          case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
          case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
@@ -96,7 +101,10 @@ void AnimationChain_Tic( AnimationChain_t* chain )
             AnimationChain_Tic_Flash( chain );
             break;
          case AnimationId_Battle_Checkerboard: AnimationChain_Tic_Battle_Checkerboard( chain ); break;
-         case AnimationId_Battle_EnemyFadeIn: AnimationChain_Tic_Battle_EnemyFadeIn( chain ); break;
+         case AnimationId_Battle_EnemyFadeIn:
+         case AnimationId_Battle_EnemySlowFadeIn:
+            AnimationChain_Tic_Battle_EnemyFadeIn( chain );
+            break;
          case AnimationId_Battle_EnemyFadeOut: AnimationChain_Tic_Battle_EnemyFadeOut( chain ); break;
          case AnimationId_Battle_EnemyDamage: AnimationChain_Tic_Battle_EnemyDamage( chain ); break;
          case AnimationId_Battle_PlayerDamage: AnimationChain_Tic_Battle_PlayerDamage( chain ); break;
@@ -125,6 +133,14 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          Screen_BackupPalette( chain->screen );
          chain->totalDuration = ANIMATION_FADE_DURATION;
          break;
+      case AnimationId_MidFadeOut:
+         Screen_BackupPalette( chain->screen );
+         chain->totalDuration = ANIMATION_MIDFADE_DURATION;
+         break;
+      case AnimationId_SlowFadeOut:
+         Screen_BackupPalette( chain->screen );
+         chain->totalDuration = ANIMATION_SLOWFADE_DURATION;
+         break;
       case AnimationId_FadeIn: chain->totalDuration = ANIMATION_FADE_DURATION; break;
       case AnimationId_RainbowBridge_Trippy:
          Screen_BackupPalette( chain->screen );
@@ -134,6 +150,9 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
       case AnimationId_RainbowBridge_FadeIn:
          chain->totalDuration = ANIMATION_RAINBOWBRIDGE_FADE_DURATION;
          break;
+      case AnimationId_Battle_Checkerboard:
+         g_squaresDrawn = 0;
+         break;
       case AnimationId_CastSpell:
          chain->screen->wipeColor = COLOR_WHITE;
          chain->totalDuration = ANIMATION_CASTSPELL_TOTALDURATION;
@@ -141,6 +160,9 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          break;
       case AnimationId_Battle_EnemyFadeIn:
          chain->totalDuration = ANIMATION_BATTLE_ENEMYFADE_DURATION;
+         break;
+      case AnimationId_Battle_EnemySlowFadeIn:
+         chain->totalDuration = ANIMATION_BATTLE_ENEMYFADE_SLOWDURATION;
          break;
       case AnimationId_Battle_EnemyDamage:
          chain->totalDuration = ANIMATION_BATTLE_ENEMYDAMAGE_DURATION;
@@ -169,6 +191,7 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
       case AnimationId_WhiteIn:
       case AnimationId_RainbowBridge_FadeIn:
       case AnimationId_Battle_EnemyFadeIn:
+      case AnimationId_Battle_EnemySlowFadeIn:
       case AnimationId_Battle_EnemyFadeOut:
          Screen_RestorePalette( chain->screen );
          break;
@@ -364,17 +387,27 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
    chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
    int16_t xOffset = chain->tileMap->isDark ? -24 : 0;
    int16_t yOffset = chain->tileMap->isDark ? 4 : 0;
+   uint32_t squaresToDraw;
 
    while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_CHECKERSQUARE_DURATION )
    {
-      uint32_t squareIndex = (uint32_t)( chain->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION );
+      squaresToDraw = (uint32_t)( chain->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION ) + 1;
 
-      Screen_DrawRectColor( chain->screen,
-                            (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].x ) + xOffset ),
-                            (uint16_t)( (int16_t)( g_battleCheckerboardPos[squareIndex].y ) + yOffset ),
-                            TILE_SIZE, TILE_SIZE, COLOR_BLACK );
+      while ( g_squaresDrawn <= squaresToDraw )
+      {
+         Screen_DrawRectColor( chain->screen,
+                               (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
+                               (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
+                               TILE_SIZE, TILE_SIZE, COLOR_BLACK );
+         g_squaresDrawn++;
 
-      if ( squareIndex == 48 )
+         if ( g_squaresDrawn > 48 )
+         {
+            break;
+         }
+      }
+
+      if ( g_squaresDrawn > 48 )
       {
          AnimationChain_AnimationFinished( chain );
          break;
@@ -466,8 +499,16 @@ internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain )
       }
       else
       {
-         Game_DrawTileMap( chain->game );
-         Game_WipeEnemy( chain->game );
+         if ( chain->game->battle.enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
+         {
+            Screen_WipeColor( &( chain->game->screen ), COLOR_BLACK );
+         }
+         else
+         {
+            Game_DrawTileMap( chain->game );
+            Game_WipeEnemy( chain->game );
+         }
+
          Game_DrawEnemy( chain->game );
       }
 

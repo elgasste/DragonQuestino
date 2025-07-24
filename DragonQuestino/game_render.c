@@ -13,7 +13,7 @@ void Game_Draw( Game_t* game )
 {
    AnimationId_t activeAnimationId;
 
-   Game_SetTextColor( game );
+   Game_UpdateTextColor( game );
 
    if ( game->doAnimation )
    {
@@ -40,6 +40,7 @@ void Game_Draw( Game_t* game )
       else if ( game->mainState == MainState_Battle )
       {
          if ( activeAnimationId == AnimationId_Battle_EnemyFadeIn ||
+              activeAnimationId == AnimationId_Battle_EnemySlowFadeIn ||
               activeAnimationId == AnimationId_Battle_EnemyFadeOut )
          {
             Game_DrawEnemy( game );
@@ -96,10 +97,22 @@ void Game_Draw( Game_t* game )
                Menu_Draw( &( game->menus[MenuId_Overworld] ) );
                Game_DrawNonUseableItems( game, False );
                break;
+            case SubState_BinaryChoice:
+               Game_DrawQuickStatus( game );
+               Dialog_Draw( &( game->dialog ) );
+               BinaryPicker_Draw( &( game->binaryPicker ) );
+               break;
          }
          break;
       case MainState_Battle:
-         Game_DrawTileMap( game );
+         if ( game->battle.enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
+         {
+            Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+         }
+         else
+         {
+            Game_DrawTileMap( game );
+         }
          switch ( game->subState )
          {
             case SubState_Menu:
@@ -257,12 +270,16 @@ void Game_WipeEnemy( Game_t* game )
    }
 }
 
-void Game_SetTextColor( Game_t* game )
+void Game_UpdateTextColor( Game_t* game )
 {
    float percentage;
    Player_t* player = &( game->player );
 
-   if ( player->isCursed )
+   if ( game->gameFlags.joinedDragonlord )
+   {
+      game->screen.textColor = COLOR_DARKRED;
+   }
+   else if ( player->isCursed )
    {
       game->screen.textColor = COLOR_GROSSYELLOW;
    }

@@ -10,6 +10,7 @@
 #include "player.h"
 #include "menu.h"
 #include "alpha_picker.h"
+#include "binary_picker.h"
 #include "dialog.h"
 #include "animation_chain.h"
 #include "battle.h"
@@ -39,10 +40,13 @@ typedef struct Game_t
    Menu_t menus[MenuId_Count];
    Menu_t* activeMenu;
    AlphaPicker_t alphaPicker;
+   BinaryPicker_t binaryPicker;
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    AnimationChain_t animationChain;
    Battle_t battle;
+   void ( *postRenderCallback )( void* );
+   void* postRenderCallbackData;
 
    float overworldInactivitySeconds;
    Bool_t doAnimation;
@@ -61,6 +65,7 @@ extern "C" {
 // game.c
 void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Load( Game_t* game, const char* password );
+void Game_Reset( Game_t* game );
 void Game_Tic( Game_t* game );
 void Game_ChangeToEnterNameState( Game_t* game );
 void Game_ChangeToEnterPasswordState( Game_t* game );
@@ -99,7 +104,7 @@ void Game_DrawOverworldDeepStatus( Game_t* game );
 void Game_DrawOverworldItemMenu( Game_t* game );
 void Game_DrawEnemy( Game_t* game );
 void Game_WipeEnemy( Game_t* game );
-void Game_SetTextColor( Game_t* game );
+void Game_UpdateTextColor( Game_t* game );
 void Game_DrawTileMap( Game_t* game );
 
 // game_spells.c
