@@ -67,6 +67,7 @@ internal void Battle_DefeatedWizardDragonlordPauseCallback( Battle_t* battle );
 internal void Battle_DefeatedWizardDragonlordCallback( Battle_t* battle );
 internal void Battle_StartFinalDragonlordBattleCallback( Battle_t* battle );
 internal void Battle_FadeFinalDragonlordBattleInCallback( Battle_t* battle );
+internal void Battle_DefeatedFinalDragonlordPauseCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -403,8 +404,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    }
    else if ( battle->enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
    {
-      // TODO: end-of-game stuff
-      Dialog_PushSection( dialog, msg );
+      Dialog_PushSectionWithCallback( dialog, msg, Battle_DefeatedFinalDragonlordPauseCallback, battle );
    }
    else
    {
@@ -1117,4 +1117,16 @@ internal void Battle_FadeFinalDragonlordBattleInCallback( Battle_t* battle )
    battle->specialEnemy = SpecialEnemy_DragonlordDragon;
    Battle_Generate( battle );
    Game_ChangeToBattleState( battle->game );
+}
+
+internal void Battle_DefeatedFinalDragonlordPauseCallback( Battle_t* battle )
+{
+   battle->game->gameFlags.defeatedDragonlord = True;
+
+   if ( !ITEM_HAS_SPHEREOFLIGHT( battle->game->player.items ) )
+   {
+      ITEM_TOGGLE_HASSPHEREOFLIGHT( battle->game->player.items );
+   }
+
+   // MUFFINS: pause, then show the dialog that we've collected the sphere of light
 }

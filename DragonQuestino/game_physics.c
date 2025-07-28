@@ -239,21 +239,24 @@ void Game_PlayerSteppedOnTile( Game_t* game )
    }
 #endif
 
-   game->battle.specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
+   if ( !game->gameFlags.defeatedDragonlord )
+   {
+      game->battle.specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
 
-   if ( game->battle.specialEnemy != SpecialEnemy_None )
-   {
-      Battle_Generate( &( game->battle ) );
-      Game_ChangeToBattleState( game );
-   }
-   else if ( game->tileMap.hasEncounters )
-   {
-      if ( !( game->tileMap.isDungeon ) && game->player.hasHolyProtection )
+      if ( game->battle.specialEnemy != SpecialEnemy_None )
       {
-         game->player.holyProtectionSteps++;
+         Battle_Generate( &( game->battle ) );
+         Game_ChangeToBattleState( game );
       }
+      else if ( game->tileMap.hasEncounters )
+      {
+         if ( !( game->tileMap.isDungeon ) && game->player.hasHolyProtection )
+         {
+            game->player.holyProtectionSteps++;
+         }
 
-      Game_RollEncounter( game );
+         Game_RollEncounter( game );
+      }
    }
 }
 

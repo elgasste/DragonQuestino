@@ -113,6 +113,7 @@ void Game_Load( Game_t* game, const char* password )
       game->gameFlags.foundHiddenStairs = False;
       game->gameFlags.rescuedPrincess = False;
       game->gameFlags.joinedDragonlord = False;
+      game->gameFlags.defeatedDragonlord = False;
    }
 }
 
