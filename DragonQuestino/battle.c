@@ -67,7 +67,10 @@ internal void Battle_DefeatedWizardDragonlordPauseCallback( Battle_t* battle );
 internal void Battle_DefeatedWizardDragonlordCallback( Battle_t* battle );
 internal void Battle_StartFinalDragonlordBattleCallback( Battle_t* battle );
 internal void Battle_FadeFinalDragonlordBattleInCallback( Battle_t* battle );
+internal void Battle_DefeatedFinalDragonlordCallback( Battle_t* battle );
 internal void Battle_DefeatedFinalDragonlordPauseCallback( Battle_t* battle );
+internal void Battle_CollectSphereCallback( Battle_t* battle );
+internal void Battle_CollectSpherePauseCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -123,10 +126,10 @@ void Battle_Attack( Battle_t* battle )
 
 void Battle_Flee( Battle_t* battle )
 {
-   Bool_t fleed = Battle_GetFleeResult( battle );
+   Bool_t fled = Battle_GetFleeResult( battle );
 
    Dialog_Reset( &( battle->game->dialog ) );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_FLEEATTEMPT, fleed ? Battle_FleeSucceededCallback : Battle_FleeFailedCallback, battle );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_FLEEATTEMPT, fled ? Battle_FleeSucceededCallback : Battle_FleeFailedCallback, battle );
    Game_OpenDialog( battle->game );
 }
 
@@ -383,7 +386,8 @@ internal void Battle_AttackIneffectiveCallback( Battle_t* battle )
 
 internal void Battle_EnemyDefeatedCallback( Battle_t* battle )
 {
-   Battle_MultiPauseBeforeAnimation( battle, 2, AnimationId_Battle_EnemyFadeOut, Battle_EnemyDefeatedMessageCallback );
+   AnimationId_t id = ( battle->specialEnemy == SpecialEnemy_DragonlordDragon ) ? AnimationId_Battle_EnemySlowFadeOut : AnimationId_Battle_EnemyFadeOut;
+   Battle_MultiPauseBeforeAnimation( battle, 2, id, Battle_EnemyDefeatedMessageCallback );
 }
 
 internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
@@ -404,7 +408,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    }
    else if ( battle->enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
    {
-      Dialog_PushSectionWithCallback( dialog, msg, Battle_DefeatedFinalDragonlordPauseCallback, battle );
+      Dialog_PushSectionWithCallback( dialog, msg, Battle_DefeatedFinalDragonlordCallback, battle );
    }
    else
    {
@@ -1119,14 +1123,41 @@ internal void Battle_FadeFinalDragonlordBattleInCallback( Battle_t* battle )
    Game_ChangeToBattleState( battle->game );
 }
 
+internal void Battle_DefeatedFinalDragonlordCallback( Battle_t* battle )
+{
+   Battle_MultiPauseBeforeAnimation( battle, 15, AnimationId_Pause, Battle_DefeatedFinalDragonlordPauseCallback );
+}
+
 internal void Battle_DefeatedFinalDragonlordPauseCallback( Battle_t* battle )
 {
    battle->game->gameFlags.defeatedDragonlord = True;
+   battle->game->tileMap.npcCount = 0;
 
+   Game_ChangeToOverworldState( battle->game );
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_MidFadeIn );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_CollectSpherePauseCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_CollectSphereCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   Battle_MultiPauseBeforeAnimation( battle, 4, AnimationId_Pause, Battle_CollectSpherePauseCallback );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_CollectSpherePauseCallback( Battle_t* battle )
+{
    if ( !ITEM_HAS_SPHEREOFLIGHT( battle->game->player.items ) )
    {
       ITEM_TOGGLE_HASSPHEREOFLIGHT( battle->game->player.items );
    }
 
-   // MUFFINS: pause, then show the dialog that we've collected the sphere of light
+   Dialog_Reset( &( battle->game->dialog ) );
+   Dialog_PushSection( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT );
+   Game_OpenDialog( battle->game );
 }

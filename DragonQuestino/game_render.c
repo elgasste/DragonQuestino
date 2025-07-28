@@ -41,7 +41,8 @@ void Game_Draw( Game_t* game )
       {
          if ( activeAnimationId == AnimationId_Battle_EnemyFadeIn ||
               activeAnimationId == AnimationId_Battle_EnemySlowFadeIn ||
-              activeAnimationId == AnimationId_Battle_EnemyFadeOut )
+              activeAnimationId == AnimationId_Battle_EnemyFadeOut ||
+              activeAnimationId == AnimationId_Battle_EnemySlowFadeOut )
          {
             Game_DrawEnemy( game );
          }
