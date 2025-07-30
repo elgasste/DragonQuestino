@@ -467,6 +467,11 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "      TileMap_LoadHiddenStairs( tileMap );\n" );
          WriteToFileStream( fs, "   }\n\n" );
 
+         WriteToFileStream( fs, "   if ( ( id == TILEMAP_CHARLOCK_DRAGONLORD_ID && tileMap->gameFlags->defeatedDragonlord ) || ( id == TILEMAP_SWAMPCAVE_ID && tileMap->gameFlags->defeatedDragonlord ) )\n" );
+         WriteToFileStream( fs, "   {\n" );
+         WriteToFileStream( fs, "      tileMap->npcCount = 0;\n" );
+         WriteToFileStream( fs, "   }\n\n" );
+
          WriteToFileStream( fs, "   TileMap_ResetNpcs( tileMap );\n" );
 
          WriteToFileStream( fs, "}\n" );

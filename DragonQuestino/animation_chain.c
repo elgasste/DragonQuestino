@@ -92,7 +92,10 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_SlowFadeOut:
             AnimationChain_Tic_FadeOut( chain );
             break;
-         case AnimationId_FadeIn: AnimationChain_Tic_FadeIn( chain ); break;
+         case AnimationId_FadeIn:
+         case AnimationId_MidFadeIn:
+            AnimationChain_Tic_FadeIn( chain );
+            break;
          case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
          case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
          case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
@@ -105,7 +108,10 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_Battle_EnemySlowFadeIn:
             AnimationChain_Tic_Battle_EnemyFadeIn( chain );
             break;
-         case AnimationId_Battle_EnemyFadeOut: AnimationChain_Tic_Battle_EnemyFadeOut( chain ); break;
+         case AnimationId_Battle_EnemyFadeOut:
+         case AnimationId_Battle_EnemySlowFadeOut:
+            AnimationChain_Tic_Battle_EnemyFadeOut( chain );
+            break;
          case AnimationId_Battle_EnemyDamage: AnimationChain_Tic_Battle_EnemyDamage( chain ); break;
          case AnimationId_Battle_PlayerDamage: AnimationChain_Tic_Battle_PlayerDamage( chain ); break;
       }
@@ -142,6 +148,7 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          chain->totalDuration = ANIMATION_SLOWFADE_DURATION;
          break;
       case AnimationId_FadeIn: chain->totalDuration = ANIMATION_FADE_DURATION; break;
+      case AnimationId_MidFadeIn: chain->totalDuration = ANIMATION_MIDFADE_DURATION; break;
       case AnimationId_RainbowBridge_Trippy:
          Screen_BackupPalette( chain->screen );
          chain->totalDuration = ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION;
@@ -159,9 +166,11 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          chain->frameDuration = ANIMATION_CASTSPELL_FRAMEDURATION;
          break;
       case AnimationId_Battle_EnemyFadeIn:
+      case AnimationId_Battle_EnemyFadeOut:
          chain->totalDuration = ANIMATION_BATTLE_ENEMYFADE_DURATION;
          break;
       case AnimationId_Battle_EnemySlowFadeIn:
+      case AnimationId_Battle_EnemySlowFadeOut:
          chain->totalDuration = ANIMATION_BATTLE_ENEMYFADE_SLOWDURATION;
          break;
       case AnimationId_Battle_EnemyDamage:
@@ -188,11 +197,13 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
    switch ( chain->animationIds[chain->activeAnimation] )
    {
       case AnimationId_FadeIn:
+      case AnimationId_MidFadeIn:
       case AnimationId_WhiteIn:
       case AnimationId_RainbowBridge_FadeIn:
       case AnimationId_Battle_EnemyFadeIn:
       case AnimationId_Battle_EnemySlowFadeIn:
       case AnimationId_Battle_EnemyFadeOut:
+      case AnimationId_Battle_EnemySlowFadeOut:
          Screen_RestorePalette( chain->screen );
          break;
       case AnimationId_Battle_Checkerboard:
@@ -446,8 +457,6 @@ internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain )
    float p;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
-
-   chain->totalElapsedSeconds += CLOCK_FRAME_SECONDS;
 
    for ( i = 0; i < PALETTE_COLORS; i++ )
    {

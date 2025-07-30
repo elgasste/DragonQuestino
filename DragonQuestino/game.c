@@ -113,6 +113,7 @@ void Game_Load( Game_t* game, const char* password )
       game->gameFlags.foundHiddenStairs = False;
       game->gameFlags.rescuedPrincess = False;
       game->gameFlags.joinedDragonlord = False;
+      game->gameFlags.defeatedDragonlord = False;
    }
 }
 
@@ -203,7 +204,7 @@ void Game_Tic( Game_t* game )
 #if defined( VISUAL_STUDIO_DEV )
    if ( game->tileMap.isDark )
    {
-      if ( g_debugFlags.noDark )
+      if ( g_debugFlags.noDark || game->gameFlags.defeatedDragonlord )
       {
          TileMap_ChangeViewportSize( &( game->tileMap ), SCREEN_WIDTH, SCREEN_HEIGHT );
       }
@@ -245,7 +246,8 @@ void Game_ChangeToEnterNameState( Game_t* game )
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
    // MUFFINS: this gives us some goodies for testing
-   Game_Load( game, "..91Mf....9Q0RP-E4iyABHdtPf..4" );
+   //Game_Load( game, "..91Mf....9Q0RP-E4iyABHdtPf..4" ); // level 21 with some good stuff (haven't saved Princess)
+   Game_Load( game, "APD...9..39I.b.-....5wqJ2p...4" ); // level 30 with everything (haven't saved Princess)
    Game_ChangeToOverworldState( game );
 
    /*game->mainState = MainState_EnterPassword;
@@ -320,7 +322,7 @@ void Game_EnterTargetPortal( Game_t* game )
 
    ActiveSprite_SetDirection( &( game->player.sprite ), arrivalDirection );
 
-   if ( game->tileMap.isDark )
+   if ( game->tileMap.isDark && !game->gameFlags.defeatedDragonlord )
    {
       TileMap_ChangeViewportSize( &( game->tileMap ),
                                   (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ),

@@ -81,7 +81,11 @@ void Game_UseTorch( Game_t* game )
 
    if ( game->tileMap.isDark )
    {
-      if ( game->tileMap.torchIsLit )
+      if ( game->gameFlags.defeatedDragonlord )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_TORCH_SPHEREOFLIGHT );
+      }
+      else if ( game->tileMap.torchIsLit )
       {
          Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_TORCH_ALREADYUSED );
       }
@@ -251,7 +255,7 @@ internal void Game_RainbowDropTrippyCallback( Game_t* game )
 
 internal void Game_UseSilverHarpCallback( Game_t* game )
 {
-   if ( game->tileMap.hasEncounters )
+   if ( game->tileMap.hasEncounters && !game->gameFlags.defeatedDragonlord )
    {
       Battle_Generate( &( game->battle ) );
       AnimationChain_Reset( &( game->animationChain ) );

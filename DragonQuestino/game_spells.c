@@ -110,9 +110,18 @@ void Game_CastGlow( Game_t* game )
    if ( game->tileMap.isDark )
    {
       Dialog_Reset( &( game->dialog ) );
-      game->pendingSpell = Spell_Glow;
-      sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW );
-      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
+
+      if ( game->gameFlags.defeatedDragonlord )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_DIALOG_SPELLS_GLOW_SPHEREOFLIGHT );
+      }
+      else
+      {
+         game->pendingSpell = Spell_Glow;
+         sprintf( msg, STRING_DIALOG_SPELLS_OVERWORLD_CAST, STRING_SPELL_GLOW );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CastSpellCallback, game );
+      }
+
       Game_OpenDialog( game );
    }
 }

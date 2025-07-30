@@ -25683,6 +25683,11 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
       TileMap_LoadHiddenStairs( tileMap );
    }
 
+   if ( ( id == TILEMAP_CHARLOCK_DRAGONLORD_ID && tileMap->gameFlags->defeatedDragonlord ) || ( id == TILEMAP_SWAMPCAVE_ID && tileMap->gameFlags->defeatedDragonlord ) )
+   {
+      tileMap->npcCount = 0;
+   }
+
    TileMap_ResetNpcs( tileMap );
 }
 
