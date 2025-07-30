@@ -204,7 +204,7 @@ void Game_Tic( Game_t* game )
 #if defined( VISUAL_STUDIO_DEV )
    if ( game->tileMap.isDark )
    {
-      if ( g_debugFlags.noDark )
+      if ( g_debugFlags.noDark || game->gameFlags.defeatedDragonlord )
       {
          TileMap_ChangeViewportSize( &( game->tileMap ), SCREEN_WIDTH, SCREEN_HEIGHT );
       }
@@ -322,7 +322,7 @@ void Game_EnterTargetPortal( Game_t* game )
 
    ActiveSprite_SetDirection( &( game->player.sprite ), arrivalDirection );
 
-   if ( game->tileMap.isDark )
+   if ( game->tileMap.isDark && !game->gameFlags.defeatedDragonlord )
    {
       TileMap_ChangeViewportSize( &( game->tileMap ),
                                   (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ),

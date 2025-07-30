@@ -81,7 +81,11 @@ void Game_UseTorch( Game_t* game )
 
    if ( game->tileMap.isDark )
    {
-      if ( game->tileMap.torchIsLit )
+      if ( game->gameFlags.defeatedDragonlord )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_TORCH_SPHEREOFLIGHT );
+      }
+      else if ( game->tileMap.torchIsLit )
       {
          Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_TORCH_ALREADYUSED );
       }
