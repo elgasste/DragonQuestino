@@ -413,8 +413,8 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    else
    {
       Dialog_PushSection( dialog, msg );
-      Math_CollectAmount16u( &( battle->experienceGained ), enemy->experience );
-      Math_CollectAmount16u( &( battle->goldGained ), enemy->gold );
+      battle->experienceGained = Math_CollectAmount16u( &( player->experience ), enemy->experience );
+      battle->goldGained = Math_CollectAmount16u( &( player->gold ), enemy->gold );
       battle->newLevel = Player_GetLevelFromExperience( player );
       battle->previousSpells = player->spells;
 
