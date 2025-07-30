@@ -1160,4 +1160,12 @@ internal void Battle_CollectSpherePauseCallback( Battle_t* battle )
    Dialog_Reset( &( battle->game->dialog ) );
    Dialog_PushSection( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT );
    Game_OpenDialog( battle->game );
+
+   // MUFFINS: what do we want to do here, exactly?
+   //
+   // - let's allow going anywhere, but make it all bright
+   //    - torches and the glow spell should be disallowed
+   // 
+   // - change all the NPC dialogue (do this later)
+   // - talking to Lorik triggers the ending (do this later)
 }
