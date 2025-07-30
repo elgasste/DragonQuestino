@@ -1160,13 +1160,4 @@ internal void Battle_CollectSpherePauseCallback( Battle_t* battle )
    Dialog_Reset( &( battle->game->dialog ) );
    Dialog_PushSection( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT );
    Game_OpenDialog( battle->game );
-
-   // MUFFINS
-   // 
-   // - make sure there's no way to take damage
-   //    - swamp
-   //    - barrier
-   // 
-   // - change all the NPC dialogue (do this later)
-   // - talking to Lorik triggers the ending (do this later)
 }

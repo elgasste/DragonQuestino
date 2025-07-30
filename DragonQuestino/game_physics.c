@@ -166,7 +166,8 @@ void Game_TicPhysics( Game_t* game )
    if ( !g_debugFlags.noTileDamage ) {
 #endif
 
-      if ( TILE_GET_DAMAGERATE( game->tileMap.tiles[player->canonicalTileIndex] ) > 0 )
+      if ( !game->gameFlags.defeatedDragonlord && ( game->player.armor.id != ARMOR_ERDRICKSARMOR_ID ) &&
+           ( TILE_GET_DAMAGERATE( game->tileMap.tiles[player->canonicalTileIndex] ) > 0 ) )
       {
          if ( ( prevPos.x != newPos.x ) || ( prevPos.y != newPos.y ) )
          {
@@ -442,7 +443,14 @@ internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game )
 internal void Game_ApplyTileDamage( Game_t* game )
 {
    uint8_t damage;
-   uint16_t damageRate = TILE_GET_DAMAGERATE( game->tileMap.tiles[game->player.canonicalTileIndex] );
+   uint16_t damageRate;
+
+   if ( game->gameFlags.defeatedDragonlord || ( game->player.armor.id == ARMOR_ERDRICKSARMOR_ID ) )
+   {
+      return;
+   }
+
+   damageRate = TILE_GET_DAMAGERATE( game->tileMap.tiles[game->player.canonicalTileIndex] );
 
    if ( damageRate == 0 )
    {
