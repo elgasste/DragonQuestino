@@ -1056,6 +1056,8 @@ internal void Battle_EnemyCastSleepAnimation( Battle_t* battle )
    Battle_MultiPauseBeforeAnimation( battle, 1, AnimationId_Pause, Battle_EnemyTurn );
 }
 
+// MUFFINS: if the enemy runs away immediately, we should use a different function.
+// also though, the fade animation isn't working here, WHY???
 internal void Battle_EnemyFlee( Battle_t* battle )
 {
    char msg[64];
