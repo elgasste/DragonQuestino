@@ -4,16 +4,18 @@
 #include "common.h"
 #include "vector.h"
 
-#define PIN_ANALOG_X             A7
-#define PIN_ANALOG_Y             A6
-#define PIN_A_BUTTON             51
-#define PIN_B_BUTTON             53
+#define INPUT_A_FLAG             0x01
+#define INPUT_B_FLAG             0x02
+#define INPUT_SELECT_FLAG        0x04
+#define INPUT_START_FLAG         0x08
+#define INPUT_UP_FLAG            0x10
+#define INPUT_DOWN_FLAG          0x20
+#define INPUT_LEFT_FLAG          0x40
+#define INPUT_RIGHT_FLAG         0x80
 
-#define INPUT_ANALOG_BITS        16
-#define INPUT_ANALOG_POLL_COUNT  1000
-#define INPUT_ANALOG_THRESHOLD   384
-#define INPUT_ANALOG_CUTOFF_HIGH 65471
-#define INPUT_ANALOG_CUTOFF_LOW  64
+#define INPUT_NES_DATA_PIN       4
+#define INPUT_NES_CLOCK_PIN      2
+#define INPUT_NES_LATCH_PIN      3
 
 typedef struct ButtonState_t
 {
@@ -26,10 +28,6 @@ ButtonState_t;
 typedef struct Input_t
 {
    ButtonState_t buttonStates[Button_Count];
-   float analogIntensity[Direction_Count];
-   Vector2i32_t analogRestingState;
-   Vector2i32_t analogLowRange;
-   Vector2i32_t analogHighRange;
 }
 Input_t;
 
@@ -45,6 +43,8 @@ Bool_t Input_AnyButtonPressed( Input_t* input );
 void Input_ResetState( Input_t* input );
 void Input_ButtonPressed( Input_t* input, uint32_t button );
 void Input_ButtonReleased( Input_t* input, uint32_t button );
+#else
+uint8_t Input_ReadNesController();
 #endif
 
 #if defined( __cplusplus )
