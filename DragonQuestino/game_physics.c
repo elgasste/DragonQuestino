@@ -208,6 +208,11 @@ void Game_PlayerSteppedOnTile( Game_t* game )
       // must have stepped on a damage tile and died
       return;
    }
+   
+   if ( game->player.armor.id == ARMOR_MAGICARMOR_ID || game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+   {
+      Player_RestoreHitPoints( &( game->player ), 1 );
+   }
 
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), game->player.tileIndex );
    portal = TileMap_GetPortalForTileIndex( &( game->tileMap ), game->player.tileIndex );
