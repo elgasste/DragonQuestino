@@ -78,12 +78,19 @@ void Game_Search( Game_t* game )
       sprintf( msg, STRING_DIALOG_SEARCH_FOUND, STRING_FOUNDITEM_ERDRICKSARMOR );
       Dialog_PushSection( &( game->dialog ), msg );
    }
-   else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID && game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->gameFlags.foundHiddenStairs )
+   else if ( game->tileMap.id == TILEMAP_CHARLOCK_ID )
    {
-      game->gameFlags.foundHiddenStairs = True;
-      TileMap_LoadHiddenStairs( &( game->tileMap ) );
-      Dialog_PushSection( &( game->dialog ), STRING_DIALOG_SEARCH );
-      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_FOUND_HIDDENSTAIRS, Game_FoundHiddenStairsCallback, game );
+      if ( game->player.tileIndex == TILEMAP_DRAGONLORDTHRONE_INDEX )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_DIALOG_DRAGONLORDTHRONE );
+      }
+      else if ( game->player.tileIndex == TILEMAP_HIDDENSTAIRS_INDEX && !game->gameFlags.foundHiddenStairs )
+      {
+         game->gameFlags.foundHiddenStairs = True;
+         TileMap_LoadHiddenStairs( &( game->tileMap ) );
+         Dialog_PushSection( &( game->dialog ), STRING_DIALOG_SEARCH );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_FOUND_HIDDENSTAIRS, Game_FoundHiddenStairsCallback, game );
+      }
    }
    else
    {
