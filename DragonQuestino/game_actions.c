@@ -154,13 +154,13 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
       case 0x400:       // Rocky Mountain Cave B1
       case 0x20000:     // Garinham, bottom-left chest
       case 0x40000:     // Garin's Grave B1, left chest
-      case 0x1000000:   // Charlock B7, top chest
-      case 0x20000000:  // Charlock B7, bottom-right chest
+      case 0x1000000:   // Charlock B8, top chest
+      case 0x20000000:  // Charlock B8, bottom-right chest
          collected = Player_CollectItem( &( game->player ), Item_Herb );
          sprintf( msg, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_HERB );
          break;
       case 0x200:       // Rimuldar Inn
-      case 0x8000000:   // Charlock B7, bottom-left chest
+      case 0x8000000:   // Charlock B8, bottom-left chest
          collected = Player_CollectItem( &( game->player ), Item_Wing );
          sprintf( msg, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_WING );
          break;
@@ -171,7 +171,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          sprintf( msg, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_TORCH );
          break;
       case 0x200000:    // Garin's Grave B3, upper-left chest
-      case 0x10000000:  // Charlock B7, bottom-center chest
+      case 0x10000000:  // Charlock B8, bottom-center chest
          collected = Player_CollectItem( &( game->player ), Item_CursedBelt );
          sprintf( msg, STRING_CHEST_ITEMFOUND, STRING_CHESTCOLLECT_CURSEDBELT );
          break;
@@ -206,7 +206,7 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
          sprintf( itemMsg, "%s %s", STRING_WEAPON_ERDRICKSSWORD1, STRING_WEAPON_ERDRICKSSWORD2 );
          sprintf( msg, STRING_CHEST_ITEMFOUND, itemMsg );
          break;
-      case 0x2000000:   // Charlock B7, center-left chest
+      case 0x2000000:   // Charlock B8, center-left chest
          gold = Random_u16( 500, 755 ); break;
       case 0x2000:      // Rocky Mountain Cave B2, center-left chest
          if ( Random_Percent() <= 5 )
