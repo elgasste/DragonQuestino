@@ -61,6 +61,7 @@ internal void Battle_EnemyCastSleepMessageCallback( Battle_t* battle );
 internal void Battle_EnemyCastSleepAnimation( Battle_t* battle );
 internal void Battle_EnemyFlee( Battle_t* battle );
 internal void Battle_EnemyFleeCallback( Battle_t* battle );
+internal void Battle_EnemyFledCallback( Battle_t* battle );
 internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,
                                                 AnimationId_t finalAnimationId, void ( *callback )( Battle_t* ) );
 internal void Battle_DefeatedWizardDragonlordPauseCallback( Battle_t* battle );
@@ -1056,8 +1057,6 @@ internal void Battle_EnemyCastSleepAnimation( Battle_t* battle )
    Battle_MultiPauseBeforeAnimation( battle, 1, AnimationId_Pause, Battle_EnemyTurn );
 }
 
-// MUFFINS: if the enemy runs away immediately, we should use a different function.
-// also though, the fade animation isn't working here, WHY???
 internal void Battle_EnemyFlee( Battle_t* battle )
 {
    char msg[64];
@@ -1070,11 +1069,15 @@ internal void Battle_EnemyFlee( Battle_t* battle )
 
 internal void Battle_EnemyFleeCallback( Battle_t* battle )
 {
-   battle->isOver = True;
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut, Battle_EnemyFledCallback, battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_EnemyFledCallback( Battle_t* battle )
+{
+   battle->isOver = True;
 }
 
 internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,
