@@ -120,6 +120,13 @@ void Game_Draw( Game_t* game )
                Game_DrawQuickStatus( game );
                Game_WipeEnemy( game );
                Game_DrawEnemy( game );
+               switch ( game->activeMenu->id )
+               {
+                  case MenuId_BattleSpell:
+                  case MenuId_BattleItem:
+                     Menu_Draw( &( game->menus[MenuId_Battle] ) );
+                     break;
+               }
                Menu_Draw( game->activeMenu );
                Dialog_Draw( &( game->dialog ) );
                break;
