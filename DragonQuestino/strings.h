@@ -130,6 +130,7 @@
 #define STRING_DIALOG_NO_ITEMS                                       "You do not have any items."
 #define STRING_DIALOG_NO_DOOR                                        "There is no door here."
 #define STRING_DIALOG_NO_KEYS                                        "You do not have any keys."
+#define STRING_DIALOG_DRAGONLORDTHRONE                               "You feel a light breeze flowing from behind the Dragonlord's throne..."
 #define STRING_DIALOG_FOUNDSPHEREOFLIGHT                             "You have found the Sphere of Light!"
 
 #define STRING_HOLYPROTECTION_ON                                     "A barrier of Holy Protection surrounds you."
