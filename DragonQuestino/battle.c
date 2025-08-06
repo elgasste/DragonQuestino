@@ -61,6 +61,7 @@ internal void Battle_EnemyCastSleepMessageCallback( Battle_t* battle );
 internal void Battle_EnemyCastSleepAnimation( Battle_t* battle );
 internal void Battle_EnemyFlee( Battle_t* battle );
 internal void Battle_EnemyFleeCallback( Battle_t* battle );
+internal void Battle_EnemyFledCallback( Battle_t* battle );
 internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,
                                                 AnimationId_t finalAnimationId, void ( *callback )( Battle_t* ) );
 internal void Battle_DefeatedWizardDragonlordPauseCallback( Battle_t* battle );
@@ -413,8 +414,8 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    else
    {
       Dialog_PushSection( dialog, msg );
-      Math_CollectAmount16u( &( battle->experienceGained ), enemy->experience );
-      Math_CollectAmount16u( &( battle->goldGained ), enemy->gold );
+      battle->experienceGained = Math_CollectAmount16u( &( player->experience ), enemy->experience );
+      battle->goldGained = Math_CollectAmount16u( &( player->gold ), enemy->gold );
       battle->newLevel = Player_GetLevelFromExperience( player );
       battle->previousSpells = player->spells;
 
@@ -1068,11 +1069,15 @@ internal void Battle_EnemyFlee( Battle_t* battle )
 
 internal void Battle_EnemyFleeCallback( Battle_t* battle )
 {
-   battle->isOver = True;
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
-   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Battle_EnemyFadeOut, Battle_EnemyFledCallback, battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_EnemyFledCallback( Battle_t* battle )
+{
+   battle->isOver = True;
 }
 
 internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,

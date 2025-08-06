@@ -398,7 +398,7 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
          sprintf( msg, STRING_BATTLE_ENEMYAPPROACHES, enemyName );
          Dialog_PushSectionWithCallback( &( game->dialog ), msg, Battle_EnemyInitiativeFlee, &( game->battle ) );
       }
-      if ( game->battle.turn == BattleTurn_Player )
+      else if ( game->battle.turn == BattleTurn_Player )
       {
          sprintf( msg, STRING_BATTLE_ENEMYAPPROACHESINITIATIVE, enemyName );
          Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
