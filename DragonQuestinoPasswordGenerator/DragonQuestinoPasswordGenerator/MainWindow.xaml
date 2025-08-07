@@ -182,31 +182,50 @@
                <!-- SINGLE ITEMS -->
                <GroupBox Header="Single Items">
                   <StackPanel Orientation="Vertical">
-                     <CheckBox Content="Dragon Scale" />
-                     <CheckBox Content="Cursed Belt" />
-                     <CheckBox Content="Fairy Flute" />
-                     <CheckBox Content="Silver Harp" />
-                     <CheckBox Content="Gwaelin's Love" />
-                     <CheckBox Content="Stone of Sunlight" />
-                     <CheckBox Content="Staff of Rain" />
-                     <CheckBox Content="Erdrick's Token" />
-                     <CheckBox Content="Rainbow Drop" />
-                     <CheckBox Content="Sphere of Light" />
+                     <CheckBox Content="Dragon Scale"
+                               IsChecked="{Binding HasDragonScale, Mode=TwoWay}" />
+                     <CheckBox Content="Cursed Belt"
+                               IsChecked="{Binding HasCursedBelt, Mode=TwoWay}" />
+                     <CheckBox Content="Fairy Flute"
+                               IsChecked="{Binding HasFairyFlute, Mode=TwoWay}" />
+                     <CheckBox Content="Silver Harp"
+                               IsChecked="{Binding HasSilverHarp, Mode=TwoWay}" />
+                     <CheckBox Content="Gwaelin's Love"
+                               IsChecked="{Binding HasGwaelinsLove, Mode=TwoWay}" />
+                     <CheckBox Content="Stone of Sunlight"
+                               IsChecked="{Binding HasStoneOfSunlight, Mode=TwoWay}" />
+                     <CheckBox Content="Staff of Rain"
+                               IsChecked="{Binding HasStaffOfRain, Mode=TwoWay}" />
+                     <CheckBox Content="Erdrick's Token"
+                               IsChecked="{Binding HasErdricksToken, Mode=TwoWay}" />
+                     <CheckBox Content="Rainbow Drop"
+                               IsChecked="{Binding HasRainbowDrop, Mode=TwoWay}" />
+                     <CheckBox Content="Sphere of Light"
+                               IsChecked="{Binding HasSphereOfLight, Mode=TwoWay}" />
                   </StackPanel>
                </GroupBox>
 
                <!-- DOORS OPENED -->
                <GroupBox Header="Doors Opened">
                   <StackPanel Orientation="Vertical">
-                     <CheckBox Content="Tantegel throne room" />
-                     <CheckBox Content="Brecconary inn" />
-                     <CheckBox Content="Cantlin left barrier" />
-                     <CheckBox Content="Cantlin right barrier" />
-                     <CheckBox Content="Kol wizard" />
-                     <CheckBox Content="Rimuldar inn" />
-                     <CheckBox Content="Garinham interior" />
-                     <CheckBox Content="Grave of Garinham B1" />
-                     <CheckBox Content="Swamp Cave prison" />
+                     <CheckBox Content="Tantegel throne room"
+                               IsChecked="{Binding OpenedDoor1, Mode=TwoWay}" />
+                     <CheckBox Content="Brecconary inn"
+                               IsChecked="{Binding OpenedDoor2, Mode=TwoWay}" />
+                     <CheckBox Content="Cantlin left barrier"
+                               IsChecked="{Binding OpenedDoor3, Mode=TwoWay}" />
+                     <CheckBox Content="Cantlin right barrier"
+                               IsChecked="{Binding OpenedDoor4, Mode=TwoWay}" />
+                     <CheckBox Content="Kol wizard"
+                               IsChecked="{Binding OpenedDoor5, Mode=TwoWay}" />
+                     <CheckBox Content="Rimuldar inn"
+                               IsChecked="{Binding OpenedDoor6, Mode=TwoWay}" />
+                     <CheckBox Content="Garinham interior"
+                               IsChecked="{Binding OpenedDoor7, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B1"
+                               IsChecked="{Binding OpenedDoor8, Mode=TwoWay}" />
+                     <CheckBox Content="Swamp Cave prison"
+                               IsChecked="{Binding OpenedDoor9, Mode=TwoWay}" />
                   </StackPanel>
                </GroupBox>
 
@@ -218,36 +237,66 @@
                <!-- TREASURES COLLECTED -->
                <GroupBox Header="Treasures Collected">
                   <StackPanel Orientation="Vertical">
-                     <CheckBox Content="Tantegel throne room, upper-right (key)" />
-                     <CheckBox Content="Tantegel throne room, lower-left (120 gold)" />
-                     <CheckBox Content="Tantegel throne room, lower-right (torch)" />
-                     <CheckBox Content="Tantegel ground floor, upper-left (6-13 gold)" />
-                     <CheckBox Content="Tantegel ground floor, middle (6-13 gold)" />
-                     <CheckBox Content="Tantegel ground floor, bottom-left (6-13 gold)" />
-                     <CheckBox Content="Tantegel ground floor, bottom-right (6-13 gold)" />
-                     <CheckBox Content="Tantegel basement (Stone of Sunlight)" />
-                     <CheckBox Content="Erdrick's Cave (Erdrick's Tablet)" />
-                     <CheckBox Content="Rimuldar inn (wing)" />
-                     <CheckBox Content="Rocky Mountain Cave B1 (herb)" />
-                     <CheckBox Content="Rocky Mountain Cave B2 upper-left, left (dragon scale)" />
-                     <CheckBox Content="Rocky Mountain Cave B2 upper-left, right (torch)" />
-                     <CheckBox Content="Rocky Mountain Cave B2, center-left (Death Necklace or 100-131 gold)" />
-                     <CheckBox Content="Rocky Mountain Cave B2, center-right (10-17 gold)" />
-                     <CheckBox Content="Garinham interior, top-left (10-17 gold)" />
-                     <CheckBox Content="Garinham interior, top-right (torch)" />
-                     <CheckBox Content="Garinham interior, bottom (herb)" />
-                     <CheckBox Content="Grave of Garinham B1, left (herb)" />
-                     <CheckBox Content="Grave of Garinham B1, center (5-20 gold)" />
-                     <CheckBox Content="Grave of Garinham B1, right (6-13 gold)" />
-                     <CheckBox Content="Grave of Garinham B3, upper-left (cursed belt)" />
-                     <CheckBox Content="Grave of Garinham B3, right (Silver Harp)" />
-                     <CheckBox Content="Charlock B2 (Erdrick's Sword)" />
-                     <CheckBox Content="Charlock B8, top (herb)" />
-                     <CheckBox Content="Charlock B8, center-left (500-755 gold)" />
-                     <CheckBox Content="Charlock B8, center-right (key)" />
-                     <CheckBox Content="Charlock B8, bottom-left (wing)" />
-                     <CheckBox Content="Charlock B8, bottom-center (cursed belt)" />
-                     <CheckBox Content="Charlock B8, bottom-right (herb)" />
+                     <CheckBox Content="Tantegel throne room, upper-right (key)"
+                               IsChecked="{Binding TreasureCollected1, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel throne room, lower-left (120 gold)"
+                               IsChecked="{Binding TreasureCollected2, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel throne room, lower-right (torch)"
+                               IsChecked="{Binding TreasureCollected3, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel ground floor, upper-left (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected4, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel ground floor, middle (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected5, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel ground floor, bottom-left (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected6, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel ground floor, bottom-right (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected7, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel basement (Stone of Sunlight)"
+                               IsChecked="{Binding TreasureCollected8, Mode=TwoWay}" />
+                     <CheckBox Content="Erdrick's Cave (Erdrick's Tablet)"
+                               IsChecked="{Binding TreasureCollected9, Mode=TwoWay}" />
+                     <CheckBox Content="Rimuldar inn (wing)"
+                               IsChecked="{Binding TreasureCollected10, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B1 (herb)"
+                               IsChecked="{Binding TreasureCollected11, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B2 upper-left, left (dragon scale)"
+                               IsChecked="{Binding TreasureCollected12, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B2 upper-left, right (torch)"
+                               IsChecked="{Binding TreasureCollected13, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B2, center-left (Death Necklace or 100-131 gold)"
+                               IsChecked="{Binding TreasureCollected14, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B2, center-right (10-17 gold)"
+                               IsChecked="{Binding TreasureCollected15, Mode=TwoWay}" />
+                     <CheckBox Content="Garinham interior, top-left (10-17 gold)"
+                               IsChecked="{Binding TreasureCollected16, Mode=TwoWay}" />
+                     <CheckBox Content="Garinham interior, top-right (torch)"
+                               IsChecked="{Binding TreasureCollected17, Mode=TwoWay}" />
+                     <CheckBox Content="Garinham interior, bottom (herb)"
+                               IsChecked="{Binding TreasureCollected18, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B1, left (herb)"
+                               IsChecked="{Binding TreasureCollected19, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B1, center (5-20 gold)"
+                               IsChecked="{Binding TreasureCollected20, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B1, right (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected21, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B3, upper-left (cursed belt)"
+                               IsChecked="{Binding TreasureCollected22, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B3, right (Silver Harp)"
+                               IsChecked="{Binding TreasureCollected23, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B2 (Erdrick's Sword)"
+                               IsChecked="{Binding TreasureCollected24, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, top (herb)"
+                               IsChecked="{Binding TreasureCollected25, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, center-left (500-755 gold)"
+                               IsChecked="{Binding TreasureCollected26, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, center-right (key)"
+                               IsChecked="{Binding TreasureCollected27, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, bottom-left (wing)"
+                               IsChecked="{Binding TreasureCollected28, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, bottom-center (cursed belt)"
+                               IsChecked="{Binding TreasureCollected29, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, bottom-right (herb)"
+                               IsChecked="{Binding TreasureCollected30, Mode=TwoWay}" />
                   </StackPanel>
                </GroupBox>
 
