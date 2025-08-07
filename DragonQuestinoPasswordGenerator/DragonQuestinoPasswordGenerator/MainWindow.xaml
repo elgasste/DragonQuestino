@@ -40,7 +40,8 @@
             <StackPanel Orientation="Vertical" >
                <StackPanel Orientation="Horizontal">
                   <Label Content="Name:" />
-                  <TextBox />
+                  <TextBox MaxLength="8"
+                           PreviewTextInput="TextBox_PreviewTextInput_ValidateName" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Experience:" />
@@ -228,8 +229,7 @@
                <StackPanel Orientation="Horizontal">
                   <TextBox x:Name="PasswordTextBox"
                            Width="240"
-                           IsReadOnly="True"
-                           Text="abcdefg"/>
+                           IsReadOnly="True" />
                   <Button Content="Copy to Clipboard"
                           Padding="4 0"
                           Margin="4 0 0 0"

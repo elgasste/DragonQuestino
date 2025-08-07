@@ -15,6 +15,12 @@ namespace DragonQuestinoPasswordGenerator
          DataContext = new MainWindowViewModel();
       }
 
+      private void TextBox_PreviewTextInput_ValidateName( object sender, TextCompositionEventArgs e )
+      {
+         Regex regex = new Regex( "^[a-zA-Z0-9\\s-]+$" );
+         e.Handled = !regex.IsMatch( e.Text );
+      }
+
       private void TextBox_PreviewTextInput_NumericOnly( object sender, TextCompositionEventArgs e )
       {
          Regex regex = new Regex( "^\\d+$" );
