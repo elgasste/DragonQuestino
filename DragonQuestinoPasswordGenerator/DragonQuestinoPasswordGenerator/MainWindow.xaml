@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DragonQuestinoPasswordGenerator"
         mc:Ignorable="d"
         Title="Dragon Questino Password Generator"
-        Height="600"
+        Height="620"
         Width="880">
 
    <Window.Resources>
@@ -60,15 +60,21 @@
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Weapon:" />
-                  <ComboBox />
+                  <ComboBox ItemsSource="{Binding Weapons, UpdateSourceTrigger=PropertyChanged}"
+                            DisplayMemberPath="DisplayText"
+                            SelectedValue="{Binding SelectedWeapon}" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Armor:" />
-                  <ComboBox />
+                  <ComboBox ItemsSource="{Binding Armor}"
+                            DisplayMemberPath="DisplayText"
+                            SelectedValue="{Binding SelectedArmor}" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Shield:" />
-                  <ComboBox />
+                  <ComboBox ItemsSource="{Binding Shields}"
+                            DisplayMemberPath="DisplayText"
+                            SelectedValue="{Binding SelectedShield}" />
                </StackPanel>
                <CheckBox Content="Cursed" />
             </StackPanel>
