@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:DragonQuestinoPasswordGenerator"
         mc:Ignorable="d"
         Title="Dragon Questino Password Generator"
-        Height="570"
-        Width="800">
+        Height="600"
+        Width="880">
 
    <Window.Resources>
       <Style TargetType="GroupBox">
@@ -20,6 +20,7 @@
       </Style>
       <Style TargetType="TextBox">
          <Setter Property="Width" Value="80" />
+         <Setter Property="Height" Value="24" />
          <Setter Property="VerticalContentAlignment" Value="Center" />
       </Style>
       <Style TargetType="ComboBox">
@@ -43,11 +44,15 @@
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Experience:" />
-                  <TextBox />
+                  <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                           PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                           TextChanged="TextBox_TextChanged_MaxUint16" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Gold:" />
-                  <TextBox />
+                  <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                           PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                           TextChanged="TextBox_TextChanged_MaxUint16" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Weapon:" />
@@ -61,7 +66,7 @@
                   <Label Content="Shield:" />
                   <ComboBox />
                </StackPanel>
-               <CheckBox Content="Cursed"></CheckBox>
+               <CheckBox Content="Cursed" />
             </StackPanel>
          </GroupBox>
          
@@ -99,102 +104,139 @@
          
       </StackPanel>
       
-      <!-- CENTER PANEL -->
-      <StackPanel Orientation="Vertical">
-         
-         <!-- ITEM COLLECTIONS -->
-         <GroupBox Header="Item Collections" >
-            <StackPanel Orientation="Vertical">
-               <StackPanel Orientation="Horizontal">
-                  <Label Content="Keys:" />
-                  <TextBox />
-               </StackPanel>
-               <StackPanel Orientation="Horizontal">
-                  <Label Content="Herbs:" />
-                  <TextBox />
-               </StackPanel>
-               <StackPanel Orientation="Horizontal">
-                  <Label Content="Wings:" />
-                  <TextBox />
-               </StackPanel>
-               <StackPanel Orientation="Horizontal">
-                  <Label Content="Fairy Waters:" />
-                  <TextBox />
-               </StackPanel>
-            </StackPanel>
-         </GroupBox>
-         
-         <!-- SINGLE ITEMS -->
-         <GroupBox Header="Single Items">
-            <StackPanel Orientation="Vertical">
-               <CheckBox Content="Dragon Scale" />
-               <CheckBox Content="Cursed Belt" />
-               <CheckBox Content="Fairy Flute" />
-               <CheckBox Content="Silver Harp" />
-               <CheckBox Content="Gwaelin's Love" />
-               <CheckBox Content="Stone of Sunlight" />
-               <CheckBox Content="Staff of Rain" />
-               <CheckBox Content="Erdrick's Token" />
-               <CheckBox Content="Rainbow Drop" />
-               <CheckBox Content="Sphere of Light" />
-            </StackPanel>
-         </GroupBox>
-         
-         <!-- DOORS OPENED -->
-         <GroupBox Header="Doors Opened">
-            <StackPanel Orientation="Vertical">
-               <CheckBox Content="Tantegel throne room" />
-               <CheckBox Content="Brecconary inn" />
-               <CheckBox Content="Cantlin left barrier" />
-               <CheckBox Content="Cantlin right barrier" />
-               <CheckBox Content="Kol wizard" />
-               <CheckBox Content="Rimuldar inn" />
-               <CheckBox Content="Garinham interior" />
-               <CheckBox Content="Grave of Garinham B1" />
-               <CheckBox Content="Swamp Cave prison" />
-            </StackPanel>
-         </GroupBox>
-         
-      </StackPanel>
-
       <!-- RIGHT PANEL -->
       <StackPanel Orientation="Vertical">
-         
-         <!-- TREASURES COLLECTED -->
-         <GroupBox Header="Treasures Collected">
+
+         <!-- RIGHT PANEL, TOP SECTION -->
+         <StackPanel Orientation="Horizontal">
+
+            <!-- RIGHT PANEL, TOP-LEFT COLUMN -->
             <StackPanel Orientation="Vertical">
-               <CheckBox Content="Tantegel throne room, upper-right (key)" />
-               <CheckBox Content="Tantegel throne room, lower-left (120 gold)" />
-               <CheckBox Content="Tantegel throne room, lower-right (torch)" />
-               <CheckBox Content="Tantegel ground floor, upper-left (6-13 gold)" />
-               <CheckBox Content="Tantegel ground floor, middle (6-13 gold)" />
-               <CheckBox Content="Tantegel ground floor, bottom-left (6-13 gold)" />
-               <CheckBox Content="Tantegel ground floor, bottom-right (6-13 gold)" />
-               <CheckBox Content="Tantegel basement (Stone of Sunlight)" />
-               <CheckBox Content="Erdrick's Cave (Erdrick's Tablet)" />
-               <CheckBox Content="Rimuldar inn (wing)" />
-               <CheckBox Content="Rocky Mountain Cave B1 (herb)" />
-               <CheckBox Content="Rocky Mountain Cave B2 upper-left, left (dragon scale)" />
-               <CheckBox Content="Rocky Mountain Cave B2 upper-left, right (torch)" />
-               <CheckBox Content="Rocky Mountain Cave B2, center-left (Death Necklace or 100-131 gold)" />
-               <CheckBox Content="Rocky Mountain Cave B2, center-right (10-17 gold)" />
-               <CheckBox Content="Garinham interior, top-left (10-17 gold)" />
-               <CheckBox Content="Garinham interior, top-right (torch)" />
-               <CheckBox Content="Garinham interior, bottom (herb)" />
-               <CheckBox Content="Grave of Garinham B1, left (herb)" />
-               <CheckBox Content="Grave of Garinham B1, center (5-20 gold)" />
-               <CheckBox Content="Grave of Garinham B1, right (6-13 gold)" />
-               <CheckBox Content="Grave of Garinham B3, upper-left (cursed belt)" />
-               <CheckBox Content="Grave of Garinham B3, right (Silver Harp)" />
-               <CheckBox Content="Charlock B2 (Erdrick's Sword)" />
-               <CheckBox Content="Charlock B8, top (herb)" />
-               <CheckBox Content="Charlock B8, center-left (500-755 gold)" />
-               <CheckBox Content="Charlock B8, center-right (key)" />
-               <CheckBox Content="Charlock B8, bottom-left (wing)" />
-               <CheckBox Content="Charlock B8, bottom-center (cursed belt)" />
-               <CheckBox Content="Charlock B8, bottom-right (herb)" />
+
+               <!-- ITEM COLLECTIONS -->
+               <GroupBox Header="Item Collections" >
+                  <StackPanel Orientation="Vertical">
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Keys:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7" />
+                     </StackPanel>
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Herbs:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7" />
+                     </StackPanel>
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Wings:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7" />
+                     </StackPanel>
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Fairy Waters:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7" />
+                     </StackPanel>
+                  </StackPanel>
+               </GroupBox>
+
+               <!-- SINGLE ITEMS -->
+               <GroupBox Header="Single Items">
+                  <StackPanel Orientation="Vertical">
+                     <CheckBox Content="Dragon Scale" />
+                     <CheckBox Content="Cursed Belt" />
+                     <CheckBox Content="Fairy Flute" />
+                     <CheckBox Content="Silver Harp" />
+                     <CheckBox Content="Gwaelin's Love" />
+                     <CheckBox Content="Stone of Sunlight" />
+                     <CheckBox Content="Staff of Rain" />
+                     <CheckBox Content="Erdrick's Token" />
+                     <CheckBox Content="Rainbow Drop" />
+                     <CheckBox Content="Sphere of Light" />
+                  </StackPanel>
+               </GroupBox>
+
+               <!-- DOORS OPENED -->
+               <GroupBox Header="Doors Opened">
+                  <StackPanel Orientation="Vertical">
+                     <CheckBox Content="Tantegel throne room" />
+                     <CheckBox Content="Brecconary inn" />
+                     <CheckBox Content="Cantlin left barrier" />
+                     <CheckBox Content="Cantlin right barrier" />
+                     <CheckBox Content="Kol wizard" />
+                     <CheckBox Content="Rimuldar inn" />
+                     <CheckBox Content="Garinham interior" />
+                     <CheckBox Content="Grave of Garinham B1" />
+                     <CheckBox Content="Swamp Cave prison" />
+                  </StackPanel>
+               </GroupBox>
+
             </StackPanel>
-         </GroupBox>
+
+            <!-- RIGHT PANEL, TOP-RIGHT COLUMN -->
+            <StackPanel Orientation="Vertical">
+
+               <!-- TREASURES COLLECTED -->
+               <GroupBox Header="Treasures Collected">
+                  <StackPanel Orientation="Vertical">
+                     <CheckBox Content="Tantegel throne room, upper-right (key)" />
+                     <CheckBox Content="Tantegel throne room, lower-left (120 gold)" />
+                     <CheckBox Content="Tantegel throne room, lower-right (torch)" />
+                     <CheckBox Content="Tantegel ground floor, upper-left (6-13 gold)" />
+                     <CheckBox Content="Tantegel ground floor, middle (6-13 gold)" />
+                     <CheckBox Content="Tantegel ground floor, bottom-left (6-13 gold)" />
+                     <CheckBox Content="Tantegel ground floor, bottom-right (6-13 gold)" />
+                     <CheckBox Content="Tantegel basement (Stone of Sunlight)" />
+                     <CheckBox Content="Erdrick's Cave (Erdrick's Tablet)" />
+                     <CheckBox Content="Rimuldar inn (wing)" />
+                     <CheckBox Content="Rocky Mountain Cave B1 (herb)" />
+                     <CheckBox Content="Rocky Mountain Cave B2 upper-left, left (dragon scale)" />
+                     <CheckBox Content="Rocky Mountain Cave B2 upper-left, right (torch)" />
+                     <CheckBox Content="Rocky Mountain Cave B2, center-left (Death Necklace or 100-131 gold)" />
+                     <CheckBox Content="Rocky Mountain Cave B2, center-right (10-17 gold)" />
+                     <CheckBox Content="Garinham interior, top-left (10-17 gold)" />
+                     <CheckBox Content="Garinham interior, top-right (torch)" />
+                     <CheckBox Content="Garinham interior, bottom (herb)" />
+                     <CheckBox Content="Grave of Garinham B1, left (herb)" />
+                     <CheckBox Content="Grave of Garinham B1, center (5-20 gold)" />
+                     <CheckBox Content="Grave of Garinham B1, right (6-13 gold)" />
+                     <CheckBox Content="Grave of Garinham B3, upper-left (cursed belt)" />
+                     <CheckBox Content="Grave of Garinham B3, right (Silver Harp)" />
+                     <CheckBox Content="Charlock B2 (Erdrick's Sword)" />
+                     <CheckBox Content="Charlock B8, top (herb)" />
+                     <CheckBox Content="Charlock B8, center-left (500-755 gold)" />
+                     <CheckBox Content="Charlock B8, center-right (key)" />
+                     <CheckBox Content="Charlock B8, bottom-left (wing)" />
+                     <CheckBox Content="Charlock B8, bottom-center (cursed belt)" />
+                     <CheckBox Content="Charlock B8, bottom-right (herb)" />
+                  </StackPanel>
+               </GroupBox>
+
+            </StackPanel>
+
+         </StackPanel>
+
+         <!-- RIGHT PANEL, BOTTOM SECTION -->
+         <StackPanel Orientation="Horizontal"
+                     HorizontalAlignment="Center">
+            
+            <!-- PASSWORD-->
+            <GroupBox Header="Password">
+               <StackPanel Orientation="Horizontal">
+                  <TextBox x:Name="PasswordTextBox"
+                           Width="240"
+                           IsReadOnly="True"
+                           Text="abcdefg"/>
+                  <Button Content="Copy to Clipboard"
+                          Padding="4 0"
+                          Margin="4 0 0 0"
+                          Click="CopyPasswordButton_Click"/>
+               </StackPanel>
+            </GroupBox>
+         </StackPanel>
          
       </StackPanel>
 
