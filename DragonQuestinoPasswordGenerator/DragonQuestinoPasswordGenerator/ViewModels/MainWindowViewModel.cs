@@ -11,6 +11,45 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
    public class MainWindowViewModel : ViewModelBase
    {
+      private string _playerName = string.Empty;
+      public string PlayerName
+      {
+         get => _playerName;
+         set
+         {
+            if ( SetProperty( ref _playerName, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private string _playerExperience = string.Empty;
+      public string PlayerExperience
+      {
+         get => _playerExperience;
+         set
+         {
+            if ( SetProperty( ref _playerExperience, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private string _playerGold = string.Empty;
+      public string PlayerGold
+      {
+         get => _playerGold;
+         set
+         {
+            if ( SetProperty( ref _playerGold, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
       public ObservableCollection<BattleItem> Weapons { get; set; } =
       [
          new( "none", 0 ),
@@ -82,39 +121,195 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private string _playerName = string.Empty;
-      public string PlayerName
+      private bool _playerIsCursed = false;
+      public bool PlayerIsCursed
       {
-         get => _playerName;
+         get => _playerIsCursed;
          set
          {
-            if ( SetProperty( ref _playerName, value ) )
+            if ( SetProperty( ref _playerIsCursed, value ) )
             {
                UpdatePassword();
             }
          }
       }
 
-      private string _playerExperience = string.Empty;
-      public string PlayerExperience
+      private bool _visitedTantegel = false;
+      public bool VisitedTantegel
       {
-         get => _playerExperience;
+         get => _visitedTantegel;
          set
          {
-            if ( SetProperty( ref _playerExperience, value ) )
+            if ( SetProperty( ref _visitedTantegel, value ) )
             {
                UpdatePassword();
             }
          }
       }
 
-      private string _playerGold = string.Empty;
-      public string PlayerGold
+      private bool _visitedBrecconary = false;
+      public bool VisitedBrecconary
       {
-         get => _playerGold;
+         get => _visitedBrecconary;
          set
          {
-            if ( SetProperty( ref _playerGold, value ) )
+            if ( SetProperty( ref _visitedBrecconary, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _visitedGarinham = false;
+      public bool VisitedGarinham
+      {
+         get => _visitedGarinham;
+         set
+         {
+            if ( SetProperty( ref _visitedGarinham, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _visitedKol = false;
+      public bool VisitedKol
+      {
+         get => _visitedKol;
+         set
+         {
+            if ( SetProperty( ref _visitedKol, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _visitedCantlin = false;
+      public bool VisitedCantlin
+      {
+         get => _visitedCantlin;
+         set
+         {
+            if ( SetProperty( ref _visitedCantlin, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _visitedRimuldar = false;
+      public bool VisitedRimuldar
+      {
+         get => _visitedRimuldar;
+         set
+         {
+            if ( SetProperty( ref _visitedRimuldar, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _defeatedGreenDragon = false;
+      public bool DefeatedGreenDragon
+      {
+         get => _defeatedGreenDragon;
+         set
+         {
+            if ( SetProperty( ref _defeatedGreenDragon, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _defeatedAxeKnight = false;
+      public bool DefeatedAxeKnight
+      {
+         get => _defeatedAxeKnight;
+         set
+         {
+            if ( SetProperty( ref _defeatedAxeKnight, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _defeatedGolem = false;
+      public bool DefeatedGolem
+      {
+         get => _defeatedGolem;
+         set
+         {
+            if ( SetProperty( ref _defeatedGolem, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _rescuedGwaelin = false;
+      public bool RescuedGwaelin
+      {
+         get => _rescuedGwaelin;
+         set
+         {
+            if ( SetProperty( ref _rescuedGwaelin, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _gotStaffOfRain = false;
+      public bool GotStaffOfRain
+      {
+         get => _gotStaffOfRain;
+         set
+         {
+            if ( SetProperty( ref _gotStaffOfRain, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _gotRainbowDrop = false;
+      public bool GotRainbowDrop
+      {
+         get => _gotRainbowDrop;
+         set
+         {
+            if ( SetProperty( ref _gotRainbowDrop, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _usedRainbowDrop = false;
+      public bool UsedRainbowDrop
+      {
+         get => _usedRainbowDrop;
+         set
+         {
+            if ( SetProperty( ref _usedRainbowDrop, value ) )
+            {
+               UpdatePassword();
+            }
+         }
+      }
+
+      private bool _foundHiddenStairs = false;
+      public bool FoundHiddenStairs
+      {
+         get => _foundHiddenStairs;
+         set
+         {
+            if ( SetProperty( ref _foundHiddenStairs, value ) )
             {
                UpdatePassword();
             }

@@ -76,39 +76,54 @@
                             DisplayMemberPath="DisplayText"
                             SelectedValue="{Binding SelectedShield}" />
                </StackPanel>
-               <CheckBox Content="Cursed" />
+               <CheckBox Content="Cursed"
+                         IsChecked="{Binding PlayerIsCursed, Mode=TwoWay}" />
             </StackPanel>
          </GroupBox>
          
          <!-- TOWNS VISITED -->
          <GroupBox Header="Towns Visited">
             <StackPanel Orientation="Vertical">
-               <CheckBox Content="Tantegel" />
-               <CheckBox Content="Brecconary" />
-               <CheckBox Content="Garinham" />
-               <CheckBox Content="Kol" />
-               <CheckBox Content="Cantlin" />
-               <CheckBox Content="Rimuldar" />
+               <CheckBox Content="Tantegel"
+                         IsChecked="{Binding VisitedTantegel, Mode=TwoWay}" />
+               <CheckBox Content="Brecconary"
+                         IsChecked="{Binding VisitedBrecconary, Mode=TwoWay}" />
+               <CheckBox Content="Garinham"
+                         IsChecked="{Binding VisitedGarinham, Mode=TwoWay}" />
+               <CheckBox Content="Kol"
+                         IsChecked="{Binding VisitedKol, Mode=TwoWay}" />
+               <CheckBox Content="Cantlin"
+                         IsChecked="{Binding VisitedCantlin, Mode=TwoWay}" />
+               <CheckBox Content="Rimuldar"
+                         IsChecked="{Binding VisitedRimuldar, Mode=TwoWay}" />
             </StackPanel>
          </GroupBox>
          
          <!-- SPECIAL ENEMIES -->
          <GroupBox Header="Special Enemies">
             <StackPanel Orientation="Vertical">
-               <CheckBox Content="Defeated Green Dragon" />
-               <CheckBox Content="Defeated Axe Knight" />
-               <CheckBox Content="Defeated Golem" />
+               <CheckBox Content="Defeated Green Dragon"
+                         IsChecked="{Binding DefeatedGreenDragon, Mode=TwoWay}" />
+               <CheckBox Content="Defeated Axe Knight"
+                         IsChecked="{Binding DefeatedAxeKnight, Mode=TwoWay}" />
+               <CheckBox Content="Defeated Golem"
+                         IsChecked="{Binding DefeatedGolem, Mode=TwoWay}" />
             </StackPanel>
          </GroupBox>
          
          <!-- FLAGS -->
          <GroupBox Header="Flags">
             <StackPanel Orientation="Vertical">
-               <CheckBox Content="Rescued Gwaelin" />
-               <CheckBox Content="Got Staff of Rain" />
-               <CheckBox Content="Got Rainbow Drop" />
-               <CheckBox Content="Used Rainbow Drop" />
-               <CheckBox Content="Found hidden stairs" />
+               <CheckBox Content="Rescued Gwaelin"
+                         IsChecked="{Binding RescuedGwaelin, Mode=TwoWay}" />
+               <CheckBox Content="Got Staff of Rain"
+                         IsChecked="{Binding GotStaffOfRain, Mode=TwoWay}" />
+               <CheckBox Content="Got Rainbow Drop"
+                         IsChecked="{Binding GotRainbowDrop, Mode=TwoWay}" />
+               <CheckBox Content="Used Rainbow Drop"
+                         IsChecked="{Binding UsedRainbowDrop, Mode=TwoWay}" />
+               <CheckBox Content="Found hidden stairs"
+                         IsChecked="{Binding FoundHiddenStairs, Mode=TwoWay}" />
             </StackPanel>
          </GroupBox>
          
