@@ -10,9 +10,8 @@ namespace DragonQuestinoPasswordGenerator
    {
       public MainWindow()
       {
-         InitializeComponent();
-
          DataContext = new MainWindowViewModel();
+         InitializeComponent();
       }
 
       private void TextBox_PreviewTextInput_ValidateName( object sender, TextCompositionEventArgs e )

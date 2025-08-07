@@ -41,19 +41,22 @@
                <StackPanel Orientation="Horizontal">
                   <Label Content="Name:" />
                   <TextBox MaxLength="8"
-                           PreviewTextInput="TextBox_PreviewTextInput_ValidateName" />
+                           PreviewTextInput="TextBox_PreviewTextInput_ValidateName"
+                           Text="{Binding PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Experience:" />
                   <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                            PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
-                           TextChanged="TextBox_TextChanged_MaxUint16" />
+                           TextChanged="TextBox_TextChanged_MaxUint16"
+                           Text="{Binding PlayerExperience, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Gold:" />
                   <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                            PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
-                           TextChanged="TextBox_TextChanged_MaxUint16" />
+                           TextChanged="TextBox_TextChanged_MaxUint16"
+                           Text="{Binding PlayerGold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Weapon:" />
@@ -121,25 +124,36 @@
                         <Label Content="Keys:" />
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
-                                 TextChanged="TextBox_TextChanged_Max7" />
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 Text="{Binding KeyCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                      <StackPanel Orientation="Horizontal">
                         <Label Content="Herbs:" />
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
-                                 TextChanged="TextBox_TextChanged_Max7" />
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 Text="{Binding HerbCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                     </StackPanel>
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Torches:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 Text="{Binding TorchCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                      <StackPanel Orientation="Horizontal">
                         <Label Content="Wings:" />
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
-                                 TextChanged="TextBox_TextChanged_Max7" />
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 Text="{Binding WingCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                      <StackPanel Orientation="Horizontal">
                         <Label Content="Fairy Waters:" />
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
-                                 TextChanged="TextBox_TextChanged_Max7" />
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 Text="{Binding FairyWaterCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                   </StackPanel>
                </GroupBox>
