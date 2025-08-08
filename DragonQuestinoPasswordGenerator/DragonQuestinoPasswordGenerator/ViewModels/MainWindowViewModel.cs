@@ -1,7 +1,10 @@
-﻿using System;
+﻿using DragonQuestinoPasswordGenerator.Commands;
+using System;
 using System.Collections.ObjectModel;
 using System.Net.NetworkInformation;
 using System.Numerics;
+using System.Windows;
+using System.Windows.Input;
 
 namespace DragonQuestinoPasswordGenerator.ViewModels
 {
@@ -1014,6 +1017,9 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          set => SetProperty( ref _password, value );
       }
 
+      private ICommand? _enterPasswordCommand;
+      public ICommand? EnterPasswordCommand => _enterPasswordCommand ??= new RelayCommand( EnterPassword, () => true );
+
       public MainWindowViewModel()
       {
          _selectedWeapon = Weapons[0];
@@ -1129,6 +1135,11 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          ];
 
          Password = new( passwordChars );
+      }
+
+      private void EnterPassword()
+      {
+         MessageBox.Show( "TODO" );
       }
 
       private int GetRangedNumberFromString( string str, int max )

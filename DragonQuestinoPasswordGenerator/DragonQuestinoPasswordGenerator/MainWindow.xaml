@@ -307,18 +307,22 @@
          <!-- RIGHT PANEL, BOTTOM SECTION -->
          <StackPanel Orientation="Horizontal"
                      HorizontalAlignment="Center">
-            
+
             <!-- PASSWORD-->
             <GroupBox Header="Password">
                <StackPanel Orientation="Horizontal">
                   <TextBox x:Name="PasswordTextBox"
                            Width="240"
                            IsReadOnly="True"
-                           Text="{Binding Password}"/>
+                           Text="{Binding Password}" />
                   <Button Content="Copy to Clipboard"
                           Padding="4 0"
                           Margin="4 0 0 0"
-                          Click="CopyPasswordButton_Click"/>
+                          Click="CopyPasswordButton_Click" />
+                  <Button Content="Enter Password"
+                          Padding="4 0"
+                          Margin="4 0 0 0"
+                          Command="{Binding EnterPasswordCommand, Mode=OneTime}"/>
                </StackPanel>
             </GroupBox>
          </StackPanel>
