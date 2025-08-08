@@ -26,7 +26,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private string _playerExperience = string.Empty;
+      private string _playerExperience = "0";
       public string PlayerExperience
       {
          get => _playerExperience;
@@ -39,7 +39,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private string _playerGold = string.Empty;
+      private string _playerGold = "0";
       public string PlayerGold
       {
          get => _playerGold;
@@ -318,7 +318,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private string _keyCount = string.Empty;
+      private string _keyCount = "0";
       public string KeyCount
       {
          get => _keyCount;
@@ -331,7 +331,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private string _herbCount = string.Empty;
+      private string _herbCount = "0";
       public string HerbCount
       {
          get => _herbCount;
@@ -344,7 +344,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private string _torchCount = string.Empty;
+      private string _torchCount = "0";
       public string TorchCount
       {
          get => _torchCount;
@@ -357,7 +357,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private string _wingCount = string.Empty;
+      private string _wingCount = "0";
       public string WingCount
       {
          get => _wingCount;
@@ -370,7 +370,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private string _fairyWaterCount = string.Empty;
+      private string _fairyWaterCount = "0";
       public string FairyWaterCount
       {
          get => _fairyWaterCount;

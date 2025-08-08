@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace DragonQuestinoPasswordGenerator
 {
@@ -56,6 +57,14 @@ namespace DragonQuestinoPasswordGenerator
                   textBox.Text = "7"; // Set to max if exceeded
                }
             }
+         }
+      }
+
+      private async void TextBox_GotFocus_SelectText( object sender, RoutedEventArgs e )
+      {
+         if ( sender is TextBox textBox )
+         {
+            await Application.Current.Dispatcher.InvokeAsync( textBox.SelectAll, DispatcherPriority.Background );
          }
       }
 

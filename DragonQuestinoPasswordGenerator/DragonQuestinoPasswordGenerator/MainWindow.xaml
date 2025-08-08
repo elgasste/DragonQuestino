@@ -43,6 +43,7 @@
                   <Label Content="Name:" />
                   <TextBox MaxLength="8"
                            PreviewTextInput="TextBox_PreviewTextInput_ValidateName"
+                           GotFocus="TextBox_GotFocus_SelectText"
                            Text="{Binding PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
@@ -50,6 +51,7 @@
                   <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                            PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
                            TextChanged="TextBox_TextChanged_MaxUint16"
+                           GotFocus="TextBox_GotFocus_SelectText"
                            Text="{Binding PlayerExperience, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
@@ -57,6 +59,7 @@
                   <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                            PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
                            TextChanged="TextBox_TextChanged_MaxUint16"
+                           GotFocus="TextBox_GotFocus_SelectText"
                            Text="{Binding PlayerGold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                </StackPanel>
                <StackPanel Orientation="Horizontal">
@@ -147,6 +150,7 @@
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
                                  TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
                                  Text="{Binding KeyCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                      <StackPanel Orientation="Horizontal">
@@ -154,6 +158,7 @@
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
                                  TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
                                  Text="{Binding HerbCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                      <StackPanel Orientation="Horizontal">
@@ -161,6 +166,7 @@
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
                                  TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
                                  Text="{Binding TorchCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                      <StackPanel Orientation="Horizontal">
@@ -168,6 +174,7 @@
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
                                  TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
                                  Text="{Binding WingCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                      <StackPanel Orientation="Horizontal">
@@ -175,6 +182,7 @@
                         <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
                                  PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
                                  TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
                                  Text="{Binding FairyWaterCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                      </StackPanel>
                   </StackPanel>
