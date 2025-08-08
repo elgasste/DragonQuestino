@@ -1016,6 +1016,8 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
       private ICommand? _enterPasswordCommand;
       public ICommand? EnterPasswordCommand => _enterPasswordCommand ??= new RelayCommand( EnterPassword, () => true );
+      private ICommand? _clearAllFieldsCommand;
+      public ICommand? ClearAllFieldsCommand => _clearAllFieldsCommand ??= new RelayCommand( ClearAllFields, () => true );
 
       public MainWindowViewModel()
       {
@@ -1133,6 +1135,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          Password = new( passwordChars );
       }
 
+
       private void EnterPassword()
       {
          EnterPasswordWindow window = new EnterPasswordWindow();
@@ -1143,8 +1146,16 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
             return;
          }
 
-         string password = window.Password;
+         ApplyPassword( window.Password );
+      }
 
+      private void ClearAllFields()
+      {
+         ApplyPassword( "..8AAP....8AAAAAAAAA4P.......w" );
+      }
+
+      private void ApplyPassword( string password )
+      {
          if ( password.Length != 30 )
          {
             MessageBox.Show( password.Length < 30 ? "Password is too short." : "Password is too long.", "Invalid Password", MessageBoxButton.OK, MessageBoxImage.Error );

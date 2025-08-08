@@ -331,7 +331,11 @@
                   <Button Content="Enter Password"
                           Padding="4 0"
                           Margin="4 0 0 0"
-                          Command="{Binding EnterPasswordCommand, Mode=OneTime}"/>
+                          Command="{Binding EnterPasswordCommand, Mode=OneTime}" />
+                  <Button Content="Clear All Fields"
+                          Padding="4 0"
+                          Margin="4 0 0 0"
+                          Command="{Binding ClearAllFieldsCommand, Mode=OneTime}" />
                </StackPanel>
             </GroupBox>
          </StackPanel>
