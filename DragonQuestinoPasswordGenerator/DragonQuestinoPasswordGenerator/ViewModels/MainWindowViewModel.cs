@@ -1136,7 +1136,12 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
       private void EnterPassword()
       {
          EnterPasswordWindow window = new EnterPasswordWindow();
-         window.ShowDialog();
+         bool? dialogResult = window.ShowDialog();
+
+         if ( dialogResult == false )
+         {
+            return;
+         }
 
          string password = window.Password;
 

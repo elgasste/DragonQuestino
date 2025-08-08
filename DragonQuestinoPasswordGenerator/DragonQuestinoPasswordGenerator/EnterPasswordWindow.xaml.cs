@@ -11,9 +11,15 @@ namespace DragonQuestinoPasswordGenerator
          InitializeComponent();
       }
 
+      private void Window_Loaded( object sender, RoutedEventArgs e )
+      {
+         PasswordTextBox.Focus();
+      }
+
       private void OkButton_Click( object sender, RoutedEventArgs e )
       {
          Password = PasswordTextBox.Text;
+         DialogResult = true;
          Close();
       }
    }
