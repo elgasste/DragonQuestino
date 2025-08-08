@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace DragonQuestinoPasswordGenerator
 {
@@ -17,6 +18,19 @@ namespace DragonQuestinoPasswordGenerator
       }
 
       private void OkButton_Click( object sender, RoutedEventArgs e )
+      {
+         CloseWithResult();
+      }
+
+      private void Window_KeyDown( object sender, KeyEventArgs e )
+      {
+         if ( e.Key == Key.Enter )
+         {
+            CloseWithResult();
+         }
+      }
+
+      private void CloseWithResult()
       {
          Password = PasswordTextBox.Text;
          DialogResult = true;
