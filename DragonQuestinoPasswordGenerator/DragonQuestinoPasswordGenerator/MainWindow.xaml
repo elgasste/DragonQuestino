@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Dragon Questino Password Generator"
         Height="620"
-        Width="880">
+        Width="880"
+        ResizeMode="NoResize">
 
    <Window.Resources>
       <Style TargetType="GroupBox">

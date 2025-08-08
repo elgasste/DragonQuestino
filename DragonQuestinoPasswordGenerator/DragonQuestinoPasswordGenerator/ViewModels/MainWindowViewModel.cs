@@ -1139,7 +1139,81 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
       private void EnterPassword()
       {
-         MessageBox.Show( "TODO" );
+         EnterPasswordWindow window = new EnterPasswordWindow();
+         window.ShowDialog();
+
+         string password = window.Password;
+
+         if ( password.Length != 30 )
+         {
+            MessageBox.Show( password.Length < 30 ? "Password is too short." : "Password is too long.", "Invalid Password", MessageBoxButton.OK, MessageBoxImage.Error );
+            return;
+         }
+
+         for ( int i = 0; i < 30; i++ )
+         {
+            char c = password[i];
+
+            // A-Z, a-z, 0-9, dot, and dash are allowed
+            if ( !( ( c >= 65 && c <= 90 ) || ( c >= 97 && c <= 122 ) || ( c >= 48 && c <= 57 ) || c == 45 || c == 46 ) )
+            {
+               MessageBox.Show( "Password contains at least one invalid character.", "Invalid Password", MessageBoxButton.OK, MessageBoxImage.Error );
+               return;
+            }
+         }
+
+         UInt32[] encodedBits = [0, 0, 0, 0, 0, 0];
+
+         encodedBits[0] = ( GetEncodedBitsFromChar( password[0] ) << 26 ) |
+                          ( GetEncodedBitsFromChar( password[1] ) << 20 ) |
+                          ( GetEncodedBitsFromChar( password[2] ) << 14 ) |
+                          ( GetEncodedBitsFromChar( password[3] ) << 8 ) |
+                          ( GetEncodedBitsFromChar( password[4] ) << 2 ) |
+                          ( GetEncodedBitsFromChar( password[5] ) >> 4 );
+         encodedBits[1] = ( GetEncodedBitsFromChar( password[5] ) << 28 ) |
+                          ( GetEncodedBitsFromChar( password[6] ) << 22 ) |
+                          ( GetEncodedBitsFromChar( password[7] ) << 16 ) |
+                          ( GetEncodedBitsFromChar( password[8] ) << 10 ) |
+                          ( GetEncodedBitsFromChar( password[9] ) << 4 ) |
+                          ( GetEncodedBitsFromChar( password[10] ) >> 2 );
+         encodedBits[2] = ( GetEncodedBitsFromChar( password[10] ) << 30 ) |
+                          ( GetEncodedBitsFromChar( password[11] ) << 24 ) |
+                          ( GetEncodedBitsFromChar( password[12] ) << 18 ) |
+                          ( GetEncodedBitsFromChar( password[13] ) << 12 ) |
+                          ( GetEncodedBitsFromChar( password[14] ) << 6 ) |
+                          ( GetEncodedBitsFromChar( password[15] ) );
+         encodedBits[3] = ( GetEncodedBitsFromChar( password[16] ) << 26 ) |
+                          ( GetEncodedBitsFromChar( password[17] ) << 20 ) |
+                          ( GetEncodedBitsFromChar( password[18] ) << 14 ) |
+                          ( GetEncodedBitsFromChar( password[19] ) << 8 ) |
+                          ( GetEncodedBitsFromChar( password[20] ) << 2 ) |
+                          ( GetEncodedBitsFromChar( password[21] ) >> 4 );
+         encodedBits[4] = ( GetEncodedBitsFromChar( password[21] ) << 28 ) |
+                          ( GetEncodedBitsFromChar( password[22] ) << 22 ) |
+                          ( GetEncodedBitsFromChar( password[23] ) << 16 ) |
+                          ( GetEncodedBitsFromChar( password[24] ) << 10 ) |
+                          ( GetEncodedBitsFromChar( password[25] ) << 4 ) |
+                          ( GetEncodedBitsFromChar( password[26] ) >> 2 );
+         encodedBits[5] = ( GetEncodedBitsFromChar( password[26] ) << 30 ) |
+                          ( GetEncodedBitsFromChar( password[27] ) << 24 ) |
+                          ( GetEncodedBitsFromChar( password[28] ) << 18 ) |
+                          ( GetEncodedBitsFromChar( password[29] ) << 12 );
+
+         PlayerExperience = ( encodedBits[0] & 0xFFFF ).ToString();
+         SetDoorsOpenedFromFlags( encodedBits[0] >> 16 );
+         SetTreasuresCollectedFromFlags( encodedBits[1] );
+         SetItemsFromFlags( ( encodedBits[2] >> 7 ) & 0x1FFFFFF );
+         SetTownsVisitedFromFlags( ( encodedBits[2] >> 1 ) & 0x3F );
+         PlayerIsCursed = ( encodedBits[2] & 0x1 ) != 0;
+         PlayerGold = ( encodedBits[3] >> 16 ).ToString();
+         SetSpecialEnemiesDefeatedFromFlags( ( encodedBits[3] >> 5 ) & 0x7 );
+         RescuedGwaelin = ( ( encodedBits[3] >> 4 ) & 0x1 ) != 0;
+         FoundHiddenStairs = ( ( encodedBits[3] >> 3 ) & 0x1 ) != 0;
+         UsedRainbowDrop = ( ( encodedBits[3] >> 2 ) & 0x1 ) != 0;
+         GotStaffOfRain = ( ( encodedBits[3] >> 1 ) & 0x1 ) != 0;
+         GotRainbowDrop = ( encodedBits[3] & 0x1 ) != 0;
+         ExtractPlayerName( encodedBits[4], encodedBits[5] );
+         SetBattleItemsFromFlags( encodedBits[3] >> 8 );
       }
 
       private int GetRangedNumberFromString( string str, int max )
@@ -1165,6 +1239,19 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          openedDoors |= _openedDoor8 ? (UInt32)0x1 << 7 : 0;
          openedDoors |= _openedDoor9 ? (UInt32)0x1 << 8 : 0;
          return openedDoors;
+      }
+
+      private void SetDoorsOpenedFromFlags( UInt32 flags )
+      {
+         OpenedDoor1 = ( flags & 0x1 ) == 0;
+         OpenedDoor2 = ( flags & 0x2 ) == 0;
+         OpenedDoor3 = ( flags & 0x4 ) == 0;
+         OpenedDoor4 = ( flags & 0x8 ) == 0;
+         OpenedDoor5 = ( flags & 0x10 ) == 0;
+         OpenedDoor6 = ( flags & 0x20 ) == 0;
+         OpenedDoor7 = ( flags & 0x40 ) == 0;
+         OpenedDoor8 = ( flags & 0x80 ) == 0;
+         OpenedDoor9 = ( flags & 0x100 ) == 0;
       }
 
       private UInt32 GetTreasureCollectedFlags()
@@ -1203,6 +1290,40 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          return treasuresCollected;
       }
 
+      private void SetTreasuresCollectedFromFlags( UInt32 flags )
+      {
+         TreasureCollected1 = ( flags & 0x1 ) == 0;
+         TreasureCollected2 = ( flags & 0x2 ) == 0;
+         TreasureCollected3 = ( flags & 0x4 ) == 0;
+         TreasureCollected4 = ( flags & 0x8 ) == 0;
+         TreasureCollected5 = ( flags & 0x10 ) == 0;
+         TreasureCollected6 = ( flags & 0x20 ) == 0;
+         TreasureCollected7 = ( flags & 0x40 ) == 0;
+         TreasureCollected8 = ( flags & 0x80 ) == 0;
+         TreasureCollected9 = ( flags & 0x100 ) == 0;
+         TreasureCollected10 = ( flags & 0x200 ) == 0;
+         TreasureCollected11 = ( flags & 0x400 ) == 0;
+         TreasureCollected12 = ( flags & 0x800 ) == 0;
+         TreasureCollected13 = ( flags & 0x1000 ) == 0;
+         TreasureCollected14 = ( flags & 0x2000 ) == 0;
+         TreasureCollected15 = ( flags & 0x4000 ) == 0;
+         TreasureCollected16 = ( flags & 0x8000 ) == 0;
+         TreasureCollected17 = ( flags & 0x10000 ) == 0;
+         TreasureCollected18 = ( flags & 0x20000 ) == 0;
+         TreasureCollected19 = ( flags & 0x40000 ) == 0;
+         TreasureCollected20 = ( flags & 0x80000 ) == 0;
+         TreasureCollected21 = ( flags & 0x100000 ) == 0;
+         TreasureCollected22 = ( flags & 0x200000 ) == 0;
+         TreasureCollected23 = ( flags & 0x400000 ) == 0;
+         TreasureCollected24 = ( flags & 0x800000 ) == 0;
+         TreasureCollected25 = ( flags & 0x1000000 ) == 0;
+         TreasureCollected26 = ( flags & 0x2000000 ) == 0;
+         TreasureCollected27 = ( flags & 0x4000000 ) == 0;
+         TreasureCollected28 = ( flags & 0x8000000 ) == 0;
+         TreasureCollected29 = ( flags & 0x10000000 ) == 0;
+         TreasureCollected30 = ( flags & 0x20000000 ) == 0;
+      }
+
       private UInt32 GetItemFlags()
       {
          int keys = GetRangedNumberFromString( _keyCount, 7 );
@@ -1227,6 +1348,15 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
                 | ( (UInt32)( _hasCursedBelt ? 0x1 : 0x0 ) << 24 );
       }
 
+      private void SetItemsFromFlags( UInt32 flags )
+      {
+         KeyCount = ( flags & 0x7 ).ToString();
+         HerbCount = ( ( flags >> 3 ) & 0x7 ).ToString();
+         TorchCount = ( ( flags >> 6 ) & 0x7 ).ToString();
+         WingCount = ( ( flags >> 9 ) & 0x7 ).ToString();
+         FairyWaterCount = ( ( flags >> 12 ) & 0x7 ).ToString();
+      }
+
       private UInt32 GetTownVisitedFlags()
       {
          UInt32 townVisitedFlags = 0;
@@ -1239,6 +1369,16 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          return townVisitedFlags;
       }
 
+      private void SetTownsVisitedFromFlags( UInt32 flags )
+      {
+         VisitedTantegel = ( flags & 0x1 ) != 0;
+         VisitedBrecconary = ( flags & 0x2 ) != 0;
+         VisitedGarinham = ( flags & 0x4 ) != 0;
+         VisitedKol = ( flags & 0x8 ) != 0;
+         VisitedCantlin = ( flags & 0x10 ) != 0;
+         VisitedRimuldar = ( flags & 0x20 ) != 0;
+      }
+
       private UInt32 GetSpecialEnemyDefeatedFlags()
       {
          UInt32 specialEnemyDefeatedFlags = 0;
@@ -1246,6 +1386,13 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          specialEnemyDefeatedFlags |= _defeatedAxeKnight ? (UInt32)0x1 << 1 : 0;
          specialEnemyDefeatedFlags |= _defeatedGolem ? (UInt32)0x1 << 2 : 0;
          return specialEnemyDefeatedFlags;
+      }
+
+      private void SetSpecialEnemiesDefeatedFromFlags( UInt32 flags )
+      {
+         DefeatedGreenDragon = ( flags & 0x1 ) == 0;
+         DefeatedAxeKnight = ( flags & 0x2 ) == 0;
+         DefeatedGolem = ( flags & 0x4 ) == 0;
       }
 
       private UInt32 GetEncodedBitsFromChar( char c )
@@ -1264,6 +1411,58 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
                 ( bits < 62 ) ? (char)( bits - 52 + 48 ) :   // 0-9
                 ( bits == 62 ) ? '-' :                       // dash
                 '.';                                         // dot
+      }
+
+      private void ExtractPlayerName( UInt32 encodedBits1, UInt32 encodedBits2 )
+      {
+         UInt32 length = ( ( encodedBits2 >> 13 ) & 0x7 ) + 1;
+         char[] name = ['\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'];
+
+         if ( length > 0 )
+         {
+            name[0] = GetEncodedCharFromBits( ( encodedBits1 >> 26 ) & 0x3F );
+         }
+         if ( length > 1 )
+         {
+            name[1] = GetEncodedCharFromBits( ( encodedBits1 >> 20 ) & 0x3F );
+         }
+         if ( length > 2 )
+         {
+            name[2] = GetEncodedCharFromBits( ( encodedBits1 >> 14 ) & 0x3F );
+         }
+         if ( length > 3 )
+         {
+            name[3] = GetEncodedCharFromBits( ( encodedBits1 >> 8 ) & 0x3F );
+         }
+         if ( length > 4 )
+         {
+            name[4] = GetEncodedCharFromBits( ( encodedBits1 >> 2 ) & 0x3F );
+         }
+         if ( length > 5 )
+         {
+            name[5] = GetEncodedCharFromBits( ( ( encodedBits1 & 0x3 ) << 4 ) | ( ( encodedBits2 >> 28 ) & 0xF ) );
+         }
+         if ( length > 6 )
+         {
+            name[6] = GetEncodedCharFromBits( ( encodedBits2 >> 22 ) & 0x3F );
+         }
+         if ( length > 7 )
+         {
+            name[7] = GetEncodedCharFromBits( ( encodedBits2 >> 16 ) & 0x3F );
+         }
+
+         PlayerName = new string( name );
+      }
+
+      private void SetBattleItemsFromFlags( UInt32 flags )
+      {
+         UInt32 weaponFlag = ( flags >> 5 ) & 0x7;
+         UInt32 armorFlag = ( flags >> 2 ) & 0x7;
+         UInt32 shieldFlag = flags & 0x3;
+
+         SelectedWeapon = Weapons[(int)weaponFlag];
+         SelectedArmor = Armor[(int)armorFlag];
+         SelectedShield = Shields[(int)shieldFlag];
       }
    }
 }
