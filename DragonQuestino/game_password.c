@@ -21,7 +21,6 @@ void Game_GetPassword( Game_t* game, char* password )
       ( (uint32_t)( player->townsVisited ) << 1 ) |               // towns visited (6 bits)
       ( player->isCursed ? 0x1 : 0x0 ),                           // is cursed (1 bit)
 
-      // last bit of this section is unused
       ( (uint32_t)( player->gold ) << 16 ) |                      // gold (16 bits)
       ( ( player->weapon.id & 0x7 ) << 13 ) |                     // weapon (3 bits)
       ( ( player->armor.id & 0x7 ) << 10 ) |                      // armor (3 bits)

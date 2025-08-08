@@ -313,7 +313,8 @@
                <StackPanel Orientation="Horizontal">
                   <TextBox x:Name="PasswordTextBox"
                            Width="240"
-                           IsReadOnly="True" />
+                           IsReadOnly="True"
+                           Text="{Binding Password}"/>
                   <Button Content="Copy to Clipboard"
                           Padding="4 0"
                           Margin="4 0 0 0"

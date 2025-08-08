@@ -1,12 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Net.NetworkInformation;
 using System.Numerics;
 
 namespace DragonQuestinoPasswordGenerator.ViewModels
 {
-   public class BattleItem( string displayText, int shift)
+   public class BattleItem( string displayText, int flag)
    {
       public string DisplayText { get; set; } = displayText;
-      public int Shift { get; } = shift;
+      public int Flag { get; } = flag;
    }
 
    public class MainWindowViewModel : ViewModelBase
@@ -1005,26 +1007,128 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
+      private string _password = string.Empty;
+      public string Password
+      {
+         get => _password;
+         set => SetProperty( ref _password, value );
+      }
+
       public MainWindowViewModel()
       {
          _selectedWeapon = Weapons[0];
          _selectedArmor = Armor[0];
          _selectedShield = Shields[0];
+
+         UpdatePassword();
       }
 
       private void UpdatePassword()
       {
-         string name = ( _playerName == string.Empty ) ? " " : _playerName.Substring( 0, 8 );
-         int experience = GetRangedNumberFromString( _playerExperience, UInt16.MaxValue );
-         int gold = GetRangedNumberFromString( _playerGold, UInt16.MaxValue );
-         int keys = GetRangedNumberFromString( _keyCount, 7 );
-         int herbs = GetRangedNumberFromString( _keyCount, 7 );
-         int torches = GetRangedNumberFromString( _torchCount, 7 );
-         int wings = GetRangedNumberFromString( _wingCount, 7 );
-         int fairyWaters = GetRangedNumberFromString( _fairyWaterCount, 7 );
-         int weaponShift = SelectedWeapon.Shift;
-         int armorShift = SelectedArmor.Shift;
-         int shieldShift = SelectedShield.Shift;
+         string name = ( _playerName == string.Empty ) ? " " : 
+            _playerName.Length > 8 ? _playerName.Substring( 0, 8 ) : _playerName;
+         UInt32 experience = (UInt32)GetRangedNumberFromString( _playerExperience, UInt16.MaxValue );
+         UInt32 gold = (UInt32)GetRangedNumberFromString( _playerGold, UInt16.MaxValue );
+         UInt32 weaponFlag = (UInt32)SelectedWeapon.Flag;
+         UInt32 armorFlag = (UInt32)SelectedArmor.Flag;
+         UInt32 shieldFlag = (UInt32)SelectedShield.Flag;
+         UInt32 openedDoorFlags = GetOpenedDoorFlags();
+         UInt32 treasureCollectedFlags = GetTreasureCollectedFlags();
+         UInt32 itemFlags = GetItemFlags();
+         UInt32 townVisitedFlags = GetTownVisitedFlags();
+         UInt32 specialEnemyDefeatedFlags = GetSpecialEnemyDefeatedFlags();
+         UInt32[] encodedNameChars = new UInt32[8];
+
+         for ( int i = 0; i < 8; i++ )
+         {
+            // pad unused chars with spaces
+            encodedNameChars[i] = ( i < name.Length ) ? GetEncodedBitsFromChar( name[i] ) : (UInt32)0x3F;
+         }
+
+         List<UInt32> encodedBits = [0, 0, 0, 0, 0, 0];
+
+         // 16 bits: doors that haven't been opened
+         // 16 bits: player's experience
+         encodedBits[0] = ( ( 0xFFFF ^ openedDoorFlags ) << 16 ) | experience;
+
+         // 32 bits: treasures that haven't been collected
+         encodedBits[1] = 0xFFFFFFFF ^ treasureCollectedFlags;
+
+         // 25 bits: player's items
+         // 6 bits: towns visited
+         // 1 bit: player is cursed
+         encodedBits[2] = ( itemFlags << 7 ) | ( townVisitedFlags << 1 ) | ( _playerIsCursed ? (UInt32)0x1 : 0 );
+
+         // 16 bits: gold
+         // 3 bits: weapon
+         // 3 bits: armor
+         // 2 bits: shield
+         // 3 bits: special enemies remaining
+         // 1 bit: rescued Gwaelin
+         // 1 bit: found hidden stairs
+         // 1 bit: used Rainbow Drop
+         // 1 bit: Got Staff of Rain
+         // 1 bit: Got Rainbow Drop
+         encodedBits[3] = ( gold << 16 )
+                          | ( weaponFlag << 13 )
+                          | ( armorFlag << 10 )
+                          | ( shieldFlag << 8 )
+                          | ( ( (UInt32)0x7 ^ specialEnemyDefeatedFlags ) << 5 )
+                          | ( ( _rescuedGwaelin ? (UInt32)0x1 : 0 ) << 4 )
+                          | ( ( _foundHiddenStairs ? (UInt32)0x1 : 0 ) << 3 )
+                          | ( ( _usedRainbowDrop ? (UInt32)0x1 : 0 ) << 2 )
+                          | ( ( _gotStaffOfRain ? (UInt32)0x1 : 0 ) << 1 )
+                          | ( _gotRainbowDrop ? (UInt32)0x1 : 0 );
+
+         // write out all 8 characters in 6-bit increments, followed by the length of the name
+         encodedBits[4] = ( encodedNameChars[0] << 26 ) |
+                          ( encodedNameChars[1] << 20 ) |
+                          ( encodedNameChars[2] << 14 ) |
+                          ( encodedNameChars[3] << 8 ) |
+                          ( encodedNameChars[4] << 2 ) |
+                          ( encodedNameChars[5] >> 4 );
+         encodedBits[5] = ( ( encodedNameChars[5] & (UInt32)0xF ) << 28 ) |
+                          ( encodedNameChars[6] << 22 ) |
+                          ( encodedNameChars[7] << 16 ) |
+                          ( ( (UInt32)( name.Length - 1 ) & (UInt32)0x7 ) << 13 );
+
+         // since the last 13 bits are unused, we only need 30 characters
+         char[] passwordChars =
+         [
+            GetEncodedCharFromBits( encodedBits[0] >> 26 ),
+            GetEncodedCharFromBits( ( encodedBits[0] >> 20 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[0] >> 14 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[0] >> 8 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[0] >> 2 ) & 0x3F ),
+            GetEncodedCharFromBits( ( ( encodedBits[0] & 0x3 ) << 4 ) | ( encodedBits[1] >> 28 ) ),
+            GetEncodedCharFromBits( ( encodedBits[1] >> 22 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[1] >> 16 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[1] >> 10 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[1] >> 4 ) & 0x3F ),
+            GetEncodedCharFromBits( ( ( encodedBits[1] & 0xF ) << 2 ) | ( encodedBits[2] >> 30 ) ),
+            GetEncodedCharFromBits( ( encodedBits[2] >> 24 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[2] >> 18 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[2] >> 12 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[2] >> 6 ) & 0x3F ),
+            GetEncodedCharFromBits( encodedBits[2] & 0x3F ),
+            GetEncodedCharFromBits( encodedBits[3] >> 26 ),
+            GetEncodedCharFromBits( ( encodedBits[3] >> 20 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[3] >> 14 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[3] >> 8 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[3] >> 2 ) & 0x3F ),
+            GetEncodedCharFromBits( ( ( encodedBits[3] & 0x3 ) << 4 ) | ( encodedBits[4] >> 28 ) ),
+            GetEncodedCharFromBits( ( encodedBits[4] >> 22 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[4] >> 16 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[4] >> 10 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[4] >> 4 ) & 0x3F ),
+            GetEncodedCharFromBits( ( ( encodedBits[4] & 0xF ) << 2 ) | ( encodedBits[5] >> 30 ) ),
+            GetEncodedCharFromBits( ( encodedBits[5] >> 24 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[5] >> 18 ) & 0x3F ),
+            GetEncodedCharFromBits( ( encodedBits[5] >> 12 ) & 0x3F ),
+            '\0',
+         ];
+
+         Password = new( passwordChars );
       }
 
       private int GetRangedNumberFromString( string str, int max )
@@ -1035,6 +1139,120 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
 
          return 0;
+      }
+
+      private UInt32 GetOpenedDoorFlags()
+      {
+         UInt32 openedDoors = 0;
+         openedDoors |= _openedDoor1 ? (UInt32)0x1 : 0;
+         openedDoors |= _openedDoor2 ? (UInt32)0x1 << 1 : 0;
+         openedDoors |= _openedDoor3 ? (UInt32)0x1 << 2 : 0;
+         openedDoors |= _openedDoor4 ? (UInt32)0x1 << 3 : 0;
+         openedDoors |= _openedDoor5 ? (UInt32)0x1 << 4 : 0;
+         openedDoors |= _openedDoor6 ? (UInt32)0x1 << 5 : 0;
+         openedDoors |= _openedDoor7 ? (UInt32)0x1 << 6 : 0;
+         openedDoors |= _openedDoor8 ? (UInt32)0x1 << 7 : 0;
+         openedDoors |= _openedDoor9 ? (UInt32)0x1 << 8 : 0;
+         return openedDoors;
+      }
+
+      private UInt32 GetTreasureCollectedFlags()
+      {
+         UInt32 treasuresCollected = 0;
+         treasuresCollected |= _treasureCollected1 ? (UInt32)0x1 : 0;
+         treasuresCollected |= _treasureCollected2 ? (UInt32)0x1 << 1 : 0;
+         treasuresCollected |= _treasureCollected3 ? (UInt32)0x1 << 2 : 0;
+         treasuresCollected |= _treasureCollected4 ? (UInt32)0x1 << 3 : 0;
+         treasuresCollected |= _treasureCollected5 ? (UInt32)0x1 << 4 : 0;
+         treasuresCollected |= _treasureCollected6 ? (UInt32)0x1 << 5 : 0;
+         treasuresCollected |= _treasureCollected7 ? (UInt32)0x1 << 6 : 0;
+         treasuresCollected |= _treasureCollected8 ? (UInt32)0x1 << 7 : 0;
+         treasuresCollected |= _treasureCollected9 ? (UInt32)0x1 << 8 : 0;
+         treasuresCollected |= _treasureCollected10 ? (UInt32)0x1 << 9 : 0;
+         treasuresCollected |= _treasureCollected11 ? (UInt32)0x1 << 10 : 0;
+         treasuresCollected |= _treasureCollected12 ? (UInt32)0x1 << 11 : 0;
+         treasuresCollected |= _treasureCollected13 ? (UInt32)0x1 << 12 : 0;
+         treasuresCollected |= _treasureCollected14 ? (UInt32)0x1 << 13 : 0;
+         treasuresCollected |= _treasureCollected15 ? (UInt32)0x1 << 14 : 0;
+         treasuresCollected |= _treasureCollected16 ? (UInt32)0x1 << 15 : 0;
+         treasuresCollected |= _treasureCollected17 ? (UInt32)0x1 << 16 : 0;
+         treasuresCollected |= _treasureCollected18 ? (UInt32)0x1 << 17 : 0;
+         treasuresCollected |= _treasureCollected19 ? (UInt32)0x1 << 18 : 0;
+         treasuresCollected |= _treasureCollected20 ? (UInt32)0x1 << 19 : 0;
+         treasuresCollected |= _treasureCollected21 ? (UInt32)0x1 << 20 : 0;
+         treasuresCollected |= _treasureCollected22 ? (UInt32)0x1 << 21 : 0;
+         treasuresCollected |= _treasureCollected23 ? (UInt32)0x1 << 22 : 0;
+         treasuresCollected |= _treasureCollected24 ? (UInt32)0x1 << 23 : 0;
+         treasuresCollected |= _treasureCollected25 ? (UInt32)0x1 << 24 : 0;
+         treasuresCollected |= _treasureCollected26 ? (UInt32)0x1 << 25 : 0;
+         treasuresCollected |= _treasureCollected27 ? (UInt32)0x1 << 26 : 0;
+         treasuresCollected |= _treasureCollected28 ? (UInt32)0x1 << 27 : 0;
+         treasuresCollected |= _treasureCollected29 ? (UInt32)0x1 << 28 : 0;
+         treasuresCollected |= _treasureCollected30 ? (UInt32)0x1 << 29 : 0;
+         return treasuresCollected;
+      }
+
+      private UInt32 GetItemFlags()
+      {
+         int keys = GetRangedNumberFromString( _keyCount, 7 );
+         int herbs = GetRangedNumberFromString( _keyCount, 7 );
+         int torches = GetRangedNumberFromString( _torchCount, 7 );
+         int wings = GetRangedNumberFromString( _wingCount, 7 );
+         int fairyWaters = GetRangedNumberFromString( _fairyWaterCount, 7 );
+
+         return (UInt32)keys
+                | ( (UInt32)herbs << 3 )
+                | ( (UInt32)wings << 6 )
+                | ( (UInt32)fairyWaters << 9 )
+                | ( (UInt32)torches << 12 )
+                | ( (UInt32)( _hasFairyFlute ? 0x1 : 0x0 ) << 15 )
+                | ( (UInt32)( _hasSilverHarp ? 0x1 : 0x0 ) << 16 )
+                | ( (UInt32)( _hasGwaelinsLove ? 0x1 : 0x0 ) << 17 )
+                | ( (UInt32)( _hasStoneOfSunlight ? 0x1 : 0x0 ) << 18 )
+                | ( (UInt32)( _hasStaffOfRain ? 0x1 : 0x0 ) << 19 )
+                | ( (UInt32)( _hasErdricksToken ? 0x1 : 0x0 ) << 20 )
+                | ( (UInt32)( _hasRainbowDrop ? 0x1 : 0x0 ) << 21 )
+                | ( (UInt32)( _hasDragonScale ? 0x1 : 0x0 ) << 23 )
+                | ( (UInt32)( _hasCursedBelt ? 0x1 : 0x0 ) << 24 );
+      }
+
+      private UInt32 GetTownVisitedFlags()
+      {
+         UInt32 townVisitedFlags = 0;
+         townVisitedFlags |= _visitedTantegel ? (UInt32)0x1 : 0;
+         townVisitedFlags |= _visitedBrecconary ? (UInt32)0x1 << 1 : 0;
+         townVisitedFlags |= _visitedGarinham ? (UInt32)0x1 << 2 : 0;
+         townVisitedFlags |= _visitedKol ? (UInt32)0x1 << 3 : 0;
+         townVisitedFlags |= _visitedCantlin ? (UInt32)0x1 << 4 : 0;
+         townVisitedFlags |= _visitedRimuldar ? (UInt32)0x1 << 5 : 0;
+         return townVisitedFlags;
+      }
+
+      private UInt32 GetSpecialEnemyDefeatedFlags()
+      {
+         UInt32 specialEnemyDefeatedFlags = 0;
+         specialEnemyDefeatedFlags |= _defeatedGreenDragon ? (UInt32)0x1 : 0;
+         specialEnemyDefeatedFlags |= _defeatedAxeKnight ? (UInt32)0x1 << 1 : 0;
+         specialEnemyDefeatedFlags |= _defeatedGolem ? (UInt32)0x1 << 2 : 0;
+         return specialEnemyDefeatedFlags;
+      }
+
+      private UInt32 GetEncodedBitsFromChar( char c )
+      {
+         return ( c >= 65 && c <= 90 ) ? (UInt32)( c - 65 ) :        // A-Z
+                ( c >= 97 && c <= 122 ) ? (UInt32)( c - 97 + 26 ) :  // a-z
+                ( c >= 48 && c <= 57 ) ? (UInt32)( c - 48 + 52 ) :   // 0-9
+                ( c == '-' ) ? (UInt32)62 :                          // dash
+                (UInt32)63;                                          // dot
+      }
+
+      private char GetEncodedCharFromBits( UInt32 bits )
+      {
+         return ( bits < 26 ) ? (char)( bits + 65 ) :        // A-Z
+                ( bits < 52 ) ? (char)( bits - 26 + 97 ) :   // a-z
+                ( bits < 62 ) ? (char)( bits - 52 + 48 ) :   // 0-9
+                ( bits == 62 ) ? '-' :                       // dash
+                '.';                                         // dot
       }
    }
 }
