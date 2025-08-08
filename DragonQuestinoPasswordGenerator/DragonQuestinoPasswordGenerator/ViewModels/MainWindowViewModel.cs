@@ -1,8 +1,5 @@
 ﻿using DragonQuestinoPasswordGenerator.Commands;
-using System;
 using System.Collections.ObjectModel;
-using System.Net.NetworkInformation;
-using System.Numerics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -1130,8 +1127,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
             GetEncodedCharFromBits( ( ( encodedBits[4] & 0xF ) << 2 ) | ( encodedBits[5] >> 30 ) ),
             GetEncodedCharFromBits( ( encodedBits[5] >> 24 ) & 0x3F ),
             GetEncodedCharFromBits( ( encodedBits[5] >> 18 ) & 0x3F ),
-            GetEncodedCharFromBits( ( encodedBits[5] >> 12 ) & 0x3F ),
-            '\0',
+            GetEncodedCharFromBits( ( encodedBits[5] >> 12 ) & 0x3F )
          ];
 
          Password = new( passwordChars );
@@ -1415,7 +1411,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
       private void ExtractPlayerName( UInt32 encodedBits1, UInt32 encodedBits2 )
       {
-         UInt32 length = ( ( encodedBits2 >> 13 ) & 0x7 ) + 1;
+         int length = (int)( ( encodedBits2 >> 13 ) & 0x7 ) + 1;
          char[] name = ['\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'];
 
          if ( length > 0 )
@@ -1451,7 +1447,19 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
             name[7] = GetEncodedCharFromBits( ( encodedBits2 >> 16 ) & 0x3F );
          }
 
-         PlayerName = new string( name );
+         // spaces are stored as dots in the encoded password, translate them back here
+         for ( int i = 0; i < length; i++ )
+         {
+            if ( name[i] == '.' )
+            {
+               name[i] = ' ';
+            }
+         }
+
+         string result = new string( name );
+
+         // strip out trailing \0 chars
+         PlayerName = result.Substring( 0, length );
       }
 
       private void SetBattleItemsFromFlags( UInt32 flags )
