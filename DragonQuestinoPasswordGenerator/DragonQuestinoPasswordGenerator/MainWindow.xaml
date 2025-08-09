@@ -1,0 +1,346 @@
+﻿<Window x:Class="DragonQuestinoPasswordGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DragonQuestinoPasswordGenerator"
+        mc:Ignorable="d"
+        Title="Dragon Questino Password Generator"
+        Height="620"
+        Width="880"
+        ResizeMode="NoResize">
+
+   <Window.Resources>
+      <Style TargetType="GroupBox">
+         <Setter Property="Margin" Value="4" />
+         <Setter Property="Padding" Value="2" />
+      </Style>
+      <Style TargetType="Label">
+         <Setter Property="Width" Value="80" />
+         <Setter Property="HorizontalContentAlignment" Value="Right" />
+      </Style>
+      <Style TargetType="TextBox">
+         <Setter Property="Width" Value="80" />
+         <Setter Property="Height" Value="24" />
+         <Setter Property="VerticalContentAlignment" Value="Center" />
+      </Style>
+      <Style TargetType="ComboBox">
+         <Setter Property="Width" Value="160" />
+         <Setter Property="VerticalContentAlignment" Value="Center" />
+      </Style>
+   </Window.Resources>
+
+   <StackPanel Orientation="Horizontal"
+               HorizontalAlignment="Left">
+
+      <!-- LEFT PANEL -->
+      <StackPanel Orientation="Vertical">
+         
+         <!-- PLAYER STATS -->
+         <GroupBox Header="Player Stats">
+            <StackPanel Orientation="Vertical" >
+               <StackPanel Orientation="Horizontal">
+                  <Label Content="Name:" />
+                  <TextBox MaxLength="8"
+                           PreviewTextInput="TextBox_PreviewTextInput_ValidateName"
+                           GotFocus="TextBox_GotFocus_SelectText"
+                           Text="{Binding PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <Label Content="Experience:" />
+                  <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                           PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                           TextChanged="TextBox_TextChanged_MaxUint16"
+                           GotFocus="TextBox_GotFocus_SelectText"
+                           Text="{Binding PlayerExperience, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <Label Content="Gold:" />
+                  <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                           PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                           TextChanged="TextBox_TextChanged_MaxUint16"
+                           GotFocus="TextBox_GotFocus_SelectText"
+                           Text="{Binding PlayerGold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <Label Content="Weapon:" />
+                  <ComboBox ItemsSource="{Binding Weapons, UpdateSourceTrigger=PropertyChanged}"
+                            DisplayMemberPath="DisplayText"
+                            SelectedValue="{Binding SelectedWeapon}" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <Label Content="Armor:" />
+                  <ComboBox ItemsSource="{Binding Armor}"
+                            DisplayMemberPath="DisplayText"
+                            SelectedValue="{Binding SelectedArmor}" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <Label Content="Shield:" />
+                  <ComboBox ItemsSource="{Binding Shields}"
+                            DisplayMemberPath="DisplayText"
+                            SelectedValue="{Binding SelectedShield}" />
+               </StackPanel>
+               <CheckBox Content="Cursed"
+                         IsChecked="{Binding PlayerIsCursed, Mode=TwoWay}" />
+            </StackPanel>
+         </GroupBox>
+         
+         <!-- TOWNS VISITED -->
+         <GroupBox Header="Towns Visited">
+            <StackPanel Orientation="Vertical">
+               <CheckBox Content="Tantegel"
+                         IsChecked="{Binding VisitedTantegel, Mode=TwoWay}" />
+               <CheckBox Content="Brecconary"
+                         IsChecked="{Binding VisitedBrecconary, Mode=TwoWay}" />
+               <CheckBox Content="Garinham"
+                         IsChecked="{Binding VisitedGarinham, Mode=TwoWay}" />
+               <CheckBox Content="Kol"
+                         IsChecked="{Binding VisitedKol, Mode=TwoWay}" />
+               <CheckBox Content="Cantlin"
+                         IsChecked="{Binding VisitedCantlin, Mode=TwoWay}" />
+               <CheckBox Content="Rimuldar"
+                         IsChecked="{Binding VisitedRimuldar, Mode=TwoWay}" />
+            </StackPanel>
+         </GroupBox>
+         
+         <!-- SPECIAL ENEMIES -->
+         <GroupBox Header="Special Enemies">
+            <StackPanel Orientation="Vertical">
+               <CheckBox Content="Defeated Green Dragon"
+                         IsChecked="{Binding DefeatedGreenDragon, Mode=TwoWay}" />
+               <CheckBox Content="Defeated Axe Knight"
+                         IsChecked="{Binding DefeatedAxeKnight, Mode=TwoWay}" />
+               <CheckBox Content="Defeated Golem"
+                         IsChecked="{Binding DefeatedGolem, Mode=TwoWay}" />
+            </StackPanel>
+         </GroupBox>
+         
+         <!-- FLAGS -->
+         <GroupBox Header="Flags">
+            <StackPanel Orientation="Vertical">
+               <CheckBox Content="Rescued Gwaelin"
+                         IsChecked="{Binding RescuedGwaelin, Mode=TwoWay}" />
+               <CheckBox Content="Got Staff of Rain"
+                         IsChecked="{Binding GotStaffOfRain, Mode=TwoWay}" />
+               <CheckBox Content="Got Rainbow Drop"
+                         IsChecked="{Binding GotRainbowDrop, Mode=TwoWay}" />
+               <CheckBox Content="Used Rainbow Drop"
+                         IsChecked="{Binding UsedRainbowDrop, Mode=TwoWay}" />
+               <CheckBox Content="Found hidden stairs"
+                         IsChecked="{Binding FoundHiddenStairs, Mode=TwoWay}" />
+            </StackPanel>
+         </GroupBox>
+         
+      </StackPanel>
+      
+      <!-- RIGHT PANEL -->
+      <StackPanel Orientation="Vertical">
+
+         <!-- RIGHT PANEL, TOP SECTION -->
+         <StackPanel Orientation="Horizontal">
+
+            <!-- RIGHT PANEL, TOP-LEFT COLUMN -->
+            <StackPanel Orientation="Vertical">
+
+               <!-- ITEM COLLECTIONS -->
+               <GroupBox Header="Item Collections" >
+                  <StackPanel Orientation="Vertical">
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Keys:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
+                                 Text="{Binding KeyCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                     </StackPanel>
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Herbs:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
+                                 Text="{Binding HerbCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                     </StackPanel>
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Torches:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
+                                 Text="{Binding TorchCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                     </StackPanel>
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Wings:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
+                                 Text="{Binding WingCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                     </StackPanel>
+                     <StackPanel Orientation="Horizontal">
+                        <Label Content="Fairy Waters:" />
+                        <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"
+                                 PreviewKeyDown="TextBox_PreviewKeyDown_NoSpaces"
+                                 TextChanged="TextBox_TextChanged_Max7"
+                                 GotFocus="TextBox_GotFocus_SelectText"
+                                 Text="{Binding FairyWaterCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                     </StackPanel>
+                  </StackPanel>
+               </GroupBox>
+
+               <!-- SINGLE ITEMS -->
+               <GroupBox Header="Single Items">
+                  <StackPanel Orientation="Vertical">
+                     <CheckBox Content="Dragon Scale"
+                               IsChecked="{Binding HasDragonScale, Mode=TwoWay}" />
+                     <CheckBox Content="Cursed Belt"
+                               IsChecked="{Binding HasCursedBelt, Mode=TwoWay}" />
+                     <CheckBox Content="Fairy Flute"
+                               IsChecked="{Binding HasFairyFlute, Mode=TwoWay}" />
+                     <CheckBox Content="Silver Harp"
+                               IsChecked="{Binding HasSilverHarp, Mode=TwoWay}" />
+                     <CheckBox Content="Gwaelin's Love"
+                               IsChecked="{Binding HasGwaelinsLove, Mode=TwoWay}" />
+                     <CheckBox Content="Stone of Sunlight"
+                               IsChecked="{Binding HasStoneOfSunlight, Mode=TwoWay}" />
+                     <CheckBox Content="Staff of Rain"
+                               IsChecked="{Binding HasStaffOfRain, Mode=TwoWay}" />
+                     <CheckBox Content="Erdrick's Token"
+                               IsChecked="{Binding HasErdricksToken, Mode=TwoWay}" />
+                     <CheckBox Content="Rainbow Drop"
+                               IsChecked="{Binding HasRainbowDrop, Mode=TwoWay}" />
+                     <CheckBox Content="Sphere of Light"
+                               IsChecked="{Binding HasSphereOfLight, Mode=TwoWay}" />
+                  </StackPanel>
+               </GroupBox>
+
+               <!-- DOORS OPENED -->
+               <GroupBox Header="Doors Opened">
+                  <StackPanel Orientation="Vertical">
+                     <CheckBox Content="Tantegel throne room"
+                               IsChecked="{Binding OpenedDoor1, Mode=TwoWay}" />
+                     <CheckBox Content="Brecconary inn"
+                               IsChecked="{Binding OpenedDoor2, Mode=TwoWay}" />
+                     <CheckBox Content="Cantlin left barrier"
+                               IsChecked="{Binding OpenedDoor3, Mode=TwoWay}" />
+                     <CheckBox Content="Cantlin right barrier"
+                               IsChecked="{Binding OpenedDoor4, Mode=TwoWay}" />
+                     <CheckBox Content="Kol wizard"
+                               IsChecked="{Binding OpenedDoor5, Mode=TwoWay}" />
+                     <CheckBox Content="Rimuldar inn"
+                               IsChecked="{Binding OpenedDoor6, Mode=TwoWay}" />
+                     <CheckBox Content="Garinham interior"
+                               IsChecked="{Binding OpenedDoor7, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B1"
+                               IsChecked="{Binding OpenedDoor8, Mode=TwoWay}" />
+                     <CheckBox Content="Swamp Cave prison"
+                               IsChecked="{Binding OpenedDoor9, Mode=TwoWay}" />
+                  </StackPanel>
+               </GroupBox>
+
+            </StackPanel>
+
+            <!-- RIGHT PANEL, TOP-RIGHT COLUMN -->
+            <StackPanel Orientation="Vertical">
+
+               <!-- TREASURES COLLECTED -->
+               <GroupBox Header="Treasures Collected">
+                  <StackPanel Orientation="Vertical">
+                     <CheckBox Content="Tantegel throne room, upper-right (key)"
+                               IsChecked="{Binding TreasureCollected1, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel throne room, lower-left (120 gold)"
+                               IsChecked="{Binding TreasureCollected2, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel throne room, lower-right (torch)"
+                               IsChecked="{Binding TreasureCollected3, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel ground floor, upper-left (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected4, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel ground floor, middle (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected5, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel ground floor, bottom-left (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected6, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel ground floor, bottom-right (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected7, Mode=TwoWay}" />
+                     <CheckBox Content="Tantegel basement (Stone of Sunlight)"
+                               IsChecked="{Binding TreasureCollected8, Mode=TwoWay}" />
+                     <CheckBox Content="Erdrick's Cave (Erdrick's Tablet)"
+                               IsChecked="{Binding TreasureCollected9, Mode=TwoWay}" />
+                     <CheckBox Content="Rimuldar inn (wing)"
+                               IsChecked="{Binding TreasureCollected10, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B1 (herb)"
+                               IsChecked="{Binding TreasureCollected11, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B2 upper-left, left (dragon scale)"
+                               IsChecked="{Binding TreasureCollected12, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B2 upper-left, right (torch)"
+                               IsChecked="{Binding TreasureCollected13, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B2, center-left (Death Necklace or 100-131 gold)"
+                               IsChecked="{Binding TreasureCollected14, Mode=TwoWay}" />
+                     <CheckBox Content="Rocky Mountain Cave B2, center-right (10-17 gold)"
+                               IsChecked="{Binding TreasureCollected15, Mode=TwoWay}" />
+                     <CheckBox Content="Garinham interior, top-left (10-17 gold)"
+                               IsChecked="{Binding TreasureCollected16, Mode=TwoWay}" />
+                     <CheckBox Content="Garinham interior, top-right (torch)"
+                               IsChecked="{Binding TreasureCollected17, Mode=TwoWay}" />
+                     <CheckBox Content="Garinham interior, bottom (herb)"
+                               IsChecked="{Binding TreasureCollected18, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B1, left (herb)"
+                               IsChecked="{Binding TreasureCollected19, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B1, center (5-20 gold)"
+                               IsChecked="{Binding TreasureCollected20, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B1, right (6-13 gold)"
+                               IsChecked="{Binding TreasureCollected21, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B3, upper-left (cursed belt)"
+                               IsChecked="{Binding TreasureCollected22, Mode=TwoWay}" />
+                     <CheckBox Content="Grave of Garinham B3, right (Silver Harp)"
+                               IsChecked="{Binding TreasureCollected23, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B2 (Erdrick's Sword)"
+                               IsChecked="{Binding TreasureCollected24, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, top (herb)"
+                               IsChecked="{Binding TreasureCollected25, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, center-left (500-755 gold)"
+                               IsChecked="{Binding TreasureCollected26, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, center-right (key)"
+                               IsChecked="{Binding TreasureCollected27, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, bottom-left (wing)"
+                               IsChecked="{Binding TreasureCollected28, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, bottom-center (cursed belt)"
+                               IsChecked="{Binding TreasureCollected29, Mode=TwoWay}" />
+                     <CheckBox Content="Charlock B8, bottom-right (herb)"
+                               IsChecked="{Binding TreasureCollected30, Mode=TwoWay}" />
+                  </StackPanel>
+               </GroupBox>
+
+            </StackPanel>
+
+         </StackPanel>
+
+         <!-- RIGHT PANEL, BOTTOM SECTION -->
+         <StackPanel Orientation="Horizontal"
+                     HorizontalAlignment="Center">
+
+            <!-- PASSWORD-->
+            <GroupBox Header="Password">
+               <StackPanel Orientation="Horizontal">
+                  <TextBox x:Name="PasswordTextBox"
+                           Width="240"
+                           IsReadOnly="True"
+                           Text="{Binding Password}" />
+                  <Button Content="Copy to Clipboard"
+                          Padding="4 0"
+                          Margin="4 0 0 0"
+                          Click="CopyPasswordButton_Click" />
+                  <Button Content="Enter Password"
+                          Padding="4 0"
+                          Margin="4 0 0 0"
+                          Command="{Binding EnterPasswordCommand, Mode=OneTime}" />
+                  <Button Content="Clear All Fields"
+                          Padding="4 0"
+                          Margin="4 0 0 0"
+                          Command="{Binding ClearAllFieldsCommand, Mode=OneTime}" />
+               </StackPanel>
+            </GroupBox>
+         </StackPanel>
+         
+      </StackPanel>
+
+   </StackPanel>
+</Window>

@@ -21,7 +21,6 @@ void Game_GetPassword( Game_t* game, char* password )
       ( (uint32_t)( player->townsVisited ) << 1 ) |               // towns visited (6 bits)
       ( player->isCursed ? 0x1 : 0x0 ),                           // is cursed (1 bit)
 
-      // last bit of this section is unused
       ( (uint32_t)( player->gold ) << 16 ) |                      // gold (16 bits)
       ( ( player->weapon.id & 0x7 ) << 13 ) |                     // weapon (3 bits)
       ( ( player->armor.id & 0x7 ) << 10 ) |                      // armor (3 bits)
@@ -183,7 +182,7 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
 
 internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBits )
 {
-   uint32_t length;
+   uint32_t length, i;
    char* name = player->name;
 
    name[0] = 0;
@@ -228,6 +227,15 @@ internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBit
    {
       name[7] = Password_GetCharFromBits( ( encodedBits[5] >> 16 ) & 0x3F );
       name[8] = 0;
+   }
+
+   // spaces are stored as dots in the encoded password, translate them back here
+   for ( i = 0; i < length; i++ )
+   {
+      if ( name[i] == '.' )
+      {
+         name[i] = ' ';
+      }
    }
 }
 

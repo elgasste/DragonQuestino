@@ -1,0 +1,76 @@
+﻿using DragonQuestinoPasswordGenerator.ViewModels;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
+
+namespace DragonQuestinoPasswordGenerator
+{
+   public partial class MainWindow : Window
+   {
+      public MainWindow()
+      {
+         DataContext = new MainWindowViewModel();
+         InitializeComponent();
+      }
+
+      private void TextBox_PreviewTextInput_ValidateName( object sender, TextCompositionEventArgs e )
+      {
+         Regex regex = new Regex( "^[a-zA-Z0-9\\s-]+$" );
+         e.Handled = !regex.IsMatch( e.Text );
+      }
+
+      private void TextBox_PreviewTextInput_NumericOnly( object sender, TextCompositionEventArgs e )
+      {
+         Regex regex = new Regex( "^\\d+$" );
+         e.Handled = !regex.IsMatch( e.Text );
+      }
+
+      private void TextBox_PreviewKeyDown_NoSpaces( object sender, KeyEventArgs e )
+      {
+         e.Handled = e.Key == Key.Space;
+      }
+
+      private void TextBox_TextChanged_MaxUint16( object sender, TextChangedEventArgs e )
+      {
+         if ( sender is TextBox textBox )
+         {
+            if ( int.TryParse( textBox.Text, out int value ) )
+            {
+               if ( value > UInt16.MaxValue )
+               {
+                  textBox.Text = UInt16.MaxValue.ToString(); // Set to max if exceeded
+               }
+            }
+         }
+      }
+
+      private void TextBox_TextChanged_Max7( object sender, TextChangedEventArgs e )
+      {
+         if ( sender is TextBox textBox )
+         {
+            if ( int.TryParse( textBox.Text, out int value ) )
+            {
+               if ( value > 7 )
+               {
+                  textBox.Text = "7"; // Set to max if exceeded
+               }
+            }
+         }
+      }
+
+      private async void TextBox_GotFocus_SelectText( object sender, RoutedEventArgs e )
+      {
+         if ( sender is TextBox textBox )
+         {
+            await Application.Current.Dispatcher.InvokeAsync( textBox.SelectAll, DispatcherPriority.Background );
+         }
+      }
+
+      private void CopyPasswordButton_Click( object sender, RoutedEventArgs e )
+      {
+         Clipboard.SetText( PasswordTextBox.Text );
+      }
+   }
+}
