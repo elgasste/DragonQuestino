@@ -247,7 +247,8 @@ void Game_ChangeToEnterPasswordState( Game_t* game )
 {
    // MUFFINS: this gives us some goodies for testing
    //Game_Load( game, "..91Mf....9Q0RP-E4iyABHdtPf..4" ); // level 21 with some good stuff (haven't saved Princess)
-   Game_Load( game, "APD...9..39I.b.-....5wqJ2p...4" ); // level 30 with everything (haven't saved Princess)
+   //Game_Load( game, "APD...9..39I.b.-....5wqJ2p...4" ); // level 30 with everything (haven't saved Princess)
+   Game_Load( game, "..8AAP....8AAAAAAADg4Fq2rYf..4" ); // WRATH
    Game_ChangeToOverworldState( game );
 
    /*game->mainState = MainState_EnterPassword;

@@ -32,7 +32,7 @@ uint8_t Player_GetLevelFromExperience( Player_t* player )
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
 {
-   return ( player->level == ( STAT_TABLE_SIZE - 1 ) ) ? 0 : ( g_experienceTable[player->level + 1] - player->experience );
+   return ( player->level == ( STAT_TABLE_SIZE - 1 ) ) ? 0 : ( ( g_experienceTable[player->level + 1] + 1 ) - player->experience );
 }
 
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
