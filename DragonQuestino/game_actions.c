@@ -140,7 +140,7 @@ void Game_OpenDoor( Game_t* game )
 
 internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 {
-   uint16_t gold = 0;
+   uint16_t gold = 0, goldCollected;
    Bool_t collected = False;
    char msg[64], itemMsg[24];
 
@@ -238,7 +238,9 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
 
    if ( gold > 0 )
    {
-      collected = ( Math_CollectAmount16u( &( game->player.gold ), gold ) > 0 ) ? True : False;
+      goldCollected = Math_AmountToCollect16u( game->player.gold, gold );
+      game->player.gold += goldCollected;
+      collected = ( goldCollected > 0 ) ? True : False;
       sprintf( msg, STRING_CHEST_GOLDFOUND, gold );
 
       if ( collected > 0 )

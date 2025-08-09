@@ -58,36 +58,14 @@ Bool_t Math_PointInRectF( float px, float py, float rx, float ry, float rw, floa
    return ( px > rx ) && ( px < ( rx + rw ) ) && ( py > ry ) && py < ( ry + rh ) ? True : False;
 }
 
-uint8_t Math_CollectAmount8u( uint8_t* dest, uint8_t src )
+uint16_t Math_AmountToCollect16u( uint16_t existing, uint16_t bounty )
 {
-   uint8_t returnAmount;
-
-   if ( src < ( UINT8_MAX - *dest ) )
+   if ( bounty < ( UINT16_MAX - existing ) )
    {
-      *dest += src;
-      return src;
+      return bounty;
    }
    else
    {
-      returnAmount = UINT8_MAX - *dest;
-      *dest = UINT8_MAX;
-      return returnAmount;
-   }
-}
-
-uint16_t Math_CollectAmount16u( uint16_t* dest, uint16_t src )
-{
-   uint16_t returnAmount;
-
-   if ( src < ( UINT16_MAX - *dest ) )
-   {
-      *dest += src;
-      return src;
-   }
-   else
-   {
-      returnAmount = UINT16_MAX - *dest;
-      *dest = UINT16_MAX;
-      return returnAmount;
+      return UINT16_MAX - existing;
    }
 }
