@@ -15,6 +15,7 @@ internal void Game_DragonlordInitiateFightCallback( Game_t* game );
 
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
+   uint16_t experienceRemaining;
    char msg[128];
    char password[32];
    char passwordMsg[34];
@@ -26,14 +27,20 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 0: // King Lorik
          sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_1, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_2 );
+         experienceRemaining = Player_GetExperienceRemaining( &( game->player ) );
+         if ( experienceRemaining > 0 )
+         {
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_2, experienceRemaining );
+            Dialog_PushSection( &( game->dialog ), msg );
+         }
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_3 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_4 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_5 );
          Game_GetPassword( game, password );
-         sprintf( passwordMsg, STRING_NPC_TANTEGEL_THRONEROOM_KING_5, password );
+         sprintf( passwordMsg, STRING_NPC_TANTEGEL_THRONEROOM_KING_6, password );
          Dialog_PushSection( &( game->dialog ), passwordMsg );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_6 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_7 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_8 );
          break;
       case 1: // Gwaelin
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_1 );
