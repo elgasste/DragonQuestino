@@ -67,6 +67,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer );
 void Game_Load( Game_t* game, const char* password );
 void Game_Reset( Game_t* game );
 void Game_Tic( Game_t* game );
+void Game_ChangeToStartupState( Game_t* game );
 void Game_ChangeToEnterNameState( Game_t* game );
 void Game_ChangeToEnterPasswordState( Game_t* game );
 void Game_ChangeToOverworldState( Game_t* game );
