@@ -469,6 +469,10 @@ internal void Game_HandleEnterNameInput( Game_t* game )
       {
          name[length - 1] = 0;
       }
+      else
+      {
+         Game_ChangeToStartupState( game );
+      }
    }
    else
    {
@@ -509,6 +513,10 @@ internal void Game_HandleEnterPasswordInput( Game_t* game )
       if ( length > 0 )
       {
          password[length - 1] = 0;
+      }
+      else
+      {
+         Game_ChangeToStartupState( game );
       }
    }
    else
