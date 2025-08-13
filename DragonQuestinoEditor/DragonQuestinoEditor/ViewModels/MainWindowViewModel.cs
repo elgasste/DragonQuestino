@@ -238,6 +238,8 @@ namespace DragonQuestinoEditor.ViewModels
                                                    false,
                                                    window.NewTilesX,
                                                    window.NewTilesY,
+                                                   -1,
+                                                   0,
                                                    Constants.MapTileTextureDefaultIndex );
 
             foreach ( var tile in newTileMap.Tiles )

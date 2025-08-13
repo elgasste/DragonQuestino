@@ -13,6 +13,8 @@ namespace DragonQuestinoEditor.FileOps
       public List<TileSaveData> Tiles { get; set; } = [];
       public int TilesX { get; set; }
       public int TilesY { get; set; }
+      public int InnTileIndex { get; set; }
+      public int InnPrice { get; set; }
       public List<TilePortalSaveData> Portals { get; set; } = [];
       public TilePortalSaveData EvacPortal { get; set; } = new();
       public List<StaticSpriteSaveData> StaticSprites { get; set; } = [];
@@ -30,6 +32,8 @@ namespace DragonQuestinoEditor.FileOps
          IsDark = tileMap.IsDark;
          TilesX = tileMap.TilesX;
          TilesY = tileMap.TilesY;
+         InnTileIndex = tileMap.InnTileIndex;
+         InnPrice = tileMap.InnPrice;
          EvacPortal = new( tileMap.EvacPortal );
 
          foreach ( var tile in tileMap.Tiles )

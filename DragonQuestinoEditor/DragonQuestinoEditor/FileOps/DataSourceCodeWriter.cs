@@ -268,7 +268,9 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   int32_t i, j;\n" );
          WriteToFileStream( fs, "   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );\n\n" );
          WriteToFileStream( fs, "   if ( id == TILEMAP_OVERWORLD_ID ) tileMap->gameFlags->doors = ( 0xFFFF0000 | ( tileMap->gameFlags->doors & 0xFFFF ) );\n\n" );
-         WriteToFileStream( fs, "   Random_Seed();\n\n" );
+         WriteToFileStream( fs, "   Random_Seed();\n" );
+         WriteToFileStream( fs, "   tileMap->innTileIndex = -1;\n" );
+         WriteToFileStream( fs, "   tileMap->innPrice = 0;\n\n" );
          WriteToFileStream( fs, "   switch( id )\n" );
          WriteToFileStream( fs, "   {\n" );
 
@@ -287,6 +289,12 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, string.Format( "         tileMap->tilesX = {0};\n", tileMap.TilesX ) );
             WriteToFileStream( fs, string.Format( "         tileMap->tilesY = {0};\n", tileMap.TilesY ) );
             WriteToFileStream( fs, string.Format( "         tileMap->portalCount = {0};\n", tileMap.Portals.Count ) );
+
+            if ( tileMap.InnTileIndex >= 0 )
+            {
+               WriteToFileStream( fs, string.Format( "         tileMap->innTileIndex = {0};\n", tileMap.InnTileIndex ) );
+               WriteToFileStream( fs, string.Format( "         tileMap->innPrice = {0};\n", tileMap.InnPrice ) );
+            }
 
             if ( tileMap.Portals.Count > 0 )
             {
