@@ -196,6 +196,7 @@ typedef struct TileMap_t
    StaticSprite_t doorSprite;
 
    int32_t innTileIndex;
+   uint16_t innPrice;
 }
 TileMap_t;
 

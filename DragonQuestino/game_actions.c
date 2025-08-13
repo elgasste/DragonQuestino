@@ -6,18 +6,23 @@ internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
 internal void Game_FoundHiddenStairsCallback( Game_t* game );
 internal void Game_TakeHiddenStairsCallback( Game_t* game );
 internal void Game_TalkToNpc( Game_t* game, NonPlayerCharacter_t* npc );
+internal void Game_VisitInn( Game_t* game );
 
 void Game_Talk( Game_t* game )
 {
-   uint32_t i, facingTileIndex;
+   uint32_t i;
    Bool_t canTalk = False;
    NonPlayerCharacter_t* npc;
    ActiveSprite_t* playerSprite = &( game->player.sprite );
+   uint32_t facingTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
 
-   if ( game->tileMap.npcCount > 0 )
+   if ( game->tileMap.innTileIndex >= 0 && (uint32_t)( game->tileMap.innTileIndex ) == facingTileIndex )
    {
-      facingTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
-
+      canTalk = True;
+      Game_VisitInn( game );
+   }
+   else if ( game->tileMap.npcCount > 0 )
+   {
       for ( i = 0; i < game->tileMap.npcCount; i++ )
       {
          npc = &( game->tileMap.npcs[i] );
@@ -301,4 +306,10 @@ internal void Game_TalkToNpc( Game_t* game, NonPlayerCharacter_t* npc )
    }
 
    Game_RunNpcDialog( game, npc->id );
+}
+
+internal void Game_VisitInn( Game_t* game )
+{
+   // MUFFINS
+   UNUSED_PARAM( game );
 }

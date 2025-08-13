@@ -77,6 +77,13 @@ namespace DragonQuestinoEditor.ViewModels
          set => SetProperty( ref _innTileIndex, value );
       }
 
+      private int _innPrice;
+      public int InnPrice
+      {
+         get => _innPrice;
+         set => SetProperty( ref _innPrice, value );
+      }
+
       public TileMapViewModel( TileSet tileSet,
                                int id,
                                string? name,
@@ -87,6 +94,7 @@ namespace DragonQuestinoEditor.ViewModels
                                int tilesX,
                                int tilesY,
                                int innTileIndex,
+                               int innPrice,
                                int defaultTileTextureIndex )
       {
          _id = id;
@@ -98,6 +106,7 @@ namespace DragonQuestinoEditor.ViewModels
          _tilesX = tilesX;
          _tilesY = tilesY;
          _innTileIndex = innTileIndex;
+         _innPrice = innPrice;
          EvacPortal = new( 0, 0, 0, Direction.Left );
 
          for ( int i = 0; i < tilesX * tilesY; i++ )
@@ -117,6 +126,7 @@ namespace DragonQuestinoEditor.ViewModels
          _tilesX = saveData.TilesX;
          _tilesY = saveData.TilesY;
          _innTileIndex = saveData.InnTileIndex;
+         _innPrice = saveData.InnPrice;
          EvacPortal = new( saveData.EvacPortal );
 
          for ( int i = 0; i < saveData.Tiles.Count; i++ )
