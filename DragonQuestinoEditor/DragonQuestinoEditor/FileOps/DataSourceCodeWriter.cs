@@ -286,6 +286,7 @@ namespace DragonQuestinoEditor.FileOps
             WriteToFileStream( fs, string.Format( "         tileMap->isDark = {0};\n", tileMap.IsDark ? "True" : "False" ) );
             WriteToFileStream( fs, string.Format( "         tileMap->tilesX = {0};\n", tileMap.TilesX ) );
             WriteToFileStream( fs, string.Format( "         tileMap->tilesY = {0};\n", tileMap.TilesY ) );
+            WriteToFileStream( fs, string.Format( "         tileMap->innTileIndex = {0};\n", tileMap.InnTileIndex ) );
             WriteToFileStream( fs, string.Format( "         tileMap->portalCount = {0};\n", tileMap.Portals.Count ) );
 
             if ( tileMap.Portals.Count > 0 )

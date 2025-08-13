@@ -13965,6 +13965,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 140;
          tileMap->tilesY = 135;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 14;
          tileMap->portals[0].sourceTileIndex = 1272;
          tileMap->portals[0].destinationTileMapIndex = 7;
@@ -18175,6 +18176,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 213;
          tileMap->portals[0].destinationTileMapIndex = 3;
@@ -18294,6 +18296,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 125;
          tileMap->portals[0].destinationTileMapIndex = 3;
@@ -18372,6 +18375,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 64;
          tileMap->portals[0].sourceTileIndex = 995;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -19152,6 +19156,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 15;
          tileMap->portals[0].sourceTileIndex = 448;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -19758,6 +19763,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 187;
          tileMap->portals[0].destinationTileMapIndex = 4;
@@ -19805,6 +19811,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 108;
          tileMap->portals[0].destinationTileMapIndex = 4;
@@ -19856,6 +19863,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 27;
          tileMap->portals[0].sourceTileIndex = 308;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -20217,6 +20225,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 217;
          tileMap->portals[0].destinationTileMapIndex = 7;
@@ -20369,6 +20378,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 36;
          tileMap->portals[0].sourceTileIndex = 66;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -20716,6 +20726,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 30;
          tileMap->tilesY = 31;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 72;
          tileMap->portals[0].sourceTileIndex = 120;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -21512,6 +21523,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 30;
          tileMap->portals[0].sourceTileIndex = 25;
          tileMap->portals[0].destinationTileMapIndex = 10;
@@ -21728,6 +21740,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 26;
          tileMap->tilesY = 26;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 47;
          tileMap->portals[0].sourceTileIndex = 668;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -22327,6 +22340,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 103;
          tileMap->portals[0].sourceTileIndex = 32;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -23212,6 +23226,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 110;
          tileMap->portals[0].destinationTileMapIndex = 13;
@@ -23266,6 +23281,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 72;
          tileMap->portals[0].destinationTileMapIndex = 13;
@@ -23387,6 +23403,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 299;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -23451,6 +23468,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 595;
          tileMap->portals[0].destinationTileMapIndex = 16;
@@ -23513,6 +23531,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 36;
          tileMap->tilesY = 32;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 4;
          tileMap->portals[0].sourceTileIndex = 587;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -23617,6 +23636,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 36;
          tileMap->tilesY = 32;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 3;
          tileMap->portals[0].sourceTileIndex = 335;
          tileMap->portals[0].destinationTileMapIndex = 18;
@@ -23722,6 +23742,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 28;
          tileMap->tilesY = 49;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 263;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -23828,6 +23849,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 857;
          tileMap->portals[0].destinationTileMapIndex = 7;
@@ -23972,6 +23994,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 36;
          tileMap->tilesY = 30;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 6;
          tileMap->portals[0].sourceTileIndex = 383;
          tileMap->portals[0].destinationTileMapIndex = 23;
@@ -24075,6 +24098,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 7;
          tileMap->portals[0].sourceTileIndex = 449;
          tileMap->portals[0].destinationTileMapIndex = 22;
@@ -24253,6 +24277,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 27;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 427;
          tileMap->portals[0].destinationTileMapIndex = 23;
@@ -24305,6 +24330,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 22;
          tileMap->tilesY = 22;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 4;
          tileMap->portals[0].sourceTileIndex = 472;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -24515,6 +24541,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 42;
          tileMap->tilesY = 38;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 10;
          tileMap->portals[0].sourceTileIndex = 398;
          tileMap->portals[0].destinationTileMapIndex = 25;
@@ -24730,6 +24757,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 4;
          tileMap->portals[0].sourceTileIndex = 339;
          tileMap->portals[0].destinationTileMapIndex = 30;
@@ -24808,6 +24836,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 6;
          tileMap->portals[0].sourceTileIndex = 306;
          tileMap->portals[0].destinationTileMapIndex = 29;
@@ -24903,6 +24932,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 11;
          tileMap->portals[0].sourceTileIndex = 299;
          tileMap->portals[0].destinationTileMapIndex = 26;
@@ -25036,6 +25066,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 28;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 4;
          tileMap->portals[0].sourceTileIndex = 299;
          tileMap->portals[0].destinationTileMapIndex = 32;
@@ -25104,6 +25135,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 23;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 363;
          tileMap->portals[0].destinationTileMapIndex = 30;
@@ -25137,6 +25169,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = True;
          tileMap->tilesX = 32;
          tileMap->tilesY = 23;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 2;
          tileMap->portals[0].sourceTileIndex = 363;
          tileMap->portals[0].destinationTileMapIndex = 30;
@@ -25174,6 +25207,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 971;
          tileMap->portals[0].destinationTileMapIndex = 32;
@@ -25492,6 +25526,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 249;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -25559,6 +25594,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 124;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -25626,6 +25662,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 129;
          tileMap->portals[0].destinationTileMapIndex = 10;
@@ -25652,6 +25689,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->isDark = False;
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
+         tileMap->innTileIndex = 0;
          tileMap->portalCount = 1;
          tileMap->portals[0].sourceTileIndex = 148;
          tileMap->portals[0].destinationTileMapIndex = 10;
