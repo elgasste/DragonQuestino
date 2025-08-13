@@ -123,11 +123,19 @@ void AlphaPicker_MoveSelection( AlphaPicker_t* picker, Direction_t direction )
    }
    else if ( direction == Direction_Down )
    {
-      picker->selectedIndex = ( row == ( ALPHA_PICKER_ROWS - 1 ) ) ? picker->selectedIndex - ( ( ALPHA_PICKER_ROWS - 1 ) * ALPHA_PICKER_COLS ) : ( picker->selectedIndex + ALPHA_PICKER_COLS );
-
-      if ( picker->selectedIndex > 64 )
+      // special case: pressing down on "2" should go straight to "END"
+      if ( picker->selectedIndex == 54 )
       {
-         picker->selectedIndex -= ( ( ALPHA_PICKER_ROWS - 1 ) * ALPHA_PICKER_COLS );
+         picker->selectedIndex = 64;
+      }
+      else
+      {
+         picker->selectedIndex = ( row == ( ALPHA_PICKER_ROWS - 1 ) ) ? picker->selectedIndex - ( ( ALPHA_PICKER_ROWS - 1 ) * ALPHA_PICKER_COLS ) : ( picker->selectedIndex + ALPHA_PICKER_COLS );
+
+         if ( picker->selectedIndex > 64 )
+         {
+            picker->selectedIndex -= ( ( ALPHA_PICKER_ROWS - 1 ) * ALPHA_PICKER_COLS );
+         }
       }
    }
 
