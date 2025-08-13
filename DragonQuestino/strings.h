@@ -307,6 +307,13 @@
 #define STRING_BATTLE_MENU_SPELL                                     "SPELL"
 #define STRING_BATTLE_MENU_ITEM                                      "ITEM"
 
+#define STRING_INN_WELCOME                                           "Welcome to the Traveler's Inn! One night's stay is %u gold, would you like a room?"
+#define STRING_INN_TOOEXPENSIVE_1                                    "It seems you are a bit short on gold, unfortunately we cannot accommodate you."
+#define STRING_INN_TOOEXPENSIVE_2                                    "Please come back when you have acquired sufficient funds!"
+#define STRING_INN_STAY                                              "Enjoy your stay!"
+#define STRING_INN_LEAVE                                             "Come back anytime, our door is always open!"
+#define STRING_INN_MORNING                                           "We hope you rested well, be safe in your travels!"
+
 #define STRING_NPC_DEFAULT                                           "No response. How rude."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_1                        "\"Hello %s, I am relieved to see you have returned safely!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_2                        "\"I sense that you'll require %u more experience points to reach a higher level...\""

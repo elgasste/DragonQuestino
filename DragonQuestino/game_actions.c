@@ -7,6 +7,12 @@ internal void Game_FoundHiddenStairsCallback( Game_t* game );
 internal void Game_TakeHiddenStairsCallback( Game_t* game );
 internal void Game_TalkToNpc( Game_t* game, NonPlayerCharacter_t* npc );
 internal void Game_VisitInn( Game_t* game );
+internal void Game_VisitInnChoiceCallback( Game_t* game );
+internal void Game_VisitInnStayCallback( Game_t* game );
+internal void Game_VisitInnLeaveCallback( Game_t* game );
+internal void Game_VisitInnStayAnimationCallback( Game_t* game );
+internal void Game_VisitInnStayPostAnimationCallback( Game_t* game );
+internal void Game_VisitInnStayMorningCallback( Game_t* game );
 
 void Game_Talk( Game_t* game )
 {
@@ -310,6 +316,89 @@ internal void Game_TalkToNpc( Game_t* game, NonPlayerCharacter_t* npc )
 
 internal void Game_VisitInn( Game_t* game )
 {
-   // MUFFINS
-   UNUSED_PARAM( game );
+   char msg[128];
+   sprintf( msg, STRING_INN_WELCOME, game->tileMap.innPrice );
+
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_VisitInnChoiceCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitInnChoiceCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_VisitInnStayCallback, Game_VisitInnLeaveCallback,
+                      game, game );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_VisitInnStayCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( game->player.gold >= game->tileMap.innPrice )
+   {
+      game->player.gold -= game->tileMap.innPrice;
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_INN_STAY, Game_VisitInnStayAnimationCallback, game );
+   }
+   else
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_INN_TOOEXPENSIVE_1 );
+      Dialog_PushSection( &( game->dialog ), STRING_INN_TOOEXPENSIVE_2 );
+   }
+
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitInnLeaveCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_INN_LEAVE );
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitInnStayAnimationCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 4; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_VisitInnStayPostAnimationCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_VisitInnStayPostAnimationCallback( Game_t* game )
+{
+   uint32_t i;
+
+   Game_ChangeSubState( game, SubState_None );
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+
+   for ( i = 0; i < 6; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_FadeIn, Game_VisitInnStayMorningCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_VisitInnStayMorningCallback( Game_t* game )
+{
+   game->player.stats.hitPoints = game->player.stats.maxHitPoints;
+   game->player.stats.magicPoints = game->player.stats.maxMagicPoints;
+
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_INN_MORNING );
+   Game_OpenDialog( game );
 }
