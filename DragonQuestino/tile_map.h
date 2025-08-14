@@ -230,6 +230,7 @@ uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileInde
 void TileMap_Draw( TileMap_t* tileMap );
 void TileMap_StopNpc( NonPlayerCharacter_t* npc );
 void TileMap_TicNpcWander( NonPlayerCharacter_t* npc );
+Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, uint32_t tileIndex, uint32_t* boothId );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );

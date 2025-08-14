@@ -135,6 +135,9 @@ void Game_UseCursedBelt( Game_t* game );
 // game_npcs.c
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId );
 
+// game_booths.c
+void Game_ActivateBooth( Game_t* game, uint32_t boothId );
+
 #if defined( __cplusplus )
 }
 #endif
