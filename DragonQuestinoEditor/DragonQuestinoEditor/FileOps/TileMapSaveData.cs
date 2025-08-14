@@ -19,6 +19,7 @@ namespace DragonQuestinoEditor.FileOps
       public TilePortalSaveData EvacPortal { get; set; } = new();
       public List<StaticSpriteSaveData> StaticSprites { get; set; } = [];
       public List<NonPlayerCharacterSaveData> NonPlayerCharacters { get; set; } = [];
+      public List<BoothSaveData> Booths { get; set; } = [];
 
       public TileMapSaveData() { }
 

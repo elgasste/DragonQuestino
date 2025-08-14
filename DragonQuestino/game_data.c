@@ -13956,6 +13956,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
    Random_Seed();
    tileMap->innTileIndex = -1;
    tileMap->innPrice = 0;
+   tileMap->boothCount = 0;
 
    switch( id )
    {

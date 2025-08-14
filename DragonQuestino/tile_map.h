@@ -108,6 +108,8 @@
 #define TILEMAP_NPC_MINWANDERSECONDS            1
 #define TILEMAP_NPC_MAXWANDERSECONDS            3
 
+#define TILEMAP_MAX_BOOTHS                      16
+
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
 typedef struct Player_t Player_t;
@@ -146,6 +148,13 @@ typedef struct NonPlayerCharacter_t
    float duration;
 }
 NonPlayerCharacter_t;
+
+typedef struct Booth_t
+{
+   uint32_t id;
+   uint32_t tileIndex;
+}
+Booth_t;
 
 typedef struct TileMap_t
 {
@@ -197,6 +206,9 @@ typedef struct TileMap_t
 
    int32_t innTileIndex;
    uint16_t innPrice;
+
+   Booth_t booths[TILEMAP_MAX_BOOTHS];
+   uint32_t boothCount;
 }
 TileMap_t;
 

@@ -9,6 +9,7 @@ namespace DragonQuestinoEditor.ViewModels
       public ObservableCollection<TileViewModel> Tiles { get; } = [];
       public ObservableCollection<StaticSpriteViewModel> StaticSprites { get; } = [];
       public ObservableCollection<NonPlayerCharacterViewModel> NonPlayerCharacters { get; } = [];
+      public ObservableCollection<BoothViewModel> Booths { get; } = [];
 
       public ObservableCollection<TilePortalViewModel> Portals { get; } = [];
 
@@ -149,6 +150,11 @@ namespace DragonQuestinoEditor.ViewModels
          foreach ( var npc in saveData.NonPlayerCharacters )
          {
             NonPlayerCharacters.Add( new( npc ) );
+         }
+
+         foreach ( var booth in saveData.Booths )
+         {
+            Booths.Add( new( booth ) );
          }
       }
    }
