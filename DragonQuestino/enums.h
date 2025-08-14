@@ -207,4 +207,14 @@ typedef enum BattleTurn_t
 }
 BattleTurn_t;
 
+typedef enum AccessoryType_t
+{
+   AccessoryType_Weapon = 0,
+   AccessoryType_Armor,
+   AccessoryType_Shield,
+
+   AccessoryType_Count
+}
+AccessoryType_t;
+
 #endif // ENUMS_H
