@@ -314,6 +314,10 @@
 #define STRING_INN_LEAVE                                             "Come back anytime, our door is always open!"
 #define STRING_INN_MORNING                                           "We hope you rested well, be safe in your travels!"
 
+#define STRING_WEAPONSHOP_WELCOME                                    "Welcome! We deal in weapons and armor, are you interested in our wares today?"
+#define STRING_WEAPONSHOP_VIEWITEMS                                  "Excellent! Let me know if you'd like to purchase something."
+#define STRING_WEAPONSHOP_LEAVE                                      "We hope you drop by again!"
+
 #define STRING_NPC_DEFAULT                                           "No response. How rude."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_1                        "\"Hello %s, I am relieved to see you have returned safely!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_2                        "\"I sense that you'll require %u more experience points to reach a higher level...\""

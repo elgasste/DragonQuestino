@@ -1,24 +1,54 @@
 #include "game.h"
 
-internal void Game_VisitWeaponShop( Game_t* game, uint32_t boothId );
+internal void Game_VisitWeaponShop( Game_t* game );
+internal void Game_WeaponShopLeaveOrStayCallback( Game_t* game );
+internal void Game_WeaponShopViewItemsCallback( Game_t* game );
+internal void Game_WeaponShopLeaveCallback( Game_t* game );
+internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId );
 
 void Game_ActivateBooth( Game_t* game, uint32_t boothId )
 {
-   switch ( boothId )
+   if ( boothId <= 6 )
    {
-      case 0: // Brecconary weapon shop
-      case 1: // Garinham weapon shop
-      case 2: // Kol weapon shop
-      case 3: // Cantlin upper-right weapon shop
-      case 4: // Cantlin middle-right weapon shop
-      case 5: // Cantlin lower-right weapon shop
-      case 6: // Rimuldar weapon shop
-         Game_VisitWeaponShop( game, boothId );
-         break;
+      Game_LoadWeaponShop( game, boothId );
+      Game_VisitWeaponShop( game );
    }
 }
 
-internal void Game_VisitWeaponShop( Game_t* game, uint32_t boothId )
+internal void Game_VisitWeaponShop( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_WELCOME, Game_WeaponShopLeaveOrStayCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_WeaponShopLeaveOrStayCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_WeaponShopViewItemsCallback, Game_WeaponShopLeaveCallback,
+                      game, game );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_WeaponShopViewItemsCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+   // TODO: open an item picker menu
+   Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_VIEWITEMS );
+   Game_OpenDialog( game );
+}
+
+internal void Game_WeaponShopLeaveCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_LEAVE );
+   Game_OpenDialog( game );
+}
+
+internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
 {
    TileMap_t* tileMap = &( game->tileMap );
 

@@ -29,6 +29,7 @@ void Game_Talk( Game_t* game )
    }
    else if ( TileMap_HasBoothAtIndex( &( game->tileMap ), facingTileIndex, &boothId ) )
    {
+      canTalk = True;
       Game_ActivateBooth( game, boothId );
    }
    else if ( game->tileMap.npcCount > 0 )
