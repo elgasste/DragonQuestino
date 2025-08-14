@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "alpha_picker.h"
 #include "binary_picker.h"
+#include "shop_picker.h"
 #include "dialog.h"
 #include "animation_chain.h"
 #include "battle.h"
@@ -41,6 +42,7 @@ typedef struct Game_t
    Menu_t* activeMenu;
    AlphaPicker_t alphaPicker;
    BinaryPicker_t binaryPicker;
+   ShopPicker_t shopPicker;
    Dialog_t dialog;
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    AnimationChain_t animationChain;

@@ -29,6 +29,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
    AlphaPicker_Init( &( game->alphaPicker ), &( game->screen ) );
    BinaryPicker_Init( &( game->binaryPicker ), &( game->screen ) );
+   ShopPicker_Init( &( game->shopPicker ), &( game->screen ), &( game->tileMap ) );
    Dialog_Init( &( game->dialog ), &( game->screen ), &( game->mainState ) );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
@@ -164,28 +165,22 @@ void Game_Tic( Game_t* game )
             {
                case SubState_None:
                   Game_TicPhysics( game );
-                  Game_TicActiveSprites( game );
-                  TileMap_Tic( &( game->tileMap ) );
                   break;
                case SubState_Menu:
-                  Game_TicActiveSprites( game );
-                  TileMap_Tic( &( game->tileMap ) );
                   Menu_Tic( game->activeMenu );
                   break;
                case SubState_Dialog:
-                  Game_TicActiveSprites( game );
-                  TileMap_Tic( &( game->tileMap ) );
                   Dialog_Tic( &( game->dialog ) );
                   break;
-               case SubState_Status:
-               case SubState_NonUseableItems:
-                  Game_TicActiveSprites( game );
-                  TileMap_Tic( &( game->tileMap ) );
                case SubState_BinaryChoice:
                   BinaryPicker_Tic( &( game->binaryPicker ) );
-                  TileMap_Tic( &( game->tileMap ) );
+                  break;
+               case SubState_ShopMenu:
+                  ShopPicker_Tic( &( game->shopPicker ) );
                   break;
             }
+            TileMap_Tic( &( game->tileMap ) );
+            Game_TicActiveSprites( game );
             break;
          case MainState_Battle:
             switch ( game->subState )

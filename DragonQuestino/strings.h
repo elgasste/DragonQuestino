@@ -315,7 +315,7 @@
 #define STRING_INN_MORNING                                           "We hope you rested well, be safe in your travels!"
 
 #define STRING_WEAPONSHOP_WELCOME                                    "Welcome! We deal in weapons and armor, are you interested in our wares today?"
-#define STRING_WEAPONSHOP_VIEWITEMS                                  "Excellent! Let me know if you'd like to purchase something."
+#define STRING_WEAPONSHOP_VIEWITEMS                                  "Excellent! What would you like to purchase?"
 #define STRING_WEAPONSHOP_LEAVE                                      "We hope you drop by again!"
 
 #define STRING_NPC_DEFAULT                                           "No response. How rude."

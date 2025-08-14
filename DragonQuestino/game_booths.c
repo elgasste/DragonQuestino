@@ -3,6 +3,7 @@
 internal void Game_VisitWeaponShop( Game_t* game );
 internal void Game_WeaponShopLeaveOrStayCallback( Game_t* game );
 internal void Game_WeaponShopViewItemsCallback( Game_t* game );
+internal void Game_WeaponShopViewItemsMessageCallback( Game_t* game );
 internal void Game_WeaponShopLeaveCallback( Game_t* game );
 internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId );
 
@@ -35,9 +36,14 @@ internal void Game_WeaponShopViewItemsCallback( Game_t* game )
 {
    Game_ChangeSubState( game, SubState_Dialog );
    Dialog_Reset( &( game->dialog ) );
-   // TODO: open an item picker menu
-   Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_VIEWITEMS );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_VIEWITEMS, Game_WeaponShopViewItemsMessageCallback, game );
    Game_OpenDialog( game );
+}
+
+internal void Game_WeaponShopViewItemsMessageCallback( Game_t* game )
+{
+   ShopPicker_Reset( &( game->shopPicker ) );
+   Game_ChangeSubState( game, SubState_ShopMenu );
 }
 
 internal void Game_WeaponShopLeaveCallback( Game_t* game )
