@@ -3,11 +3,12 @@
 
 #include "common.h"
 
-#define STAT_TABLE_SIZE    30
-#define SPELL_TABLE_SIZE   10
-#define WEAPON_TABLE_SIZE  8
-#define ARMOR_TABLE_SIZE   8
-#define SHIELD_TABLE_SIZE  4
+#define STAT_TABLE_SIZE       30
+#define SPELL_TABLE_SIZE      10
+#define WEAPON_TABLE_SIZE     8
+#define ARMOR_TABLE_SIZE      8
+#define SHIELD_TABLE_SIZE     4
+#define INNPRICE_TABLE_SIZE   5
 
 global uint16_t g_experienceTable[STAT_TABLE_SIZE] = {
    0,
@@ -243,6 +244,14 @@ global uint16_t g_shieldCostTable[SHIELD_TABLE_SIZE] = {
    90,
    800,
    14800
+};
+
+global uint16_t g_innPriceTable[] = {
+   6,
+   25,
+   20,
+   100,
+   55
 };
 
 #endif // TABLES_H

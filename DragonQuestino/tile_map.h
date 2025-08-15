@@ -213,15 +213,14 @@ typedef struct TileMap_t
    StaticSprite_t chestSprite;
    StaticSprite_t doorSprite;
 
-   int32_t innTileIndex;
-   uint16_t innPrice;
-
    Booth_t booths[TILEMAP_MAX_BOOTHS];
    uint32_t boothCount;
 
    ShopItem_t shopItems[TILEMAP_MAX_SHOPITEMS];
    uint32_t shopItemCount;
    ShopType_t shopType;
+
+   uint16_t innPrice;
 }
 TileMap_t;
 
