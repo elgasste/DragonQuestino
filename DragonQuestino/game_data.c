@@ -19167,7 +19167,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->innTileIndex = 714;
          tileMap->innPrice = 6;
          tileMap->boothCount = 1;
-         tileMap->booths[0].id = 0;
+         tileMap->booths[0].id = 1;
          tileMap->booths[0].tileIndex = 198;
          tileMap->portals[0].sourceTileIndex = 448;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -19880,7 +19880,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->innTileIndex = 369;
          tileMap->innPrice = 25;
          tileMap->boothCount = 1;
-         tileMap->booths[0].id = 1;
+         tileMap->booths[0].id = 2;
          tileMap->booths[0].tileIndex = 407;
          tileMap->portals[0].sourceTileIndex = 308;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -20756,11 +20756,11 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->innTileIndex = 128;
          tileMap->innPrice = 100;
          tileMap->boothCount = 3;
-         tileMap->booths[0].id = 3;
+         tileMap->booths[0].id = 4;
          tileMap->booths[0].tileIndex = 171;
-         tileMap->booths[1].id = 4;
+         tileMap->booths[1].id = 5;
          tileMap->booths[1].tileIndex = 385;
-         tileMap->booths[2].id = 5;
+         tileMap->booths[2].id = 6;
          tileMap->booths[2].tileIndex = 806;
          tileMap->portals[0].sourceTileIndex = 120;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -21779,7 +21779,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->innTileIndex = 124;
          tileMap->innPrice = 20;
          tileMap->boothCount = 1;
-         tileMap->booths[0].id = 2;
+         tileMap->booths[0].id = 3;
          tileMap->booths[0].tileIndex = 360;
          tileMap->portals[0].sourceTileIndex = 668;
          tileMap->portals[0].destinationTileMapIndex = 0;
@@ -22383,7 +22383,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->innTileIndex = 626;
          tileMap->innPrice = 55;
          tileMap->boothCount = 1;
-         tileMap->booths[0].id = 6;
+         tileMap->booths[0].id = 7;
          tileMap->booths[0].tileIndex = 312;
          tileMap->portals[0].sourceTileIndex = 32;
          tileMap->portals[0].destinationTileMapIndex = 0;

@@ -12,7 +12,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId );
 
 void Game_ActivateBooth( Game_t* game, uint32_t boothId )
 {
-   if ( boothId <= 6 )
+   if ( boothId <= 7 )
    {
       Game_LoadWeaponShop( game, boothId );
       Game_VisitWeaponShop( game );
@@ -150,7 +150,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
 
    switch ( boothId )
    {
-      case 0: // Brecconary weapon shop
+      case 1: // Brecconary weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_BAMBOOPOLE_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -171,7 +171,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[5].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[5].price = 90;
          break;
-      case 1: // Garinham weapon shop
+      case 2: // Garinham weapon shop
          tileMap->shopItemCount = 7;
          tileMap->shopItems[0].id = WEAPON_CLUB_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -195,7 +195,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[6].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[6].price = 800;
          break;
-      case 2: // Kol weapon shop
+      case 3: // Kol weapon shop
          tileMap->shopItemCount = 5;
          tileMap->shopItems[0].id = WEAPON_COPPERSWORD_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -213,7 +213,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[4].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[4].price = 90;
          break;
-      case 3: // Cantlin upper-right weapon shop
+      case 4: // Cantlin upper-right weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_BAMBOOPOLE_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -234,7 +234,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[5].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[5].price = 800;
          break;
-      case 4: // Cantlin middle-right weapon shop
+      case 5: // Cantlin middle-right weapon shop
          tileMap->shopItemCount = 2;
          tileMap->shopItems[0].id = WEAPON_FLAMESWORD_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -243,7 +243,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[1].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[1].price = 14800;
          break;
-      case 5: // Cantlin lower-right weapon shop
+      case 6: // Cantlin lower-right weapon shop
          tileMap->shopItemCount = 4;
          tileMap->shopItems[0].id = WEAPON_HANDAXE_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -258,7 +258,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[3].type = (uint32_t)AccessoryType_Armor;
          tileMap->shopItems[3].price = 7700;
          break;
-      case 6: // Rimuldar weapon shop
+      case 7: // Rimuldar weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_COPPERSWORD_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
