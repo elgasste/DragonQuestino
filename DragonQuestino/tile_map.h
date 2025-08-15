@@ -108,6 +108,9 @@
 #define TILEMAP_NPC_MINWANDERSECONDS            1
 #define TILEMAP_NPC_MAXWANDERSECONDS            3
 
+#define TILEMAP_MAX_BOOTHS                      16
+#define TILEMAP_MAX_SHOPITEMS                   8
+
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
 typedef struct Player_t Player_t;
@@ -146,6 +149,21 @@ typedef struct NonPlayerCharacter_t
    float duration;
 }
 NonPlayerCharacter_t;
+
+typedef struct Booth_t
+{
+   uint32_t id;
+   uint32_t tileIndex;
+}
+Booth_t;
+
+typedef struct ShopItem_t
+{
+   uint32_t id;
+   AccessoryType_t type;
+   uint16_t price;
+}
+ShopItem_t;
 
 typedef struct TileMap_t
 {
@@ -197,6 +215,13 @@ typedef struct TileMap_t
 
    int32_t innTileIndex;
    uint16_t innPrice;
+
+   Booth_t booths[TILEMAP_MAX_BOOTHS];
+   uint32_t boothCount;
+
+   ShopItem_t shopItems[TILEMAP_MAX_SHOPITEMS];
+   uint32_t shopItemCount;
+   ShopType_t shopType;
 }
 TileMap_t;
 
@@ -218,6 +243,7 @@ uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileInde
 void TileMap_Draw( TileMap_t* tileMap );
 void TileMap_StopNpc( NonPlayerCharacter_t* npc );
 void TileMap_TicNpcWander( NonPlayerCharacter_t* npc );
+Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, uint32_t tileIndex, uint32_t* boothId );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap );

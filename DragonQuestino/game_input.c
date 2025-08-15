@@ -18,6 +18,7 @@ internal void Game_OpenBattleItemMenu( Game_t* game );
 internal void Game_HandleEnterNameInput( Game_t* game );
 internal void Game_HandleEnterPasswordInput( Game_t* game );
 internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game );
+internal void Game_HandleOverworldShopMenuInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -50,6 +51,9 @@ void Game_HandleInput( Game_t* game )
                break;
             case SubState_BinaryChoice:
                Game_HandleOverworldBinaryChoiceInput( game );
+               break;
+            case SubState_ShopMenu:
+               Game_HandleOverworldShopMenuInput( game );
                break;
          }
          break;
@@ -551,6 +555,41 @@ internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game )
          if ( game->input.buttonStates[i].pressed )
          {
             BinaryPicker_MoveSelection( &( game->binaryPicker ), (Direction_t)i );
+         }
+      }
+   }
+}
+
+internal void Game_HandleOverworldShopMenuInput( Game_t* game )
+{
+   uint32_t i;
+
+   if ( game->input.buttonStates[Button_A].pressed )
+   {
+      ShopPicker_ResetCarat( &( game->shopPicker ) );
+      Game_SelectShopItem( game );
+   }
+   else if ( game->input.buttonStates[Button_B].pressed )
+   {
+      
+      Dialog_Reset( &( game->dialog ) );
+
+      switch ( game->tileMap.shopType )
+      {
+         case ShopType_Weapon:
+            Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_LEAVE );
+            break;
+      }
+
+      Game_OpenDialog( game );
+   }
+   else
+   {
+      for ( i = 0; i < Direction_Count; i++ )
+      {
+         if ( game->input.buttonStates[i].pressed )
+         {
+            ShopPicker_MoveSelection( &( game->shopPicker ), (Direction_t)i );
          }
       }
    }

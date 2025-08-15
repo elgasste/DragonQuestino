@@ -275,6 +275,22 @@ void TileMap_TicNpcWander( NonPlayerCharacter_t* npc )
    }
 }
 
+Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, uint32_t tileIndex, uint32_t* boothId )
+{
+   uint32_t i;
+
+   for ( i = 0; i < tileMap->boothCount; i++ )
+   {
+      if ( tileMap->booths[i].tileIndex == tileIndex )
+      {
+         *boothId = tileMap->booths[i].id;
+         return True;
+      }
+   }
+
+   return False;
+}
+
 internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter )
 {
    tileMap->glowDiameter = diameter;

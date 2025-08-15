@@ -93,6 +93,9 @@
     <ClInclude Include="..\..\DragonQuestino\binary_picker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\DragonQuestino\shop_picker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="win_clock.c">
@@ -183,6 +186,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\DragonQuestino\binary_picker.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\game_booths.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DragonQuestino\shop_picker.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

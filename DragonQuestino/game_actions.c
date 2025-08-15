@@ -16,7 +16,7 @@ internal void Game_VisitInnStayMorningCallback( Game_t* game );
 
 void Game_Talk( Game_t* game )
 {
-   uint32_t i;
+   uint32_t i, boothId;
    Bool_t canTalk = False;
    NonPlayerCharacter_t* npc;
    ActiveSprite_t* playerSprite = &( game->player.sprite );
@@ -26,6 +26,11 @@ void Game_Talk( Game_t* game )
    {
       canTalk = True;
       Game_VisitInn( game );
+   }
+   else if ( TileMap_HasBoothAtIndex( &( game->tileMap ), facingTileIndex, &boothId ) )
+   {
+      canTalk = True;
+      Game_ActivateBooth( game, boothId );
    }
    else if ( game->tileMap.npcCount > 0 )
    {

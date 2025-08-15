@@ -103,6 +103,11 @@ void Game_Draw( Game_t* game )
                Dialog_Draw( &( game->dialog ) );
                BinaryPicker_Draw( &( game->binaryPicker ) );
                break;
+            case SubState_ShopMenu:
+               Game_DrawQuickStatus( game );
+               Dialog_Draw( &( game->dialog ) );
+               ShopPicker_Draw( &( game->shopPicker ) );
+               break;
          }
          break;
       case MainState_Battle:

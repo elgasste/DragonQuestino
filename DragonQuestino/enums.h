@@ -47,6 +47,7 @@ typedef enum SubState_t
    SubState_Status,
    SubState_NonUseableItems,
    SubState_BinaryChoice,
+   SubState_ShopMenu,
 
    SubState_Count
 }
@@ -206,5 +207,24 @@ typedef enum BattleTurn_t
    BattleTurn_Count
 }
 BattleTurn_t;
+
+typedef enum AccessoryType_t
+{
+   AccessoryType_Weapon = 0,
+   AccessoryType_Armor,
+   AccessoryType_Shield,
+
+   AccessoryType_Count
+}
+AccessoryType_t;
+
+typedef enum ShopType_t
+{
+   ShopType_Weapon,
+   ShopType_Item,
+
+   ShopType_Count
+}
+ShopType_t;
 
 #endif // ENUMS_H
