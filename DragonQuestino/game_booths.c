@@ -1,5 +1,13 @@
 #include "game.h"
+#include "tables.h"
 
+internal void Game_VisitInn( Game_t* game, uint32_t boothId );
+internal void Game_VisitInnChoiceCallback( Game_t* game );
+internal void Game_VisitInnStayCallback( Game_t* game );
+internal void Game_VisitInnLeaveCallback( Game_t* game );
+internal void Game_VisitInnStayAnimationCallback( Game_t* game );
+internal void Game_VisitInnStayPostAnimationCallback( Game_t* game );
+internal void Game_VisitInnStayMorningCallback( Game_t* game );
 internal void Game_VisitWeaponShop( Game_t* game );
 internal void Game_WeaponShopLeaveOrStayCallback( Game_t* game );
 internal void Game_WeaponShopViewItemsCallback( Game_t* game );
@@ -12,7 +20,11 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId );
 
 void Game_ActivateBooth( Game_t* game, uint32_t boothId )
 {
-   if ( boothId <= 7 )
+   if ( boothId <= 4 )
+   {
+      Game_VisitInn( game, boothId );
+   }
+   else if ( boothId <= 11 )
    {
       Game_LoadWeaponShop( game, boothId );
       Game_VisitWeaponShop( game );
@@ -66,6 +78,97 @@ void Game_SelectShopItem( Game_t* game )
       }
    }
 
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitInn( Game_t* game, uint32_t boothId )
+{
+   char msg[128];
+
+   game->tileMap.innPrice = g_innPriceTable[boothId];
+   sprintf( msg, STRING_INN_WELCOME, game->tileMap.innPrice );
+
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_VisitInnChoiceCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitInnChoiceCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_VisitInnStayCallback, Game_VisitInnLeaveCallback,
+                      game, game );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_VisitInnStayCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( game->player.gold >= game->tileMap.innPrice )
+   {
+      game->player.gold -= game->tileMap.innPrice;
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_INN_STAY, Game_VisitInnStayAnimationCallback, game );
+   }
+   else
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_INN_TOOEXPENSIVE_1 );
+      Dialog_PushSection( &( game->dialog ), STRING_INN_TOOEXPENSIVE_2 );
+   }
+
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitInnLeaveCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_INN_LEAVE );
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitInnStayAnimationCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 4; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_VisitInnStayPostAnimationCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_VisitInnStayPostAnimationCallback( Game_t* game )
+{
+   uint32_t i;
+
+   Game_ChangeSubState( game, SubState_None );
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+
+   for ( i = 0; i < 6; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_FadeIn, Game_VisitInnStayMorningCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_VisitInnStayMorningCallback( Game_t* game )
+{
+   game->player.stats.hitPoints = game->player.stats.maxHitPoints;
+   game->player.stats.magicPoints = game->player.stats.maxMagicPoints;
+
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_INN_MORNING );
    Game_OpenDialog( game );
 }
 
@@ -150,7 +253,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
 
    switch ( boothId )
    {
-      case 1: // Brecconary weapon shop
+      case 5: // Brecconary weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_BAMBOOPOLE_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -171,7 +274,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[5].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[5].price = 90;
          break;
-      case 2: // Garinham weapon shop
+      case 6: // Garinham weapon shop
          tileMap->shopItemCount = 7;
          tileMap->shopItems[0].id = WEAPON_CLUB_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -195,7 +298,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[6].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[6].price = 800;
          break;
-      case 3: // Kol weapon shop
+      case 7: // Kol weapon shop
          tileMap->shopItemCount = 5;
          tileMap->shopItems[0].id = WEAPON_COPPERSWORD_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -213,7 +316,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[4].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[4].price = 90;
          break;
-      case 4: // Cantlin upper-right weapon shop
+      case 8: // Cantlin upper-right weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_BAMBOOPOLE_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -234,7 +337,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[5].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[5].price = 800;
          break;
-      case 5: // Cantlin middle-right weapon shop
+      case 9: // Cantlin middle-right weapon shop
          tileMap->shopItemCount = 2;
          tileMap->shopItems[0].id = WEAPON_FLAMESWORD_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -243,7 +346,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[1].type = (uint32_t)AccessoryType_Shield;
          tileMap->shopItems[1].price = 14800;
          break;
-      case 6: // Cantlin lower-right weapon shop
+      case 10: // Cantlin lower-right weapon shop
          tileMap->shopItemCount = 4;
          tileMap->shopItems[0].id = WEAPON_HANDAXE_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
@@ -258,7 +361,7 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
          tileMap->shopItems[3].type = (uint32_t)AccessoryType_Armor;
          tileMap->shopItems[3].price = 7700;
          break;
-      case 7: // Rimuldar weapon shop
+      case 11: // Rimuldar weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_COPPERSWORD_ID;
          tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;

@@ -13,8 +13,6 @@ namespace DragonQuestinoEditor.FileOps
       public List<TileSaveData> Tiles { get; set; } = [];
       public int TilesX { get; set; }
       public int TilesY { get; set; }
-      public int InnTileIndex { get; set; }
-      public int InnPrice { get; set; }
       public List<TilePortalSaveData> Portals { get; set; } = [];
       public TilePortalSaveData EvacPortal { get; set; } = new();
       public List<StaticSpriteSaveData> StaticSprites { get; set; } = [];
@@ -33,8 +31,6 @@ namespace DragonQuestinoEditor.FileOps
          IsDark = tileMap.IsDark;
          TilesX = tileMap.TilesX;
          TilesY = tileMap.TilesY;
-         InnTileIndex = tileMap.InnTileIndex;
-         InnPrice = tileMap.InnPrice;
          EvacPortal = new( tileMap.EvacPortal );
 
          foreach ( var tile in tileMap.Tiles )
@@ -55,6 +51,11 @@ namespace DragonQuestinoEditor.FileOps
          foreach ( var npc in tileMap.NonPlayerCharacters )
          {
             NonPlayerCharacters.Add( new( npc ) );
+         }
+
+         foreach( var booth in tileMap.Booths )
+         {
+            Booths.Add( new( booth ) );
          }
 
          // NOTE: this is how I originally initialized the enemy pool indexes for the Overworld,
