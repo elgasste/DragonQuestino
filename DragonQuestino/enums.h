@@ -218,4 +218,13 @@ typedef enum AccessoryType_t
 }
 AccessoryType_t;
 
+typedef enum ShopType_t
+{
+   ShopType_Weapon,
+   ShopType_Item,
+
+   ShopType_Count
+}
+ShopType_t;
+
 #endif // ENUMS_H

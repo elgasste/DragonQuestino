@@ -221,6 +221,7 @@ typedef struct TileMap_t
 
    ShopItem_t shopItems[TILEMAP_MAX_SHOPITEMS];
    uint32_t shopItemCount;
+   ShopType_t shopType;
 }
 TileMap_t;
 

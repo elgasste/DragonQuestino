@@ -5,6 +5,9 @@ internal void Game_WeaponShopLeaveOrStayCallback( Game_t* game );
 internal void Game_WeaponShopViewItemsCallback( Game_t* game );
 internal void Game_WeaponShopViewItemsMessageCallback( Game_t* game );
 internal void Game_WeaponShopLeaveCallback( Game_t* game );
+internal void Game_WeaponShopPurchaseOrNotCallback( Game_t* game );
+internal void Game_WeaponShopPurchaseCallback( Game_t* game );
+internal void Game_WeaponShopNoPurchaseCallback( Game_t* game );
 internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId );
 
 void Game_ActivateBooth( Game_t* game, uint32_t boothId )
@@ -14,6 +17,56 @@ void Game_ActivateBooth( Game_t* game, uint32_t boothId )
       Game_LoadWeaponShop( game, boothId );
       Game_VisitWeaponShop( game );
    }
+}
+
+void Game_SelectShopItem( Game_t* game )
+{
+   char msg[64];
+   ShopItem_t* item = &( game->tileMap.shopItems[game->shopPicker.selectedIndex] );
+   ShopPickerItem_t* pickerItem = &( game->shopPicker.items[game->shopPicker.selectedIndex] );
+
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( item->price > game->player.gold )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_TOOEXPENSIVE );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_ANYTHINGELSE, Game_WeaponShopViewItemsMessageCallback, game );
+   }
+   else if ( game->tileMap.shopType == ShopType_Weapon )
+   {
+      if ( item->type == AccessoryType_Weapon && game->player.weapon.id == WEAPON_ERDRICKSSWORD_ID )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_ERDRICKSSWORD );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_ANYTHINGELSE, Game_WeaponShopViewItemsMessageCallback, game );
+      }
+      else if ( item->type == AccessoryType_Armor && game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_ERDRICKSARMOR );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_ANYTHINGELSE, Game_WeaponShopViewItemsMessageCallback, game );
+      }
+      else if ( ( item->type == AccessoryType_Weapon && game->player.weapon.id == item->id ) ||
+                ( item->type == AccessoryType_Armor && game->player.armor.id == item->id ) ||
+                ( item->type == AccessoryType_Shield && game->player.shield.id == item->id ) )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_ALREADYHAVE );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_ANYTHINGELSE, Game_WeaponShopViewItemsMessageCallback, game );
+      }
+      else
+      {
+         if ( pickerItem->itemText.hasTwoLines )
+         {
+            sprintf( msg, STRING_WEAPONSHOP_AREYOUSURE2, pickerItem->itemText.line1, pickerItem->itemText.line2 );
+         }
+         else
+         {
+            sprintf( msg, STRING_WEAPONSHOP_AREYOUSURE1, pickerItem->itemText.line1 );
+         }
+
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_WeaponShopPurchaseOrNotCallback, game );
+      }
+   }
+
+   Game_OpenDialog( game );
 }
 
 internal void Game_VisitWeaponShop( Game_t* game )
@@ -54,9 +107,46 @@ internal void Game_WeaponShopLeaveCallback( Game_t* game )
    Game_OpenDialog( game );
 }
 
+internal void Game_WeaponShopPurchaseOrNotCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_WeaponShopPurchaseCallback, Game_WeaponShopNoPurchaseCallback,
+                      game, game );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_WeaponShopPurchaseCallback( Game_t* game )
+{
+   ShopItem_t* item = &( game->tileMap.shopItems[game->shopPicker.selectedIndex] );
+
+   switch ( item->type )
+   {
+      case AccessoryType_Weapon: Player_LoadWeapon( &( game->player ), item->id ); break;
+      case AccessoryType_Armor: Player_LoadArmor( &( game->player ), item->id ); break;
+      case AccessoryType_Shield: Player_LoadShield( &( game->player ), item->id ); break;
+   }
+
+   game->player.gold -= item->price;
+
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_THANKYOU, Game_WeaponShopViewItemsMessageCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_WeaponShopNoPurchaseCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_ANYTHINGELSE, Game_WeaponShopViewItemsMessageCallback, game );
+   Game_OpenDialog( game );
+}
+
 internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
 {
    TileMap_t* tileMap = &( game->tileMap );
+
+   tileMap->shopType = ShopType_Weapon;
 
    switch ( boothId )
    {

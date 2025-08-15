@@ -567,12 +567,21 @@ internal void Game_HandleOverworldShopMenuInput( Game_t* game )
    if ( game->input.buttonStates[Button_A].pressed )
    {
       ShopPicker_ResetCarat( &( game->shopPicker ) );
-
-      // MUFFINS: implement selection
+      Game_SelectShopItem( game );
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
-      // MUFFINS: show a dialog that we've decided not to buy anything
+      
+      Dialog_Reset( &( game->dialog ) );
+
+      switch ( game->tileMap.shopType )
+      {
+         case ShopType_Weapon:
+            Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_LEAVE );
+            break;
+      }
+
+      Game_OpenDialog( game );
    }
    else
    {
