@@ -1,11 +1,14 @@
 #include "game.h"
 #include "tables.h"
+#include "random.h"
 
 internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits );
+internal void Password_InjectChecksum( uint32_t* encodedBits );
 internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBits );
 internal char Password_GetCharFromBits( uint32_t bits );
 internal uint32_t Password_GetBitsFromChar( char c );
-internal Bool_t Password_Validate( const char* password );
+internal Bool_t Password_ValidateChars( const char* password );
+internal Bool_t Password_ValidateChecksum( uint32_t* encodedBits );
 
 void Game_GetPassword( Game_t* game, char* password )
 {
@@ -33,10 +36,12 @@ void Game_GetPassword( Game_t* game, char* password )
       ( game->gameFlags.gotRainbowDrop ? 0x1 : 0x0 )              // got the rainbow drop (1 bit)
    };
 
-   // the player's encoded name goes on the end, followed by its length, the last 13 bits are unused
+   // the player's encoded name goes on the end, followed by its length
    Password_InjectPlayerName( player, encodedBits );
 
-   // since the last 13 bits are unused, we only need 30 characters, not 32
+   // now we inject the checksum before encoding to a string
+   Password_InjectChecksum( encodedBits );
+
    password[0] = Password_GetCharFromBits( encodedBits[0] >> 26 );
    password[1] = Password_GetCharFromBits( ( encodedBits[0] >> 20 ) & 0x3F );
    password[2] = Password_GetCharFromBits( ( encodedBits[0] >> 14 ) & 0x3F );
@@ -75,7 +80,7 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    uint32_t encodedBits[6];
    Player_t* player = &( game->player );
 
-   if ( !Password_Validate( password ) )
+   if ( !Password_ValidateChars( password ) )
    {
       return False;
    }
@@ -114,6 +119,11 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
                     ( Password_GetBitsFromChar( password[27] ) << 24 ) |
                     ( Password_GetBitsFromChar( password[28] ) << 18 ) |
                     ( Password_GetBitsFromChar( password[29] ) << 12 );
+
+   if ( !Password_ValidateChecksum( encodedBits ) )
+   {
+      return False;
+   }
 
    Password_ExtractPlayerName( player, encodedBits );
 
@@ -178,6 +188,25 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
                     ( encodedChars[6] << 22 ) |
                     ( encodedChars[7] << 16 ) |
                     ( ( ( length - 1 ) & 0x7 ) << 13 );
+}
+
+internal void Password_InjectChecksum( uint32_t* encodedBits )
+{
+   uint32_t tableIndex = Random_u32( 0, 31 );
+   uint32_t tableValue = g_passwordChecksumTable[tableIndex];
+
+   // the highest 7 bits of the permanent door flags
+   encodedBits[0] &= ~( 0x7F << 25 );
+   encodedBits[0] |= tableIndex << 27;
+   encodedBits[0] |= ( tableValue >> 3 ) << 25;
+
+   // the highest two bits of the treasure flags
+   encodedBits[1] &= ~( 0x3 << 30 );
+   encodedBits[1] |= ( ( tableValue >> 1 ) & 0x3 ) << 30;
+
+   // the last bit of the password
+   encodedBits[5] &= ~( 0x1 << 12 );
+   encodedBits[5] |= ( tableValue & 0x1 ) << 12;
 }
 
 internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBits )
@@ -257,7 +286,7 @@ internal uint32_t Password_GetBitsFromChar( char c )
           63;                                                    // dot
 }
 
-internal Bool_t Password_Validate( const char* password )
+internal Bool_t Password_ValidateChars( const char* password )
 {
    uint32_t i;
    char c;
@@ -280,4 +309,14 @@ internal Bool_t Password_Validate( const char* password )
    }
 
    return True;
+}
+
+internal Bool_t Password_ValidateChecksum( uint32_t* encodedBits )
+{
+   uint32_t tableIndex = encodedBits[0] >> 27;
+   uint32_t tableValue = ( ( encodedBits[5] >> 12 ) & 0x1 ) |
+                         ( ( encodedBits[1] >> 29 ) & 0x6 ) |
+                         ( ( encodedBits[0] >> 22 ) & 0x18 );
+
+   return ( tableValue == g_passwordChecksumTable[tableIndex] ) ? True : False;
 }
