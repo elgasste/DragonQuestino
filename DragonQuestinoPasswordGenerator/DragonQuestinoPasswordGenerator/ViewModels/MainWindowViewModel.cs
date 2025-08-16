@@ -1,4 +1,5 @@
 ﻿using DragonQuestinoPasswordGenerator.Commands;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -13,6 +14,42 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
    public class MainWindowViewModel : ViewModelBase
    {
+      private static readonly int[] _checksumTable =
+      {
+         11,
+         29,
+         7,
+         5,
+         16,
+         4,
+         9,
+         28,
+         19,
+         15,
+         13,
+         12,
+         8,
+         6,
+         0,
+         3,
+         24,
+         10,
+         23,
+         25,
+         31,
+         30,
+         22,
+         1,
+         27,
+         21,
+         18,
+         26,
+         14,
+         20,
+         17,
+         2
+      };
+
       private string _playerName = string.Empty;
       public string PlayerName
       {
@@ -1097,6 +1134,21 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
                           ( encodedNameChars[7] << 16 ) |
                           ( ( (UInt32)( name.Length - 1 ) & (UInt32)0x7 ) << 13 );
 
+         // inject the checksum
+         Random random = new Random();
+         UInt32 tableIndex = (UInt32)random.Next( 32 );
+         UInt32 tableValue = (UInt32)_checksumTable[tableIndex];
+
+         encodedBits[0] &= ~( (UInt32)0x7F << 25 );
+         encodedBits[0] |= tableIndex << 27;
+         encodedBits[0] |= ( tableValue >> 3 ) << 25;
+
+         encodedBits[1] &= ~( (UInt32)0x3 << 30 );
+         encodedBits[1] |= ( ( tableValue >> 1 ) & 0x3 ) << 30;
+
+         encodedBits[5] &= ~( (UInt32)0x1 << 12 );
+         encodedBits[5] |= ( tableValue & 0x1 ) << 12;
+
          // since the last 13 bits are unused, we only need 30 characters
          char[] passwordChars =
          [
@@ -1151,7 +1203,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
       private void ClearAllFields()
       {
-         ApplyPassword( "..8AAP....8AAAAAAAAA4P.......w" );
+         ApplyPassword( "Y.8AAD....8AAAAAAAAA4P.......w" );
       }
 
       private void ApplyPassword( string password )
@@ -1210,6 +1262,12 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
                           ( GetEncodedBitsFromChar( password[27] ) << 24 ) |
                           ( GetEncodedBitsFromChar( password[28] ) << 18 ) |
                           ( GetEncodedBitsFromChar( password[29] ) << 12 );
+
+         if ( !ValidateChecksum( encodedBits[0], encodedBits[1], encodedBits[5] ) )
+         {
+            MessageBox.Show( "Password checksum is invalid.", "Invalid Password", MessageBoxButton.OK, MessageBoxImage.Error );
+            return;
+         }
 
          PlayerExperience = ( encodedBits[0] & 0xFFFF ).ToString();
          SetDoorsOpenedFromFlags( encodedBits[0] >> 16 );
@@ -1487,6 +1545,16 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          SelectedWeapon = Weapons[(int)weaponFlag];
          SelectedArmor = Armor[(int)armorFlag];
          SelectedShield = Shields[(int)shieldFlag];
+      }
+
+      private bool ValidateChecksum( UInt32 encodedBits0, UInt32 encodedBits1, UInt32 encodedBits5 )
+      {
+         UInt32 tableIndex = encodedBits0 >> 27;
+         UInt32 tableValue = ( ( encodedBits5 >> 12 ) & 0x1 ) |
+                             ( ( encodedBits1 >> 29 ) & 0x6 ) |
+                             ( ( encodedBits0 >> 22 ) & 0x18 );
+
+         return ( tableValue == _checksumTable[tableIndex] );
       }
    }
 }
