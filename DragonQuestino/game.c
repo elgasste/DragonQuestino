@@ -100,10 +100,15 @@ void Game_Reset( Game_t* game )
 
 void Game_Load( Game_t* game, const char* password )
 {
-   game->mainState = MainState_Overworld;
-   game->subState = SubState_None;
-
-   if ( ( strlen( password ) <= 0 ) || !Game_LoadFromPassword( game, password ) )
+   if ( strlen( password ) > 0 )
+   {
+      if ( Game_LoadFromPassword( game, password ) )
+      {
+         game->mainState = MainState_Overworld;
+         game->subState = SubState_None;
+      }
+   }
+   else
    {
       game->gameFlags.treasures = 0xFFFFFFFF;
       game->gameFlags.doors = 0xFFFFFFFF;
@@ -115,6 +120,8 @@ void Game_Load( Game_t* game, const char* password )
       game->gameFlags.rescuedPrincess = False;
       game->gameFlags.joinedDragonlord = False;
       game->gameFlags.defeatedDragonlord = False;
+      game->mainState = MainState_Overworld;
+      game->subState = SubState_None;
    }
 }
 
@@ -247,9 +254,7 @@ void Game_ChangeToEnterNameState( Game_t* game )
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
    // MUFFINS: this gives us some goodies for testing
-   //Game_Load( game, "..91Mf....9Q0RP-E4iyABHdtPf..4" ); // level 21 with some good stuff (haven't saved Princess)
-   //Game_Load( game, "APD...9..39I.b.-....5wqJ2p...4" ); // level 30 with everything (haven't saved Princess)
-   //Game_Load( game, "..8AAP....8AAAAAAADg4Fq2rYf..4" ); // WRATH
+   //Game_Load( game, "pgT...-gIwBZ...-...fExHdtPf..5" ); // level 30 with everything, but no rainbow bridge
    //Game_ChangeToOverworldState( game );
 
    game->mainState = MainState_EnterPassword;
