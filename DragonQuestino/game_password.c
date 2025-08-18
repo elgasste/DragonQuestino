@@ -143,7 +143,7 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    player->townsVisited = (uint8_t)( ( encodedBits[2] >> 1 ) & 0x3F );
    player->isCursed = (Bool_t)( encodedBits[2] & 0x1 );
 
-   player->level = Player_GetLevelFromExperience( player );
+   player->level = Player_GetLevelFromExperience( player->experience );
    Player_UpdateSpellsToLevel( player, player->level );
 
    player->stats.strength = g_strengthTable[player->level];

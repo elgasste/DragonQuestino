@@ -259,7 +259,7 @@ extern "C" {
 #endif
 
 void Player_Init( Player_t* player, TileMap_t* tileMap );
-uint8_t Player_GetLevelFromExperience( Player_t* player );
+uint8_t Player_GetLevelFromExperience( uint16_t experience );
 uint16_t Player_GetExperienceRemaining( Player_t* player );
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
