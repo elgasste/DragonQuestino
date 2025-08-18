@@ -353,7 +353,7 @@
 
 #define STRING_NPC_DEFAULT                                           "No response. How rude."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_1                        "\"Hello %s, I am relieved to see you have returned safely!\""
-#define STRING_NPC_TANTEGEL_THRONEROOM_KING_2                        "\"I sense that you'll require %u more experience points to reach a higher level...\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_2                        "\"I sense that you'll require %u more experience %s to reach a higher level...\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_3                        "\"...\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_4                        "King Lorik suddenly convulses grotesquely..."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_5                        "\"Your progress... remember...\""
