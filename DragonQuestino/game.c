@@ -254,14 +254,14 @@ void Game_ChangeToEnterNameState( Game_t* game )
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
    // MUFFINS: this gives us some goodies for testing
-   //Game_Load( game, "pgT...-gIwBZ...-...fExHdtPf..5" ); // level 30 with everything, but no rainbow bridge
-   //Game_ChangeToOverworldState( game );
-
-   game->mainState = MainState_EnterPassword;
+   Game_Load( game, "pgT...-gIwBZ...-...fExHdtPf..5" ); // level 30 with everything, but no rainbow bridge
+   Game_ChangeToOverworldState( game );
+   
+   /*game->mainState = MainState_EnterPassword;
    game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
    Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
 }
 
 void Game_ChangeToBattleState( Game_t* game )

@@ -178,6 +178,13 @@ typedef struct TileMap_t TileMap_t;
 #define SHIELD_LARGESHIELD_ID                   2
 #define SHIELD_SILVERSHIELD_ID                  3
 
+#define ITEM_KEY_ID                             0
+#define ITEM_HERB_ID                            1
+#define ITEM_WING_ID                            2
+#define ITEM_FAIRYWATER_ID                      3
+#define ITEM_TORCH_ID                           4
+#define ITEM_DRAGONSCALE_ID                     5
+
 typedef struct Accessory_t
 {
    uint32_t id;
