@@ -11,9 +11,14 @@ internal void Game_VisitInnStayMorningCallback( Game_t* game );
 internal void Game_VisitWeaponShop( Game_t* game );
 internal void Game_VisitItemShop( Game_t* game );
 internal void Game_VisitKeyShop( Game_t* game, uint32_t boothId );
+internal void Game_VisitFairyWaterShop( Game_t* game );
+internal void Game_VisitTantegelWizard( Game_t* game );
 internal void Game_KeyShopLeaveOrStayCallback( Game_t* game );
 internal void Game_KeyShopPurchaseCallback( Game_t* game );
 internal void Game_KeyShopLeaveCallback( Game_t* game );
+internal void Game_FairyWaterShopLeaveOrBuyCallback( Game_t* game );
+internal void Game_FairyWaterShopPurchaseCallback( Game_t* game );
+internal void Game_FairyWaterShopLeaveCallback( Game_t* game );
 internal void Game_ShopLeaveOrStayCallback( Game_t* game );
 internal void Game_ShopViewItemsCallback( Game_t* game );
 internal void Game_ShopViewItemsMessageCallback( Game_t* game );
@@ -22,6 +27,8 @@ internal void Game_ShopPurchaseOrNotCallback( Game_t* game );
 internal void Game_ShopNoPurchaseCallback( Game_t* game );
 internal void Game_WeaponShopPurchaseCallback( Game_t* game );
 internal void Game_ItemShopPurchaseCallback( Game_t* game );
+internal void Game_TantegelWizardCallback( Game_t* game );
+internal void Game_TantegelWizardMagicCallback( Game_t* game );
 internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId );
 internal void Game_LoadItemShop( Game_t* game, uint32_t boothId );
 
@@ -44,6 +51,61 @@ void Game_ActivateBooth( Game_t* game, uint32_t boothId )
    else if ( boothId <= 19 )
    {
       Game_VisitKeyShop( game, boothId );
+   }
+   else if ( boothId <= 21 )
+   {
+      Game_VisitFairyWaterShop( game );
+   }
+   else if ( boothId == 22 )
+   {
+      Game_VisitTantegelWizard( game );
+   }
+   else
+   {
+      Dialog_Reset( &( game->dialog ) );
+
+      switch ( boothId )
+      {
+         case 23: // Kol NW building
+            if ( game->player.weapon.id == WEAPON_ERDRICKSSWORD_ID )
+            {
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD7 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD8 );
+            }
+            else
+            {
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD1 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD2 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD3 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD4 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD5 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD6 );
+            }
+            break;
+         case 24: // Cantlin E building
+            Dialog_PushSection( &( game->dialog ), STRING_BOOTH_CANTLINWIZARD );
+            break;
+         case 25: // Cantlin W building
+            Dialog_PushSection( &( game->dialog ), STRING_BOOTH_CANTLINRADISHES );
+            break;
+         case 26: // Cantlin SW building
+            Dialog_PushSection( &( game->dialog ), STRING_BOOTH_CANTLINWYNN1 );
+            Dialog_PushSection( &( game->dialog ), STRING_BOOTH_CANTLINWYNN2 );
+            break;
+         case 27: // Rimuldar S building
+            if ( game->gameFlags.gotRainbowDrop )
+            {
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_RIMULDARWIZARD3 );
+            }
+            else
+            {
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_RIMULDARWIZARD1 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_RIMULDARWIZARD2 );
+            }
+            break;
+      }
+
+      Game_OpenDialog( game );
    }
 }
 
@@ -127,8 +189,8 @@ internal void Game_VisitInn( Game_t* game, uint32_t boothId )
 {
    char msg[128];
 
-   game->tileMap.innPrice = g_innPriceTable[boothId];
-   sprintf( msg, STRING_INN_WELCOME, game->tileMap.innPrice );
+   game->tileMap.boothPrice = g_innPriceTable[boothId];
+   sprintf( msg, STRING_INN_WELCOME, game->tileMap.boothPrice );
 
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_VisitInnChoiceCallback, game );
@@ -149,9 +211,9 @@ internal void Game_VisitInnStayCallback( Game_t* game )
    Game_ChangeSubState( game, SubState_Dialog );
    Dialog_Reset( &( game->dialog ) );
 
-   if ( game->player.gold >= game->tileMap.innPrice )
+   if ( game->player.gold >= game->tileMap.boothPrice )
    {
-      game->player.gold -= game->tileMap.innPrice;
+      game->player.gold -= game->tileMap.boothPrice;
       Dialog_PushSectionWithCallback( &( game->dialog ), STRING_INN_STAY, Game_VisitInnStayAnimationCallback, game );
    }
    else
@@ -234,14 +296,28 @@ internal void Game_VisitKeyShop( Game_t* game, uint32_t boothId )
 
    switch ( boothId )
    {
-      case 17: game->tileMap.keyPrice = 85; break;
-      case 18: game->tileMap.keyPrice = 98; break;
-      case 19: game->tileMap.keyPrice = 53; break;
+      case 17: game->tileMap.boothPrice = 85; break;
+      case 18: game->tileMap.boothPrice = 98; break;
+      case 19: game->tileMap.boothPrice = 53; break;
    }
 
    Dialog_Reset( &( game->dialog ) );
-   sprintf( msg, STRING_KEYSHOP_WELCOME, game->tileMap.keyPrice );
+   sprintf( msg, STRING_KEYSHOP_WELCOME, game->tileMap.boothPrice );
    Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_KeyShopLeaveOrStayCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitFairyWaterShop( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_FAIRYWATERSHOP_PURCHASE, Game_FairyWaterShopLeaveOrBuyCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitTantegelWizard( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BOOTH_TANTEGELWIZARD, Game_TantegelWizardCallback, game );
    Game_OpenDialog( game );
 }
 
@@ -256,15 +332,17 @@ internal void Game_KeyShopLeaveOrStayCallback( Game_t* game )
 
 internal void Game_KeyShopPurchaseCallback( Game_t* game )
 {
+   uint32_t keyCount;
+
    Dialog_Reset( &( game->dialog ) );
 
-   if ( game->tileMap.keyPrice > game->player.gold )
+   if ( game->tileMap.boothPrice > game->player.gold )
    {
       Dialog_PushSection( &( game->dialog ), STRING_KEYSHOP_TOOEXPENSIVE );
    }
    else
    {
-      uint32_t keyCount = ITEM_GET_KEYCOUNT( game->player.items );
+      keyCount = ITEM_GET_KEYCOUNT( game->player.items );
 
       if ( keyCount >= ITEM_MAXKEYS )
       {
@@ -272,7 +350,7 @@ internal void Game_KeyShopPurchaseCallback( Game_t* game )
       }
       else
       {
-         game->player.gold -= game->tileMap.keyPrice;
+         game->player.gold -= game->tileMap.boothPrice;
          ITEM_SET_KEYCOUNT( game->player.items, keyCount + 1 );
          Dialog_PushSectionWithCallback( &( game->dialog ), STRING_KEYSHOP_THANKYOU, Game_KeyShopLeaveOrStayCallback, game );
       }
@@ -286,6 +364,52 @@ internal void Game_KeyShopLeaveCallback( Game_t* game )
    Game_ChangeSubState( game, SubState_Dialog );
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSection( &( game->dialog ), STRING_KEYSHOP_LEAVE );
+   Game_OpenDialog( game );
+}
+
+internal void Game_FairyWaterShopLeaveOrBuyCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_FairyWaterShopPurchaseCallback, Game_FairyWaterShopLeaveCallback,
+                      game, game );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_FairyWaterShopPurchaseCallback( Game_t* game )
+{
+   uint32_t fairyWaterCount;
+
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( game->player.gold < 38 )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_FAIRYWATERSHOP_TOOEXPENSIVE );
+   }
+   else
+   {
+      fairyWaterCount = ITEM_GET_FAIRYWATERCOUNT( game->player.items );
+
+      if ( fairyWaterCount >= ITEM_MAXFAIRYWATERS )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_FAIRYWATERSHOP_NOSPACE );
+      }
+      else
+      {
+         game->player.gold -= 38;
+         ITEM_SET_FAIRYWATERCOUNT( game->player.items, fairyWaterCount + 1 );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_FAIRYWATERSHOP_THANKYOU, Game_FairyWaterShopLeaveOrBuyCallback, game );
+      }
+   }
+
+   Game_OpenDialog( game );
+}
+
+internal void Game_FairyWaterShopLeaveCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_FAIRYWATERSHOP_LEAVE );
    Game_OpenDialog( game );
 }
 
@@ -379,6 +503,18 @@ internal void Game_ItemShopPurchaseCallback( Game_t* game )
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_THANKYOU, Game_ShopViewItemsMessageCallback, game );
    Game_OpenDialog( game );
+}
+
+internal void Game_TantegelWizardCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_CastSpell, Game_TantegelWizardMagicCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_TantegelWizardMagicCallback( Game_t* game )
+{
+   game->player.stats.magicPoints = game->player.stats.maxMagicPoints;
 }
 
 internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )

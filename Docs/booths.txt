@@ -114,17 +114,59 @@ Wing		70
 KEY SHOPS
 ================================================================
 
-TANTEGEL
+17: TANTEGEL
 
 tile index:	121
 price:		85
 
-CANTLIN
+18: CANTLIN
 
 tile index:	712
 price:		98
 
-RIMULDAR
+19: RIMULDAR
 
 tile index:	170
 price:		53
+
+================================================================
+FAIRY WATER SHOPS
+================================================================
+
+20: BRECCONARY
+
+tile index:	149
+price:		38
+
+21: CANTLIN
+
+tile index:	411
+price:		38
+
+================================================================
+OTHER
+================================================================
+
+22: TANTEGEL WIZARD
+
+tile index:	884
+
+23: KOL NW BUILDING
+
+tile index:	80
+
+24: CANTLIN E BUILDING
+
+tile index:	237
+
+25: CANTLIN W BUILDING
+
+tile index:	363
+
+26: CANTLIN SW BUILDING
+
+tile index:	785
+
+27: RIMULDAR BUILDING
+
+tile index:	146
