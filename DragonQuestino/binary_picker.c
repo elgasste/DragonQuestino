@@ -39,8 +39,8 @@ void BinaryPicker_Draw( BinaryPicker_t* picker )
    uint32_t startY = picker->position.y + TEXT_TILE_SIZE;
 
    Screen_DrawTextWindow( picker->screen, picker->position.x, picker->position.y, picker->size.x, picker->size.y );
-   Screen_DrawText( picker->screen, picker->option1, startX, startY );
-   Screen_DrawText( picker->screen, picker->option2, startX, startY + ( TEXT_TILE_SIZE * 2 ) );
+   Screen_DrawText( picker->screen, picker->option1, startX, startY + 1 );
+   Screen_DrawText( picker->screen, picker->option2, startX, startY + ( TEXT_TILE_SIZE * 2 ) + 1 );
    BinaryPicker_DrawCarat( picker );
 }
 
@@ -98,12 +98,12 @@ internal void BinaryPicker_DrawCarat( BinaryPicker_t* picker )
 {
    if ( picker->selectedIndex == 0 )
    {
-      Screen_DrawChar( picker->screen, picker->showCarat ? '>' : ' ', picker->position.x + TEXT_TILE_SIZE, picker->position.y + TEXT_TILE_SIZE);
+      Screen_DrawChar( picker->screen, picker->showCarat ? '>' : ' ', picker->position.x + TEXT_TILE_SIZE, picker->position.y + TEXT_TILE_SIZE + 1 );
       Screen_DrawChar( picker->screen, ' ', picker->position.x + TEXT_TILE_SIZE, picker->position.y + ( TEXT_TILE_SIZE * 3 ) );
    }
    else
    {
       Screen_DrawChar( picker->screen, ' ', picker->position.x + TEXT_TILE_SIZE, picker->position.y + TEXT_TILE_SIZE );
-      Screen_DrawChar( picker->screen, picker->showCarat ? '>' : ' ', picker->position.x + TEXT_TILE_SIZE, picker->position.y + ( TEXT_TILE_SIZE * 3 ));
+      Screen_DrawChar( picker->screen, picker->showCarat ? '>' : ' ', picker->position.x + TEXT_TILE_SIZE, picker->position.y + ( TEXT_TILE_SIZE * 3 ) + 1 );
    }
 }
