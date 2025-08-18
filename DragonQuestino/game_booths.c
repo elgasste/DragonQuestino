@@ -92,7 +92,7 @@ void Game_SelectShopItem( Game_t* game )
            ( item->id == ITEM_WING_ID && ITEM_GET_WINGCOUNT( game->player.items ) >= ITEM_MAXWINGS ) ||
            ( item->id == ITEM_FAIRYWATER_ID && ITEM_GET_FAIRYWATERCOUNT( game->player.items ) >= ITEM_MAXFAIRYWATERS ) ||
            ( item->id == ITEM_TORCH_ID && ITEM_GET_TORCHCOUNT( game->player.items ) >= ITEM_MAXTORCHES ) ||
-           ITEM_HAS_DRAGONSCALE( game->player.items ) )
+           ( item->id == ITEM_DRAGONSCALE_ID && ITEM_HAS_DRAGONSCALE( game->player.items ) ) )
       {
          Dialog_PushSection( &( game->dialog ), STRING_ITEMSHOP_NOSPACE );
          Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_ANYTHINGELSE, Game_ShopViewItemsMessageCallback, game );
