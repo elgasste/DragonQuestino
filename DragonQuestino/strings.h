@@ -353,6 +353,12 @@
 #define STRING_KEYSHOP_NOSPACE                                       "\"You can't carry any more keys, I'm afraid I can't sell!\""
 #define STRING_KEYSHOP_THANKYOU                                      "\"Appreciated, how about another one?\""
 
+#define STRING_FAIRYWATERSHOP_PURCHASE                               "\"Traveler, will you buy a vial of Fairy Water for 38 gold to keep the Dragonlord's minions away?\""
+#define STRING_FAIRYWATERSHOP_TOOEXPENSIVE                           "\"Oh I'm terribly sorry, but it appears you are low on gold, please come back again later!\""
+#define STRING_FAIRYWATERSHOP_NOSPACE                                "\"My mistake, I didn't realize your pouch is already full. Be safe on your travels!\""
+#define STRING_FAIRYWATERSHOP_THANKYOU                               "\"Thank you very much! How about another vial?\""
+#define STRING_FAIRYWATERSHOP_LEAVE                                  "\"Be safe on your travels!\""
+
 #define STRING_NPC_DEFAULT                                           "No response. How rude."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_1                        "\"Hello %s, I am relieved to see you have returned safely!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_2                        "\"I sense that you'll require %u more experience %s to reach a higher level...\""

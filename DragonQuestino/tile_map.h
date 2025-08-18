@@ -215,13 +215,11 @@ typedef struct TileMap_t
 
    Booth_t booths[TILEMAP_MAX_BOOTHS];
    uint32_t boothCount;
+   uint16_t boothPrice;
 
    ShopItem_t shopItems[TILEMAP_MAX_SHOPITEMS];
    uint32_t shopItemCount;
    ShopType_t shopType;
-
-   uint16_t innPrice;
-   uint16_t keyPrice;
 }
 TileMap_t;
 
