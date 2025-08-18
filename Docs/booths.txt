@@ -109,3 +109,22 @@ Torch		8
 
 Dragon Scale	20
 Wing		70
+
+================================================================
+KEY SHOPS
+================================================================
+
+TANTEGEL
+
+tile index:	121
+price:		85
+
+CANTLIN
+
+tile index:	712
+price:		98
+
+RIMULDAR
+
+tile index:	170
+price:		53

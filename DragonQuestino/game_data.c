@@ -18374,6 +18374,9 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
          tileMap->portalCount = 64;
+         tileMap->boothCount = 1;
+         tileMap->booths[0].id = 17;
+         tileMap->booths[0].tileIndex = 121;
          tileMap->portals[0].sourceTileIndex = 995;
          tileMap->portals[0].destinationTileMapIndex = 0;
          tileMap->portals[0].destinationTileIndex = 7193;
@@ -20740,7 +20743,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->tilesX = 30;
          tileMap->tilesY = 31;
          tileMap->portalCount = 72;
-         tileMap->boothCount = 6;
+         tileMap->boothCount = 7;
          tileMap->booths[0].id = 8;
          tileMap->booths[0].tileIndex = 171;
          tileMap->booths[1].id = 9;
@@ -20753,6 +20756,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->booths[4].tileIndex = 213;
          tileMap->booths[5].id = 16;
          tileMap->booths[5].tileIndex = 366;
+         tileMap->booths[6].id = 18;
+         tileMap->booths[6].tileIndex = 712;
          tileMap->portals[0].sourceTileIndex = 120;
          tileMap->portals[0].destinationTileMapIndex = 0;
          tileMap->portals[0].destinationTileIndex = 15342;
@@ -22371,9 +22376,11 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
          tileMap->portalCount = 103;
-         tileMap->boothCount = 1;
+         tileMap->boothCount = 2;
          tileMap->booths[0].id = 4;
          tileMap->booths[0].tileIndex = 626;
+         tileMap->booths[1].id = 19;
+         tileMap->booths[1].tileIndex = 170;
          tileMap->portals[0].sourceTileIndex = 32;
          tileMap->portals[0].destinationTileMapIndex = 0;
          tileMap->portals[0].destinationTileIndex = 11171;
