@@ -12,6 +12,8 @@ internal void Game_DragonlordJoinPostFadeCallback( Game_t* game );
 internal void Game_DragonlordRefuseCallback( Game_t* game );
 internal void Game_DragonlordRefuseMessageCallback( Game_t* game );
 internal void Game_DragonlordInitiateFightCallback( Game_t* game );
+internal void Game_CurseLiftedCallback( Game_t* game );
+internal void Game_CurseLiftedSpellCallback( Game_t* game );
 
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
@@ -129,7 +131,20 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LEFTROOMBLUEMAN );
          break;
       case 26: // Brecconary right room wizard
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD );
+         if ( game->player.isCursed )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD2 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD3 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD4 );
+            Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD5, Game_CurseLiftedCallback, game );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD6 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD7 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD8 );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_RIGHTROOMWIZARD1 );
+         }
          break;
       case 27: // Brecconary inn static soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNSTATICSOLDIER );
@@ -503,4 +518,16 @@ internal void Game_DragonlordInitiateFightCallback( Game_t* game )
    Battle_Generate( &( game->battle ) );
    game->postRenderCallback = Game_ChangeToBattleState;
    game->postRenderCallbackData = game;
+}
+
+internal void Game_CurseLiftedCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_CastSpell, Game_CurseLiftedSpellCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_CurseLiftedSpellCallback( Game_t* game )
+{
+   Player_SetCursed( &( game->player ), False );
 }
