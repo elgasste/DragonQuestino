@@ -7,7 +7,7 @@
 
 typedef struct TileMap_t TileMap_t;
 
-#define PLAYER_LOWHEALTH_PERCENTAGE             0.2f
+#define PLAYER_LOWHEALTH_PERCENTAGE             0.26f
 
 #define SPELL_HAS_HEAL( x )                     ( ( x ) & 0x1 )
 #define SPELL_HAS_SIZZ( x )                     ( ( x ) & 0x2 )
