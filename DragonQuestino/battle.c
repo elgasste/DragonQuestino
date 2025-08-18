@@ -139,7 +139,7 @@ void Battle_AttackSucceededCallback( Battle_t* battle )
    char msg[64];
 
    Dialog_Reset( &( battle->game->dialog ) );
-   battle->enemy.stats.hitPoints -= battle->pendingPayload8u;
+   battle->enemy.stats.hitPoints -= Math_Min8u( battle->pendingPayload8u, battle->enemy.stats.hitPoints );
    sprintf( msg,
             battle->excellentMove ? STRING_BATTLE_ATTACKEXCELLENTMOVE : STRING_BATTLE_ATTACKSUCCEEDED,
             battle->enemy.name, battle->pendingPayload8u, ( battle->pendingPayload8u == 1 ) ? STRING_POINT : STRING_POINTS );
@@ -264,7 +264,7 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
       }
    }
 
-   return ( damage > enemy->stats.hitPoints ) ? enemy->stats.hitPoints : damage;
+   return damage;
 }
 
 internal Bool_t Battle_GetFleeResult( Battle_t* battle )
@@ -769,7 +769,7 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
    Player_t* player = &( battle->game->player );
    char msg[64];
 
-   player->stats.hitPoints -= battle->pendingPayload8u;
+   player->stats.hitPoints -= Math_Min8u( battle->pendingPayload8u, player->stats.hitPoints );
    Dialog_Reset( &( battle->game->dialog ) );
 
    if ( player->stats.hitPoints == 0 )
@@ -844,7 +844,7 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
       damage = 1;
    }
 
-   return ( damage < player->stats.hitPoints ) ? damage : player->stats.hitPoints;
+   return damage;
 }
 
 internal void Battle_EnemyBreatheFire( Battle_t* battle )
@@ -859,7 +859,7 @@ internal void Battle_EnemyBreatheFire( Battle_t* battle )
 
 internal void Battle_EnemyBreatheFireCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Math_Min8u( Random_u8( FIRE_BREATH_MIN_DAMAGE, FIRE_BREATH_MAX_DAMAGE ), battle->game->player.stats.hitPoints );
+   battle->pendingPayload8u = Random_u8( FIRE_BREATH_MIN_DAMAGE, FIRE_BREATH_MAX_DAMAGE );
 
    if ( battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
    {
@@ -884,7 +884,7 @@ internal void Battle_EnemyBreatheStrongFire( Battle_t* battle )
 
 internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle )
 {
-   battle->pendingPayload8u = Math_Min8u( Random_u8( STRONG_FIRE_BREATH_MIN_DAMAGE, STRONG_FIRE_BREATH_MAX_DAMAGE ), battle->game->player.stats.hitPoints );
+   battle->pendingPayload8u = Random_u8( STRONG_FIRE_BREATH_MIN_DAMAGE, STRONG_FIRE_BREATH_MAX_DAMAGE );
 
    if ( battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
    {
@@ -918,7 +918,7 @@ internal void Battle_EnemyCastSizzCallback( Battle_t* battle )
                           ? ENEMY_SIZZ_REDUCEDMIN_DAMAGE : ENEMY_SIZZ_MIN_DAMAGE;
    uint8_t maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
                           ? ENEMY_SIZZ_REDUCEDMAX_DAMAGE : ENEMY_SIZZ_MAX_DAMAGE;
-   battle->pendingPayload8u = Math_Min8u( Random_u8( minDamage, maxDamage ), battle->game->player.stats.hitPoints );
+   battle->pendingPayload8u = Random_u8( minDamage, maxDamage );
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
@@ -937,7 +937,7 @@ internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
                           ? ENEMY_SIZZLE_REDUCEDMIN_DAMAGE : ENEMY_SIZZLE_MIN_DAMAGE;
    uint8_t maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
                           ? ENEMY_SIZZLE_REDUCEDMAX_DAMAGE : ENEMY_SIZZLE_MAX_DAMAGE;
-   battle->pendingPayload8u = Math_Min8u( Random_u8( minDamage, maxDamage ), battle->game->player.stats.hitPoints );
+   battle->pendingPayload8u = Random_u8( minDamage, maxDamage );
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
