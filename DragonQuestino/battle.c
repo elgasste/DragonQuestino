@@ -232,7 +232,7 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
 
    if ( ( battle->specialEnemy != SpecialEnemy_DragonlordWizard ) &&
         ( battle->specialEnemy != SpecialEnemy_DragonlordDragon ) &&
-        ( Random_u8(1, 32) == 1 ) )
+        ( Random_u8( 1, 32 ) == 1 ) )
    {
       battle->excellentMove = True;
       minDamage = power / 2;
@@ -416,7 +416,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
       Dialog_PushSection( dialog, msg );
       battle->experienceGained = Math_AmountToCollect16u( player->experience, enemy->experience );
       battle->goldGained = Math_AmountToCollect16u( player->gold, enemy->gold );
-      battle->newLevel = Player_GetLevelFromExperience( player );
+      battle->newLevel = Player_GetLevelFromExperience( player->experience + battle->experienceGained );
       battle->previousSpells = player->spells;
 
       if ( battle->experienceGained > 0 || battle->goldGained > 0 )

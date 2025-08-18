@@ -15,13 +15,13 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    Sprite_LoadActive( &( player->sprite ), ACTIVE_SPRITE_PLAYER_ID );
 }
 
-uint8_t Player_GetLevelFromExperience( Player_t* player )
+uint8_t Player_GetLevelFromExperience( uint16_t experience )
 {
    uint8_t i;
 
    for ( i = 0; i < STAT_TABLE_SIZE - 1; i++ )
    {
-      if ( player->experience < g_experienceTable[i + 1] )
+      if ( experience < g_experienceTable[i + 1] )
       {
          return i;
       }
@@ -32,7 +32,7 @@ uint8_t Player_GetLevelFromExperience( Player_t* player )
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
 {
-   return ( player->level == ( STAT_TABLE_SIZE - 1 ) ) ? 0 : ( ( g_experienceTable[player->level + 1] + 1 ) - player->experience );
+   return ( player->level == ( STAT_TABLE_SIZE - 1 ) ) ? 0 : ( g_experienceTable[player->level + 1] - player->experience );
 }
 
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )

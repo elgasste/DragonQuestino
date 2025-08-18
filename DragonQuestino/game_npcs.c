@@ -30,7 +30,8 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          experienceRemaining = Player_GetExperienceRemaining( &( game->player ) );
          if ( experienceRemaining > 0 )
          {
-            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_2, experienceRemaining );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_2, experienceRemaining,
+                     experienceRemaining == 1 ? STRING_POINT : STRING_POINTS );
             Dialog_PushSection( &( game->dialog ), msg );
          }
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_3 );
