@@ -401,9 +401,6 @@ internal void Game_SpellHurtCallback( Game_t* game )
    }
    else
    {
-      game->battle.pendingPayload8u = ( game->battle.enemy.stats.hitPoints > game->pendingPayload8u )
-                                      ? game->pendingPayload8u
-                                      : game->battle.enemy.stats.hitPoints;
       AnimationChain_Reset( &( game->animationChain ) );
       AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Battle_EnemyDamage, Battle_AttackSucceededCallback, &( game->battle ) );
       AnimationChain_Start( &( game->animationChain ) );
