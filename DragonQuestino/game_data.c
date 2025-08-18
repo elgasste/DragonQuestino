@@ -18374,9 +18374,11 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->tilesX = 32;
          tileMap->tilesY = 32;
          tileMap->portalCount = 64;
-         tileMap->boothCount = 1;
+         tileMap->boothCount = 2;
          tileMap->booths[0].id = 17;
          tileMap->booths[0].tileIndex = 121;
+         tileMap->booths[1].id = 20;
+         tileMap->booths[1].tileIndex = 884;
          tileMap->portals[0].sourceTileIndex = 995;
          tileMap->portals[0].destinationTileMapIndex = 0;
          tileMap->portals[0].destinationTileIndex = 7193;

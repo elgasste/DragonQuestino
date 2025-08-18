@@ -345,6 +345,8 @@
 #define STRING_ITEMSHOP_ANYTHINGELSE                                 "\"Would you like to purchase anything else?\""
 #define STRING_ITEMSHOP_THANKYOU                                     "\"Thank you very much! Would you like to purchase anything else?\""
 
+#define STRING_TANTEGEL_WIZARD                                       "\"May the light shine upon the brave hero, descendent of Erdrick!\""
+
 #define STRING_KEYSHOP_WELCOME                                       "\"Magic Keys! They unlock any door, one-use only! %u gold, are you in?\""
 #define STRING_KEYSHOP_LEAVE                                         "\"You know where to find me!\""
 #define STRING_KEYSHOP_TOOEXPENSIVE                                  "\"I'm afraid you're short on funds, come back when you've got the goods!\""

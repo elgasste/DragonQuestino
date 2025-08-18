@@ -11,6 +11,7 @@ internal void Game_VisitInnStayMorningCallback( Game_t* game );
 internal void Game_VisitWeaponShop( Game_t* game );
 internal void Game_VisitItemShop( Game_t* game );
 internal void Game_VisitKeyShop( Game_t* game, uint32_t boothId );
+internal void Game_VisitTantegelWizard( Game_t* game );
 internal void Game_KeyShopLeaveOrStayCallback( Game_t* game );
 internal void Game_KeyShopPurchaseCallback( Game_t* game );
 internal void Game_KeyShopLeaveCallback( Game_t* game );
@@ -22,6 +23,8 @@ internal void Game_ShopPurchaseOrNotCallback( Game_t* game );
 internal void Game_ShopNoPurchaseCallback( Game_t* game );
 internal void Game_WeaponShopPurchaseCallback( Game_t* game );
 internal void Game_ItemShopPurchaseCallback( Game_t* game );
+internal void Game_TantegelWizardCallback( Game_t* game );
+internal void Game_TantegelWizardMagicCallback( Game_t* game );
 internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId );
 internal void Game_LoadItemShop( Game_t* game, uint32_t boothId );
 
@@ -44,6 +47,13 @@ void Game_ActivateBooth( Game_t* game, uint32_t boothId )
    else if ( boothId <= 19 )
    {
       Game_VisitKeyShop( game, boothId );
+   }
+   else
+   {
+      switch ( boothId )
+      {
+         case 20: Game_VisitTantegelWizard( game );
+      }
    }
 }
 
@@ -245,6 +255,13 @@ internal void Game_VisitKeyShop( Game_t* game, uint32_t boothId )
    Game_OpenDialog( game );
 }
 
+internal void Game_VisitTantegelWizard( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_TANTEGEL_WIZARD, Game_TantegelWizardCallback, game );
+   Game_OpenDialog( game );
+}
+
 internal void Game_KeyShopLeaveOrStayCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
@@ -379,6 +396,18 @@ internal void Game_ItemShopPurchaseCallback( Game_t* game )
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_THANKYOU, Game_ShopViewItemsMessageCallback, game );
    Game_OpenDialog( game );
+}
+
+internal void Game_TantegelWizardCallback( Game_t* game )
+{
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_CastSpell, Game_TantegelWizardMagicCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_TantegelWizardMagicCallback( Game_t* game )
+{
+   game->player.stats.magicPoints = game->player.stats.maxMagicPoints;
 }
 
 internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )

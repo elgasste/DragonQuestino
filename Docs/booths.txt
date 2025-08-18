@@ -114,17 +114,23 @@ Wing		70
 KEY SHOPS
 ================================================================
 
-TANTEGEL
+17: TANTEGEL
 
 tile index:	121
 price:		85
 
-CANTLIN
+18: CANTLIN
 
 tile index:	712
 price:		98
 
-RIMULDAR
+19: RIMULDAR
 
 tile index:	170
 price:		53
+
+================================================================
+TANTEGEL WIZARD
+================================================================
+
+20: tile index:	884
