@@ -56,12 +56,56 @@ void Game_ActivateBooth( Game_t* game, uint32_t boothId )
    {
       Game_VisitFairyWaterShop( game );
    }
+   else if ( boothId == 22 )
+   {
+      Game_VisitTantegelWizard( game );
+   }
    else
    {
+      Dialog_Reset( &( game->dialog ) );
+
       switch ( boothId )
       {
-         case 22: Game_VisitTantegelWizard( game );
+         case 23: // Kol NW building
+            if ( game->player.weapon.id == WEAPON_ERDRICKSSWORD_ID )
+            {
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD7 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD8 );
+            }
+            else
+            {
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD1 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD2 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD3 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD4 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD5 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_KOLWIZARD6 );
+            }
+            break;
+         case 24: // Cantlin E building
+            Dialog_PushSection( &( game->dialog ), STRING_BOOTH_CANTLINWIZARD );
+            break;
+         case 25: // Cantlin W building
+            Dialog_PushSection( &( game->dialog ), STRING_BOOTH_CANTLINRADISHES );
+            break;
+         case 26: // Cantlin SW building
+            Dialog_PushSection( &( game->dialog ), STRING_BOOTH_CANTLINWYNN1 );
+            Dialog_PushSection( &( game->dialog ), STRING_BOOTH_CANTLINWYNN2 );
+            break;
+         case 27: // Rimuldar S building
+            if ( game->gameFlags.gotRainbowDrop )
+            {
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_RIMULDARWIZARD3 );
+            }
+            else
+            {
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_RIMULDARWIZARD1 );
+               Dialog_PushSection( &( game->dialog ), STRING_BOOTH_RIMULDARWIZARD2 );
+            }
+            break;
       }
+
+      Game_OpenDialog( game );
    }
 }
 
@@ -273,7 +317,7 @@ internal void Game_VisitFairyWaterShop( Game_t* game )
 internal void Game_VisitTantegelWizard( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
-   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_TANTEGEL_WIZARD, Game_TantegelWizardCallback, game );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BOOTH_TANTEGELWIZARD, Game_TantegelWizardCallback, game );
    Game_OpenDialog( game );
 }
 

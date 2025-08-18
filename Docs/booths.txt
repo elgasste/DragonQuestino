@@ -150,3 +150,23 @@ OTHER
 22: TANTEGEL WIZARD
 
 tile index:	884
+
+23: KOL NW BUILDING
+
+tile index:	80
+
+24: CANTLIN E BUILDING
+
+tile index:	237
+
+25: CANTLIN W BUILDING
+
+tile index:	363
+
+26: CANTLIN SW BUILDING
+
+tile index:	785
+
+27: RIMULDAR BUILDING
+
+tile index:	146
