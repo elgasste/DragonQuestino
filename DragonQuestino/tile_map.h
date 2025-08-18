@@ -221,6 +221,7 @@ typedef struct TileMap_t
    ShopType_t shopType;
 
    uint16_t innPrice;
+   uint16_t keyPrice;
 }
 TileMap_t;
 

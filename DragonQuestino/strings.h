@@ -345,6 +345,12 @@
 #define STRING_ITEMSHOP_ANYTHINGELSE                                 "Would you like to purchase anything else?"
 #define STRING_ITEMSHOP_THANKYOU                                     "Thank you very much! Would you like to purchase anything else?"
 
+#define STRING_KEYSHOP_WELCOME                                       "Magic Keys! They unlock any door, one-use only! %u gold, are you in?"
+#define STRING_KEYSHOP_LEAVE                                         "You know where to find me!"
+#define STRING_KEYSHOP_TOOEXPENSIVE                                  "I'm afraid you're short on funds, come back when you've got the goods!"
+#define STRING_KEYSHOP_NOSPACE                                       "You can't carry any more keys, I'm afraid I can't sell!"
+#define STRING_KEYSHOP_THANKYOU                                      "Appreciated, how about another one?"
+
 #define STRING_NPC_DEFAULT                                           "No response. How rude."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_1                        "\"Hello %s, I am relieved to see you have returned safely!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_2                        "\"I sense that you'll require %u more experience points to reach a higher level...\""
