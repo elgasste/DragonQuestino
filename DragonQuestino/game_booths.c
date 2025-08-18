@@ -10,6 +10,10 @@ internal void Game_VisitInnStayPostAnimationCallback( Game_t* game );
 internal void Game_VisitInnStayMorningCallback( Game_t* game );
 internal void Game_VisitWeaponShop( Game_t* game );
 internal void Game_VisitItemShop( Game_t* game );
+internal void Game_VisitKeyShop( Game_t* game, uint32_t boothId );
+internal void Game_KeyShopLeaveOrStayCallback( Game_t* game );
+internal void Game_KeyShopPurchaseCallback( Game_t* game );
+internal void Game_KeyShopLeaveCallback( Game_t* game );
 internal void Game_ShopLeaveOrStayCallback( Game_t* game );
 internal void Game_ShopViewItemsCallback( Game_t* game );
 internal void Game_ShopViewItemsMessageCallback( Game_t* game );
@@ -36,6 +40,10 @@ void Game_ActivateBooth( Game_t* game, uint32_t boothId )
    {
       Game_LoadItemShop( game, boothId );
       Game_VisitItemShop( game );
+   }
+   else if ( boothId <= 19 )
+   {
+      Game_VisitKeyShop( game, boothId );
    }
 }
 
@@ -217,6 +225,67 @@ internal void Game_VisitItemShop( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
    Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_WELCOME, Game_ShopLeaveOrStayCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_VisitKeyShop( Game_t* game, uint32_t boothId )
+{
+   char msg [128];
+
+   switch ( boothId )
+   {
+      case 17: game->tileMap.keyPrice = 85; break;
+      case 18: game->tileMap.keyPrice = 98; break;
+      case 19: game->tileMap.keyPrice = 53; break;
+   }
+
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_KEYSHOP_WELCOME, game->tileMap.keyPrice );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_KeyShopLeaveOrStayCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_KeyShopLeaveOrStayCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_KeyShopPurchaseCallback, Game_KeyShopLeaveCallback,
+                      game, game );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_KeyShopPurchaseCallback( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( game->tileMap.keyPrice > game->player.gold )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_KEYSHOP_TOOEXPENSIVE );
+   }
+   else
+   {
+      uint32_t keyCount = ITEM_GET_KEYCOUNT( game->player.items );
+
+      if ( keyCount >= ITEM_MAXKEYS )
+      {
+         Dialog_PushSection( &( game->dialog ), STRING_KEYSHOP_NOSPACE );
+      }
+      else
+      {
+         game->player.gold -= game->tileMap.keyPrice;
+         ITEM_SET_KEYCOUNT( game->player.items, keyCount + 1 );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_KEYSHOP_THANKYOU, Game_KeyShopLeaveOrStayCallback, game );
+      }
+   }
+
+   Game_OpenDialog( game );
+}
+
+internal void Game_KeyShopLeaveCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_KEYSHOP_LEAVE );
    Game_OpenDialog( game );
 }
 
