@@ -1,0 +1,111 @@
+================================================================
+INNS
+================================================================
+
+0: Brecconary
+	- tile index:	714
+	- price:	6
+1: Garinham
+	- tile index:	369
+	- price:	25
+2: Kol
+	- tile index:	124
+	- price:	20
+3: Cantlin
+	- tile index:	128
+	- price:	100
+4: Rimuldar
+	- tile index:	626
+	- price:	55
+
+================================================================
+WEAPON AND ARMOR SHOPS
+================================================================
+
+5: BRECCONARY (tile index 198)
+
+Bamboo Pole	10
+Club		60
+Copper Sword	180
+Clothes		20
+Leather Armor	70
+Small Shield	90
+
+6: GARINHAM (tile index 407)
+
+Club		60
+Copper Sword	180
+Hand Axe	560
+Leather Armor	70
+Chain Mail	300
+Half Plate	1000
+Large Shield	800
+
+7: KOL (tile index 360)
+
+Copper Sword	180
+Hand Axe	560
+Half Plate	1000
+Full Plate	3000
+Small Shield	90
+
+8: CANTLIN UPPER RIGHT (tile index 171)
+
+Bamboo Pole	10
+Club		60
+Copper Sword	180
+Leather Armor	70
+Chain Mail	300
+Large Shield	800
+
+9: CANTLIN MIDDLE RIGHT (tile index 385)
+Flame Sword	9800
+Silver Shield	14800
+
+10: CANTLIN LOWER RIGHT (tile index 806)
+Hand Axe	560
+Broad Sword	1500
+Full Plate	3000
+Magic Armor	7700
+
+11: RIMULDAR (tile index 312)
+
+Copper Sword	180
+Hand Axe	560
+Broad Sword	1500
+Half Plate	1000
+Full Plate	3000
+Magic Armor	7700
+
+================================================================
+ITEM SHOPS
+================================================================
+
+12: BRECCONARY (tile index 150)
+
+Herb		24
+Torch		8
+Dragon Scale	20
+
+13: GARINHAM (tile index 269)
+
+Herb		24
+Torch		8
+Dragon Scale	20
+
+14: KOL (tile index 586)
+
+Herb		24
+Torch		8
+Dragon Scale	20
+Wing		70
+
+15: CANTLIN UPPER-LEFT (tile index 213)
+
+Herb		24
+Torch		8
+
+16: CANTLIN LOWER-LEFT (tile index 366)
+
+Dragon Scale	20
+Wing		70
