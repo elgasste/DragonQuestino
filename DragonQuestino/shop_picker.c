@@ -5,7 +5,8 @@
 
 internal void ShopPicker_DrawCarat( ShopPicker_t* picker );
 internal void ShopPicker_LoadItems( ShopPicker_t* picker );
-internal void ShopPicker_LoadItemText( ShopPickerItemText_t* itemText, uint32_t itemId, AccessoryType_t type );
+internal void ShopPicker_LoadWeaponItemText( ShopPickerItemText_t* itemText, uint32_t itemId, AccessoryType_t type );
+internal void ShopPicker_LoadItemItemText( ShopPickerItemText_t* itemText, uint32_t itemId );
 
 void ShopPicker_Init( ShopPicker_t* picker, Screen_t* screen, TileMap_t* tileMap )
 {
@@ -109,13 +110,21 @@ internal void ShopPicker_LoadItems( ShopPicker_t* picker )
 
    for ( i = 0; i < picker->itemCount; i++ )
    {
-      ShopPicker_LoadItemText( &( picker->items[i].itemText ), picker->tileMap->shopItems[i].id, picker->tileMap->shopItems[i].type );
+      if ( picker->tileMap->shopType == ShopType_Weapon )
+      {
+         ShopPicker_LoadWeaponItemText( &( picker->items[i].itemText ), picker->tileMap->shopItems[i].id, picker->tileMap->shopItems[i].type );
+      }
+      else
+      {
+         ShopPicker_LoadItemItemText( &( picker->items[i].itemText ), picker->tileMap->shopItems[i].id );
+      }
+
       price = picker->tileMap->shopItems[i].price;
       sprintf( picker->items[i].priceText, price < 10 ? "   %u" : price < 100 ? "  %u" : price < 1000 ? " %u" : "%u", picker->tileMap->shopItems[i].price );
    }
 }
 
-internal void ShopPicker_LoadItemText( ShopPickerItemText_t* itemText, uint32_t itemId, AccessoryType_t type )
+internal void ShopPicker_LoadWeaponItemText( ShopPickerItemText_t* itemText, uint32_t itemId, AccessoryType_t type )
 {
    switch ( type )
    {
@@ -219,6 +228,39 @@ internal void ShopPicker_LoadItemText( ShopPickerItemText_t* itemText, uint32_t 
       default:
          itemText->line1[0] = 0;
          itemText->hasTwoLines = False;
+         break;
+   }
+}
+
+internal void ShopPicker_LoadItemItemText( ShopPickerItemText_t* itemText, uint32_t itemId )
+{
+   switch ( itemId )
+   {
+      case ITEM_KEY_ID:
+         itemText->hasTwoLines = False;
+         strcpy( itemText->line1, STRING_ITEM_KEY );
+         break;
+      case ITEM_HERB_ID:
+         itemText->hasTwoLines = False;
+         strcpy( itemText->line1, STRING_ITEM_HERB );
+         break;
+      case ITEM_WING_ID:
+         itemText->hasTwoLines = False;
+         strcpy( itemText->line1, STRING_ITEM_WING );
+         break;
+      case ITEM_FAIRYWATER_ID:
+         itemText->hasTwoLines = True;
+         strcpy( itemText->line1, STRING_ITEM_FAIRYWATER1 );
+         strcpy( itemText->line2, STRING_ITEM_FAIRYWATER2 );
+         break;
+      case ITEM_TORCH_ID:
+         itemText->hasTwoLines = False;
+         strcpy( itemText->line1, STRING_ITEM_TORCH );
+         break;
+      case ITEM_DRAGONSCALE_ID:
+         itemText->hasTwoLines = True;
+         strcpy( itemText->line1, STRING_ITEM_DRAGONSCALE1 );
+         strcpy( itemText->line2, STRING_ITEM_DRAGONSCALE2 );
          break;
    }
 }

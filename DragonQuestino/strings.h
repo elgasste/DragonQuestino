@@ -48,6 +48,15 @@
 #define STRING_WEAPON_ERDRICKSSWORD1                                 "Erdrick's"
 #define STRING_WEAPON_ERDRICKSSWORD2                                 "Sword"
 
+#define STRING_ITEM_KEY                                              "Key"
+#define STRING_ITEM_HERB                                             "Herb"
+#define STRING_ITEM_WING                                             "Wing"
+#define STRING_ITEM_FAIRYWATER1                                      "Fairy"
+#define STRING_ITEM_FAIRYWATER2                                      "Water"
+#define STRING_ITEM_TORCH                                            "Torch"
+#define STRING_ITEM_DRAGONSCALE1                                     "Dragon"
+#define STRING_ITEM_DRAGONSCALE2                                     "Scale"
+
 #define STRING_ARMOR_CLOTHES                                         "Clothes"
 #define STRING_ARMOR_LEATHERARMOR1                                   "Leather"
 #define STRING_ARMOR_LEATHERARMOR2                                   "Armor"
@@ -325,6 +334,16 @@
 #define STRING_WEAPONSHOP_AREYOUSURE2                                "You'd like to purchase the %s %s, are you sure?"
 #define STRING_WEAPONSHOP_ANYTHINGELSE                               "Does anything else catch your eye?"
 #define STRING_WEAPONSHOP_THANKYOU                                   "Thank you for your purchase! Does anything else catch your eye?"
+
+#define STRING_ITEMSHOP_WELCOME                                      "Welcome! We deal in tools, would you like to see our inventory?"
+#define STRING_ITEMSHOP_VIEWITEMS                                    "Please let me know if you'd like to purchase something."
+#define STRING_ITEMSHOP_LEAVE                                        "Have a wonderful day!"
+#define STRING_ITEMSHOP_TOOEXPENSIVE                                 "Oh no, it seems you don't have enough gold, sorry!"
+#define STRING_ITEMSHOP_NOSPACE                                      "Whoops, it seems you can't carry any more of these!"
+#define STRING_ITEMSHOP_AREYOUSURE1                                  "One %s, are you sure?"
+#define STRING_ITEMSHOP_AREYOUSURE2                                  "One %s %s, are you sure?"
+#define STRING_ITEMSHOP_ANYTHINGELSE                                 "Would you like to purchase anything else?"
+#define STRING_ITEMSHOP_THANKYOU                                     "Thank you very much! Would you like to purchase anything else?"
 
 #define STRING_NPC_DEFAULT                                           "No response. How rude."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_1                        "\"Hello %s, I am relieved to see you have returned safely!\""

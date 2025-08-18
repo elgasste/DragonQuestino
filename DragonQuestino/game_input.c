@@ -571,13 +571,15 @@ internal void Game_HandleOverworldShopMenuInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
-      
       Dialog_Reset( &( game->dialog ) );
 
       switch ( game->tileMap.shopType )
       {
          case ShopType_Weapon:
             Dialog_PushSection( &( game->dialog ), STRING_WEAPONSHOP_LEAVE );
+            break;
+         case ShopType_Item:
+            Dialog_PushSection( &( game->dialog ), STRING_ITEMSHOP_LEAVE );
             break;
       }
 
