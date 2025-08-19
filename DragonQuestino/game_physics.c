@@ -8,6 +8,8 @@ internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
 internal void Game_ApplyTileDamage( Game_t* game );
+internal void Game_TileDamageDeathCallback( Game_t* game );
+internal void Game_TileDamageDeathMessageCallback( Game_t* game );
 internal void Game_MoveNpcs( Game_t* game );
 
 void Game_TicPhysics( Game_t* game )
@@ -462,6 +464,7 @@ internal void Game_ApplyTileDamage( Game_t* game )
 {
    uint8_t damage;
    uint16_t damageRate;
+   uint32_t i;
 
    if ( game->gameFlags.defeatedDragonlord || ( game->player.armor.id == ARMOR_ERDRICKSARMOR_ID ) )
    {
@@ -478,11 +481,42 @@ internal void Game_ApplyTileDamage( Game_t* game )
    damage = ( damageRate == 1 ) ? TILEMAP_SWAMP_DAMAGE : TILEMAP_BARRIER_DAMAGE;
    game->player.stats.hitPoints -= Math_Min8u( damage, game->player.stats.hitPoints );
 
-   // TODO: this is temporary, it can be changed when we implement death
    if ( game->player.stats.hitPoints == 0 )
    {
-      game->player.stats.hitPoints = 1;
+      // TODO: need to show some kind of animation here, and make sure the player gets drawn
+
+      AnimationChain_Reset( &( game->animationChain ) );
+
+      for ( i = 0; i < 7; i++ )
+      {
+         AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      }
+
+      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_TileDamageDeathCallback, game );
+      AnimationChain_Start( &( game->animationChain ) );
    }
+}
+
+internal void Game_TileDamageDeathCallback( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_DIALOG_DEAD, Game_TileDamageDeathMessageCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_TileDamageDeathMessageCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 11; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_HandleDeath, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 internal void Game_MoveNpcs( Game_t* game )
