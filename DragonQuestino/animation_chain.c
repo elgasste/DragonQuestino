@@ -100,6 +100,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
          case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
          case AnimationId_CastSpell:
+         case AnimationId_TileDeath:
          case AnimationId_Battle_PlayerDeath:
             AnimationChain_Tic_Flash( chain );
             break;
@@ -181,6 +182,7 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          chain->totalDuration = ANIMATION_BATTLE_PLAYERDAMAGE_DURATION;
          chain->flag = True;
          break;
+      case AnimationId_TileDeath:
       case AnimationId_Battle_PlayerDeath:
          chain->screen->wipeColor = COLOR_DEEPRED;
          chain->totalDuration = ANIMATION_BATTLE_PLAYERDEATH_TOTALDURATION;

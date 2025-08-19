@@ -5,6 +5,8 @@
 
 internal void Game_BattleIntroMessageCallback( Game_t* game );
 internal void Game_TicActiveSprites( Game_t* game );
+internal void Game_DeathFadeOutCallback( Game_t* game );
+internal void Game_DeathPostFadeCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -380,6 +382,38 @@ void Game_ResetBattleMenu( Game_t* game )
    }
 }
 
+void Game_HandleDeath( Game_t* game )
+{
+   uint32_t i;
+
+   game->mainState = MainState_Overworld;
+   game->subState = SubState_None;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 9; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_MidFadeOut, Game_DeathFadeOutCallback, game );
+
+   for ( i = 0; i < 9; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_MidFadeIn, Screen_RestorePalette, &( game->screen ) );
+
+   for ( i = 0; i < 4; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_DeathPostFadeCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
 internal void Game_BattleIntroMessageCallback( Game_t* game )
 {
    char enemyName[24];
@@ -431,4 +465,37 @@ internal void Game_TicActiveSprites( Game_t* game )
    {
       ActiveSprite_Tic( &( game->tileMap.npcs[i].sprite ) );
    }
+}
+
+internal void Game_DeathFadeOutCallback( Game_t* game )
+{
+   game->player.gold /= 2;
+   game->player.stats.hitPoints = game->player.stats.maxHitPoints;
+   game->player.stats.magicPoints = game->player.stats.maxMagicPoints;
+
+   if ( game->gameFlags.carryingPrincess )
+   {
+      game->gameFlags.carryingPrincess = False;
+      game->gameFlags.rescuedPrincess = False;
+      Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
+   }
+
+   TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
+   game->player.tileIndex = 128;
+   Player_SetCanonicalTileIndex( &( game->player ) );
+   Player_CenterOnTile( &( game->player ) );
+   ActiveSprite_SetDirection( &( game->player.sprite ), Direction_Up );
+   TileMap_UpdateViewport( &( game->tileMap ) );
+}
+
+internal void Game_DeathPostFadeCallback( Game_t* game )
+{
+   char msg[128];
+
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_1, game->player.name );
+   Dialog_PushSection( &( game->dialog ), msg );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_2 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_3 );
+   Game_OpenDialog( game );
 }

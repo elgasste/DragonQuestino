@@ -37,6 +37,8 @@ internal void Battle_EnemyAttackDodgedCallback( Battle_t* battle );
 internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle );
 internal void Battle_PlayerDefeatedCallback( Battle_t* battle );
 internal void Battle_PlayerDefeatedCallbackMessage( Battle_t* battle );
+internal void Battle_PlayerDefeatedDialogCallback( Battle_t* battle );
+internal void Battle_PlayerDefeatedPostDialogCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheFire( Battle_t* battle );
 internal void Battle_EnemyBreatheFireCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFire( Battle_t* battle );
@@ -794,19 +796,24 @@ internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle )
 
 internal void Battle_PlayerDefeatedCallback( Battle_t* battle )
 {
-   // TODO: actually implement death
    Battle_MultiPauseBeforeAnimation( battle, 4, AnimationId_Pause, Battle_PlayerDefeatedCallbackMessage );
 }
 
 internal void Battle_PlayerDefeatedCallbackMessage( Battle_t* battle )
 {
-   battle->game->player.stats.hitPoints = battle->game->player.stats.maxHitPoints;
-   battle->game->player.stats.magicPoints = battle->game->player.stats.maxMagicPoints;
-   battle->turn = BattleTurn_Player;
-
    Dialog_Reset( &( battle->game->dialog ) );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), "Now you're pissed off! Command?", Game_ResetBattleMenu, battle->game );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_DIALOG_DEAD, Battle_PlayerDefeatedDialogCallback, battle );
    Game_OpenDialog( battle->game );
+}
+
+internal void Battle_PlayerDefeatedDialogCallback( Battle_t* battle )
+{
+   Battle_MultiPauseBeforeAnimation( battle, 12, AnimationId_Pause, Battle_PlayerDefeatedPostDialogCallback );
+}
+
+internal void Battle_PlayerDefeatedPostDialogCallback( Battle_t* battle )
+{
+   Game_HandleDeath( battle->game );
 }
 
 internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )

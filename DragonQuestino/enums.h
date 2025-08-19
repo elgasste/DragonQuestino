@@ -64,6 +64,7 @@ typedef enum AnimationId_t
    AnimationId_WhiteOut,
    AnimationId_WhiteIn,
    AnimationId_CastSpell,
+   AnimationId_TileDeath,
    AnimationId_RainbowBridge_Trippy,
    AnimationId_RainbowBridge_WhiteOut,
    AnimationId_RainbowBridge_FadeIn,

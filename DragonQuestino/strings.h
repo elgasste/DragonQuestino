@@ -141,6 +141,7 @@
 #define STRING_DIALOG_NO_KEYS                                        "You do not have any keys."
 #define STRING_DIALOG_DRAGONLORDTHRONE                               "You feel a light breeze flowing from behind the Dragonlord's throne..."
 #define STRING_DIALOG_FOUNDSPHEREOFLIGHT                             "You have found the Sphere of Light!"
+#define STRING_DIALOG_DEAD                                           "You fall to the ground, lifeless..."
 
 #define STRING_HOLYPROTECTION_ON                                     "A barrier of Holy Protection surrounds you."
 #define STRING_HOLYPROTECTION_OFF                                    "The effects of Holy Protection have worn off."
@@ -396,6 +397,9 @@
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_10                "King Lorek sheds a tear of joy as you take Gwaelin's token in your hand."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_11                "It feels as if you can tell Gwaelin's exact location just by looking at it."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_12                "Lorik: \"All hail %s, our courageous hero!!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_1                  "\"%s, what a terrible thing, my soldiers found you and thought you had died!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_2                  "\"Against all odds, my people were able to nurse you back to health, what a relief!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_3                  "\"Please be more careful in your travels, next time you may not be so lucky!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_1                    "\"My savior, my champion, you who have stolen my heart...\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_2                    "\"I love you, %s!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_3                    "\"I will be thinking of you every moment you're away on your quest...\""
