@@ -259,7 +259,8 @@ void Game_ChangeToEnterNameState( Game_t* game )
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
    // MUFFINS: this gives us some goodies for testing
-   Game_Load( game, "pgT...-gIwBZ...-...fExHdtPf..5" ); // level 30 with everything, but no rainbow bridge
+   //Game_Load( game, "pgT...-gIwBZ...-...fExHdtPf..5" ); // level 30 with everything, but no rainbow bridge
+   Game_Load( game, "ef8AAH....-AAAAAAAAA4P.......x" ); // cursed belt
    Game_ChangeToOverworldState( game );
    
    /*game->mainState = MainState_EnterPassword;

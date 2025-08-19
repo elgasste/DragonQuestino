@@ -581,5 +581,7 @@
 #define STRING_NPC_SWAMPCAVE_PRINCESS_CURSED_2                       "\"I can sense the horrible curse that has invaded your aura, it burns my spirit!\""
 #define STRING_NPC_SWAMPCAVE_PRINCESS_CURSED_3                       "\"Please just leave me here, death is more welcome than this feeling...\""
 #define STRING_NPC_OVERWORLD_PRINCESS                                "\"Please %s, take me home to Tantegel, I must see my father!\""
+#define STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_1                      "\"Wait, %s, no! Please do not put on the cursed belt!\""
+#define STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_2                      "\"I sense a great evil emanating from it, you must leave it be.\""
 
 #endif // STRINGS_H

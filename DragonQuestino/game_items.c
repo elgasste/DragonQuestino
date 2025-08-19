@@ -202,11 +202,28 @@ void Game_UseRainbowDrop( Game_t* game )
 
 void Game_UseCursedBelt( Game_t* game )
 {
-   ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
-   Dialog_Reset( &( game->dialog ) );
-   Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_CURSEDBELT );
-   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_CURSED, Game_CursedCallback, game );
-   Game_OpenDialog( game );
+   char msg[64];
+
+   if ( game->gameFlags.carryingPrincess )
+   {
+      Dialog_Reset( &( game->dialog ) );
+      sprintf( msg, STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_1, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_2 );
+      Game_OpenDialog( game );
+   }
+   else
+   {
+      if ( !ITEM_HAS_CURSEDBELT( game->player.items ) )
+      {
+         ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
+      }
+
+      Dialog_Reset( &( game->dialog ) );
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMUSE_CURSEDBELT );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_CURSED, Game_CursedCallback, game );
+      Game_OpenDialog( game );
+   }
 }
 
 internal void Game_UseWingCallback( Game_t* game )
