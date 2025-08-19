@@ -22,7 +22,7 @@ void Game_GetPassword( Game_t* game, char* password )
 
       ( player->items << 7 ) |                                    // items (25 bits)
       ( (uint32_t)( player->townsVisited ) << 1 ) |               // towns visited (6 bits)
-      ( player->isCursed ? 0x1 : 0x0 ),                           // is cursed (1 bit)
+      0x1,                                                        // reserved (1 bit)
 
       ( (uint32_t)( player->gold ) << 16 ) |                      // gold (16 bits)
       ( ( player->weapon.id & 0x7 ) << 13 ) |                     // weapon (3 bits)
@@ -141,7 +141,6 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    player->gold = (uint16_t)( encodedBits[3] >> 16 );
    player->items = ( encodedBits[2] >> 7 ) & 0x1FFFFFF;
    player->townsVisited = (uint8_t)( ( encodedBits[2] >> 1 ) & 0x3F );
-   player->isCursed = (Bool_t)( encodedBits[2] & 0x1 );
 
    player->level = Player_GetLevelFromExperience( player->experience );
    Player_UpdateSpellsToLevel( player, player->level );

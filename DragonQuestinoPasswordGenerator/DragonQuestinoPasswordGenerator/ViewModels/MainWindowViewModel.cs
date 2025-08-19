@@ -160,19 +160,6 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          }
       }
 
-      private bool _playerIsCursed = false;
-      public bool PlayerIsCursed
-      {
-         get => _playerIsCursed;
-         set
-         {
-            if ( SetProperty( ref _playerIsCursed, value ) )
-            {
-               UpdatePassword();
-            }
-         }
-      }
-
       private bool _visitedTantegel = false;
       public bool VisitedTantegel
       {
@@ -1098,8 +1085,8 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
          // 25 bits: player's items
          // 6 bits: towns visited
-         // 1 bit: player is cursed
-         encodedBits[2] = ( itemFlags << 7 ) | ( townVisitedFlags << 1 ) | ( _playerIsCursed ? (UInt32)0x1 : 0 );
+         // 1 bit: reserved
+         encodedBits[2] = ( itemFlags << 7 ) | ( townVisitedFlags << 1 ) | (UInt32)0x1;
 
          // 16 bits: gold
          // 3 bits: weapon
@@ -1274,7 +1261,6 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          SetTreasuresCollectedFromFlags( encodedBits[1] );
          SetItemsFromFlags( ( encodedBits[2] >> 7 ) & 0x1FFFFFF );
          SetTownsVisitedFromFlags( ( encodedBits[2] >> 1 ) & 0x3F );
-         PlayerIsCursed = ( encodedBits[2] & 0x1 ) != 0;
          PlayerGold = ( encodedBits[3] >> 16 ).ToString();
          SetSpecialEnemiesDefeatedFromFlags( ( encodedBits[3] >> 5 ) & 0x7 );
          RescuedGwaelin = ( ( encodedBits[3] >> 4 ) & 0x1 ) != 0;
