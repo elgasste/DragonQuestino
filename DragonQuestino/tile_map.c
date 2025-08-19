@@ -33,6 +33,33 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags,
    tileMap->torchIsLit = False;
 }
 
+void TileMap_CheckThroneRoomPrincess( TileMap_t* tileMap )
+{
+   uint32_t i;
+   NonPlayerCharacter_t* npc = tileMap->npcs;
+
+   if ( tileMap->id == TILEMAP_TANTEGEL_THRONEROOM_ID &&
+        ( !tileMap->gameFlags->rescuedPrincess ) || tileMap->gameFlags->carryingPrincess )
+   {
+      for ( i = 0; i < tileMap->npcCount; i++ )
+      {
+         if ( tileMap->npcs[i].id == THRONE_ROOM_PRINCESS_NPC_ID )
+         {
+            for ( ; i < tileMap->npcCount - 1; i++ )
+            {
+               memcpy( npc, npc + 1, sizeof( NonPlayerCharacter_t ) );
+               npc++;
+            }
+
+            tileMap->npcCount--;
+            break;
+         }
+
+         npc++;
+      }
+   }
+}
+
 void TileMap_ResetNpcs( TileMap_t* tileMap )
 {
    uint32_t i;

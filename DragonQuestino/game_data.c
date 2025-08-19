@@ -25779,11 +25779,12 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
       TileMap_LoadHiddenStairs( tileMap );
    }
 
-   if ( ( id == TILEMAP_CHARLOCK_DRAGONLORD_ID && tileMap->gameFlags->defeatedDragonlord ) || ( id == TILEMAP_SWAMPCAVE_ID && tileMap->gameFlags->defeatedDragonlord ) )
+   if ( ( id == TILEMAP_CHARLOCK_DRAGONLORD_ID && tileMap->gameFlags->defeatedDragonlord ) || ( id == TILEMAP_SWAMPCAVE_ID && ( tileMap->gameFlags->defeatedDragonlord || tileMap->gameFlags->rescuedPrincess ) ) )
    {
       tileMap->npcCount = 0;
    }
 
+   TileMap_CheckThroneRoomPrincess( tileMap );
    TileMap_ResetNpcs( tileMap );
 }
 

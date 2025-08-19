@@ -228,6 +228,7 @@ extern "C" {
 #endif
 
 void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags, Player_t* player );
+void TileMap_CheckThroneRoomPrincess( TileMap_t* tileMap );
 void TileMap_ResetNpcs( TileMap_t* tileMap );
 void TileMap_Tic( TileMap_t* tileMap );
 void TileMap_ResetViewport( TileMap_t* tileMap );

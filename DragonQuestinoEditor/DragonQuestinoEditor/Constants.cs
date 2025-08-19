@@ -66,6 +66,7 @@ namespace DragonQuestinoEditor
 
       public const int PlayerActiveSpriteIndex = 0;
       public const int PlayerCarryActiveSpriteIndex = 10;
+      public const int ThroneRoomPrincessNpcId = 1;
 
       // bits 6-7
       public static readonly UInt32[] TileSetIndexWalkSpeeds = [

@@ -88,7 +88,8 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, string.Format( "#define TILE_OVERWORLD_ENEMY_INDEX_POOLS {0}\n", _overworldEnemyIndexPools.Count ) );
          WriteToFileStream( fs, string.Format( "#define TILE_DUNGEON_ENEMY_INDEX_POOLS {0}\n", _dungeonEnemyIndexPools.Count ) );
          WriteToFileStream( fs, string.Format( "#define ACTIVE_SPRITE_PLAYER_ID {0}\n", Constants.PlayerActiveSpriteIndex ) );
-         WriteToFileStream( fs, string.Format( "#define ACTIVE_SPRITE_PLAYER_CARRY_ID {0}\n\n", Constants.PlayerCarryActiveSpriteIndex ) );
+         WriteToFileStream( fs, string.Format( "#define ACTIVE_SPRITE_PLAYER_CARRY_ID {0}\n", Constants.PlayerCarryActiveSpriteIndex ) );
+         WriteToFileStream( fs, string.Format( "#define THRONE_ROOM_PRINCESS_NPC_ID {0}\n\n", Constants.ThroneRoomPrincessNpcId ) );
 
          WriteToFileStream( fs, "#endif // GENERATED_DEFINES_H\n" );
       }
@@ -479,11 +480,12 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "      TileMap_LoadHiddenStairs( tileMap );\n" );
          WriteToFileStream( fs, "   }\n\n" );
 
-         WriteToFileStream( fs, "   if ( ( id == TILEMAP_CHARLOCK_DRAGONLORD_ID && tileMap->gameFlags->defeatedDragonlord ) || ( id == TILEMAP_SWAMPCAVE_ID && tileMap->gameFlags->defeatedDragonlord ) )\n" );
+         WriteToFileStream( fs, "   if ( ( id == TILEMAP_CHARLOCK_DRAGONLORD_ID && tileMap->gameFlags->defeatedDragonlord ) || ( id == TILEMAP_SWAMPCAVE_ID && ( tileMap->gameFlags->defeatedDragonlord || tileMap->gameFlags->rescuedPrincess ) ) )\n" );
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      tileMap->npcCount = 0;\n" );
          WriteToFileStream( fs, "   }\n\n" );
 
+         WriteToFileStream( fs, "   TileMap_CheckThroneRoomPrincess( tileMap );\n" );
          WriteToFileStream( fs, "   TileMap_ResetNpcs( tileMap );\n" );
 
          WriteToFileStream( fs, "}\n" );

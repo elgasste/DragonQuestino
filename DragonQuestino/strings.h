@@ -527,5 +527,11 @@
 #define STRING_NPC_CHARLOCK_DRAGONLORD_2_3                           "Thus the hero became the ultimate villain, joining the Dragonlord to destroy Alefgard."
 #define STRING_NPC_CHARLOCK_DRAGONLORD_2_4                           "With no true heroes left, the entire kingdom was laid to waste."
 #define STRING_NPC_CHARLOCK_DRAGONLORD_3                             "\"Then you are a FOOL!\""
+#define STRING_NPC_SWAMPCAVE_PRINCESS_1                              "\"I've waited what seems an eternity for a brave hero to come to my rescue!\""
+#define STRING_NPC_SWAMPCAVE_PRINCESS_2                              "\"I am Gwaelin, daughter of King Lorik of Tantegel, I was captured by a dragon and brought here.\""
+#define STRING_NPC_SWAMPCAVE_PRINCESS_3                              "\"Please, I must return to my father's side, but I am too weak to stand.\""
+#define STRING_NPC_SWAMPCAVE_PRINCESS_4                              "\"%s, will you carry me back to my home?\""
+#define STRING_NPC_SWAMPCAVE_PRINCESS_5                              "You embrace Princess Gwaelin."
+#define STRING_NPC_SWAMPCAVE_PRINCESS_6                              "\"%s, you are my hero! I am so happy!\""
 
 #endif // STRINGS_H
