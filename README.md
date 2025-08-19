@@ -14,6 +14,7 @@ This project is designed to use the following hardware:
 
 The wiring is quite simple. The display shield is designed to attach directly to the back of the circuit board, and the controller only has five wires that need to be connected. The following photos match with the corresponding colos in the diagram:
 
+![PXL_20250818_235817562](https://github.com/user-attachments/assets/15e820b8-7181-4045-a097-2f1c28f2381e)
 ![PXL_20250818_235726708](https://github.com/user-attachments/assets/b2f8f18c-1761-40b2-8110-e61edcba1c52)
 ![PXL_20250818_235705632](https://github.com/user-attachments/assets/0f7103da-448b-4b8b-8690-0ae9cf102560)
 ![NESPi_part4_web1](https://github.com/user-attachments/assets/0413c9b0-52c0-449b-8687-c0f1bf888ba2)
