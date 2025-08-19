@@ -60,11 +60,7 @@ void Game_Reset( Game_t* game )
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
 
-   TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
-
    player->name[0] = 0;
-   player->tileIndex = 128; // in front of King Lorik
-   Player_SetCanonicalTileIndex( player );
    player->sprite.position.x = (float)( TILE_SIZE * 8 ) + 2.0f;
    player->sprite.position.y = (float)( TILE_SIZE * 6 ) + 4.0f;
    player->sprite.direction = Direction_Up;
@@ -118,11 +114,16 @@ void Game_Load( Game_t* game, const char* password )
       game->gameFlags.usedRainbowDrop = False;
       game->gameFlags.foundHiddenStairs = False;
       game->gameFlags.rescuedPrincess = False;
+      game->gameFlags.carryingPrincess = False;
       game->gameFlags.joinedDragonlord = False;
       game->gameFlags.defeatedDragonlord = False;
       game->mainState = MainState_Overworld;
       game->subState = SubState_None;
    }
+
+   TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
+   game->player.tileIndex = 128; // in front of King Lorik
+   Player_SetCanonicalTileIndex( &( game->player ) );
 }
 
 void Game_Tic( Game_t* game )

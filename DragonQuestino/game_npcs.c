@@ -14,6 +14,11 @@ internal void Game_DragonlordRefuseMessageCallback( Game_t* game );
 internal void Game_DragonlordInitiateFightCallback( Game_t* game );
 internal void Game_CurseLiftedCallback( Game_t* game );
 internal void Game_CurseLiftedSpellCallback( Game_t* game );
+internal void Game_RescuePrincessCallback( Game_t* game );
+internal void Game_ReturnPrincessCallback( Game_t* game );
+internal void Game_ReturnPrincessPreFadeCallback( Game_t* game );
+internal void Game_ReturnPrincessFadeOutCallback( Game_t* game );
+internal void Game_ReturnPrincessPostFadeCallback( Game_t* game );
 
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
@@ -27,96 +32,189 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
    switch ( npcId )
    {
       case 0: // King Lorik
-         sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_1, game->player.name );
-         Dialog_PushSection( &( game->dialog ), msg );
-         experienceRemaining = Player_GetExperienceRemaining( &( game->player ) );
-         if ( experienceRemaining > 0 )
+         if ( game->gameFlags.carryingPrincess )
          {
-            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_2, experienceRemaining,
-                     experienceRemaining == 1 ? STRING_POINT : STRING_POINTS );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_1 );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_2, game->player.name );
             Dialog_PushSection( &( game->dialog ), msg );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_3, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_4 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_5 );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_6, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_7 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_8 );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_9, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_10 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_11 );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_12, game->player.name );
+            Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ReturnPrincessCallback, game );
          }
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_3 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_4 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_5 );
-         Game_GetPassword( game, password );
-         sprintf( passwordMsg, STRING_NPC_TANTEGEL_THRONEROOM_KING_6, password );
-         Dialog_PushSection( &( game->dialog ), passwordMsg );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_7 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_8 );
+         else
+         {
+            sprintf( msg, game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_THRONEROOM_KING_1_2 : STRING_NPC_TANTEGEL_THRONEROOM_KING_1_1, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            experienceRemaining = Player_GetExperienceRemaining( &( game->player ) );
+            if ( experienceRemaining > 0 )
+            {
+               sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_2, experienceRemaining,
+                        experienceRemaining == 1 ? STRING_POINT : STRING_POINTS );
+               Dialog_PushSection( &( game->dialog ), msg );
+            }
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_3 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_4 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_5 );
+            Game_GetPassword( game, password );
+            sprintf( passwordMsg, STRING_NPC_TANTEGEL_THRONEROOM_KING_6, password );
+            Dialog_PushSection( &( game->dialog ), passwordMsg );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_7 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_8 );
+         }
          break;
-      case 1: // Gwaelin
+      case 1: // Gwaelin (throne room)
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_1 );
          sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_2, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
          break;
       case 2: // Tantegel throne room left soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_2 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_PR );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_LEFTSOLDIER_2 );
+         }
          break;
       case 3: // Tantegel throne room right soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_RIGHTSOLDIER );
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_THRONEROOM_RIGHTSOLDIER_PR : STRING_NPC_TANTEGEL_THRONEROOM_RIGHTSOLDIER );
          break;
       case 4: // Tantegel throne room moving solder
-         sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_MOVINGSOLDIER, game->player.name );
-         Dialog_PushSection( &( game->dialog ), msg );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_MOVINGSOLDIER_PR );
+         }
+         else
+         {
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_MOVINGSOLDIER, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+         }
          break;
       case 5: // Tantegel ground floor top soldier next to throne room stairs
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_2 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_PR );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSUPPERSOLDIER_2 );
+         }
          break;
       case 6: // Tantegel ground floor bottom soldier next to throne room stairs
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSLOWERSOLDIER );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSLOWERSOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSLOWERSOLDIER );
          break;
       case 7: // Tantegel ground floor bottom right static soldier
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_2 : STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_1 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_PR );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_2 : STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_1 );
+         }
          break;
       case 8: // Tantegel ground floor entry left soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER );
          break;
       case 9: // Tantegel ground floor entry right soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_2 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_PR );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_2 );
+         }
          break;
       case 10: // Tantegel ground floor upper-left static blue man
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN );
          break;
       case 11: // Tantegel ground floor upper-right static blue woman
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_2 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_PR );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_2 );
+         }
          break;
       case 12: // Tantegel ground floor static barrier soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STATICBARRIERSOLDIER );
          break;
       case 13: // Tantegel ground floor blue man by the stairs
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSBLUEMAN );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSBLUEMAN_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSBLUEMAN );
          break;
       case 14: // Tantegel ground floor blue woman in the courtyard
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_2 : STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_1 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_PR );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_2 : STRING_NPC_TANTEGEL_GROUNDFLOOR_COURTYARDBLUEWOMAN_1 );
+         }
          break;
       case 15: // Tantegel ground floor green man on the right in the lower-left room
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_2 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_PR);
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_2 );
+         }
          break;
       case 16: // Tantegel ground floor green man on the left in the lower-left room
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT );
          break;
       case 17: // Tantegel ground floor treasure room soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_2 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_PR );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_2 );
+         }
          break;
       case 18: // Tantegel ground floor upper area soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER );
          break;
       case 19: // Tantegel ground floor right area moving soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER );
          break;
       case 20: // Tantegel ground floor moving wizard
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD : STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD );
          break;
       case 21: // Tantegel ground floor soldier on the other side of the barrier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_2 );
+         if ( game->gameFlags.carryingPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_PR );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_2 );
+         }
          break;
       case 22: // Tantegel basement wizard
          Dialog_PushSection( &( game->dialog ), ( game->gameFlags.treasures & 0x80 ) ? STRING_NPC_TANTEGEL_BASEMENT_WIZARD_1 : STRING_NPC_TANTEGEL_BASEMENT_WIZARD_2 );
@@ -381,6 +479,16 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_4 );
          Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_5, Game_DragonlordChoicePresentationCallback, game );
          break;
+      case 87: // Gwaelin (swamp cave)
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_3 );
+         sprintf( msg, STRING_NPC_SWAMPCAVE_PRINCESS_4, game->player.name );
+         Dialog_PushSection( &( game->dialog ), msg );
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_5, Game_RescuePrincessCallback, game );
+         sprintf( msg, STRING_NPC_SWAMPCAVE_PRINCESS_6, game->player.name );
+         Dialog_PushSection( &( game->dialog ), msg );
+         break;
 
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );
@@ -530,4 +638,74 @@ internal void Game_CurseLiftedCallback( Game_t* game )
 internal void Game_CurseLiftedSpellCallback( Game_t* game )
 {
    Player_SetCursed( &( game->player ), False );
+}
+
+internal void Game_RescuePrincessCallback( Game_t* game )
+{
+   game->gameFlags.rescuedPrincess = True;
+   game->gameFlags.carryingPrincess = True;
+   game->tileMap.npcCount = 0;
+   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_CARRY_ID );
+}
+
+internal void Game_ReturnPrincessCallback( Game_t* game )
+{
+   uint32_t i;
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 18; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ReturnPrincessPreFadeCallback, game );
+
+   for ( i = 0; i < 3; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+
+   for ( i = 0; i < 5; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ReturnPrincessFadeOutCallback, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_FadeIn, Screen_RestorePalette, &( game->screen ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ReturnPrincessPostFadeCallback, game );
+
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_ReturnPrincessPreFadeCallback( Game_t* game )
+{
+   game->mainState = MainState_Overworld;
+   game->subState = SubState_None;
+}
+
+internal void Game_ReturnPrincessFadeOutCallback( Game_t* game )
+{
+   if ( !ITEM_HAS_GWAELYNSLOVE( game->player.items ) )
+   {
+      ITEM_TOGGLE_HASGWAELYNSLOVE( game->player.items );
+   }
+
+   game->gameFlags.carryingPrincess = False;
+   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
+   TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
+   game->player.tileIndex = 131;
+   Player_SetCanonicalTileIndex( &( game->player ) );
+   Player_CenterOnTile( &( game->player ) );
+   ActiveSprite_SetDirection( &( game->player.sprite ), Direction_Up );
+   TileMap_UpdateViewport( &( game->tileMap ) );
+}
+
+internal void Game_ReturnPrincessPostFadeCallback( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_3 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_4 );
+   Game_OpenDialog( game );
 }
