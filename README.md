@@ -16,4 +16,4 @@ The wiring is quite simple. The display shield is designed to attach directly to
 
 ![PXL_20250818_235726708](https://github.com/user-attachments/assets/b2f8f18c-1761-40b2-8110-e61edcba1c52)
 ![PXL_20250818_235705632](https://github.com/user-attachments/assets/0f7103da-448b-4b8b-8690-0ae9cf102560)
-![PXL_20250818_235817562](https://github.com/user-attachments/assets/329a0118-1a25-427f-ab18-6082fad9a9eb)
+![NESPi_part4_web1](https://github.com/user-attachments/assets/0413c9b0-52c0-449b-8687-c0f1bf888ba2)
