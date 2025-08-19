@@ -49,6 +49,7 @@
 
 #define TILEMAP_OVERWORLD_ID                    0
 #define TILEMAP_TANTEGEL_THRONEROOM_ID          1
+#define TILEMAP_TANTEGEL_BASEMENT_ID            2
 #define TILEMAP_TANTEGEL_ID                     3
 #define TILEMAP_BRECCONARY_ID                   4
 #define TILEMAP_GARINHAM_ID                     7

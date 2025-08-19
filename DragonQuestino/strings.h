@@ -145,6 +145,8 @@
 #define STRING_DIALOG_EXPEL_1                                        "\"You there, hey! Stop!\""
 #define STRING_DIALOG_EXPEL_2                                        "\"This is a place of purity, we cannot allow a curse to befall our people!\""
 #define STRING_DIALOG_EXPEL_3                                        "\"Guards, let's remove this individual from the premises!\""
+#define STRING_DIALOG_CURSEDBELT_TANTEGEL_1                          "You wrap the cursed belt around your waist..."
+#define STRING_DIALOG_CURSEDBELT_TANTEGEL_2                          "Yet you can't bring yourself to buckle it, a mysterious benevolent force stops you."
 
 #define STRING_HOLYPROTECTION_ON                                     "A barrier of Holy Protection surrounds you."
 #define STRING_HOLYPROTECTION_OFF                                    "The effects of Holy Protection have worn off."
