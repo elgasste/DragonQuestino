@@ -398,7 +398,7 @@
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_11                "It feels as if you can tell Gwaelin's exact location just by looking at it."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_12                "Lorik: \"All hail %s, our courageous hero!!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_1                  "\"%s, what a terrible thing, my soldiers found you and thought you had died!\""
-#define STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_2                  "\"Against all odds, my people were able to nurse you back to health, welcome back!\""
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_2                  "\"Against all odds, my people were able to nurse you back to health, what a relief!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_3                  "\"Please be more careful in your travels, next time you may not be so lucky!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_1                    "\"My savior, my champion, you who have stolen my heart...\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_2                    "\"I love you, %s!\""

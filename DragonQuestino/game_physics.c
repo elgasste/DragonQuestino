@@ -169,7 +169,8 @@ void Game_TicPhysics( Game_t* game )
 #endif
 
       if ( !game->gameFlags.defeatedDragonlord && ( game->player.armor.id != ARMOR_ERDRICKSARMOR_ID ) &&
-           ( TILE_GET_DAMAGERATE( game->tileMap.tiles[player->canonicalTileIndex] ) > 0 ) )
+           ( TILE_GET_DAMAGERATE( game->tileMap.tiles[player->canonicalTileIndex] ) > 0 ) &&
+           game->player.stats.hitPoints > 0 )
       {
          if ( ( prevPos.x != newPos.x ) || ( prevPos.y != newPos.y ) )
          {
@@ -483,9 +484,8 @@ internal void Game_ApplyTileDamage( Game_t* game )
 
    if ( game->player.stats.hitPoints == 0 )
    {
-      // TODO: need to show some kind of animation here, and make sure the player gets drawn
-
       AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_TileDeath );
 
       for ( i = 0; i < 7; i++ )
       {
