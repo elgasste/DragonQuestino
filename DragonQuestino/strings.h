@@ -577,6 +577,9 @@
 #define STRING_NPC_SWAMPCAVE_PRINCESS_4                              "\"%s, will you carry me back to my home?\""
 #define STRING_NPC_SWAMPCAVE_PRINCESS_5                              "You embrace Princess Gwaelin."
 #define STRING_NPC_SWAMPCAVE_PRINCESS_6                              "\"%s, you are my hero! I am so happy!\""
+#define STRING_NPC_SWAMPCAVE_PRINCESS_CURSED_1                       "\"Who goes there? What is this awful feeling in my soul?!\""
+#define STRING_NPC_SWAMPCAVE_PRINCESS_CURSED_2                       "\"I can sense the horrible curse that has invaded your aura, it burns my spirit!\""
+#define STRING_NPC_SWAMPCAVE_PRINCESS_CURSED_3                       "\"Please just leave me here, death is more welcome than this feeling...\""
 #define STRING_NPC_OVERWORLD_PRINCESS                                "\"Please %s, take me home to Tantegel, I must see my father!\""
 
 #endif // STRINGS_H
