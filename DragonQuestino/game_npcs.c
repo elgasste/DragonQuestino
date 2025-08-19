@@ -45,7 +45,7 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_7 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_8 );
          break;
-      case 1: // Gwaelin
+      case 1: // Gwaelin (throne room)
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_1 );
          sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_2, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
@@ -380,6 +380,9 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_3 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_4 );
          Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_5, Game_DragonlordChoicePresentationCallback, game );
+         break;
+      case 87: // Gwaelin (swamp cave)
+         Dialog_PushSection( &( game->dialog ), "Have you seen my pet dragon?" );
          break;
 
       default: // should never happen, but it's nice to have a catch-all
