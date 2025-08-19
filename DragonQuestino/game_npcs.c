@@ -15,6 +15,10 @@ internal void Game_DragonlordInitiateFightCallback( Game_t* game );
 internal void Game_CurseLiftedCallback( Game_t* game );
 internal void Game_CurseLiftedSpellCallback( Game_t* game );
 internal void Game_RescuePrincessCallback( Game_t* game );
+internal void Game_ReturnPrincessCallback( Game_t* game );
+internal void Game_ReturnPrincessPreFadeCallback( Game_t* game );
+internal void Game_ReturnPrincessFadeOutCallback( Game_t* game );
+internal void Game_ReturnPrincessPostFadeCallback( Game_t* game );
 
 void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
 {
@@ -28,23 +32,46 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
    switch ( npcId )
    {
       case 0: // King Lorik
-         sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_1, game->player.name );
-         Dialog_PushSection( &( game->dialog ), msg );
-         experienceRemaining = Player_GetExperienceRemaining( &( game->player ) );
-         if ( experienceRemaining > 0 )
+         if ( game->gameFlags.carryingPrincess )
          {
-            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_2, experienceRemaining,
-                     experienceRemaining == 1 ? STRING_POINT : STRING_POINTS );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_1 );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_2, game->player.name );
             Dialog_PushSection( &( game->dialog ), msg );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_3, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_4 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_5 );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_6, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_7 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_8 );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_9, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_10 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_11 );
+            sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_12, game->player.name );
+            Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ReturnPrincessCallback, game );
          }
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_3 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_4 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_5 );
-         Game_GetPassword( game, password );
-         sprintf( passwordMsg, STRING_NPC_TANTEGEL_THRONEROOM_KING_6, password );
-         Dialog_PushSection( &( game->dialog ), passwordMsg );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_7 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_8 );
+         else
+         {
+            sprintf( msg, game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_THRONEROOM_KING_1_2 : STRING_NPC_TANTEGEL_THRONEROOM_KING_1_1, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            experienceRemaining = Player_GetExperienceRemaining( &( game->player ) );
+            if ( experienceRemaining > 0 )
+            {
+               sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_2, experienceRemaining,
+                        experienceRemaining == 1 ? STRING_POINT : STRING_POINTS );
+               Dialog_PushSection( &( game->dialog ), msg );
+            }
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_3 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_4 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_5 );
+            Game_GetPassword( game, password );
+            sprintf( passwordMsg, STRING_NPC_TANTEGEL_THRONEROOM_KING_6, password );
+            Dialog_PushSection( &( game->dialog ), passwordMsg );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_7 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_8 );
+         }
          break;
       case 1: // Gwaelin (throne room)
          Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_1 );
@@ -549,4 +576,66 @@ internal void Game_RescuePrincessCallback( Game_t* game )
    game->gameFlags.carryingPrincess = True;
    game->tileMap.npcCount = 0;
    Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_CARRY_ID );
+}
+
+internal void Game_ReturnPrincessCallback( Game_t* game )
+{
+   uint32_t i;
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 18; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ReturnPrincessPreFadeCallback, game );
+
+   for ( i = 0; i < 3; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+
+   for ( i = 0; i < 5; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ReturnPrincessFadeOutCallback, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_FadeIn, Screen_RestorePalette, &( game->screen ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ReturnPrincessPostFadeCallback, game );
+
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_ReturnPrincessPreFadeCallback( Game_t* game )
+{
+   game->mainState = MainState_Overworld;
+   game->subState = SubState_None;
+}
+
+internal void Game_ReturnPrincessFadeOutCallback( Game_t* game )
+{
+   if ( !ITEM_HAS_GWAELYNSLOVE( game->player.items ) )
+   {
+      ITEM_TOGGLE_HASGWAELYNSLOVE( game->player.items );
+   }
+
+   game->gameFlags.carryingPrincess = False;
+   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
+   TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
+   game->player.tileIndex = 131;
+   Player_SetCanonicalTileIndex( &( game->player ) );
+   Player_CenterOnTile( &( game->player ) );
+   ActiveSprite_SetDirection( &( game->player.sprite ), Direction_Up );
+   TileMap_UpdateViewport( &( game->tileMap ) );
+}
+
+internal void Game_ReturnPrincessPostFadeCallback( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_3 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_PRINCESS_4 );
+   Game_OpenDialog( game );
 }
