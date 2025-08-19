@@ -83,6 +83,7 @@ void Game_RestoredHitPointsCallback( Game_t* game );
 void Game_CursedCallback( Game_t* game );
 void Game_ResetBattleMenu( Game_t* game );
 void Game_HandleDeath( Game_t* game );
+void Game_ExpelCursedPlayer( Game_t* game );
 
 // game_password.c
 void Game_GetPassword( Game_t* game, char* password );

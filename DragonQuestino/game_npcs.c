@@ -480,14 +480,23 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_CHARLOCK_DRAGONLORD_1_5, Game_DragonlordChoicePresentationCallback, game );
          break;
       case 87: // Gwaelin (swamp cave)
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_1 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_2 );
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_3 );
-         sprintf( msg, STRING_NPC_SWAMPCAVE_PRINCESS_4, game->player.name );
-         Dialog_PushSection( &( game->dialog ), msg );
-         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_5, Game_RescuePrincessCallback, game );
-         sprintf( msg, STRING_NPC_SWAMPCAVE_PRINCESS_6, game->player.name );
-         Dialog_PushSection( &( game->dialog ), msg );
+         if ( game->player.isCursed )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_CURSED_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_CURSED_2 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_CURSED_3 );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_2 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_3 );
+            sprintf( msg, STRING_NPC_SWAMPCAVE_PRINCESS_4, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+            Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_SWAMPCAVE_PRINCESS_5, Game_RescuePrincessCallback, game );
+            sprintf( msg, STRING_NPC_SWAMPCAVE_PRINCESS_6, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+         }
          break;
 
       default: // should never happen, but it's nice to have a catch-all

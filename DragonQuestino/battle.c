@@ -1169,6 +1169,12 @@ internal void Battle_CollectSpherePauseCallback( Battle_t* battle )
       ITEM_TOGGLE_HASSPHEREOFLIGHT( battle->game->player.items );
    }
 
+   if ( ITEM_HAS_CURSEDBELT( battle->game->player.items ) )
+   {
+      ITEM_TOGGLE_HASCURSEDBELT( battle->game->player.items );
+   }
+
+   battle->game->player.isCursed = False;
    Dialog_Reset( &( battle->game->dialog ) );
    Dialog_PushSection( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT );
    Game_OpenDialog( battle->game );
