@@ -80,8 +80,6 @@
                             DisplayMemberPath="DisplayText"
                             SelectedValue="{Binding SelectedShield}" />
                </StackPanel>
-               <CheckBox Content="Cursed"
-                         IsChecked="{Binding PlayerIsCursed, Mode=TwoWay}" />
             </StackPanel>
          </GroupBox>
          
