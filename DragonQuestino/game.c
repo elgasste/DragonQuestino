@@ -7,6 +7,8 @@ internal void Game_BattleIntroMessageCallback( Game_t* game );
 internal void Game_TicActiveSprites( Game_t* game );
 internal void Game_DeathFadeOutCallback( Game_t* game );
 internal void Game_DeathPostFadeCallback( Game_t* game );
+internal void Game_CursedExpelCallback( Game_t* game );
+internal void Game_CursedExpelMessageCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -469,9 +471,18 @@ internal void Game_TicActiveSprites( Game_t* game )
 
 internal void Game_DeathFadeOutCallback( Game_t* game )
 {
-   game->player.gold /= 2;
-   game->player.stats.hitPoints = game->player.stats.maxHitPoints;
-   game->player.stats.magicPoints = game->player.stats.maxMagicPoints;
+   if ( game->player.isCursed )
+   {
+      game->player.gold = 0;
+      game->player.stats.hitPoints = 1;
+      game->player.stats.magicPoints = 0;
+   }
+   else
+   {
+      game->player.gold /= 2;
+      game->player.stats.hitPoints = game->player.stats.maxHitPoints;
+      game->player.stats.magicPoints = game->player.stats.maxMagicPoints;
+   }
 
    if ( game->gameFlags.carryingPrincess )
    {
@@ -493,9 +504,47 @@ internal void Game_DeathPostFadeCallback( Game_t* game )
    char msg[128];
 
    Dialog_Reset( &( game->dialog ) );
-   sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_1, game->player.name );
-   Dialog_PushSection( &( game->dialog ), msg );
-   Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_2 );
-   Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_3 );
+
+   if ( game->player.isCursed )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_CURSED_1 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_CURSED_2 );
+      sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_CURSED_3, game->player.name );
+      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_CursedExpelCallback, game );
+   }
+   else
+   {
+      sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_1, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_2 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_3 );
+   }
+
    Game_OpenDialog( game );
+}
+
+internal void Game_CursedExpelCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 11; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_CursedExpelMessageCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_CursedExpelMessageCallback( Game_t* game )
+{
+   game->tileMap.evacPortal.arrivalDirection = Direction_Down;
+   game->tileMap.evacPortal.destinationTileMapIndex = TILEMAP_OVERWORLD_ID;
+   game->tileMap.evacPortal.destinationTileIndex = 7193;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   Game_AnimatePortalEntrance( game, &( game->tileMap.evacPortal ) );
+   AnimationChain_Start( &( game->animationChain ) );
 }
