@@ -87,7 +87,8 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, string.Format( "#define TILE_OVERWORLD_ENEMY_INDEX_POOLS {0}\n", _overworldEnemyIndexPools.Count ) );
          WriteToFileStream( fs, string.Format( "#define TILE_DUNGEON_ENEMY_INDEX_POOLS {0}\n", _dungeonEnemyIndexPools.Count ) );
-         WriteToFileStream( fs, string.Format( "#define ACTIVE_SPRITE_PLAYER_ID {0}\n\n", Constants.PlayerActiveSpriteIndex ) );
+         WriteToFileStream( fs, string.Format( "#define ACTIVE_SPRITE_PLAYER_ID {0}\n", Constants.PlayerActiveSpriteIndex ) );
+         WriteToFileStream( fs, string.Format( "#define ACTIVE_SPRITE_PLAYER_CARRY_ID {0}\n\n", Constants.PlayerCarryActiveSpriteIndex ) );
 
          WriteToFileStream( fs, "#endif // GENERATED_DEFINES_H\n" );
       }

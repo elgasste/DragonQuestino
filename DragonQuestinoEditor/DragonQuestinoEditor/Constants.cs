@@ -23,7 +23,8 @@ namespace DragonQuestinoEditor
          AssetsBasePath + "green_man_sprite.png",
          AssetsBasePath + "brown_soldier_sprite.png",
          AssetsBasePath + "wizard_sprite.png",
-         AssetsBasePath + "dragonlord_sprite.png"
+         AssetsBasePath + "dragonlord_sprite.png",
+         AssetsBasePath + "player_sprite_carry.png"
       ];
 
       public const string GameDataSourceFilePath = SourceBasePath + "game_data.c";
@@ -64,6 +65,7 @@ namespace DragonQuestinoEditor
       public const int EnemyTileCount = 120;   // keep this in parity with ENEMY_TILE_COUNT
 
       public const int PlayerActiveSpriteIndex = 0;
+      public const int PlayerCarryActiveSpriteIndex = 10;
 
       // bits 6-7
       public static readonly UInt32[] TileSetIndexWalkSpeeds = [
