@@ -241,6 +241,13 @@ void Game_PlayerSteppedOnTile( Game_t* game )
       }
    }
 
+   if ( game->player.isCursed && game->tileMap.id == TILEMAP_TANTEGEL_ID &&
+        ( game->player.tileIndex == 907 || game->player.tileIndex == 908 ) )
+   {
+      Game_ExpelCursedPlayer( game );
+      return;
+   }
+
    if ( game->tileMap.isDark && game->tileMap.glowDiameter > 1 )
    {
       game->tileMap.glowTileCount++;

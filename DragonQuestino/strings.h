@@ -142,6 +142,9 @@
 #define STRING_DIALOG_DRAGONLORDTHRONE                               "You feel a light breeze flowing from behind the Dragonlord's throne..."
 #define STRING_DIALOG_FOUNDSPHEREOFLIGHT                             "You have found the Sphere of Light!"
 #define STRING_DIALOG_DEAD                                           "You fall to the ground, lifeless..."
+#define STRING_DIALOG_EXPEL_1                                        "\"You there, hey! Stop!\""
+#define STRING_DIALOG_EXPEL_2                                        "\"This is a place of purity, we cannot allow a curse to befall our people!\""
+#define STRING_DIALOG_EXPEL_3                                        "\"Guards, let's remove this individual from the premises!\""
 
 #define STRING_HOLYPROTECTION_ON                                     "A barrier of Holy Protection surrounds you."
 #define STRING_HOLYPROTECTION_OFF                                    "The effects of Holy Protection have worn off."

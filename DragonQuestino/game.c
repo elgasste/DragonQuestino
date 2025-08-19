@@ -416,6 +416,15 @@ void Game_HandleDeath( Game_t* game )
    AnimationChain_Start( &( game->animationChain ) );
 }
 
+void Game_ExpelCursedPlayer( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_DIALOG_EXPEL_1 );
+   Dialog_PushSection( &( game->dialog ), STRING_DIALOG_EXPEL_2 );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_DIALOG_EXPEL_3, Game_CursedExpelCallback, game );
+   Game_OpenDialog( game );
+}
+
 internal void Game_BattleIntroMessageCallback( Game_t* game )
 {
    char enemyName[24];
