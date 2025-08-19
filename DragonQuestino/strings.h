@@ -533,5 +533,6 @@
 #define STRING_NPC_SWAMPCAVE_PRINCESS_4                              "\"%s, will you carry me back to my home?\""
 #define STRING_NPC_SWAMPCAVE_PRINCESS_5                              "You embrace Princess Gwaelin."
 #define STRING_NPC_SWAMPCAVE_PRINCESS_6                              "\"%s, you are my hero! I am so happy!\""
+#define STRING_NPC_OVERWORLD_PRINCESS                                "\"Please %s, take me home to Tantegel, I must see my father!\""
 
 #endif // STRINGS_H

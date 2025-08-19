@@ -191,6 +191,7 @@ void Game_TicPhysics( Game_t* game )
 void Game_PlayerSteppedOnTile( Game_t* game )
 {
    TilePortal_t* portal;
+   char msg[64];
 
 #if defined VISUAL_STUDIO_DEV
    if ( !g_debugFlags.noTileDamage )
@@ -219,10 +220,22 @@ void Game_PlayerSteppedOnTile( Game_t* game )
 
    if ( portal )
    {
-      AnimationChain_Reset( &( game->animationChain ) );
-      Game_AnimatePortalEntrance( game, portal );
-      AnimationChain_Start( &( game->animationChain ) );
-      return;
+      if ( ( game->tileMap.id == TILEMAP_OVERWORLD_ID ) && game->gameFlags.carryingPrincess &&
+           ( portal->destinationTileMapIndex != TILEMAP_TANTEGEL_ID ) && ( portal->destinationTileMapIndex != TILEMAP_SWAMPCAVE_ID ) )
+      {
+         Dialog_Reset( &( game->dialog ) );
+         sprintf( msg, STRING_NPC_OVERWORLD_PRINCESS, game->player.name );
+         Dialog_PushSection( &( game->dialog ), msg );
+         Game_OpenDialog( game );
+         return;
+      }
+      else
+      {
+         AnimationChain_Reset( &( game->animationChain ) );
+         Game_AnimatePortalEntrance( game, portal );
+         AnimationChain_Start( &( game->animationChain ) );
+         return;
+      }
    }
 
    if ( game->tileMap.isDark && game->tileMap.glowDiameter > 1 )
