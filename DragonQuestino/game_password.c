@@ -22,7 +22,7 @@ void Game_GetPassword( Game_t* game, char* password )
 
       ( player->items << 7 ) |                                    // items (25 bits)
       ( (uint32_t)( player->townsVisited ) << 1 ) |               // towns visited (6 bits)
-      0x1,                                                        // reserved (1 bit)
+      0x0,                                                        // reserved (1 bit)
 
       ( (uint32_t)( player->gold ) << 16 ) |                      // gold (16 bits)
       ( ( player->weapon.id & 0x7 ) << 13 ) |                     // weapon (3 bits)
@@ -191,8 +191,9 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
 
 internal void Password_InjectChecksum( uint32_t* encodedBits )
 {
+   uint32_t checksumIndex = Random_u32( 0, 1 );
    uint32_t tableIndex = Random_u32( 0, 31 );
-   uint32_t tableValue = g_passwordChecksumTable[tableIndex];
+   uint32_t tableValue = ( checksumIndex == 0 ) ? g_passwordChecksumTable1[tableIndex] : g_passwordChecksumTable2[tableIndex];
 
    // the highest 7 bits of the permanent door flags
    encodedBits[0] &= ~( 0x7F << 25 );
@@ -202,6 +203,10 @@ internal void Password_InjectChecksum( uint32_t* encodedBits )
    // the highest two bits of the treasure flags
    encodedBits[1] &= ~( 0x3 << 30 );
    encodedBits[1] |= ( ( tableValue >> 1 ) & 0x3 ) << 30;
+
+   // the lowest bit of the third set
+   encodedBits[2] &= ~( 0x1 );
+   encodedBits[2] |= checksumIndex;
 
    // the last bit of the password
    encodedBits[5] &= ~( 0x1 << 12 );
@@ -312,10 +317,13 @@ internal Bool_t Password_ValidateChars( const char* password )
 
 internal Bool_t Password_ValidateChecksum( uint32_t* encodedBits )
 {
+   uint32_t checksumIndex = encodedBits[2] & 0x1;
    uint32_t tableIndex = encodedBits[0] >> 27;
    uint32_t tableValue = ( ( encodedBits[5] >> 12 ) & 0x1 ) |
                          ( ( encodedBits[1] >> 29 ) & 0x6 ) |
                          ( ( encodedBits[0] >> 22 ) & 0x18 );
 
-   return ( tableValue == g_passwordChecksumTable[tableIndex] ) ? True : False;
+   return ( checksumIndex == 0 )
+      ? ( ( tableValue == g_passwordChecksumTable1[tableIndex] ) ? True : False )
+      : ( ( tableValue == g_passwordChecksumTable2[tableIndex] ) ? True : False );
 }

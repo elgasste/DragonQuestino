@@ -254,7 +254,7 @@ global uint16_t g_innPriceTable[INNPRICE_TABLE_SIZE] = {
    55
 };
 
-global uint32_t g_passwordChecksumTable[32] = {
+global uint32_t g_passwordChecksumTable1[32] = {
    11,
    29,
    7,
@@ -287,6 +287,41 @@ global uint32_t g_passwordChecksumTable[32] = {
    20,
    17,
    2
+};
+
+global uint32_t g_passwordChecksumTable2[32] = {
+   25,
+   21,
+   22,
+   7,
+   13,
+   12,
+   17,
+   29,
+   20,
+   14,
+   0,
+   24,
+   6,
+   4,
+   26,
+   30,
+   3,
+   18,
+   28,
+   16,
+   9,
+   15,
+   5,
+   2,
+   31,
+   27,
+   10,
+   1,
+   8,
+   19,
+   11,
+   23
 };
 
 #endif // TABLES_H
