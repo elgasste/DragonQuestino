@@ -14,7 +14,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
    public class MainWindowViewModel : ViewModelBase
    {
-      private static readonly int[] _checksumTable =
+      private static readonly int[] _checksumTable1 =
       {
          11,
          29,
@@ -48,6 +48,42 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          20,
          17,
          2
+      };
+
+      private static readonly int[] _checksumTable2 =
+      {
+         25,
+         21,
+         22,
+         7,
+         13,
+         12,
+         17,
+         29,
+         20,
+         14,
+         0,
+         24,
+         6,
+         4,
+         26,
+         30,
+         3,
+         18,
+         28,
+         16,
+         9,
+         15,
+         5,
+         2,
+         31,
+         27,
+         10,
+         1,
+         8,
+         19,
+         11,
+         23
       };
 
       private string _playerName = string.Empty;
@@ -1123,8 +1159,9 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
          // inject the checksum
          Random random = new Random();
+         UInt32 checksumIndex = (UInt32)random.Next( 2 );
          UInt32 tableIndex = (UInt32)random.Next( 32 );
-         UInt32 tableValue = (UInt32)_checksumTable[tableIndex];
+         UInt32 tableValue = ( checksumIndex == 0 ) ? (UInt32)_checksumTable1[tableIndex] : (UInt32)_checksumTable2[tableIndex];
 
          encodedBits[0] &= ~( (UInt32)0x7F << 25 );
          encodedBits[0] |= tableIndex << 27;
@@ -1132,6 +1169,9 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
          encodedBits[1] &= ~( (UInt32)0x3 << 30 );
          encodedBits[1] |= ( ( tableValue >> 1 ) & 0x3 ) << 30;
+
+         encodedBits[2] &= ~( (UInt32)0x1 );
+         encodedBits[2] |= checksumIndex;
 
          encodedBits[5] &= ~( (UInt32)0x1 << 12 );
          encodedBits[5] |= ( tableValue & 0x1 ) << 12;
@@ -1190,7 +1230,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
 
       private void ClearAllFields()
       {
-         ApplyPassword( "Y.8AAD....8AAAAAAAAA4P.......w" );
+         ApplyPassword( "I.8AAL....8AAAABAAAA4P.......x" );
       }
 
       private void ApplyPassword( string password )
@@ -1250,7 +1290,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
                           ( GetEncodedBitsFromChar( password[28] ) << 18 ) |
                           ( GetEncodedBitsFromChar( password[29] ) << 12 );
 
-         if ( !ValidateChecksum( encodedBits[0], encodedBits[1], encodedBits[5] ) )
+         if ( !ValidateChecksum( encodedBits[0], encodedBits[1], encodedBits[2], encodedBits[5] ) )
          {
             MessageBox.Show( "Password checksum is invalid.", "Invalid Password", MessageBoxButton.OK, MessageBoxImage.Error );
             return;
@@ -1533,14 +1573,17 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          SelectedShield = Shields[(int)shieldFlag];
       }
 
-      private bool ValidateChecksum( UInt32 encodedBits0, UInt32 encodedBits1, UInt32 encodedBits5 )
+      private bool ValidateChecksum( UInt32 encodedBits0, UInt32 encodedBits1, UInt32 encodedBits2, UInt32 encodedBits5 )
       {
+         UInt32 checksumIndex = encodedBits2 & 0x1;
          UInt32 tableIndex = encodedBits0 >> 27;
          UInt32 tableValue = ( ( encodedBits5 >> 12 ) & 0x1 ) |
                              ( ( encodedBits1 >> 29 ) & 0x6 ) |
                              ( ( encodedBits0 >> 22 ) & 0x18 );
 
-         return ( tableValue == _checksumTable[tableIndex] );
+         return ( checksumIndex == 0 )
+            ? ( ( tableValue == _checksumTable1[tableIndex] ) )
+            : ( ( tableValue == _checksumTable2[tableIndex] ) );
       }
    }
 }
