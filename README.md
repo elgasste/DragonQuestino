@@ -18,3 +18,11 @@ The wiring is quite simple. The display shield is designed to attach directly to
 ![PXL_20250818_235726708](https://github.com/user-attachments/assets/b2f8f18c-1761-40b2-8110-e61edcba1c52)
 ![PXL_20250818_235705632](https://github.com/user-attachments/assets/0f7103da-448b-4b8b-8690-0ae9cf102560)
 ![NESPi_part4_web1](https://github.com/user-attachments/assets/0413c9b0-52c0-449b-8687-c0f1bf888ba2)
+
+## Development
+
+Although this is an Arduino project, it's much easier to do all the development on a PC, so there are three Visual Studio projects available for that:
+
+- `DragonQuestinoWinDev`: the game itself, but on the Windows platform. It builds and runs super fast, and includes diagnostic information and debugging tools. You can also scale the game up or down.
+- `DragonQuestinoEditor`: this started off as a full-blown tile map editor with other capabilities, but at some point it kinda broke, so now I just edit the JSON data by hand and pretty much just use the "Write Game Data" button when I need to.
+- `DragonQuestinoPasswordGenerator`: as you'd expect, this allows you to generate passwords that allow you to adjust the game to your liking (helps a lot with debugging).
