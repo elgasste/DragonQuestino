@@ -11,6 +11,7 @@ typedef enum Button_t
    Button_Down,
    Button_A,
    Button_B,
+   Button_Start,
 
    Button_Count
 }

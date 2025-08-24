@@ -186,6 +186,7 @@ internal void InitButtonMap()
    g_globals.buttonMap[Button_Down] = VK_DOWN;
    g_globals.buttonMap[Button_A] = 0x58; // X
    g_globals.buttonMap[Button_B] = 0x5A; // Z
+   g_globals.buttonMap[Button_Start] = VK_RETURN;
 }
 
 internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
