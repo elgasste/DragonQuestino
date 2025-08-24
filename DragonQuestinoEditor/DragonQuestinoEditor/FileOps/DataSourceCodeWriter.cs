@@ -338,8 +338,9 @@ namespace DragonQuestinoEditor.FileOps
                for ( int i = 0; i < tileMap.NonPlayerCharacters.Count; i++ )
                {
                   var npc = tileMap.NonPlayerCharacters[i];
-                  int xPos = ( npc.TileIndex % tileMap.TilesX ) * Constants.SpriteFrameSize;
-                  int yPos = ( npc.TileIndex / tileMap.TilesX ) * Constants.SpriteFrameSize;
+                  int canonicalTileIndex = npc.TileIndex + ( ( npc.TileIndex / tileMap.TilesX ) * ( Constants.TileMapMaxTilesX - tileMap.TilesX ) );
+                  int xPos = ( canonicalTileIndex % Constants.TileMapMaxTilesX ) * Constants.SpriteFrameSize;
+                  int yPos = ( canonicalTileIndex / Constants.TileMapMaxTilesX ) * Constants.SpriteFrameSize;
 
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].id = {1};\n", i, npc.Id ) );
                   WriteToFileStream( fs, string.Format( "         tileMap->npcs[{0}].tileIndex = {1};\n", i, npc.TileIndex ) );
