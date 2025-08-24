@@ -850,9 +850,16 @@ internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
 
    damage = Random_u8( minDamage, maxDamage );
 
-   if ( damage == 0 && player->stats.isAsleep )
+   if ( damage == 0 )
    {
-      damage = 1;
+      if ( player->stats.isAsleep )
+      {
+         damage = 1;
+      }
+      else
+      {
+         damage = Random_u8( 0, 1 );
+      }
    }
 
    return damage;
