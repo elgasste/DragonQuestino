@@ -28,6 +28,7 @@ void Input_Read( Input_t* input )
    Input_UpdateButtonState( &( input->buttonStates[ Button_Up ] ), ( nesInput & INPUT_UP_FLAG ) ? True : False );
    Input_UpdateButtonState( &( input->buttonStates[ Button_Right ] ), ( nesInput & INPUT_RIGHT_FLAG ) ? True : False );
    Input_UpdateButtonState( &( input->buttonStates[ Button_Down ] ), ( nesInput & INPUT_DOWN_FLAG ) ? True : False );
+   Input_UpdateButtonState( &( input->buttonStates[ Button_Start ] ), ( nesInput & INPUT_START_FLAG ) ? True : False );
 #endif
 }
 

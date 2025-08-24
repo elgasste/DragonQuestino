@@ -451,6 +451,13 @@ internal void Game_HandleEnterNameInput( Game_t* game )
    char* name = game->player.name;
    size_t length = strlen( name );
 
+   if ( game->input.buttonStates[Button_Start].pressed )
+   {
+      if ( length > 0 )
+      {
+         Game_Load( game, "" );
+      }
+   }
    if ( game->input.buttonStates[Button_A].pressed )
    {
       if ( game->alphaPicker.selectedIndex == 64 )
@@ -496,6 +503,13 @@ internal void Game_HandleEnterPasswordInput( Game_t* game )
    char* password = game->password;
    size_t length = strlen( password );
 
+   if ( game->input.buttonStates[Button_Start].pressed )
+   {
+      if ( length == PASSWORD_LENGTH )
+      {
+         Game_Load( game, password );
+      }
+   }
    if ( game->input.buttonStates[Button_A].pressed )
    {
       if ( game->alphaPicker.selectedIndex == 64 )
