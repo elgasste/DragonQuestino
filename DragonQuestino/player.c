@@ -57,17 +57,17 @@ uint8_t Player_GetStrengthFromLevel( Player_t* player, uint8_t level )
 
 uint8_t Player_GetAgilityFromLevel( Player_t* player, uint8_t level )
 {
-   return Player_GetStatFromLevel( player, level, g_strengthTable, ( player->statGrowthType == 0 || player->statGrowthType == 1 ) ? True : False );
+   return Player_GetStatFromLevel( player, level, g_agilityTable, ( player->statGrowthType == 0 || player->statGrowthType == 1 ) ? True : False );
 }
 
 uint8_t Player_GetMaxHitPointsFromLevel( Player_t* player, uint8_t level )
 {
-   return Player_GetStatFromLevel( player, level, g_strengthTable, ( player->statGrowthType == 2 || player->statGrowthType == 3 ) ? True : False );
+   return Player_GetStatFromLevel( player, level, g_hitPointsTable, ( player->statGrowthType == 2 || player->statGrowthType == 3 ) ? True : False );
 }
 
 uint8_t Player_GetMaxMagicPointsFromLevel( Player_t* player, uint8_t level )
 {
-   return Player_GetStatFromLevel( player, level, g_strengthTable, ( player->statGrowthType == 1 || player->statGrowthType == 3 ) ? True : False );
+   return Player_GetStatFromLevel( player, level, g_magicPointsTable, ( player->statGrowthType == 1 || player->statGrowthType == 3 ) ? True : False );
 }
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
