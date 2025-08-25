@@ -1,6 +1,7 @@
 ﻿using DragonQuestinoPasswordGenerator.Commands;
 using System;
 using System.Collections.ObjectModel;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -95,7 +96,18 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
             if ( SetProperty( ref _playerName, value ) )
             {
                UpdatePassword();
+               UpdateStatGrowthText();
             }
+         }
+      }
+
+      private string _statGrowthText = string.Empty;
+      public string StatGrowthText
+      {
+         get => _statGrowthText;
+         set
+         {
+            SetProperty( ref _statGrowthText, value );
          }
       }
 
@@ -1086,6 +1098,7 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          _selectedShield = Shields[0];
 
          UpdatePassword();
+         UpdateStatGrowthText();
       }
 
       private void UpdatePassword()
@@ -1214,6 +1227,33 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          Password = new( passwordChars );
       }
 
+      private void UpdateStatGrowthText()
+      {
+         int nameSum = 0;
+
+         for ( int i = 0; i < PlayerName.Length; i++ )
+         {
+            nameSum += PlayerName[i] % 16;
+         }
+
+         int statFactor = ( nameSum / 4 ) % 4;
+
+         switch( nameSum % 4 )
+         {
+            case 0:
+               StatGrowthText = string.Format( "(short term str and agl by {0})", statFactor );
+               break;
+            case 1:
+               StatGrowthText = string.Format( "(short term agl and MP by {0})", statFactor );
+               break;
+            case 2:
+               StatGrowthText = string.Format( "(short term str and HP by {0})", statFactor );
+               break;
+            case 3:
+               StatGrowthText = string.Format( "(short term HP and MP by {0})", statFactor );
+               break;
+         }
+      }
 
       private void EnterPassword()
       {

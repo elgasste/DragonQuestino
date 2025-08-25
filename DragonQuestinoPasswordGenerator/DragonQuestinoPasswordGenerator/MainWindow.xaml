@@ -46,6 +46,8 @@
                            GotFocus="TextBox_GotFocus_SelectText"
                            Text="{Binding PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                </StackPanel>
+               <TextBlock Text="{Binding StatGrowthText}"
+                          Margin="80 0 0 0"/>
                <StackPanel Orientation="Horizontal">
                   <Label Content="Experience:" />
                   <TextBox PreviewTextInput="TextBox_PreviewTextInput_NumericOnly"

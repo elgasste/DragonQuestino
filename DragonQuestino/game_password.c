@@ -145,12 +145,12 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    player->level = Player_GetLevelFromExperience( player->experience );
    Player_UpdateSpellsToLevel( player, player->level );
 
-   player->stats.strength = g_strengthTable[player->level];
-   player->stats.agility = g_agilityTable[player->level];
-   player->stats.hitPoints = g_hitPointsTable[player->level];
-   player->stats.maxHitPoints = g_hitPointsTable[player->level];
-   player->stats.magicPoints = g_magicPointsTable[player->level];
-   player->stats.maxMagicPoints = g_magicPointsTable[player->level];
+   player->stats.strength = Player_GetStrengthFromLevel( player, player->level );
+   player->stats.agility = Player_GetAgilityFromLevel( player, player->level );
+   player->stats.maxHitPoints = Player_GetMaxHitPointsFromLevel( player, player->level );
+   player->stats.hitPoints = player->stats.maxHitPoints;
+   player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, player->level );
+   player->stats.magicPoints = player->stats.maxMagicPoints;
 
    Player_LoadWeapon( player, ( encodedBits[3] >> 13 ) & 0x7 );
    Player_LoadArmor( player, ( encodedBits[3] >> 10 ) & 0x7 );
@@ -167,7 +167,7 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
    if ( length <= 0 )
    {
       length = 1;
-      player->name[0] = ' ';
+      Player_SetName( player, " " );
    }
 
    for ( i = 0; i < 8; i++ )
@@ -216,7 +216,7 @@ internal void Password_InjectChecksum( uint32_t* encodedBits )
 internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBits )
 {
    uint32_t length, i;
-   char* name = player->name;
+   char name[9];
 
    name[0] = 0;
    length = ( ( encodedBits[5] >> 13 ) & 0x7 ) + 1;
@@ -270,6 +270,8 @@ internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBit
          name[i] = ' ';
       }
    }
+
+   Player_SetName( player, name );
 }
 
 internal char Password_GetCharFromBits( uint32_t bits )

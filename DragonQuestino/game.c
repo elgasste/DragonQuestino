@@ -64,7 +64,7 @@ void Game_Reset( Game_t* game )
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
 
-   player->name[0] = 0;
+   Player_SetName( player, "" );
    player->sprite.position.x = (float)( TILE_SIZE * 8 ) + 2.0f;
    player->sprite.position.y = (float)( TILE_SIZE * 6 ) + 4.0f;
    player->sprite.direction = Direction_Up;
@@ -83,12 +83,6 @@ void Game_Reset( Game_t* game )
    player->stats.stopSpellResist = 0;
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
-   player->stats.strength = g_strengthTable[0];
-   player->stats.agility = g_agilityTable[0];
-   player->stats.hitPoints = g_hitPointsTable[0];
-   player->stats.maxHitPoints = g_hitPointsTable[0];
-   player->stats.magicPoints = g_magicPointsTable[0];
-   player->stats.maxMagicPoints = g_magicPointsTable[0];
    player->isCursed = False;
 
    Player_LoadWeapon( player, WEAPON_NONE_ID );
@@ -100,6 +94,8 @@ void Game_Reset( Game_t* game )
 
 void Game_Load( Game_t* game, const char* password )
 {
+   Player_t* player = &( game->player );
+
    if ( strlen( password ) > 0 )
    {
       if ( Game_LoadFromPassword( game, password ) )
@@ -125,9 +121,16 @@ void Game_Load( Game_t* game, const char* password )
       game->subState = SubState_None;
    }
 
+   player->stats.strength = Player_GetStrengthFromLevel( player, 0 );
+   player->stats.agility = Player_GetAgilityFromLevel( player, 0 );
+   player->stats.maxHitPoints = Player_GetMaxHitPointsFromLevel( player, 0 );
+   player->stats.hitPoints = player->stats.maxHitPoints;
+   player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, 0 );
+   player->stats.magicPoints = player->stats.maxMagicPoints;
+
    TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
-   game->player.tileIndex = 128; // in front of King Lorik
-   Player_SetCanonicalTileIndex( &( game->player ) );
+   player->tileIndex = 128; // in front of King Lorik
+   Player_SetCanonicalTileIndex( player );
 }
 
 void Game_Tic( Game_t* game )

@@ -4,6 +4,8 @@
 #include "math.h"
 #include "tables.h"
 
+internal uint32_t Player_GetNameSum( Player_t* player );
+
 void Player_Init( Player_t* player, TileMap_t* tileMap )
 {
    player->tileMap = tileMap;
@@ -13,6 +15,12 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    player->sprite.offset.x = -2;
    player->sprite.offset.y = -4;
    Sprite_LoadActive( &( player->sprite ), ACTIVE_SPRITE_PLAYER_ID );
+}
+
+void Player_SetName( Player_t* player, const char* name )
+{
+   strcpy( player->name, name );
+   player->statGrowthType = Player_GetNameSum( player ) % 4;
 }
 
 uint8_t Player_GetLevelFromExperience( uint16_t experience )
@@ -28,6 +36,40 @@ uint8_t Player_GetLevelFromExperience( uint16_t experience )
    }
 
    return i;
+}
+
+internal uint8_t Player_GetStatFromLevel( Player_t* player, uint8_t level, uint8_t* table, Bool_t shortTerm )
+{
+   uint8_t stat = table[level];
+
+   if ( shortTerm )
+   {
+      stat = ( ( Player_GetNameSum( player ) / 4 ) % 4 ) + ( ( stat * 9 ) / 10 );
+   }
+
+   return stat;
+}
+
+uint8_t Player_GetStrengthFromLevel( Player_t* player, uint8_t level )
+{
+   return Player_GetStatFromLevel( player, level, g_strengthTable, ( player->statGrowthType == 0 || player->statGrowthType == 2 ) ? True : False );
+}
+
+uint8_t Player_GetAgilityFromLevel( Player_t* player, uint8_t level )
+{
+   return Player_GetStatFromLevel( player, level, g_agilityTable, ( player->statGrowthType == 0 || player->statGrowthType == 1 ) ? True : False );
+}
+
+uint8_t Player_GetMaxHitPointsFromLevel( Player_t* player, uint8_t level )
+{
+   return Player_GetStatFromLevel( player, level, g_hitPointsTable, ( player->statGrowthType == 2 || player->statGrowthType == 3 ) ? True : False );
+}
+
+uint8_t Player_GetMaxMagicPointsFromLevel( Player_t* player, uint8_t level )
+{
+   return ( player->spells == 0 )
+      ? 0
+      : Player_GetStatFromLevel( player, level, g_magicPointsTable, ( player->statGrowthType == 1 || player->statGrowthType == 3 ) ? True : False );
 }
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
@@ -212,4 +254,16 @@ void Player_CenterOnTile( Player_t* player )
 
    player->sprite.position.x = (float)( tileX + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.x / 2 ) ) );
    player->sprite.position.y = (float)( tileY + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.y / 2 ) ) );
+}
+
+internal uint32_t Player_GetNameSum( Player_t* player )
+{
+   uint32_t i, nameSum = 0;
+
+   for ( i = 0; i < strlen( player->name ); i++ )
+   {
+      nameSum += (uint32_t)( player->name[i] ) % 16;
+   }
+
+   return nameSum;
 }

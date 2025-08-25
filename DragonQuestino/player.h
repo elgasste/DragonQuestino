@@ -215,6 +215,12 @@ typedef struct Player_t
    uint16_t experience;
    uint16_t gold;
 
+   // 0: short term strength and agility
+   // 1: short term agility and MP
+   // 2: short term strength and HP
+   // 3: short term HP and MP
+   uint32_t statGrowthType;
+
    // bits 0-2: keys
    // bits 3-5: herbs
    // bits 6-8: wings
@@ -259,7 +265,12 @@ extern "C" {
 #endif
 
 void Player_Init( Player_t* player, TileMap_t* tileMap );
+void Player_SetName( Player_t* player, const char* name );
 uint8_t Player_GetLevelFromExperience( uint16_t experience );
+uint8_t Player_GetStrengthFromLevel( Player_t* player, uint8_t level );
+uint8_t Player_GetAgilityFromLevel( Player_t* player, uint8_t level );
+uint8_t Player_GetMaxHitPointsFromLevel( Player_t* player, uint8_t level );
+uint8_t Player_GetMaxMagicPointsFromLevel( Player_t* player, uint8_t level );
 uint16_t Player_GetExperienceRemaining( Player_t* player );
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
