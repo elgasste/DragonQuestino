@@ -1241,16 +1241,16 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          switch( nameSum % 4 )
          {
             case 0:
-               StatGrowthText = string.Format( "(S.T. strength and agility by {0})", statFactor );
+               StatGrowthText = string.Format( "(short term str and agl by {0})", statFactor );
                break;
             case 1:
-               StatGrowthText = string.Format( "(S.T. agility and MP by {0})", statFactor );
+               StatGrowthText = string.Format( "(short term agl and MP by {0})", statFactor );
                break;
             case 2:
-               StatGrowthText = string.Format( "(S.T. strength and HP by {0})", statFactor );
+               StatGrowthText = string.Format( "(short term str and HP by {0})", statFactor );
                break;
             case 3:
-               StatGrowthText = string.Format( "(S.T. HP and MP by {0})", statFactor );
+               StatGrowthText = string.Format( "(short term HP and MP by {0})", statFactor );
                break;
          }
       }
