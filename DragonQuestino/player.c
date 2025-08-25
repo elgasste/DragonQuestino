@@ -67,7 +67,9 @@ uint8_t Player_GetMaxHitPointsFromLevel( Player_t* player, uint8_t level )
 
 uint8_t Player_GetMaxMagicPointsFromLevel( Player_t* player, uint8_t level )
 {
-   return Player_GetStatFromLevel( player, level, g_magicPointsTable, ( player->statGrowthType == 1 || player->statGrowthType == 3 ) ? True : False );
+   return ( player->spells == 0 )
+      ? 0
+      : Player_GetStatFromLevel( player, level, g_magicPointsTable, ( player->statGrowthType == 1 || player->statGrowthType == 3 ) ? True : False );
 }
 
 uint16_t Player_GetExperienceRemaining( Player_t* player )
