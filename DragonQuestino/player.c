@@ -15,6 +15,20 @@ void Player_Init( Player_t* player, TileMap_t* tileMap )
    Sprite_LoadActive( &( player->sprite ), ACTIVE_SPRITE_PLAYER_ID );
 }
 
+void Player_SetName( Player_t* player, const char* name )
+{
+   uint32_t i, nameSum = 0;
+
+   strcpy( player->name, name );
+
+   for ( i = 0; i < strlen( player->name ); i++ )
+   {
+      nameSum += (uint32_t)( player->name[i] ) % 16;
+   }
+
+   player->statGrowthType = nameSum % 4;
+}
+
 uint8_t Player_GetLevelFromExperience( uint16_t experience )
 {
    uint8_t i;

@@ -448,8 +448,10 @@ internal void Game_OpenBattleItemMenu( Game_t* game )
 internal void Game_HandleEnterNameInput( Game_t* game )
 {
    uint32_t i;
-   char* name = game->player.name;
-   size_t length = strlen( name );
+   char name[9];
+   size_t length = strlen( game->player.name );
+
+   strcpy( name, game->player.name );
 
    if ( game->input.buttonStates[Button_Start].pressed )
    {
@@ -469,8 +471,9 @@ internal void Game_HandleEnterNameInput( Game_t* game )
       }
       else if ( length < 8 )
       {
-         game->player.name[length] = AlphaPicker_GetSelectedChar( &( game->alphaPicker ) );
-         game->player.name[length + 1] = 0;
+         name[length] = AlphaPicker_GetSelectedChar( &( game->alphaPicker ) );
+         name[length + 1] = 0;
+         Player_SetName( &( game->player ), name );
          AlphaPicker_ResetCarat( &( game->alphaPicker ) );
       }
    }
@@ -479,6 +482,7 @@ internal void Game_HandleEnterNameInput( Game_t* game )
       if ( length > 0 )
       {
          name[length - 1] = 0;
+         Player_SetName( &( game->player ), name );
       }
       else
       {

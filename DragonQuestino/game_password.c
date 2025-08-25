@@ -167,7 +167,7 @@ internal void Password_InjectPlayerName( Player_t* player, uint32_t* encodedBits
    if ( length <= 0 )
    {
       length = 1;
-      player->name[0] = ' ';
+      Player_SetName( player, " " );
    }
 
    for ( i = 0; i < 8; i++ )
@@ -216,7 +216,7 @@ internal void Password_InjectChecksum( uint32_t* encodedBits )
 internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBits )
 {
    uint32_t length, i;
-   char* name = player->name;
+   char name[9];
 
    name[0] = 0;
    length = ( ( encodedBits[5] >> 13 ) & 0x7 ) + 1;
@@ -270,6 +270,8 @@ internal void Password_ExtractPlayerName( Player_t* player, uint32_t* encodedBit
          name[i] = ' ';
       }
    }
+
+   Player_SetName( player, name );
 }
 
 internal char Password_GetCharFromBits( uint32_t bits )

@@ -64,7 +64,7 @@ void Game_Reset( Game_t* game )
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
 
-   player->name[0] = 0;
+   Player_SetName( player, "" );
    player->sprite.position.x = (float)( TILE_SIZE * 8 ) + 2.0f;
    player->sprite.position.y = (float)( TILE_SIZE * 6 ) + 4.0f;
    player->sprite.direction = Direction_Up;
