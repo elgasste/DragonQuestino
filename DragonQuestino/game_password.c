@@ -145,12 +145,12 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    player->level = Player_GetLevelFromExperience( player->experience );
    Player_UpdateSpellsToLevel( player, player->level );
 
-   player->stats.strength = g_strengthTable[player->level];
-   player->stats.agility = g_agilityTable[player->level];
-   player->stats.hitPoints = g_hitPointsTable[player->level];
-   player->stats.maxHitPoints = g_hitPointsTable[player->level];
-   player->stats.magicPoints = g_magicPointsTable[player->level];
-   player->stats.maxMagicPoints = g_magicPointsTable[player->level];
+   player->stats.strength = Player_GetStrengthFromLevel( player, player->level );
+   player->stats.agility = Player_GetAgilityFromLevel( player, player->level );
+   player->stats.maxHitPoints = Player_GetMaxHitPointsFromLevel( player, player->level );
+   player->stats.hitPoints = player->stats.maxHitPoints;
+   player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, player->level );
+   player->stats.magicPoints = player->stats.maxMagicPoints;
 
    Player_LoadWeapon( player, ( encodedBits[3] >> 13 ) & 0x7 );
    Player_LoadArmor( player, ( encodedBits[3] >> 10 ) & 0x7 );

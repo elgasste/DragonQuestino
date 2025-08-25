@@ -260,6 +260,10 @@ extern "C" {
 
 void Player_Init( Player_t* player, TileMap_t* tileMap );
 uint8_t Player_GetLevelFromExperience( uint16_t experience );
+uint8_t Player_GetStrengthFromLevel( Player_t* player, uint8_t level );
+uint8_t Player_GetAgilityFromLevel( Player_t* player, uint8_t level );
+uint8_t Player_GetMaxHitPointsFromLevel( Player_t* player, uint8_t level );
+uint8_t Player_GetMaxMagicPointsFromLevel( Player_t* player, uint8_t level );
 uint16_t Player_GetExperienceRemaining( Player_t* player );
 uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );

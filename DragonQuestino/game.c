@@ -83,12 +83,12 @@ void Game_Reset( Game_t* game )
    player->stats.stopSpellResist = 0;
    player->stats.hurtResist = 0;
    player->stats.dodge = 1;
-   player->stats.strength = g_strengthTable[0];
-   player->stats.agility = g_agilityTable[0];
-   player->stats.hitPoints = g_hitPointsTable[0];
-   player->stats.maxHitPoints = g_hitPointsTable[0];
-   player->stats.magicPoints = g_magicPointsTable[0];
-   player->stats.maxMagicPoints = g_magicPointsTable[0];
+   player->stats.strength = Player_GetStrengthFromLevel( player, 0 );
+   player->stats.agility = Player_GetAgilityFromLevel( player, 0 );
+   player->stats.maxHitPoints = Player_GetMaxHitPointsFromLevel( player, 0 );
+   player->stats.hitPoints = player->stats.maxHitPoints;
+   player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, 0 );
+   player->stats.magicPoints = player->stats.maxMagicPoints;
    player->isCursed = False;
 
    Player_LoadWeapon( player, WEAPON_NONE_ID );

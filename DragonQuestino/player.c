@@ -30,6 +30,38 @@ uint8_t Player_GetLevelFromExperience( uint16_t experience )
    return i;
 }
 
+uint8_t Player_GetStrengthFromLevel( Player_t* player, uint8_t level )
+{
+   // TODO
+   UNUSED_PARAM( player );
+
+   return g_strengthTable[level];
+}
+
+uint8_t Player_GetAgilityFromLevel( Player_t* player, uint8_t level )
+{
+   // TODO
+   UNUSED_PARAM( player );
+
+   return g_agilityTable[level];
+}
+
+uint8_t Player_GetMaxHitPointsFromLevel( Player_t* player, uint8_t level )
+{
+   // TODO
+   UNUSED_PARAM( player );
+
+   return g_hitPointsTable[level];
+}
+
+uint8_t Player_GetMaxMagicPointsFromLevel( Player_t* player, uint8_t level )
+{
+   // TODO
+   UNUSED_PARAM( player );
+
+   return g_magicPointsTable[level];
+}
+
 uint16_t Player_GetExperienceRemaining( Player_t* player )
 {
    return ( player->level == ( STAT_TABLE_SIZE - 1 ) ) ? 0 : ( g_experienceTable[player->level + 1] - player->experience );

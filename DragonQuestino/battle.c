@@ -445,10 +445,10 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
       {
          Dialog_PushSectionWithCallback( dialog, STRING_BATTLE_LEVELUP, Battle_NewLevelCallback, battle );
 
-         battle->strengthGained = g_strengthTable[battle->newLevel] - player->stats.strength;
-         battle->agilityGained = g_agilityTable[battle->newLevel] - player->stats.agility;
-         battle->hitPointsGained = g_hitPointsTable[battle->newLevel] - player->stats.maxHitPoints;
-         battle->magicPointsGained = g_magicPointsTable[battle->newLevel] - player->stats.maxMagicPoints;
+         battle->strengthGained = Player_GetStrengthFromLevel( player, battle->newLevel ) - player->stats.strength;
+         battle->agilityGained = Player_GetAgilityFromLevel( player, battle->newLevel ) - player->stats.agility;
+         battle->hitPointsGained = Player_GetMaxHitPointsFromLevel( player, battle->newLevel ) - player->stats.maxHitPoints;
+         battle->magicPointsGained = Player_GetMaxMagicPointsFromLevel( player, battle->newLevel ) - player->stats.maxMagicPoints;
          Player_UpdateSpellsToLevel( &( battle->game->player ), battle->newLevel );
 
          player->stats.strength += battle->strengthGained;
