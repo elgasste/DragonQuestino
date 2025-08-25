@@ -208,13 +208,18 @@ typedef struct Player_t
    uint32_t holyProtectionSteps;
    char name[9];
    BattleStats_t stats;
-   uint32_t statGrowthType;
    Accessory_t weapon;
    Accessory_t armor;
    Accessory_t shield;
    uint8_t level;
    uint16_t experience;
    uint16_t gold;
+
+   // 0: short term strength and agility
+   // 1: short term agility and MP
+   // 2: short term strength and HP
+   // 3: short term HP and MP
+   uint32_t statGrowthType;
 
    // bits 0-2: keys
    // bits 3-5: herbs
