@@ -20,7 +20,7 @@
 #define TEXT_TILE_COUNT                85
 #define TEXT_TILE_SIZE                 8
 
-#define TRANSPARENT_COLOR_INDEX        0x0A
+#define TRANSPARENT_COLOR_INDEX        0x0B
 
 #define MENU_BORDER_CHAR_TOPLEFT       1
 #define MENU_BORDER_CHAR_TOPRIGHT      2

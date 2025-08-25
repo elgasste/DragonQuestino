@@ -10,7 +10,8 @@ namespace DragonQuestinoEditor.ViewModels
    public class MainWindowViewModel : ViewModelBase
    {
       private readonly Palette _palette;
-      private readonly TileSet _tileSet;
+      private readonly TileSet _titleTileSet;
+      private readonly TileSet _mapTileSet;
       private readonly StaticSpriteSheet _staticSpriteSheet;
 
       public ObservableCollection<ActiveSpriteSheet> ActiveSpriteSheets { get; } = [];
@@ -154,7 +155,8 @@ namespace DragonQuestinoEditor.ViewModels
       public MainWindowViewModel()
       {
          _palette = new Palette();
-         _tileSet = new TileSet( Constants.TileTexturesFilePath, _palette );
+         _titleTileSet = new TileSet( Constants.TitleTexturesFilePath, _palette );
+         _mapTileSet = new TileSet( Constants.TileTexturesFilePath, _palette );
          _staticSpriteSheet = new StaticSpriteSheet( Constants.StaticSpriteSheetFilePath, _palette );
 
          foreach ( var path in Constants.ActiveSpriteSheetPaths )
@@ -162,12 +164,12 @@ namespace DragonQuestinoEditor.ViewModels
             ActiveSpriteSheets.Add( new( path, _palette ) );
          }
 
-         for ( int i = 0; i < Constants.MapTileTextureCount; i++ )
+         for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
-            TileTextureViewModels.Add( new( _tileSet, i ) );
+            TileTextureViewModels.Add( new( _mapTileSet, i ) );
          }
 
-         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _tileSet, _palette, TileMaps, Enemies ) )
+         if ( !SaveDataFileOps.LoadData( Constants.EditorSaveDataFilePath, _mapTileSet, _palette, TileMaps, Enemies ) )
          {
             MessageBox.Show( "Could not load editor save file!" );
          }
@@ -176,7 +178,7 @@ namespace DragonQuestinoEditor.ViewModels
          {
             foreach( var tile in tileMap.Tiles )
             {
-               tile.SetTextureProvider( _tileSet );
+               tile.SetTextureProvider( _mapTileSet );
             }
          }
 
@@ -229,7 +231,7 @@ namespace DragonQuestinoEditor.ViewModels
          if ( result.HasValue && result.Value )
          {
             int id = TileMaps[^1].Id + 1;
-            var newTileMap = new TileMapViewModel( _tileSet,
+            var newTileMap = new TileMapViewModel( _mapTileSet,
                                                    id,
                                                    window.NewTileMapName,
                                                    true,
@@ -242,7 +244,7 @@ namespace DragonQuestinoEditor.ViewModels
 
             foreach ( var tile in newTileMap.Tiles )
             {
-               tile.SetTextureProvider( _tileSet );
+               tile.SetTextureProvider( _mapTileSet );
             }
 
             TileMaps.Add( newTileMap );
@@ -257,7 +259,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void WriteGameData()
       {
-         var writer = new DataSourceCodeWriter( _palette, _tileSet, TileMaps, Enemies, ActiveSpriteSheets, _staticSpriteSheet );
+         var writer = new DataSourceCodeWriter( _palette, _titleTileSet, _mapTileSet, TileMaps, Enemies, ActiveSpriteSheets, _staticSpriteSheet );
          writer.WriteFiles();
          MessageBox.Show( "Game data file has been written!" );
       }

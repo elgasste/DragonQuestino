@@ -9,6 +9,7 @@ namespace DragonQuestinoEditor
 
       public const string ShieldBackgroundFilePath = AssetsBasePath + "shield_background.png";
       public const string TileTexturesFilePath = AssetsBasePath + "tile_textures.png";
+      public const string TitleTexturesFilePath = AssetsBasePath + "title_textures.png";
       public const string EditorSaveDataFilePath = AssetsBasePath + "editor_save.json";
       public const string StaticSpriteSheetFilePath = AssetsBasePath + "static_sprites.png";
       public const string TextTileSetFilePath = AssetsBasePath + "text_tileset.png";
@@ -40,9 +41,9 @@ namespace DragonQuestinoEditor
 
       public const int PaletteMaxSize = 256;
 
-      public const int MapTileSize = 16;
-      public const int MapTilePixels = 256;
-      public const int MapTileTextureCount = 32;
+      public const int TileSize = 16;
+      public const int TilePixels = 256;
+      public const int TileTextureCount = 32;
       public const int TileMapMinTilesX = 20;
       public const int TileMapMinTilesY = 15;
       public const int TileMapMaxTilesX = 140;

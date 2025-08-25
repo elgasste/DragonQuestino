@@ -30,17 +30,19 @@ namespace DragonQuestinoEditor.Utilities
 
       public static void CheckMapTileSetBitmapFormat( BitmapSource bitmapSource )
       {
+         int expectedCount = Constants.TileTextureCount;
+
          if ( bitmapSource.Format != PixelFormats.Indexed8 )
          {
             throw new Exception( "Tileset image pixel format should be Indexed8" );
          }
-         else if ( bitmapSource.PixelWidth != ( Constants.MapTileSize * Constants.MapTileTextureCount ) )
+         else if ( bitmapSource.PixelHeight != Constants.TileSize )
          {
-            throw new Exception( string.Format( "Tileset image width should be {0}", Constants.MapTileSize * Constants.MapTileTextureCount ) );
+            throw new Exception( string.Format( "Tileset image height should be {0}", Constants.TileSize ) );
          }
-         else if ( bitmapSource.PixelHeight != Constants.MapTileSize )
+         else if ( bitmapSource.PixelWidth != ( Constants.TileSize * expectedCount ) )
          {
-            throw new Exception( string.Format( "Tileset image height should be {0}", Constants.MapTileSize ) );
+            throw new Exception( string.Format( "Tileset image width should be {0}", Constants.TileSize * Constants.TileTextureCount ) );
          }
       }
 

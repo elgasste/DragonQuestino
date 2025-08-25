@@ -10,14 +10,16 @@ using DragonQuestinoEditor.ViewModels;
 namespace DragonQuestinoEditor.FileOps
 {
    public class DataSourceCodeWriter( Palette palette,
-                                      TileSet tileSet,
+                                      TileSet titleTileSet,
+                                      TileSet mapTileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
                                       ObservableCollection<EnemyViewModel> enemies,
                                       ObservableCollection<ActiveSpriteSheet> activeSpriteSheets,
                                       StaticSpriteSheet staticSpriteSheet )
    {
       private readonly Palette _palette = palette;
-      private readonly TileSet _tileSet = tileSet;
+      private readonly TileSet _titleTileSet = titleTileSet;
+      private readonly TileSet _mapTileSet = mapTileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
       private readonly ObservableCollection<EnemyViewModel> _enemies = enemies;
       private readonly ObservableCollection<ActiveSpriteSheet> _activeSpriteSheets = activeSpriteSheets;
@@ -140,18 +142,19 @@ namespace DragonQuestinoEditor.FileOps
 
       private void WriteTileTexturesFunction( FileStream fs )
       {
+         // MUFFINS: I guess we should send in some kind of index here?
          WriteToFileStream( fs, "\nvoid TileMap_LoadTextures( TileMap_t* tileMap )\n" );
          WriteToFileStream( fs, "{\n" );
          WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
 
-         // TODO: try compressing this, it only ever gets called once
-         for ( int i = 0; i < Constants.MapTileTextureCount; i++ )
+         // MUFFINS: we should compress this
+         for ( int i = 0; i < Constants.TileTextureCount; i++ )
          {
             WriteToFileStream( fs, string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
 
-            var pixelIndexes = _tileSet.TilePaletteIndexes[i];
+            var pixelIndexes = _mapTileSet.TilePaletteIndexes[i];
 
-            for ( int j = 0, memoryIndex = 0; j < Constants.MapTilePixels; j += 4, memoryIndex++ )
+            for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
             {
                var index0 = (UInt32)( pixelIndexes[j + 0] );
                var index1 = (UInt32)( pixelIndexes[j + 1] );
