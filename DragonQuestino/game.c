@@ -9,6 +9,8 @@ internal void Game_DeathFadeOutCallback( Game_t* game );
 internal void Game_DeathPostFadeCallback( Game_t* game );
 internal void Game_CursedExpelCallback( Game_t* game );
 internal void Game_CursedExpelMessageCallback( Game_t* game );
+internal void Game_ResetTitleScreenFlash( Game_t* game );
+internal void Game_TicTitleScreenFlash( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -17,7 +19,8 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ), &( game->player ) );
-   TileMap_LoadTextures( &( game->tileMap ) );
+   TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Title );
+   TileMap_Load( &( game->tileMap ), TILEMAP_TITLESCREEN_ID );
    AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ), game );
    Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
    Clock_Init( &( game->clock ) );
@@ -89,6 +92,7 @@ void Game_Reset( Game_t* game )
    Player_LoadArmor( player, ARMOR_NONE_ID );
    Player_LoadShield( player, SHIELD_NONE_ID );
 
+   Game_ResetTitleScreenFlash( game );
    Game_OpenMenu( game, MenuId_Startup );
 }
 
@@ -128,6 +132,7 @@ void Game_Load( Game_t* game, const char* password )
    player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, 0 );
    player->stats.magicPoints = player->stats.maxMagicPoints;
 
+   TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Map );
    TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
    player->tileIndex = 128; // in front of King Lorik
    Player_SetCanonicalTileIndex( player );
@@ -164,6 +169,7 @@ void Game_Tic( Game_t* game )
       switch ( game->mainState )
       {
          case MainState_Startup:
+            Game_TicTitleScreenFlash( game );
             switch ( game->subState )
             {
                case SubState_Menu:
@@ -559,4 +565,47 @@ internal void Game_CursedExpelMessageCallback( Game_t* game )
    AnimationChain_Reset( &( game->animationChain ) );
    Game_AnimatePortalEntrance( game, &( game->tileMap.evacPortal ) );
    AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_ResetTitleScreenFlash( Game_t* game )
+{
+   game->titleScreenFlash.isFlashing = False;
+   game->titleScreenFlash.slowFlash = Random_u32( 0, 1 );
+   game->titleScreenFlash.elapsedSeconds = 0.0f;
+   game->titleScreenFlash.pauseSeconds = (float)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
+   game->titleScreenFlash.currentFrame = 0;
+}
+
+internal void Game_TicTitleScreenFlash( Game_t* game )
+{
+   TitleScreenFlash_t* flash = &( game->titleScreenFlash );
+   float frameDuration;
+
+   flash->elapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   if ( flash->isFlashing )
+   {
+      frameDuration = flash->slowFlash ? TITLESCREEN_FLASH_SLOWFRAMEDURATION : TITLESCREEN_FLASH_FASTFRAMEDURATION;
+
+      while ( flash->elapsedSeconds > frameDuration )
+      {
+         flash->elapsedSeconds -= frameDuration;
+         flash->currentFrame++;
+
+         if ( flash->currentFrame >= TITLESCREEN_FLASH_NUMFRAMES )
+         {
+            flash->isFlashing = False;
+            flash->elapsedSeconds = 0.0f;
+            flash->pauseSeconds = (float)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
+            break;
+         }
+      }
+   }
+   else if ( flash->elapsedSeconds > flash->pauseSeconds )
+   {
+      flash->isFlashing = True;
+      flash->elapsedSeconds = 0.0f;
+      flash->slowFlash = Random_u32( 0, 1 );
+      flash->currentFrame = 0;
+   }
 }

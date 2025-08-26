@@ -192,7 +192,7 @@ internal void Menu_InitStartup( Menu_t* menu )
    menu->selectedIndex = 0;
 
    menu->position.x = 48;
-   menu->position.y = 80;
+   menu->position.y = 152;
    menu->borderSize.x = 20;
    menu->borderSize.y = 7;
    menu->borderPadding.x = 3;

@@ -26,6 +26,22 @@
 
 #define PASSWORD_LENGTH                            30
 
+#define TITLESCREEN_FLASH_MINPAUSE                 1
+#define TITLESCREEN_FLASH_MAXPAUSE                 3
+#define TITLESCREEN_FLASH_SLOWFRAMEDURATION        0.1f
+#define TITLESCREEN_FLASH_FASTFRAMEDURATION        0.05f
+#define TITLESCREEN_FLASH_NUMFRAMES                7
+
+typedef struct TitleScreenFlash_t
+{
+   Bool_t isFlashing;
+   Bool_t slowFlash;
+   float elapsedSeconds;
+   float pauseSeconds;
+   uint32_t currentFrame;
+}
+TitleScreenFlash_t;
+
 typedef struct Game_t
 {
    TilePortal_t* targetPortal;
@@ -47,6 +63,8 @@ typedef struct Game_t
    TilePortal_t zoomPortals[TILEMAP_TOWN_COUNT];
    AnimationChain_t animationChain;
    Battle_t battle;
+   TitleScreenFlash_t titleScreenFlash;
+
    void ( *postRenderCallback )( void* );
    void* postRenderCallbackData;
 
@@ -111,6 +129,7 @@ void Game_DrawEnemy( Game_t* game );
 void Game_WipeEnemy( Game_t* game );
 void Game_UpdateTextColor( Game_t* game );
 void Game_DrawTileMap( Game_t* game );
+void Game_DrawTitleScreenFlash( Game_t* game );
 
 // game_spells.c
 void Game_CastHeal( Game_t* game );

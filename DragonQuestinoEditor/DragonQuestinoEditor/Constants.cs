@@ -9,6 +9,7 @@ namespace DragonQuestinoEditor
 
       public const string ShieldBackgroundFilePath = AssetsBasePath + "shield_background.png";
       public const string TileTexturesFilePath = AssetsBasePath + "tile_textures.png";
+      public const string TitleTexturesFilePath = AssetsBasePath + "title_textures.png";
       public const string EditorSaveDataFilePath = AssetsBasePath + "editor_save.json";
       public const string StaticSpriteSheetFilePath = AssetsBasePath + "static_sprites.png";
       public const string TextTileSetFilePath = AssetsBasePath + "text_tileset.png";
@@ -24,7 +25,11 @@ namespace DragonQuestinoEditor
          AssetsBasePath + "brown_soldier_sprite.png",
          AssetsBasePath + "wizard_sprite.png",
          AssetsBasePath + "dragonlord_sprite.png",
-         AssetsBasePath + "player_sprite_carry.png"
+         AssetsBasePath + "player_sprite_carry.png",
+         AssetsBasePath + "flash_sprite_1.png",
+         AssetsBasePath + "flash_sprite_2.png",
+         AssetsBasePath + "flash_sprite_3.png",
+         AssetsBasePath + "flash_sprite_4.png"
       ];
 
       public const string GameDataSourceFilePath = SourceBasePath + "game_data.c";
@@ -36,9 +41,9 @@ namespace DragonQuestinoEditor
 
       public const int PaletteMaxSize = 256;
 
-      public const int MapTileSize = 16;
-      public const int MapTilePixels = 256;
-      public const int MapTileTextureCount = 32;
+      public const int TileSize = 16;
+      public const int TilePixels = 256;
+      public const int TileTextureCount = 32;
       public const int TileMapMinTilesX = 20;
       public const int TileMapMinTilesY = 15;
       public const int TileMapMaxTilesX = 140;
@@ -98,7 +103,11 @@ namespace DragonQuestinoEditor
          0,       // water, left-stop
          0,       // water, full-stop
          0,       // water, horizontal river
-         0        // water, vertical river
+         0,       // water, vertical river
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0        // (title screen only)
       ];
 
       // bits 8-9
@@ -131,7 +140,11 @@ namespace DragonQuestinoEditor
          0,       // water, left-stop
          0,       // water, full-stop
          0,       // water, horizontal river
-         0        // water, vertical river
+         0,       // water, vertical river
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0        // (title screen only)
       ];
 
       // bits 10-11
@@ -164,7 +177,11 @@ namespace DragonQuestinoEditor
          0,       // water, left-stop
          0,       // water, full-stop
          0,       // water, horizontal river
-         0        // water, vertical river
+         0,       // water, vertical river
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0        // (title screen only)
       ];
    }
 }

@@ -47,6 +47,7 @@
 #define GLOW_ONERADIUS_TILES                    60
 #define GLOW_TRANSITION_FRAME_SECONDS           0.1f
 
+#define TILEMAP_TITLESCREEN_ID                  38
 #define TILEMAP_OVERWORLD_ID                    0
 #define TILEMAP_TANTEGEL_THRONEROOM_ID          1
 #define TILEMAP_TANTEGEL_BASEMENT_ID            2
@@ -246,7 +247,7 @@ void TileMap_TicNpcWander( NonPlayerCharacter_t* npc );
 Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, uint32_t tileIndex, uint32_t* boothId );
 
 // game_data.c
-void TileMap_LoadTextures( TileMap_t* tileMap );
+void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type );
 void TileMap_LoadEnemyIndexPools( TileMap_t* tileMap );
 void TileMap_Load( TileMap_t* tileMap, uint32_t id );
 void TileMap_LoadHiddenStairs( TileMap_t* tileMap );
