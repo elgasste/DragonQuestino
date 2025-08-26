@@ -1187,6 +1187,8 @@ internal void Battle_CollectSpherePauseCallback( Battle_t* battle )
       ITEM_TOGGLE_HASCURSEDBELT( battle->game->player.items );
    }
 
+   battle->game->gameFlags.treasures ^= 0x10000000;
+
    Dialog_Reset( &( battle->game->dialog ) );
    Dialog_PushSection( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT_1 );
    Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT_2, Battle_CollectSphereLightupCallback, battle );
