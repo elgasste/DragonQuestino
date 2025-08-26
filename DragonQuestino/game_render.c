@@ -54,6 +54,7 @@ void Game_Draw( Game_t* game )
    switch ( game->mainState )
    {
       case MainState_Startup:
+         Game_DrawTileMap( game );
          Menu_Draw( game->activeMenu );
          break;
       case MainState_EnterName:
