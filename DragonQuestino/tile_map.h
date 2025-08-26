@@ -246,7 +246,7 @@ void TileMap_TicNpcWander( NonPlayerCharacter_t* npc );
 Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, uint32_t tileIndex, uint32_t* boothId );
 
 // game_data.c
-void TileMap_LoadTextures( TileMap_t* tileMap );
+void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type );
 void TileMap_LoadEnemyIndexPools( TileMap_t* tileMap );
 void TileMap_Load( TileMap_t* tileMap, uint32_t id );
 void TileMap_LoadHiddenStairs( TileMap_t* tileMap );

@@ -229,4 +229,13 @@ typedef enum ShopType_t
 }
 ShopType_t;
 
+typedef enum TileTextureType_t
+{
+   TileTextureType_Title = 0,
+   TileTextureType_Map,
+
+   TileTextureType_Count
+}
+TileTextureType_t;
+
 #endif // ENUMS_H

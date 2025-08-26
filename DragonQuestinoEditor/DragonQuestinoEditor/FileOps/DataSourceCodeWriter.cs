@@ -142,28 +142,41 @@ namespace DragonQuestinoEditor.FileOps
 
       private void WriteTileTexturesFunction( FileStream fs )
       {
-         // MUFFINS: I guess we should send in some kind of index here?
-         WriteToFileStream( fs, "\nvoid TileMap_LoadTextures( TileMap_t* tileMap )\n" );
+         WriteToFileStream( fs, "\nvoid TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )\n" );
          WriteToFileStream( fs, "{\n" );
          WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
 
-         // MUFFINS: we should compress this
-         for ( int i = 0; i < Constants.TileTextureCount; i++ )
+         WriteToFileStream( fs, "   if ( type == TileTextureType_Title )\n" );
+         WriteToFileStream( fs, "   {\n" );
+
+         for ( int type = 0; type < 2; type++ )
          {
-            WriteToFileStream( fs, string.Format( "   mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
-
-            var pixelIndexes = _mapTileSet.TilePaletteIndexes[i];
-
-            for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
+            // MUFFINS: we should compress this, it'll save a ton of space
+            for ( int i = 0; i < Constants.TileTextureCount; i++ )
             {
-               var index0 = (UInt32)( pixelIndexes[j + 0] );
-               var index1 = (UInt32)( pixelIndexes[j + 1] );
-               var index2 = (UInt32)( pixelIndexes[j + 2] );
-               var index3 = (UInt32)( pixelIndexes[j + 3] );
+               WriteToFileStream( fs, string.Format( "      mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
 
-               var packed = ( index3 << 24 ) | ( index2 << 16  ) | ( index1 << 8  ) | ( index0 << 0  );
+               var pixelIndexes = ( type == 0 ) ? _titleTileSet.TilePaletteIndexes[i] : _mapTileSet.TilePaletteIndexes[i];
 
-               WriteToFileStream( fs, string.Format( "   mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) ) );
+               for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
+               {
+                  var index0 = (UInt32)( pixelIndexes[j + 0] );
+                  var index1 = (UInt32)( pixelIndexes[j + 1] );
+                  var index2 = (UInt32)( pixelIndexes[j + 2] );
+                  var index3 = (UInt32)( pixelIndexes[j + 3] );
+
+                  var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
+
+                  WriteToFileStream( fs, string.Format( "      mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) ) );
+               }
+            }
+
+            WriteToFileStream( fs, "   }\n" );
+
+            if ( type == 0 )
+            {
+               WriteToFileStream( fs, "   else\n" );
+               WriteToFileStream( fs, "   {\n" );
             }
          }
 
