@@ -55,6 +55,7 @@ void Game_Draw( Game_t* game )
    {
       case MainState_Startup:
          Game_DrawTileMap( game );
+         Game_DrawTitleScreenFlash( game );
          Menu_Draw( game->activeMenu );
          break;
       case MainState_EnterName:
@@ -312,6 +313,45 @@ void Game_DrawTileMap( Game_t* game )
    }
 
    TileMap_Draw( &( game->tileMap ) );
+}
+
+void Game_DrawTitleScreenFlash( Game_t* game )
+{
+   uint32_t sx = 181, sy = 58;
+   ActiveSprite_t* sprite;
+
+   if ( !( game->titleScreenFlash.isFlashing ) )
+   {
+      return;
+   }
+
+   switch ( game->titleScreenFlash.currentFrame )
+   {
+      case 0:
+      case 6:
+         sprite = &( game->tileMap.npcs[0].sprite );
+         break;
+      case 1:
+      case 5:
+         sprite = &( game->tileMap.npcs[1].sprite );
+         break;
+      case 2:
+      case 4:
+         sprite = &( game->tileMap.npcs[2].sprite );
+         break;
+      default:
+         sprite = &( game->tileMap.npcs[3].sprite );
+         break;
+   }
+
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[0].memory, SPRITE_TEXTURE_SIZE, 0, 0, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, sx, sy, True );
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[1].memory, SPRITE_TEXTURE_SIZE, 0, 0, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, sx + SPRITE_TEXTURE_SIZE, sy, True );
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[2].memory, SPRITE_TEXTURE_SIZE, 0, 0, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, sx, sy + SPRITE_TEXTURE_SIZE, True );
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[3].memory, SPRITE_TEXTURE_SIZE, 0, 0, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, sx + SPRITE_TEXTURE_SIZE, sy + SPRITE_TEXTURE_SIZE, True );
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[4].memory, SPRITE_TEXTURE_SIZE, 0, 0, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, sx, sy + ( SPRITE_TEXTURE_SIZE * 2 ), True );
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[5].memory, SPRITE_TEXTURE_SIZE, 0, 0, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, sx + SPRITE_TEXTURE_SIZE, sy + ( SPRITE_TEXTURE_SIZE * 2 ), True );
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[7].memory, SPRITE_TEXTURE_SIZE, 0, 0, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, sx + ( SPRITE_TEXTURE_SIZE * 2 ), sy + ( SPRITE_TEXTURE_SIZE * 2 ), True );
+   Screen_DrawMemorySection( &( game->screen ), sprite->textures[6].memory, SPRITE_TEXTURE_SIZE, 0, 0, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, sx, sy + ( SPRITE_TEXTURE_SIZE * 3 ), True );
 }
 
 internal void Game_DrawPlayer( Game_t* game )
