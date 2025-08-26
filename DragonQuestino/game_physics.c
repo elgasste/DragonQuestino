@@ -223,12 +223,21 @@ void Game_PlayerSteppedOnTile( Game_t* game )
 
    if ( portal )
    {
-      if ( ( game->tileMap.id == TILEMAP_OVERWORLD_ID ) && game->gameFlags.carryingPrincess &&
+      if ( ( game->tileMap.id == TILEMAP_OVERWORLD_ID ) && ( game->gameFlags.carryingPrincess || game->gameFlags.defeatedDragonlord ) &&
            ( portal->destinationTileMapIndex != TILEMAP_TANTEGEL_ID ) && ( portal->destinationTileMapIndex != TILEMAP_SWAMPCAVE_ID ) )
       {
          Dialog_Reset( &( game->dialog ) );
-         sprintf( msg, STRING_NPC_OVERWORLD_PRINCESS, game->player.name );
-         Dialog_PushSection( &( game->dialog ), msg );
+
+         if ( game->gameFlags.carryingPrincess )
+         {
+            sprintf( msg, STRING_NPC_OVERWORLD_PRINCESS, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_DEFEATED_DRAGONLORD_OVERWORLD );
+         }
+
          Game_OpenDialog( game );
          return;
       }

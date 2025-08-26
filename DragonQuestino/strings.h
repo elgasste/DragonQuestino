@@ -218,6 +218,7 @@
 #define STRING_FOUNDITEM_ERDRICKSARMOR                               "Erdrick's Armor"
 
 #define STRING_FOUND_HIDDENSTAIRS                                    "You found a hidden stairway!"
+#define STRING_DEFEATED_DRAGONLORD_OVERWORLD                         "Now is not the time, you should return to Tantegel immediately!"
 
 #define STRING_ENEMY_SLIME                                           "slime"
 #define STRING_ENEMY_REDSLIME                                        "red slime"
