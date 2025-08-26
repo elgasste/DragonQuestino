@@ -125,11 +125,11 @@ void Game_Load( Game_t* game, const char* password )
       game->subState = SubState_None;
    }
 
-   player->stats.strength = Player_GetStrengthFromLevel( player, 0 );
-   player->stats.agility = Player_GetAgilityFromLevel( player, 0 );
-   player->stats.maxHitPoints = Player_GetMaxHitPointsFromLevel( player, 0 );
+   player->stats.strength = Player_GetStrengthFromLevel( player, player->level );
+   player->stats.agility = Player_GetAgilityFromLevel( player, player->level );
+   player->stats.maxHitPoints = Player_GetMaxHitPointsFromLevel( player, player->level );
    player->stats.hitPoints = player->stats.maxHitPoints;
-   player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, 0 );
+   player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, player->level );
    player->stats.magicPoints = player->stats.maxMagicPoints;
 
    TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Map );
@@ -268,14 +268,14 @@ void Game_ChangeToEnterNameState( Game_t* game )
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
    // MUFFINS: this gives us some goodies for testing
-   //Game_Load( game, "JCT..xAAI3jZ...-....HxHdtPf..4" ); // level 30 with everything except a few treasures
-   //Game_ChangeToOverworldState( game );
+   Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" ); // level 30 with everything except a few treasures
+   Game_ChangeToOverworldState( game );
    
-   game->mainState = MainState_EnterPassword;
+   /*game->mainState = MainState_EnterPassword;
    game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
    Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
 }
 
 void Game_ChangeToBattleState( Game_t* game )
