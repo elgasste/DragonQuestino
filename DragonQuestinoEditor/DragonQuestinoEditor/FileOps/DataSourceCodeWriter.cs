@@ -151,7 +151,7 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int type = 0; type < 2; type++ )
          {
-            // MUFFINS: we should compress this, it'll save a ton of space
+            // TODO: compress this if we need the space
             for ( int i = 0; i < Constants.TileTextureCount; i++ )
             {
                WriteToFileStream( fs, string.Format( "      mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
