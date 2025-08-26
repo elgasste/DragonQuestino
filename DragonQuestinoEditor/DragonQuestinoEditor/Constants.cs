@@ -103,7 +103,11 @@ namespace DragonQuestinoEditor
          0,       // water, left-stop
          0,       // water, full-stop
          0,       // water, horizontal river
-         0        // water, vertical river
+         0,       // water, vertical river
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0        // (title screen only)
       ];
 
       // bits 8-9
@@ -136,7 +140,11 @@ namespace DragonQuestinoEditor
          0,       // water, left-stop
          0,       // water, full-stop
          0,       // water, horizontal river
-         0        // water, vertical river
+         0,       // water, vertical river
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0        // (title screen only)
       ];
 
       // bits 10-11
@@ -169,7 +177,11 @@ namespace DragonQuestinoEditor
          0,       // water, left-stop
          0,       // water, full-stop
          0,       // water, horizontal river
-         0        // water, vertical river
+         0,       // water, vertical river
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0,       // (title screen only)
+         0        // (title screen only)
       ];
    }
 }

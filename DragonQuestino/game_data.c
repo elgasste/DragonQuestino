@@ -27852,6 +27852,32 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tiles32[493] = 0x00060008;
          tiles32[494] = 0x00060028;
          break;
+      case 38:
+         tileMap->id = 38;
+         tileMap->hasEncounters = False;
+         tileMap->blocksMagic = False;
+         tileMap->isDungeon = False;
+         tileMap->isDark = False;
+         tileMap->tilesX = 20;
+         tileMap->tilesY = 15;
+         tileMap->portalCount = 0;
+         tileMap->evacPortal.destinationTileMapIndex = 0;
+         tileMap->evacPortal.destinationTileIndex = 0;
+         tileMap->evacPortal.arrivalDirection = (Direction_t)0;
+         tileMap->staticSpriteCount = 0;
+         tileMap->npcCount = 0;
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 10; j++ ) tiles32[(i * 70) + j] = 0x001E001E;
+         for ( i = 213; i < 217; i++ ) tiles32[i] = 0x003E003E;
+         tiles32[283] = 0x001E003E;
+         tiles32[286] = 0x003E001E;
+         for ( i = 353; i < 355; i++ ) tiles32[i] = 0x001E003E;
+         for ( i = 355; i < 357; i++ ) tiles32[i] = 0x003E001E;
+         for ( i = 423; i < 427; i++ ) tiles32[i] = 0x003E003E;
+         for ( i = 493; i < 497; i++ ) tiles32[i] = 0x003E003E;
+         for ( i = 563; i < 567; i++ ) tiles32[i] = 0x003E003E;
+         tiles32[634] = 0x003E001E;
+         for ( i = 703; i < 707; i++ ) tiles32[i] = 0x003E003E;
+         break;
    }
 
    if ( id == TILEMAP_OVERWORLD_ID && tileMap->gameFlags->usedRainbowDrop )
@@ -32646,6 +32672,11 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 429 ) return 0x10000000;
          if ( tileIndex == 430 ) return 0x20000000;
          break;
+      case 38:
+         if ( tileIndex == 71 ) return 0x00000001;
+         if ( tileIndex == 129 ) return 0x00000002;
+         if ( tileIndex == 130 ) return 0x00000004;
+         break;
    }
 
    return 0;
@@ -32699,6 +32730,9 @@ uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
          break;
       case 33:
          if ( tileIndex == 402 ) return 0x01000000;
+         break;
+      case 38:
+         if ( tileIndex == 189 ) return 0x00000001;
          break;
    }
 

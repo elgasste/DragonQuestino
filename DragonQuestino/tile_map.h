@@ -47,6 +47,7 @@
 #define GLOW_ONERADIUS_TILES                    60
 #define GLOW_TRANSITION_FRAME_SECONDS           0.1f
 
+#define TILEMAP_TITLESCREEN_ID                  38
 #define TILEMAP_OVERWORLD_ID                    0
 #define TILEMAP_TANTEGEL_THRONEROOM_ID          1
 #define TILEMAP_TANTEGEL_BASEMENT_ID            2
