@@ -144,6 +144,7 @@ namespace DragonQuestinoEditor.FileOps
       {
          WriteToFileStream( fs, "\nvoid TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )\n" );
          WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   uint32_t i;\n" );
          WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
 
          WriteToFileStream( fs, "   if ( type == TileTextureType_Title )\n" );
@@ -151,9 +152,11 @@ namespace DragonQuestinoEditor.FileOps
 
          for ( int type = 0; type < 2; type++ )
          {
-            // TODO: compress this if we need the space
             for ( int i = 0; i < Constants.TileTextureCount; i++ )
             {
+               var packedPixels = new List<UInt32>( Constants.TilePixels );
+               var indexCounts = new Dictionary<UInt32, int>();
+
                WriteToFileStream( fs, string.Format( "      mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
 
                var pixelIndexes = ( type == 0 ) ? _titleTileSet.TilePaletteIndexes[i] : _mapTileSet.TilePaletteIndexes[i];
@@ -166,8 +169,71 @@ namespace DragonQuestinoEditor.FileOps
                   var index3 = (UInt32)( pixelIndexes[j + 3] );
 
                   var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
+                  packedPixels.Add( packed );
 
-                  WriteToFileStream( fs, string.Format( "      mem32[{0}] = 0x{1};\n", memoryIndex, packed.ToString( "X8" ) ) );
+                  if ( indexCounts.TryGetValue( packed, out int value ) )
+                  {
+                     indexCounts[packed] = ++value;
+                  }
+                  else
+                  {
+                     indexCounts[packed] = 1;
+                  }
+               }
+
+               int highestCount = 0;
+               UInt32 mostCommonValue = 0;
+
+               foreach ( var pair in indexCounts )
+               {
+                  if ( pair.Value > highestCount )
+                  {
+                     highestCount = pair.Value;
+                     mostCommonValue = pair.Key;
+                  }
+               }
+
+               WriteToFileStream( fs, string.Format( "      for ( i = 0; i < {0}; i++ ) mem32[i] = 0x{1};\n", Constants.TilePixels / 4, mostCommonValue.ToString( "X8" ) ) );
+
+               for ( int j = 0; j < packedPixels.Count; )
+               {
+                  int firstIndex = j;
+                  int lastIndex = j;
+                  var currentPixel = packedPixels[j];
+                  j++;
+
+                  if ( currentPixel != mostCommonValue )
+                  {
+                     while ( j < packedPixels.Count )
+                     {
+                        var nextPixel = packedPixels[j];
+                        lastIndex = j;
+                        j++;
+
+                        if ( nextPixel != currentPixel )
+                        {
+                           break;
+                        }
+                     }
+
+                     if ( lastIndex == firstIndex )
+                     {
+                        WriteToFileStream( fs, string.Format( "      mem32[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                     }
+                     else
+                     {
+                        if ( ( lastIndex - firstIndex ) > 1 )
+                        {
+                           WriteToFileStream( fs, string.Format( "      for ( i = {0}; i < {1}; i++ ) mem32[i] = 0x{2};\n", firstIndex, lastIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                        }
+                        else
+                        {
+                           WriteToFileStream( fs, string.Format( "      mem32[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                        }
+
+                        j--;
+                     }
+                  }
                }
             }
 
