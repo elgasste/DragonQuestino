@@ -498,6 +498,9 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
             Dialog_PushSection( &( game->dialog ), msg );
          }
          break;
+      case 88:
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_STATICSOLDIER );
+         break;
 
       default: // should never happen, but it's nice to have a catch-all
          Dialog_PushSection( &( game->dialog ), STRING_NPC_DEFAULT );

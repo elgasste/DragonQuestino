@@ -588,5 +588,6 @@
 #define STRING_NPC_OVERWORLD_PRINCESS                                "\"Please %s, take me home to Tantegel, I must see my father!\""
 #define STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_1                      "\"Wait, %s, no! Please do not put on the cursed belt!\""
 #define STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_2                      "\"I sense a great evil emanating from it, you must leave it be.\""
+#define STRING_NPC_STATICSOLDIER                                     "The soldier is standing at attention, so he cannot speak."
 
 #endif // STRINGS_H
