@@ -243,6 +243,11 @@ void Game_PlayerSteppedOnTile( Game_t* game )
       }
       else
       {
+         if ( portal->destinationTileMapIndex == TILEMAP_TANTEGEL_ID && game->gameFlags.defeatedDragonlord )
+         {
+            portal->destinationTileMapIndex = TILEMAP_TANTEGEL_VICTORY_ID;
+         }
+
          AnimationChain_Reset( &( game->animationChain ) );
          Game_AnimatePortalEntrance( game, portal );
          AnimationChain_Start( &( game->animationChain ) );
