@@ -14,6 +14,13 @@ internal void Game_TicTitleScreenFlash( Game_t* game );
 internal void Game_KingQuestionCallback( Game_t* game );
 internal void Game_KingQuestionPostDialogCallback( Game_t* game );
 internal void Game_KingQuestionPauseCallback( Game_t* game );
+internal void Game_GwaelinAccompanyCallback( Game_t* game );
+internal void Game_GwaelinAccompanyPostDialogCallback( Game_t* game );
+internal void Game_GwaelinAccompanyPauseCallback( Game_t* game );
+internal void Game_QueenGwaelinCallback( Game_t* game );
+internal void Game_QueenGwaelinPostDialogCallback( Game_t* game );
+internal void Game_GoFindGwaelinCallback( Game_t* game );
+internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -672,11 +679,103 @@ internal void Game_KingQuestionPostDialogCallback( Game_t* game )
 
 internal void Game_KingQuestionPauseCallback( Game_t* game )
 {
-   // MUFFINS
-   // - if you saved the princess, take her with you
-   // - if you haven't, take over as king, maybe?
+   char msg[128];
 
    Dialog_Reset( &( game->dialog ) );
-   Dialog_PushSection( &( game->dialog ), "FINE, don't answer." );
+
+   if ( game->gameFlags.rescuedPrincess )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_1 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_2 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_3 );
+      sprintf( msg, STRING_NPC_ENDING_RESCUED_4, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_5 );
+      sprintf( msg, STRING_NPC_ENDING_RESCUED_6, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_7 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_8 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_9 );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_ENDING_RESCUED_10, Game_GwaelinAccompanyCallback, game );
+   }
+   else
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_NOTRESCUED_1 );
+      sprintf( msg, STRING_NPC_ENDING_NOTRESCUED_2, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_NOTRESCUED_3 );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_ENDING_NOTRESCUED_4, Game_GoFindGwaelinCallback, game );
+   }
+
    Game_OpenDialog( game );
+}
+
+internal void Game_GwaelinAccompanyCallback( Game_t* game )
+{
+   game->postDialogCallback = Game_GwaelinAccompanyPostDialogCallback;
+   game->postDialogCallbackData = game;
+}
+
+internal void Game_GwaelinAccompanyPostDialogCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 12; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_ActivePause, Game_GwaelinAccompanyPauseCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_GwaelinAccompanyPauseCallback( Game_t* game )
+{
+   char msg[128];
+
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_11 );
+   sprintf( msg, STRING_NPC_ENDING_RESCUED_12, game->player.name );
+   Dialog_PushSection( &( game->dialog ), msg );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_ENDING_RESCUED_13, Game_QueenGwaelinCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_QueenGwaelinCallback( Game_t* game )
+{
+   game->tileMap.npcCount--;
+   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_CARRY_ID );
+   game->player.sprite.direction = Direction_Down;
+   game->postDialogCallback = Game_QueenGwaelinPostDialogCallback;
+   game->postDialogCallbackData = game;
+}
+
+internal void Game_QueenGwaelinPostDialogCallback( Game_t* game )
+{
+   uint32_t i;
+
+   for ( i = 0; i < game->tileMap.npcCount; i++ )
+   {
+      if ( game->tileMap.npcs[i].id == 88 )
+      {
+         Sprite_LoadActive( &( game->tileMap.npcs[i].sprite ), 16 );
+      }
+   }
+
+   // MUFFINS: pause, then animate the player moving down off the screen, while fading out
+}
+
+internal void Game_GoFindGwaelinCallback( Game_t* game )
+{
+   game->postDialogCallback = Game_GoFindGwaelinPostDialogCallback;
+   game->postDialogCallbackData = game;
+}
+
+internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game )
+{
+   game->player.sprite.direction = Direction_Down;
+
+   // MUFFINS: pause, then animate the player moving down off the screen, while fading out
 }

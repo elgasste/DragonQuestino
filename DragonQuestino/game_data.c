@@ -26803,6 +26803,11 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
       tileMap->npcCount = 0;
    }
 
+   if ( ( id == TILEMAP_TANTEGEL_VICTORY_ID ) && !tileMap->gameFlags->rescuedPrincess )
+   {
+      tileMap->npcCount--;
+   }
+
    TileMap_CheckThroneRoomPrincess( tileMap );
    TileMap_ResetNpcs( tileMap );
 }

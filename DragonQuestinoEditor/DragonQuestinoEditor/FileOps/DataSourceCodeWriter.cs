@@ -568,6 +568,11 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "      tileMap->npcCount = 0;\n" );
          WriteToFileStream( fs, "   }\n\n" );
 
+         WriteToFileStream( fs, "   if ( ( id == TILEMAP_TANTEGEL_VICTORY_ID ) && !tileMap->gameFlags->rescuedPrincess )\n" );
+         WriteToFileStream( fs, "   {\n" );
+         WriteToFileStream( fs, "      tileMap->npcCount--;\n" );
+         WriteToFileStream( fs, "   }\n\n" );
+
          WriteToFileStream( fs, "   TileMap_CheckThroneRoomPrincess( tileMap );\n" );
          WriteToFileStream( fs, "   TileMap_ResetNpcs( tileMap );\n" );
 
