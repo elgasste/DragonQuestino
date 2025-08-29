@@ -171,6 +171,13 @@ void Game_DrawQuickStatus( Game_t* game )
    uint8_t level = game->player.level + 1;
    char line[9];
 
+   // special case for the game's ending dialogue
+   if ( game->gameFlags.defeatedDragonlord &&
+        ( ( game->player.tileIndex == TILEMAP_ENDING_TRIGGERINDEX_1 ) || ( game->player.tileIndex == TILEMAP_ENDING_TRIGGERINDEX_2 ) ) )
+   {
+      return;
+   }
+
    memSize = Math_Min32u( (uint32_t)( strlen( game->player.name ) ), 4 );
    memcpy( line, game->player.name, sizeof( char ) * memSize );
    line[memSize] = '\0';

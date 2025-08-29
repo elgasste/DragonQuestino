@@ -11,6 +11,9 @@ internal void Game_CursedExpelCallback( Game_t* game );
 internal void Game_CursedExpelMessageCallback( Game_t* game );
 internal void Game_ResetTitleScreenFlash( Game_t* game );
 internal void Game_TicTitleScreenFlash( Game_t* game );
+internal void Game_KingQuestionCallback( Game_t* game );
+internal void Game_KingQuestionPostDialogCallback( Game_t* game );
+internal void Game_KingQuestionPauseCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -161,6 +164,13 @@ void Game_Tic( Game_t* game )
    if ( game->animationChain.isRunning )
    {
       AnimationChain_Tic( &( game->animationChain ) );
+
+      if ( ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_ActivePause ) &&
+           game->mainState == MainState_Overworld )
+      {
+         Game_TicPhysics( game );
+         Game_TicActiveSprites( game );
+      }
    }
    else if ( !runningCallback )
    {
@@ -434,6 +444,35 @@ void Game_ExpelCursedPlayer( Game_t* game )
    Game_OpenDialog( game );
 }
 
+void Game_TriggerEnding( Game_t* game )
+{
+   char msg[128];
+
+   Dialog_Reset( &( game->dialog ) );
+
+   sprintf( msg, STRING_NPC_ENDING_1, game->player.name );
+   Dialog_PushSection( &( game->dialog ), msg );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_2 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_3 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_4 );
+   sprintf( msg, STRING_NPC_ENDING_5, game->player.name );
+   Dialog_PushSection( &( game->dialog ), msg );
+
+   if ( !game->gameFlags.rescuedPrincess )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_5_1 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_5_2 );
+   }
+
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_6 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_7 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_8 );
+   sprintf( msg, STRING_NPC_ENDING_9, game->player.name );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_KingQuestionCallback, game );
+
+   Game_OpenDialog( game );
+}
+
 internal void Game_BattleIntroMessageCallback( Game_t* game )
 {
    char enemyName[24];
@@ -608,4 +647,36 @@ internal void Game_TicTitleScreenFlash( Game_t* game )
       flash->slowFlash = Random_u32( 0, 1 );
       flash->currentFrame = 0;
    }
+}
+
+internal void Game_KingQuestionCallback( Game_t* game )
+{
+   game->postDialogCallback = Game_KingQuestionPostDialogCallback;
+   game->postDialogCallbackData = game;
+}
+
+internal void Game_KingQuestionPostDialogCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 12; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+   
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_ActivePause, Game_KingQuestionPauseCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_KingQuestionPauseCallback( Game_t* game )
+{
+   // MUFFINS
+   // - if you saved the princess, take her with you
+   // - if you haven't, take over as king, maybe?
+
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), "FINE, don't answer." );
+   Game_OpenDialog( game );
 }

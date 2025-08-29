@@ -285,7 +285,15 @@ void Game_PlayerSteppedOnTile( Game_t* game )
    }
 #endif
 
-   if ( !game->gameFlags.defeatedDragonlord )
+   if ( game->gameFlags.defeatedDragonlord )
+   {
+      if ( game->tileMap.id == TILEMAP_TANTEGEL_VICTORY_ID &&
+           ( game->player.tileIndex == TILEMAP_ENDING_TRIGGERINDEX_1 || game->player.tileIndex == TILEMAP_ENDING_TRIGGERINDEX_2 ) )
+      {
+         Game_TriggerEnding( game );
+      }
+   }
+   else
    {
       game->battle.specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
 

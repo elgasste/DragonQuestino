@@ -282,11 +282,23 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
 
 internal void Game_ReturnToOverworldWithPause( Game_t* game )
 {
-   Game_ChangeToOverworldState( game );
-   Game_DrawOverworld( game );
-   AnimationChain_Reset( &( game->animationChain ) );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-   AnimationChain_Start( &( game->animationChain ) );
+   if ( game->subState == SubState_Dialog && game->postDialogCallback != 0 )
+   {
+      Game_ChangeToOverworldState( game );
+      Game_DrawOverworld( game );
+      game->postRenderCallback = game->postDialogCallback;
+      game->postRenderCallbackData = game->postDialogCallbackData;
+      game->postDialogCallback = 0;
+      game->postDialogCallbackData = 0;
+   }
+   else
+   {
+      Game_ChangeToOverworldState( game );
+      Game_DrawOverworld( game );
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_Start( &( game->animationChain ) );
+   }
 }
 
 internal void Game_OpenOverworldSpellMenu( Game_t* game )

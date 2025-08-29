@@ -114,6 +114,9 @@
 #define TILEMAP_MAX_BOOTHS                      16
 #define TILEMAP_MAX_SHOPITEMS                   8
 
+#define TILEMAP_ENDING_TRIGGERINDEX_1           299
+#define TILEMAP_ENDING_TRIGGERINDEX_2           300
+
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
 typedef struct Player_t Player_t;

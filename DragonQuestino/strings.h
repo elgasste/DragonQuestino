@@ -589,5 +589,16 @@
 #define STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_1                      "\"Wait, %s, no! Please do not put on the cursed belt!\""
 #define STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_2                      "\"I sense a great evil emanating from it, you must leave it be.\""
 #define STRING_NPC_STATICSOLDIER                                     "The soldier is standing at attention, so he cannot speak."
+#define STRING_NPC_ENDING_1                                          "\"Lorik: %s, I cannot begin to express my gratitude for your exploits.\""
+#define STRING_NPC_ENDING_2                                          "\"I had all but lost faith in the future of Alefgard.\""
+#define STRING_NPC_ENDING_3                                          "\"Yet here we stand, the Dragonlord has been defeated and the Sphere of Light is reclaimed!\""
+#define STRING_NPC_ENDING_4                                          "\"I never doubted your bravery, but this victory has truly cemented your legacy.\""
+#define STRING_NPC_ENDING_5                                          "\"Let the world know that %s truly is Erdrick's descendent!\""
+#define STRING_NPC_ENDING_5_1                                        "\"If only my daughter could be present to see it, but I'm afraid she may be lost forever.\""
+#define STRING_NPC_ENDING_5_2                                        "\"...\""
+#define STRING_NPC_ENDING_6                                          "\"Now there is something I must ask of you.\""
+#define STRING_NPC_ENDING_7                                          "\"As the blood of Erdrick flows in your veins, it is your right to rule this land.\""
+#define STRING_NPC_ENDING_8                                          "\"Therefore, it is my duty to offer you my crown, and my throne.\""
+#define STRING_NPC_ENDING_9                                          "\"%s, will you take my place as King of Alefgard?\""
 
 #endif // STRINGS_H

@@ -84,7 +84,10 @@ void AnimationChain_Tic( AnimationChain_t* chain )
    {
       switch ( chain->animationIds[chain->activeAnimation] )
       {
-         case AnimationId_Pause: AnimationChain_Tic_Pause( chain ); break;
+         case AnimationId_Pause:
+         case AnimationId_ActivePause:
+            AnimationChain_Tic_Pause( chain );
+            break;
          case AnimationId_WhiteOut: AnimationChain_Tic_WhiteOut( chain ); break;
          case AnimationId_WhiteIn: AnimationChain_Tic_WhiteIn( chain ); break;
          case AnimationId_FadeOut:
@@ -130,7 +133,10 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
 
    switch ( chain->animationIds[chain->activeAnimation] )
    {
-      case AnimationId_Pause: chain->totalDuration = ANIMATION_PAUSE_DURATION; break;
+      case AnimationId_Pause:
+      case AnimationId_ActivePause:
+         chain->totalDuration = ANIMATION_PAUSE_DURATION;
+         break;
       case AnimationId_WhiteOut:
          Screen_BackupPalette( chain->screen );
          chain->totalDuration = ANIMATION_WHITE_DURATION;

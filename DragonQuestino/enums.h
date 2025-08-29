@@ -57,6 +57,7 @@ SubState_t;
 typedef enum AnimationId_t
 {
    AnimationId_Pause = 0,
+   AnimationId_ActivePause,
    AnimationId_FadeOut,
    AnimationId_MidFadeOut,
    AnimationId_SlowFadeOut,
