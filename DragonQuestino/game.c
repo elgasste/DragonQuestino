@@ -172,7 +172,8 @@ void Game_Tic( Game_t* game )
    {
       AnimationChain_Tic( &( game->animationChain ) );
 
-      if ( ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_ActivePause ) &&
+      if ( ( ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_ActivePause ) ||
+             ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_Ending_WalkFade ) ) &&
            game->mainState == MainState_Overworld )
       {
          Game_TicPhysics( game );
@@ -764,7 +765,16 @@ internal void Game_QueenGwaelinPostDialogCallback( Game_t* game )
       }
    }
 
-   // MUFFINS: pause, then animate the player moving down off the screen, while fading out
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 12; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+
+   // MUFFINS: add a callback that goes to the credits
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Ending_WalkFade );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 internal void Game_GoFindGwaelinCallback( Game_t* game )
@@ -775,7 +785,18 @@ internal void Game_GoFindGwaelinCallback( Game_t* game )
 
 internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game )
 {
+   uint32_t i;
+
    game->player.sprite.direction = Direction_Down;
 
-   // MUFFINS: pause, then animate the player moving down off the screen, while fading out
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 12; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+
+   // MUFFINS: add a callback that goes to the credits
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Ending_WalkFade );
+   AnimationChain_Start( &( game->animationChain ) );
 }

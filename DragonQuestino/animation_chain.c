@@ -27,6 +27,7 @@ internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain );
+internal void AnimationChain_Tic_EndingWalk( AnimationChain_t* chain );
 
 internal Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -95,6 +96,10 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_SlowFadeOut:
             AnimationChain_Tic_FadeOut( chain );
             break;
+         case AnimationId_Ending_WalkFade:
+            AnimationChain_Tic_FadeOut( chain );
+            AnimationChain_Tic_EndingWalk( chain );
+            break;
          case AnimationId_FadeIn:
          case AnimationId_MidFadeIn:
             AnimationChain_Tic_FadeIn( chain );
@@ -151,6 +156,7 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          chain->totalDuration = ANIMATION_MIDFADE_DURATION;
          break;
       case AnimationId_SlowFadeOut:
+      case AnimationId_Ending_WalkFade:
          Screen_BackupPalette( chain->screen );
          chain->totalDuration = ANIMATION_SLOWFADE_DURATION;
          break;
@@ -531,4 +537,12 @@ internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain )
 
       TOGGLE_BOOL( chain->flag );
    }
+}
+
+internal void AnimationChain_Tic_EndingWalk( AnimationChain_t* chain )
+{
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+   chain->game->player.sprite.position.y += 0.5f;
 }
