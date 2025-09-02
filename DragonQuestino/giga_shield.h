@@ -9,7 +9,7 @@
 class GigaShield : public Adafruit_GFX {
    public:
       GigaShield();
-      ~GigaShield();
+      ~GigaShield() { };
 
       void begin();
       void setScreen( Screen_t* screen ) { _screen = screen; };
@@ -24,8 +24,8 @@ class GigaShield : public Adafruit_GFX {
 
    private:
       Arduino_H7_Video* _display;
-      uint16_t* _mainBuffer = nullptr;
-      uint16_t* _wipeBuffer = nullptr;
+      uint16_t _mainBuffer[SCREEN_PIXELS];
+      uint16_t _wipeBuffer[SCREEN_PIXELS];
       bool _isWiping = false;
       Screen_t* _screen;
       rtos::Thread* _refreshThread;
