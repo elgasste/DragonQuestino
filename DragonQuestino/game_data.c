@@ -27095,6 +27095,36 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          for ( i = 2115; i < 2185; i++ ) tiles32[i] = 0x00200020;
          tiles32[2185] = 0x00200020;
          break;
+      case 40:
+         tileMap->id = 40;
+         tileMap->hasEncounters = False;
+         tileMap->blocksMagic = False;
+         tileMap->isDungeon = False;
+         tileMap->isDark = False;
+         tileMap->tilesX = 16;
+         tileMap->tilesY = 15;
+         tileMap->portalCount = 0;
+         tileMap->evacPortal.destinationTileMapIndex = 0;
+         tileMap->evacPortal.destinationTileIndex = 0;
+         tileMap->evacPortal.arrivalDirection = (Direction_t)0;
+         tileMap->staticSpriteCount = 0;
+         tileMap->npcCount = 0;
+         for ( i = 0; i < 15; i++ ) for ( j = 0; j < 8; j++ ) tiles32[(i * 70) + j] = 0x00000000;
+         for ( i = 281; i < 285; i++ ) tiles32[i] = 0x00200020;
+         tiles32[353] = 0x00000020;
+         tiles32[356] = 0x00200000;
+         tiles32[422] = 0x01410000;
+         tiles32[423] = 0x02430282;
+         for ( i = 425; i < 427; i++ ) tiles32[i] = 0x00000020;
+         for ( i = 427; i < 491; i++ ) tiles32[i] = 0x00200000;
+         tiles32[492] = 0x05C40000;
+         tiles32[493] = 0x00060005;
+         for ( i = 497; i < 563; i++ ) tiles32[i] = 0x00200020;
+         for ( i = 631; i < 635; i++ ) tiles32[i] = 0x00200020;
+         for ( i = 703; i < 707; i++ ) tiles32[i] = 0x00200020;
+         tiles32[776] = 0x00200000;
+         for ( i = 847; i < 913; i++ ) tiles32[i] = 0x00200020;
+         break;
    }
 
    TileMap_UpdateViewport( tileMap );
@@ -32280,11 +32310,6 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
          if ( tileIndex == 429 ) return 0x10000000;
          if ( tileIndex == 430 ) return 0x20000000;
          break;
-      case 38:
-         if ( tileIndex == 71 ) return 0x00000001;
-         if ( tileIndex == 129 ) return 0x00000002;
-         if ( tileIndex == 130 ) return 0x00000004;
-         break;
       case 39:
          if ( tileIndex == 450 ) return 0x00000008;
          if ( tileIndex == 483 ) return 0x00000010;
@@ -32351,6 +32376,9 @@ uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
       case 39:
          if ( tileIndex == 243 ) return 0x00010000;
          if ( tileIndex == 453 ) return 0x00020000;
+         break;
+      case 40:
+         if ( tileIndex == 189 ) return 0x00000001;
          break;
    }
 

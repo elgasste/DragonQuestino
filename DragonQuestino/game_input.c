@@ -636,20 +636,24 @@ internal void Game_HandleEndingInput( Game_t* game )
 {
    if ( game->mainState == MainState_Ending_1 )
    {
-      // MUFFINS: wipe to black, then fade in ending 2
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
+         // MUFFINS
+         //
+         // - wipe the screen
+         // - pause
+         // - load the ending screen tile map and tile set
+         // - change game state
+         // - fade in
+
          game->mainState = MainState_Ending_2;
       }
    }
    else
    {
-      // MUFFINS: fade out, pause, then reset the game (need tiles and a tile map for this)
-      //
-      // - we have the tile set for this, just need to load it
-      // - add a tile map
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
+         // MUFFINS: fade out and pause before doing this
          Game_Reset( game );
       }
    }
