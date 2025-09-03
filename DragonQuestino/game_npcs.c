@@ -122,18 +122,34 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          {
             Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_PR );
          }
+         else if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_DF );
+         }
          else
          {
             Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_2 : STRING_NPC_TANTEGEL_GROUNDFLOOR_BOTTOMRIGHTSTATICSOLDIER_1 );
          }
          break;
       case 8: // Tantegel ground floor entry left soldier
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER );
+         if ( game->gameFlags.defeatedDragonlord )
+         {
+            sprintf( msg, STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER_DF, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYLEFTSOLDIER );
+         }
          break;
       case 9: // Tantegel ground floor entry right soldier
          if ( game->gameFlags.carryingPrincess )
          {
             Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_PR );
+         }
+         else if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_ENTRYRIGHTSOLDIER_DF );
          }
          else
          {
@@ -142,12 +158,23 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          }
          break;
       case 10: // Tantegel ground floor upper-left static blue man
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN );
+         if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN_DF );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERLEFTSTATICBLUEMAN );
+         }
          break;
       case 11: // Tantegel ground floor upper-right static blue woman
          if ( game->gameFlags.carryingPrincess )
          {
             Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_PR );
+         }
+         else if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERRIGHTSTATICBLUEWOMAN_DF );
          }
          else
          {
@@ -156,7 +183,7 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          }
          break;
       case 12: // Tantegel ground floor static barrier soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_STATICBARRIERSOLDIER );
+         Dialog_PushSection( &( game->dialog ), game->gameFlags.defeatedDragonlord ? STRING_NPC_TANTEGEL_GROUNDFLOOR_STATICBARRIERSOLDIER_DF : STRING_NPC_TANTEGEL_GROUNDFLOOR_STATICBARRIERSOLDIER );
          break;
       case 13: // Tantegel ground floor blue man by the stairs
          Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSBLUEMAN_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_STAIRSBLUEMAN );
@@ -174,7 +201,11 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
       case 15: // Tantegel ground floor green man on the right in the lower-left room
          if ( game->gameFlags.carryingPrincess )
          {
-            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_PR);
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_PR );
+         }
+         else if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANRIGHT_DF );
          }
          else
          {
@@ -183,12 +214,24 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          }
          break;
       case 16: // Tantegel ground floor green man on the left in the lower-left room
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT );
+         if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT_DF );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_LOWERLEFTGREENMANLEFT );
+         }
          break;
       case 17: // Tantegel ground floor treasure room soldier
          if ( game->gameFlags.carryingPrincess )
          {
             Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_PR );
+         }
+         else if ( game->gameFlags.defeatedDragonlord )
+         {
+            sprintf( msg, STRING_NPC_TANTEGEL_GROUNDFLOOR_TREASUREROOMSOLDIER_DF, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
          }
          else
          {
@@ -197,18 +240,44 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          }
          break;
       case 18: // Tantegel ground floor upper area soldier
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER );
+         if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER_DF );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_UPPERSOLDIER );
+         }
          break;
       case 19: // Tantegel ground floor right area moving soldier
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER );
+         if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER_DF );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_RIGHTACTIVESOLDIER );
+         }
          break;
       case 20: // Tantegel ground floor moving wizard
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD : STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD );
+         if ( game->gameFlags.defeatedDragonlord )
+         {
+            sprintf( msg, STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD_DF, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), game->gameFlags.carryingPrincess ? STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD_PR : STRING_NPC_TANTEGEL_GROUNDFLOOR_ACTIVEWIZARD );
+         }
          break;
       case 21: // Tantegel ground floor soldier on the other side of the barrier
          if ( game->gameFlags.carryingPrincess )
          {
             Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_PR );
+         }
+         else if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_GROUNDFLOOR_PASTBARRIERSOLDIER_DF );
          }
          else
          {
@@ -217,7 +286,15 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
          }
          break;
       case 22: // Tantegel basement wizard
-         Dialog_PushSection( &( game->dialog ), ( game->gameFlags.treasures & 0x80 ) ? STRING_NPC_TANTEGEL_BASEMENT_WIZARD_1 : STRING_NPC_TANTEGEL_BASEMENT_WIZARD_2 );
+         if ( game->gameFlags.defeatedDragonlord )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_BASEMENT_WIZARD_DF_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_BASEMENT_WIZARD_DF_2 );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), ( game->gameFlags.treasures & 0x80 ) ? STRING_NPC_TANTEGEL_BASEMENT_WIZARD_1 : STRING_NPC_TANTEGEL_BASEMENT_WIZARD_2 );
+         }
          break;
       case 23: // Brecconary west entrance blue man
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_WESTENTRANCEBLUEMAN );
@@ -497,6 +574,9 @@ void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
             sprintf( msg, STRING_NPC_SWAMPCAVE_PRINCESS_6, game->player.name );
             Dialog_PushSection( &( game->dialog ), msg );
          }
+         break;
+      case 88:
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_STATICSOLDIER );
          break;
 
       default: // should never happen, but it's nice to have a catch-all

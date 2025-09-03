@@ -19,6 +19,9 @@ internal void Game_HandleEnterNameInput( Game_t* game );
 internal void Game_HandleEnterPasswordInput( Game_t* game );
 internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game );
 internal void Game_HandleOverworldShopMenuInput( Game_t* game );
+internal void Game_HandleEndingInput( Game_t* game );
+internal void Game_EndingPauseCallback( Game_t* game );
+internal void Game_EndingPostFadeOutCallback( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -32,6 +35,10 @@ void Game_HandleInput( Game_t* game )
          break;
       case MainState_EnterPassword:
          Game_HandleEnterPasswordInput( game );
+         break;
+      case MainState_Ending_1:
+      case MainState_Ending_2:
+         Game_HandleEndingInput( game );
          break;
       case MainState_Overworld:
          switch ( game->subState )
@@ -282,11 +289,23 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
 
 internal void Game_ReturnToOverworldWithPause( Game_t* game )
 {
-   Game_ChangeToOverworldState( game );
-   Game_DrawOverworld( game );
-   AnimationChain_Reset( &( game->animationChain ) );
-   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-   AnimationChain_Start( &( game->animationChain ) );
+   if ( game->subState == SubState_Dialog && game->postDialogCallback != 0 )
+   {
+      Game_ChangeToOverworldState( game );
+      Game_DrawOverworld( game );
+      game->postRenderCallback = game->postDialogCallback;
+      game->postRenderCallbackData = game->postDialogCallbackData;
+      game->postDialogCallback = 0;
+      game->postDialogCallbackData = 0;
+   }
+   else
+   {
+      Game_ChangeToOverworldState( game );
+      Game_DrawOverworld( game );
+      AnimationChain_Reset( &( game->animationChain ) );
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+      AnimationChain_Start( &( game->animationChain ) );
+   }
 }
 
 internal void Game_OpenOverworldSpellMenu( Game_t* game )
@@ -613,4 +632,54 @@ internal void Game_HandleOverworldShopMenuInput( Game_t* game )
          }
       }
    }
+}
+
+internal void Game_HandleEndingInput( Game_t* game )
+{
+   uint32_t i;
+
+   if ( game->mainState == MainState_Ending_1 )
+   {
+      if ( Input_AnyButtonPressed( &( game->input ) ) )
+      {
+         Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+         AnimationChain_Reset( &( game->animationChain ) );
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EndingPauseCallback, game );
+         AnimationChain_Start( &( game->animationChain ) );
+      }
+   }
+   else
+   {
+      if ( Input_AnyButtonPressed( &( game->input ) ) )
+      {
+         AnimationChain_Reset( &( game->animationChain ) );
+         AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_MidFadeOut );
+
+         for ( i = 0; i < 8; i++ )
+         {
+            AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+         }
+
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EndingPostFadeOutCallback, game );
+         AnimationChain_Start( &( game->animationChain ) );
+      }
+   }
+}
+
+internal void Game_EndingPauseCallback( Game_t* game )
+{
+   TileMap_LoadTextures( &( game->tileMap ), TileTextureType_TheEnd );
+   TileMap_Load( &( game->tileMap ), TILEMAP_THEENDSCREEN_ID );
+
+   game->mainState = MainState_Ending_2;
+   
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_MidFadeIn );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_EndingPostFadeOutCallback( Game_t* game )
+{
+   Game_Reset( game );
+   Screen_RestorePalette( &( game->screen ) );
 }

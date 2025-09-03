@@ -35,6 +35,8 @@ typedef enum MainState_t
    MainState_EnterPassword,
    MainState_Overworld,
    MainState_Battle,
+   MainState_Ending_1,
+   MainState_Ending_2,
 
    MainState_Count
 }
@@ -57,6 +59,7 @@ SubState_t;
 typedef enum AnimationId_t
 {
    AnimationId_Pause = 0,
+   AnimationId_ActivePause,
    AnimationId_FadeOut,
    AnimationId_MidFadeOut,
    AnimationId_SlowFadeOut,
@@ -79,6 +82,7 @@ typedef enum AnimationId_t
    AnimationId_Battle_EnemyDodge,
    AnimationId_Battle_PlayerDamage,
    AnimationId_Battle_PlayerDeath,
+   AnimationId_Ending_WalkFade,
 
    AnimationId_Count
 }
@@ -233,6 +237,7 @@ typedef enum TileTextureType_t
 {
    TileTextureType_Title = 0,
    TileTextureType_Map,
+   TileTextureType_TheEnd,
 
    TileTextureType_Count
 }

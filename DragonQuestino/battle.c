@@ -74,6 +74,8 @@ internal void Battle_DefeatedFinalDragonlordCallback( Battle_t* battle );
 internal void Battle_DefeatedFinalDragonlordPauseCallback( Battle_t* battle );
 internal void Battle_CollectSphereCallback( Battle_t* battle );
 internal void Battle_CollectSpherePauseCallback( Battle_t* battle );
+internal void Battle_CollectSphereLightupCallback( Battle_t* battle );
+internal void Battle_CollectSphereHealCallback( Battle_t* battle );
 
 void Battle_Init( Battle_t* battle, Game_t* game )
 {
@@ -1185,8 +1187,25 @@ internal void Battle_CollectSpherePauseCallback( Battle_t* battle )
       ITEM_TOGGLE_HASCURSEDBELT( battle->game->player.items );
    }
 
-   battle->game->player.isCursed = False;
+   battle->game->gameFlags.treasures ^= 0x10000000;
+
    Dialog_Reset( &( battle->game->dialog ) );
-   Dialog_PushSection( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT );
+   Dialog_PushSection( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT_1 );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT_2, Battle_CollectSphereLightupCallback, battle );
+   Dialog_PushSection( &( battle->game->dialog ), STRING_DIALOG_FOUNDSPHEREOFLIGHT_3 );
    Game_OpenDialog( battle->game );
+}
+
+internal void Battle_CollectSphereLightupCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_CastSpell, Battle_CollectSphereHealCallback, battle );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_CollectSphereHealCallback( Battle_t* battle )
+{
+   battle->game->player.isCursed = False;
+   battle->game->player.stats.hitPoints = battle->game->player.stats.maxHitPoints;
+   battle->game->player.stats.magicPoints = battle->game->player.stats.maxMagicPoints;
 }

@@ -8,8 +8,9 @@ namespace DragonQuestinoEditor
       public const string SourceBasePath = "..\\..\\..\\..\\..\\DragonQuestino\\";
 
       public const string ShieldBackgroundFilePath = AssetsBasePath + "shield_background.png";
-      public const string TileTexturesFilePath = AssetsBasePath + "tile_textures.png";
       public const string TitleTexturesFilePath = AssetsBasePath + "title_textures.png";
+      public const string TileTexturesFilePath = AssetsBasePath + "tile_textures.png";
+      public const string TheEndTexturesFilePath = AssetsBasePath + "the_end_textures.png";
       public const string EditorSaveDataFilePath = AssetsBasePath + "editor_save.json";
       public const string StaticSpriteSheetFilePath = AssetsBasePath + "static_sprites.png";
       public const string TextTileSetFilePath = AssetsBasePath + "text_tileset.png";
@@ -29,7 +30,9 @@ namespace DragonQuestinoEditor
          AssetsBasePath + "flash_sprite_1.png",
          AssetsBasePath + "flash_sprite_2.png",
          AssetsBasePath + "flash_sprite_3.png",
-         AssetsBasePath + "flash_sprite_4.png"
+         AssetsBasePath + "flash_sprite_4.png",
+         AssetsBasePath + "soldier_static_sprite.png",
+         AssetsBasePath + "soldier_trumpet_sprite.png"
       ];
 
       public const string GameDataSourceFilePath = SourceBasePath + "game_data.c";

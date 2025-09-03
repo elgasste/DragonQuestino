@@ -11,6 +11,18 @@ internal void Game_CursedExpelCallback( Game_t* game );
 internal void Game_CursedExpelMessageCallback( Game_t* game );
 internal void Game_ResetTitleScreenFlash( Game_t* game );
 internal void Game_TicTitleScreenFlash( Game_t* game );
+internal void Game_KingQuestionCallback( Game_t* game );
+internal void Game_KingQuestionPostDialogCallback( Game_t* game );
+internal void Game_KingQuestionPauseCallback( Game_t* game );
+internal void Game_GwaelinAccompanyCallback( Game_t* game );
+internal void Game_GwaelinAccompanyPostDialogCallback( Game_t* game );
+internal void Game_GwaelinAccompanyPauseCallback( Game_t* game );
+internal void Game_QueenGwaelinCallback( Game_t* game );
+internal void Game_QueenGwaelinPostDialogCallback( Game_t* game );
+internal void Game_HappyEndingCallback( Game_t* game );
+internal void Game_GoFindGwaelinCallback( Game_t* game );
+internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game );
+internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -19,8 +31,6 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ), &( game->player ) );
-   TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Title );
-   TileMap_Load( &( game->tileMap ), TILEMAP_TITLESCREEN_ID );
    AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ), game );
    Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
    Clock_Init( &( game->clock ) );
@@ -92,6 +102,9 @@ void Game_Reset( Game_t* game )
    Player_LoadArmor( player, ARMOR_NONE_ID );
    Player_LoadShield( player, SHIELD_NONE_ID );
 
+   TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Title );
+   TileMap_Load( &( game->tileMap ), TILEMAP_TITLESCREEN_ID );
+
    Game_ResetTitleScreenFlash( game );
    Game_OpenMenu( game, MenuId_Startup );
 }
@@ -125,11 +138,11 @@ void Game_Load( Game_t* game, const char* password )
       game->subState = SubState_None;
    }
 
-   player->stats.strength = Player_GetStrengthFromLevel( player, 0 );
-   player->stats.agility = Player_GetAgilityFromLevel( player, 0 );
-   player->stats.maxHitPoints = Player_GetMaxHitPointsFromLevel( player, 0 );
+   player->stats.strength = Player_GetStrengthFromLevel( player, player->level );
+   player->stats.agility = Player_GetAgilityFromLevel( player, player->level );
+   player->stats.maxHitPoints = Player_GetMaxHitPointsFromLevel( player, player->level );
    player->stats.hitPoints = player->stats.maxHitPoints;
-   player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, 0 );
+   player->stats.maxMagicPoints = Player_GetMaxMagicPointsFromLevel( player, player->level );
    player->stats.magicPoints = player->stats.maxMagicPoints;
 
    TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Map );
@@ -161,6 +174,14 @@ void Game_Tic( Game_t* game )
    if ( game->animationChain.isRunning )
    {
       AnimationChain_Tic( &( game->animationChain ) );
+
+      if ( ( ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_ActivePause ) ||
+             ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_Ending_WalkFade ) ) &&
+           game->mainState == MainState_Overworld )
+      {
+         Game_TicPhysics( game );
+         Game_TicActiveSprites( game );
+      }
    }
    else if ( !runningCallback )
    {
@@ -268,14 +289,14 @@ void Game_ChangeToEnterNameState( Game_t* game )
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
    // MUFFINS: this gives us some goodies for testing
-   //Game_Load( game, "JCT..xAAI3jZ...-....HxHdtPf..4" ); // level 30 with everything except a few treasures
-   //Game_ChangeToOverworldState( game );
+   Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" ); // level 30 with everything except a few treasures
+   Game_ChangeToOverworldState( game );
    
-   game->mainState = MainState_EnterPassword;
+   /*game->mainState = MainState_EnterPassword;
    game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
    Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
 }
 
 void Game_ChangeToBattleState( Game_t* game )
@@ -431,6 +452,35 @@ void Game_ExpelCursedPlayer( Game_t* game )
    Dialog_PushSection( &( game->dialog ), STRING_DIALOG_EXPEL_1 );
    Dialog_PushSection( &( game->dialog ), STRING_DIALOG_EXPEL_2 );
    Dialog_PushSectionWithCallback( &( game->dialog ), STRING_DIALOG_EXPEL_3, Game_CursedExpelCallback, game );
+   Game_OpenDialog( game );
+}
+
+void Game_TriggerEnding( Game_t* game )
+{
+   char msg[128];
+
+   Dialog_Reset( &( game->dialog ) );
+
+   sprintf( msg, STRING_NPC_ENDING_1, game->player.name );
+   Dialog_PushSection( &( game->dialog ), msg );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_2 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_3 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_4 );
+   sprintf( msg, STRING_NPC_ENDING_5, game->player.name );
+   Dialog_PushSection( &( game->dialog ), msg );
+
+   if ( !game->gameFlags.rescuedPrincess )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_5_1 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_5_2 );
+   }
+
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_6 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_7 );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_8 );
+   sprintf( msg, STRING_NPC_ENDING_9, game->player.name );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_KingQuestionCallback, game );
+
    Game_OpenDialog( game );
 }
 
@@ -608,4 +658,173 @@ internal void Game_TicTitleScreenFlash( Game_t* game )
       flash->slowFlash = Random_u32( 0, 1 );
       flash->currentFrame = 0;
    }
+}
+
+internal void Game_KingQuestionCallback( Game_t* game )
+{
+   game->postDialogCallback = Game_KingQuestionPostDialogCallback;
+   game->postDialogCallbackData = game;
+}
+
+internal void Game_KingQuestionPostDialogCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 12; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+   
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_ActivePause, Game_KingQuestionPauseCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_KingQuestionPauseCallback( Game_t* game )
+{
+   char msg[128];
+
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( game->gameFlags.rescuedPrincess )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_1 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_2 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_3 );
+      sprintf( msg, STRING_NPC_ENDING_RESCUED_4, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_5 );
+      sprintf( msg, STRING_NPC_ENDING_RESCUED_6, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_7 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_8 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_9 );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_ENDING_RESCUED_10, Game_GwaelinAccompanyCallback, game );
+   }
+   else
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_NOTRESCUED_1 );
+      sprintf( msg, STRING_NPC_ENDING_NOTRESCUED_2, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_NOTRESCUED_3 );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_ENDING_NOTRESCUED_4, Game_GoFindGwaelinCallback, game );
+   }
+
+   Game_OpenDialog( game );
+}
+
+internal void Game_GwaelinAccompanyCallback( Game_t* game )
+{
+   game->postDialogCallback = Game_GwaelinAccompanyPostDialogCallback;
+   game->postDialogCallbackData = game;
+}
+
+internal void Game_GwaelinAccompanyPostDialogCallback( Game_t* game )
+{
+   uint32_t i;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 12; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_ActivePause, Game_GwaelinAccompanyPauseCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_GwaelinAccompanyPauseCallback( Game_t* game )
+{
+   char msg[128];
+
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSection( &( game->dialog ), STRING_NPC_ENDING_RESCUED_11 );
+   sprintf( msg, STRING_NPC_ENDING_RESCUED_12, game->player.name );
+   Dialog_PushSection( &( game->dialog ), msg );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_NPC_ENDING_RESCUED_13, Game_QueenGwaelinCallback, game );
+   Game_OpenDialog( game );
+}
+
+internal void Game_QueenGwaelinCallback( Game_t* game )
+{
+   game->tileMap.npcCount--;
+   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_CARRY_ID );
+   game->player.sprite.direction = Direction_Down;
+   game->postDialogCallback = Game_QueenGwaelinPostDialogCallback;
+   game->postDialogCallbackData = game;
+}
+
+internal void Game_QueenGwaelinPostDialogCallback( Game_t* game )
+{
+   uint32_t i;
+
+   for ( i = 0; i < game->tileMap.npcCount; i++ )
+   {
+      if ( game->tileMap.npcs[i].id == 88 )
+      {
+         Sprite_LoadActive( &( game->tileMap.npcs[i].sprite ), 16 );
+      }
+   }
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 16; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Ending_WalkFade );
+
+   for ( i = 0; i < 10; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_HappyEndingCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_HappyEndingCallback( Game_t* game )
+{
+   game->mainState = MainState_Ending_1;
+   Screen_RestorePalette( &( game->screen ) );
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+}
+
+internal void Game_GoFindGwaelinCallback( Game_t* game )
+{
+   game->postDialogCallback = Game_GoFindGwaelinPostDialogCallback;
+   game->postDialogCallbackData = game;
+}
+
+internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game )
+{
+   uint32_t i;
+
+   game->player.sprite.direction = Direction_Down;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 10; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Ending_WalkFade );
+
+   for ( i = 0; i < 10; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_GoFindGwaelinPostDialogPauseCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game )
+{
+   Screen_RestorePalette( &( game->screen ) );
+   Game_Reset( game );
 }

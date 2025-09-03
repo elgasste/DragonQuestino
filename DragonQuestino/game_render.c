@@ -8,6 +8,7 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 internal void Game_DrawNonPlayerCharacters( Game_t* game );
 internal void Game_DrawPlayerNameEntry( Game_t* game );
 internal void Game_DrawPasswordEntry( Game_t* game );
+internal void Game_DrawEnding1( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -47,6 +48,10 @@ void Game_Draw( Game_t* game )
             Game_DrawEnemy( game );
          }
       }
+      else if ( game->mainState == MainState_Ending_2 )
+      {
+         Game_DrawTileMap( game );
+      }
 
       return;
    }
@@ -65,6 +70,12 @@ void Game_Draw( Game_t* game )
       case MainState_EnterPassword:
          AlphaPicker_Draw( &( game->alphaPicker ) );
          Game_DrawPasswordEntry( game );
+         break;
+      case MainState_Ending_1:
+         Game_DrawEnding1( game );
+         break;
+      case MainState_Ending_2:
+         Game_DrawTileMap( game );
          break;
       case MainState_Overworld:
          Game_DrawOverworld( game );
@@ -170,6 +181,13 @@ void Game_DrawQuickStatus( Game_t* game )
    int32_t xOffset = ( game->mainState == MainState_Battle ) ? -8 : 0;
    uint8_t level = game->player.level + 1;
    char line[9];
+
+   // special case for the game's ending dialogue
+   if ( game->gameFlags.defeatedDragonlord &&
+        ( ( game->player.tileIndex == TILEMAP_ENDING_TRIGGERINDEX_1 ) || ( game->player.tileIndex == TILEMAP_ENDING_TRIGGERINDEX_2 ) ) )
+   {
+      return;
+   }
 
    memSize = Math_Min32u( (uint32_t)( strlen( game->player.name ) ), 4 );
    memcpy( line, game->player.name, sizeof( char ) * memSize );
@@ -547,4 +565,26 @@ internal void Game_DrawPasswordEntry( Game_t* game )
          Screen_DrawChar( &( game->screen ), '*', textX + ( ( i - 15 ) * TEXT_TILE_SIZE ), textY + 16);
       }
    }
+}
+
+internal void Game_DrawEnding1( Game_t* game )
+{
+   char msg[64];
+
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+
+   game->screen.textColor = COLOR_ENDINGYELLOW;
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_1, 32 );
+   sprintf( msg, STRING_ENDING_MESSAGE_2, game->player.name );
+   Screen_DrawCenteredText( &( game->screen ), msg, 48 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_3, 64 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_4, 80 );
+
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_5, 112 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_6, 128 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_7, 144 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_8, 160 );
+
+   game->screen.textColor = COLOR_ENDINGPURPLE;
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_9, 192 );
 }

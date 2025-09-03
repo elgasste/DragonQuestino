@@ -208,6 +208,21 @@ void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y
    }
 }
 
+void Screen_DrawCenteredText( Screen_t* screen, const char* text, uint32_t y )
+{
+   size_t textLength = strlen( text );
+   uint32_t textWidth = (uint32_t)textLength * TEXT_TILE_SIZE;
+   uint32_t x;
+
+   if ( textWidth > SCREEN_WIDTH )
+   {
+      return;
+   }
+
+   x = ( SCREEN_WIDTH - textWidth ) / 2;
+   Screen_DrawText( screen, text, x, y );
+}
+
 internal int8_t Screen_GetCharIndexFromChar( const char c )
 {
    if ( c >= 97 && c <= 122 )

@@ -52,6 +52,7 @@
 #define TILEMAP_TANTEGEL_THRONEROOM_ID          1
 #define TILEMAP_TANTEGEL_BASEMENT_ID            2
 #define TILEMAP_TANTEGEL_ID                     3
+#define TILEMAP_TANTEGEL_VICTORY_ID             39
 #define TILEMAP_BRECCONARY_ID                   4
 #define TILEMAP_GARINHAM_ID                     7
 #define TILEMAP_HAUKSNESS_ID                    9
@@ -63,6 +64,7 @@
 #define TILEMAP_CHARLOCK_ID                     25
 #define TILEMAP_CHARLOCK_DRAGONLORD_ID          33
 #define TILEMAP_NORTHERNSHRINE_ID               34
+#define TILEMAP_THEENDSCREEN_ID                 40
 #define TILEMAP_TANTEGEL_INDEX                  7053
 #define TILEMAP_TOKEN_INDEX                     16893
 #define TILEMAP_FAIRYFLUTE_INDEX                192
@@ -112,6 +114,9 @@
 
 #define TILEMAP_MAX_BOOTHS                      16
 #define TILEMAP_MAX_SHOPITEMS                   8
+
+#define TILEMAP_ENDING_TRIGGERINDEX_1           299
+#define TILEMAP_ENDING_TRIGGERINDEX_2           300
 
 typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;

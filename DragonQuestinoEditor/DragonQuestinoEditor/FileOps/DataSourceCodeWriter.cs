@@ -12,6 +12,7 @@ namespace DragonQuestinoEditor.FileOps
    public class DataSourceCodeWriter( Palette palette,
                                       TileSet titleTileSet,
                                       TileSet mapTileSet,
+                                      TileSet theEndTileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
                                       ObservableCollection<EnemyViewModel> enemies,
                                       ObservableCollection<ActiveSpriteSheet> activeSpriteSheets,
@@ -20,6 +21,7 @@ namespace DragonQuestinoEditor.FileOps
       private readonly Palette _palette = palette;
       private readonly TileSet _titleTileSet = titleTileSet;
       private readonly TileSet _mapTileSet = mapTileSet;
+      private readonly TileSet _theEndTileSet = theEndTileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
       private readonly ObservableCollection<EnemyViewModel> _enemies = enemies;
       private readonly ObservableCollection<ActiveSpriteSheet> _activeSpriteSheets = activeSpriteSheets;
@@ -147,11 +149,19 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   uint32_t i;\n" );
          WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
 
-         WriteToFileStream( fs, "   if ( type == TileTextureType_Title )\n" );
-         WriteToFileStream( fs, "   {\n" );
-
-         for ( int type = 0; type < 2; type++ )
+         for ( int type = 0; type < 3; type++ )
          {
+            if ( type == 0 )
+            {
+               WriteToFileStream( fs, string.Format( "   if ( type == (TileTextureType_t){0} )\n", type ) );
+            }
+            else
+            {
+               WriteToFileStream( fs, string.Format( "   else if ( type == (TileTextureType_t){0} )\n", type ) );
+            }
+
+            WriteToFileStream( fs, "   {\n" );
+
             for ( int i = 0; i < Constants.TileTextureCount; i++ )
             {
                var packedPixels = new List<UInt32>( Constants.TilePixels );
@@ -159,7 +169,10 @@ namespace DragonQuestinoEditor.FileOps
 
                WriteToFileStream( fs, string.Format( "      mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
 
-               var pixelIndexes = ( type == 0 ) ? _titleTileSet.TilePaletteIndexes[i] : _mapTileSet.TilePaletteIndexes[i];
+               var pixelIndexes = ( type == 0 ) ?
+                  _titleTileSet.TilePaletteIndexes[i] : ( type == 1 ) ?
+                  _mapTileSet.TilePaletteIndexes[i] :
+                  _theEndTileSet.TilePaletteIndexes[i];
 
                for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
                {
@@ -238,12 +251,6 @@ namespace DragonQuestinoEditor.FileOps
             }
 
             WriteToFileStream( fs, "   }\n" );
-
-            if ( type == 0 )
-            {
-               WriteToFileStream( fs, "   else\n" );
-               WriteToFileStream( fs, "   {\n" );
-            }
          }
 
          WriteToFileStream( fs, "}\n" );
@@ -552,6 +559,8 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, "   }\n\n" );
 
+         WriteToFileStream( fs, "   TileMap_UpdateViewport( tileMap );\n\n" );
+
          WriteToFileStream( fs, "   if ( id == TILEMAP_OVERWORLD_ID && tileMap->gameFlags->usedRainbowDrop )\n" );
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );\n" );
@@ -566,6 +575,11 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   if ( ( id == TILEMAP_CHARLOCK_DRAGONLORD_ID && tileMap->gameFlags->defeatedDragonlord ) || ( id == TILEMAP_SWAMPCAVE_ID && ( tileMap->gameFlags->defeatedDragonlord || tileMap->gameFlags->rescuedPrincess ) ) )\n" );
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      tileMap->npcCount = 0;\n" );
+         WriteToFileStream( fs, "   }\n\n" );
+
+         WriteToFileStream( fs, "   if ( ( id == TILEMAP_TANTEGEL_VICTORY_ID ) && !tileMap->gameFlags->rescuedPrincess )\n" );
+         WriteToFileStream( fs, "   {\n" );
+         WriteToFileStream( fs, "      tileMap->npcCount--;\n" );
          WriteToFileStream( fs, "   }\n\n" );
 
          WriteToFileStream( fs, "   TileMap_CheckThroneRoomPrincess( tileMap );\n" );

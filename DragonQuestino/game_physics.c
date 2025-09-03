@@ -223,17 +223,35 @@ void Game_PlayerSteppedOnTile( Game_t* game )
 
    if ( portal )
    {
-      if ( ( game->tileMap.id == TILEMAP_OVERWORLD_ID ) && game->gameFlags.carryingPrincess &&
+      if ( ( game->tileMap.id == TILEMAP_OVERWORLD_ID ) && ( game->gameFlags.carryingPrincess || game->gameFlags.defeatedDragonlord ) &&
            ( portal->destinationTileMapIndex != TILEMAP_TANTEGEL_ID ) && ( portal->destinationTileMapIndex != TILEMAP_SWAMPCAVE_ID ) )
       {
          Dialog_Reset( &( game->dialog ) );
-         sprintf( msg, STRING_NPC_OVERWORLD_PRINCESS, game->player.name );
-         Dialog_PushSection( &( game->dialog ), msg );
+
+         if ( game->gameFlags.carryingPrincess )
+         {
+            sprintf( msg, STRING_NPC_OVERWORLD_PRINCESS, game->player.name );
+            Dialog_PushSection( &( game->dialog ), msg );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_DEFEATED_DRAGONLORD_OVERWORLD );
+         }
+
          Game_OpenDialog( game );
          return;
       }
       else
       {
+         // MUFFINS: uncomment for testing
+         game->gameFlags.defeatedDragonlord = True;
+         //game->gameFlags.rescuedPrincess = False;
+
+         if ( portal->destinationTileMapIndex == TILEMAP_TANTEGEL_ID && game->gameFlags.defeatedDragonlord )
+         {
+            portal->destinationTileMapIndex = TILEMAP_TANTEGEL_VICTORY_ID;
+         }
+
          AnimationChain_Reset( &( game->animationChain ) );
          Game_AnimatePortalEntrance( game, portal );
          AnimationChain_Start( &( game->animationChain ) );
@@ -268,7 +286,15 @@ void Game_PlayerSteppedOnTile( Game_t* game )
    }
 #endif
 
-   if ( !game->gameFlags.defeatedDragonlord )
+   if ( game->gameFlags.defeatedDragonlord )
+   {
+      if ( game->tileMap.id == TILEMAP_TANTEGEL_VICTORY_ID &&
+           ( game->player.tileIndex == TILEMAP_ENDING_TRIGGERINDEX_1 || game->player.tileIndex == TILEMAP_ENDING_TRIGGERINDEX_2 ) )
+      {
+         Game_TriggerEnding( game );
+      }
+   }
+   else
    {
       game->battle.specialEnemy = Game_GetSpecialEnemyFromPlayerLocation( game );
 
