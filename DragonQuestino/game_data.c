@@ -27115,10 +27115,14 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tiles32[356] = 0x00200000;
          tiles32[422] = 0x01410000;
          tiles32[423] = 0x02430282;
-         for ( i = 425; i < 427; i++ ) tiles32[i] = 0x00000020;
+         tiles32[424] = 0x000505C4;
+         tiles32[425] = 0x00000026;
+         tiles32[426] = 0x00000020;
          for ( i = 427; i < 491; i++ ) tiles32[i] = 0x00200000;
-         tiles32[492] = 0x05C40000;
-         tiles32[493] = 0x00060005;
+         tiles32[492] = 0x01070000;
+         tiles32[493] = 0x09C90008;
+         tiles32[494] = 0x000B000A;
+         tiles32[495] = 0x0000000C;
          for ( i = 497; i < 563; i++ ) tiles32[i] = 0x00200020;
          for ( i = 631; i < 635; i++ ) tiles32[i] = 0x00200020;
          for ( i = 703; i < 707; i++ ) tiles32[i] = 0x00200020;

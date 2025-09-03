@@ -64,6 +64,7 @@
 #define TILEMAP_CHARLOCK_ID                     25
 #define TILEMAP_CHARLOCK_DRAGONLORD_ID          33
 #define TILEMAP_NORTHERNSHRINE_ID               34
+#define TILEMAP_THEENDSCREEN_ID                 40
 #define TILEMAP_TANTEGEL_INDEX                  7053
 #define TILEMAP_TOKEN_INDEX                     16893
 #define TILEMAP_FAIRYFLUTE_INDEX                192

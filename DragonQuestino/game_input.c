@@ -20,6 +20,8 @@ internal void Game_HandleEnterPasswordInput( Game_t* game );
 internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game );
 internal void Game_HandleOverworldShopMenuInput( Game_t* game );
 internal void Game_HandleEndingInput( Game_t* game );
+internal void Game_EndingPauseCallback( Game_t* game );
+internal void Game_EndingPostFadeOutCallback( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -634,27 +636,50 @@ internal void Game_HandleOverworldShopMenuInput( Game_t* game )
 
 internal void Game_HandleEndingInput( Game_t* game )
 {
+   uint32_t i;
+
    if ( game->mainState == MainState_Ending_1 )
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         // MUFFINS
-         //
-         // - wipe the screen
-         // - pause
-         // - load the ending screen tile map and tile set
-         // - change game state
-         // - fade in
-
-         game->mainState = MainState_Ending_2;
+         Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+         AnimationChain_Reset( &( game->animationChain ) );
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EndingPauseCallback, game );
+         AnimationChain_Start( &( game->animationChain ) );
       }
    }
    else
    {
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
-         // MUFFINS: fade out and pause before doing this
-         Game_Reset( game );
+         AnimationChain_Reset( &( game->animationChain ) );
+         AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_MidFadeOut );
+
+         for ( i = 0; i < 8; i++ )
+         {
+            AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+         }
+
+         AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EndingPostFadeOutCallback, game );
+         AnimationChain_Start( &( game->animationChain ) );
       }
    }
+}
+
+internal void Game_EndingPauseCallback( Game_t* game )
+{
+   TileMap_LoadTextures( &( game->tileMap ), TileTextureType_TheEnd );
+   TileMap_Load( &( game->tileMap ), TILEMAP_THEENDSCREEN_ID );
+
+   game->mainState = MainState_Ending_2;
+   
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_MidFadeIn );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_EndingPostFadeOutCallback( Game_t* game )
+{
+   Game_Reset( game );
+   Screen_RestorePalette( &( game->screen ) );
 }

@@ -237,6 +237,7 @@ typedef enum TileTextureType_t
 {
    TileTextureType_Title = 0,
    TileTextureType_Map,
+   TileTextureType_TheEnd,
 
    TileTextureType_Count
 }

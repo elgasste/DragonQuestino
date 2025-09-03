@@ -9,7 +9,6 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game );
 internal void Game_DrawPlayerNameEntry( Game_t* game );
 internal void Game_DrawPasswordEntry( Game_t* game );
 internal void Game_DrawEnding1( Game_t* game );
-internal void Game_DrawEnding2( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -49,6 +48,10 @@ void Game_Draw( Game_t* game )
             Game_DrawEnemy( game );
          }
       }
+      else if ( game->mainState == MainState_Ending_2 )
+      {
+         Game_DrawTileMap( game );
+      }
 
       return;
    }
@@ -72,7 +75,7 @@ void Game_Draw( Game_t* game )
          Game_DrawEnding1( game );
          break;
       case MainState_Ending_2:
-         Game_DrawEnding2( game );
+         Game_DrawTileMap( game );
          break;
       case MainState_Overworld:
          Game_DrawOverworld( game );
@@ -584,10 +587,4 @@ internal void Game_DrawEnding1( Game_t* game )
 
    game->screen.textColor = COLOR_ENDINGPURPLE;
    Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_9, 192 );
-}
-
-internal void Game_DrawEnding2( Game_t* game )
-{
-   // MUFFINS: draw "the end" graphic
-   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
 }
