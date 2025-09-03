@@ -244,7 +244,7 @@ void Game_PlayerSteppedOnTile( Game_t* game )
       else
       {
          // MUFFINS: uncomment for testing
-         //game->gameFlags.defeatedDragonlord = True;
+         game->gameFlags.defeatedDragonlord = True;
          //game->gameFlags.rescuedPrincess = False;
 
          if ( portal->destinationTileMapIndex == TILEMAP_TANTEGEL_ID && game->gameFlags.defeatedDragonlord )
