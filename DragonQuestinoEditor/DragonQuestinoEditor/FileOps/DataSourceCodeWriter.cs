@@ -12,6 +12,7 @@ namespace DragonQuestinoEditor.FileOps
    public class DataSourceCodeWriter( Palette palette,
                                       TileSet titleTileSet,
                                       TileSet mapTileSet,
+                                      TileSet theEndTileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
                                       ObservableCollection<EnemyViewModel> enemies,
                                       ObservableCollection<ActiveSpriteSheet> activeSpriteSheets,
@@ -20,6 +21,7 @@ namespace DragonQuestinoEditor.FileOps
       private readonly Palette _palette = palette;
       private readonly TileSet _titleTileSet = titleTileSet;
       private readonly TileSet _mapTileSet = mapTileSet;
+      private readonly TileSet _theEndTileSet = theEndTileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
       private readonly ObservableCollection<EnemyViewModel> _enemies = enemies;
       private readonly ObservableCollection<ActiveSpriteSheet> _activeSpriteSheets = activeSpriteSheets;
@@ -150,7 +152,7 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   if ( type == TileTextureType_Title )\n" );
          WriteToFileStream( fs, "   {\n" );
 
-         for ( int type = 0; type < 2; type++ )
+         for ( int type = 0; type < 3; type++ )
          {
             for ( int i = 0; i < Constants.TileTextureCount; i++ )
             {
@@ -159,7 +161,10 @@ namespace DragonQuestinoEditor.FileOps
 
                WriteToFileStream( fs, string.Format( "      mem32 = (uint32_t*)( tileMap->textures[{0}].memory );\n", i ) );
 
-               var pixelIndexes = ( type == 0 ) ? _titleTileSet.TilePaletteIndexes[i] : _mapTileSet.TilePaletteIndexes[i];
+               var pixelIndexes = ( type == 0 ) ?
+                  _titleTileSet.TilePaletteIndexes[i] : ( type == 1 ) ?
+                  _mapTileSet.TilePaletteIndexes[i] :
+                  _theEndTileSet.TilePaletteIndexes[i];
 
                for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
                {

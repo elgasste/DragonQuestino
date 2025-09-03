@@ -8,8 +8,9 @@ namespace DragonQuestinoEditor
       public const string SourceBasePath = "..\\..\\..\\..\\..\\DragonQuestino\\";
 
       public const string ShieldBackgroundFilePath = AssetsBasePath + "shield_background.png";
-      public const string TileTexturesFilePath = AssetsBasePath + "tile_textures.png";
       public const string TitleTexturesFilePath = AssetsBasePath + "title_textures.png";
+      public const string TileTexturesFilePath = AssetsBasePath + "tile_textures.png";
+      public const string TheEndTexturesFilePath = AssetsBasePath + "the_end_textures.png";
       public const string EditorSaveDataFilePath = AssetsBasePath + "editor_save.json";
       public const string StaticSpriteSheetFilePath = AssetsBasePath + "static_sprites.png";
       public const string TextTileSetFilePath = AssetsBasePath + "text_tileset.png";
