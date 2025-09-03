@@ -16,6 +16,8 @@
 #define COLOR_INJUREDRED               0xDA8A
 #define COLOR_DARKRED                  0xB0E4
 #define COLOR_DEEPRED                  0x7800
+#define COLOR_ENDINGYELLOW             0xFD00
+#define COLOR_ENDINGPURPLE             0xEB1F
 
 #define TEXT_TILE_COUNT                85
 #define TEXT_TILE_SIZE                 8
@@ -61,6 +63,7 @@ void Screen_DrawRectFromPalette( Screen_t* screen, uint32_t x, uint32_t y, uint3
 void Screen_DrawRectColor( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color );
 void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y );
 void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y );
+void Screen_DrawCenteredText( Screen_t* screen, const char* text, uint32_t y );
 void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t stride,
                                uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
                                uint32_t sx, uint32_t sy, Bool_t transparency );

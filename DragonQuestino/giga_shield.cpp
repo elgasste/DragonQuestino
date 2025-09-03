@@ -2,7 +2,6 @@
 #include "giga_shield.h"
 #include "Adafruit_SPITFT.h"
 #include "dsi.h"
-#include "SDRAM.h"
 #include "giga_shield_background_data.h"
 
 #define PLAY_AREA_OFFSET_X    115
@@ -16,7 +15,7 @@ void GigaShield::begin()
 {
    _display = new Arduino_H7_Video( GIGA_SHIELD_WIDTH, GIGA_SHIELD_HEIGHT, GigaDisplayShield );
    _display->begin();
-   
+
    memset( (void*)_mainBuffer, 0, SCREEN_PIXELS * sizeof( uint16_t ) );
    memset( (void*)_wipeBuffer, 0, SCREEN_PIXELS * sizeof( uint16_t ) );
    

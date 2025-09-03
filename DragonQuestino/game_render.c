@@ -8,6 +8,8 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
 internal void Game_DrawNonPlayerCharacters( Game_t* game );
 internal void Game_DrawPlayerNameEntry( Game_t* game );
 internal void Game_DrawPasswordEntry( Game_t* game );
+internal void Game_DrawEnding1( Game_t* game );
+internal void Game_DrawEnding2( Game_t* game );
 
 void Game_Draw( Game_t* game )
 {
@@ -65,6 +67,12 @@ void Game_Draw( Game_t* game )
       case MainState_EnterPassword:
          AlphaPicker_Draw( &( game->alphaPicker ) );
          Game_DrawPasswordEntry( game );
+         break;
+      case MainState_Ending_1:
+         Game_DrawEnding1( game );
+         break;
+      case MainState_Ending_2:
+         Game_DrawEnding2( game );
          break;
       case MainState_Overworld:
          Game_DrawOverworld( game );
@@ -554,4 +562,32 @@ internal void Game_DrawPasswordEntry( Game_t* game )
          Screen_DrawChar( &( game->screen ), '*', textX + ( ( i - 15 ) * TEXT_TILE_SIZE ), textY + 16);
       }
    }
+}
+
+internal void Game_DrawEnding1( Game_t* game )
+{
+   char msg[64];
+
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+
+   game->screen.textColor = COLOR_ENDINGYELLOW;
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_1, 32 );
+   sprintf( msg, STRING_ENDING_MESSAGE_2, game->player.name );
+   Screen_DrawCenteredText( &( game->screen ), msg, 48 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_3, 64 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_4, 80 );
+
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_5, 112 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_6, 128 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_7, 144 );
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_8, 160 );
+
+   game->screen.textColor = COLOR_ENDINGPURPLE;
+   Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_9, 192 );
+}
+
+internal void Game_DrawEnding2( Game_t* game )
+{
+   // MUFFINS: draw "the end" graphic
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
 }

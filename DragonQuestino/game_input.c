@@ -19,6 +19,7 @@ internal void Game_HandleEnterNameInput( Game_t* game );
 internal void Game_HandleEnterPasswordInput( Game_t* game );
 internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game );
 internal void Game_HandleOverworldShopMenuInput( Game_t* game );
+internal void Game_HandleEndingInput( Game_t* game );
 
 void Game_HandleInput( Game_t* game )
 {
@@ -32,6 +33,10 @@ void Game_HandleInput( Game_t* game )
          break;
       case MainState_EnterPassword:
          Game_HandleEnterPasswordInput( game );
+         break;
+      case MainState_Ending_1:
+      case MainState_Ending_2:
+         Game_HandleEndingInput( game );
          break;
       case MainState_Overworld:
          switch ( game->subState )
@@ -623,6 +628,26 @@ internal void Game_HandleOverworldShopMenuInput( Game_t* game )
          {
             ShopPicker_MoveSelection( &( game->shopPicker ), (Direction_t)i );
          }
+      }
+   }
+}
+
+internal void Game_HandleEndingInput( Game_t* game )
+{
+   if ( game->mainState == MainState_Ending_1 )
+   {
+      // MUFFINS: wipe to black, then fade in ending 2
+      if ( Input_AnyButtonPressed( &( game->input ) ) )
+      {
+         game->mainState = MainState_Ending_2;
+      }
+   }
+   else
+   {
+      // MUFFINS: fade out, pause, then reset the game (need tiles and a tile map for this)
+      if ( Input_AnyButtonPressed( &( game->input ) ) )
+      {
+         Game_Reset( game );
       }
    }
 }

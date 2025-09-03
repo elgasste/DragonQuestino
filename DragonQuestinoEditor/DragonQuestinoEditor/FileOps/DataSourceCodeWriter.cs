@@ -552,6 +552,8 @@ namespace DragonQuestinoEditor.FileOps
 
          WriteToFileStream( fs, "   }\n\n" );
 
+         WriteToFileStream( fs, "   TileMap_UpdateViewport( tileMap );\n\n" );
+
          WriteToFileStream( fs, "   if ( id == TILEMAP_OVERWORLD_ID && tileMap->gameFlags->usedRainbowDrop )\n" );
          WriteToFileStream( fs, "   {\n" );
          WriteToFileStream( fs, "      TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );\n" );

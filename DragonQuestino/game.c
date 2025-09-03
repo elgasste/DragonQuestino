@@ -19,8 +19,10 @@ internal void Game_GwaelinAccompanyPostDialogCallback( Game_t* game );
 internal void Game_GwaelinAccompanyPauseCallback( Game_t* game );
 internal void Game_QueenGwaelinCallback( Game_t* game );
 internal void Game_QueenGwaelinPostDialogCallback( Game_t* game );
+internal void Game_HappyEndingCallback( Game_t* game );
 internal void Game_GoFindGwaelinCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game );
+internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -29,8 +31,6 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
    TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ), &( game->player ) );
-   TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Title );
-   TileMap_Load( &( game->tileMap ), TILEMAP_TITLESCREEN_ID );
    AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ), game );
    Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
    Clock_Init( &( game->clock ) );
@@ -101,6 +101,9 @@ void Game_Reset( Game_t* game )
    Player_LoadWeapon( player, WEAPON_NONE_ID );
    Player_LoadArmor( player, ARMOR_NONE_ID );
    Player_LoadShield( player, SHIELD_NONE_ID );
+
+   TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Title );
+   TileMap_Load( &( game->tileMap ), TILEMAP_TITLESCREEN_ID );
 
    Game_ResetTitleScreenFlash( game );
    Game_OpenMenu( game, MenuId_Startup );
@@ -767,14 +770,27 @@ internal void Game_QueenGwaelinPostDialogCallback( Game_t* game )
 
    AnimationChain_Reset( &( game->animationChain ) );
 
-   for ( i = 0; i < 12; i++ )
+   for ( i = 0; i < 16; i++ )
    {
       AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
    }
 
-   // MUFFINS: add a callback that goes to the credits
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Ending_WalkFade );
+
+   for ( i = 0; i < 10; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_HappyEndingCallback, game );
    AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_HappyEndingCallback( Game_t* game )
+{
+   game->mainState = MainState_Ending_1;
+   Screen_RestorePalette( &( game->screen ) );
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
 }
 
 internal void Game_GoFindGwaelinCallback( Game_t* game )
@@ -791,12 +807,24 @@ internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game )
 
    AnimationChain_Reset( &( game->animationChain ) );
 
-   for ( i = 0; i < 12; i++ )
+   for ( i = 0; i < 10; i++ )
    {
       AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
    }
 
-   // MUFFINS: add a callback that goes to the credits
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Ending_WalkFade );
+
+   for ( i = 0; i < 10; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_GoFindGwaelinPostDialogPauseCallback, game );
    AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game )
+{
+   Screen_RestorePalette( &( game->screen ) );
+   Game_Reset( game );
 }

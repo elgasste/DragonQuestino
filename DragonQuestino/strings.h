@@ -618,4 +618,14 @@
 #define STRING_NPC_ENDING_NOTRESCUED_3                               "\"In the wake of the Dragonlord's demise, let us hope she is safe somewhere in this land.\""
 #define STRING_NPC_ENDING_NOTRESCUED_4                               "\"May the light guide you on your quest to find my daughter!\""
 
+#define STRING_ENDING_MESSAGE_1                                      "AND THUS, WITH PEACE RESTORED"
+#define STRING_ENDING_MESSAGE_2                                      "TO ALEFGARD, %s AND"
+#define STRING_ENDING_MESSAGE_3                                      "GWAELIN SAILED TO THE EAST,"
+#define STRING_ENDING_MESSAGE_4                                      "SEEKING UNDISCOVERED LANDS."
+#define STRING_ENDING_MESSAGE_5                                      "THE ROAD IS LONG,"
+#define STRING_ENDING_MESSAGE_6                                      "AND MANY PERILS AWAIT,"
+#define STRING_ENDING_MESSAGE_7                                      "BUT COURAGE AND BRAVERY"
+#define STRING_ENDING_MESSAGE_8                                      "SHALL ALWAYS PREVAIL."
+#define STRING_ENDING_MESSAGE_9                                      "MAY THE LIGHT SHINE UPON YOU!"
+
 #endif // STRINGS_H

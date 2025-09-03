@@ -26787,6 +26787,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          break;
    }
 
+   TileMap_UpdateViewport( tileMap );
+
    if ( id == TILEMAP_OVERWORLD_ID && tileMap->gameFlags->usedRainbowDrop )
    {
       TILE_SET_TEXTUREINDEX( tileMap->tiles[TILEMAP_RAINBOWBRIDGE_INDEX], 13 );

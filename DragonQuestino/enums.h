@@ -35,6 +35,8 @@ typedef enum MainState_t
    MainState_EnterPassword,
    MainState_Overworld,
    MainState_Battle,
+   MainState_Ending_1,
+   MainState_Ending_2,
 
    MainState_Count
 }
