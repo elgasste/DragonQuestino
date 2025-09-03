@@ -149,11 +149,19 @@ namespace DragonQuestinoEditor.FileOps
          WriteToFileStream( fs, "   uint32_t i;\n" );
          WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
 
-         WriteToFileStream( fs, "   if ( type == TileTextureType_Title )\n" );
-         WriteToFileStream( fs, "   {\n" );
-
          for ( int type = 0; type < 3; type++ )
          {
+            if ( type == 0 )
+            {
+               WriteToFileStream( fs, string.Format( "   if ( type == (TileTextureType_t){0} )\n", type ) );
+            }
+            else
+            {
+               WriteToFileStream( fs, string.Format( "   else if ( type == (TileTextureType_t){0} )\n", type ) );
+            }
+
+            WriteToFileStream( fs, "   {\n" );
+
             for ( int i = 0; i < Constants.TileTextureCount; i++ )
             {
                var packedPixels = new List<UInt32>( Constants.TilePixels );
@@ -243,12 +251,6 @@ namespace DragonQuestinoEditor.FileOps
             }
 
             WriteToFileStream( fs, "   }\n" );
-
-            if ( type == 0 )
-            {
-               WriteToFileStream( fs, "   else\n" );
-               WriteToFileStream( fs, "   {\n" );
-            }
          }
 
          WriteToFileStream( fs, "}\n" );

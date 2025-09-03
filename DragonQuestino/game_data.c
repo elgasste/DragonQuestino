@@ -601,7 +601,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
    uint32_t i;
    uint32_t* mem32;
 
-   if ( type == TileTextureType_Title )
+   if ( type == (TileTextureType_t)0 )
    {
       mem32 = (uint32_t*)( tileMap->textures[0].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
@@ -1632,7 +1632,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32 = (uint32_t*)( tileMap->textures[31].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
    }
-   else
+   else if ( type == (TileTextureType_t)1 )
    {
       mem32 = (uint32_t*)( tileMap->textures[0].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
@@ -2814,6 +2814,8 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32 = (uint32_t*)( tileMap->textures[31].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
    }
+   else if ( type == (TileTextureType_t)2 )
+   {
       mem32 = (uint32_t*)( tileMap->textures[0].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32 = (uint32_t*)( tileMap->textures[1].memory );

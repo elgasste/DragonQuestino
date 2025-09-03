@@ -645,6 +645,9 @@ internal void Game_HandleEndingInput( Game_t* game )
    else
    {
       // MUFFINS: fade out, pause, then reset the game (need tiles and a tile map for this)
+      //
+      // - we have the tile set for this, just need to load it
+      // - add a tile map
       if ( Input_AnyButtonPressed( &( game->input ) ) )
       {
          Game_Reset( game );
