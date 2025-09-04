@@ -65,6 +65,7 @@ typedef enum AnimationId_t
    AnimationId_SlowFadeOut,
    AnimationId_FadeIn,
    AnimationId_MidFadeIn,
+   AnimationId_ActiveMidFadeIn,
    AnimationId_WhiteOut,
    AnimationId_WhiteIn,
    AnimationId_CastSpell,

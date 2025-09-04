@@ -42,6 +42,12 @@ void Screen_ClearPalette( Screen_t* screen, uint16_t color )
    }
 }
 
+void Screen_BackupPaletteAndWipeColor( Screen_t* screen, uint16_t color )
+{
+   Screen_BackupPalette( screen );
+   Screen_ClearPalette( screen, color );
+}
+
 Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex )
 {
    uint32_t i;

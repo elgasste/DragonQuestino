@@ -23,6 +23,11 @@ internal void Game_HappyEndingCallback( Game_t* game );
 internal void Game_GoFindGwaelinCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game );
+internal void Game_StartPostIntroFadeIn( Game_t* game );
+internal void Game_PostIntroPauseCallback( Game_t* game );
+internal void Game_TitleScreenFadeInCallback( Game_t* game );
+internal void Game_EnterNameFadeOutCallback( Game_t* game );
+internal void Game_EnterPasswordFadeOutCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -72,7 +77,7 @@ void Game_Reset( Game_t* game )
    game->postRenderCallback = 0;
    game->activeMenu = 0;
    game->mainState = MainState_Startup;
-   game->subState = SubState_Menu;
+   game->subState = SubState_None;
    game->doAnimation = False;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
@@ -105,8 +110,14 @@ void Game_Reset( Game_t* game )
    TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Title );
    TileMap_Load( &( game->tileMap ), TILEMAP_TITLESCREEN_ID );
 
-   Game_ResetTitleScreenFlash( game );
-   Game_OpenMenu( game, MenuId_Startup );
+   Screen_BackupPaletteAndWipeColor( &( game->screen ), COLOR_BLACK );
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_MidFadeIn );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause);
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause);
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_TitleScreenFadeInCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 void Game_Load( Game_t* game, const char* password )
@@ -117,8 +128,11 @@ void Game_Load( Game_t* game, const char* password )
    {
       if ( Game_LoadFromPassword( game, password ) )
       {
-         game->mainState = MainState_Overworld;
-         game->subState = SubState_None;
+         game->gameFlags.leftThroneRoom = True;
+      }
+      else
+      {
+         return;
       }
    }
    else
@@ -126,6 +140,7 @@ void Game_Load( Game_t* game, const char* password )
       game->gameFlags.treasures = 0xFFFFFFFF;
       game->gameFlags.doors = 0xFFFFFFFF;
       game->gameFlags.specialEnemies = 0xFF;
+      game->gameFlags.leftThroneRoom = False;
       game->gameFlags.gotStaffOfRain = False;
       game->gameFlags.gotRainbowDrop = False;
       game->gameFlags.usedRainbowDrop = False;
@@ -134,8 +149,6 @@ void Game_Load( Game_t* game, const char* password )
       game->gameFlags.carryingPrincess = False;
       game->gameFlags.joinedDragonlord = False;
       game->gameFlags.defeatedDragonlord = False;
-      game->mainState = MainState_Overworld;
-      game->subState = SubState_None;
    }
 
    player->stats.strength = Player_GetStrengthFromLevel( player, player->level );
@@ -149,6 +162,11 @@ void Game_Load( Game_t* game, const char* password )
    TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
    player->tileIndex = 128; // in front of King Lorik
    Player_SetCanonicalTileIndex( player );
+
+   game->subState = SubState_None;
+
+   Screen_BackupPaletteAndWipeColor( &( game->screen ), COLOR_BLACK );
+   Game_StartPostIntroFadeIn( game );
 }
 
 void Game_Tic( Game_t* game )
@@ -176,7 +194,8 @@ void Game_Tic( Game_t* game )
       AnimationChain_Tic( &( game->animationChain ) );
 
       if ( ( ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_ActivePause ) ||
-             ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_Ending_WalkFade ) ) &&
+             ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_Ending_WalkFade ) ||
+             ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_ActiveMidFadeIn ) ) &&
            game->mainState == MainState_Overworld )
       {
          Game_TicPhysics( game );
@@ -279,24 +298,24 @@ void Game_ChangeToStartupState( Game_t* game )
 
 void Game_ChangeToEnterNameState( Game_t* game )
 {
-   game->mainState = MainState_EnterName;
-   game->alphaPicker.position.x = 28;
-   game->alphaPicker.position.y = 28;
-   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_NAME_TITLE, False );
+   game->subState = SubState_None;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EnterNameFadeOutCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
-   // MUFFINS: this gives us some goodies for testing
-   Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" ); // level 30 with everything except a few treasures
-   Game_ChangeToOverworldState( game );
-   
-   /*game->mainState = MainState_EnterPassword;
-   game->alphaPicker.position.x = 28;
-   game->alphaPicker.position.y = 28;
-   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
+   game->subState = SubState_None;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EnterPasswordFadeOutCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 void Game_ChangeToBattleState( Game_t* game )
@@ -827,4 +846,96 @@ internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game )
 {
    Screen_RestorePalette( &( game->screen ) );
    Game_Reset( game );
+}
+
+internal void Game_StartPostIntroFadeIn( Game_t* game )
+{
+   uint32_t i;
+
+   game->mainState = MainState_Overworld;
+   game->subState = SubState_None;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 3; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActiveMidFadeIn );
+
+   for ( i = 0; i < 4; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_ActivePause, Game_PostIntroPauseCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_PostIntroPauseCallback( Game_t* game )
+{
+   char msg[128];
+
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( game->gameFlags.leftThroneRoom )
+   {
+      sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_3_1, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_3_2 );
+   }
+   else
+   {
+      sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_1, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_2 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_3 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_4 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_5 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_6 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_7 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_8 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_9 );
+      sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_10, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+   }
+
+   Game_OpenDialog( game );
+}
+
+internal void Game_TitleScreenFadeInCallback( Game_t* game )
+{
+   Game_ResetTitleScreenFlash( game );
+   Game_OpenMenu( game, MenuId_Startup );
+}
+
+internal void Game_EnterNameFadeOutCallback( Game_t* game )
+{
+   Screen_RestorePalette( &( game->screen ) );
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+
+   game->mainState = MainState_EnterName;
+   game->subState = SubState_Menu;
+
+   game->alphaPicker.position.x = 28;
+   game->alphaPicker.position.y = 28;
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_NAME_TITLE, False );
+}
+
+internal void Game_EnterPasswordFadeOutCallback( Game_t* game )
+{
+   Screen_RestorePalette( &( game->screen ) );
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+
+   game->mainState = MainState_EnterPassword;
+   game->subState = SubState_Menu;
+
+   // MUFFINS: this gives us some goodies for testing (level 30 with everything except a few treasures).
+   // to use it, uncomment this line and comment out all the lines below it.
+   //Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" );
+
+   game->alphaPicker.position.x = 28;
+   game->alphaPicker.position.y = 28;
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
 }
