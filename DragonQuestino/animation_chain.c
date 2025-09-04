@@ -102,6 +102,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
             break;
          case AnimationId_FadeIn:
          case AnimationId_MidFadeIn:
+         case AnimationId_ActiveMidFadeIn:
             AnimationChain_Tic_FadeIn( chain );
             break;
          case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
@@ -161,7 +162,9 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          chain->totalDuration = ANIMATION_SLOWFADE_DURATION;
          break;
       case AnimationId_FadeIn: chain->totalDuration = ANIMATION_FADE_DURATION; break;
-      case AnimationId_MidFadeIn: chain->totalDuration = ANIMATION_MIDFADE_DURATION; break;
+      case AnimationId_MidFadeIn:
+      case AnimationId_ActiveMidFadeIn:
+         chain->totalDuration = ANIMATION_MIDFADE_DURATION; break;
       case AnimationId_RainbowBridge_Trippy:
          Screen_BackupPalette( chain->screen );
          chain->totalDuration = ANIMATION_RAINBOWBRIDGE_TRIPPY_DURATION;
@@ -212,6 +215,7 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
    {
       case AnimationId_FadeIn:
       case AnimationId_MidFadeIn:
+      case AnimationId_ActiveMidFadeIn:
       case AnimationId_WhiteIn:
       case AnimationId_RainbowBridge_FadeIn:
       case AnimationId_Battle_EnemyFadeIn:

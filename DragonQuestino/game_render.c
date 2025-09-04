@@ -61,15 +61,32 @@ void Game_Draw( Game_t* game )
       case MainState_Startup:
          Game_DrawTileMap( game );
          Game_DrawTitleScreenFlash( game );
-         Menu_Draw( game->activeMenu );
+         if ( game->subState == SubState_Menu )
+         {
+            Menu_Draw( game->activeMenu );
+         }
          break;
       case MainState_EnterName:
-         AlphaPicker_Draw( &( game->alphaPicker ) );
-         Game_DrawPlayerNameEntry( game );
+         if ( game->subState == SubState_Menu )
+         {
+            AlphaPicker_Draw( &( game->alphaPicker ) );
+            Game_DrawPlayerNameEntry( game );
+         }
+         else
+         {
+            Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+         }
          break;
       case MainState_EnterPassword:
-         AlphaPicker_Draw( &( game->alphaPicker ) );
-         Game_DrawPasswordEntry( game );
+         if ( game->subState == SubState_Menu )
+         {
+            AlphaPicker_Draw( &( game->alphaPicker ) );
+            Game_DrawPasswordEntry( game );
+         }
+         else
+         {
+            Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+         }
          break;
       case MainState_Ending_1:
          Game_DrawEnding1( game );

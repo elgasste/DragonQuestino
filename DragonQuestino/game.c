@@ -23,6 +23,7 @@ internal void Game_HappyEndingCallback( Game_t* game );
 internal void Game_GoFindGwaelinCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game );
+internal void Game_PostIntroFadeInCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -147,8 +148,11 @@ void Game_Load( Game_t* game, const char* password )
    player->tileIndex = 128; // in front of King Lorik
    Player_SetCanonicalTileIndex( player );
 
-   game->mainState = MainState_Overworld;
    game->subState = SubState_None;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_FadeOut, Game_PostIntroFadeInCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 void Game_Tic( Game_t* game )
@@ -176,7 +180,8 @@ void Game_Tic( Game_t* game )
       AnimationChain_Tic( &( game->animationChain ) );
 
       if ( ( ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_ActivePause ) ||
-             ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_Ending_WalkFade ) ) &&
+             ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_Ending_WalkFade ) ||
+             ( game->animationChain.animationIds[game->animationChain.activeAnimation] == AnimationId_ActiveMidFadeIn ) ) &&
            game->mainState == MainState_Overworld )
       {
          Game_TicPhysics( game );
@@ -826,4 +831,22 @@ internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game )
 {
    Screen_RestorePalette( &( game->screen ) );
    Game_Reset( game );
+}
+
+internal void Game_PostIntroFadeInCallback( Game_t* game )
+{
+   uint32_t i;
+
+   game->mainState = MainState_Overworld;
+   game->subState = SubState_None;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActiveMidFadeIn );
+
+   for ( i = 0; i < 4; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
+   }
+
+   AnimationChain_Start( &( game->animationChain ) );
 }
