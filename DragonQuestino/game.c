@@ -24,6 +24,7 @@ internal void Game_GoFindGwaelinCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game );
 internal void Game_PostIntroFadeInCallback( Game_t* game );
+internal void Game_PostIntroPauseCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -116,7 +117,11 @@ void Game_Load( Game_t* game, const char* password )
 
    if ( strlen( password ) > 0 )
    {
-      if ( !Game_LoadFromPassword( game, password ) )
+      if ( Game_LoadFromPassword( game, password ) )
+      {
+         game->gameFlags.leftThroneRoom = True;
+      }
+      else
       {
          return;
       }
@@ -126,6 +131,7 @@ void Game_Load( Game_t* game, const char* password )
       game->gameFlags.treasures = 0xFFFFFFFF;
       game->gameFlags.doors = 0xFFFFFFFF;
       game->gameFlags.specialEnemies = 0xFF;
+      game->gameFlags.leftThroneRoom = False;
       game->gameFlags.gotStaffOfRain = False;
       game->gameFlags.gotRainbowDrop = False;
       game->gameFlags.usedRainbowDrop = False;
@@ -848,5 +854,37 @@ internal void Game_PostIntroFadeInCallback( Game_t* game )
       AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActivePause );
    }
 
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_ActivePause, Game_PostIntroPauseCallback, game );
    AnimationChain_Start( &( game->animationChain ) );
+}
+
+internal void Game_PostIntroPauseCallback( Game_t* game )
+{
+   char msg[128];
+
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( game->gameFlags.leftThroneRoom )
+   {
+      sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_3_1, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_3_2 );
+   }
+   else
+   {
+      sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_1, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_2 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_3 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_4 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_5 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_6 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_7 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_8 );
+      Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_9 );
+      sprintf( msg, STRING_NPC_TANTEGEL_THRONEROOM_KING_INTRO_1_10, game->player.name );
+      Dialog_PushSection( &( game->dialog ), msg );
+   }
+
+   Game_OpenDialog( game );
 }
