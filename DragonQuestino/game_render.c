@@ -48,7 +48,7 @@ void Game_Draw( Game_t* game )
             Game_DrawEnemy( game );
          }
       }
-      else if ( game->mainState == MainState_Ending_2 )
+      else if ( game->mainState == MainState_Startup || game->mainState == MainState_Ending_2 )
       {
          Game_DrawTileMap( game );
       }

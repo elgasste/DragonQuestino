@@ -23,8 +23,9 @@ internal void Game_HappyEndingCallback( Game_t* game );
 internal void Game_GoFindGwaelinCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game );
 internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game );
-internal void Game_PostIntroFadeInCallback( Game_t* game );
+internal void Game_StartPostIntroFadeIn( Game_t* game );
 internal void Game_PostIntroPauseCallback( Game_t* game );
+internal void Game_TitleScreenFadeInCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -74,7 +75,7 @@ void Game_Reset( Game_t* game )
    game->postRenderCallback = 0;
    game->activeMenu = 0;
    game->mainState = MainState_Startup;
-   game->subState = SubState_Menu;
+   game->subState = SubState_None;
    game->doAnimation = False;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
@@ -107,8 +108,14 @@ void Game_Reset( Game_t* game )
    TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Title );
    TileMap_Load( &( game->tileMap ), TILEMAP_TITLESCREEN_ID );
 
-   Game_ResetTitleScreenFlash( game );
-   Game_OpenMenu( game, MenuId_Startup );
+   Screen_BackupPaletteAndWipeColor( &( game->screen ), COLOR_BLACK );
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_MidFadeIn );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause);
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause);
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_TitleScreenFadeInCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 void Game_Load( Game_t* game, const char* password )
@@ -156,9 +163,8 @@ void Game_Load( Game_t* game, const char* password )
 
    game->subState = SubState_None;
 
-   AnimationChain_Reset( &( game->animationChain ) );
-   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_FadeOut, Game_PostIntroFadeInCallback, game );
-   AnimationChain_Start( &( game->animationChain ) );
+   Screen_BackupPaletteAndWipeColor( &( game->screen ), COLOR_BLACK );
+   Game_StartPostIntroFadeIn( game );
 }
 
 void Game_Tic( Game_t* game )
@@ -839,7 +845,7 @@ internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game )
    Game_Reset( game );
 }
 
-internal void Game_PostIntroFadeInCallback( Game_t* game )
+internal void Game_StartPostIntroFadeIn( Game_t* game )
 {
    uint32_t i;
 
@@ -847,6 +853,12 @@ internal void Game_PostIntroFadeInCallback( Game_t* game )
    game->subState = SubState_None;
 
    AnimationChain_Reset( &( game->animationChain ) );
+
+   for ( i = 0; i < 3; i++ )
+   {
+      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   }
+
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_ActiveMidFadeIn );
 
    for ( i = 0; i < 4; i++ )
@@ -887,4 +899,10 @@ internal void Game_PostIntroPauseCallback( Game_t* game )
    }
 
    Game_OpenDialog( game );
+}
+
+internal void Game_TitleScreenFadeInCallback( Game_t* game )
+{
+   Game_ResetTitleScreenFlash( game );
+   Game_OpenMenu( game, MenuId_Startup );
 }
