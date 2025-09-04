@@ -26,6 +26,8 @@ internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game );
 internal void Game_StartPostIntroFadeIn( Game_t* game );
 internal void Game_PostIntroPauseCallback( Game_t* game );
 internal void Game_TitleScreenFadeInCallback( Game_t* game );
+internal void Game_EnterNameFadeOutCallback( Game_t* game );
+internal void Game_EnterPasswordFadeOutCallback( Game_t* game );
 
 void Game_Init( Game_t* game, uint16_t* screenBuffer )
 {
@@ -296,23 +298,24 @@ void Game_ChangeToStartupState( Game_t* game )
 
 void Game_ChangeToEnterNameState( Game_t* game )
 {
-   game->mainState = MainState_EnterName;
-   game->alphaPicker.position.x = 28;
-   game->alphaPicker.position.y = 28;
-   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_NAME_TITLE, False );
+   game->subState = SubState_None;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EnterNameFadeOutCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
-   // MUFFINS: this gives us some goodies for testing
-   //Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" ); // level 30 with everything except a few treasures
-   
-   game->mainState = MainState_EnterPassword;
-   game->alphaPicker.position.x = 28;
-   game->alphaPicker.position.y = 28;
-   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
+   game->subState = SubState_None;
+
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_EnterPasswordFadeOutCallback, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 void Game_ChangeToBattleState( Game_t* game )
@@ -905,4 +908,34 @@ internal void Game_TitleScreenFadeInCallback( Game_t* game )
 {
    Game_ResetTitleScreenFlash( game );
    Game_OpenMenu( game, MenuId_Startup );
+}
+
+internal void Game_EnterNameFadeOutCallback( Game_t* game )
+{
+   Screen_RestorePalette( &( game->screen ) );
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+
+   game->mainState = MainState_EnterName;
+   game->subState = SubState_Menu;
+
+   game->alphaPicker.position.x = 28;
+   game->alphaPicker.position.y = 28;
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_NAME_TITLE, False );
+}
+
+internal void Game_EnterPasswordFadeOutCallback( Game_t* game )
+{
+   Screen_RestorePalette( &( game->screen ) );
+   Screen_WipeColor( &( game->screen ), COLOR_BLACK );
+
+   game->mainState = MainState_EnterPassword;
+   game->subState = SubState_Menu;
+
+   // MUFFINS: this gives us some goodies for testing (level 30 with everything except a few treasures).
+   // to use it, uncomment this line and comment out all the lines below it.
+   //Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" );
+
+   game->alphaPicker.position.x = 28;
+   game->alphaPicker.position.y = 28;
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
 }
