@@ -115,10 +115,9 @@ void Game_Load( Game_t* game, const char* password )
 
    if ( strlen( password ) > 0 )
    {
-      if ( Game_LoadFromPassword( game, password ) )
+      if ( !Game_LoadFromPassword( game, password ) )
       {
-         game->mainState = MainState_Overworld;
-         game->subState = SubState_None;
+         return;
       }
    }
    else
@@ -134,8 +133,6 @@ void Game_Load( Game_t* game, const char* password )
       game->gameFlags.carryingPrincess = False;
       game->gameFlags.joinedDragonlord = False;
       game->gameFlags.defeatedDragonlord = False;
-      game->mainState = MainState_Overworld;
-      game->subState = SubState_None;
    }
 
    player->stats.strength = Player_GetStrengthFromLevel( player, player->level );
@@ -149,6 +146,9 @@ void Game_Load( Game_t* game, const char* password )
    TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
    player->tileIndex = 128; // in front of King Lorik
    Player_SetCanonicalTileIndex( player );
+
+   game->mainState = MainState_Overworld;
+   game->subState = SubState_None;
 }
 
 void Game_Tic( Game_t* game )
@@ -289,14 +289,13 @@ void Game_ChangeToEnterNameState( Game_t* game )
 void Game_ChangeToEnterPasswordState( Game_t* game )
 {
    // MUFFINS: this gives us some goodies for testing
-   Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" ); // level 30 with everything except a few treasures
-   Game_ChangeToOverworldState( game );
+   //Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" ); // level 30 with everything except a few treasures
    
-   /*game->mainState = MainState_EnterPassword;
+   game->mainState = MainState_EnterPassword;
    game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
    Screen_WipeColor( &( game->screen ), COLOR_BLACK );
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
 }
 
 void Game_ChangeToBattleState( Game_t* game )
