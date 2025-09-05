@@ -13,6 +13,7 @@ namespace DragonQuestinoEditor.FileOps
                                       TileSet titleTileSet,
                                       TileSet mapTileSet,
                                       TileSet theEndTileSet,
+                                      BattleBackgroundTileSet battleBackgroundTileSet,
                                       ObservableCollection<TileMapViewModel> tileMaps,
                                       ObservableCollection<EnemyViewModel> enemies,
                                       ObservableCollection<ActiveSpriteSheet> activeSpriteSheets,
@@ -22,6 +23,7 @@ namespace DragonQuestinoEditor.FileOps
       private readonly TileSet _titleTileSet = titleTileSet;
       private readonly TileSet _mapTileSet = mapTileSet;
       private readonly TileSet _theEndTileSet = theEndTileSet;
+      private readonly BattleBackgroundTileSet _battleBackgroundTileSet = battleBackgroundTileSet;
       private readonly ObservableCollection<TileMapViewModel> _tileMaps = tileMaps;
       private readonly ObservableCollection<EnemyViewModel> _enemies = enemies;
       private readonly ObservableCollection<ActiveSpriteSheet> _activeSpriteSheets = activeSpriteSheets;
@@ -105,6 +107,7 @@ namespace DragonQuestinoEditor.FileOps
          WritePaletteFunction( fs );
          WriteTextTilesFunction( fs );
          WriteTileTexturesFunction( fs );
+         WriteBattleBackgroundTileTexturesFunction( fs );
          WriteEnemyIndexPoolsFunction( fs );
          WriteEnemyLoadFunction( fs );
          WriteTileMapFunction( fs );
@@ -251,6 +254,101 @@ namespace DragonQuestinoEditor.FileOps
             }
 
             WriteToFileStream( fs, "   }\n" );
+         }
+
+         WriteToFileStream( fs, "}\n" );
+      }
+
+      private void WriteBattleBackgroundTileTexturesFunction( FileStream fs )
+      {
+         WriteToFileStream( fs, "\nvoid Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )\n" );
+         WriteToFileStream( fs, "{\n" );
+         WriteToFileStream( fs, "   uint32_t i;\n" );
+         WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
+
+         for ( int i = 0; i < Constants.BattleBackgroundTileTextureCount; i++ )
+         {
+            var packedPixels = new List<UInt32>( Constants.TilePixels );
+            var indexCounts = new Dictionary<UInt32, int>();
+
+            WriteToFileStream( fs, string.Format( "   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[{0}].memory );\n", i ) );
+
+            var pixelIndexes = _battleBackgroundTileSet.TilePaletteIndexes[i];
+
+            for ( int j = 0, memoryIndex = 0; j < Constants.TilePixels; j += 4, memoryIndex++ )
+            {
+               var index0 = (UInt32)( pixelIndexes[j + 0] );
+               var index1 = (UInt32)( pixelIndexes[j + 1] );
+               var index2 = (UInt32)( pixelIndexes[j + 2] );
+               var index3 = (UInt32)( pixelIndexes[j + 3] );
+
+               var packed = ( index3 << 24 ) | ( index2 << 16 ) | ( index1 << 8 ) | ( index0 << 0 );
+               packedPixels.Add( packed );
+
+               if ( indexCounts.TryGetValue( packed, out int value ) )
+               {
+                  indexCounts[packed] = ++value;
+               }
+               else
+               {
+                  indexCounts[packed] = 1;
+               }
+            }
+
+            int highestCount = 0;
+            UInt32 mostCommonValue = 0;
+
+            foreach ( var pair in indexCounts )
+            {
+               if ( pair.Value > highestCount )
+               {
+                  highestCount = pair.Value;
+                  mostCommonValue = pair.Key;
+               }
+            }
+
+            WriteToFileStream( fs, string.Format( "   for ( i = 0; i < {0}; i++ ) mem32[i] = 0x{1};\n", Constants.TilePixels / 4, mostCommonValue.ToString( "X8" ) ) );
+
+            for ( int j = 0; j < packedPixels.Count; )
+            {
+               int firstIndex = j;
+               int lastIndex = j;
+               var currentPixel = packedPixels[j];
+               j++;
+
+               if ( currentPixel != mostCommonValue )
+               {
+                  while ( j < packedPixels.Count )
+                  {
+                     var nextPixel = packedPixels[j];
+                     lastIndex = j;
+                     j++;
+
+                     if ( nextPixel != currentPixel )
+                     {
+                        break;
+                     }
+                  }
+
+                  if ( lastIndex == firstIndex )
+                  {
+                     WriteToFileStream( fs, string.Format( "   mem32[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                  }
+                  else
+                  {
+                     if ( ( lastIndex - firstIndex ) > 1 )
+                     {
+                        WriteToFileStream( fs, string.Format( "   for ( i = {0}; i < {1}; i++ ) mem32[i] = 0x{2};\n", firstIndex, lastIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                     }
+                     else
+                     {
+                        WriteToFileStream( fs, string.Format( "   mem32[{0}] = 0x{1};\n", firstIndex, packedPixels[firstIndex].ToString( "X8" ) ) );
+                     }
+
+                     j--;
+                  }
+               }
+            }
          }
 
          WriteToFileStream( fs, "}\n" );

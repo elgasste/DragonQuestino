@@ -14,6 +14,7 @@ namespace DragonQuestinoEditor
       public const string EditorSaveDataFilePath = AssetsBasePath + "editor_save.json";
       public const string StaticSpriteSheetFilePath = AssetsBasePath + "static_sprites.png";
       public const string TextTileSetFilePath = AssetsBasePath + "text_tileset.png";
+      public const string BattleBackgroundTileTexturesFilePath = AssetsBasePath + "battle_background_tiles.png";
 
       public static readonly string[] ActiveSpriteSheetPaths = [
          AssetsBasePath + "player_sprite.png",
@@ -47,12 +48,14 @@ namespace DragonQuestinoEditor
       public const int TileSize = 16;
       public const int TilePixels = 256;
       public const int TileTextureCount = 32;
-      public const int TileMapMinTilesX = 20;
+      public const int TileMapMinTilesX = 16;
       public const int TileMapMinTilesY = 15;
       public const int TileMapMaxTilesX = 140;
       public const int TileMapMaxTilesY = 135;
       public const int TileMapTileCount = TileMapMaxTilesX * TileMapMaxTilesY;
       public const int MapTileTextureDefaultIndex = 8;  // black square
+
+      public const int BattleBackgroundTileTextureCount = 36;
 
       public const int TileMapListViewItemSize = 32;
       public const int TileMapTextureListViewMaxWidth = 1120;

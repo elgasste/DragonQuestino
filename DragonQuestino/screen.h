@@ -22,6 +22,8 @@
 #define TEXT_TILE_COUNT                85
 #define TEXT_TILE_SIZE                 8
 
+#define TILE_TEXTURE_BYTES             256   // 8 bpp
+
 #define TRANSPARENT_COLOR_INDEX        0x0B
 
 #define MENU_BORDER_CHAR_TOPLEFT       1
@@ -36,6 +38,14 @@
 
 #define CARAT_BLINK_RATE_SECONDS       0.3f
 
+#define BATTLE_BACKGROUND_TILE_COUNT   36
+
+typedef struct TileTexture_t
+{
+   uint8_t memory[TILE_TEXTURE_BYTES];
+}
+TileTexture_t;
+
 typedef struct Screen_t
 {
    uint16_t* buffer;
@@ -45,6 +55,8 @@ typedef struct Screen_t
    uint16_t textColor;
    uint16_t wipeColor;
    Bool_t needsWipe;
+
+   TileTexture_t battleBackgroundTileTextures[BATTLE_BACKGROUND_TILE_COUNT];
 }
 Screen_t;
 
@@ -77,6 +89,7 @@ void Screen_RenderBuffer( Screen_t* screen );
 // game_data.c
 void Screen_LoadPalette( Screen_t* screen );
 void Screen_LoadTextBitFields( Screen_t* screen );
+void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen );
 
 #if defined( __cplusplus )
 }
