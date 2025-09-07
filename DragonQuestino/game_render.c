@@ -10,6 +10,17 @@ internal void Game_DrawPlayerNameEntry( Game_t* game );
 internal void Game_DrawPasswordEntry( Game_t* game );
 internal void Game_DrawEnding1( Game_t* game );
 
+global uint32_t g_battleBackgroundIndexTable[49] =
+{
+   0,  1,  2,  3,  3,  4,  5,
+   6,  7,  8,  9,  10, 11, 12,
+   13, 14, 15, 16, 17, 18, 19,
+   20, 21, 22, 23, 24, 25, 26,
+   27, 28, 23, 23, 23, 29, 30,
+   31, 32, 23, 23, 23, 23, 30,
+   33, 34, 34, 34, 34, 34, 35
+};
+
 void Game_Draw( Game_t* game )
 {
    AnimationId_t activeAnimationId;
@@ -153,7 +164,7 @@ void Game_Draw( Game_t* game )
          {
             case SubState_Menu:
                Game_DrawQuickStatus( game );
-               Game_WipeEnemy( game );
+               Game_DrawBattleBackground( game );
                Game_DrawEnemy( game );
                switch ( game->activeMenu->id )
                {
@@ -167,7 +178,7 @@ void Game_Draw( Game_t* game )
                break;
             case SubState_Dialog:
                Game_DrawQuickStatus( game );
-               Game_WipeEnemy( game );
+               Game_DrawBattleBackground( game );
                Game_DrawEnemy( game );
                Dialog_Draw( &( game->dialog ) );
                break;
@@ -299,24 +310,42 @@ void Game_DrawEnemy( Game_t* game )
             screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
             screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
 
+            // MUFFINS: this isn't doing transparency, why not?
             Screen_DrawMemorySection( &( game->screen ), texture, ENEMY_TILE_SIZE,
                                       0, 0,
                                       ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,
-                                      x + screenOffsetX, y + screenOffsetY, False );
+                                      x + screenOffsetX, y + screenOffsetY, True );
          }
       }
    }
 }
 
-void Game_WipeEnemy( Game_t* game )
+void Game_DrawBattleBackground( Game_t* game )
 {
+   uint32_t row, col;
+   uint32_t x = 96, y = 52;
+
    if ( game->tileMap.isDark )
    {
       Screen_DrawRectColor( &( game->screen ), 72, 56, 112, 112, COLOR_BLACK );
    }
+   else if ( game->tileMap.isDungeon )
+   {
+      Screen_DrawRectColor( &( game->screen ), x, y, 112, 112, COLOR_BLACK );
+   }
    else
    {
-      Screen_DrawRectColor( &( game->screen ), 96, 52, 112, 112, COLOR_BLACK );
+      for ( row = 0; row < 7; row++ )
+      {
+         for ( col = 0; col < 7; col++ )
+         {
+            Screen_DrawMemorySection( &( game->screen ), game->screen.battleBackgroundTileTextures[g_battleBackgroundIndexTable[col + ( row * 7 )]].memory,
+                                      TILE_SIZE, 0, 0,
+                                      TILE_SIZE, TILE_SIZE,
+                                      x + ( col * TILE_SIZE ), y + ( row * TILE_SIZE ),
+                                      False );
+         }
+      }
    }
 }
 

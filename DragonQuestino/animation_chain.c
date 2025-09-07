@@ -29,7 +29,7 @@ internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain );
 internal void AnimationChain_Tic_EndingWalk( AnimationChain_t* chain );
 
-internal Vector2u16_t g_battleCheckerboardPos[49] =
+global Vector2u16_t g_battleCheckerboardPos[49] =
 {
    { 144, 100 }, { 160, 100 }, { 160, 116 }, { 144, 116 }, { 128, 116 }, { 128, 100 }, { 128, 84  },
    { 144, 84  }, { 160, 84  }, { 176, 84  }, { 176, 100 }, { 176, 116 }, { 176, 132 }, { 160, 132 },
@@ -39,7 +39,19 @@ internal Vector2u16_t g_battleCheckerboardPos[49] =
    { 112, 148 }, { 96,  148 }, { 96,  132 }, { 96,  116 }, { 96,  100 }, { 96,  84  }, { 96,  68  },
    { 96,  52  }, { 112, 52  }, { 128, 52  }, { 144, 52  }, { 160, 52  }, { 176, 52  }, { 192, 52  }
 };
-internal uint32_t g_squaresDrawn;
+
+global uint32_t g_battleBackgroundCheckerboardIndexTable[49] =
+{
+   23, 24, 23, 23, 23, 22, 15,
+   16, 17, 18, 25, 29, 23, 23,
+   23, 23, 32, 28, 21, 14, 7,
+   8,  9,  10, 11, 12, 19, 26,
+   30, 30, 35, 34, 34, 34, 34,
+   34, 33, 31, 27, 20, 13, 6,
+   0,  1,  2,  3,  3,  4,  5
+};
+
+global uint32_t g_squaresDrawn;
 
 void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap, Game_t* game )
 {
@@ -234,7 +246,7 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
       case AnimationId_Battle_PlayerDamage:
          Game_DrawQuickStatus( chain->game );
          Dialog_Draw( &( chain->game->dialog ) );
-         Game_WipeEnemy( chain->game );
+         Game_DrawBattleBackground( chain->game );
          Game_DrawEnemy( chain->game );
          break;
    }
@@ -413,10 +425,10 @@ internal void AnimationChain_Tic_Flash( AnimationChain_t* chain )
 
 internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
 {
-   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
-   int16_t xOffset = chain->tileMap->isDark ? -24 : 0;
-   int16_t yOffset = chain->tileMap->isDark ? 4 : 0;
    uint32_t squaresToDraw;
+   int32_t xOffset, yOffset;
+
+   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
 
    while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_CHECKERSQUARE_DURATION )
    {
@@ -424,10 +436,27 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
 
       while ( g_squaresDrawn <= squaresToDraw )
       {
-         Screen_DrawRectColor( chain->screen,
-                               (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
-                               (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
-                               TILE_SIZE, TILE_SIZE, COLOR_BLACK );
+         if ( chain->tileMap->isDungeon )
+         {
+            xOffset = chain->tileMap->isDark ? -24 : 0;
+            yOffset = chain->tileMap->isDark ? 4 : 0;
+
+            Screen_DrawRectColor( chain->screen,
+                                  (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
+                                  (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
+                                  TILE_SIZE, TILE_SIZE, COLOR_BLACK );
+         }
+         else
+         {
+            Screen_DrawMemorySection( chain->screen,
+                                      chain->screen->battleBackgroundTileTextures[g_battleBackgroundCheckerboardIndexTable[g_squaresDrawn]].memory,
+                                      TILE_SIZE, 0, 0,
+                                      TILE_SIZE, TILE_SIZE,
+                                      g_battleCheckerboardPos[g_squaresDrawn].x,
+                                      g_battleCheckerboardPos[g_squaresDrawn].y,
+                                      False );
+         }
+         
          g_squaresDrawn++;
 
          if ( g_squaresDrawn > 48 )
@@ -502,7 +531,7 @@ internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain )
       }
       else
       {
-         Game_WipeEnemy( chain->game );
+         Game_DrawBattleBackground( chain->game );
       }
 
       TOGGLE_BOOL( chain->flag );
@@ -533,7 +562,7 @@ internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain )
          else
          {
             Game_DrawTileMap( chain->game );
-            Game_WipeEnemy( chain->game );
+            Game_DrawBattleBackground( chain->game );
          }
 
          Game_DrawEnemy( chain->game );
