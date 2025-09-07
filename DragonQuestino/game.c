@@ -35,6 +35,7 @@ void Game_Init( Game_t* game, uint16_t* screenBuffer )
 
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
+   Screen_LoadBattleBackgroundTileTextures( &( game->screen ) );
    TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ), &( game->player ) );
    AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ), game );
    Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );

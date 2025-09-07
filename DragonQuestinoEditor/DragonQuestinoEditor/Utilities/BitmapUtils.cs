@@ -46,6 +46,24 @@ namespace DragonQuestinoEditor.Utilities
          }
       }
 
+      public static void CheckBattleBackgroundTileSetBitmapFormat( BitmapSource bitmapSource )
+      {
+         int expectedCount = Constants.BattleBackgroundTileTextureCount;
+
+         if ( bitmapSource.Format != PixelFormats.Indexed8 )
+         {
+            throw new Exception( "Tileset image pixel format should be Indexed8" );
+         }
+         else if ( bitmapSource.PixelHeight != Constants.TileSize )
+         {
+            throw new Exception( string.Format( "Tileset image height should be {0}", Constants.TileSize ) );
+         }
+         else if ( bitmapSource.PixelWidth != ( Constants.TileSize * expectedCount ) )
+         {
+            throw new Exception( string.Format( "Tileset image width should be {0}", Constants.TileSize * Constants.BattleBackgroundTileTextureCount ) );
+         }
+      }
+
       public static void CheckActiveSpriteSheetBitmapFormat( BitmapSource bitmapSource )
       {
          if ( bitmapSource.Format != PixelFormats.Indexed8 )

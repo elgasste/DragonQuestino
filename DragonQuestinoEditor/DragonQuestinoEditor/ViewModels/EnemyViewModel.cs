@@ -5,6 +5,7 @@ using System.Windows.Media.Imaging;
 using DragonQuestinoEditor.Utilities;
 using DragonQuestinoEditor.Graphics;
 using System.Windows;
+using System.Windows.Media;
 
 namespace DragonQuestinoEditor.ViewModels
 {
@@ -164,7 +165,7 @@ namespace DragonQuestinoEditor.ViewModels
       private void ReadTileBitmaps( BitmapSource bitmapSource )
       {
          var textureMapBytes = new List<byte>();
-         byte blankPaletteIndex = (byte)_palette.GetIndexForColor( 0 );
+         byte blankPaletteIndex = (byte)_palette.GetIndexForColor( ColorUtils.ColorToUInt16( Color.FromRgb( 255, 0, 255 ) ) );
 
          for ( int row = 0; row < bitmapSource.PixelHeight; row++ )
          {

@@ -3,9 +3,9 @@
 
 #include "common.h"
 #include "sprite.h"
+#include "screen.h"
 
 #define TILE_SIZE                               16
-#define TILE_TEXTURE_BYTES                      256   // 8 bpp
 #define TILE_TEXTURE_COUNT                      32
 #define TILE_COUNT_X                            140   // overworld size
 #define TILE_COUNT_Y                            135
@@ -118,15 +118,8 @@
 #define TILEMAP_ENDING_TRIGGERINDEX_1           299
 #define TILEMAP_ENDING_TRIGGERINDEX_2           300
 
-typedef struct Screen_t Screen_t;
 typedef struct GameFlags_t GameFlags_t;
 typedef struct Player_t Player_t;
-
-typedef struct TileTexture_t
-{
-   uint8_t memory[TILE_TEXTURE_BYTES];
-}
-TileTexture_t;
 
 typedef struct TilePortal_t
 {

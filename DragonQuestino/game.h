@@ -129,7 +129,7 @@ void Game_DrawQuickStatus( Game_t* game );
 void Game_DrawOverworldDeepStatus( Game_t* game );
 void Game_DrawOverworldItemMenu( Game_t* game );
 void Game_DrawEnemy( Game_t* game );
-void Game_WipeEnemy( Game_t* game );
+void Game_DrawBattleBackground( Game_t* game );
 void Game_UpdateTextColor( Game_t* game );
 void Game_DrawTileMap( Game_t* game );
 void Game_DrawTitleScreenFlash( Game_t* game );

@@ -13,6 +13,7 @@ namespace DragonQuestinoEditor.ViewModels
       private readonly TileSet _titleTileSet;
       private readonly TileSet _mapTileSet;
       private readonly TileSet _theEndTileSet;
+      private readonly BattleBackgroundTileSet _battleBackgroundTileSet;
       private readonly StaticSpriteSheet _staticSpriteSheet;
 
       public ObservableCollection<ActiveSpriteSheet> ActiveSpriteSheets { get; } = [];
@@ -159,6 +160,7 @@ namespace DragonQuestinoEditor.ViewModels
          _titleTileSet = new TileSet( Constants.TitleTexturesFilePath, _palette );
          _mapTileSet = new TileSet( Constants.TileTexturesFilePath, _palette );
          _theEndTileSet = new TileSet( Constants.TheEndTexturesFilePath, _palette );
+         _battleBackgroundTileSet = new BattleBackgroundTileSet( Constants.BattleBackgroundTileTexturesFilePath, _palette );
          _staticSpriteSheet = new StaticSpriteSheet( Constants.StaticSpriteSheetFilePath, _palette );
 
          foreach ( var path in Constants.ActiveSpriteSheetPaths )
@@ -261,7 +263,7 @@ namespace DragonQuestinoEditor.ViewModels
 
       private void WriteGameData()
       {
-         var writer = new DataSourceCodeWriter( _palette, _titleTileSet, _mapTileSet, _theEndTileSet, TileMaps, Enemies, ActiveSpriteSheets, _staticSpriteSheet );
+         var writer = new DataSourceCodeWriter( _palette, _titleTileSet, _mapTileSet, _theEndTileSet, _battleBackgroundTileSet, TileMaps, Enemies, ActiveSpriteSheets, _staticSpriteSheet );
          writer.WriteFiles();
          MessageBox.Show( "Game data file has been written!" );
       }

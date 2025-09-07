@@ -1,5 +1,4 @@
 #include "tile_map.h"
-#include "screen.h"
 #include "game_flags.h"
 #include "player.h"
 #include "clock.h"
