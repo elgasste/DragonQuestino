@@ -4,7 +4,7 @@
 #include "common.h"
 #include "battle_stats.h"
 
-#define ENEMY_TILE_TEXTURE_COUNT       78
+#define ENEMY_TILE_TEXTURE_COUNT       120
 #define ENEMY_TILE_TEXTURE_SIZE_BYTES  64
 #define ENEMY_TILE_SIZE                8
 #define ENEMY_TILE_COUNT               120

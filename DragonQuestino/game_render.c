@@ -310,7 +310,6 @@ void Game_DrawEnemy( Game_t* game )
             screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
             screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
 
-            // MUFFINS: this isn't doing transparency, why not?
             Screen_DrawMemorySection( &( game->screen ), texture, ENEMY_TILE_SIZE,
                                       0, 0,
                                       ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,

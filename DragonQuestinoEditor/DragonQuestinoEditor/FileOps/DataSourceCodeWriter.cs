@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Windows.Media;
@@ -382,13 +383,13 @@ namespace DragonQuestinoEditor.FileOps
       {
          WriteToFileStream( fs, "\nvoid Enemy_Load( Enemy_t* enemy, uint32_t index )\n" );
          WriteToFileStream( fs, "{\n" );
-         WriteToFileStream( fs, "   uint32_t i, j;\n" );
-         WriteToFileStream( fs, "   uint32_t* mem32;" );
+         WriteToFileStream( fs, "   uint32_t i;\n" );
+         WriteToFileStream( fs, "   uint32_t* mem32;\n\n" );
 
-         var blankPaletteIndex = (ushort)_palette.GetIndexForColor( 0 );
+         var blankPaletteIndex = (ushort)_palette.GetIndexForColor( ColorUtils.ColorToUInt16( Color.FromRgb( 255, 0, 255 ) ) );
          var packedBlankPaletteIndex = ( blankPaletteIndex << 24 ) | ( blankPaletteIndex << 16 ) | ( blankPaletteIndex << 8 ) | ( blankPaletteIndex << 0 );
 
-         WriteToFileStream( fs, string.Format( "   for ( i = 0; i < 78; i++ ) {{ mem32 = (uint32_t*)( enemy->tileTextures[i] ); for ( j = 0; j < 16; j++ ) {{ mem32[j] = 0x{0}; }} }}\n", packedBlankPaletteIndex.ToString( "X8" ) ) );
+         WriteToFileStream( fs, string.Format( "   for ( i = 0; i < ENEMY_TILE_TEXTURE_COUNT; i++ ) {{ {{ mem32 = (uint32_t*)( enemy->tileTextures[i] ); memset( mem32, 0x{0}, sizeof( uint8_t ) * ENEMY_TILE_TEXTURE_SIZE_BYTES ); }} }}\n", packedBlankPaletteIndex.ToString( "X8" ) ) );
          WriteToFileStream( fs, "   for ( i = 0; i < 120; i++ ) {{ enemy->tileTextureIndexes[i] = -1; }}\n\n" );
 
          WriteToFileStream( fs, "   switch( index )\n" );
