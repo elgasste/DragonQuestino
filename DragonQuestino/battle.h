@@ -34,16 +34,16 @@ typedef struct Battle_t
    Bool_t excellentMove;
    Bool_t isOver;
 
-   uint8_t pendingPayload8u;
+   u8 pendingPayload8u;
 
-   uint16_t experienceGained;
-   uint16_t goldGained;
-   uint8_t strengthGained;
-   uint8_t agilityGained;
-   uint8_t hitPointsGained;
-   uint8_t magicPointsGained;
-   uint16_t previousSpells;
-   uint8_t newLevel;
+   u16 experienceGained;
+   u16 goldGained;
+   u8 strengthGained;
+   u8 agilityGained;
+   u8 hitPointsGained;
+   u8 magicPointsGained;
+   u16 previousSpells;
+   u8 newLevel;
 }
 Battle_t;
 

@@ -12,7 +12,7 @@ typedef struct BinaryPicker_t
 {
    Screen_t* screen;
 
-   uint32_t selectedIndex;
+   u32 selectedIndex;
    Vector2u32_t position;        // position on the screen, in pixels
    Vector2u32_t size;            // in characters
    Bool_t showCarat;

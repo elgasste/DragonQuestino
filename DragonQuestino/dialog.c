@@ -104,7 +104,7 @@ void Dialog_Tic( Dialog_t* dialog )
 
 void Dialog_Draw( Dialog_t* dialog )
 {
-   uint32_t i, x, y, stopCharIndex, len;
+   u32 i, x, y, stopCharIndex, len;
    char substr[DIALOG_LINE_TEXT_SIZE];
    Screen_t* screen = dialog->screen;
 
@@ -115,11 +115,11 @@ void Dialog_Draw( Dialog_t* dialog )
 
    if ( dialog->isScrolling )
    {
-      stopCharIndex = (uint32_t)( dialog->scrollSeconds / DIALOG_SCROLL_CHAR_SECONDS );
+      stopCharIndex = (u32)( dialog->scrollSeconds / DIALOG_SCROLL_CHAR_SECONDS );
 
       for ( i = 0; i < dialog->lineCount; i++, y += TEXT_TILE_SIZE )
       {
-         len = (uint32_t)( strlen( dialog->lines[i] ) );
+         len = (u32)( strlen( dialog->lines[i] ) );
 
          if ( len < stopCharIndex )
          {
@@ -151,8 +151,8 @@ void Dialog_Draw( Dialog_t* dialog )
 
 internal void Dialog_LoadActiveSectionLines( Dialog_t* dialog )
 {
-   uint32_t textIndex, lineIndex, lastSpaceIndex, currentLine;
-   uint32_t strLen;
+   u32 textIndex, lineIndex, lastSpaceIndex, currentLine;
+   u32 strLen;
    Bool_t endOfLine, endOfText;
    char curChar;
    char* sectionText = dialog->sectionTexts[dialog->activeSection];
@@ -160,7 +160,7 @@ internal void Dialog_LoadActiveSectionLines( Dialog_t* dialog )
    dialog->lineCount = 0;
    dialog->charCount = 0;
 
-   strLen = (uint16_t)strlen( sectionText );
+   strLen = (u16)strlen( sectionText );
 
    for ( textIndex = 0, lineIndex = 0, lastSpaceIndex = 0, currentLine = 0; textIndex < strLen; textIndex++ )
    {
@@ -200,7 +200,7 @@ internal void Dialog_LoadActiveSectionLines( Dialog_t* dialog )
          lineIndex = 0;
          lastSpaceIndex = 0;
          dialog->lineCount++;
-         dialog->charCount += (uint32_t)( strlen( dialog->lines[currentLine] ) );
+         dialog->charCount += (u32)( strlen( dialog->lines[currentLine] ) );
          currentLine++;
       }
       else if ( curChar != ' ' )

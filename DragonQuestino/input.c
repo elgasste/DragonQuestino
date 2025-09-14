@@ -5,7 +5,7 @@ internal void Input_UpdateButtonState( ButtonState_t* buttonState, Bool_t down )
 
 void Input_Init( Input_t* input )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < Button_Count; i++ )
    {
@@ -20,7 +20,7 @@ void Input_Read( Input_t* input )
 #if defined( VISUAL_STUDIO_DEV )
    UNUSED_PARAM( input );
 #else
-   uint8_t nesInput = Input_ReadNesController();
+   u8 nesInput = Input_ReadNesController();
 
    Input_UpdateButtonState( &( input->buttonStates[ Button_A ] ), ( nesInput & INPUT_A_FLAG ) ? True : False );
    Input_UpdateButtonState( &( input->buttonStates[ Button_B ] ), ( nesInput & INPUT_B_FLAG ) ? True : False );
@@ -34,7 +34,7 @@ void Input_Read( Input_t* input )
 
 Bool_t Input_AnyButtonPressed( Input_t* input )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < Button_Count; i++ )
    {

@@ -7,10 +7,10 @@
 extern "C" {
 #endif
 
-uint32_t Random_Percent();
-uint8_t Random_u8( uint8_t min, uint8_t max );
-uint16_t Random_u16( uint16_t min, uint16_t max );
-uint32_t Random_u32( uint32_t min, uint32_t max );
+u32 Random_Percent();
+u8 Random_u8( u8 min, u8 max );
+u16 Random_u16( u16 min, u16 max );
+u32 Random_u32( u32 min, u32 max );
 float Random_NormalizedPercent();
 
 // platform-specific

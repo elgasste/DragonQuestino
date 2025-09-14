@@ -22,16 +22,16 @@ typedef struct Dialog_t
    void* sectionCallbackData[DIALOG_MAX_SECTIONS];
    void ( *pendingCallback )( void* );
    void* pendingCallbackData;
-   uint32_t sectionCount;
-   uint32_t activeSection;
+   u32 sectionCount;
+   u32 activeSection;
 
    Vector2u16_t position;  // in pixels
    Vector2u16_t size;      // in characters
-   uint32_t lineWidth;     // in characters
+   u32 lineWidth;     // in characters
 
    char lines[DIALOG_MAX_LINES][DIALOG_LINE_TEXT_SIZE];
-   uint32_t lineCount;
-   uint32_t charCount;
+   u32 lineCount;
+   u32 charCount;
 
    Bool_t isScrolling;
    float scrollSeconds;

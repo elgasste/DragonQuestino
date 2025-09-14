@@ -116,10 +116,10 @@ typedef struct TileMap_t TileMap_t;
                                                 ( ITEM_HAS_DRAGONSCALE( x ) ? 1 : 0 ) )
 
 #define ITEM_SET_KEYCOUNT( x, c )               ( x ) = ( ( ( x ) & 0xFFFFFFF8 ) | ( ( c ) & 0x7 ) )
-#define ITEM_SET_HERBCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFFC7 ) | ( (uint32_t)( c ) & 0x7 ) << 3 )
-#define ITEM_SET_WINGCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFE3F ) | ( (uint32_t)( c ) & 0x7 ) << 6 )
-#define ITEM_SET_FAIRYWATERCOUNT( x, c )        ( x ) = ( ( ( x ) & 0xFFFFF1FF ) | ( (uint32_t)( c ) & 0x7 ) << 9 )
-#define ITEM_SET_TORCHCOUNT( x, c )             ( x ) = ( ( ( x ) & 0xFFFF8FFF ) | ( (uint32_t)( c ) & 0x7 ) << 12 )
+#define ITEM_SET_HERBCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFFC7 ) | ( (u32)( c ) & 0x7 ) << 3 )
+#define ITEM_SET_WINGCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFE3F ) | ( (u32)( c ) & 0x7 ) << 6 )
+#define ITEM_SET_FAIRYWATERCOUNT( x, c )        ( x ) = ( ( ( x ) & 0xFFFFF1FF ) | ( (u32)( c ) & 0x7 ) << 9 )
+#define ITEM_SET_TORCHCOUNT( x, c )             ( x ) = ( ( ( x ) & 0xFFFF8FFF ) | ( (u32)( c ) & 0x7 ) << 12 )
 #define ITEM_TOGGLE_HASFAIRYFLUTE( x )          ( x ) ^= ( 0x1 << 15 )
 #define ITEM_TOGGLE_HASSILVERHARP( x )          ( x ) ^= ( 0x1 << 16 )
 #define ITEM_TOGGLE_HASGWAELYNSLOVE( x )        ( x ) ^= ( 0x1 << 17 )
@@ -187,10 +187,10 @@ typedef struct TileMap_t TileMap_t;
 
 typedef struct Accessory_t
 {
-   uint32_t id;
+   u32 id;
    char name1[12];
    char name2[12];
-   uint8_t effect;
+   u8 effect;
 }
 Accessory_t;
 
@@ -201,25 +201,25 @@ typedef struct Player_t
    ActiveSprite_t sprite;
    Vector2f_t velocity;
    float maxVelocity;
-   uint32_t tileIndex;
-   uint32_t canonicalTileIndex;
+   u32 tileIndex;
+   u32 canonicalTileIndex;
    Bool_t isCursed;
    Bool_t hasHolyProtection;
-   uint32_t holyProtectionSteps;
+   u32 holyProtectionSteps;
    char name[9];
    BattleStats_t stats;
    Accessory_t weapon;
    Accessory_t armor;
    Accessory_t shield;
-   uint8_t level;
-   uint16_t experience;
-   uint16_t gold;
+   u8 level;
+   u16 experience;
+   u16 gold;
 
    // 0: short term strength and agility
    // 1: short term agility and MP
    // 2: short term strength and HP
    // 3: short term HP and MP
-   uint32_t statGrowthType;
+   u32 statGrowthType;
 
    // bits 0-2: keys
    // bits 3-5: herbs
@@ -236,7 +236,7 @@ typedef struct Player_t
    // bit 22: sphere of light
    // bit 23: dragon scale
    // bit 24: cursed belt
-   uint32_t items;
+   u32 items;
 
    // bit 0: heal
    // bit 1: sizz
@@ -248,7 +248,7 @@ typedef struct Player_t
    // bit 7: repel
    // bit 8: midheal
    // bit 9: sizzle
-   uint16_t spells;
+   u16 spells;
 
    // bit 0: tantegel
    // bit 1: brecconary
@@ -256,7 +256,7 @@ typedef struct Player_t
    // bit 3: kol
    // bit 4: cantlin
    // bit 5: rimuldar
-   uint8_t townsVisited;
+   u8 townsVisited;
 }
 Player_t;
 
@@ -266,20 +266,20 @@ extern "C" {
 
 void Player_Init( Player_t* player, TileMap_t* tileMap );
 void Player_SetName( Player_t* player, const char* name );
-uint8_t Player_GetLevelFromExperience( uint16_t experience );
-uint8_t Player_GetStrengthFromLevel( Player_t* player, uint8_t level );
-uint8_t Player_GetAgilityFromLevel( Player_t* player, uint8_t level );
-uint8_t Player_GetMaxHitPointsFromLevel( Player_t* player, uint8_t level );
-uint8_t Player_GetMaxMagicPointsFromLevel( Player_t* player, uint8_t level );
-uint16_t Player_GetExperienceRemaining( Player_t* player );
-uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints );
+u8 Player_GetLevelFromExperience( u16 experience );
+u8 Player_GetStrengthFromLevel( Player_t* player, u8 level );
+u8 Player_GetAgilityFromLevel( Player_t* player, u8 level );
+u8 Player_GetMaxHitPointsFromLevel( Player_t* player, u8 level );
+u8 Player_GetMaxMagicPointsFromLevel( Player_t* player, u8 level );
+u16 Player_GetExperienceRemaining( Player_t* player );
+u8 Player_RestoreHitPoints( Player_t* player, u8 hitPoints );
 Bool_t Player_CollectItem( Player_t* player, Item_t item );
 void Player_SetCursed( Player_t* player, Bool_t cursed );
 void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection );
-void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level );
-void Player_LoadWeapon( Player_t* player, uint32_t weaponId );
-void Player_LoadArmor( Player_t* player, uint32_t armorId );
-void Player_LoadShield( Player_t* player, uint32_t shieldId );
+void Player_UpdateSpellsToLevel( Player_t* player, u8 level );
+void Player_LoadWeapon( Player_t* player, u32 weaponId );
+void Player_LoadArmor( Player_t* player, u32 armorId );
+void Player_LoadShield( Player_t* player, u32 shieldId );
 void Player_SetCanonicalTileIndex( Player_t* player );
 void Player_CenterOnTile( Player_t* player );
 

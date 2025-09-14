@@ -17,7 +17,7 @@ typedef struct AlphaPicker_t
    char title[ALPHA_PICKER_TITLE_LENGTH];
    char chars[65];
    Bool_t hasDot;
-   uint32_t selectedIndex;
+   u32 selectedIndex;
    Vector2u32_t position;        // position on the screen, in pixels
    Bool_t showCarat;
    float blinkSeconds;

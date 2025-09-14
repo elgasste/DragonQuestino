@@ -7,7 +7,7 @@
 internal void FatalError( const char* message );
 internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam );
 internal void InitButtonMap();
-internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags );
+internal void HandleKeyboardInput( u32 keyCode, LPARAM flags );
 internal void RenderScreen();
 internal void DrawDiagnostics( HDC* dcMem );
 internal void ToggleFastWalk();
@@ -166,7 +166,7 @@ internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ W
       case WM_KEYUP:
       case WM_SYSKEYDOWN:
       case WM_SYSKEYUP:
-         HandleKeyboardInput( (uint32_t)wParam, lParam );
+         HandleKeyboardInput( (u32)wParam, lParam );
          break;
       case WM_PAINT:
          RenderScreen();
@@ -189,11 +189,11 @@ internal void InitButtonMap()
    g_globals.buttonMap[Button_Start] = VK_RETURN;
 }
 
-internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
+internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
 {
    Bool_t keyWasDown = ( flags & ( (LONG_PTR)1 << 30 ) ) != 0 ? True : False;
    Bool_t keyIsDown = ( flags & ( (LONG_PTR)1 << 31 ) ) == 0 ? True : False;
-   uint32_t i;
+   u32 i;
 
    // ignore repeat presses
    if ( keyWasDown != keyIsDown )
@@ -207,7 +207,7 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
             return;
          }
 
-         for ( i = 0; i < (uint32_t)Button_Count; i++ )
+         for ( i = 0; i < (u32)Button_Count; i++ )
          {
             if ( g_globals.buttonMap[i] == keyCode )
             {
@@ -253,7 +253,7 @@ internal void HandleKeyboardInput( uint32_t keyCode, LPARAM flags )
       }
       else
       {
-         for ( i = 0; i < (uint32_t)Button_Count; i++ )
+         for ( i = 0; i < (u32)Button_Count; i++ )
          {
             if ( g_globals.buttonMap[i] == keyCode )
             {
@@ -308,7 +308,7 @@ internal void RenderScreen()
 
 internal void DrawDiagnostics( HDC* dcMem )
 {
-   uint32_t gameSeconds, realSeconds;
+   u32 gameSeconds, realSeconds;
    RECT r = { 10, 10, 0, 0 };
    char str[STRING_SIZE_DEFAULT];
    HFONT oldFont = (HFONT)SelectObject( *dcMem, g_globals.hFont );
@@ -342,7 +342,7 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "   Player Pos: %u, %u", (uint32_t)( g_globals.game.player.sprite.position.x ), (uint32_t)( g_globals.game.player.sprite.position.y ) );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "   Player Pos: %u, %u", (u32)( g_globals.game.player.sprite.position.x ), (u32)( g_globals.game.player.sprite.position.y ) );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
@@ -509,7 +509,7 @@ internal void GetAllItems()
 
 internal void MaxOutStats()
 {
-   uint32_t i;
+   u32 i;
 
    g_globals.game.player.level = STAT_TABLE_SIZE - 1;
    g_globals.game.player.experience = UINT16_MAX;

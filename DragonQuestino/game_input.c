@@ -80,7 +80,7 @@ void Game_HandleInput( Game_t* game )
 
 internal void Game_HandleStartupMenuInput( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
@@ -219,7 +219,7 @@ internal void Game_HandleOverworldDialogInput( Game_t* game )
 
 internal void Game_HandleOverworldMenuInput( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
@@ -345,7 +345,7 @@ internal void Game_OpenOverworldItemMenu( Game_t* game )
 
 internal void Game_OpenZoomMenu( Game_t* game )
 {
-   uint32_t townCount = HAS_VISITED_COUNT( game->player.townsVisited );
+   u32 townCount = HAS_VISITED_COUNT( game->player.townsVisited );
 
    if ( game->player.stats.magicPoints < SPELL_ZOOM_MP )
    {
@@ -359,7 +359,7 @@ internal void Game_OpenZoomMenu( Game_t* game )
 
 internal void Game_HandleBattleMenuInput( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
@@ -466,7 +466,7 @@ internal void Game_OpenBattleItemMenu( Game_t* game )
 
 internal void Game_HandleEnterNameInput( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
    char name[9];
    size_t length = strlen( game->player.name );
 
@@ -522,7 +522,7 @@ internal void Game_HandleEnterNameInput( Game_t* game )
 
 internal void Game_HandleEnterPasswordInput( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
    char* password = game->password;
    size_t length = strlen( password );
 
@@ -574,7 +574,7 @@ internal void Game_HandleEnterPasswordInput( Game_t* game )
 
 internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
@@ -599,7 +599,7 @@ internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game )
 
 internal void Game_HandleOverworldShopMenuInput( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    if ( game->input.buttonStates[Button_A].pressed )
    {
@@ -636,7 +636,7 @@ internal void Game_HandleOverworldShopMenuInput( Game_t* game )
 
 internal void Game_HandleEndingInput( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    if ( game->mainState == MainState_Ending_1 )
    {

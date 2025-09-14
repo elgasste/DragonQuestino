@@ -2,7 +2,7 @@
 
 void Input_ResetState( Input_t* input )
 {
-   uint32_t i;
+   u32 i;
    ButtonState_t* state = input->buttonStates;
 
    for ( i = 0; i < Button_Count; i++ )
@@ -13,7 +13,7 @@ void Input_ResetState( Input_t* input )
    }
 }
 
-void Input_ButtonPressed( Input_t* input, uint32_t button )
+void Input_ButtonPressed( Input_t* input, u32 button )
 {
    ButtonState_t* state = &( input->buttonStates[button] );
 
@@ -24,7 +24,7 @@ void Input_ButtonPressed( Input_t* input, uint32_t button )
    }
 }
 
-void Input_ButtonReleased( Input_t* input, uint32_t button )
+void Input_ButtonReleased( Input_t* input, u32 button )
 {
    ButtonState_t* state = &( input->buttonStates[button] );
 

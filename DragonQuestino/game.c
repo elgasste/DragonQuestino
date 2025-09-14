@@ -29,9 +29,9 @@ internal void Game_TitleScreenFadeInCallback( Game_t* game );
 internal void Game_EnterNameFadeOutCallback( Game_t* game );
 internal void Game_EnterPasswordFadeOutCallback( Game_t* game );
 
-void Game_Init( Game_t* game, uint16_t* screenBuffer )
+void Game_Init( Game_t* game, u16* screenBuffer )
 {
-   uint32_t i;
+   u32 i;
 
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
@@ -268,8 +268,8 @@ void Game_Tic( Game_t* game )
       else
       {
          TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ) );
+                                     TILE_SIZE * (u16)( game->tileMap.glowDiameter ),
+                                     TILE_SIZE * (u16)( game->tileMap.glowDiameter ) );
       }
    }
 #endif
@@ -360,7 +360,7 @@ void Game_AnimatePortalEntrance( Game_t* game, TilePortal_t* portal )
 
 void Game_EnterTargetPortal( Game_t* game )
 {
-   uint32_t destinationTileIndex = game->targetPortal->destinationTileIndex;
+   u32 destinationTileIndex = game->targetPortal->destinationTileIndex;
    Direction_t arrivalDirection = game->targetPortal->arrivalDirection;
 
    switch ( game->targetPortal->destinationTileMapIndex )
@@ -387,8 +387,8 @@ void Game_EnterTargetPortal( Game_t* game )
    if ( game->tileMap.isDark && !game->gameFlags.defeatedDragonlord )
    {
       TileMap_ChangeViewportSize( &( game->tileMap ),
-                                  (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ),
-                                  (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ) );
+                                  (u16)( game->tileMap.glowDiameter * TILE_SIZE ),
+                                  (u16)( game->tileMap.glowDiameter * TILE_SIZE ) );
    }
    else
    {
@@ -436,7 +436,7 @@ void Game_ResetBattleMenu( Game_t* game )
 
 void Game_HandleDeath( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
@@ -547,7 +547,7 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
 
 internal void Game_TicActiveSprites( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    ActiveSprite_Tic( &( game->player.sprite ) );
 
@@ -613,7 +613,7 @@ internal void Game_DeathPostFadeCallback( Game_t* game )
 
 internal void Game_CursedExpelCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -688,7 +688,7 @@ internal void Game_KingQuestionCallback( Game_t* game )
 
 internal void Game_KingQuestionPostDialogCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -742,7 +742,7 @@ internal void Game_GwaelinAccompanyCallback( Game_t* game )
 
 internal void Game_GwaelinAccompanyPostDialogCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -778,7 +778,7 @@ internal void Game_QueenGwaelinCallback( Game_t* game )
 
 internal void Game_QueenGwaelinPostDialogCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < game->tileMap.npcCount; i++ )
    {
@@ -821,7 +821,7 @@ internal void Game_GoFindGwaelinCallback( Game_t* game )
 
 internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    game->player.sprite.direction = Direction_Down;
 
@@ -851,7 +851,7 @@ internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game )
 
 internal void Game_StartPostIntroFadeIn( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;

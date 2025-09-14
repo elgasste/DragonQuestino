@@ -5,8 +5,8 @@
 
 internal void ShopPicker_DrawCarat( ShopPicker_t* picker );
 internal void ShopPicker_LoadItems( ShopPicker_t* picker );
-internal void ShopPicker_LoadWeaponItemText( ShopPickerItemText_t* itemText, uint32_t itemId, AccessoryType_t type );
-internal void ShopPicker_LoadItemItemText( ShopPickerItemText_t* itemText, uint32_t itemId );
+internal void ShopPicker_LoadWeaponItemText( ShopPickerItemText_t* itemText, u32 itemId, AccessoryType_t type );
+internal void ShopPicker_LoadItemItemText( ShopPickerItemText_t* itemText, u32 itemId );
 
 void ShopPicker_Init( ShopPicker_t* picker, Screen_t* screen, TileMap_t* tileMap )
 {
@@ -26,9 +26,9 @@ void ShopPicker_Reset( ShopPicker_t* picker )
 
 void ShopPicker_Draw( ShopPicker_t* picker )
 {
-   uint32_t i;
-   uint32_t x = picker->position.x + ( TEXT_TILE_SIZE * 2 );
-   uint32_t y = picker->position.y + TEXT_TILE_SIZE;
+   u32 i;
+   u32 x = picker->position.x + ( TEXT_TILE_SIZE * 2 );
+   u32 y = picker->position.y + TEXT_TILE_SIZE;
 
    Screen_DrawTextWindow( picker->screen, picker->position.x, picker->position.y, 16, 2 + ( picker->itemCount * 2 ) );
 
@@ -82,9 +82,9 @@ void ShopPicker_Tic( ShopPicker_t* picker )
 
 internal void ShopPicker_DrawCarat( ShopPicker_t* picker )
 {
-   uint32_t i;
-   uint32_t x = picker->position.x + TEXT_TILE_SIZE;
-   uint32_t y = picker->position.y + TEXT_TILE_SIZE;
+   u32 i;
+   u32 x = picker->position.x + TEXT_TILE_SIZE;
+   u32 y = picker->position.y + TEXT_TILE_SIZE;
 
    for ( i = 0; i < picker->itemCount; i++ )
    {
@@ -103,8 +103,8 @@ internal void ShopPicker_DrawCarat( ShopPicker_t* picker )
 
 internal void ShopPicker_LoadItems( ShopPicker_t* picker )
 {
-   uint32_t i;
-   uint16_t price;
+   u32 i;
+   u16 price;
 
    picker->itemCount = picker->tileMap->shopItemCount;
 
@@ -124,7 +124,7 @@ internal void ShopPicker_LoadItems( ShopPicker_t* picker )
    }
 }
 
-internal void ShopPicker_LoadWeaponItemText( ShopPickerItemText_t* itemText, uint32_t itemId, AccessoryType_t type )
+internal void ShopPicker_LoadWeaponItemText( ShopPickerItemText_t* itemText, u32 itemId, AccessoryType_t type )
 {
    switch ( type )
    {
@@ -232,7 +232,7 @@ internal void ShopPicker_LoadWeaponItemText( ShopPickerItemText_t* itemText, uin
    }
 }
 
-internal void ShopPicker_LoadItemItemText( ShopPickerItemText_t* itemText, uint32_t itemId )
+internal void ShopPicker_LoadItemItemText( ShopPickerItemText_t* itemText, u32 itemId )
 {
    switch ( itemId )
    {

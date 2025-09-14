@@ -4,7 +4,7 @@
 #include "math.h"
 #include "tables.h"
 
-internal uint32_t Player_GetNameSum( Player_t* player );
+internal u32 Player_GetNameSum( Player_t* player );
 
 void Player_Init( Player_t* player, TileMap_t* tileMap )
 {
@@ -23,9 +23,9 @@ void Player_SetName( Player_t* player, const char* name )
    player->statGrowthType = Player_GetNameSum( player ) % 4;
 }
 
-uint8_t Player_GetLevelFromExperience( uint16_t experience )
+u8 Player_GetLevelFromExperience( u16 experience )
 {
-   uint8_t i;
+   u8 i;
 
    for ( i = 0; i < STAT_TABLE_SIZE - 1; i++ )
    {
@@ -38,9 +38,9 @@ uint8_t Player_GetLevelFromExperience( uint16_t experience )
    return i;
 }
 
-internal uint8_t Player_GetStatFromLevel( Player_t* player, uint8_t level, uint8_t* table, Bool_t shortTerm )
+internal u8 Player_GetStatFromLevel( Player_t* player, u8 level, u8* table, Bool_t shortTerm )
 {
-   uint8_t stat = table[level];
+   u8 stat = table[level];
 
    if ( shortTerm )
    {
@@ -50,36 +50,36 @@ internal uint8_t Player_GetStatFromLevel( Player_t* player, uint8_t level, uint8
    return stat;
 }
 
-uint8_t Player_GetStrengthFromLevel( Player_t* player, uint8_t level )
+u8 Player_GetStrengthFromLevel( Player_t* player, u8 level )
 {
    return Player_GetStatFromLevel( player, level, g_strengthTable, ( player->statGrowthType == 0 || player->statGrowthType == 2 ) ? True : False );
 }
 
-uint8_t Player_GetAgilityFromLevel( Player_t* player, uint8_t level )
+u8 Player_GetAgilityFromLevel( Player_t* player, u8 level )
 {
    return Player_GetStatFromLevel( player, level, g_agilityTable, ( player->statGrowthType == 0 || player->statGrowthType == 1 ) ? True : False );
 }
 
-uint8_t Player_GetMaxHitPointsFromLevel( Player_t* player, uint8_t level )
+u8 Player_GetMaxHitPointsFromLevel( Player_t* player, u8 level )
 {
    return Player_GetStatFromLevel( player, level, g_hitPointsTable, ( player->statGrowthType == 2 || player->statGrowthType == 3 ) ? True : False );
 }
 
-uint8_t Player_GetMaxMagicPointsFromLevel( Player_t* player, uint8_t level )
+u8 Player_GetMaxMagicPointsFromLevel( Player_t* player, u8 level )
 {
    return ( level < 2 )
       ? 0
       : Player_GetStatFromLevel( player, level, g_magicPointsTable, ( player->statGrowthType == 1 || player->statGrowthType == 3 ) ? True : False );
 }
 
-uint16_t Player_GetExperienceRemaining( Player_t* player )
+u16 Player_GetExperienceRemaining( Player_t* player )
 {
    return ( player->level == ( STAT_TABLE_SIZE - 1 ) ) ? 0 : ( g_experienceTable[player->level + 1] - player->experience );
 }
 
-uint8_t Player_RestoreHitPoints( Player_t* player, uint8_t hitPoints )
+u8 Player_RestoreHitPoints( Player_t* player, u8 hitPoints )
 {
-   uint8_t restoredHitPoints = hitPoints;
+   u8 restoredHitPoints = hitPoints;
 
    if ( ( player->stats.maxHitPoints - player->stats.hitPoints ) < hitPoints )
    {
@@ -146,7 +146,7 @@ Bool_t Player_CollectItem( Player_t* player, Item_t item )
          if ( item < Item_Count )
          {
             // single items start at 5 (Item_FairyFlute), and shifting starts at 15, hence "item + 10"
-            uint32_t shiftedFlag = ( 0x1 << ( ( uint32_t )( item ) + 10 ) );
+            u32 shiftedFlag = ( 0x1 << ( ( u32 )( item ) + 10 ) );
             if ( !( player->items & shiftedFlag ) )
             {
                player->items |= shiftedFlag;
@@ -179,9 +179,9 @@ void Player_SetHolyProtection( Player_t* player, Bool_t hasHolyProtection )
    }
 }
 
-void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level )
+void Player_UpdateSpellsToLevel( Player_t* player, u8 level )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < SPELL_TABLE_SIZE; i++ )
    {
@@ -192,7 +192,7 @@ void Player_UpdateSpellsToLevel( Player_t* player, uint8_t level )
    }
 }
 
-void Player_LoadWeapon( Player_t* player, uint32_t weaponId )
+void Player_LoadWeapon( Player_t* player, u32 weaponId )
 {
    player->weapon.id = weaponId;
    player->weapon.effect = g_weaponEffectTable[weaponId];
@@ -210,7 +210,7 @@ void Player_LoadWeapon( Player_t* player, uint32_t weaponId )
    }
 }
 
-void Player_LoadArmor( Player_t* player, uint32_t armorId )
+void Player_LoadArmor( Player_t* player, u32 armorId )
 {
    player->armor.id = armorId;
    player->armor.effect = g_armorEffectTable[armorId];
@@ -228,7 +228,7 @@ void Player_LoadArmor( Player_t* player, uint32_t armorId )
    }
 }
 
-void Player_LoadShield( Player_t* player, uint32_t shieldId )
+void Player_LoadShield( Player_t* player, u32 shieldId )
 {
    player->shield.id = shieldId;
    player->shield.effect = g_shieldEffectTable[shieldId];
@@ -249,20 +249,20 @@ void Player_SetCanonicalTileIndex( Player_t* player )
 
 void Player_CenterOnTile( Player_t* player )
 {
-   uint32_t tileX = ( player->tileIndex % player->tileMap->tilesX ) * TILE_SIZE;
-   uint32_t tileY = ( player->tileIndex / player->tileMap->tilesX ) * TILE_SIZE;
+   u32 tileX = ( player->tileIndex % player->tileMap->tilesX ) * TILE_SIZE;
+   u32 tileY = ( player->tileIndex / player->tileMap->tilesX ) * TILE_SIZE;
 
    player->sprite.position.x = (float)( tileX + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.x / 2 ) ) );
    player->sprite.position.y = (float)( tileY + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.y / 2 ) ) );
 }
 
-internal uint32_t Player_GetNameSum( Player_t* player )
+internal u32 Player_GetNameSum( Player_t* player )
 {
-   uint32_t i, nameSum = 0;
+   u32 i, nameSum = 0;
 
    for ( i = 0; i < strlen( player->name ); i++ )
    {
-      nameSum += (uint32_t)( player->name[i] ) % 16;
+      nameSum += (u32)( player->name[i] ) % 16;
    }
 
    return nameSum;

@@ -3,17 +3,17 @@
 #define MIN_FORMULA( l, r ) return l < r ? l : r
 #define MAX_FORMULA( l, r ) return l > r ? l : r
 
-uint8_t Math_Min8u( uint8_t l, uint8_t r )
+u8 Math_Min8u( u8 l, u8 r )
 {
    MIN_FORMULA( l, r );
 }
 
-uint16_t Math_Min16u( uint16_t l, uint16_t r )
+u16 Math_Min16u( u16 l, u16 r )
 {
    MIN_FORMULA( l, r );
 }
 
-uint32_t Math_Min32u( uint32_t l, uint32_t r )
+u32 Math_Min32u( u32 l, u32 r )
 {
    MIN_FORMULA( l, r );
 }
@@ -23,17 +23,17 @@ int32_t Math_Min32i( int32_t l, int32_t r )
    MIN_FORMULA( l, r );
 }
 
-uint8_t Math_Max8u( uint8_t l, uint8_t r )
+u8 Math_Max8u( u8 l, u8 r )
 {
    MAX_FORMULA( l, r );
 }
 
-uint16_t Math_Max16u( uint16_t l, uint16_t r )
+u16 Math_Max16u( u16 l, u16 r )
 {
    MAX_FORMULA( l, r );
 }
 
-uint32_t Math_Max32u( uint32_t l, uint32_t r )
+u32 Math_Max32u( u32 l, u32 r )
 {
    MAX_FORMULA( l, r );
 }
@@ -58,7 +58,7 @@ Bool_t Math_PointInRectF( float px, float py, float rx, float ry, float rw, floa
    return ( px > rx ) && ( px < ( rx + rw ) ) && ( py > ry ) && py < ( ry + rh ) ? True : False;
 }
 
-uint16_t Math_AmountToCollect16u( uint16_t existing, uint16_t bounty )
+u16 Math_AmountToCollect16u( u16 existing, u16 bounty )
 {
    if ( bounty < ( UINT16_MAX - existing ) )
    {

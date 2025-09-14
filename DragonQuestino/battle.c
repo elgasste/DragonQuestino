@@ -3,8 +3,8 @@
 #include "tables.h"
 #include "math.h"
 
-internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle );
-internal uint8_t Battle_GetAttackDamage( Battle_t* battle );
+internal u32 Battle_GenerateEnemyIndex( Battle_t* battle );
+internal u8 Battle_GetAttackDamage( Battle_t* battle );
 internal Bool_t Battle_GetFleeResult( Battle_t* battle );
 internal void Battle_FleeSucceededCallback( Battle_t* battle );
 internal void Battle_FleeSucceededMessageCallback( Battle_t* battle );
@@ -25,14 +25,14 @@ internal void Battle_EnemyInitiativeMessageCallback( Battle_t* battle );
 internal void Battle_EnemyTurn( Battle_t* battle );
 internal void Battle_EnemyWokeUpCallback( Battle_t* battle );
 internal void Battle_EnemyInitiateBehavior( Battle_t* battle );
-internal void Battle_EnemyActionOrAttack( Battle_t* battle, void ( *action )( Battle_t* ), uint32_t chance );
-internal Bool_t Battle_EnemyTryHeal( Battle_t* battle, Bool_t midHeal, uint32_t chance );
-internal Bool_t Battle_EnemyTryFizzle( Battle_t* battle, uint32_t chance );
-internal Bool_t Battle_EnemyTrySleep( Battle_t* battle, uint32_t chance );
+internal void Battle_EnemyActionOrAttack( Battle_t* battle, void ( *action )( Battle_t* ), u32 chance );
+internal Bool_t Battle_EnemyTryHeal( Battle_t* battle, Bool_t midHeal, u32 chance );
+internal Bool_t Battle_EnemyTryFizzle( Battle_t* battle, u32 chance );
+internal Bool_t Battle_EnemyTrySleep( Battle_t* battle, u32 chance );
 internal void Battle_EnemyAttack( Battle_t* battle );
 internal void Battle_PushPlayerHurtAnimation( Battle_t* battle );
 internal void Battle_EnemyAttackCallback( Battle_t* battle );
-internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle );
+internal u8 Battle_GetEnemyAttackDamage( Battle_t* battle );
 internal void Battle_EnemyAttackDodgedCallback( Battle_t* battle );
 internal void Battle_EnemyAttackSucceededCallback( Battle_t* battle );
 internal void Battle_PlayerDefeatedCallback( Battle_t* battle );
@@ -64,7 +64,7 @@ internal void Battle_EnemyCastSleepAnimation( Battle_t* battle );
 internal void Battle_EnemyFlee( Battle_t* battle );
 internal void Battle_EnemyFleeCallback( Battle_t* battle );
 internal void Battle_EnemyFledCallback( Battle_t* battle );
-internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,
+internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, u32 numPauses,
                                                 AnimationId_t finalAnimationId, void ( *callback )( Battle_t* ) );
 internal void Battle_DefeatedWizardDragonlordPauseCallback( Battle_t* battle );
 internal void Battle_DefeatedWizardDragonlordCallback( Battle_t* battle );
@@ -90,8 +90,8 @@ void Battle_Init( Battle_t* battle, Game_t* game )
 
 void Battle_Generate( Battle_t* battle )
 {
-   uint32_t enemyIndex;
-   uint32_t playerFactor, enemyFactor;
+   u32 enemyIndex;
+   u32 playerFactor, enemyFactor;
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
 
@@ -117,8 +117,8 @@ void Battle_Generate( Battle_t* battle )
    enemy->stats.isAsleep = False;
    enemy->stats.isFizzled = False;
 
-   playerFactor = (uint32_t)( player->stats.agility ) * Random_u32( 0, 255 );
-   enemyFactor = (uint32_t)( (uint32_t)( enemy->stats.agility ) * Random_u32( 0, 255 ) * 0.25f );
+   playerFactor = (u32)( player->stats.agility ) * Random_u32( 0, 255 );
+   enemyFactor = (u32)( (u32)( enemy->stats.agility ) * Random_u32( 0, 255 ) * 0.25f );
    battle->turn = ( playerFactor < enemyFactor ) ? BattleTurn_Enemy : BattleTurn_Player;
 }
 
@@ -195,12 +195,12 @@ void Battle_EnemyInitiativeFlee( Battle_t* battle )
    Battle_MultiPauseBeforeAnimation( battle, 2, AnimationId_Pause, Battle_EnemyFlee );
 }
 
-internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
+internal u32 Battle_GenerateEnemyIndex( Battle_t* battle )
 {
    TileMap_t* tileMap = &( battle->game->tileMap );
    Player_t* player = &( battle->game->player );
-   uint32_t enemyPoolIndex = TILE_GET_ENEMYPOOLINDEX( tileMap->tiles[player->canonicalTileIndex] );
-   uint32_t i, enemyIndex;
+   u32 enemyPoolIndex = TILE_GET_ENEMYPOOLINDEX( tileMap->tiles[player->canonicalTileIndex] );
+   u32 i, enemyIndex;
 
    if ( tileMap->isDungeon )
    {
@@ -216,11 +216,11 @@ internal uint32_t Battle_GenerateEnemyIndex( Battle_t* battle )
    return enemyIndex;
 }
 
-internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
+internal u8 Battle_GetAttackDamage( Battle_t* battle )
 {
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
-   uint8_t power, defense, damage, minDamage = 0, maxDamage = 0;
+   u8 power, defense, damage, minDamage = 0, maxDamage = 0;
 
    if ( !enemy->stats.isAsleep && enemy->stats.dodge > 0 && Random_u8( 1, 64 ) <= enemy->stats.dodge )
    {
@@ -273,7 +273,7 @@ internal uint8_t Battle_GetAttackDamage( Battle_t* battle )
 
 internal Bool_t Battle_GetFleeResult( Battle_t* battle )
 {
-   uint32_t playerFactor, enemyFactor;
+   u32 playerFactor, enemyFactor;
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
 
@@ -282,8 +282,8 @@ internal Bool_t Battle_GetFleeResult( Battle_t* battle )
       return True;
    }
 
-   playerFactor = (uint32_t)( player->stats.agility ) * Random_u32( 0, 255 );
-   enemyFactor = (uint32_t)( (uint32_t)( enemy->stats.agility ) * Random_u32( 0, 255 ) * Enemy_GetFleeFactor( enemy ) );
+   playerFactor = (u32)( player->stats.agility ) * Random_u32( 0, 255 );
+   enemyFactor = (u32)( (u32)( enemy->stats.agility ) * Random_u32( 0, 255 ) * Enemy_GetFleeFactor( enemy ) );
 
    return ( playerFactor < enemyFactor ) ? False : True;
 }
@@ -400,7 +400,7 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
    Dialog_t* dialog = &( battle->game->dialog );
-   uint16_t i, learnedSpell = 0;
+   u16 i, learnedSpell = 0;
    char msg[96];
       
    Dialog_Reset( dialog );
@@ -674,7 +674,7 @@ internal void Battle_EnemyInitiateBehavior( Battle_t* battle )
    }
 }
 
-internal void Battle_EnemyActionOrAttack( Battle_t* battle, void ( *action )( Battle_t* ), uint32_t chance )
+internal void Battle_EnemyActionOrAttack( Battle_t* battle, void ( *action )( Battle_t* ), u32 chance )
 {
    if ( Random_Percent() <= chance )
    {
@@ -686,7 +686,7 @@ internal void Battle_EnemyActionOrAttack( Battle_t* battle, void ( *action )( Ba
    }
 }
 
-internal Bool_t Battle_EnemyTryHeal( Battle_t* battle, Bool_t midHeal, uint32_t chance )
+internal Bool_t Battle_EnemyTryHeal( Battle_t* battle, Bool_t midHeal, u32 chance )
 {
    if ( battle->enemy.stats.hitPoints < ( battle->enemy.stats.maxHitPoints / 4 ) && Random_Percent() <= chance )
    {
@@ -705,7 +705,7 @@ internal Bool_t Battle_EnemyTryHeal( Battle_t* battle, Bool_t midHeal, uint32_t 
    return False;
 }
 
-internal Bool_t Battle_EnemyTryFizzle( Battle_t* battle, uint32_t chance )
+internal Bool_t Battle_EnemyTryFizzle( Battle_t* battle, u32 chance )
 {
    if ( !battle->game->player.stats.isFizzled && Random_Percent() <= chance )
    {
@@ -716,7 +716,7 @@ internal Bool_t Battle_EnemyTryFizzle( Battle_t* battle, uint32_t chance )
    return False;
 }
 
-internal Bool_t Battle_EnemyTrySleep( Battle_t* battle, uint32_t chance )
+internal Bool_t Battle_EnemyTrySleep( Battle_t* battle, u32 chance )
 {
    if ( !battle->game->player.stats.isAsleep && Random_Percent() <= chance )
    {
@@ -822,9 +822,9 @@ internal void Battle_PlayerDefeatedPostDialogCallback( Battle_t* battle )
    Game_HandleDeath( battle->game );
 }
 
-internal uint8_t Battle_GetEnemyAttackDamage( Battle_t* battle )
+internal u8 Battle_GetEnemyAttackDamage( Battle_t* battle )
 {
-   uint8_t defense, damage, minDamage = 0, maxDamage = 0;
+   u8 defense, damage, minDamage = 0, maxDamage = 0;
    Enemy_t* enemy = &( battle->enemy );
    Player_t* player = &( battle->game->player );
 
@@ -934,9 +934,9 @@ internal void Battle_EnemyCastSizz( Battle_t* battle )
 
 internal void Battle_EnemyCastSizzCallback( Battle_t* battle )
 {
-   uint8_t minDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+   u8 minDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
                           ? ENEMY_SIZZ_REDUCEDMIN_DAMAGE : ENEMY_SIZZ_MIN_DAMAGE;
-   uint8_t maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+   u8 maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
                           ? ENEMY_SIZZ_REDUCEDMAX_DAMAGE : ENEMY_SIZZ_MAX_DAMAGE;
    battle->pendingPayload8u = Random_u8( minDamage, maxDamage );
 
@@ -953,9 +953,9 @@ internal void Battle_EnemyCastSizzle( Battle_t* battle )
 
 internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
 {
-   uint8_t minDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+   u8 minDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
                           ? ENEMY_SIZZLE_REDUCEDMIN_DAMAGE : ENEMY_SIZZLE_MIN_DAMAGE;
-   uint8_t maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
+   u8 maxDamage = ( battle->game->player.armor.id == ARMOR_MAGICARMOR_ID || battle->game->player.armor.id == ARMOR_ERDRICKSARMOR_ID )
                           ? ENEMY_SIZZLE_REDUCEDMAX_DAMAGE : ENEMY_SIZZLE_MAX_DAMAGE;
    battle->pendingPayload8u = Random_u8( minDamage, maxDamage );
 
@@ -980,7 +980,7 @@ internal void Battle_EnemyCastHeal( Battle_t* battle )
 
 internal void Battle_EnemyCastHealCallback( Battle_t* battle )
 {
-   uint8_t payload = Math_Min8u( Random_u8( ENEMY_HEAL_MIN_RECOVERY, ENEMY_HEAL_MAX_RECOVERY ), battle->enemy.stats.maxHitPoints - battle->enemy.stats.hitPoints );
+   u8 payload = Math_Min8u( Random_u8( ENEMY_HEAL_MIN_RECOVERY, ENEMY_HEAL_MAX_RECOVERY ), battle->enemy.stats.maxHitPoints - battle->enemy.stats.hitPoints );
    battle->enemy.stats.hitPoints += payload;
    Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemyHealMessageCallback );
 }
@@ -1013,7 +1013,7 @@ internal void Battle_EnemyCastMidheal( Battle_t* battle )
 
 internal void Battle_EnemyCastMidhealCallback( Battle_t* battle )
 {
-   uint8_t payload = Math_Min8u( Random_u8( ENEMY_MIDHEAL_MIN_RECOVERY, ENEMY_MIDHEAL_MAX_RECOVERY ), battle->enemy.stats.maxHitPoints - battle->enemy.stats.hitPoints );
+   u8 payload = Math_Min8u( Random_u8( ENEMY_MIDHEAL_MIN_RECOVERY, ENEMY_MIDHEAL_MAX_RECOVERY ), battle->enemy.stats.maxHitPoints - battle->enemy.stats.hitPoints );
    battle->enemy.stats.hitPoints += payload;
    Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemyHealMessageCallback );
 }
@@ -1100,10 +1100,10 @@ internal void Battle_EnemyFledCallback( Battle_t* battle )
    battle->isOver = True;
 }
 
-internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, uint32_t numPauses,
+internal void Battle_MultiPauseBeforeAnimation( Battle_t* battle, u32 numPauses,
                                                 AnimationId_t finalAnimationId, void ( *callback )( Battle_t* ) )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
 

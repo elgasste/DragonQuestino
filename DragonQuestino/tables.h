@@ -10,7 +10,7 @@
 #define SHIELD_TABLE_SIZE                    4
 #define INNPRICE_TABLE_SIZE                  5
 
-global uint16_t g_experienceTable[STAT_TABLE_SIZE] = {
+global u16 g_experienceTable[STAT_TABLE_SIZE] = {
    0,
    7,
    23,
@@ -43,7 +43,7 @@ global uint16_t g_experienceTable[STAT_TABLE_SIZE] = {
    UINT16_MAX
 };
 
-global uint8_t g_strengthTable[STAT_TABLE_SIZE] = {
+global u8 g_strengthTable[STAT_TABLE_SIZE] = {
    4,
    5,
    7,
@@ -76,7 +76,7 @@ global uint8_t g_strengthTable[STAT_TABLE_SIZE] = {
    140
 };
 
-global uint8_t g_agilityTable[STAT_TABLE_SIZE] = {
+global u8 g_agilityTable[STAT_TABLE_SIZE] = {
    4,
    4,
    6,
@@ -109,7 +109,7 @@ global uint8_t g_agilityTable[STAT_TABLE_SIZE] = {
    130
 };
 
-global uint8_t g_hitPointsTable[STAT_TABLE_SIZE] = {
+global u8 g_hitPointsTable[STAT_TABLE_SIZE] = {
    15,
    22,
    24,
@@ -142,7 +142,7 @@ global uint8_t g_hitPointsTable[STAT_TABLE_SIZE] = {
    210
 };
 
-global uint8_t g_magicPointsTable[STAT_TABLE_SIZE] = {
+global u8 g_magicPointsTable[STAT_TABLE_SIZE] = {
    0,
    0,
    5,
@@ -175,7 +175,7 @@ global uint8_t g_magicPointsTable[STAT_TABLE_SIZE] = {
    200
 };
 
-global uint8_t g_spellsLevelTable[SPELL_TABLE_SIZE] = {
+global u8 g_spellsLevelTable[SPELL_TABLE_SIZE] = {
    2,
    3,
    6,
@@ -188,7 +188,7 @@ global uint8_t g_spellsLevelTable[SPELL_TABLE_SIZE] = {
    18
 };
 
-global uint8_t g_weaponEffectTable[WEAPON_TABLE_SIZE] = {
+global u8 g_weaponEffectTable[WEAPON_TABLE_SIZE] = {
    0,
    2,
    4,
@@ -199,7 +199,7 @@ global uint8_t g_weaponEffectTable[WEAPON_TABLE_SIZE] = {
    40
 };
 
-global uint16_t g_weaponCostTable[WEAPON_TABLE_SIZE] = {
+global u16 g_weaponCostTable[WEAPON_TABLE_SIZE] = {
    0,
    10,
    60,
@@ -210,7 +210,7 @@ global uint16_t g_weaponCostTable[WEAPON_TABLE_SIZE] = {
    0
 };
 
-global uint8_t g_armorEffectTable[ARMOR_TABLE_SIZE] = {
+global u8 g_armorEffectTable[ARMOR_TABLE_SIZE] = {
    0,
    2,
    4,
@@ -221,7 +221,7 @@ global uint8_t g_armorEffectTable[ARMOR_TABLE_SIZE] = {
    28
 };
 
-global uint16_t g_armorCostTable[ARMOR_TABLE_SIZE] = {
+global u16 g_armorCostTable[ARMOR_TABLE_SIZE] = {
    0,
    10,
    70,
@@ -232,21 +232,21 @@ global uint16_t g_armorCostTable[ARMOR_TABLE_SIZE] = {
    0
 };
 
-global uint8_t g_shieldEffectTable[SHIELD_TABLE_SIZE] = {
+global u8 g_shieldEffectTable[SHIELD_TABLE_SIZE] = {
    0,
    4,
    10,
    20
 };
 
-global uint16_t g_shieldCostTable[SHIELD_TABLE_SIZE] = {
+global u16 g_shieldCostTable[SHIELD_TABLE_SIZE] = {
    0,
    90,
    800,
    14800
 };
 
-global uint16_t g_innPriceTable[INNPRICE_TABLE_SIZE] = {
+global u16 g_innPriceTable[INNPRICE_TABLE_SIZE] = {
    6,
    25,
    20,
@@ -254,7 +254,7 @@ global uint16_t g_innPriceTable[INNPRICE_TABLE_SIZE] = {
    55
 };
 
-global uint32_t g_passwordChecksumTable1[32] = {
+global u32 g_passwordChecksumTable1[32] = {
    11,
    29,
    7,
@@ -289,7 +289,7 @@ global uint32_t g_passwordChecksumTable1[32] = {
    2
 };
 
-global uint32_t g_passwordChecksumTable2[32] = {
+global u32 g_passwordChecksumTable2[32] = {
    25,
    21,
    22,

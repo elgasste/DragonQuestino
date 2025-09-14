@@ -38,7 +38,7 @@ typedef struct TitleScreenFlash_t
    Bool_t slowFlash;
    float elapsedSeconds;
    float pauseSeconds;
-   uint32_t currentFrame;
+   u32 currentFrame;
 }
 TitleScreenFlash_t;
 
@@ -73,7 +73,7 @@ typedef struct Game_t
    float overworldInactivitySeconds;
    Bool_t doAnimation;
 
-   uint8_t pendingPayload8u;
+   u8 pendingPayload8u;
    Spell_t pendingSpell;
 
    char password[PASSWORD_LENGTH + 1];
@@ -85,7 +85,7 @@ extern "C" {
 #endif
 
 // game.c
-void Game_Init( Game_t* game, uint16_t* screenBuffer );
+void Game_Init( Game_t* game, u16* screenBuffer );
 void Game_Load( Game_t* game, const char* password );
 void Game_Reset( Game_t* game );
 void Game_Tic( Game_t* game );
@@ -141,7 +141,7 @@ void Game_CastSleep( Game_t* game );
 void Game_CastGlow( Game_t* game );
 void Game_CastFizzle( Game_t* game );
 void Game_CastEvac( Game_t* game );
-void Game_CastZoom( Game_t* game, uint32_t townId );
+void Game_CastZoom( Game_t* game, u32 townId );
 void Game_CastRepel( Game_t* game );
 void Game_CastMidheal( Game_t* game );
 void Game_CastSizzle( Game_t* game );
@@ -159,10 +159,10 @@ void Game_UseRainbowDrop( Game_t* game );
 void Game_UseCursedBelt( Game_t* game );
 
 // game_npcs.c
-void Game_RunNpcDialog( Game_t* game, uint32_t npcId );
+void Game_RunNpcDialog( Game_t* game, u32 npcId );
 
 // game_booths.c
-void Game_ActivateBooth( Game_t* game, uint32_t boothId );
+void Game_ActivateBooth( Game_t* game, u32 boothId );
 void Game_SelectShopItem( Game_t* game );
 
 #if defined( __cplusplus )

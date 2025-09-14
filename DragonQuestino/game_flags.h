@@ -8,10 +8,10 @@ typedef struct GameFlags_t
    // 1 means the door is not opened, flips to 0 when opened
    // low 16 bits: permanent doors (they stay opened)
    // high 16 bits: temporary doors (they close again when you leave the tile map)
-   uint32_t doors;
+   u32 doors;
 
-   uint32_t treasures;
-   uint8_t specialEnemies;
+   u32 treasures;
+   u8 specialEnemies;
 
    Bool_t leftThroneRoom;
    Bool_t gotStaffOfRain;

@@ -3,7 +3,7 @@
 #include "math.h"
 
 internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t prevPos, Vector2f_t* newPos );
-internal uint32_t Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite );
+internal u32 Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite );
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game );
@@ -14,9 +14,9 @@ internal void Game_MoveNpcs( Game_t* game );
 
 void Game_TicPhysics( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
    Vector2f_t prevPos, newPos;
-   uint32_t tileRowStartIndex, tileRowEndIndex, tileColStartIndex, tileColEndIndex, row, col, tile, tileIndex;
+   u32 tileRowStartIndex, tileRowEndIndex, tileColStartIndex, tileColEndIndex, row, col, tile, tileIndex;
    Player_t* player = &( game->player );
 
    if ( player->velocity.x == 0.0f && player->velocity.y == 0.0f )
@@ -68,13 +68,13 @@ void Game_TicPhysics( Game_t* game )
       // clip to unpassable horizontal tiles
       if ( newPos.x != player->sprite.position.x )
       {
-         tileRowStartIndex = (uint32_t)( player->sprite.position.y / TILE_SIZE );
-         tileRowEndIndex = (uint32_t)( ( player->sprite.position.y + player->sprite.hitBoxSize.y ) / TILE_SIZE );
+         tileRowStartIndex = (u32)( player->sprite.position.y / TILE_SIZE );
+         tileRowEndIndex = (u32)( ( player->sprite.position.y + player->sprite.hitBoxSize.y ) / TILE_SIZE );
 
          if ( newPos.x < player->sprite.position.x )
          {
             // moving left, check leftward tiles
-            col = (uint32_t)( newPos.x / TILE_SIZE );
+            col = (u32)( newPos.x / TILE_SIZE );
 
             for ( row = tileRowStartIndex; row <= tileRowEndIndex; row++ )
             {
@@ -92,7 +92,7 @@ void Game_TicPhysics( Game_t* game )
          else
          {
             // moving right, check rightward tiles
-            col = (uint32_t )( ( newPos.x + player->sprite.hitBoxSize.x ) / TILE_SIZE );
+            col = (u32 )( ( newPos.x + player->sprite.hitBoxSize.x ) / TILE_SIZE );
 
             for ( row = tileRowStartIndex; row <= tileRowEndIndex; row++ )
             {
@@ -112,13 +112,13 @@ void Game_TicPhysics( Game_t* game )
       // clip to unpassable vertical tiles
       if ( newPos.y != player->sprite.position.y )
       {
-         tileColStartIndex = ( uint32_t )( player->sprite.position.x / TILE_SIZE );
-         tileColEndIndex = (uint32_t)( ( player->sprite.position.x + player->sprite.hitBoxSize.x ) / TILE_SIZE );
+         tileColStartIndex = ( u32 )( player->sprite.position.x / TILE_SIZE );
+         tileColEndIndex = (u32)( ( player->sprite.position.x + player->sprite.hitBoxSize.x ) / TILE_SIZE );
 
          if ( newPos.y < player->sprite.position.y )
          {
             // moving up, check upward tiles
-            row = (uint32_t)( newPos.y / TILE_SIZE );
+            row = (u32)( newPos.y / TILE_SIZE );
 
             for ( col = tileColStartIndex; col <= tileColEndIndex; col++ )
             {
@@ -136,7 +136,7 @@ void Game_TicPhysics( Game_t* game )
          else
          {
             // moving down, check downward tiles
-            row = (uint32_t)( ( newPos.y + player->sprite.hitBoxSize.y ) / TILE_SIZE );
+            row = (u32)( ( newPos.y + player->sprite.hitBoxSize.y ) / TILE_SIZE );
 
             for ( col = tileColStartIndex; col <= tileColEndIndex; col++ )
             {
@@ -399,16 +399,16 @@ internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clip
    }
 }
 
-internal uint32_t Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite )
+internal u32 Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite )
 {
-   uint32_t centerX = (uint32_t)( sprite->position.x + ( sprite->hitBoxSize.x / 2 ) );
-   uint32_t centerY = (uint32_t)( sprite->position.y + ( sprite->hitBoxSize.y / 2 ) );
+   u32 centerX = (u32)( sprite->position.x + ( sprite->hitBoxSize.x / 2 ) );
+   u32 centerY = (u32)( sprite->position.y + ( sprite->hitBoxSize.y / 2 ) );
    return ( ( centerY / TILE_SIZE ) * game->tileMap.tilesX ) + ( centerX / TILE_SIZE );
 }
 
 internal void Game_UpdatePlayerTileIndex( Game_t* game )
 {
-   uint32_t newTileIndex = Game_GetSpriteTileIndex( game, &( game->player.sprite ) );
+   u32 newTileIndex = Game_GetSpriteTileIndex( game, &( game->player.sprite ) );
 
    if ( newTileIndex != game->player.tileIndex )
    {
@@ -420,9 +420,9 @@ internal void Game_UpdatePlayerTileIndex( Game_t* game )
 
 internal void Game_RollEncounter( Game_t* game )
 {
-   uint32_t encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[game->player.canonicalTileIndex] );
+   u32 encounterRate = TILE_GET_ENCOUNTERRATE( game->tileMap.tiles[game->player.canonicalTileIndex] );
    Bool_t spawnEncounter = False, zoneZero = False;
-   uint32_t row, col;
+   u32 row, col;
 
    if ( game->tileMap.id == TILEMAP_OVERWORLD_ID )
    {
@@ -466,8 +466,8 @@ internal void Game_RollEncounter( Game_t* game )
 
 internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game )
 {
-   uint32_t tileMapId = game->tileMap.id;
-   uint32_t tileIndex = game->player.tileIndex;
+   u32 tileMapId = game->tileMap.id;
+   u32 tileIndex = game->player.tileIndex;
 
    if ( tileMapId == TILEMAP_GREENDRAGON_MAPID && tileIndex == TILEMAP_GREENDRAGON_TILEINDEX )
    {
@@ -496,9 +496,9 @@ internal SpecialEnemy_t Game_GetSpecialEnemyFromPlayerLocation( Game_t* game )
 
 internal void Game_ApplyTileDamage( Game_t* game )
 {
-   uint8_t damage;
-   uint16_t damageRate;
-   uint32_t i;
+   u8 damage;
+   u16 damageRate;
+   u32 i;
 
    if ( game->gameFlags.defeatedDragonlord || ( game->player.armor.id == ARMOR_ERDRICKSARMOR_ID ) )
    {
@@ -539,7 +539,7 @@ internal void Game_TileDamageDeathCallback( Game_t* game )
 
 internal void Game_TileDamageDeathMessageCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -554,7 +554,7 @@ internal void Game_TileDamageDeathMessageCallback( Game_t* game )
 
 internal void Game_MoveNpcs( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
    NonPlayerCharacter_t* npc;
    Vector2f_t newPos;
    float leftBound, topBound, rightBound, bottomBound;

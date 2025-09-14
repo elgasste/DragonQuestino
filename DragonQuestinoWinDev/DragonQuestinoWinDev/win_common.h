@@ -31,7 +31,7 @@ typedef struct GlobalObjects_t
    HWND hWndMain;
    HFONT hFont;
    LARGE_INTEGER performanceFrequency;
-   uint32_t buttonMap[Button_Count];
+   u32 buttonMap[Button_Count];
    Game_t game;
    Bool_t shutdown;
    BITMAPINFO bmpInfo;   

@@ -30,9 +30,9 @@ typedef struct ShopPicker_t
    TileMap_t* tileMap;
 
    ShopPickerItem_t items[TILEMAP_MAX_SHOPITEMS];
-   uint32_t itemCount;
+   u32 itemCount;
 
-   uint32_t selectedIndex;
+   u32 selectedIndex;
    Vector2u32_t position;        // position on the screen, in pixels
    Bool_t showCarat;
    float blinkSeconds;

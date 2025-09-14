@@ -42,18 +42,18 @@
 
 typedef struct TileTexture_t
 {
-   uint8_t memory[TILE_TEXTURE_BYTES];
+   u8 memory[TILE_TEXTURE_BYTES];
 }
 TileTexture_t;
 
 typedef struct Screen_t
 {
-   uint16_t* buffer;
-   uint16_t palette[PALETTE_COLORS];
-   uint16_t backupPalette[PALETTE_COLORS];
-   uint8_t textBitFields[TEXT_TILE_COUNT][TEXT_TILE_SIZE];
-   uint16_t textColor;
-   uint16_t wipeColor;
+   u16* buffer;
+   u16 palette[PALETTE_COLORS];
+   u16 backupPalette[PALETTE_COLORS];
+   u8 textBitFields[TEXT_TILE_COUNT][TEXT_TILE_SIZE];
+   u16 textColor;
+   u16 wipeColor;
    Bool_t needsWipe;
 
    TileTexture_t battleBackgroundTileTextures[BATTLE_BACKGROUND_TILE_COUNT];
@@ -64,24 +64,24 @@ Screen_t;
 extern "C" {
 #endif
 
-void Screen_Init( Screen_t* screen, uint16_t* buffer );
+void Screen_Init( Screen_t* screen, u16* buffer );
 void Screen_BackupPalette( Screen_t* screen );
 void Screen_RestorePalette( Screen_t* screen );
-void Screen_ClearPalette( Screen_t* screen, uint16_t color );
-void Screen_BackupPaletteAndWipeColor( Screen_t* screen, uint16_t color );
-Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, uint16_t color, uint32_t* paletteIndex );
-void Screen_WipeFromPalette( Screen_t* screen, uint32_t paletteIndex );
-void Screen_WipeColor( Screen_t* screen, uint16_t color );
-void Screen_DrawRectFromPalette( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t paletteIndex );
-void Screen_DrawRectColor( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint16_t color );
-void Screen_DrawChar( Screen_t* screen, char c, uint32_t x, uint32_t y );
-void Screen_DrawText( Screen_t* screen, const char* text, uint32_t x, uint32_t y );
-void Screen_DrawCenteredText( Screen_t* screen, const char* text, uint32_t y );
-void Screen_DrawMemorySection( Screen_t* screen, uint8_t* memory, uint32_t stride,
-                               uint32_t tx, uint32_t ty, uint32_t tw, uint32_t th,
-                               uint32_t sx, uint32_t sy, Bool_t transparency );
-void Screen_DrawTextWindow( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h );
-void Screen_DrawTextWindowWithTitle( Screen_t* screen, uint32_t x, uint32_t y, uint32_t w, uint32_t h, const char* title );
+void Screen_ClearPalette( Screen_t* screen, u16 color );
+void Screen_BackupPaletteAndWipeColor( Screen_t* screen, u16 color );
+Bool_t Screen_GetPaletteIndexForColor( Screen_t* screen, u16 color, u32* paletteIndex );
+void Screen_WipeFromPalette( Screen_t* screen, u32 paletteIndex );
+void Screen_WipeColor( Screen_t* screen, u16 color );
+void Screen_DrawRectFromPalette( Screen_t* screen, u32 x, u32 y, u32 w, u32 h, u32 paletteIndex );
+void Screen_DrawRectColor( Screen_t* screen, u32 x, u32 y, u32 w, u32 h, u16 color );
+void Screen_DrawChar( Screen_t* screen, char c, u32 x, u32 y );
+void Screen_DrawText( Screen_t* screen, const char* text, u32 x, u32 y );
+void Screen_DrawCenteredText( Screen_t* screen, const char* text, u32 y );
+void Screen_DrawMemorySection( Screen_t* screen, u8* memory, u32 stride,
+                               u32 tx, u32 ty, u32 tw, u32 th,
+                               u32 sx, u32 sy, Bool_t transparency );
+void Screen_DrawTextWindow( Screen_t* screen, u32 x, u32 y, u32 w, u32 h );
+void Screen_DrawTextWindowWithTitle( Screen_t* screen, u32 x, u32 y, u32 w, u32 h, const char* title );
 
 // platform-specific
 void Screen_RenderBuffer( Screen_t* screen );

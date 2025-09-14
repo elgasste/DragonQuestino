@@ -1,7 +1,7 @@
 #include "clock.h"
 #include "win_common.h"
 
-internal uint32_t Clock_GetMicros();
+internal u32 Clock_GetMicros();
 
 void Clock_Init( Clock_t* clock )
 {
@@ -28,8 +28,8 @@ void Clock_StartFrame( Clock_t* clock )
 
 void Clock_EndFrame( Clock_t* clock )
 {
-   uint32_t frameEndMicro = Clock_GetMicros();
-   uint32_t elapsedMicro;
+   u32 frameEndMicro = Clock_GetMicros();
+   u32 elapsedMicro;
 
    clock->frameCount++;
    clock->absoluteEndMicro = frameEndMicro;
@@ -56,9 +56,9 @@ void Clock_EndFrame( Clock_t* clock )
    }
 }
 
-internal uint32_t Clock_GetMicros()
+internal u32 Clock_GetMicros()
 {
    LARGE_INTEGER ticks;
    QueryPerformanceCounter( &ticks );
-   return (uint32_t)( ( (double)( ticks.QuadPart ) / (double)( g_globals.performanceFrequency.QuadPart ) ) * (uint64_t)1000000 );
+   return (u32)( ( (double)( ticks.QuadPart ) / (double)( g_globals.performanceFrequency.QuadPart ) ) * (uint64_t)1000000 );
 }

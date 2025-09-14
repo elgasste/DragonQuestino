@@ -34,6 +34,10 @@
 #define True 1
 #define False 0
 
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+
 #define UNUSED_PARAM( x )              (void)x
 #define TOGGLE_BOOL( b )               b = b ? False : True;
 

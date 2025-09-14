@@ -6,7 +6,7 @@ internal void AlphaPicker_DrawCarat( AlphaPicker_t* picker );
 
 void AlphaPicker_Init( AlphaPicker_t* picker, Screen_t* screen )
 {
-   uint32_t i;
+   u32 i;
 
    picker->screen = screen;
    picker->hasDot = False;
@@ -45,9 +45,9 @@ void AlphaPicker_Reset( AlphaPicker_t* picker, const char* title, Bool_t hasDot 
 
 void AlphaPicker_Draw( AlphaPicker_t* picker )
 {
-   uint32_t i, j, x, y, index;
-   uint32_t startX = picker->position.x + ( TEXT_TILE_SIZE * 2 );
-   uint32_t startY = picker->position.y + ( TEXT_TILE_SIZE * 2 );
+   u32 i, j, x, y, index;
+   u32 startX = picker->position.x + ( TEXT_TILE_SIZE * 2 );
+   u32 startY = picker->position.y + ( TEXT_TILE_SIZE * 2 );
    char text[2];
 
    Screen_DrawTextWindowWithTitle( picker->screen, picker->position.x, picker->position.y, 25, 14, picker->title );
@@ -87,8 +87,8 @@ void AlphaPicker_ResetCarat( AlphaPicker_t* picker )
 
 void AlphaPicker_MoveSelection( AlphaPicker_t* picker, Direction_t direction )
 {
-   uint32_t row = picker->selectedIndex / ALPHA_PICKER_COLS;
-   uint32_t col = picker->selectedIndex % ALPHA_PICKER_COLS;
+   u32 row = picker->selectedIndex / ALPHA_PICKER_COLS;
+   u32 col = picker->selectedIndex % ALPHA_PICKER_COLS;
 
    if ( direction == Direction_Left )
    {
@@ -160,9 +160,9 @@ char AlphaPicker_GetSelectedChar( AlphaPicker_t* picker )
 
 internal void AlphaPicker_DrawCarat( AlphaPicker_t* picker )
 {
-   uint32_t i, j, x, y, index;
-   uint32_t startX = picker->position.x + TEXT_TILE_SIZE;
-   uint32_t startY = picker->position.y + ( TEXT_TILE_SIZE * 2 );
+   u32 i, j, x, y, index;
+   u32 startX = picker->position.x + TEXT_TILE_SIZE;
+   u32 startY = picker->position.y + ( TEXT_TILE_SIZE * 2 );
 
    for ( i = 0; i < ALPHA_PICKER_ROWS; i++ )
    {

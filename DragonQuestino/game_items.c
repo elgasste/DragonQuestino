@@ -13,7 +13,7 @@ internal void Game_UseTorchResultCallback( Game_t* game );
 
 void Game_UseHerb( Game_t* game )
 {
-   uint8_t restoredHitPoints;
+   u8 restoredHitPoints;
    char msg[64];
 
    Dialog_Reset( &( game->dialog ) );
@@ -129,7 +129,7 @@ void Game_UseFairyFlute( Game_t* game )
 
 void Game_UseGwaelynsLove( Game_t* game )
 {
-   uint32_t px, py, tx, ty, exp;
+   u32 px, py, tx, ty, exp;
    char msg[128], loc[64];
 
    Dialog_Reset( &( game->dialog ) );
@@ -262,7 +262,7 @@ internal void Game_UseRainbowDropCallback( Game_t* game )
 
 internal void Game_RainbowDropTrippyCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < PALETTE_COLORS; i++ )
    {

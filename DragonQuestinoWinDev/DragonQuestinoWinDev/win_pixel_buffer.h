@@ -5,14 +5,14 @@
 
 typedef struct WinPixelBuffer_t
 {
-   uint32_t w;
-   uint32_t h;
-   uint16_t* memory16;
-   uint32_t* memory32;
+   u32 w;
+   u32 h;
+   u16* memory16;
+   u32* memory32;
 }
 WinPixelBuffer_t;
 
-void WinPixelBuffer_Init( WinPixelBuffer_t* buffer, uint32_t w, uint32_t h );
+void WinPixelBuffer_Init( WinPixelBuffer_t* buffer, u32 w, u32 h );
 void WinPixelBuffer_CleanUp( WinPixelBuffer_t* buffer );
 
 #endif // WIN_PIXEL_BUFFER_H
