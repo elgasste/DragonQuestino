@@ -12,7 +12,6 @@ class GigaShield : public Adafruit_GFX {
       ~GigaShield() { };
 
       void begin();
-      void setScreen( Screen_t* screen ) { _screen = screen; };
       // we have to implement this, even if it does nothing
       void drawPixel( int16_t x, int16_t y, uint16_t color ) { }
       void drawScreen();
@@ -27,7 +26,6 @@ class GigaShield : public Adafruit_GFX {
       uint16_t _mainBuffer[SCREEN_PIXELS];
       uint16_t _wipeBuffer[SCREEN_PIXELS];
       bool _isWiping = false;
-      Screen_t* _screen;
       rtos::Thread* _refreshThread;
 };
 
