@@ -123,8 +123,8 @@ void TileMap_ChangeViewportSize( TileMap_t* tileMap, u16 w, u16 h )
 
 void TileMap_UpdateViewport( TileMap_t* tileMap )
 {
-   int32_t anchorX = (int32_t)( tileMap->player->sprite.position.x );
-   int32_t anchorY = (int32_t)( tileMap->player->sprite.position.y );
+   i32 anchorX = (i32)( tileMap->player->sprite.position.x );
+   i32 anchorY = (i32)( tileMap->player->sprite.position.y );
    u32 anchorW = tileMap->player->sprite.hitBoxSize.x;
    u32 anchorH = tileMap->player->sprite.hitBoxSize.y;
    Vector4i32_t* viewport = &( tileMap->viewport );
@@ -136,7 +136,7 @@ void TileMap_UpdateViewport( TileMap_t* tileMap )
    {
       viewport->x = 0;
    }
-   else if ( ( viewport->x + viewport->w ) > (int32_t)( tileMap->tilesX * TILE_SIZE ) )
+   else if ( ( viewport->x + viewport->w ) > (i32)( tileMap->tilesX * TILE_SIZE ) )
    {
       viewport->x = ( tileMap->tilesX * TILE_SIZE ) - viewport->w;
    }
@@ -145,7 +145,7 @@ void TileMap_UpdateViewport( TileMap_t* tileMap )
    {
       viewport->y = 0;
    }
-   else if ( ( viewport->y + viewport->h ) > (int32_t)( tileMap->tilesY * TILE_SIZE ) )
+   else if ( ( viewport->y + viewport->h ) > (i32)( tileMap->tilesY * TILE_SIZE ) )
    {
       viewport->y = ( tileMap->tilesY * TILE_SIZE ) - viewport->h;
    }
@@ -346,7 +346,7 @@ internal void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap )
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap )
 {
    u32 i, tx, ty, tw, th, sxu, syu;
-   int32_t sx, sy;
+   i32 sx, sy;
    StaticSprite_t* sprite;
    Vector4i32_t* viewport = &( tileMap->viewport );
 

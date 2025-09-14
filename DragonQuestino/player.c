@@ -93,7 +93,7 @@ u8 Player_RestoreHitPoints( Player_t* player, u8 hitPoints )
 Bool_t Player_CollectItem( Player_t* player, Item_t item )
 {
    Bool_t collected = False;
-   int8_t count;
+   i8 count;
 
    switch ( item )
    {

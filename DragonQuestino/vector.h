@@ -12,8 +12,8 @@ Vector2u16_t;
 
 typedef struct Vector2i32_t
 {
-   int32_t x;
-   int32_t y;
+   i32 x;
+   i32 y;
 }
 Vector2i32_t;
 
@@ -33,10 +33,10 @@ Vector2f_t;
 
 typedef struct Vector4i32_t
 {
-   int32_t x;
-   int32_t y;
-   int32_t w;
-   int32_t h;
+   i32 x;
+   i32 y;
+   i32 w;
+   i32 h;
 }
 Vector4i32_t;
 

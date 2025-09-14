@@ -206,7 +206,7 @@ void Game_DrawOverworld( Game_t* game )
 void Game_DrawQuickStatus( Game_t* game )
 {
    u32 memSize;
-   int32_t xOffset = ( game->mainState == MainState_Battle ) ? -8 : 0;
+   i32 xOffset = ( game->mainState == MainState_Battle ) ? -8 : 0;
    u8 level = game->player.level + 1;
    char line[9];
 
@@ -420,10 +420,10 @@ void Game_DrawTitleScreenFlash( Game_t* game )
 internal void Game_DrawPlayer( Game_t* game )
 {
    ActiveSprite_t* sprite = &( game->player.sprite );
-   int32_t wx = (int32_t)( sprite->position.x ) + game->player.sprite.offset.x;
-   int32_t wy = (int32_t)( sprite->position.y ) + game->player.sprite.offset.y;
-   int32_t sx = wx - game->tileMap.viewport.x;
-   int32_t sy = wy - game->tileMap.viewport.y;
+   i32 wx = (i32)( sprite->position.x ) + game->player.sprite.offset.x;
+   i32 wy = (i32)( sprite->position.y ) + game->player.sprite.offset.y;
+   i32 sx = wx - game->tileMap.viewport.x;
+   i32 sy = wy - game->tileMap.viewport.y;
    u32 textureIndex = ( (u32)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
    u32 tx = ( sx < 0 ) ? (u32)( -sx ) : 0;
    u32 ty = ( sy < 0 ) ? (u32)( -sy ) : 0;
@@ -508,15 +508,15 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
 internal void Game_DrawNonPlayerCharacters( Game_t* game )
 {
    u32 i, tx, ty, tw, th, sxu, syu, textureIndex;
-   int32_t sx, sy;
+   i32 sx, sy;
    ActiveSprite_t* sprite;
    Vector4i32_t* viewport = &( game->tileMap.viewport );
 
    for ( i = 0; i < game->tileMap.npcCount; i++ )
    {
       sprite = &( game->tileMap.npcs[i].sprite );
-      sx = (int32_t)( sprite->position.x - viewport->x + sprite->offset.x );
-      sy = (int32_t)( sprite->position.y - viewport->y + sprite->offset.y );
+      sx = (i32)( sprite->position.x - viewport->x + sprite->offset.x );
+      sy = (i32)( sprite->position.y - viewport->y + sprite->offset.y );
 
       if ( Math_RectsIntersect32i( sx, sy, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, 0, 0, viewport->w, viewport->h ) )
       {
@@ -534,14 +534,14 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game )
 #if defined( VISUAL_STUDIO_DEV )
          if ( g_debugFlags.showHitBoxes )
          {
-            sx = (int32_t)( sprite->position.x - viewport->x );
-            sy = (int32_t)( sprite->position.y - viewport->y );
+            sx = (i32)( sprite->position.x - viewport->x );
+            sy = (i32)( sprite->position.y - viewport->y );
             if ( Math_RectsIntersect32i( sx, sy, sprite->hitBoxSize.x, sprite->hitBoxSize.y, 0, 0, viewport->w, viewport->h ) )
             {
                tx = ( sx < 0 ) ? (u32)( -sx ) : 0;
                ty = ( sy < 0 ) ? (u32)( -sy ) : 0;
-               tw = ( ( sx + (int32_t)( sprite->hitBoxSize.x ) ) > viewport->w ) ? ( viewport->w - sx ) : ( (int32_t)( sprite->hitBoxSize.x ) - tx );
-               th = ( ( sy + (int32_t)( sprite->hitBoxSize.y ) ) > viewport->h ) ? ( viewport->h - sy ) : ( (int32_t)( sprite->hitBoxSize.y ) - ty );
+               tw = ( ( sx + (i32)( sprite->hitBoxSize.x ) ) > viewport->w ) ? ( viewport->w - sx ) : ( (i32)( sprite->hitBoxSize.x ) - tx );
+               th = ( ( sy + (i32)( sprite->hitBoxSize.y ) ) > viewport->h ) ? ( viewport->h - sy ) : ( (i32)( sprite->hitBoxSize.y ) - ty );
                sxu = ( sx < 0 ) ? 0 : sx;
                syu = ( sy < 0 ) ? 0 : sy;
                Screen_DrawRectColor( &( game->screen ), sxu, syu, tw, th, COLOR_RED );

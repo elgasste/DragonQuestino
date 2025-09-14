@@ -80,28 +80,28 @@ void Menu_ResetCarat( Menu_t* menu )
 
 void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
 {
-   int32_t newIndex = 0;
+   i32 newIndex = 0;
    u32 column;
 
    switch ( direction )
    {
       case Direction_Left:
-         newIndex = (int32_t)menu->selectedIndex - menu->itemsPerColumn;
+         newIndex = (i32)menu->selectedIndex - menu->itemsPerColumn;
          if ( newIndex < 0 )
          {
             newIndex = menu->itemCount + newIndex;
          }
          break;
       case Direction_Right:
-         newIndex = (int32_t)menu->selectedIndex + menu->itemsPerColumn;
-         if ( newIndex >= (int32_t)( menu->itemCount ) )
+         newIndex = (i32)menu->selectedIndex + menu->itemsPerColumn;
+         if ( newIndex >= (i32)( menu->itemCount ) )
          {
             newIndex = menu->itemsPerColumn - ( menu->itemCount - menu->selectedIndex );
          }
          break;
       case Direction_Up:
          column = menu->selectedIndex / menu->itemsPerColumn;
-         newIndex = (int32_t)( menu->selectedIndex ) - 1;
+         newIndex = (i32)( menu->selectedIndex ) - 1;
          if ( newIndex < 0 )
          {
             newIndex = menu->itemsPerColumn - 1;
@@ -116,8 +116,8 @@ void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
          break;
       case Direction_Down:
          column = menu->selectedIndex / menu->itemsPerColumn;
-         newIndex = (int32_t)( menu->selectedIndex ) + 1;
-         if ( newIndex >= (int32_t)( menu->itemCount ) )
+         newIndex = (i32)( menu->selectedIndex ) + 1;
+         if ( newIndex >= (i32)( menu->itemCount ) )
          {
             newIndex = menu->itemCount - menu->itemsPerColumn;
          }

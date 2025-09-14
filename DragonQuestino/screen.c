@@ -1,6 +1,6 @@
 #include "screen.h"
 
-internal int8_t Screen_GetCharIndexFromChar( const char c );
+internal i8 Screen_GetCharIndexFromChar( const char c );
 
 void Screen_Init( Screen_t* screen, u16* buffer )
 {
@@ -124,10 +124,10 @@ void Screen_DrawRectColor( Screen_t* screen, u32 x, u32 y, u32 w, u32 h, u16 col
 
 void Screen_DrawChar( Screen_t* screen, char c, u32 x, u32 y )
 {
-   int32_t i;
+   i32 i;
    u32 j, row;
    u8* bitField;
-   int8_t charIndex = Screen_GetCharIndexFromChar( c );
+   i8 charIndex = Screen_GetCharIndexFromChar( c );
    u16* bufferPos = screen->buffer + ( y * SCREEN_WIDTH ) + x;
 
    if ( charIndex < 0 )
@@ -167,7 +167,7 @@ void Screen_DrawChar( Screen_t* screen, char c, u32 x, u32 y )
 void Screen_DrawText( Screen_t* screen, const char* text, u32 x, u32 y )
 {
    u16 ch, j;
-   int8_t charIndex, i;
+   i8 charIndex, i;
    u8 row;
    u8* bitField;
    u16* bufferPos;
@@ -229,7 +229,7 @@ void Screen_DrawCenteredText( Screen_t* screen, const char* text, u32 y )
    Screen_DrawText( screen, text, x, y );
 }
 
-internal int8_t Screen_GetCharIndexFromChar( const char c )
+internal i8 Screen_GetCharIndexFromChar( const char c )
 {
    if ( c >= 97 && c <= 122 )
    {

@@ -426,7 +426,7 @@ internal void AnimationChain_Tic_Flash( AnimationChain_t* chain )
 internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
 {
    u32 squaresToDraw;
-   int32_t xOffset, yOffset;
+   i32 xOffset, yOffset;
 
    chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
 
@@ -442,8 +442,8 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
             yOffset = chain->tileMap->isDark ? 4 : 0;
 
             Screen_DrawRectColor( chain->screen,
-                                  (u16)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
-                                  (u16)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
+                                  (u16)( (i16)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
+                                  (u16)( (i16)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
                                   TILE_SIZE, TILE_SIZE, COLOR_BLACK );
          }
          else

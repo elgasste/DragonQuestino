@@ -67,7 +67,7 @@ typedef struct Enemy_t
    BattleStats_t stats;
 
    u8 tileTextures[ENEMY_TILE_TEXTURE_COUNT][ENEMY_TILE_TEXTURE_SIZE_BYTES];
-   int8_t tileTextureIndexes[ENEMY_TILE_COUNT];
+   i8 tileTextureIndexes[ENEMY_TILE_COUNT];
 }
 Enemy_t;
 
