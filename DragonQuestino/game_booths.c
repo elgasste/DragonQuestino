@@ -257,7 +257,7 @@ internal void Game_VisitInnStayPostAnimationCallback( Game_t* game )
    AnimationChain_Reset( &( game->animationChain ) );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_FadeOut );
 
-   for ( i = 0; i < 6; i++ )
+   for ( i = 0; i < 8; i++ )
    {
       AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
    }
