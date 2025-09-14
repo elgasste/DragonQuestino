@@ -278,7 +278,7 @@ internal void AnimationChain_Tic_WhiteOut( AnimationChain_t* chain )
 {
    u32 i;
    u16 rangeR, rangeB, rangeG;
-   float p;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -299,7 +299,7 @@ internal void AnimationChain_Tic_WhiteIn( AnimationChain_t* chain )
 {
    u32 i;
    u16 rangeR, rangeB, rangeG;
-   float p;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -320,7 +320,7 @@ internal void AnimationChain_Tic_FadeOut( AnimationChain_t* chain )
 {
    u32 i;
    u16 rangeR, rangeB, rangeG;
-   float p;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -339,7 +339,7 @@ internal void AnimationChain_Tic_FadeIn( AnimationChain_t* chain )
 {
    u32 i;
    u16 rangeR, rangeB, rangeG;
-   float p;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -358,7 +358,7 @@ internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain )
 {
    u32 i;
    u16 rangeR, rangeB, rangeG, increment;
-   float p;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -383,7 +383,7 @@ internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain )
 {
    u32 i;
    u16 rangeR, rangeB, rangeG, increment;
-   float p;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -482,7 +482,7 @@ internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain )
 {
    u32 i;
    u16 rangeR, rangeB, rangeG;
-   float p;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -501,7 +501,7 @@ internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain )
 {
    u32 i;
    u16 rangeR, rangeB, rangeG;
-   float p;
+   r32 p;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
 

@@ -44,10 +44,10 @@ typedef struct AnimationChain_t
 
    Bool_t isRunning;
    Bool_t startNext;
-   float totalElapsedSeconds;
-   float frameElapsedSeconds;
-   float totalDuration;
-   float frameDuration;
+   r32 totalElapsedSeconds;
+   r32 frameElapsedSeconds;
+   r32 totalDuration;
+   r32 frameDuration;
    Bool_t flag;
 }
 AnimationChain_t;

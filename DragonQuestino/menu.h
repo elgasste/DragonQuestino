@@ -41,7 +41,7 @@ typedef struct Menu_t
    u32 caratOffset;         // how far to the left to draw the carat, in characters
 
    Bool_t showCarat;
-   float blinkSeconds;
+   r32 blinkSeconds;
 }
 Menu_t;
 

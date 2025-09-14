@@ -48,12 +48,12 @@ Bool_t Math_RectsIntersect32i( i32 x1, i32 y1, i32 w1, i32 h1, i32 x2, i32 y2, i
    return ( x1 < ( x2 + w2 ) && ( x1 + w1 ) > x2 && y1 < ( y2 + h2 ) && ( y1 + h1 ) > y2 ) ? True : False;
 }
 
-Bool_t Math_RectsIntersectF( float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2 )
+Bool_t Math_RectsIntersectF( r32 x1, r32 y1, r32 w1, r32 h1, r32 x2, r32 y2, r32 w2, r32 h2 )
 {
    return ( x1 < ( x2 + w2 ) && ( x1 + w1 ) > x2 && y1 < ( y2 + h2 ) && ( y1 + h1 ) > y2 ) ? True : False;
 }
 
-Bool_t Math_PointInRectF( float px, float py, float rx, float ry, float rw, float rh )
+Bool_t Math_PointInRectF( r32 px, r32 py, r32 rx, r32 ry, r32 rw, r32 rh )
 {
    return ( px > rx ) && ( px < ( rx + rw ) ) && ( py > ry ) && py < ( ry + rh ) ? True : False;
 }

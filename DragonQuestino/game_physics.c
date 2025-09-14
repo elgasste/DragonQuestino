@@ -2,7 +2,7 @@
 #include "random.h"
 #include "math.h"
 
-internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t prevPos, Vector2f_t* newPos );
+internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2r32_t prevPos, Vector2r32_t* newPos );
 internal u32 Game_GetSpriteTileIndex( Game_t* game, ActiveSprite_t* sprite );
 internal void Game_UpdatePlayerTileIndex( Game_t* game );
 internal void Game_RollEncounter( Game_t* game );
@@ -15,7 +15,7 @@ internal void Game_MoveNpcs( Game_t* game );
 void Game_TicPhysics( Game_t* game )
 {
    u32 i;
-   Vector2f_t prevPos, newPos;
+   Vector2r32_t prevPos, newPos;
    u32 tileRowStartIndex, tileRowEndIndex, tileColStartIndex, tileColEndIndex, row, col, tile, tileIndex;
    Player_t* player = &( game->player );
 
@@ -84,7 +84,7 @@ void Game_TicPhysics( Game_t* game )
                if ( !TILE_GET_PASSABLE( tile ) ||
                     ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->gameFlags.doors ) )
                {
-                  newPos.x = (float)( ( ( col + 1 ) * TILE_SIZE ) );
+                  newPos.x = (r32)( ( ( col + 1 ) * TILE_SIZE ) );
                   break;
                }
             }
@@ -128,7 +128,7 @@ void Game_TicPhysics( Game_t* game )
                if ( !TILE_GET_PASSABLE( tile ) ||
                     ( TileMap_GetDoorFlag( game->tileMap.id, col + ( row * game->tileMap.tilesX ) ) & game->gameFlags.doors ) )
                {
-                  newPos.y = (float)( ( ( row + 1 ) * TILE_SIZE ) );
+                  newPos.y = (r32)( ( ( row + 1 ) * TILE_SIZE ) );
                   break;
                }
             }
@@ -320,18 +320,18 @@ void Game_PlayerSteppedOnTile( Game_t* game )
 #define PHYSICS_CLIPSPRITE_BOTTOMLEFT() if ( newPos->x < prevPos.x ) if ( newPos->y > prevPos.y ) if ( ( clipHitBoxR - newPos->x ) > ( mainHitBoxB - clipHitBoxY ) ) newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA; else newPos->x = clipHitBoxR + COLLISION_THETA; else newPos->x = clipHitBoxR + COLLISION_THETA; else newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA
 #define PHYSICS_CLIPSPRITE_BOTTOMRIGHT() if ( newPos->x > prevPos.x ) if ( newPos->y > prevPos.y ) if ( ( mainHitBoxR - clipHitBoxX ) > ( mainHitBoxB - clipHitBoxY ) ) newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA; else newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA; else newPos->x = clipHitBoxX - mainHitBoxW - COLLISION_THETA; else newPos->y = clipHitBoxY - mainHitBoxH - COLLISION_THETA
 
-internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2f_t prevPos, Vector2f_t* newPos )
+internal void Game_ClipSprites( ActiveSprite_t* mainSprite, ActiveSprite_t* clipSprite, Vector2r32_t prevPos, Vector2r32_t* newPos )
 {
-   float clipHitBoxX = clipSprite->position.x;
-   float clipHitBoxY = clipSprite->position.y;
-   float clipHitBoxW = (float)( clipSprite->hitBoxSize.x );
-   float clipHitBoxH = (float)( clipSprite->hitBoxSize.y );
-   float clipHitBoxR = clipHitBoxX + clipHitBoxW;
-   float clipHitBoxB = clipHitBoxY + clipHitBoxH;
-   float mainHitBoxW = (float)( mainSprite->hitBoxSize.x );
-   float mainHitBoxH = (float)( mainSprite->hitBoxSize.y );
-   float mainHitBoxR = newPos->x + mainHitBoxW;
-   float mainHitBoxB = newPos->y + mainHitBoxH;
+   r32 clipHitBoxX = clipSprite->position.x;
+   r32 clipHitBoxY = clipSprite->position.y;
+   r32 clipHitBoxW = (r32)( clipSprite->hitBoxSize.x );
+   r32 clipHitBoxH = (r32)( clipSprite->hitBoxSize.y );
+   r32 clipHitBoxR = clipHitBoxX + clipHitBoxW;
+   r32 clipHitBoxB = clipHitBoxY + clipHitBoxH;
+   r32 mainHitBoxW = (r32)( mainSprite->hitBoxSize.x );
+   r32 mainHitBoxH = (r32)( mainSprite->hitBoxSize.y );
+   r32 mainHitBoxR = newPos->x + mainHitBoxW;
+   r32 mainHitBoxB = newPos->y + mainHitBoxH;
 
    if ( newPos->x < clipHitBoxR && newPos->x > clipHitBoxX && newPos->y < clipHitBoxB && mainHitBoxB > clipHitBoxY )
    {
@@ -556,8 +556,8 @@ internal void Game_MoveNpcs( Game_t* game )
 {
    u32 i;
    NonPlayerCharacter_t* npc;
-   Vector2f_t newPos;
-   float leftBound, topBound, rightBound, bottomBound;
+   Vector2r32_t newPos;
+   r32 leftBound, topBound, rightBound, bottomBound;
 
    for ( i = 0; i < game->tileMap.npcCount; i++ )
    {
@@ -581,10 +581,10 @@ internal void Game_MoveNpcs( Game_t* game )
 
          npc->sprite.position.x = newPos.x;
          npc->sprite.position.y = newPos.y;
-         leftBound = (float)( npc->wanderBounds.x * TILE_SIZE );
-         topBound = (float)( npc->wanderBounds.y * TILE_SIZE );
-         rightBound = (float)( ( npc->wanderBounds.x + npc->wanderBounds.w ) * TILE_SIZE );
-         bottomBound = (float)( ( npc->wanderBounds.y + npc->wanderBounds.h ) * TILE_SIZE );
+         leftBound = (r32)( npc->wanderBounds.x * TILE_SIZE );
+         topBound = (r32)( npc->wanderBounds.y * TILE_SIZE );
+         rightBound = (r32)( ( npc->wanderBounds.x + npc->wanderBounds.w ) * TILE_SIZE );
+         bottomBound = (r32)( ( npc->wanderBounds.y + npc->wanderBounds.h ) * TILE_SIZE );
 
          if ( newPos.x < leftBound )
          {

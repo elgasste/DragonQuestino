@@ -16,7 +16,7 @@ typedef struct BinaryPicker_t
    Vector2u32_t position;        // position on the screen, in pixels
    Vector2u32_t size;            // in characters
    Bool_t showCarat;
-   float blinkSeconds;
+   r32 blinkSeconds;
    char option1[BINARYPICKER_OPTION_SIZE];
    char option2[BINARYPICKER_OPTION_SIZE];
    void ( *option1Callback )( void* );

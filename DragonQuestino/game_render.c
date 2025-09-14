@@ -350,7 +350,7 @@ void Game_DrawBattleBackground( Game_t* game )
 
 void Game_UpdateTextColor( Game_t* game )
 {
-   float percentage;
+   r32 percentage;
    Player_t* player = &( game->player );
 
    if ( game->gameFlags.joinedDragonlord )
@@ -363,7 +363,7 @@ void Game_UpdateTextColor( Game_t* game )
    }
    else
    {
-      percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
+      percentage = (r32)( player->stats.hitPoints ) / player->stats.maxHitPoints;
       game->screen.textColor = ( percentage < PLAYER_LOWHEALTH_PERCENTAGE ) ? COLOR_INJUREDRED : COLOR_WHITE;
    }
 }

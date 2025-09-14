@@ -75,7 +75,7 @@ Enemy_t;
 extern "C" {
 #endif
 
-float Enemy_GetFleeFactor( Enemy_t* enemy );
+r32 Enemy_GetFleeFactor( Enemy_t* enemy );
 
 // game_data.c
 void Enemy_Load( Enemy_t* enemy, u32 index );

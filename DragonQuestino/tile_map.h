@@ -145,8 +145,8 @@ typedef struct NonPlayerCharacter_t
    Bool_t wanders;
    Bool_t isWandering;
    Vector4u32_t wanderBounds;
-   float totalDuration;
-   float duration;
+   r32 totalDuration;
+   r32 duration;
 }
 NonPlayerCharacter_t;
 
@@ -181,7 +181,7 @@ typedef struct TileMap_t
    u32 glowDiameter;
    u32 targetGlowDiameter;
    u32 glowTileCount;
-   float glowTransitionSeconds;
+   r32 glowTransitionSeconds;
 
    // bits 0-4: texture index (max 32 textures)
    // bit 5: is-passable flag
@@ -236,7 +236,7 @@ void TileMap_ChangeViewportSize( TileMap_t* tileMap, u16 w, u16 h );
 void TileMap_UpdateViewport( TileMap_t* tileMap );
 void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, u32 targetDiameter );
 void TileMap_ReduceTargetGlowDiameter( TileMap_t* tileMap );
-float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, u32 tileIndex );
+r32 TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, u32 tileIndex );
 TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, u32 index );
 u32 TileMap_GetFacingTileIndex( TileMap_t* tileMap, u32 sourceTileIndex, Direction_t direction );
 void TileMap_Draw( TileMap_t* tileMap );

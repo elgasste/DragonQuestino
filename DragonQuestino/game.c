@@ -84,8 +84,8 @@ void Game_Reset( Game_t* game )
    game->overworldInactivitySeconds = 0.0f;
 
    Player_SetName( player, "" );
-   player->sprite.position.x = (float)( TILE_SIZE * 8 ) + 2.0f;
-   player->sprite.position.y = (float)( TILE_SIZE * 6 ) + 4.0f;
+   player->sprite.position.x = (r32)( TILE_SIZE * 8 ) + 2.0f;
+   player->sprite.position.y = (r32)( TILE_SIZE * 6 ) + 4.0f;
    player->sprite.direction = Direction_Up;
    player->velocity.x = 0.0f;
    player->velocity.y = 0.0f;
@@ -375,9 +375,9 @@ void Game_EnterTargetPortal( Game_t* game )
 
    TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
 
-   game->player.sprite.position.x = (float)( ( i32 )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.sprite.offset.x ) + COLLISION_THETA;
+   game->player.sprite.position.x = (r32)( ( i32 )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.sprite.offset.x ) + COLLISION_THETA;
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
-   game->player.sprite.position.y = (float)( ( i32 )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.sprite.offset.y ) - COLLISION_THETA;
+   game->player.sprite.position.y = (r32)( ( i32 )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.sprite.offset.y ) - COLLISION_THETA;
    game->player.tileIndex = destinationTileIndex;
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
    game->targetPortal = 0;
@@ -642,14 +642,14 @@ internal void Game_ResetTitleScreenFlash( Game_t* game )
    game->titleScreenFlash.isFlashing = False;
    game->titleScreenFlash.slowFlash = Random_u32( 0, 1 );
    game->titleScreenFlash.elapsedSeconds = 0.0f;
-   game->titleScreenFlash.pauseSeconds = (float)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
+   game->titleScreenFlash.pauseSeconds = (r32)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
    game->titleScreenFlash.currentFrame = 0;
 }
 
 internal void Game_TicTitleScreenFlash( Game_t* game )
 {
    TitleScreenFlash_t* flash = &( game->titleScreenFlash );
-   float frameDuration;
+   r32 frameDuration;
 
    flash->elapsedSeconds += CLOCK_FRAME_SECONDS;
 
@@ -666,7 +666,7 @@ internal void Game_TicTitleScreenFlash( Game_t* game )
          {
             flash->isFlashing = False;
             flash->elapsedSeconds = 0.0f;
-            flash->pauseSeconds = (float)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
+            flash->pauseSeconds = (r32)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
             break;
          }
       }

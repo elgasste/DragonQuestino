@@ -36,9 +36,9 @@ internal u32 Convert565To32( u16 color )
    u16 g6 = ( ( color & 0x07E0 ) >> 5 );
    u16 b5 = ( ( color & 0x001F ) );
 
-   float pR = ( r5 == 0 ) ? 0.0f : (float)r5 / 0x1F;
-   float pG = ( g6 == 0 ) ? 0.0f : (float)g6 / 0x3F;
-   float pB = ( b5 == 0 ) ? 0.0f : (float)b5 / 0x1F;
+   r32 pR = ( r5 == 0 ) ? 0.0f : (r32)r5 / 0x1F;
+   r32 pG = ( g6 == 0 ) ? 0.0f : (r32)g6 / 0x3F;
+   r32 pB = ( b5 == 0 ) ? 0.0f : (r32)b5 / 0x1F;
 
    return (u32)0xFF000000 | ( (u32)( 0xFF * pR ) << 16 ) | ( (u32)( 0xFF * pG ) << 8 ) | (u32)( 0xFF * pB );
 }

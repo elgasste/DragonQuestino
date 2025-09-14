@@ -24,12 +24,12 @@ typedef struct Vector2u32_t
 }
 Vector2u32_t;
 
-typedef struct Vector2f_t
+typedef struct Vector2r32_t
 {
-   float x;
-   float y;
+   r32 x;
+   r32 y;
 }
-Vector2f_t;
+Vector2r32_t;
 
 typedef struct Vector4i32_t
 {

@@ -34,11 +34,11 @@ typedef struct Dialog_t
    u32 charCount;
 
    Bool_t isScrolling;
-   float scrollSeconds;
-   float scrollTotalSeconds;
+   r32 scrollSeconds;
+   r32 scrollTotalSeconds;
 
    Bool_t showCarat;
-   float blinkSeconds;
+   r32 blinkSeconds;
 }
 Dialog_t;
 

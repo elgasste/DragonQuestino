@@ -23,8 +23,8 @@ u32 Random_u32( u32 min, u32 max )
    return ( (u32)rand() % ( ( max + 1 ) - min ) ) + min;
 }
 
-float Random_NormalizedPercent()
+r32 Random_NormalizedPercent()
 {
    u32 percent = Random_Percent();
-   return (float)percent * 0.01f;
+   return (r32)percent * 0.01f;
 }

@@ -36,8 +36,8 @@ typedef struct TitleScreenFlash_t
 {
    Bool_t isFlashing;
    Bool_t slowFlash;
-   float elapsedSeconds;
-   float pauseSeconds;
+   r32 elapsedSeconds;
+   r32 pauseSeconds;
    u32 currentFrame;
 }
 TitleScreenFlash_t;
@@ -70,7 +70,7 @@ typedef struct Game_t
    void ( *postDialogCallback )( void* );
    void* postDialogCallbackData;
 
-   float overworldInactivitySeconds;
+   r32 overworldInactivitySeconds;
    Bool_t doAnimation;
 
    u8 pendingPayload8u;

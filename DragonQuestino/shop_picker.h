@@ -35,7 +35,7 @@ typedef struct ShopPicker_t
    u32 selectedIndex;
    Vector2u32_t position;        // position on the screen, in pixels
    Bool_t showCarat;
-   float blinkSeconds;
+   r32 blinkSeconds;
 }
 ShopPicker_t;
 

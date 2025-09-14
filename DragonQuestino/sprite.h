@@ -29,16 +29,16 @@ StaticSprite_t;
 typedef struct ActiveSprite_t
 {
    SpriteTexture_t textures[ACTIVE_SPRITE_TEXTURES];
-   Vector2f_t position;
+   Vector2r32_t position;
    Vector2i32_t offset;
    Vector2u32_t hitBoxSize;
    Direction_t direction;
    u32 currentFrame;
-   float elapsedFrameSeconds;
+   r32 elapsedFrameSeconds;
 
    Bool_t isFlickering;
    Bool_t flickerOff;
-   float elapsedFlickerSeconds;
+   r32 elapsedFlickerSeconds;
 }
 ActiveSprite_t;
 

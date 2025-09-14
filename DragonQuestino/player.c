@@ -252,8 +252,8 @@ void Player_CenterOnTile( Player_t* player )
    u32 tileX = ( player->tileIndex % player->tileMap->tilesX ) * TILE_SIZE;
    u32 tileY = ( player->tileIndex / player->tileMap->tilesX ) * TILE_SIZE;
 
-   player->sprite.position.x = (float)( tileX + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.x / 2 ) ) );
-   player->sprite.position.y = (float)( tileY + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.y / 2 ) ) );
+   player->sprite.position.x = (r32)( tileX + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.x / 2 ) ) );
+   player->sprite.position.y = (r32)( tileY + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.y / 2 ) ) );
 }
 
 internal u32 Player_GetNameSum( Player_t* player )
