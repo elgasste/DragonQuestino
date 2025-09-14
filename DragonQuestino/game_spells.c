@@ -4,7 +4,7 @@
 
 #define CHECK_CAST_ABILITY( m, n ) if ( !Game_CanCastSpell( game, m, n ) ) return;
 
-internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName );
+internal Bool_t Game_CanCastSpell( Game_t* game, u8 requiredMp, const char* spellName );
 internal void Game_SpellBlockedCallback( Game_t* game );
 internal void Game_SpellBlockedMessageCallback( Game_t* game );
 internal void Game_SpellFizzledCallback( Game_t* game );
@@ -25,7 +25,7 @@ internal void Game_SpellNoEffectCallback( Game_t* game );
 
 void Game_CastHeal( Game_t* game )
 {
-   uint8_t maxEffect;
+   u8 maxEffect;
    char msg[64];
 
    CHECK_CAST_ABILITY( SPELL_HEAL_MP, STRING_SPELL_HEAL );
@@ -166,7 +166,7 @@ void Game_CastEvac( Game_t* game )
    }
 }
 
-void Game_CastZoom( Game_t* game, uint32_t townId )
+void Game_CastZoom( Game_t* game, u32 townId )
 {
    char msg[64];
 
@@ -195,7 +195,7 @@ void Game_CastRepel( Game_t* game )
 
 void Game_CastMidheal( Game_t* game )
 {
-   uint8_t maxEffect;
+   u8 maxEffect;
    char msg[64];
 
    CHECK_CAST_ABILITY( SPELL_MIDHEAL_MP, STRING_SPELL_MIDHEAL );
@@ -257,7 +257,7 @@ void Game_SpellSleepSuccessCallback( Game_t* game )
    Game_OpenDialog( game );
 }
 
-internal Bool_t Game_CanCastSpell( Game_t* game, uint8_t requiredMp, const char* spellName )
+internal Bool_t Game_CanCastSpell( Game_t* game, u8 requiredMp, const char* spellName )
 {
    char msg[64];
 

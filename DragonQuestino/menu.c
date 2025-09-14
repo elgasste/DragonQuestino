@@ -48,10 +48,10 @@ void Menu_Reset( Menu_t* menu )
 
 void Menu_Draw( Menu_t* menu )
 {
-   uint16_t i;
-   uint32_t x, y;
-   uint32_t startX = menu->position.x + ( ( menu->borderPadding.x + 1 ) * ( TEXT_TILE_SIZE ) );
-   uint32_t startY = menu->position.y + ( ( menu->borderPadding.y + 1 ) * ( TEXT_TILE_SIZE ) );
+   u16 i;
+   u32 x, y;
+   u32 startX = menu->position.x + ( ( menu->borderPadding.x + 1 ) * ( TEXT_TILE_SIZE ) );
+   u32 startY = menu->position.y + ( ( menu->borderPadding.y + 1 ) * ( TEXT_TILE_SIZE ) );
 
    Screen_DrawTextWindowWithTitle( menu->screen, menu->position.x, menu->position.y, menu->borderSize.x, menu->borderSize.y, menu->title );
 
@@ -80,28 +80,28 @@ void Menu_ResetCarat( Menu_t* menu )
 
 void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
 {
-   int32_t newIndex = 0;
-   uint32_t column;
+   i32 newIndex = 0;
+   u32 column;
 
    switch ( direction )
    {
       case Direction_Left:
-         newIndex = (int32_t)menu->selectedIndex - menu->itemsPerColumn;
+         newIndex = (i32)menu->selectedIndex - menu->itemsPerColumn;
          if ( newIndex < 0 )
          {
             newIndex = menu->itemCount + newIndex;
          }
          break;
       case Direction_Right:
-         newIndex = (int32_t)menu->selectedIndex + menu->itemsPerColumn;
-         if ( newIndex >= (int32_t)( menu->itemCount ) )
+         newIndex = (i32)menu->selectedIndex + menu->itemsPerColumn;
+         if ( newIndex >= (i32)( menu->itemCount ) )
          {
             newIndex = menu->itemsPerColumn - ( menu->itemCount - menu->selectedIndex );
          }
          break;
       case Direction_Up:
          column = menu->selectedIndex / menu->itemsPerColumn;
-         newIndex = (int32_t)( menu->selectedIndex ) - 1;
+         newIndex = (i32)( menu->selectedIndex ) - 1;
          if ( newIndex < 0 )
          {
             newIndex = menu->itemsPerColumn - 1;
@@ -116,8 +116,8 @@ void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
          break;
       case Direction_Down:
          column = menu->selectedIndex / menu->itemsPerColumn;
-         newIndex = (int32_t)( menu->selectedIndex ) + 1;
-         if ( newIndex >= (int32_t)( menu->itemCount ) )
+         newIndex = (i32)( menu->selectedIndex ) + 1;
+         if ( newIndex >= (i32)( menu->itemCount ) )
          {
             newIndex = menu->itemCount - menu->itemsPerColumn;
          }
@@ -131,7 +131,7 @@ void Menu_MoveSelection( Menu_t* menu, Direction_t direction )
          break;
    }
 
-   menu->selectedIndex = (uint32_t)newIndex;
+   menu->selectedIndex = (u32)newIndex;
    Menu_ResetCarat( menu );
 }
 
@@ -160,10 +160,10 @@ internal void Menu_Update( Menu_t* menu )
 
 internal void Menu_DrawCarat( Menu_t* menu )
 {
-   uint32_t i;
-   uint32_t x, y;
-   uint32_t startX = menu->position.x + ( ( menu->borderPadding.x + 1 ) * ( TEXT_TILE_SIZE ) );
-   uint32_t startY = menu->position.y + ( ( menu->borderPadding.y + 1 ) * ( TEXT_TILE_SIZE ) );
+   u32 i;
+   u32 x, y;
+   u32 startX = menu->position.x + ( ( menu->borderPadding.x + 1 ) * ( TEXT_TILE_SIZE ) );
+   u32 startY = menu->position.y + ( ( menu->borderPadding.y + 1 ) * ( TEXT_TILE_SIZE ) );
 
    for ( i = 0; i < menu->itemCount; i++ )
    {
@@ -204,7 +204,7 @@ internal void Menu_InitStartup( Menu_t* menu )
 
 internal void Menu_InitOverworld( Menu_t* menu )
 {
-   uint32_t i;
+   u32 i;
 
    strcpy( menu->title, STRING_OVERWORLD_MENU_TITLE );
    strcpy( menu->items[0].text, STRING_OVERWORLD_MENU_TALK );
@@ -237,7 +237,7 @@ internal void Menu_InitOverworld( Menu_t* menu )
 
 internal void Menu_InitBattle( Menu_t* menu )
 {
-   uint32_t i;
+   u32 i;
 
    strcpy( menu->title, "" );
    strcpy( menu->items[0].text, STRING_BATTLE_MENU_ATTACK );
@@ -266,8 +266,8 @@ internal void Menu_InitBattle( Menu_t* menu )
 
 internal void Menu_UpdateOverworldSpell( Menu_t* menu )
 {
-   uint32_t i;
-   uint32_t spells = menu->player->spells;
+   u32 i;
+   u32 spells = menu->player->spells;
 
    strcpy( menu->title, STRING_OVERWORLD_MENU_SPELL );
 
@@ -277,7 +277,7 @@ internal void Menu_UpdateOverworldSpell( Menu_t* menu )
    menu->position.x = 152;
    menu->position.y = 32;
    menu->borderSize.x = 12;
-   menu->borderSize.y = (uint16_t)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderSize.y = (u16)( ( menu->itemCount * 2 ) + 3 );
    menu->borderPadding.x = 1;
    menu->borderPadding.y = 1;
    menu->columnWidth = 10;
@@ -330,8 +330,8 @@ internal void Menu_UpdateOverworldSpell( Menu_t* menu )
 
 internal void Menu_UpdateOverworldItem( Menu_t* menu )
 {
-   uint32_t i = 0;
-   uint32_t items = menu->player->items;
+   u32 i = 0;
+   u32 items = menu->player->items;
 
    strcpy( menu->title, STRING_OVERWORLD_MENU_ITEM );
 
@@ -341,7 +341,7 @@ internal void Menu_UpdateOverworldItem( Menu_t* menu )
    menu->position.x = 144;
    menu->position.y = 48;
    menu->borderSize.x = 12;
-   menu->borderSize.y = (uint16_t)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderSize.y = (u16)( ( menu->itemCount * 2 ) + 3 );
    menu->borderPadding.x = 1;
    menu->borderPadding.y = 1;
    menu->columnWidth = 10;
@@ -420,8 +420,8 @@ internal void Menu_UpdateOverworldItem( Menu_t* menu )
 
 internal void Menu_UpdateZoom( Menu_t* menu )
 {
-   uint32_t i = 0;
-   uint8_t tv = menu->player->townsVisited;
+   u32 i = 0;
+   u8 tv = menu->player->townsVisited;
 
    strcpy( menu->title, STRING_SPELL_ZOOM );
 
@@ -431,7 +431,7 @@ internal void Menu_UpdateZoom( Menu_t* menu )
    menu->position.x = 136;
    menu->position.y = 64;
    menu->borderSize.x = 13;
-   menu->borderSize.y = (uint16_t)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderSize.y = (u16)( ( menu->itemCount * 2 ) + 3 );
    menu->borderPadding.x = 1;
    menu->borderPadding.y = 1;
    menu->columnWidth = 10;
@@ -484,8 +484,8 @@ internal void Menu_UpdateZoom( Menu_t* menu )
 
 internal void Menu_UpdateBattleSpell( Menu_t* menu )
 {
-   uint32_t i;
-   uint32_t spells = menu->player->spells;
+   u32 i;
+   u32 spells = menu->player->spells;
 
    strcpy( menu->title, STRING_BATTLE_MENU_SPELL );
 
@@ -495,7 +495,7 @@ internal void Menu_UpdateBattleSpell( Menu_t* menu )
    menu->position.x = 144;
    menu->position.y = 16;
    menu->borderSize.x = 12;
-   menu->borderSize.y = (uint16_t)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderSize.y = (u16)( ( menu->itemCount * 2 ) + 3 );
    menu->borderPadding.x = 1;
    menu->borderPadding.y = 1;
    menu->columnWidth = 10;
@@ -548,8 +548,8 @@ internal void Menu_UpdateBattleSpell( Menu_t* menu )
 
 internal void Menu_UpdateBattleItem( Menu_t* menu )
 {
-   uint32_t i;
-   uint32_t items = menu->player->items;
+   u32 i;
+   u32 items = menu->player->items;
 
    strcpy( menu->title, STRING_BATTLE_MENU_ITEM );
 
@@ -559,7 +559,7 @@ internal void Menu_UpdateBattleItem( Menu_t* menu )
    menu->position.x = 136;
    menu->position.y = 32;
    menu->borderSize.x = 12;
-   menu->borderSize.y = (uint16_t)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderSize.y = (u16)( ( menu->itemCount * 2 ) + 3 );
    menu->borderPadding.x = 1;
    menu->borderPadding.y = 1;
    menu->columnWidth = 10;

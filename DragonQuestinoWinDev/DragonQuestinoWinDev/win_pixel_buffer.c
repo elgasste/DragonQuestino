@@ -1,12 +1,12 @@
 #include "win_pixel_buffer.h"
 #include "win_common.h"
 
-void WinPixelBuffer_Init( WinPixelBuffer_t* buffer, uint32_t w, uint32_t h )
+void WinPixelBuffer_Init( WinPixelBuffer_t* buffer, u32 w, u32 h )
 {
    buffer->w = w;
    buffer->h = h;
-   buffer->memory16 = (uint16_t*)calloc( w * h, sizeof( uint16_t ) );
-   buffer->memory32 = (uint32_t*)calloc( w * h, sizeof( uint32_t ) );
+   buffer->memory16 = (u16*)calloc( w * h, sizeof( u16 ) );
+   buffer->memory32 = (u32*)calloc( w * h, sizeof( u32 ) );
 }
 
 void WinPixelBuffer_CleanUp( WinPixelBuffer_t* buffer )

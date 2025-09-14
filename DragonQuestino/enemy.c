@@ -1,8 +1,8 @@
 #include "enemy.h"
 
-float Enemy_GetFleeFactor( Enemy_t* enemy )
+r32 Enemy_GetFleeFactor( Enemy_t* enemy )
 {
-   float result = 0.0f;
+   r32 result = 0.0f;
 
    switch ( enemy->groupId )
    {

@@ -123,45 +123,45 @@ typedef struct Player_t Player_t;
 
 typedef struct TilePortal_t
 {
-   uint32_t sourceTileIndex;
-   uint32_t destinationTileMapIndex;
-   uint32_t destinationTileIndex;
+   u32 sourceTileIndex;
+   u32 destinationTileMapIndex;
+   u32 destinationTileIndex;
    Direction_t arrivalDirection;
 }
 TilePortal_t;
 
 typedef struct EnemyIndexPool_t
 {
-   uint8_t enemyIndexes[TILE_ENEMY_POOL_ENEMY_INDEX_COUNT];
+   u8 enemyIndexes[TILE_ENEMY_POOL_ENEMY_INDEX_COUNT];
 }
 EnemyIndexPool_t;
 
 typedef struct NonPlayerCharacter_t
 {
-   uint32_t id;
-   uint32_t tileIndex;
+   u32 id;
+   u32 tileIndex;
    ActiveSprite_t sprite;
 
    Bool_t wanders;
    Bool_t isWandering;
    Vector4u32_t wanderBounds;
-   float totalDuration;
-   float duration;
+   r32 totalDuration;
+   r32 duration;
 }
 NonPlayerCharacter_t;
 
 typedef struct Booth_t
 {
-   uint32_t id;
-   uint32_t tileIndex;
+   u32 id;
+   u32 tileIndex;
 }
 Booth_t;
 
 typedef struct ShopItem_t
 {
-   uint32_t id;
+   u32 id;
    AccessoryType_t type;
-   uint16_t price;
+   u16 price;
 }
 ShopItem_t;
 
@@ -171,17 +171,17 @@ typedef struct TileMap_t
    GameFlags_t* gameFlags;
    Player_t* player;
 
-   uint32_t id;
+   u32 id;
 
    Bool_t hasEncounters;
    Bool_t blocksMagic;
    Bool_t isDungeon;
    Bool_t isDark;
    Bool_t torchIsLit;
-   uint32_t glowDiameter;
-   uint32_t targetGlowDiameter;
-   uint32_t glowTileCount;
-   float glowTransitionSeconds;
+   u32 glowDiameter;
+   u32 targetGlowDiameter;
+   u32 glowTileCount;
+   r32 glowTransitionSeconds;
 
    // bits 0-4: texture index (max 32 textures)
    // bit 5: is-passable flag
@@ -189,36 +189,36 @@ typedef struct TileMap_t
    // bits 8-9: encounter rate
    // bits 10-11: damage rate
    // bits 12-15: enemy pool index
-   uint16_t tiles[TILE_COUNT];
-   uint32_t tilesX;
-   uint32_t tilesY;
+   u16 tiles[TILE_COUNT];
+   u32 tilesX;
+   u32 tilesY;
    Vector4i32_t viewport;
    Vector2u16_t viewportScreenPos;
 
    TileTexture_t textures[TILE_TEXTURE_COUNT];
 
    TilePortal_t portals[TILEMAP_MAX_PORTALS];
-   uint32_t portalCount;
+   u32 portalCount;
    TilePortal_t evacPortal;
 
    EnemyIndexPool_t overworldEnemyIndexPools[TILE_OVERWORLD_ENEMY_INDEX_POOLS];
    EnemyIndexPool_t dungeonEnemyIndexPools[TILE_DUNGEON_ENEMY_INDEX_POOLS];
 
    StaticSprite_t staticSprites[TILEMAP_MAX_STATICSPRITES];
-   uint32_t staticSpriteCount;
+   u32 staticSpriteCount;
 
    NonPlayerCharacter_t npcs[TILEMAP_MAX_NPCS];
-   uint32_t npcCount;
+   u32 npcCount;
 
    StaticSprite_t chestSprite;
    StaticSprite_t doorSprite;
 
    Booth_t booths[TILEMAP_MAX_BOOTHS];
-   uint32_t boothCount;
-   uint16_t boothPrice;
+   u32 boothCount;
+   u16 boothPrice;
 
    ShopItem_t shopItems[TILEMAP_MAX_SHOPITEMS];
-   uint32_t shopItemCount;
+   u32 shopItemCount;
    ShopType_t shopType;
 }
 TileMap_t;
@@ -232,25 +232,25 @@ void TileMap_CheckThroneRoomPrincess( TileMap_t* tileMap );
 void TileMap_ResetNpcs( TileMap_t* tileMap );
 void TileMap_Tic( TileMap_t* tileMap );
 void TileMap_ResetViewport( TileMap_t* tileMap );
-void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h );
+void TileMap_ChangeViewportSize( TileMap_t* tileMap, u16 w, u16 h );
 void TileMap_UpdateViewport( TileMap_t* tileMap );
-void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, uint32_t targetDiameter );
+void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, u32 targetDiameter );
 void TileMap_ReduceTargetGlowDiameter( TileMap_t* tileMap );
-float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex );
-TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index );
-uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction );
+r32 TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, u32 tileIndex );
+TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, u32 index );
+u32 TileMap_GetFacingTileIndex( TileMap_t* tileMap, u32 sourceTileIndex, Direction_t direction );
 void TileMap_Draw( TileMap_t* tileMap );
 void TileMap_StopNpc( NonPlayerCharacter_t* npc );
 void TileMap_TicNpcWander( NonPlayerCharacter_t* npc );
-Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, uint32_t tileIndex, uint32_t* boothId );
+Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, u32 tileIndex, u32* boothId );
 
 // game_data.c
 void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type );
 void TileMap_LoadEnemyIndexPools( TileMap_t* tileMap );
-void TileMap_Load( TileMap_t* tileMap, uint32_t id );
+void TileMap_Load( TileMap_t* tileMap, u32 id );
 void TileMap_LoadHiddenStairs( TileMap_t* tileMap );
-uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex );
-uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex );
+u32 TileMap_GetTreasureFlag( u32 tileMapId, u32 tileIndex );
+u32 TileMap_GetDoorFlag( u32 tileMapId, u32 tileIndex );
 
 #if defined( __cplusplus )
 }

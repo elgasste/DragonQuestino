@@ -2,18 +2,18 @@
 #include "random.h"
 #include "math.h"
 
-internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag );
+internal void Game_CollectTreasure( Game_t* game, u32 treasureFlag );
 internal void Game_FoundHiddenStairsCallback( Game_t* game );
 internal void Game_TakeHiddenStairsCallback( Game_t* game );
 internal void Game_TalkToNpc( Game_t* game, NonPlayerCharacter_t* npc );
 
 void Game_Talk( Game_t* game )
 {
-   uint32_t i, boothId;
+   u32 i, boothId;
    Bool_t canTalk = False;
    NonPlayerCharacter_t* npc;
    ActiveSprite_t* playerSprite = &( game->player.sprite );
-   uint32_t facingTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
+   u32 facingTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
 
    if ( TileMap_HasBoothAtIndex( &( game->tileMap ), facingTileIndex, &boothId ) )
    {
@@ -56,7 +56,7 @@ void Game_Talk( Game_t* game )
 
 void Game_Search( Game_t* game )
 {
-   uint32_t treasureFlag;
+   u32 treasureFlag;
    char msg[64];
 
    Dialog_Reset( &( game->dialog ) );
@@ -116,8 +116,8 @@ void Game_Search( Game_t* game )
 
 void Game_OpenDoor( Game_t* game )
 {
-   uint32_t doorTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
-   uint32_t doorFlag = TileMap_GetDoorFlag( game->tileMap.id, doorTileIndex );
+   u32 doorTileIndex = TileMap_GetFacingTileIndex( &( game->tileMap ), game->player.tileIndex, game->player.sprite.direction );
+   u32 doorFlag = TileMap_GetDoorFlag( game->tileMap.id, doorTileIndex );
 
    if ( doorFlag && ( game->gameFlags.doors & doorFlag ) )
    {
@@ -142,9 +142,9 @@ void Game_OpenDoor( Game_t* game )
    }
 }
 
-internal void Game_CollectTreasure( Game_t* game, uint32_t treasureFlag )
+internal void Game_CollectTreasure( Game_t* game, u32 treasureFlag )
 {
-   uint16_t gold = 0, goldCollected;
+   u16 gold = 0, goldCollected;
    Bool_t collected = False;
    char msg[64], itemMsg[24];
 

@@ -54,7 +54,7 @@ void Screen_LoadPalette( Screen_t* screen )
 
 void Screen_LoadTextBitFields( Screen_t* screen )
 {
-   uint32_t i, j;
+   u32 i, j;
 
    for ( i = 0; i < TEXT_TILE_COUNT; i++ ) for ( j = 0; j < TEXT_TILE_SIZE; j++ ) screen->textBitFields[i][j] = 0x00;
    screen->textBitFields[0][1] = 0x78;
@@ -605,26 +605,26 @@ void Screen_LoadTextBitFields( Screen_t* screen )
 
 void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
 {
-   uint32_t i;
-   uint32_t* mem32;
+   u32 i;
+   u32* mem32;
 
    if ( type == (TileTextureType_t)0 )
    {
-      mem32 = (uint32_t*)( tileMap->textures[0].memory );
+      mem32 = (u32*)( tileMap->textures[0].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       for ( i = 40; i < 44; i++ ) mem32[i] = 0x01010101;
       for ( i = 44; i < 48; i++ ) mem32[i] = 0x00000002;
       for ( i = 48; i < 52; i++ ) mem32[i] = 0x01010100;
       for ( i = 52; i < 56; i++ ) mem32[i] = 0x02000201;
       for ( i = 56; i < 60; i++ ) mem32[i] = 0x03030300;
-      mem32 = (uint32_t*)( tileMap->textures[1].memory );
+      mem32 = (u32*)( tileMap->textures[1].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       for ( i = 4; i < 8; i++ ) mem32[i] = 0x01010101;
       for ( i = 8; i < 12; i++ ) mem32[i] = 0x00000002;
       for ( i = 12; i < 16; i++ ) mem32[i] = 0x01010100;
       for ( i = 16; i < 20; i++ ) mem32[i] = 0x02000201;
       for ( i = 20; i < 24; i++ ) mem32[i] = 0x03030300;
-      mem32 = (uint32_t*)( tileMap->textures[2].memory );
+      mem32 = (u32*)( tileMap->textures[2].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x05040404;
       mem32[3] = 0x05040404;
@@ -651,7 +651,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[56] = 0x04040504;
       mem32[58] = 0x05040404;
       mem32[61] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[3].memory );
+      mem32 = (u32*)( tileMap->textures[3].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x05040404;
       mem32[3] = 0x00000000;
@@ -680,7 +680,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[56] = 0x04040504;
       mem32[58] = 0x05040404;
       mem32[61] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[4].memory );
+      mem32 = (u32*)( tileMap->textures[4].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[1] = 0x04040404;
       mem32[2] = 0x00000004;
@@ -712,7 +712,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x00040404;
       mem32[62] = 0x04000000;
       mem32[63] = 0x04040404;
-      mem32 = (uint32_t*)( tileMap->textures[5].memory );
+      mem32 = (u32*)( tileMap->textures[5].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x00000404;
       mem32[1] = 0x04000000;
@@ -750,7 +750,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[56] = 0x04040504;
       mem32[58] = 0x05040404;
       mem32[61] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[6].memory );
+      mem32 = (u32*)( tileMap->textures[6].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x05040404;
       mem32[3] = 0x05040404;
@@ -780,7 +780,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x05040404;
       mem32[60] = 0x00040404;
       mem32[61] = 0x04050000;
-      mem32 = (uint32_t*)( tileMap->textures[7].memory );
+      mem32 = (u32*)( tileMap->textures[7].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x05040404;
       mem32[2] = 0x06060004;
@@ -825,7 +825,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x04050404;
       mem32[62] = 0x06060600;
       mem32[63] = 0x06060606;
-      mem32 = (uint32_t*)( tileMap->textures[8].memory );
+      mem32 = (u32*)( tileMap->textures[8].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06060606;
       mem32[0] = 0x04060606;
       mem32[1] = 0x06000404;
@@ -871,7 +871,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x04060606;
       mem32[61] = 0x00040404;
       mem32[63] = 0x04040404;
-      mem32 = (uint32_t*)( tileMap->textures[9].memory );
+      mem32 = (u32*)( tileMap->textures[9].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06000404;
       mem32[0] = 0x06060606;
       mem32[1] = 0x00000406;
@@ -928,7 +928,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x06000606;
       mem32[62] = 0x04060606;
       mem32[63] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[10].memory );
+      mem32 = (u32*)( tileMap->textures[10].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06060606;
       mem32[1] = 0x04040406;
       mem32[2] = 0x06000404;
@@ -978,7 +978,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x06060004;
       mem32[60] = 0x00040404;
       mem32[62] = 0x06000404;
-      mem32 = (uint32_t*)( tileMap->textures[11].memory );
+      mem32 = (u32*)( tileMap->textures[11].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06060606;
       mem32[0] = 0x04060606;
       mem32[1] = 0x04040404;
@@ -1033,7 +1033,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x06060004;
       mem32[61] = 0x04040606;
       mem32[62] = 0x06000404;
-      mem32 = (uint32_t*)( tileMap->textures[12].memory );
+      mem32 = (u32*)( tileMap->textures[12].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06060004;
       mem32[0] = 0x04040606;
       mem32[1] = 0x06060600;
@@ -1077,7 +1077,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x04040406;
       mem32[62] = 0x04040606;
       mem32[63] = 0x00050404;
-      mem32 = (uint32_t*)( tileMap->textures[13].memory );
+      mem32 = (u32*)( tileMap->textures[13].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x04040406;
       mem32[1] = 0x00040404;
@@ -1131,7 +1131,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x00040404;
       for ( i = 59; i < 61; i++ ) mem32[i] = 0x06060606;
       mem32[63] = 0x06060600;
-      mem32 = (uint32_t*)( tileMap->textures[14].memory );
+      mem32 = (u32*)( tileMap->textures[14].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04060606;
       mem32[0] = 0x04040606;
       mem32[1] = 0x06060600;
@@ -1186,7 +1186,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x06000404;
       mem32[60] = 0x06000404;
       mem32[62] = 0x06000404;
-      mem32 = (uint32_t*)( tileMap->textures[15].memory );
+      mem32 = (u32*)( tileMap->textures[15].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06060004;
       mem32[0] = 0x04040404;
       mem32[1] = 0x06060606;
@@ -1230,7 +1230,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x04040404;
       mem32[61] = 0x00040404;
       mem32[62] = 0x06060606;
-      mem32 = (uint32_t*)( tileMap->textures[16].memory );
+      mem32 = (u32*)( tileMap->textures[16].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06060004;
       mem32[0] = 0x04040406;
       mem32[1] = 0x06060600;
@@ -1278,7 +1278,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x04040606;
       mem32[61] = 0x06000404;
       mem32[62] = 0x06060606;
-      mem32 = (uint32_t*)( tileMap->textures[17].memory );
+      mem32 = (u32*)( tileMap->textures[17].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06060004;
       mem32[0] = 0x04040406;
       mem32[1] = 0x06060600;
@@ -1326,7 +1326,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x04040606;
       mem32[61] = 0x06000404;
       mem32[62] = 0x06060606;
-      mem32 = (uint32_t*)( tileMap->textures[18].memory );
+      mem32 = (u32*)( tileMap->textures[18].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04060606;
       mem32[0] = 0x04040406;
       mem32[1] = 0x06060004;
@@ -1383,7 +1383,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x06000404;
       mem32[62] = 0x06060606;
       mem32[63] = 0x04040406;
-      mem32 = (uint32_t*)( tileMap->textures[19].memory );
+      mem32 = (u32*)( tileMap->textures[19].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x06060004;
       mem32[0] = 0x06060600;
       mem32[1] = 0x04040406;
@@ -1435,7 +1435,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x04040606;
       mem32[62] = 0x06000404;
       mem32[63] = 0x06060606;
-      mem32 = (uint32_t*)( tileMap->textures[20].memory );
+      mem32 = (u32*)( tileMap->textures[20].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x06060600;
       mem32[1] = 0x06000606;
@@ -1465,7 +1465,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[56] = 0x04040504;
       mem32[58] = 0x05040404;
       mem32[61] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[21].memory );
+      mem32 = (u32*)( tileMap->textures[21].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[1] = 0x00040404;
       mem32[2] = 0x04040606;
@@ -1491,7 +1491,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[56] = 0x04040504;
       mem32[58] = 0x05040404;
       mem32[61] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[22].memory );
+      mem32 = (u32*)( tileMap->textures[22].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x05040404;
       mem32[3] = 0x04060004;
@@ -1518,7 +1518,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[56] = 0x04040504;
       mem32[58] = 0x05040404;
       mem32[61] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[23].memory );
+      mem32 = (u32*)( tileMap->textures[23].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x06060004;
       mem32[1] = 0x05040606;
@@ -1545,7 +1545,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[56] = 0x04040504;
       mem32[58] = 0x05040404;
       mem32[61] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[24].memory );
+      mem32 = (u32*)( tileMap->textures[24].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040404;
       mem32[0] = 0x05040404;
       mem32[2] = 0x00040404;
@@ -1573,9 +1573,9 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[56] = 0x04040504;
       mem32[58] = 0x05040404;
       mem32[61] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[25].memory );
+      mem32 = (u32*)( tileMap->textures[25].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[26].memory );
+      mem32 = (u32*)( tileMap->textures[26].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x04040606;
       mem32[0] = 0x06060606;
       mem32[1] = 0x04040406;
@@ -1628,20 +1628,20 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x06000606;
       mem32[62] = 0x04060606;
       mem32[63] = 0x04050404;
-      mem32 = (uint32_t*)( tileMap->textures[27].memory );
+      mem32 = (u32*)( tileMap->textures[27].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[28].memory );
+      mem32 = (u32*)( tileMap->textures[28].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[29].memory );
+      mem32 = (u32*)( tileMap->textures[29].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[30].memory );
+      mem32 = (u32*)( tileMap->textures[30].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[31].memory );
+      mem32 = (u32*)( tileMap->textures[31].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
    }
    else if ( type == (TileTextureType_t)1 )
    {
-      mem32 = (uint32_t*)( tileMap->textures[0].memory );
+      mem32 = (u32*)( tileMap->textures[0].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
       mem32[1] = 0x07070807;
       mem32[3] = 0x07070807;
@@ -1663,7 +1663,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[50] = 0x07070807;
       mem32[56] = 0x08070707;
       mem32[58] = 0x08070707;
-      mem32 = (uint32_t*)( tileMap->textures[1].memory );
+      mem32 = (u32*)( tileMap->textures[1].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x08080808;
       mem32[0] = 0x00070707;
       mem32[1] = 0x07070708;
@@ -1723,7 +1723,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x07070000;
       mem32[62] = 0x00000007;
       mem32[63] = 0x07070000;
-      mem32 = (uint32_t*)( tileMap->textures[2].memory );
+      mem32 = (u32*)( tileMap->textures[2].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
       mem32[3] = 0x07070007;
       mem32[4] = 0x07000707;
@@ -1767,7 +1767,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[54] = 0x01000100;
       mem32[55] = 0x07000000;
       mem32[58] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[3].memory );
+      mem32 = (u32*)( tileMap->textures[3].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x01010101;
       mem32[5] = 0x01010001;
       mem32[7] = 0x01010001;
@@ -1793,7 +1793,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x01000101;
       mem32[61] = 0x01010001;
       mem32[63] = 0x01010001;
-      mem32 = (uint32_t*)( tileMap->textures[4].memory );
+      mem32 = (u32*)( tileMap->textures[4].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[0] = 0x07000000;
       mem32[1] = 0x00000007;
@@ -1835,7 +1835,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x08080000;
       mem32[61] = 0x00080800;
       mem32[63] = 0x00080800;
-      mem32 = (uint32_t*)( tileMap->textures[5].memory );
+      mem32 = (u32*)( tileMap->textures[5].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
       mem32[1] = 0x07040007;
       mem32[3] = 0x07070407;
@@ -1895,7 +1895,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x04000000;
       mem32[62] = 0x04040000;
       mem32[63] = 0x07070005;
-      mem32 = (uint32_t*)( tileMap->textures[6].memory );
+      mem32 = (u32*)( tileMap->textures[6].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x05050505;
       mem32[0] = 0x05040000;
       mem32[1] = 0x05050405;
@@ -1934,7 +1934,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x00040000;
       for ( i = 61; i < 63; i++ ) mem32[i] = 0x04000004;
       mem32[63] = 0x00000400;
-      mem32 = (uint32_t*)( tileMap->textures[7].memory );
+      mem32 = (u32*)( tileMap->textures[7].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x09090909;
       mem32[1] = 0x09090400;
       mem32[3] = 0x09090400;
@@ -1973,9 +1973,9 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[59] = 0x04040404;
       for ( i = 60; i < 63; i++ ) mem32[i] = 0x00000000;
       mem32[63] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[8].memory );
+      mem32 = (u32*)( tileMap->textures[8].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[9].memory );
+      mem32 = (u32*)( tileMap->textures[9].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070101;
       mem32[1] = 0x00000A0A;
       mem32[3] = 0x00000A0A;
@@ -2033,7 +2033,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x000A0A07;
       mem32[62] = 0x07010100;
       mem32[63] = 0x000A0A07;
-      mem32 = (uint32_t*)( tileMap->textures[10].memory );
+      mem32 = (u32*)( tileMap->textures[10].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x02020202;
       for ( i = 0; i < 4; i++ ) mem32[i] = 0x00000000;
       mem32[4] = 0x02020200;
@@ -2068,7 +2068,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[59] = 0x00020202;
       for ( i = 60; i < 63; i++ ) mem32[i] = 0x00000000;
       mem32[63] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[11].memory );
+      mem32 = (u32*)( tileMap->textures[11].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x05050404;
       for ( i = 0; i < 4; i++ ) mem32[i] = 0x05050505;
       mem32[4] = 0x05050504;
@@ -2112,7 +2112,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x04000000;
       mem32[62] = 0x00000004;
       mem32[63] = 0x04000000;
-      mem32 = (uint32_t*)( tileMap->textures[12].memory );
+      mem32 = (u32*)( tileMap->textures[12].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[6] = 0x06060A0A;
       mem32[10] = 0x060A060A;
@@ -2137,7 +2137,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[53] = 0x0A0A0A06;
       for ( i = 55; i < 57; i++ ) mem32[i] = 0x060A0A0A;
       mem32[57] = 0x0A0A060A;
-      mem32 = (uint32_t*)( tileMap->textures[13].memory );
+      mem32 = (u32*)( tileMap->textures[13].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x05050505;
       mem32[0] = 0x0A0A0A0A;
       for ( i = 1; i < 3; i++ ) mem32[i] = 0x00000000;
@@ -2175,7 +2175,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[60] = 0x0A0A0006;
       for ( i = 61; i < 63; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[63] = 0x06000A0A;
-      mem32 = (uint32_t*)( tileMap->textures[14].memory );
+      mem32 = (u32*)( tileMap->textures[14].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x0A050506;
       mem32[4] = 0x0A050605;
@@ -2211,7 +2211,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[55] = 0x060A0A0A;
       mem32[56] = 0x06050605;
       mem32[60] = 0x0A050506;
-      mem32 = (uint32_t*)( tileMap->textures[15].memory );
+      mem32 = (u32*)( tileMap->textures[15].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x06050506;
       mem32[1] = 0x06050505;
@@ -2243,7 +2243,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[53] = 0x0A0A0A06;
       for ( i = 55; i < 57; i++ ) mem32[i] = 0x060A0A0A;
       mem32[57] = 0x0A0A060A;
-      mem32 = (uint32_t*)( tileMap->textures[16].memory );
+      mem32 = (u32*)( tileMap->textures[16].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[3] = 0x0605050A;
       mem32[7] = 0x05060506;
@@ -2279,7 +2279,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x0A060A0A;
       mem32[59] = 0x0506050A;
       mem32[63] = 0x0605050A;
-      mem32 = (uint32_t*)( tileMap->textures[17].memory );
+      mem32 = (u32*)( tileMap->textures[17].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[6] = 0x06060A0A;
       mem32[10] = 0x060A060A;
@@ -2312,7 +2312,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x05050606;
       mem32[62] = 0x05050506;
       mem32[63] = 0x06050506;
-      mem32 = (uint32_t*)( tileMap->textures[18].memory );
+      mem32 = (u32*)( tileMap->textures[18].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x05060505;
       mem32[1] = 0x06050606;
@@ -2353,7 +2353,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[55] = 0x060A0A0A;
       mem32[56] = 0x06050605;
       mem32[60] = 0x0A050506;
-      mem32 = (uint32_t*)( tileMap->textures[19].memory );
+      mem32 = (u32*)( tileMap->textures[19].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x06050506;
       mem32[1] = 0x06050505;
@@ -2398,7 +2398,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x0A060A0A;
       mem32[59] = 0x0506050A;
       mem32[63] = 0x0605050A;
-      mem32 = (uint32_t*)( tileMap->textures[20].memory );
+      mem32 = (u32*)( tileMap->textures[20].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[3] = 0x0605050A;
       mem32[7] = 0x05060506;
@@ -2439,7 +2439,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x05050606;
       mem32[62] = 0x06060506;
       mem32[63] = 0x05050605;
-      mem32 = (uint32_t*)( tileMap->textures[21].memory );
+      mem32 = (u32*)( tileMap->textures[21].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x0A050506;
       mem32[4] = 0x0A050605;
@@ -2484,7 +2484,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x05050606;
       mem32[62] = 0x05050506;
       mem32[63] = 0x06050506;
-      mem32 = (uint32_t*)( tileMap->textures[22].memory );
+      mem32 = (u32*)( tileMap->textures[22].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x05060505;
       mem32[1] = 0x06050606;
@@ -2532,7 +2532,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[59] = 0x0506050A;
       mem32[60] = 0x0A050506;
       mem32[63] = 0x0605050A;
-      mem32 = (uint32_t*)( tileMap->textures[23].memory );
+      mem32 = (u32*)( tileMap->textures[23].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x06050506;
       mem32[1] = 0x06050505;
@@ -2582,7 +2582,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x05050606;
       mem32[62] = 0x06060506;
       mem32[63] = 0x05050605;
-      mem32 = (uint32_t*)( tileMap->textures[24].memory );
+      mem32 = (u32*)( tileMap->textures[24].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x0A050506;
       mem32[3] = 0x0605050A;
@@ -2629,7 +2629,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x06050606;
       mem32[62] = 0x06060505;
       mem32[63] = 0x05050605;
-      mem32 = (uint32_t*)( tileMap->textures[25].memory );
+      mem32 = (u32*)( tileMap->textures[25].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x05060505;
       mem32[1] = 0x06050606;
@@ -2679,7 +2679,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x05050606;
       mem32[62] = 0x05050506;
       mem32[63] = 0x06050506;
-      mem32 = (uint32_t*)( tileMap->textures[26].memory );
+      mem32 = (u32*)( tileMap->textures[26].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x05060505;
       mem32[1] = 0x06050606;
@@ -2730,7 +2730,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x06050606;
       mem32[62] = 0x06060505;
       mem32[63] = 0x05050605;
-      mem32 = (uint32_t*)( tileMap->textures[27].memory );
+      mem32 = (u32*)( tileMap->textures[27].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x06050506;
       mem32[1] = 0x06050505;
@@ -2770,7 +2770,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x05050606;
       mem32[62] = 0x05050506;
       mem32[63] = 0x06050506;
-      mem32 = (uint32_t*)( tileMap->textures[28].memory );
+      mem32 = (u32*)( tileMap->textures[28].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
       mem32[0] = 0x0A050506;
       mem32[3] = 0x0605050A;
@@ -2814,18 +2814,18 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[59] = 0x0506050A;
       mem32[60] = 0x0A050506;
       mem32[63] = 0x0605050A;
-      mem32 = (uint32_t*)( tileMap->textures[29].memory );
+      mem32 = (u32*)( tileMap->textures[29].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[30].memory );
+      mem32 = (u32*)( tileMap->textures[30].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[31].memory );
+      mem32 = (u32*)( tileMap->textures[31].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
    }
    else if ( type == (TileTextureType_t)2 )
    {
-      mem32 = (uint32_t*)( tileMap->textures[0].memory );
+      mem32 = (u32*)( tileMap->textures[0].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[1].memory );
+      mem32 = (u32*)( tileMap->textures[1].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[32] = 0x06060000;
       mem32[33] = 0x06060606;
@@ -2858,7 +2858,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x06000000;
       mem32[62] = 0x00000606;
       mem32[63] = 0x00000006;
-      mem32 = (uint32_t*)( tileMap->textures[2].memory );
+      mem32 = (u32*)( tileMap->textures[2].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[32] = 0x06000000;
       mem32[33] = 0x06060000;
@@ -2879,7 +2879,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x00000606;
       mem32[62] = 0x06000000;
       mem32[63] = 0x00000006;
-      mem32 = (uint32_t*)( tileMap->textures[3].memory );
+      mem32 = (u32*)( tileMap->textures[3].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[41] = 0x00000600;
       mem32[45] = 0x00060606;
@@ -2892,7 +2892,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x00000606;
       mem32[60] = 0x00060606;
       mem32[62] = 0x00000006;
-      mem32 = (uint32_t*)( tileMap->textures[4].memory );
+      mem32 = (u32*)( tileMap->textures[4].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[34] = 0x00000006;
       mem32[37] = 0x06000006;
@@ -2918,7 +2918,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x00060606;
       mem32[62] = 0x06060600;
       mem32[63] = 0x00000606;
-      mem32 = (uint32_t*)( tileMap->textures[5].memory );
+      mem32 = (u32*)( tileMap->textures[5].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[44] = 0x06000000;
       mem32[46] = 0x00000600;
@@ -2934,7 +2934,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[61] = 0x00000606;
       mem32[62] = 0x06000000;
       mem32[63] = 0x00000006;
-      mem32 = (uint32_t*)( tileMap->textures[6].memory );
+      mem32 = (u32*)( tileMap->textures[6].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[32] = 0x00060600;
       mem32[36] = 0x06060600;
@@ -2953,7 +2953,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[58] = 0x00060600;
       mem32[60] = 0x06060000;
       mem32[62] = 0x00060600;
-      mem32 = (uint32_t*)( tileMap->textures[7].memory );
+      mem32 = (u32*)( tileMap->textures[7].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[0] = 0x00060606;
       mem32[1] = 0x06000000;
@@ -2983,7 +2983,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[27] = 0x00000006;
       mem32[29] = 0x06060606;
       mem32[30] = 0x00060606;
-      mem32 = (uint32_t*)( tileMap->textures[8].memory );
+      mem32 = (u32*)( tileMap->textures[8].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[1] = 0x00000606;
       mem32[2] = 0x06000000;
@@ -3005,7 +3005,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[22] = 0x06060000;
       mem32[26] = 0x00060600;
       mem32[30] = 0x00000006;
-      mem32 = (uint32_t*)( tileMap->textures[9].memory );
+      mem32 = (u32*)( tileMap->textures[9].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[0] = 0x00060600;
       mem32[1] = 0x06000000;
@@ -3024,7 +3024,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[25] = 0x00060606;
       mem32[28] = 0x06000000;
       mem32[29] = 0x00000606;
-      mem32 = (uint32_t*)( tileMap->textures[10].memory );
+      mem32 = (u32*)( tileMap->textures[10].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[0] = 0x00000606;
       mem32[1] = 0x00060606;
@@ -3048,7 +3048,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       for ( i = 25; i < 27; i++ ) mem32[i] = 0x06060606;
       mem32[29] = 0x06060600;
       mem32[30] = 0x00000606;
-      mem32 = (uint32_t*)( tileMap->textures[11].memory );
+      mem32 = (u32*)( tileMap->textures[11].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[1] = 0x00000606;
       mem32[2] = 0x06000000;
@@ -3074,7 +3074,7 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[27] = 0x00000606;
       mem32[29] = 0x00000606;
       mem32[31] = 0x00000006;
-      mem32 = (uint32_t*)( tileMap->textures[12].memory );
+      mem32 = (u32*)( tileMap->textures[12].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
       mem32[0] = 0x06060000;
       mem32[2] = 0x00060600;
@@ -3092,53 +3092,53 @@ void TileMap_LoadTextures( TileMap_t* tileMap, TileTextureType_t type )
       mem32[24] = 0x06000000;
       mem32[25] = 0x06060606;
       mem32[29] = 0x00060606;
-      mem32 = (uint32_t*)( tileMap->textures[13].memory );
+      mem32 = (u32*)( tileMap->textures[13].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[14].memory );
+      mem32 = (u32*)( tileMap->textures[14].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[15].memory );
+      mem32 = (u32*)( tileMap->textures[15].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[16].memory );
+      mem32 = (u32*)( tileMap->textures[16].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[17].memory );
+      mem32 = (u32*)( tileMap->textures[17].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[18].memory );
+      mem32 = (u32*)( tileMap->textures[18].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[19].memory );
+      mem32 = (u32*)( tileMap->textures[19].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[20].memory );
+      mem32 = (u32*)( tileMap->textures[20].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[21].memory );
+      mem32 = (u32*)( tileMap->textures[21].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[22].memory );
+      mem32 = (u32*)( tileMap->textures[22].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[23].memory );
+      mem32 = (u32*)( tileMap->textures[23].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[24].memory );
+      mem32 = (u32*)( tileMap->textures[24].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[25].memory );
+      mem32 = (u32*)( tileMap->textures[25].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[26].memory );
+      mem32 = (u32*)( tileMap->textures[26].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[27].memory );
+      mem32 = (u32*)( tileMap->textures[27].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[28].memory );
+      mem32 = (u32*)( tileMap->textures[28].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[29].memory );
+      mem32 = (u32*)( tileMap->textures[29].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[30].memory );
+      mem32 = (u32*)( tileMap->textures[30].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
-      mem32 = (uint32_t*)( tileMap->textures[31].memory );
+      mem32 = (u32*)( tileMap->textures[31].memory );
       for ( i = 0; i < 64; i++ ) mem32[i] = 0x00000000;
    }
 }
 
 void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
 {
-   uint32_t i;
-   uint32_t* mem32;
+   u32 i;
+   u32* mem32;
 
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[0].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[0].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    for ( i = 0; i < 4; i++ ) mem32[i] = 0x00000000;
    mem32[4] = 0x0A0A0A00;
@@ -3156,7 +3156,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[52] = 0x0A0A0A00;
    mem32[56] = 0x0A0A0A00;
    mem32[60] = 0x0A0A0A00;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[1].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[1].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    for ( i = 0; i < 4; i++ ) mem32[i] = 0x00000000;
    mem32[35] = 0x0A0A0A06;
@@ -3180,7 +3180,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[59] = 0x06060605;
    mem32[62] = 0x06050A0A;
    mem32[63] = 0x0605050A;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[2].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[2].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    for ( i = 0; i < 4; i++ ) mem32[i] = 0x00000000;
    mem32[40] = 0x0A0A0A06;
@@ -3192,10 +3192,10 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[57] = 0x0A060606;
    mem32[60] = 0x050A0A06;
    mem32[61] = 0x0A0A0A05;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[3].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[3].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    for ( i = 0; i < 4; i++ ) mem32[i] = 0x00000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[4].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[4].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    for ( i = 0; i < 4; i++ ) mem32[i] = 0x00000000;
    mem32[35] = 0x0A0A0A06;
@@ -3213,7 +3213,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[59] = 0x06060605;
    mem32[62] = 0x06050A0A;
    mem32[63] = 0x0605050A;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[5].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[5].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    for ( i = 0; i < 4; i++ ) mem32[i] = 0x00000000;
    mem32[7] = 0x000A0A0A;
@@ -3241,7 +3241,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[57] = 0x0A060505;
    mem32[59] = 0x000A0A0A;
    mem32[63] = 0x000A0A0A;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[6].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[6].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[0] = 0x0A0A0A00;
    mem32[4] = 0x0A0A0A00;
@@ -3259,7 +3259,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[52] = 0x0A0A0A00;
    mem32[56] = 0x0A0A0A00;
    mem32[60] = 0x0A0A0A00;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[7].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[7].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[1] = 0x00000A0A;
    mem32[2] = 0x0A000000;
@@ -3320,9 +3320,9 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[61] = 0x00010000;
    mem32[62] = 0x00000000;
    mem32[63] = 0x00070007;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[8].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[8].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[9].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[9].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[18] = 0x060A0A0A;
    mem32[19] = 0x06060A06;
@@ -3330,7 +3330,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[23] = 0x06060606;
    mem32[26] = 0x050A0A0A;
    mem32[27] = 0x0A0A0605;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[10].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[10].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[0] = 0x060A0A0A;
    mem32[1] = 0x0A0A0A06;
@@ -3355,7 +3355,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[25] = 0x05050A0A;
    mem32[26] = 0x0A060A05;
    mem32[27] = 0x0A060505;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[11].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[11].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[51] = 0x0A000000;
    mem32[54] = 0x000A0A0A;
@@ -3364,7 +3364,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[59] = 0x00050506;
    mem32[62] = 0x06000A0A;
    mem32[63] = 0x05000505;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[12].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[12].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[3] = 0x000A0A0A;
    mem32[7] = 0x000A0A0A;
@@ -3382,7 +3382,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[55] = 0x000A0A0A;
    mem32[59] = 0x000A0A0A;
    mem32[63] = 0x000A0A0A;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[13].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[13].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[0] = 0x0A0A0A00;
    for ( i = 1; i < 3; i++ ) mem32[i] = 0x0A0A0A0A;
@@ -3434,7 +3434,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[61] = 0x00070100;
    mem32[62] = 0x00000101;
    mem32[63] = 0x00010100;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[14].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[14].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x08080808;
    mem32[0] = 0x08000702;
    mem32[1] = 0x08000008;
@@ -3495,7 +3495,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[58] = 0x08080800;
    mem32[59] = 0x08080700;
    mem32[63] = 0x08080800;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[15].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[15].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[0] = 0x0A0A0A00;
    mem32[4] = 0x0A0A0000;
@@ -3534,7 +3534,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[61] = 0x07000000;
    mem32[62] = 0x07070707;
    mem32[63] = 0x07070707;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[16].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[16].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    for ( i = 37; i < 39; i++ ) mem32[i] = 0x0A0A0A01;
    mem32[41] = 0x0A0A0101;
@@ -3552,7 +3552,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[55] = 0x00010707;
    for ( i = 56; i < 63; i++ ) mem32[i] = 0x07070707;
    mem32[63] = 0x07070707;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[17].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[17].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[6] = 0x0A0A0000;
    mem32[9] = 0x000A0A0A;
@@ -3600,7 +3600,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[61] = 0x00000007;
    mem32[62] = 0x00000000;
    mem32[63] = 0x00000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[18].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[18].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x0A0A0A0A;
    mem32[2] = 0x0606000A;
    mem32[3] = 0x06000606;
@@ -3657,7 +3657,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[61] = 0x05000500;
    mem32[62] = 0x00000505;
    mem32[63] = 0x05000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[19].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[19].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x000A0A0A;
    mem32[0] = 0x0A0A0A00;
    for ( i = 1; i < 3; i++ ) mem32[i] = 0x0A0A0A0A;
@@ -3706,7 +3706,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[61] = 0x00050000;
    mem32[62] = 0x05000505;
    mem32[63] = 0x000A0000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[20].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[20].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[0] = 0x00000000;
    mem32[1] = 0x00000700;
@@ -3748,7 +3748,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[52] = 0x07070700;
    mem32[56] = 0x07070700;
    mem32[60] = 0x07070700;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[21].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[21].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    for ( i = 0; i < 3; i++ ) mem32[i] = 0x08080808;
    mem32[3] = 0x08080807;
@@ -3768,7 +3768,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[20] = 0x07070008;
    mem32[23] = 0x00070707;
    mem32[24] = 0x07070700;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[22].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[22].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[0] = 0x00080008;
    mem32[1] = 0x07000800;
@@ -3782,9 +3782,9 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[17] = 0x07070000;
    mem32[20] = 0x00000807;
    mem32[21] = 0x07070700;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[23].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[23].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[24].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[24].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[2] = 0x00000007;
    mem32[3] = 0x00080800;
@@ -3796,7 +3796,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[19] = 0x08070808;
    mem32[23] = 0x02080808;
    mem32[27] = 0x00020707;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[25].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[25].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[0] = 0x07000808;
    mem32[1] = 0x00000707;
@@ -3830,7 +3830,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[29] = 0x00000007;
    mem32[30] = 0x00000002;
    mem32[31] = 0x02000007;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[26].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[26].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x08080807;
    mem32[0] = 0x00080000;
    for ( i = 1; i < 4; i++ ) mem32[i] = 0x00000000;
@@ -3884,7 +3884,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    for ( i = 60; i < 62; i++ ) mem32[i] = 0x07070707;
    mem32[62] = 0x07000000;
    mem32[63] = 0x00070000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[27].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[27].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070700;
    mem32[1] = 0x07070707;
    mem32[2] = 0x00050507;
@@ -3943,7 +3943,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[61] = 0x00070707;
    mem32[62] = 0x00000000;
    mem32[63] = 0x04000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[28].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[28].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[8] = 0x04050500;
    mem32[12] = 0x04040505;
@@ -3972,7 +3972,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[57] = 0x00000000;
    mem32[60] = 0x00000004;
    mem32[61] = 0x07000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[29].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[29].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[38] = 0x05040707;
    mem32[39] = 0x07070405;
@@ -3988,7 +3988,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[59] = 0x00000400;
    mem32[62] = 0x00070707;
    mem32[63] = 0x07000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[30].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[30].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[3] = 0x00070707;
    mem32[7] = 0x00070707;
@@ -4006,7 +4006,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[55] = 0x00070707;
    mem32[59] = 0x00070707;
    mem32[63] = 0x00070707;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[31].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[31].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[0] = 0x07070700;
    mem32[4] = 0x07070700;
@@ -4024,7 +4024,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[52] = 0x07070700;
    mem32[56] = 0x07070700;
    mem32[60] = 0x07070700;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[32].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[32].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[0] = 0x00000000;
    mem32[1] = 0x07070000;
@@ -4042,7 +4042,7 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[59] = 0x00000400;
    mem32[62] = 0x00070707;
    mem32[63] = 0x07000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[33].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[33].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[0] = 0x07070700;
    mem32[4] = 0x07070700;
@@ -4061,11 +4061,11 @@ void Screen_LoadBattleBackgroundTileTextures( Screen_t* screen )
    mem32[56] = 0x07070700;
    for ( i = 60; i < 63; i++ ) mem32[i] = 0x00000000;
    mem32[63] = 0x00000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[34].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[34].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    for ( i = 60; i < 63; i++ ) mem32[i] = 0x00000000;
    mem32[63] = 0x00000000;
-   mem32 = (uint32_t*)( screen->battleBackgroundTileTextures[35].memory );
+   mem32 = (u32*)( screen->battleBackgroundTileTextures[35].memory );
    for ( i = 0; i < 64; i++ ) mem32[i] = 0x07070707;
    mem32[3] = 0x00070707;
    mem32[7] = 0x00070707;
@@ -4195,12 +4195,12 @@ void TileMap_LoadEnemyIndexPools( TileMap_t* tileMap )
    tileMap->dungeonEnemyIndexPools[6].enemyIndexes[4] = 37;
 }
 
-void Enemy_Load( Enemy_t* enemy, uint32_t index )
+void Enemy_Load( Enemy_t* enemy, u32 index )
 {
-   uint32_t i;
-   uint32_t* mem32;
+   u32 i;
+   u32* mem32;
 
-   for ( i = 0; i < ENEMY_TILE_TEXTURE_COUNT; i++ ) { { mem32 = (uint32_t*)( enemy->tileTextures[i] ); memset( mem32, 0x0B0B0B0B, sizeof( uint8_t ) * ENEMY_TILE_TEXTURE_SIZE_BYTES ); } }
+   for ( i = 0; i < ENEMY_TILE_TEXTURE_COUNT; i++ ) { { mem32 = (u32*)( enemy->tileTextures[i] ); memset( mem32, 0x0B0B0B0B, sizeof( u8 ) * ENEMY_TILE_TEXTURE_SIZE_BYTES ); } }
    for ( i = 0; i < 120; i++ ) {{ enemy->tileTextureIndexes[i] = -1; }}
 
    switch( index )
@@ -4229,7 +4229,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[84] = 5;
       enemy->tileTextureIndexes[85] = 6;
       enemy->tileTextureIndexes[86] = 7;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[1] = 0x100B0B0B;
       mem32[3] = 0x100B0B0B;
       mem32[5] = 0x100B0B0B;
@@ -4240,13 +4240,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101010;
       mem32[14] = 0x06060B0B;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[8] = 0x0B0B0B10;
       mem32[10] = 0x0B0B1010;
       mem32[12] = 0x10101010;
       mem32[14] = 0x10101010;
       mem32[15] = 0x0B0B0B10;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x1006060B;
       mem32[1] = 0x10101010;
       mem32[2] = 0x10100610;
@@ -4263,7 +4263,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11111111;
       mem32[14] = 0x100B0B0B;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x10101010;
       mem32[1] = 0x0B0B1010;
       mem32[2] = 0x10100610;
@@ -4280,19 +4280,19 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001010;
       mem32[14] = 0x10101010;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[10] = 0x0B0B0B00;
       mem32[12] = 0x0B000000;
       mem32[14] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[1] = 0x00000000;
       mem32[3] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
       mem32[3] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x0B0B0000;
       break;
    case 1:
@@ -4319,7 +4319,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[84] = 5;
       enemy->tileTextureIndexes[85] = 6;
       enemy->tileTextureIndexes[86] = 7;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[1] = 0x120B0B0B;
       mem32[3] = 0x090B0B0B;
       mem32[5] = 0x090B0B0B;
@@ -4330,13 +4330,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090909;
       mem32[14] = 0x06060B0B;
       mem32[15] = 0x09090909;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[8] = 0x0B0B0B09;
       mem32[10] = 0x0B0B0909;
       mem32[12] = 0x09090909;
       mem32[14] = 0x09090909;
       mem32[15] = 0x0B0B0B09;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x0906060B;
       mem32[1] = 0x09090909;
       mem32[2] = 0x09090609;
@@ -4353,7 +4353,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x090B0B0B;
       mem32[15] = 0x09090909;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x09090909;
       mem32[1] = 0x0B0B0909;
       mem32[2] = 0x09090609;
@@ -4370,19 +4370,19 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000909;
       mem32[14] = 0x09090909;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[10] = 0x0B0B0B00;
       mem32[12] = 0x0B000000;
       mem32[14] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[1] = 0x00000000;
       mem32[3] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
       mem32[3] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x0B0B0000;
       break;
    case 2:
@@ -4416,13 +4416,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[94] = 12;
       enemy->tileTextureIndexes[95] = 13;
       enemy->tileTextureIndexes[96] = 14;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[7] = 0x13130B0B;
       mem32[12] = 0x13130B0B;
       mem32[13] = 0x0B0B1313;
       mem32[14] = 0x1313130B;
       mem32[15] = 0x0B131313;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[6] = 0x0B0B0B13;
       mem32[7] = 0x130B0B0B;
       mem32[8] = 0x130B1313;
@@ -4433,13 +4433,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x13131313;
       mem32[14] = 0x13131313;
       mem32[15] = 0x13131313;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[6] = 0x0B0B1313;
       mem32[12] = 0x13130B0B;
       mem32[13] = 0x0B0B1313;
       mem32[14] = 0x1313130B;
       mem32[15] = 0x0B131313;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x13131313;
       mem32[1] = 0x13131313;
       mem32[2] = 0x13130B13;
@@ -4454,7 +4454,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x130B0B0B;
       mem32[14] = 0x130B0B0B;
       mem32[15] = 0x13130B13;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x13061313;
       mem32[1] = 0x13130613;
       mem32[2] = 0x13061313;
@@ -4471,7 +4471,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x13131111;
       mem32[14] = 0x13131313;
       mem32[15] = 0x13131313;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x13131313;
       mem32[1] = 0x13131313;
       mem32[2] = 0x13131313;
@@ -4486,12 +4486,12 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B13;
       mem32[14] = 0x130B1313;
       mem32[15] = 0x0B0B0B13;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x130B0B0B;
       mem32[1] = 0x0B131313;
       mem32[3] = 0x0B0B1313;
       mem32[5] = 0x0B13130B;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x13131313;
       mem32[1] = 0x13131313;
       mem32[2] = 0x130B0B0B;
@@ -4499,26 +4499,26 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x0B0B0B13;
       mem32[7] = 0x130B1313;
       mem32[9] = 0x1313130B;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x1313130B;
       mem32[1] = 0x0B0B0B13;
       mem32[2] = 0x13130B0B;
       mem32[4] = 0x0B131313;
       mem32[6] = 0x0B130B13;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[15] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[12] = 0x0000000B;
       mem32[13] = 0x0B000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[14] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[1] = 0x0000000B;
       mem32[3] = 0x0000000B;
       mem32[5] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -4527,7 +4527,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x00000000;
       mem32[6] = 0x0000000B;
       mem32[7] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x0B000000;
       mem32[2] = 0x0B000000;
       mem32[4] = 0x0B0B0B00;
@@ -4568,7 +4568,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[93] = 17;
       enemy->tileTextureIndexes[94] = 18;
       enemy->tileTextureIndexes[95] = 19;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[7] = 0x15150B0B;
       mem32[9] = 0x1515150B;
       mem32[11] = 0x15151515;
@@ -4576,7 +4576,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x15151515;
       mem32[14] = 0x150B0B0B;
       mem32[15] = 0x11111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[1] = 0x0B141414;
       mem32[2] = 0x15150B0B;
       mem32[3] = 0x15151515;
@@ -4592,7 +4592,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B16;
       mem32[14] = 0x15151515;
       mem32[15] = 0x0B0B0B16;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[3] = 0x1616160B;
       mem32[5] = 0x16161616;
       mem32[6] = 0x170B0B0B;
@@ -4600,7 +4600,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x16161616;
       mem32[11] = 0x1616160B;
       mem32[13] = 0x16160B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x11110B0B;
       mem32[1] = 0x11111111;
       mem32[2] = 0x16161616;
@@ -4617,7 +4617,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18181818;
       mem32[14] = 0x18181616;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x15111111;
       mem32[1] = 0x0B0B0B15;
       mem32[2] = 0x11111111;
@@ -4634,10 +4634,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16161616;
       mem32[14] = 0x16181818;
       mem32[15] = 0x16161616;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[12] = 0x0B0B0B16;
       mem32[14] = 0x0B0B1616;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[1] = 0x0B180B0B;
       mem32[2] = 0x190B0B0B;
       mem32[3] = 0x0B180B0B;
@@ -4648,7 +4648,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x0018180B;
       mem32[13] = 0x18180B0B;
       mem32[15] = 0x180B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x1818180B;
       mem32[1] = 0x18181818;
       mem32[2] = 0x0618180B;
@@ -4665,7 +4665,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11001111;
       mem32[14] = 0x11181800;
       mem32[15] = 0x11110011;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x18181818;
       mem32[1] = 0x16161616;
       mem32[2] = 0x18181806;
@@ -4682,7 +4682,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18181818;
       mem32[14] = 0x18181811;
       mem32[15] = 0x18180018;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x0B171618;
       mem32[2] = 0x0B171618;
       mem32[4] = 0x0B191618;
@@ -4690,7 +4690,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x0B0B1818;
       mem32[10] = 0x0B0B0B18;
       mem32[12] = 0x0B0B0B18;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x11181818;
       mem32[1] = 0x11110011;
       mem32[2] = 0x11181818;
@@ -4703,7 +4703,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x11111111;
       mem32[10] = 0x180B0B0B;
       mem32[11] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x18181811;
       mem32[1] = 0x0B0B0B18;
       mem32[2] = 0x18181811;
@@ -4715,15 +4715,15 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x18181818;
       mem32[9] = 0x0B0B1818;
       mem32[10] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[4] = 0x0B0B180B;
       mem32[6] = 0x0B0B1818;
       mem32[8] = 0x0B0B0B18;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[11] = 0x00000B0B;
       mem32[13] = 0x0000000B;
       mem32[15] = 0x0000000B;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[8] = 0x0000000B;
       mem32[9] = 0x00000000;
       mem32[10] = 0x00000000;
@@ -4732,7 +4732,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[8] = 0x00000000;
       mem32[9] = 0x0B0B0B00;
       mem32[10] = 0x00000000;
@@ -4741,18 +4741,18 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[12] = 0x0B0B0B00;
       mem32[14] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[1] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x0000000B;
       mem32[3] = 0x00000000;
       mem32[5] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0B000000;
       mem32[2] = 0x00000000;
@@ -4796,10 +4796,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[95] = 18;
       enemy->tileTextureIndexes[96] = 19;
       enemy->tileTextureIndexes[97] = 20;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[13] = 0x040B0B0B;
       mem32[15] = 0x04040B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[2] = 0x040B0B0B;
       mem32[3] = 0x0B0B0B04;
       mem32[4] = 0x04040B0B;
@@ -4814,10 +4814,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x04000000;
       mem32[15] = 0x00000004;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[12] = 0x0B0B0B04;
       mem32[14] = 0x0B0B0404;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[3] = 0x0B0B0B1A;
       mem32[4] = 0x0B0B1A0B;
       mem32[5] = 0x0B1A0B1A;
@@ -4831,7 +4831,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x041A1A1A;
       mem32[14] = 0x1A1A0B0B;
       mem32[15] = 0x041A0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x040B0B0B;
       mem32[1] = 0x00040000;
       mem32[2] = 0x04040B01;
@@ -4848,7 +4848,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x00040004;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00060000;
@@ -4865,7 +4865,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040404;
       mem32[14] = 0x04040004;
       mem32[15] = 0x04000404;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000400;
       mem32[1] = 0x0B0B0404;
       mem32[2] = 0x04000400;
@@ -4882,9 +4882,9 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1A1A1A00;
       mem32[14] = 0x1A040400;
       mem32[15] = 0x1A1A001A;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[1] = 0x040B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00040404;
       mem32[1] = 0x04040404;
       mem32[2] = 0x00040404;
@@ -4901,7 +4901,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000404;
       mem32[14] = 0x0404040B;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x04040404;
       mem32[1] = 0x04040404;
       mem32[2] = 0x04040404;
@@ -4918,7 +4918,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x04040404;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x1A000400;
       mem32[1] = 0x1A1A1A00;
       mem32[2] = 0x00000404;
@@ -4935,9 +4935,9 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B040000;
       mem32[14] = 0x04040400;
       mem32[15] = 0x0B040400;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[15] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x0404040B;
       mem32[1] = 0x04040404;
       mem32[2] = 0x0404040B;
@@ -4954,7 +4954,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x04040400;
       mem32[15] = 0x04000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x04040404;
       mem32[1] = 0x00040404;
       mem32[2] = 0x04040404;
@@ -4971,7 +4971,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x04040404;
       mem32[15] = 0x00000004;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x04040404;
       mem32[1] = 0x0B040404;
       mem32[2] = 0x04040404;
@@ -4988,21 +4988,21 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040404;
       mem32[14] = 0x04040400;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[10] = 0x0B0B0B00;
       mem32[12] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[1] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x0000000B;
       mem32[3] = 0x00000000;
       mem32[4] = 0x000B0B0B;
       mem32[5] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5011,7 +5011,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x00000000;
       mem32[6] = 0x00000000;
       mem32[7] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5019,7 +5019,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x00000000;
       mem32[5] = 0x00000000;
       mem32[6] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x0B000000;
@@ -5056,13 +5056,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[94] = 12;
       enemy->tileTextureIndexes[95] = 13;
       enemy->tileTextureIndexes[96] = 14;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[7] = 0x11110B0B;
       mem32[12] = 0x11110B0B;
       mem32[13] = 0x0B0B1111;
       mem32[14] = 0x1111110B;
       mem32[15] = 0x0B111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[6] = 0x0B0B0B11;
       mem32[7] = 0x110B0B0B;
       mem32[8] = 0x110B1111;
@@ -5073,13 +5073,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11111111;
       mem32[14] = 0x11111111;
       mem32[15] = 0x11111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[6] = 0x0B0B1111;
       mem32[12] = 0x11110B0B;
       mem32[13] = 0x0B0B1111;
       mem32[14] = 0x1111110B;
       mem32[15] = 0x0B111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x11111111;
       mem32[1] = 0x11111111;
       mem32[2] = 0x11110B11;
@@ -5094,7 +5094,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x110B0B0B;
       mem32[14] = 0x110B0B0B;
       mem32[15] = 0x11110B11;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x11061111;
       mem32[1] = 0x11110611;
       mem32[2] = 0x11061111;
@@ -5111,7 +5111,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11110000;
       mem32[14] = 0x11111111;
       mem32[15] = 0x11111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x11111111;
       mem32[1] = 0x11111111;
       mem32[2] = 0x11111111;
@@ -5126,12 +5126,12 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B11;
       mem32[14] = 0x110B1111;
       mem32[15] = 0x0B0B0B11;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x110B0B0B;
       mem32[1] = 0x0B111111;
       mem32[3] = 0x0B0B1111;
       mem32[5] = 0x0B11110B;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x11111111;
       mem32[1] = 0x11111111;
       mem32[2] = 0x110B0B0B;
@@ -5139,26 +5139,26 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x0B0B0B11;
       mem32[7] = 0x110B1111;
       mem32[9] = 0x1111110B;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x1111110B;
       mem32[1] = 0x0B0B0B11;
       mem32[2] = 0x11110B0B;
       mem32[4] = 0x0B111111;
       mem32[6] = 0x0B110B11;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[15] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[12] = 0x0000000B;
       mem32[13] = 0x0B000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[14] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[1] = 0x0000000B;
       mem32[3] = 0x0000000B;
       mem32[5] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5167,7 +5167,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x00000000;
       mem32[6] = 0x0000000B;
       mem32[7] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x0B000000;
       mem32[2] = 0x0B000000;
       mem32[4] = 0x0B0B0B00;
@@ -5206,7 +5206,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[84] = 15;
       enemy->tileTextureIndexes[85] = 16;
       enemy->tileTextureIndexes[86] = 17;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[1] = 0x18181818;
       mem32[2] = 0x18180B0B;
       mem32[3] = 0x18181818;
@@ -5217,7 +5217,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x180B0B0B;
       mem32[9] = 0x18181818;
       mem32[11] = 0x1818180B;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[2] = 0x18180B18;
       mem32[3] = 0x0B0B1818;
       mem32[4] = 0x18180018;
@@ -5227,25 +5227,25 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x180B1818;
       mem32[9] = 0x00181818;
       mem32[11] = 0x180B1818;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[4] = 0x0B0B0B18;
       mem32[6] = 0x0B0B1818;
       mem32[8] = 0x0B181818;
       mem32[10] = 0x18181818;
       mem32[12] = 0x0B181818;
       mem32[14] = 0x18001800;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[9] = 0x180B0B0B;
       mem32[11] = 0x180B0B0B;
       mem32[15] = 0x0018180B;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[10] = 0x0B0B0B18;
       mem32[11] = 0x180B0B0B;
       mem32[12] = 0x0B0B0B18;
       mem32[13] = 0x00180B0B;
       mem32[14] = 0x18001818;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[7] = 0x180B0B0B;
       mem32[9] = 0x18180018;
       mem32[10] = 0x18001818;
@@ -5254,7 +5254,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00181800;
       mem32[14] = 0x00181800;
       mem32[15] = 0x18180018;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x1818000B;
       mem32[1] = 0x0B0B0B18;
       mem32[2] = 0x1818180B;
@@ -5267,14 +5267,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x18181818;
       mem32[12] = 0x0B181818;
       mem32[14] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[9] = 0x180B0B0B;
       mem32[11] = 0x00181818;
       mem32[12] = 0x18180B0B;
       mem32[13] = 0x0B181818;
       mem32[14] = 0x18180B0B;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x180B0B0B;
       mem32[1] = 0x18180018;
       mem32[2] = 0x18180B0B;
@@ -5291,7 +5291,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000018;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x18181800;
       mem32[1] = 0x18181818;
       mem32[2] = 0x18181818;
@@ -5308,7 +5308,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00151515;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x18001818;
       mem32[1] = 0x00180018;
       mem32[2] = 0x00180018;
@@ -5325,7 +5325,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00181818;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x18001800;
       mem32[1] = 0x0B0B0000;
       mem32[2] = 0x00180018;
@@ -5342,11 +5342,11 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B000000;
       mem32[14] = 0x00001818;
       mem32[15] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[4] = 0x0B0B0B00;
       mem32[6] = 0x0B0B0000;
       mem32[8] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x1818180B;
       mem32[1] = 0x18180000;
       mem32[2] = 0x0018180B;
@@ -5357,7 +5357,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x18180B0B;
       mem32[8] = 0x0B0B000B;
       mem32[9] = 0x00001818;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000018;
       mem32[1] = 0x00000000;
       mem32[2] = 0x000B0B18;
@@ -5365,7 +5365,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x0B0B0B00;
       mem32[5] = 0x0000000B;
       mem32[6] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x18000000;
       mem32[2] = 0x00000000;
@@ -5377,7 +5377,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x000B0B0B;
       mem32[13] = 0x18180B0B;
       mem32[15] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x18181818;
       mem32[1] = 0x00001800;
       mem32[2] = 0x18181818;
@@ -5392,7 +5392,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x0B0B0B00;
       mem32[12] = 0x00000018;
       mem32[14] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00181800;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x00000000;
@@ -5534,7 +5534,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5551,7 +5551,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5568,7 +5568,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5585,7 +5585,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5602,7 +5602,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5619,7 +5619,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5636,7 +5636,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5653,7 +5653,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5670,7 +5670,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5687,7 +5687,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5704,7 +5704,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5721,7 +5721,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5738,7 +5738,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5755,7 +5755,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5772,7 +5772,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5789,7 +5789,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5806,7 +5806,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5823,7 +5823,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5840,7 +5840,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5857,7 +5857,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5874,7 +5874,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5891,7 +5891,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5908,7 +5908,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5925,7 +5925,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5942,7 +5942,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5959,7 +5959,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5976,7 +5976,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -5993,7 +5993,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6010,7 +6010,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6027,7 +6027,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6044,7 +6044,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6061,7 +6061,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6078,7 +6078,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6095,7 +6095,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6112,7 +6112,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6129,7 +6129,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6146,7 +6146,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6163,7 +6163,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6180,7 +6180,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6197,7 +6197,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6214,7 +6214,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6231,7 +6231,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6248,7 +6248,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6265,7 +6265,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6282,7 +6282,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6299,7 +6299,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6316,7 +6316,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6333,7 +6333,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6350,7 +6350,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6367,7 +6367,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6384,7 +6384,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6401,7 +6401,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6418,7 +6418,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6435,7 +6435,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6452,7 +6452,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x1B1B1B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6469,7 +6469,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000018;
       mem32[14] = 0x18181B1B;
       mem32[15] = 0x1B1B1B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x18181800;
@@ -6486,7 +6486,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000018;
       mem32[14] = 0x0000001B;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6503,7 +6503,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6520,7 +6520,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6537,7 +6537,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6554,7 +6554,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6571,7 +6571,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6588,7 +6588,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6605,7 +6605,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06060000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x06060000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x1B000000;
       mem32[1] = 0x1B1B1B1B;
       mem32[2] = 0x1B1B0000;
@@ -6622,7 +6622,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1B1B1B18;
       mem32[14] = 0x181B1B06;
       mem32[15] = 0x1B1B1B18;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x1818181B;
       mem32[1] = 0x1B1B1B1B;
       mem32[2] = 0x1B1B1B1B;
@@ -6639,7 +6639,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1B1B1B1B;
       mem32[14] = 0x1B1B1B1B;
       mem32[15] = 0x1B1B1B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x001B1B1B;
       mem32[1] = 0x00000000;
       mem32[2] = 0x1B1B1B1B;
@@ -6656,7 +6656,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1111111B;
       mem32[14] = 0x1B1B1B1B;
       mem32[15] = 0x00111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6673,7 +6673,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00110000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6690,7 +6690,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6707,7 +6707,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6724,7 +6724,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6741,7 +6741,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6758,7 +6758,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x06060000;
       mem32[2] = 0x00000000;
@@ -6775,7 +6775,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x000E0000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00020000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x18001B06;
       mem32[1] = 0x1B1B1B18;
       mem32[2] = 0x18001B06;
@@ -6792,7 +6792,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0E0E0E02;
       mem32[14] = 0x02000E0E;
       mem32[15] = 0x0202020E;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x1B1B1B1B;
       mem32[1] = 0x1B1B1B1B;
       mem32[2] = 0x00000000;
@@ -6809,7 +6809,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0000020E;
       mem32[14] = 0x0E020000;
       mem32[15] = 0x110E0202;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x111B1B1B;
       mem32[1] = 0x00001111;
       mem32[2] = 0x11111B1B;
@@ -6826,7 +6826,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000011;
       mem32[14] = 0x11111111;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x11111100;
       mem32[1] = 0x00000011;
       mem32[2] = 0x11111111;
@@ -6843,7 +6843,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6860,7 +6860,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6877,7 +6877,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6894,7 +6894,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6911,7 +6911,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -6928,7 +6928,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x000E0000;
       mem32[2] = 0x00000000;
@@ -6945,7 +6945,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x000E0202;
       mem32[1] = 0x0E0E0202;
       mem32[2] = 0x00020E00;
@@ -6962,7 +6962,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x0E021111;
       mem32[1] = 0x02020E02;
       mem32[2] = 0x0E111102;
@@ -6979,7 +6979,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x020E020E;
       mem32[1] = 0x0000020E;
       mem32[2] = 0x020E0202;
@@ -6996,7 +6996,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7013,7 +7013,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7030,7 +7030,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7047,7 +7047,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7064,7 +7064,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7081,7 +7081,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7098,7 +7098,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7115,7 +7115,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7132,7 +7132,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7149,7 +7149,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7166,7 +7166,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7183,7 +7183,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7200,7 +7200,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7217,7 +7217,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7234,7 +7234,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7251,7 +7251,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7268,7 +7268,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7285,7 +7285,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7302,7 +7302,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7319,7 +7319,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7336,7 +7336,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7353,7 +7353,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7370,7 +7370,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7387,7 +7387,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7404,7 +7404,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7421,7 +7421,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7438,7 +7438,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7455,7 +7455,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7472,7 +7472,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7489,7 +7489,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7506,7 +7506,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7523,7 +7523,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7540,7 +7540,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7557,7 +7557,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7711,7 +7711,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7728,7 +7728,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7745,7 +7745,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7762,7 +7762,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7779,7 +7779,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7796,7 +7796,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7813,7 +7813,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7830,7 +7830,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7847,7 +7847,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7864,7 +7864,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7881,7 +7881,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7898,7 +7898,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7915,7 +7915,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7932,7 +7932,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7949,7 +7949,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7966,7 +7966,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -7983,7 +7983,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8000,7 +8000,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8017,7 +8017,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8034,7 +8034,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8051,7 +8051,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8068,7 +8068,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8085,7 +8085,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8102,7 +8102,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8119,7 +8119,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8136,7 +8136,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8153,7 +8153,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8170,7 +8170,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8187,7 +8187,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8204,7 +8204,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8221,7 +8221,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8238,7 +8238,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8255,7 +8255,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8272,7 +8272,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8289,7 +8289,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8306,7 +8306,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8323,7 +8323,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8340,7 +8340,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8357,7 +8357,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8374,7 +8374,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8391,7 +8391,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8408,7 +8408,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8425,7 +8425,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8442,7 +8442,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8459,7 +8459,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8476,7 +8476,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1C1C1C1C;
       mem32[14] = 0x1C000000;
       mem32[15] = 0x11111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x001C1C1C;
       mem32[2] = 0x1C1C0000;
@@ -8493,7 +8493,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0000001D;
       mem32[14] = 0x1C1C1C1C;
       mem32[15] = 0x0000001D;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8510,7 +8510,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8527,7 +8527,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8544,7 +8544,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8561,7 +8561,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8578,7 +8578,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8595,7 +8595,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8612,7 +8612,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8629,7 +8629,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1D1D0000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x11110000;
       mem32[1] = 0x11111111;
       mem32[2] = 0x1D1D1D1D;
@@ -8646,7 +8646,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1E1E1E1E;
       mem32[14] = 0x1E1E1D1D;
       mem32[15] = 0x1E1E1E1E;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x1C111111;
       mem32[1] = 0x0000001C;
       mem32[2] = 0x11111111;
@@ -8663,7 +8663,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1D1D1D1D;
       mem32[14] = 0x1D1E1E1E;
       mem32[15] = 0x1D1D1D1D;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8680,7 +8680,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00001D1D;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8697,7 +8697,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8714,7 +8714,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8731,7 +8731,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8748,7 +8748,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8765,7 +8765,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8782,7 +8782,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x001E0000;
       mem32[2] = 0x1E000000;
@@ -8799,7 +8799,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1E1E0000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x1E000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x1E1E1E00;
       mem32[1] = 0x1E1E1E1E;
       mem32[2] = 0x061E1E00;
@@ -8816,7 +8816,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11001111;
       mem32[14] = 0x111E1E00;
       mem32[15] = 0x11110011;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x1E1E1E1E;
       mem32[1] = 0x1D1D1D1D;
       mem32[2] = 0x1E1E1E06;
@@ -8833,7 +8833,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1E1E1E1E;
       mem32[14] = 0x1E1E1E11;
       mem32[15] = 0x1E1E001E;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x001D1D1E;
       mem32[1] = 0x00000000;
       mem32[2] = 0x001D1D1E;
@@ -8850,7 +8850,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8867,7 +8867,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8884,7 +8884,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8901,7 +8901,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8918,7 +8918,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8935,7 +8935,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8952,7 +8952,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -8969,7 +8969,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x111E1E1E;
       mem32[1] = 0x11110011;
       mem32[2] = 0x111E1E1E;
@@ -8986,7 +8986,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x1E1E1E11;
       mem32[1] = 0x0000001E;
       mem32[2] = 0x1E1E1E11;
@@ -9003,7 +9003,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9020,7 +9020,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9037,7 +9037,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9054,7 +9054,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9071,7 +9071,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9088,7 +9088,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9105,7 +9105,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9122,7 +9122,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9139,7 +9139,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9156,7 +9156,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9173,7 +9173,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9190,7 +9190,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9207,7 +9207,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9224,7 +9224,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9241,7 +9241,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9258,7 +9258,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9275,7 +9275,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9292,7 +9292,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9309,7 +9309,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9326,7 +9326,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9343,7 +9343,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9360,7 +9360,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9377,7 +9377,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9394,7 +9394,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9411,7 +9411,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9428,7 +9428,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9445,7 +9445,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9462,7 +9462,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9479,7 +9479,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9496,7 +9496,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9513,7 +9513,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9530,7 +9530,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9547,7 +9547,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9564,7 +9564,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9581,7 +9581,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9598,7 +9598,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9615,7 +9615,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9632,7 +9632,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9649,7 +9649,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9666,7 +9666,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9683,7 +9683,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9700,7 +9700,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9717,7 +9717,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9734,7 +9734,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9888,7 +9888,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9905,7 +9905,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9922,7 +9922,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9939,7 +9939,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9956,7 +9956,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9973,7 +9973,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -9990,7 +9990,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10007,7 +10007,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10024,7 +10024,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10041,7 +10041,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10058,7 +10058,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10075,7 +10075,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10092,7 +10092,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10109,7 +10109,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10126,7 +10126,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10143,7 +10143,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10160,7 +10160,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10177,7 +10177,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10194,7 +10194,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10211,7 +10211,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10228,7 +10228,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10245,7 +10245,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10262,7 +10262,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10279,7 +10279,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10296,7 +10296,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10313,7 +10313,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10330,7 +10330,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10347,7 +10347,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10364,7 +10364,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10381,7 +10381,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10398,7 +10398,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10415,7 +10415,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10432,7 +10432,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10449,7 +10449,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10466,7 +10466,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10483,7 +10483,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10500,7 +10500,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10517,7 +10517,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10534,7 +10534,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10551,7 +10551,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10568,7 +10568,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10585,7 +10585,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10602,7 +10602,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10619,7 +10619,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10636,7 +10636,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10653,7 +10653,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x000E0000;
       mem32[15] = 0x0E0E0E0E;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10670,7 +10670,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x000E0E00;
       mem32[14] = 0x0E0E0E0E;
       mem32[15] = 0x00000E00;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10687,7 +10687,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10704,7 +10704,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10721,7 +10721,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10738,7 +10738,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10755,7 +10755,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10772,7 +10772,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10789,7 +10789,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x06060600;
       mem32[1] = 0x00000011;
       mem32[2] = 0x06060606;
@@ -10806,7 +10806,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11000011;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0E0E0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x0E0E0000;
       mem32[1] = 0x0E0E0E0E;
       mem32[2] = 0x0E0E0E00;
@@ -10823,7 +10823,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x150E0E0E;
       mem32[14] = 0x0E0E0E0E;
       mem32[15] = 0x150E0E0E;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x0E0E0E0E;
       mem32[1] = 0x00000E0E;
       mem32[2] = 0x0E0E0E0E;
@@ -10840,7 +10840,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x110E0E0E;
       mem32[14] = 0x0E0E0E15;
       mem32[15] = 0x0E0E0E0E;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x11000000;
       mem32[1] = 0x00060606;
       mem32[2] = 0x06110000;
@@ -10857,7 +10857,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001111;
       mem32[14] = 0x00000E0E;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10874,7 +10874,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10891,7 +10891,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10908,7 +10908,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10925,7 +10925,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10942,7 +10942,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -10959,7 +10959,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0E0E0E00;
       mem32[2] = 0x00000000;
@@ -10976,7 +10976,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0E0E0E0E;
       mem32[14] = 0x0E0E0000;
       mem32[15] = 0x0E0E000E;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x0E0E0E0E;
       mem32[1] = 0x15150E0E;
       mem32[2] = 0x0E0E0E0E;
@@ -10993,7 +10993,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x15151515;
       mem32[14] = 0x150E0E0E;
       mem32[15] = 0x1F1F1515;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x0E0E1515;
       mem32[1] = 0x0E0E0E0E;
       mem32[2] = 0x0E0E1515;
@@ -11010,7 +11010,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0E0E0E0E;
       mem32[14] = 0x15151F1F;
       mem32[15] = 0x0E0E0E15;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x000E0E0E;
       mem32[1] = 0x00000000;
       mem32[2] = 0x000E0E0E;
@@ -11027,7 +11027,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x0E000E0E;
       mem32[15] = 0x00000E0E;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11044,7 +11044,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11061,7 +11061,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11078,7 +11078,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11095,7 +11095,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11112,7 +11112,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11129,7 +11129,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0E0E0000;
       mem32[2] = 0x00000000;
@@ -11146,7 +11146,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11111111;
       mem32[14] = 0x11000000;
       mem32[15] = 0x1F111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x15150E0E;
       mem32[1] = 0x151F1F15;
       mem32[2] = 0x1515150E;
@@ -11163,7 +11163,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11111115;
       mem32[14] = 0x151F1F1F;
       mem32[15] = 0x11111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x151F1F15;
       mem32[1] = 0x0E0E1515;
       mem32[2] = 0x1F1F1515;
@@ -11180,7 +11180,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1F1F1F1F;
       mem32[14] = 0x11111111;
       mem32[15] = 0x1F1F1F15;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00000E0E;
       mem32[1] = 0x00000000;
       mem32[2] = 0x000E0E0E;
@@ -11197,7 +11197,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x1111111F;
       mem32[15] = 0x00000011;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11214,7 +11214,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11231,7 +11231,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11248,7 +11248,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11265,7 +11265,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11282,7 +11282,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11299,7 +11299,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x11110000;
       mem32[1] = 0x1F111111;
       mem32[2] = 0x11111100;
@@ -11316,7 +11316,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1F1F1F1F;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x111F1F1F;
       mem32[1] = 0x06000600;
       mem32[2] = 0x00111F1F;
@@ -11333,7 +11333,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00060006;
       mem32[1] = 0x1F1F1F11;
       mem32[2] = 0x00000000;
@@ -11350,7 +11350,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1F1F1F00;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x1111111F;
       mem32[1] = 0x00001111;
       mem32[2] = 0x11001F1F;
@@ -11367,7 +11367,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0000001F;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11384,7 +11384,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11401,7 +11401,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11418,7 +11418,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11435,7 +11435,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11452,7 +11452,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11469,7 +11469,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11486,7 +11486,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11503,7 +11503,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11520,7 +11520,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11537,7 +11537,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11554,7 +11554,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11571,7 +11571,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11588,7 +11588,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11605,7 +11605,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11622,7 +11622,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11639,7 +11639,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11656,7 +11656,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11673,7 +11673,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11690,7 +11690,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11707,7 +11707,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11724,7 +11724,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11741,7 +11741,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11758,7 +11758,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11775,7 +11775,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11792,7 +11792,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11809,7 +11809,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11826,7 +11826,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11843,7 +11843,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11860,7 +11860,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11877,7 +11877,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11894,7 +11894,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -11911,7 +11911,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12065,7 +12065,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12082,7 +12082,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12099,7 +12099,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12116,7 +12116,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12133,7 +12133,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12150,7 +12150,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12167,7 +12167,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12184,7 +12184,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12201,7 +12201,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12218,7 +12218,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12235,7 +12235,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12252,7 +12252,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12269,7 +12269,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12286,7 +12286,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12303,7 +12303,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12320,7 +12320,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12337,7 +12337,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12354,7 +12354,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12371,7 +12371,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12388,7 +12388,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12405,7 +12405,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12422,7 +12422,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12439,7 +12439,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12456,7 +12456,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12473,7 +12473,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12490,7 +12490,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12507,7 +12507,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12524,7 +12524,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12541,7 +12541,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12558,7 +12558,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12575,7 +12575,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12592,7 +12592,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12609,7 +12609,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12626,7 +12626,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12643,7 +12643,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12660,7 +12660,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12677,7 +12677,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12694,7 +12694,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12711,7 +12711,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12728,7 +12728,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12745,7 +12745,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12762,7 +12762,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12779,7 +12779,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12796,7 +12796,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12813,7 +12813,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12830,7 +12830,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12847,7 +12847,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12864,7 +12864,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12881,7 +12881,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12898,7 +12898,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12915,7 +12915,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12932,7 +12932,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12949,7 +12949,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12966,7 +12966,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -12983,7 +12983,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13000,7 +13000,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001A1A;
       mem32[14] = 0x1A1A1A00;
       mem32[15] = 0x001A1A1A;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13017,7 +13017,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1A1A1A1A;
       mem32[14] = 0x1A1A1A1A;
       mem32[15] = 0x1A1A1A1A;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13034,7 +13034,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001A1A;
       mem32[14] = 0x1A1A1A00;
       mem32[15] = 0x001A1A1A;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13051,7 +13051,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13068,7 +13068,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13085,7 +13085,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13102,7 +13102,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13119,7 +13119,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13136,7 +13136,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13153,7 +13153,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x1A1A1A1A;
       mem32[1] = 0x1A1A1A1A;
       mem32[2] = 0x1A1A001A;
@@ -13170,7 +13170,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1A000000;
       mem32[14] = 0x1A000000;
       mem32[15] = 0x1A1A001A;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x1A201A1A;
       mem32[1] = 0x1A1A201A;
       mem32[2] = 0x1A201A1A;
@@ -13187,7 +13187,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1A1A0000;
       mem32[14] = 0x1A1A1A1A;
       mem32[15] = 0x1A1A1A1A;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x1A1A1A1A;
       mem32[1] = 0x1A1A1A1A;
       mem32[2] = 0x1A1A1A1A;
@@ -13204,7 +13204,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0000001A;
       mem32[14] = 0x1A001A1A;
       mem32[15] = 0x0000001A;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13221,7 +13221,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13238,7 +13238,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13255,7 +13255,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13272,7 +13272,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13289,7 +13289,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13306,7 +13306,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13323,7 +13323,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x1A000000;
       mem32[1] = 0x001A1A1A;
       mem32[2] = 0x00000000;
@@ -13340,7 +13340,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x1A1A1A1A;
       mem32[1] = 0x1A1A1A1A;
       mem32[2] = 0x1A000000;
@@ -13357,7 +13357,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x1A1A1A00;
       mem32[1] = 0x0000001A;
       mem32[2] = 0x1A1A0000;
@@ -13374,7 +13374,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13391,7 +13391,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13408,7 +13408,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13425,7 +13425,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13442,7 +13442,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13459,7 +13459,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13476,7 +13476,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13493,7 +13493,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13510,7 +13510,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13527,7 +13527,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13544,7 +13544,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13561,7 +13561,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13578,7 +13578,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13595,7 +13595,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13612,7 +13612,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13629,7 +13629,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13646,7 +13646,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13663,7 +13663,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13680,7 +13680,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13697,7 +13697,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13714,7 +13714,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13731,7 +13731,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13748,7 +13748,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13765,7 +13765,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13782,7 +13782,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13799,7 +13799,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13816,7 +13816,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13833,7 +13833,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13850,7 +13850,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13867,7 +13867,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13884,7 +13884,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13901,7 +13901,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13918,7 +13918,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13935,7 +13935,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13952,7 +13952,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13969,7 +13969,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -13986,7 +13986,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -14003,7 +14003,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -14020,7 +14020,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -14037,7 +14037,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -14054,7 +14054,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -14071,7 +14071,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -14088,7 +14088,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -14146,21 +14146,21 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[86] = 21;
       enemy->tileTextureIndexes[93] = 22;
       enemy->tileTextureIndexes[94] = 23;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[5] = 0x060B0B0B;
       mem32[7] = 0x06060B0B;
       mem32[9] = 0x06060B0B;
       mem32[11] = 0x04060B0B;
       mem32[13] = 0x06060B0B;
       mem32[15] = 0x06060B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[4] = 0x0B060406;
       mem32[6] = 0x06060604;
       mem32[8] = 0x06060604;
       mem32[10] = 0x06060406;
       mem32[12] = 0x06040606;
       mem32[14] = 0x06060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[3] = 0x16160B0B;
       mem32[5] = 0x1616160B;
       mem32[7] = 0x1616160B;
@@ -14169,7 +14169,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16060606;
       mem32[14] = 0x060B0B0B;
       mem32[15] = 0x0B0B0606;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[1] = 0x0606040B;
       mem32[2] = 0x0E021616;
       mem32[3] = 0x0000000E;
@@ -14185,7 +14185,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00060E0E;
       mem32[14] = 0x16161616;
       mem32[15] = 0x00060E02;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x06060606;
       mem32[1] = 0x0B0B0B04;
       mem32[2] = 0x00000406;
@@ -14202,7 +14202,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16020E0E;
       mem32[14] = 0x06000000;
       mem32[15] = 0x1616020E;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[2] = 0x16161616;
       mem32[4] = 0x16161616;
       mem32[5] = 0x0B0B0B16;
@@ -14216,7 +14216,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0606;
       mem32[14] = 0x0A0A1616;
       mem32[15] = 0x0B060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x0B060B0B;
       mem32[1] = 0x0B0B0B06;
       mem32[2] = 0x060B060B;
@@ -14230,7 +14230,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B10;
       mem32[14] = 0x0010100B;
       mem32[15] = 0x0B101000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x1616160B;
       mem32[1] = 0x040E0216;
       mem32[2] = 0x160B0B0B;
@@ -14242,7 +14242,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x020E0E0E;
       mem32[14] = 0x160B0B0B;
       mem32[15] = 0x020E0E16;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x0E060406;
       mem32[1] = 0x16161602;
       mem32[2] = 0x16060606;
@@ -14259,7 +14259,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0E0E;
       mem32[14] = 0x0E020E0E;
       mem32[15] = 0x0B16160E;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x0B0A0A16;
       mem32[1] = 0x060B060B;
       mem32[2] = 0x0B0B0A0B;
@@ -14274,7 +14274,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B100010;
       mem32[14] = 0x100B0B0B;
       mem32[15] = 0x10100000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x100B0B0B;
       mem32[1] = 0x10101010;
       mem32[2] = 0x10100B0B;
@@ -14284,7 +14284,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x100B0B0B;
       mem32[7] = 0x0B100010;
       mem32[15] = 0x0E0B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x16160B0B;
       mem32[1] = 0x16161616;
       mem32[2] = 0x1616160B;
@@ -14299,7 +14299,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x1616160E;
       mem32[12] = 0x0E0E0E0E;
       mem32[14] = 0x0B0E0E0E;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x16160202;
       mem32[1] = 0x16161616;
       mem32[2] = 0x16161616;
@@ -14314,14 +14314,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x0E0E0E16;
       mem32[13] = 0x0E0E0B0B;
       mem32[15] = 0x0E0B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[1] = 0x0B101010;
       mem32[2] = 0x0B0B0B16;
       mem32[4] = 0x0B0B0B16;
       mem32[10] = 0x0B0B0B0E;
       mem32[12] = 0x0B0B0E0E;
       mem32[14] = 0x0B0E0E0E;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[1] = 0x0E0E0B0B;
       mem32[3] = 0x0E0E0E0B;
       mem32[5] = 0x0E0E0E0B;
@@ -14330,7 +14330,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x0E16160B;
       mem32[13] = 0x06060606;
       mem32[15] = 0x06060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x0B0B0E0E;
       mem32[2] = 0x0B0B0B0E;
       mem32[6] = 0x0B0B0B0E;
@@ -14339,7 +14339,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x06060606;
       mem32[14] = 0x06060606;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[3] = 0x16020B0B;
       mem32[5] = 0x0606060B;
       mem32[7] = 0x0606100B;
@@ -14348,7 +14348,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101010;
       mem32[14] = 0x00000000;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x0E0E0E0E;
       mem32[2] = 0x0E0E0E0E;
       mem32[4] = 0x0B0E0E0E;
@@ -14357,7 +14357,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B060610;
       mem32[12] = 0x0B0B1010;
       mem32[14] = 0x0B0B0010;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[1] = 0x0606060B;
       mem32[3] = 0x10101000;
       mem32[4] = 0x0000000B;
@@ -14372,7 +14372,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x000B0B0B;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x10060606;
       mem32[1] = 0x00000000;
       mem32[2] = 0x10101010;
@@ -14389,7 +14389,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x10101000;
       mem32[2] = 0x00000000;
@@ -14402,7 +14402,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x00000000;
       mem32[10] = 0x00000000;
       mem32[11] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00101010;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x10101010;
@@ -14411,9 +14411,9 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x0B0B0000;
       mem32[6] = 0x00000000;
       mem32[8] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[1] = 0x0000000B;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x0B000000;
       break;
    case 12:
@@ -14455,13 +14455,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[95] = 20;
       enemy->tileTextureIndexes[96] = 21;
       enemy->tileTextureIndexes[97] = 22;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[14] = 0x110B0B0B;
       mem32[15] = 0x0B111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[13] = 0x220B0B0B;
       mem32[15] = 0x22220B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[2] = 0x220B0B0B;
       mem32[3] = 0x0B0B0B22;
       mem32[4] = 0x22220B0B;
@@ -14476,7 +14476,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x22000000;
       mem32[15] = 0x00000022;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x21110B0B;
       mem32[1] = 0x11111111;
       mem32[2] = 0x1111210B;
@@ -14493,10 +14493,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0303;
       mem32[14] = 0x0B0B2222;
       mem32[15] = 0x0B0B0303;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[2] = 0x0B0B0B21;
       mem32[4] = 0x0B0B0B21;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[3] = 0x0B0B0B16;
       mem32[4] = 0x0B0B160B;
       mem32[5] = 0x0B160B16;
@@ -14510,7 +14510,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22161616;
       mem32[14] = 0x16160B0B;
       mem32[15] = 0x22160B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x220B0B0B;
       mem32[1] = 0x00220000;
       mem32[2] = 0x22220B0B;
@@ -14527,7 +14527,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x00220022;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00060000;
@@ -14544,7 +14544,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00222222;
       mem32[14] = 0x22220022;
       mem32[15] = 0x22002222;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00002200;
       mem32[1] = 0x0B0B0303;
       mem32[2] = 0x22002200;
@@ -14561,9 +14561,9 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16161600;
       mem32[14] = 0x16222200;
       mem32[15] = 0x16160016;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[1] = 0x220B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00222222;
       mem32[1] = 0x22222222;
       mem32[2] = 0x00222222;
@@ -14580,7 +14580,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00002222;
       mem32[14] = 0x2222220B;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x22222222;
       mem32[1] = 0x22222222;
       mem32[2] = 0x22222222;
@@ -14597,7 +14597,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x22222222;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x16002200;
       mem32[1] = 0x16161600;
       mem32[2] = 0x00002222;
@@ -14614,9 +14614,9 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B030300;
       mem32[14] = 0x22222200;
       mem32[15] = 0x0B030300;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[15] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x2222220B;
       mem32[1] = 0x22222222;
       mem32[2] = 0x2222220B;
@@ -14633,7 +14633,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x22222200;
       mem32[15] = 0x22000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x22222222;
       mem32[1] = 0x00222222;
       mem32[2] = 0x22222222;
@@ -14650,7 +14650,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x22222222;
       mem32[15] = 0x00000022;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x22222222;
       mem32[1] = 0x0B030322;
       mem32[2] = 0x22222222;
@@ -14667,21 +14667,21 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03032222;
       mem32[14] = 0x22222200;
       mem32[15] = 0x03032222;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[10] = 0x0B0B0B00;
       mem32[12] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[1] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x0000000B;
       mem32[3] = 0x00000000;
       mem32[4] = 0x000B0B0B;
       mem32[5] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -14690,7 +14690,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x00000000;
       mem32[6] = 0x00000000;
       mem32[7] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x03030000;
       mem32[2] = 0x00000000;
@@ -14698,7 +14698,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x00000000;
       mem32[5] = 0x00000000;
       mem32[6] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x0B000000;
@@ -14738,14 +14738,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[84] = 15;
       enemy->tileTextureIndexes[85] = 16;
       enemy->tileTextureIndexes[86] = 17;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[5] = 0x050B0B0B;
       mem32[7] = 0x05050B0B;
       mem32[9] = 0x0505050B;
       mem32[11] = 0x05050505;
       mem32[13] = 0x05050500;
       mem32[15] = 0x0B050005;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[2] = 0x05050B0B;
       mem32[3] = 0x050B0505;
       mem32[4] = 0x0505050B;
@@ -14755,7 +14755,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x05050500;
       mem32[9] = 0x05050005;
       mem32[10] = 0x05050005;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x05050505;
       mem32[2] = 0x05050505;
       mem32[3] = 0x0B0B0505;
@@ -14766,7 +14766,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x05050505;
       mem32[9] = 0x0B0B0B05;
       mem32[10] = 0x0B050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x050B0B0B;
       mem32[1] = 0x0B000505;
       mem32[2] = 0x050B0B0B;
@@ -14779,7 +14779,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x05050505;
       mem32[13] = 0x0505050B;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[6] = 0x0B0B0B05;
       mem32[8] = 0x05000505;
       mem32[10] = 0x05000005;
@@ -14788,22 +14788,22 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05000505;
       mem32[14] = 0x05000505;
       mem32[15] = 0x00050500;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[10] = 0x0B0B0B05;
       mem32[11] = 0x050B0B0B;
       mem32[12] = 0x0B0B0500;
       mem32[13] = 0x050B0B0B;
       mem32[14] = 0x05050505;
       mem32[15] = 0x05050005;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[8] = 0x0B0B0B05;
       mem32[10] = 0x0B0B0B05;
       mem32[14] = 0x0B050500;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[5] = 0x000B0B0B;
       mem32[7] = 0x00000B0B;
       mem32[9] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000B0B;
       mem32[1] = 0x00050005;
       mem32[2] = 0x0500000B;
@@ -14820,7 +14820,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05000505;
       mem32[14] = 0x00000B0B;
       mem32[15] = 0x05050000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x05000500;
       mem32[1] = 0x05050005;
       mem32[2] = 0x05050005;
@@ -14837,7 +14837,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050005;
       mem32[14] = 0x05050500;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x05050505;
       mem32[1] = 0x00050505;
       mem32[2] = 0x00050505;
@@ -14854,7 +14854,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11111111;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x05000505;
       mem32[1] = 0x0B0B0B05;
       mem32[2] = 0x05050000;
@@ -14871,19 +14871,19 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00050500;
       mem32[14] = 0x00000000;
       mem32[15] = 0x05000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[8] = 0x0B0B0B05;
       mem32[10] = 0x05050500;
       mem32[12] = 0x0505050B;
       mem32[13] = 0x0B0B0505;
       mem32[14] = 0x05050505;
       mem32[15] = 0x0B0B0505;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x000B0B0B;
       mem32[1] = 0x00050500;
       mem32[3] = 0x00000000;
       mem32[5] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00050000;
       mem32[1] = 0x05050505;
       mem32[2] = 0x05000000;
@@ -14898,7 +14898,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x05050500;
       mem32[13] = 0x05000000;
       mem32[15] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000005;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00050505;
@@ -14910,7 +14910,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x0B0B0B00;
       mem32[12] = 0x0B0B0505;
       mem32[14] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x05000000;
       mem32[2] = 0x00000000;
@@ -14918,7 +14918,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x0B000000;
       mem32[5] = 0x000B0B0B;
       mem32[7] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000505;
       mem32[1] = 0x0B050505;
       mem32[2] = 0x0B0B0005;
@@ -14973,7 +14973,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[94] = 24;
       enemy->tileTextureIndexes[95] = 25;
       enemy->tileTextureIndexes[96] = 26;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[2] = 0x0B0B230B;
       mem32[4] = 0x0B230606;
       mem32[6] = 0x23230606;
@@ -14985,7 +14985,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x23232323;
       mem32[14] = 0x00060600;
       mem32[15] = 0x23232323;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[3] = 0x0B0B0B23;
       mem32[4] = 0x230B0B0B;
       mem32[5] = 0x0B0B0606;
@@ -14999,23 +14999,23 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0606;
       mem32[14] = 0x06002323;
       mem32[15] = 0x0B0B0006;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[9] = 0x23232323;
       mem32[10] = 0x230B0B0B;
       mem32[11] = 0x23232323;
       mem32[12] = 0x23230B0B;
       mem32[13] = 0x230B0B23;
       mem32[14] = 0x23230B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[10] = 0x0B0B0B23;
       mem32[12] = 0x0B0B0B23;
       mem32[14] = 0x0B0B0B23;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[9] = 0x0B23220B;
       mem32[11] = 0x23232322;
       mem32[13] = 0x23230B0B;
       mem32[15] = 0x23230B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[1] = 0x23230B0B;
       mem32[3] = 0x2323230B;
       mem32[5] = 0x23232323;
@@ -15028,7 +15028,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x23230023;
       mem32[14] = 0x00002323;
       mem32[15] = 0x23232323;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00230023;
       mem32[1] = 0x23230000;
       mem32[2] = 0x23230023;
@@ -15045,7 +15045,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06062323;
       mem32[14] = 0x23000023;
       mem32[15] = 0x00000606;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x23000000;
       mem32[1] = 0x22222200;
       mem32[2] = 0x23230006;
@@ -15062,7 +15062,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x23220023;
       mem32[14] = 0x00230606;
       mem32[15] = 0x23222200;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x23230B0B;
       mem32[2] = 0x23232222;
       mem32[4] = 0x23222222;
@@ -15075,10 +15075,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x23230B0B;
       mem32[14] = 0x00002323;
       mem32[15] = 0x23232323;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[8] = 0x0B0B0B22;
       mem32[10] = 0x0B0B2223;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x23230B0B;
       mem32[1] = 0x23230B23;
       mem32[2] = 0x2323220B;
@@ -15090,7 +15090,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x220B0B0B;
       mem32[11] = 0x0B0B2323;
       mem32[13] = 0x0B0B0B22;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x23232323;
       mem32[1] = 0x23232300;
       mem32[2] = 0x23230023;
@@ -15105,7 +15105,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x230B0B0B;
       mem32[13] = 0x220B0B0B;
       mem32[15] = 0x220B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00002323;
       mem32[1] = 0x00000006;
       mem32[2] = 0x00232323;
@@ -15122,7 +15122,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000022;
       mem32[14] = 0x22222222;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000600;
       mem32[1] = 0x23222222;
       mem32[2] = 0x22000000;
@@ -15139,7 +15139,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x22222222;
       mem32[15] = 0x0B222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x23230023;
       mem32[1] = 0x23232323;
       mem32[2] = 0x23230023;
@@ -15153,7 +15153,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x23230B0B;
       mem32[12] = 0x2323230B;
       mem32[14] = 0x2323230B;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x2323230B;
       mem32[2] = 0x23232323;
       mem32[3] = 0x0B0B0B22;
@@ -15163,7 +15163,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x0B0B2323;
       mem32[10] = 0x0B222323;
       mem32[12] = 0x0B0B220B;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[1] = 0x1622220B;
       mem32[3] = 0x16222222;
       mem32[5] = 0x22222222;
@@ -15172,7 +15172,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x23232323;
       mem32[13] = 0x23232323;
       mem32[15] = 0x1823060B;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x22221616;
       mem32[1] = 0x16161622;
       mem32[2] = 0x16161616;
@@ -15187,7 +15187,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x22222222;
       mem32[12] = 0x0B181818;
       mem32[14] = 0x0B221818;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x22222216;
       mem32[1] = 0x22161616;
       mem32[2] = 0x16161616;
@@ -15202,7 +15202,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x23232222;
       mem32[13] = 0x23232323;
       mem32[15] = 0x2323230B;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x23232322;
       mem32[2] = 0x0B232222;
       mem32[4] = 0x0B0B2222;
@@ -15211,7 +15211,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B232323;
       mem32[12] = 0x0B232323;
       mem32[14] = 0x0B232323;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[1] = 0x18181818;
       mem32[3] = 0x22181800;
       mem32[4] = 0x0000000B;
@@ -15223,7 +15223,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x00000B0B;
       mem32[11] = 0x22222222;
       mem32[13] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x22222218;
       mem32[2] = 0x00222222;
       mem32[3] = 0x0B000000;
@@ -15239,7 +15239,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x0000000B;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[1] = 0x18181818;
       mem32[3] = 0x18181818;
       mem32[4] = 0x00000000;
@@ -15254,7 +15254,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x22000000;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x18181818;
       mem32[2] = 0x18181818;
       mem32[4] = 0x0B181818;
@@ -15266,14 +15266,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B002222;
       mem32[14] = 0x22222222;
       mem32[15] = 0x00002222;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[1] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[3] = 0x00000000;
       mem32[5] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15323,21 +15323,21 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[94] = 24;
       enemy->tileTextureIndexes[95] = 25;
       enemy->tileTextureIndexes[96] = 26;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[5] = 0x240B0B0B;
       mem32[7] = 0x06060B0B;
       mem32[9] = 0x06060B0B;
       mem32[11] = 0x06060B0B;
       mem32[13] = 0x04060B0B;
       mem32[15] = 0x06060B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[4] = 0x0B242425;
       mem32[6] = 0x06060406;
       mem32[8] = 0x06060406;
       mem32[10] = 0x06040604;
       mem32[12] = 0x06060606;
       mem32[14] = 0x06060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[3] = 0x03030B0B;
       mem32[5] = 0x0303030B;
       mem32[7] = 0x0303030B;
@@ -15346,7 +15346,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03060606;
       mem32[14] = 0x060B0B0B;
       mem32[15] = 0x0B0B0606;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[1] = 0x0606040B;
       mem32[2] = 0x1D000303;
       mem32[3] = 0x0000061D;
@@ -15362,7 +15362,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04061D1D;
       mem32[14] = 0x03030303;
       mem32[15] = 0x00061D00;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x06060606;
       mem32[1] = 0x0B0B0B04;
       mem32[2] = 0x00000604;
@@ -15379,7 +15379,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03001D1D;
       mem32[14] = 0x06000000;
       mem32[15] = 0x0303001D;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[2] = 0x03030303;
       mem32[4] = 0x03030303;
       mem32[5] = 0x0B0B0B03;
@@ -15392,7 +15392,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0606;
       mem32[14] = 0x0B0B0303;
       mem32[15] = 0x0B060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x0B060B0B;
       mem32[1] = 0x0B0B0B06;
       mem32[2] = 0x06060B0B;
@@ -15408,7 +15408,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B002600;
       mem32[14] = 0x26260B0B;
       mem32[15] = 0x0B260000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x0303030B;
       mem32[1] = 0x061D0003;
       mem32[2] = 0x030B0B0B;
@@ -15420,7 +15420,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x001D1D1D;
       mem32[14] = 0x030B0B0B;
       mem32[15] = 0x001D1D03;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x1D040604;
       mem32[1] = 0x03030300;
       mem32[2] = 0x03060606;
@@ -15437,7 +15437,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B1D1D;
       mem32[14] = 0x1D001D1D;
       mem32[15] = 0x0B03031D;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x0B0B0B03;
       mem32[1] = 0x060B060B;
       mem32[3] = 0x0B060B0B;
@@ -15448,18 +15448,18 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2626260B;
       mem32[14] = 0x260B0B0B;
       mem32[15] = 0x26000026;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[2] = 0x0B0B0B06;
       mem32[4] = 0x0B0B060B;
       mem32[6] = 0x0B0B060B;
       mem32[8] = 0x0B0B0B06;
       mem32[12] = 0x0B0B0B26;
       mem32[14] = 0x0B0B0B26;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x260B0B0B;
       mem32[1] = 0x0B0B2626;
       mem32[15] = 0x1D0B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x03030B0B;
       mem32[1] = 0x03030303;
       mem32[2] = 0x0303030B;
@@ -15474,7 +15474,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x0303031D;
       mem32[12] = 0x1D1D1D1D;
       mem32[14] = 0x0B1D1D1D;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x03030000;
       mem32[1] = 0x03030303;
       mem32[2] = 0x03030303;
@@ -15489,7 +15489,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x1D1D1D03;
       mem32[13] = 0x1D1D0B0B;
       mem32[15] = 0x1D0B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x26260B0B;
       mem32[1] = 0x0B262626;
       mem32[2] = 0x260B0B03;
@@ -15501,13 +15501,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B0B1D;
       mem32[12] = 0x0B0B1D1D;
       mem32[14] = 0x0B1D1D1D;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[1] = 0x1D1D0B0B;
       mem32[3] = 0x1D1D0B0B;
       mem32[5] = 0x1D0B0B0B;
       mem32[9] = 0x06060B0B;
       mem32[11] = 0x060B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x0B0B1D1D;
       mem32[2] = 0x0B031D1D;
       mem32[4] = 0x06061D1D;
@@ -15522,11 +15522,11 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B2626;
       mem32[14] = 0x26262600;
       mem32[15] = 0x00002626;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[13] = 0x06060B0B;
       mem32[14] = 0x00000000;
       mem32[15] = 0x06060000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x1D1D1D1D;
       mem32[2] = 0x1D1D1D0B;
       mem32[3] = 0x0B0B0B1D;
@@ -15540,12 +15540,12 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0606;
       mem32[14] = 0x06060606;
       mem32[15] = 0x0B0B0606;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[1] = 0x2600000B;
       mem32[3] = 0x26260000;
       mem32[5] = 0x00000000;
       mem32[7] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x26262626;
       mem32[1] = 0x00000026;
       mem32[2] = 0x00262626;
@@ -15557,7 +15557,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x00000000;
       mem32[9] = 0x00000000;
       mem32[11] = 0x0000000B;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x06260000;
       mem32[2] = 0x00000000;
@@ -15573,7 +15573,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x000B0B0B;
       mem32[13] = 0x00000000;
       mem32[15] = 0x0000000B;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x06060606;
       mem32[1] = 0x0B0B0B06;
       mem32[2] = 0x26262626;
@@ -15590,17 +15590,17 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[4] = 0x0B0B0B00;
       mem32[6] = 0x0B0B0000;
       mem32[8] = 0x0B0B0000;
       mem32[10] = 0x0B0B0B00;
       mem32[12] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[1] = 0x0B0B270B;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[1] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0B0B0B00;
       break;
@@ -15628,7 +15628,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[84] = 5;
       enemy->tileTextureIndexes[85] = 6;
       enemy->tileTextureIndexes[86] = 7;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[1] = 0x040B0B0B;
       mem32[3] = 0x040B0B0B;
       mem32[5] = 0x040B0B0B;
@@ -15639,13 +15639,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x06060B0B;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[8] = 0x0B0B0B04;
       mem32[10] = 0x0B0B0404;
       mem32[12] = 0x04040404;
       mem32[14] = 0x04040404;
       mem32[15] = 0x0B0B0B04;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x0406060B;
       mem32[1] = 0x04040404;
       mem32[2] = 0x04040604;
@@ -15662,7 +15662,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x040B0B0B;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x04040404;
       mem32[1] = 0x0B0B0404;
       mem32[2] = 0x04040604;
@@ -15679,19 +15679,19 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000404;
       mem32[14] = 0x04040404;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[10] = 0x0B0B0B00;
       mem32[12] = 0x0B000000;
       mem32[14] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[1] = 0x00000000;
       mem32[3] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
       mem32[3] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x0B0B0000;
       break;
    case 17:
@@ -15830,7 +15830,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15847,7 +15847,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15864,7 +15864,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15881,7 +15881,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15898,7 +15898,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15915,7 +15915,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15932,7 +15932,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15949,7 +15949,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15966,7 +15966,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -15983,7 +15983,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16000,7 +16000,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16017,7 +16017,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16034,7 +16034,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16051,7 +16051,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16068,7 +16068,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16085,7 +16085,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16102,7 +16102,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16119,7 +16119,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16136,7 +16136,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16153,7 +16153,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16170,7 +16170,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16187,7 +16187,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16204,7 +16204,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16221,7 +16221,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16238,7 +16238,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16255,7 +16255,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16272,7 +16272,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16289,7 +16289,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16306,7 +16306,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16323,7 +16323,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16340,7 +16340,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16357,7 +16357,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16374,7 +16374,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16391,7 +16391,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16408,7 +16408,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16425,7 +16425,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16442,7 +16442,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16459,7 +16459,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16476,7 +16476,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16493,7 +16493,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16510,7 +16510,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16527,7 +16527,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16544,7 +16544,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16561,7 +16561,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x02000000;
       mem32[2] = 0x00000000;
@@ -16578,7 +16578,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000202;
       mem32[1] = 0x00000000;
       mem32[2] = 0x02020202;
@@ -16595,7 +16595,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x02020E00;
       mem32[15] = 0x11110202;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16612,7 +16612,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00021111;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16629,7 +16629,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16646,7 +16646,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16663,7 +16663,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16680,7 +16680,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16697,7 +16697,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16714,7 +16714,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16731,7 +16731,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16748,7 +16748,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0E0E0E00;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0E0E0E0E;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x11020200;
       mem32[1] = 0x11111111;
       mem32[2] = 0x11110200;
@@ -16765,7 +16765,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1010100E;
       mem32[14] = 0x100E0E0E;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x11111111;
       mem32[1] = 0x00000000;
       mem32[2] = 0x0E0E0E0E;
@@ -16782,7 +16782,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0E0E0E0E;
       mem32[14] = 0x10101010;
       mem32[15] = 0x00000E0E;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x0000000E;
@@ -16799,7 +16799,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16816,7 +16816,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16833,7 +16833,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16850,7 +16850,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16867,7 +16867,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16884,7 +16884,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16901,7 +16901,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x0E000000;
       mem32[1] = 0x0E0E100E;
       mem32[2] = 0x0E000000;
@@ -16918,7 +16918,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x10100000;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x10100E0E;
       mem32[1] = 0x10101010;
       mem32[2] = 0x1010100E;
@@ -16935,7 +16935,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00111111;
       mem32[14] = 0x10101000;
       mem32[15] = 0x11111110;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x10101010;
       mem32[1] = 0x10000010;
       mem32[2] = 0x10061010;
@@ -16952,7 +16952,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101010;
       mem32[14] = 0x10111100;
       mem32[15] = 0x00100010;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00100000;
@@ -16969,7 +16969,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -16986,7 +16986,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17003,7 +17003,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17020,7 +17020,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17037,7 +17037,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17054,7 +17054,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17071,7 +17071,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17088,7 +17088,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x10101000;
       mem32[1] = 0x11111110;
       mem32[2] = 0x10100010;
@@ -17105,7 +17105,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x10111100;
       mem32[1] = 0x00001010;
       mem32[2] = 0x10111100;
@@ -17122,7 +17122,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17139,7 +17139,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17156,7 +17156,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17173,7 +17173,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17190,7 +17190,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17207,7 +17207,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17224,7 +17224,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17241,7 +17241,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17258,7 +17258,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17275,7 +17275,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17292,7 +17292,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17309,7 +17309,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17326,7 +17326,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17343,7 +17343,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17360,7 +17360,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17377,7 +17377,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17394,7 +17394,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17411,7 +17411,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17428,7 +17428,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17445,7 +17445,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17462,7 +17462,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17479,7 +17479,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17496,7 +17496,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17513,7 +17513,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17530,7 +17530,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17547,7 +17547,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17564,7 +17564,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17581,7 +17581,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17598,7 +17598,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17615,7 +17615,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17632,7 +17632,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17649,7 +17649,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17666,7 +17666,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17683,7 +17683,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17700,7 +17700,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17717,7 +17717,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17734,7 +17734,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17751,7 +17751,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17768,7 +17768,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17785,7 +17785,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17802,7 +17802,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17819,7 +17819,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17836,7 +17836,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17853,7 +17853,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -17915,17 +17915,17 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[92] = 25;
       enemy->tileTextureIndexes[93] = 26;
       enemy->tileTextureIndexes[94] = 27;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[9] = 0x22220B0B;
       mem32[11] = 0x2222220B;
       mem32[13] = 0x0B22220B;
       mem32[15] = 0x0B0B220B;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[8] = 0x0B0B2222;
       mem32[10] = 0x0B222222;
       mem32[12] = 0x2222220B;
       mem32[14] = 0x22220B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[2] = 0x0B0B220B;
       mem32[4] = 0x0B220606;
       mem32[6] = 0x22220606;
@@ -17937,7 +17937,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x00060600;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[3] = 0x0B0B0B22;
       mem32[4] = 0x220B0B0B;
       mem32[5] = 0x0B0B0606;
@@ -17951,12 +17951,12 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0606;
       mem32[14] = 0x06002222;
       mem32[15] = 0x0B0B0006;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[9] = 0x0B22050B;
       mem32[11] = 0x22222205;
       mem32[13] = 0x22220B0B;
       mem32[15] = 0x22220B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x22220B0B;
       mem32[1] = 0x05050B0B;
       mem32[2] = 0x22220B0B;
@@ -17973,7 +17973,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05220022;
       mem32[14] = 0x00002222;
       mem32[15] = 0x05222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00220005;
       mem32[1] = 0x22220000;
       mem32[2] = 0x22220005;
@@ -17990,7 +17990,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06062222;
       mem32[14] = 0x22000005;
       mem32[15] = 0x00000606;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x22000000;
       mem32[1] = 0x22222200;
       mem32[2] = 0x22220006;
@@ -18007,7 +18007,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22220022;
       mem32[14] = 0x00220606;
       mem32[15] = 0x22222200;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[2] = 0x0B0B0B22;
       mem32[4] = 0x0B0B2222;
       mem32[6] = 0x0B0B2222;
@@ -18019,10 +18019,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22220B0B;
       mem32[14] = 0x00002222;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[8] = 0x0B0B0B05;
       mem32[10] = 0x0B0B0522;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x22220B0B;
       mem32[1] = 0x22220B22;
       mem32[2] = 0x2222050B;
@@ -18034,7 +18034,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x050B0B0B;
       mem32[11] = 0x0B0B2222;
       mem32[13] = 0x0B0B0B05;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x22222222;
       mem32[1] = 0x05222200;
       mem32[2] = 0x22220022;
@@ -18051,7 +18051,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050B22;
       mem32[14] = 0x22220B0B;
       mem32[15] = 0x050B0B22;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000505;
       mem32[1] = 0x00000006;
       mem32[2] = 0x00050505;
@@ -18068,7 +18068,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000005;
       mem32[14] = 0x05050505;
       mem32[15] = 0x05050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000600;
       mem32[1] = 0x22222222;
       mem32[2] = 0x22000000;
@@ -18085,7 +18085,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B050505;
       mem32[14] = 0x05050505;
       mem32[15] = 0x0B050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x22220022;
       mem32[1] = 0x22222222;
       mem32[2] = 0x22220022;
@@ -18098,7 +18098,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x22220500;
       mem32[10] = 0x220B0B0B;
       mem32[11] = 0x0B0B0B22;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x2222220B;
       mem32[2] = 0x22222222;
       mem32[3] = 0x0B0B0B05;
@@ -18108,7 +18108,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x0B0B2222;
       mem32[10] = 0x0B052222;
       mem32[12] = 0x0B0B050B;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x22220B0B;
       mem32[1] = 0x11050522;
       mem32[2] = 0x220B0B0B;
@@ -18122,7 +18122,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x220B0B0B;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x05051111;
       mem32[1] = 0x11111105;
       mem32[2] = 0x11111111;
@@ -18137,7 +18137,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x05050505;
       mem32[12] = 0x0B0B2222;
       mem32[14] = 0x0B0B0B22;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x05050511;
       mem32[1] = 0x05111111;
       mem32[2] = 0x11111111;
@@ -18154,7 +18154,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22221818;
       mem32[14] = 0x110B0B0B;
       mem32[15] = 0x22181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x0B0B0B05;
       mem32[2] = 0x0B0B0505;
       mem32[4] = 0x0B0B0505;
@@ -18163,10 +18163,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B2222;
       mem32[12] = 0x0B0B2222;
       mem32[14] = 0x0B0B0B06;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[13] = 0x000B0B0B;
       mem32[15] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x18180B0B;
       mem32[1] = 0x18181818;
       mem32[2] = 0x18180B0B;
@@ -18183,7 +18183,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11111111;
       mem32[14] = 0x11111111;
       mem32[15] = 0x11111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x0B0B1818;
       mem32[2] = 0x0B0B1818;
       mem32[3] = 0x000B0B0B;
@@ -18199,7 +18199,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00111111;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x11110B0B;
       mem32[1] = 0x18181811;
       mem32[2] = 0x11000000;
@@ -18216,7 +18216,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x0B0B1818;
       mem32[2] = 0x0B0B0018;
       mem32[4] = 0x00000000;
@@ -18227,16 +18227,16 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x0B0B0000;
       mem32[10] = 0x00001111;
       mem32[12] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[1] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
       mem32[3] = 0x00000000;
       mem32[4] = 0x00000B0B;
       mem32[5] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0B000000;
       mem32[2] = 0x0B0B0000;
@@ -18377,7 +18377,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18394,7 +18394,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18411,7 +18411,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18428,7 +18428,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18445,7 +18445,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18462,7 +18462,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18479,7 +18479,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18496,7 +18496,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18513,7 +18513,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18530,7 +18530,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18547,7 +18547,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18564,7 +18564,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18581,7 +18581,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18598,7 +18598,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18615,7 +18615,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18632,7 +18632,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18649,7 +18649,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18666,7 +18666,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18683,7 +18683,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18700,7 +18700,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18717,7 +18717,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18734,7 +18734,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18751,7 +18751,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18768,7 +18768,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18785,7 +18785,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18802,7 +18802,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18819,7 +18819,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18836,7 +18836,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18853,7 +18853,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18870,7 +18870,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18887,7 +18887,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18904,7 +18904,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18921,7 +18921,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18938,7 +18938,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18955,7 +18955,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18972,7 +18972,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -18989,7 +18989,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19006,7 +19006,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19023,7 +19023,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19040,7 +19040,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19057,7 +19057,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19074,7 +19074,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19091,7 +19091,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19108,7 +19108,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19125,7 +19125,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19142,7 +19142,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19159,7 +19159,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19176,7 +19176,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19193,7 +19193,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19210,7 +19210,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19227,7 +19227,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19244,7 +19244,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19261,7 +19261,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19278,7 +19278,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19295,7 +19295,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x15151500;
@@ -19312,7 +19312,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x28000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19329,7 +19329,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x15001515;
       mem32[14] = 0x28282828;
       mem32[15] = 0x28281515;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19346,7 +19346,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00282828;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19363,7 +19363,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19380,7 +19380,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19397,7 +19397,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19414,7 +19414,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19431,7 +19431,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19448,7 +19448,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19465,7 +19465,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x08080000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000800;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x28282800;
       mem32[2] = 0x00000000;
@@ -19482,7 +19482,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x28282828;
       mem32[14] = 0x08080800;
       mem32[15] = 0x28282828;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x28282828;
       mem32[1] = 0x28151515;
       mem32[2] = 0x28282828;
@@ -19499,7 +19499,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x28282828;
       mem32[14] = 0x28282828;
       mem32[15] = 0x28282828;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x28282828;
       mem32[1] = 0x00000028;
       mem32[2] = 0x28282828;
@@ -19516,7 +19516,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06060615;
       mem32[14] = 0x15282828;
       mem32[15] = 0x06282815;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19533,7 +19533,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000606;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19550,7 +19550,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19567,7 +19567,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19584,7 +19584,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19601,7 +19601,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19618,7 +19618,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x08000000;
       mem32[1] = 0x00080808;
       mem32[2] = 0x08080800;
@@ -19635,7 +19635,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x08080000;
       mem32[1] = 0x28282808;
       mem32[2] = 0x08000000;
@@ -19652,7 +19652,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x23162308;
       mem32[14] = 0x00000000;
       mem32[15] = 0x08080808;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x28282828;
       mem32[1] = 0x28282828;
       mem32[2] = 0x28282828;
@@ -19669,7 +19669,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00162323;
       mem32[14] = 0x23231608;
       mem32[15] = 0x00002316;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x15282828;
       mem32[1] = 0x06280015;
       mem32[2] = 0x15152828;
@@ -19686,7 +19686,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x23230023;
       mem32[14] = 0x16232323;
       mem32[15] = 0x16160023;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000606;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000606;
@@ -19703,7 +19703,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00002300;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19720,7 +19720,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19737,7 +19737,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19754,7 +19754,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19771,7 +19771,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19788,7 +19788,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19805,7 +19805,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x16230000;
       mem32[1] = 0x16231623;
       mem32[2] = 0x16000000;
@@ -19822,7 +19822,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x23162323;
       mem32[1] = 0x08082316;
       mem32[2] = 0x23162316;
@@ -19839,7 +19839,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x23231616;
       mem32[1] = 0x23231600;
       mem32[2] = 0x23162323;
@@ -19856,7 +19856,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00001600;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000023;
@@ -19873,7 +19873,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19890,7 +19890,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19907,7 +19907,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19924,7 +19924,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19941,7 +19941,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19958,7 +19958,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19975,7 +19975,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -19992,7 +19992,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20009,7 +20009,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20026,7 +20026,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20043,7 +20043,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20060,7 +20060,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20077,7 +20077,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20094,7 +20094,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20111,7 +20111,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20128,7 +20128,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20145,7 +20145,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20162,7 +20162,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20179,7 +20179,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20196,7 +20196,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20213,7 +20213,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20230,7 +20230,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20247,7 +20247,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20264,7 +20264,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20281,7 +20281,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20298,7 +20298,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20315,7 +20315,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20332,7 +20332,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20349,7 +20349,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20366,7 +20366,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20383,7 +20383,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20400,7 +20400,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20554,7 +20554,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20571,7 +20571,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20588,7 +20588,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20605,7 +20605,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20622,7 +20622,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20639,7 +20639,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20656,7 +20656,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20673,7 +20673,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20690,7 +20690,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20707,7 +20707,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20724,7 +20724,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20741,7 +20741,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20758,7 +20758,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20775,7 +20775,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20792,7 +20792,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20809,7 +20809,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20826,7 +20826,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20843,7 +20843,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20860,7 +20860,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20877,7 +20877,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20894,7 +20894,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20911,7 +20911,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20928,7 +20928,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20945,7 +20945,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20962,7 +20962,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20979,7 +20979,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -20996,7 +20996,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21013,7 +21013,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21030,7 +21030,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21047,7 +21047,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21064,7 +21064,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21081,7 +21081,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21098,7 +21098,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21115,7 +21115,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21132,7 +21132,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21149,7 +21149,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21166,7 +21166,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21183,7 +21183,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21200,7 +21200,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21217,7 +21217,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21234,7 +21234,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21251,7 +21251,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21268,7 +21268,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21285,7 +21285,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21302,7 +21302,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21319,7 +21319,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00050000;
       mem32[15] = 0x05050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21336,7 +21336,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00050500;
       mem32[14] = 0x05050505;
       mem32[15] = 0x00000500;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21353,7 +21353,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21370,7 +21370,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21387,7 +21387,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21404,7 +21404,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21421,7 +21421,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21438,7 +21438,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21455,7 +21455,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x06060600;
       mem32[1] = 0x00000028;
       mem32[2] = 0x06060606;
@@ -21472,7 +21472,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x28000028;
       mem32[14] = 0x00000000;
       mem32[15] = 0x05050000;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x05050000;
       mem32[1] = 0x05050505;
       mem32[2] = 0x05050500;
@@ -21489,7 +21489,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04050505;
       mem32[14] = 0x05050505;
       mem32[15] = 0x04050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x05050505;
       mem32[1] = 0x00000505;
       mem32[2] = 0x05050505;
@@ -21506,7 +21506,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x28050505;
       mem32[14] = 0x05050504;
       mem32[15] = 0x05050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x28000000;
       mem32[1] = 0x00060606;
       mem32[2] = 0x06280000;
@@ -21523,7 +21523,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00002828;
       mem32[14] = 0x00000505;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21540,7 +21540,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21557,7 +21557,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21574,7 +21574,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21591,7 +21591,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21608,7 +21608,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21625,7 +21625,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x05050500;
       mem32[2] = 0x00000000;
@@ -21642,7 +21642,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x05050000;
       mem32[15] = 0x05050005;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x05050505;
       mem32[1] = 0x04040505;
       mem32[2] = 0x05050505;
@@ -21659,7 +21659,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x04050505;
       mem32[15] = 0x05050404;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x05050404;
       mem32[1] = 0x05050505;
       mem32[2] = 0x05050404;
@@ -21676,7 +21676,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x04040505;
       mem32[15] = 0x05050504;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x00050505;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00050505;
@@ -21693,7 +21693,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x05000505;
       mem32[15] = 0x00000505;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21710,7 +21710,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21727,7 +21727,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21744,7 +21744,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21761,7 +21761,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21778,7 +21778,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21795,7 +21795,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x05050000;
       mem32[2] = 0x00000000;
@@ -21812,7 +21812,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x28282828;
       mem32[14] = 0x28000000;
       mem32[15] = 0x05282828;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x04040505;
       mem32[1] = 0x04050504;
       mem32[2] = 0x04040405;
@@ -21829,7 +21829,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x28282804;
       mem32[14] = 0x04050505;
       mem32[15] = 0x28282828;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x04050504;
       mem32[1] = 0x05050404;
       mem32[2] = 0x05050404;
@@ -21846,7 +21846,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x28282828;
       mem32[15] = 0x05050504;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00000505;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00050505;
@@ -21863,7 +21863,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x28282805;
       mem32[15] = 0x00000028;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21880,7 +21880,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21897,7 +21897,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21914,7 +21914,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21931,7 +21931,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21948,7 +21948,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -21965,7 +21965,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x28280000;
       mem32[1] = 0x05282828;
       mem32[2] = 0x28282800;
@@ -21982,7 +21982,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x28050505;
       mem32[1] = 0x06000600;
       mem32[2] = 0x00280505;
@@ -21999,7 +21999,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00060006;
       mem32[1] = 0x05050528;
       mem32[2] = 0x00000000;
@@ -22016,7 +22016,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050500;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x28282805;
       mem32[1] = 0x00002828;
       mem32[2] = 0x28000505;
@@ -22033,7 +22033,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000005;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22050,7 +22050,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22067,7 +22067,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22084,7 +22084,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22101,7 +22101,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22118,7 +22118,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22135,7 +22135,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22152,7 +22152,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22169,7 +22169,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22186,7 +22186,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22203,7 +22203,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22220,7 +22220,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22237,7 +22237,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22254,7 +22254,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22271,7 +22271,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22288,7 +22288,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22305,7 +22305,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22322,7 +22322,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22339,7 +22339,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22356,7 +22356,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22373,7 +22373,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22390,7 +22390,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22407,7 +22407,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22424,7 +22424,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22441,7 +22441,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22458,7 +22458,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22475,7 +22475,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22492,7 +22492,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22509,7 +22509,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22526,7 +22526,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22543,7 +22543,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22560,7 +22560,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22577,7 +22577,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22640,15 +22640,15 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[94] = 26;
       enemy->tileTextureIndexes[95] = 27;
       enemy->tileTextureIndexes[96] = 28;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[11] = 0x0B0B1616;
       mem32[12] = 0x160B0B0B;
       mem32[13] = 0x0B0B0B16;
       mem32[14] = 0x160B0B0B;
       mem32[15] = 0x0B0B0B16;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[15] = 0x160B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[6] = 0x0B16160B;
       mem32[8] = 0x1616160B;
       mem32[10] = 0x1616160B;
@@ -22656,10 +22656,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B06;
       mem32[14] = 0x060B1616;
       mem32[15] = 0x0B0B0B06;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[13] = 0x18180B0B;
       mem32[15] = 0x1818180B;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[1] = 0x05050505;
       mem32[2] = 0x050B0B0B;
       mem32[3] = 0x05050505;
@@ -22675,7 +22675,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050518;
       mem32[14] = 0x18180018;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x060B0B05;
       mem32[1] = 0x0B0B0B16;
       mem32[2] = 0x060B0505;
@@ -22692,7 +22692,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B1605;
       mem32[14] = 0x060B0B05;
       mem32[15] = 0x0B0B0606;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[1] = 0x16160B0B;
       mem32[3] = 0x1616160B;
       mem32[4] = 0x160B0B0B;
@@ -22707,7 +22707,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16160505;
       mem32[14] = 0x1616160B;
       mem32[15] = 0x05050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x06061616;
       mem32[1] = 0x0B0B0B06;
       mem32[2] = 0x06060616;
@@ -22724,10 +22724,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0606;
       mem32[14] = 0x06161605;
       mem32[15] = 0x0B0B0606;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[1] = 0x18181818;
       mem32[3] = 0x180B0B18;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x18181818;
       mem32[1] = 0x18181616;
       mem32[2] = 0x16181818;
@@ -22744,7 +22744,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B18;
       mem32[14] = 0x18161618;
       mem32[15] = 0x0B0B0B18;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x06060505;
       mem32[1] = 0x0B060606;
       mem32[2] = 0x16060505;
@@ -22761,7 +22761,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16160606;
       mem32[14] = 0x0606060B;
       mem32[15] = 0x16161606;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x05161616;
       mem32[1] = 0x05050516;
       mem32[2] = 0x05051616;
@@ -22778,7 +22778,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06050505;
       mem32[14] = 0x05050516;
       mem32[15] = 0x06161616;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x06060606;
       mem32[1] = 0x0B0B0B06;
       mem32[2] = 0x06060616;
@@ -22790,13 +22790,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B161616;
       mem32[12] = 0x0B060606;
       mem32[14] = 0x0B0B0606;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[11] = 0x0505160B;
       mem32[12] = 0x050B0B0B;
       mem32[13] = 0x05160505;
       mem32[14] = 0x16050B0B;
       mem32[15] = 0x05160505;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x1818180B;
       mem32[5] = 0x050B0B0B;
       mem32[7] = 0x160B0B0B;
@@ -22807,7 +22807,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050516;
       mem32[14] = 0x05160505;
       mem32[15] = 0x05051605;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x0505050B;
       mem32[1] = 0x16160505;
       mem32[2] = 0x16161616;
@@ -22824,7 +22824,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16160505;
       mem32[14] = 0x05160505;
       mem32[15] = 0x16161605;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x05051616;
       mem32[1] = 0x16060605;
       mem32[2] = 0x050B1616;
@@ -22835,15 +22835,15 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B0B16;
       mem32[12] = 0x0B0B0B16;
       mem32[14] = 0x0B0B0B16;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x0B0B0B16;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x1605050B;
       mem32[1] = 0x16161616;
       mem32[2] = 0x0B16050B;
       mem32[3] = 0x160B0B0B;
       mem32[4] = 0x0B0B160B;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x05160516;
       mem32[1] = 0x05160505;
       mem32[2] = 0x16161616;
@@ -22853,7 +22853,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x16160B0B;
       mem32[7] = 0x16161616;
       mem32[9] = 0x1616160B;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x16050505;
       mem32[1] = 0x16161616;
       mem32[2] = 0x16161605;
@@ -22863,24 +22863,24 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x16161616;
       mem32[7] = 0x0B0B1616;
       mem32[8] = 0x0B161616;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[15] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[12] = 0x00000B0B;
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[12] = 0x00000000;
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[14] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[1] = 0x00000B0B;
       mem32[3] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22890,7 +22890,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x00000B0B;
       mem32[7] = 0x00000000;
       mem32[9] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -22901,7 +22901,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x00000000;
       mem32[8] = 0x00000000;
       mem32[9] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[2] = 0x00000000;
       mem32[4] = 0x0B0B0000;
@@ -22940,7 +22940,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[84] = 15;
       enemy->tileTextureIndexes[85] = 16;
       enemy->tileTextureIndexes[86] = 17;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[1] = 0x10101010;
       mem32[2] = 0x10100B0B;
       mem32[3] = 0x10101010;
@@ -22951,7 +22951,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x100B0B0B;
       mem32[9] = 0x10101010;
       mem32[11] = 0x1010100B;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[2] = 0x10100010;
       mem32[3] = 0x0B001010;
       mem32[4] = 0x10100010;
@@ -22961,25 +22961,25 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x10001010;
       mem32[9] = 0x00101010;
       mem32[11] = 0x10001010;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[4] = 0x0B0B0B10;
       mem32[6] = 0x0B0B1010;
       mem32[8] = 0x0B101010;
       mem32[10] = 0x10101010;
       mem32[12] = 0x00101010;
       mem32[14] = 0x1000100B;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[9] = 0x100B0B0B;
       mem32[11] = 0x100B0B0B;
       mem32[15] = 0x0010100B;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[10] = 0x0B0B0B10;
       mem32[11] = 0x100B0B0B;
       mem32[12] = 0x0B0B0B10;
       mem32[13] = 0x00100B0B;
       mem32[14] = 0x10001010;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[7] = 0x100B0B0B;
       mem32[9] = 0x10100010;
       mem32[10] = 0x10001010;
@@ -22988,7 +22988,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00101000;
       mem32[14] = 0x00101000;
       mem32[15] = 0x10100010;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x1010000B;
       mem32[1] = 0x0B0B0B10;
       mem32[2] = 0x1010100B;
@@ -23001,14 +23001,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x10101010;
       mem32[12] = 0x0B101010;
       mem32[14] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[9] = 0x100B0B0B;
       mem32[11] = 0x00101010;
       mem32[12] = 0x10100B0B;
       mem32[13] = 0x0B101010;
       mem32[14] = 0x10100B0B;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x100B0B0B;
       mem32[1] = 0x10100010;
       mem32[2] = 0x10100B0B;
@@ -23025,7 +23025,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000010;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x10101000;
       mem32[1] = 0x10101010;
       mem32[2] = 0x10101010;
@@ -23042,7 +23042,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00222222;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x10001010;
       mem32[1] = 0x00100010;
       mem32[2] = 0x00100010;
@@ -23059,7 +23059,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00101010;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x10001000;
       mem32[1] = 0x0B0B0000;
       mem32[2] = 0x00100010;
@@ -23076,11 +23076,11 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B000000;
       mem32[14] = 0x00001010;
       mem32[15] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[4] = 0x0B0B0B00;
       mem32[6] = 0x0B0B0000;
       mem32[8] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x1010100B;
       mem32[1] = 0x10100000;
       mem32[2] = 0x0010100B;
@@ -23091,7 +23091,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x10100B0B;
       mem32[8] = 0x0B0B000B;
       mem32[9] = 0x00001010;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000010;
       mem32[1] = 0x00000000;
       mem32[2] = 0x000B0B10;
@@ -23099,7 +23099,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x0B0B0B00;
       mem32[5] = 0x0000000B;
       mem32[6] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x10000000;
       mem32[2] = 0x00000000;
@@ -23111,7 +23111,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x000B0B0B;
       mem32[13] = 0x10100B0B;
       mem32[15] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x10101010;
       mem32[1] = 0x00001000;
       mem32[2] = 0x10101010;
@@ -23126,7 +23126,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x0B0B0B00;
       mem32[12] = 0x00000010;
       mem32[14] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00101000;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x00000000;
@@ -23173,21 +23173,21 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[86] = 22;
       enemy->tileTextureIndexes[93] = 23;
       enemy->tileTextureIndexes[94] = 24;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[5] = 0x060B0B0B;
       mem32[7] = 0x06060B0B;
       mem32[9] = 0x06060B0B;
       mem32[11] = 0x04060B0B;
       mem32[13] = 0x06060B0B;
       mem32[15] = 0x06060B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[4] = 0x0B060406;
       mem32[6] = 0x06060604;
       mem32[8] = 0x06060604;
       mem32[10] = 0x06060406;
       mem32[12] = 0x06040606;
       mem32[14] = 0x06060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[3] = 0x22220B0B;
       mem32[5] = 0x2222220B;
       mem32[7] = 0x2222220B;
@@ -23196,7 +23196,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22060606;
       mem32[14] = 0x060B0B0B;
       mem32[15] = 0x0B0B0606;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[1] = 0x0606040B;
       mem32[2] = 0x1B022222;
       mem32[3] = 0x0000001B;
@@ -23212,7 +23212,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00061B1B;
       mem32[14] = 0x22222222;
       mem32[15] = 0x00061B02;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x06060606;
       mem32[1] = 0x0B0B0B04;
       mem32[2] = 0x00000406;
@@ -23229,7 +23229,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22021B1B;
       mem32[14] = 0x06000000;
       mem32[15] = 0x2222021B;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[2] = 0x22222222;
       mem32[4] = 0x22222222;
       mem32[5] = 0x0B0B0B22;
@@ -23243,12 +23243,12 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101006;
       mem32[14] = 0x10060606;
       mem32[15] = 0x0B101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[6] = 0x0B0B0606;
       mem32[8] = 0x0B0B0606;
       mem32[10] = 0x0B0B0606;
       mem32[12] = 0x0B0B0B06;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x0B060B0B;
       mem32[1] = 0x0B0B0B06;
       mem32[2] = 0x060B060B;
@@ -23262,7 +23262,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x220B0B20;
       mem32[14] = 0x0022200B;
       mem32[15] = 0x0B202000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x2222220B;
       mem32[1] = 0x041B0222;
       mem32[2] = 0x220B0B0B;
@@ -23275,7 +23275,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101006;
       mem32[14] = 0x10060622;
       mem32[15] = 0x021B1010;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x1B060406;
       mem32[1] = 0x06062202;
       mem32[2] = 0x22060606;
@@ -23292,7 +23292,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B1B1B;
       mem32[14] = 0x1B021B1B;
       mem32[15] = 0x0B22221B;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x10101006;
       mem32[1] = 0x0610060B;
       mem32[2] = 0x0B0B1010;
@@ -23307,7 +23307,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B200020;
       mem32[14] = 0x200B0B0B;
       mem32[15] = 0x20200000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x20220B0B;
       mem32[1] = 0x20202020;
       mem32[2] = 0x20220B0B;
@@ -23318,7 +23318,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x0B200020;
       mem32[8] = 0x0B100B0B;
       mem32[15] = 0x1B0B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x10101022;
       mem32[1] = 0x22222222;
       mem32[2] = 0x22221022;
@@ -23333,7 +23333,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x2222221B;
       mem32[12] = 0x1B1B1B1B;
       mem32[14] = 0x0B1B1B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x22220202;
       mem32[1] = 0x22222222;
       mem32[2] = 0x22222222;
@@ -23348,14 +23348,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x1B1B1B22;
       mem32[13] = 0x1B1B0B0B;
       mem32[15] = 0x1B0B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[1] = 0x0B202020;
       mem32[2] = 0x0B0B0B22;
       mem32[4] = 0x0B0B0B22;
       mem32[10] = 0x0B0B0B1B;
       mem32[12] = 0x0B0B1B1B;
       mem32[14] = 0x0B1B1B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[1] = 0x1B1B0B0B;
       mem32[3] = 0x1B1B1B0B;
       mem32[5] = 0x1B1B1B0B;
@@ -23364,7 +23364,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x1B22220B;
       mem32[13] = 0x06060606;
       mem32[15] = 0x06060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x0B0B1B1B;
       mem32[2] = 0x0B0B0B1B;
       mem32[6] = 0x0B0B0B1B;
@@ -23373,7 +23373,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x06060606;
       mem32[14] = 0x06060606;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[3] = 0x22020B0B;
       mem32[5] = 0x0606060B;
       mem32[7] = 0x0606200B;
@@ -23382,7 +23382,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x20202020;
       mem32[14] = 0x00000000;
       mem32[15] = 0x20202020;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x1B1B1B1B;
       mem32[2] = 0x1B1B1B1B;
       mem32[4] = 0x0B1B1B1B;
@@ -23391,7 +23391,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B060620;
       mem32[12] = 0x0B0B2020;
       mem32[14] = 0x0B0B0020;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[1] = 0x0606060B;
       mem32[3] = 0x20202000;
       mem32[4] = 0x0000000B;
@@ -23406,7 +23406,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x000B0B0B;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x20060606;
       mem32[1] = 0x00000000;
       mem32[2] = 0x20202020;
@@ -23423,7 +23423,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x20202000;
       mem32[2] = 0x00000000;
@@ -23436,7 +23436,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x00000000;
       mem32[10] = 0x00000000;
       mem32[11] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00202020;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x20202020;
@@ -23445,9 +23445,9 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x0B0B0000;
       mem32[6] = 0x00000000;
       mem32[8] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[1] = 0x0000000B;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x0B000000;
       break;
    case 24:
@@ -23500,11 +23500,11 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[95] = 31;
       enemy->tileTextureIndexes[96] = 32;
       enemy->tileTextureIndexes[97] = 33;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[13] = 0x1818180B;
       mem32[14] = 0x180B0B0B;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[1] = 0x180B0B0B;
       mem32[3] = 0x18180B0B;
       mem32[5] = 0x1800090B;
@@ -23516,7 +23516,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090900;
       mem32[14] = 0x18181800;
       mem32[15] = 0x09090900;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x18181818;
       mem32[1] = 0x0B0B0B18;
       mem32[2] = 0x18181818;
@@ -23533,7 +23533,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00181818;
       mem32[14] = 0x18180909;
       mem32[15] = 0x00181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[8] = 0x18181800;
       mem32[9] = 0x0B0B1818;
       mem32[10] = 0x18181818;
@@ -23542,15 +23542,15 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B181800;
       mem32[14] = 0x18181818;
       mem32[15] = 0x18180018;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[14] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[7] = 0x000B0B0B;
       mem32[9] = 0x000B0B0B;
       mem32[11] = 0x180B0B0B;
       mem32[13] = 0x1818000B;
       mem32[15] = 0x0000000B;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x180B0B0B;
       mem32[1] = 0x18180018;
       mem32[2] = 0x180B0B0B;
@@ -23567,7 +23567,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00090909;
       mem32[14] = 0x00090909;
       mem32[15] = 0x00000009;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x18181800;
       mem32[1] = 0x09000900;
       mem32[2] = 0x18181818;
@@ -23584,7 +23584,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00090000;
       mem32[14] = 0x09090000;
       mem32[15] = 0x09090909;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x18180909;
       mem32[1] = 0x00180018;
       mem32[2] = 0x0A00000A;
@@ -23601,7 +23601,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090900;
       mem32[14] = 0x09001809;
       mem32[15] = 0x00090909;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x18001818;
       mem32[1] = 0x18180018;
       mem32[2] = 0x00001818;
@@ -23618,7 +23618,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00181818;
       mem32[14] = 0x18000000;
       mem32[15] = 0x00181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x0B001800;
       mem32[2] = 0x00181800;
       mem32[3] = 0x0B0B0B18;
@@ -23634,7 +23634,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B180018;
       mem32[14] = 0x18180018;
       mem32[15] = 0x0B180900;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[1] = 0x18181818;
       mem32[2] = 0x18090B0B;
       mem32[3] = 0x00000018;
@@ -23650,7 +23650,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x0000090B;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x09090000;
       mem32[1] = 0x09090900;
       mem32[2] = 0x0B091818;
@@ -23663,7 +23663,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B181818;
       mem32[12] = 0x18000000;
       mem32[14] = 0x00181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x09090009;
       mem32[1] = 0x09090009;
       mem32[2] = 0x00000000;
@@ -23680,7 +23680,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090909;
       mem32[14] = 0x09090018;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x09001818;
       mem32[1] = 0x09090909;
       mem32[2] = 0x09001818;
@@ -23697,7 +23697,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18180009;
       mem32[14] = 0x00000000;
       mem32[15] = 0x18181800;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x18180900;
       mem32[1] = 0x0B0B1818;
       mem32[2] = 0x18180900;
@@ -23710,7 +23710,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x18001818;
       mem32[14] = 0x18001818;
       mem32[15] = 0x0B0B0B18;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00001809;
       mem32[1] = 0x0B090909;
       mem32[2] = 0x09090900;
@@ -23725,7 +23725,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x0B0B0900;
       mem32[12] = 0x0009090B;
       mem32[13] = 0x0B0B0B09;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x0909000B;
       mem32[1] = 0x18181818;
       mem32[2] = 0x1809090B;
@@ -23742,7 +23742,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00180018;
       mem32[14] = 0x09000009;
       mem32[15] = 0x09000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x18181818;
       mem32[2] = 0x18181818;
       mem32[3] = 0x0B0B0B18;
@@ -23758,7 +23758,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090018;
       mem32[14] = 0x18090018;
       mem32[15] = 0x09090018;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00001800;
       mem32[1] = 0x09090009;
       mem32[2] = 0x18180009;
@@ -23774,7 +23774,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x00090000;
       mem32[13] = 0x09090900;
       mem32[14] = 0x18000909;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00090909;
       mem32[1] = 0x18181809;
       mem32[2] = 0x00000000;
@@ -23789,7 +23789,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x18181809;
       mem32[12] = 0x09090909;
       mem32[13] = 0x00181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x18180000;
       mem32[1] = 0x0B0B0B18;
       mem32[2] = 0x18181818;
@@ -23806,7 +23806,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B181800;
       mem32[14] = 0x18000909;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000909;
       mem32[1] = 0x09180009;
       mem32[2] = 0x0900090B;
@@ -23814,7 +23814,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x180B0B0B;
       mem32[13] = 0x00090B0B;
       mem32[15] = 0x09090B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x18000000;
       mem32[1] = 0x00001800;
       mem32[2] = 0x00180900;
@@ -23831,7 +23831,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18181818;
       mem32[14] = 0x18000009;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x18180000;
       mem32[2] = 0x00001818;
       mem32[4] = 0x18180000;
@@ -23845,7 +23845,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001818;
       mem32[14] = 0x18180000;
       mem32[15] = 0x00000018;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[6] = 0x00000B0B;
       mem32[7] = 0x0B0B0000;
       mem32[8] = 0x00000000;
@@ -23856,7 +23856,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00180000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x18180900;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x18090900;
       mem32[1] = 0x18181818;
       mem32[2] = 0x00000009;
@@ -23873,7 +23873,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18180000;
       mem32[14] = 0x18180900;
       mem32[15] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[2] = 0x0B0B0B18;
       mem32[4] = 0x0B0B1818;
       mem32[6] = 0x0B0B1818;
@@ -23881,13 +23881,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B1818;
       mem32[12] = 0x0B0B1818;
       mem32[14] = 0x0B180018;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[1] = 0x09000B0B;
       mem32[3] = 0x0000000B;
       mem32[5] = 0x00000000;
       mem32[7] = 0x00000000;
       mem32[9] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00090909;
       mem32[1] = 0x00001800;
       mem32[2] = 0x09090900;
@@ -23900,7 +23900,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x00000000;
       mem32[10] = 0x00000000;
       mem32[11] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00181818;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000018;
@@ -23908,7 +23908,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x00000000;
       mem32[5] = 0x000B0B00;
       mem32[6] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x18000900;
       mem32[2] = 0x00000000;
@@ -23919,7 +23919,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x09000000;
       mem32[9] = 0x0000000B;
       mem32[11] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000018;
       mem32[1] = 0x00000000;
       mem32[2] = 0x18181818;
@@ -23934,7 +23934,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x18181818;
       mem32[12] = 0x18000B0B;
       mem32[13] = 0x18181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x18181800;
       mem32[2] = 0x18181818;
       mem32[3] = 0x0B0B0B18;
@@ -23999,7 +23999,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[95] = 31;
       enemy->tileTextureIndexes[96] = 32;
       enemy->tileTextureIndexes[97] = 33;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[8] = 0x01010B0B;
       mem32[9] = 0x00010101;
       mem32[10] = 0x0101010B;
@@ -24008,7 +24008,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010101;
       mem32[14] = 0x01000101;
       mem32[15] = 0x01010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x010B0B0B;
       mem32[1] = 0x01010101;
       mem32[2] = 0x01010B0B;
@@ -24025,7 +24025,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020101;
       mem32[14] = 0x01010100;
       mem32[15] = 0x02020101;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x0B0B0B01;
       mem32[2] = 0x0B0B0101;
       mem32[4] = 0x0B020001;
@@ -24037,11 +24037,11 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00010101;
       mem32[14] = 0x00020202;
       mem32[15] = 0x00010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[12] = 0x0B010101;
       mem32[14] = 0x01010101;
       mem32[15] = 0x0B0B0B01;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[1] = 0x00010B0B;
       mem32[2] = 0x010B0B0B;
       mem32[3] = 0x00010100;
@@ -24057,7 +24057,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00020000;
       mem32[14] = 0x0002010B;
       mem32[15] = 0x01000101;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x01000101;
       mem32[1] = 0x01010001;
       mem32[2] = 0x00000101;
@@ -24074,7 +24074,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020101;
       mem32[14] = 0x01010100;
       mem32[15] = 0x00000001;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x01000100;
       mem32[1] = 0x02020101;
       mem32[2] = 0x00010001;
@@ -24091,7 +24091,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x02020200;
       mem32[15] = 0x02010002;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00020002;
       mem32[1] = 0x00010101;
       mem32[2] = 0x01000200;
@@ -24108,7 +24108,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020000;
       mem32[14] = 0x02020202;
       mem32[15] = 0x00000202;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x01000101;
       mem32[1] = 0x0B0B0B01;
       mem32[2] = 0x01000101;
@@ -24125,13 +24125,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02000000;
       mem32[14] = 0x02000000;
       mem32[15] = 0x02020200;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[6] = 0x0B0B0B00;
       mem32[8] = 0x0B0B0100;
       mem32[10] = 0x0B0B0101;
       mem32[12] = 0x0B010101;
       mem32[14] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x02020201;
       mem32[1] = 0x02010000;
       mem32[2] = 0x02020001;
@@ -24146,7 +24146,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x02000002;
       mem32[12] = 0x020B0B0B;
       mem32[13] = 0x0B020200;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x01010B0B;
       mem32[1] = 0x00020101;
       mem32[2] = 0x01010B0B;
@@ -24159,7 +24159,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010001;
       mem32[14] = 0x010B0B0B;
       mem32[15] = 0x01010001;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x01010002;
       mem32[2] = 0x02000000;
@@ -24176,7 +24176,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00020202;
       mem32[14] = 0x00010101;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x02000202;
       mem32[1] = 0x02000202;
       mem32[2] = 0x00020202;
@@ -24193,7 +24193,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00020000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x01000202;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00020202;
       mem32[1] = 0x00000202;
       mem32[2] = 0x01020000;
@@ -24207,7 +24207,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x0101010B;
       mem32[13] = 0x00000001;
       mem32[15] = 0x01010100;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x01010101;
       mem32[1] = 0x0B0B0B01;
       mem32[2] = 0x01000000;
@@ -24224,7 +24224,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B020202;
       mem32[14] = 0x01010101;
       mem32[15] = 0x0B020000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x010B0B0B;
       mem32[1] = 0x00000101;
       mem32[2] = 0x010B0B0B;
@@ -24241,7 +24241,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00020100;
       mem32[14] = 0x01010101;
       mem32[15] = 0x02020001;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x02010101;
       mem32[1] = 0x02020200;
       mem32[2] = 0x00000000;
@@ -24256,7 +24256,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x02020202;
       mem32[12] = 0x01010100;
       mem32[13] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x02000202;
       mem32[1] = 0x00010000;
       mem32[2] = 0x00000000;
@@ -24272,7 +24272,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x00020202;
       mem32[13] = 0x00000200;
       mem32[15] = 0x02020001;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[1] = 0x01010101;
       mem32[2] = 0x010B0B0B;
       mem32[3] = 0x01010101;
@@ -24288,7 +24288,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000002;
       mem32[14] = 0x01000202;
       mem32[15] = 0x01000201;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x01010101;
       mem32[1] = 0x0B000202;
       mem32[2] = 0x01010101;
@@ -24305,11 +24305,11 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00020002;
       mem32[14] = 0x00000002;
       mem32[15] = 0x02000002;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[6] = 0x0B0B0B02;
       mem32[8] = 0x0B0B0B02;
       mem32[10] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[3] = 0x010B0B0B;
       mem32[5] = 0x01010B0B;
       mem32[7] = 0x01010B0B;
@@ -24317,7 +24317,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x01010B0B;
       mem32[13] = 0x01010B0B;
       mem32[15] = 0x0100010B;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x01010101;
       mem32[1] = 0x00020201;
       mem32[2] = 0x00000000;
@@ -24334,7 +24334,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02000000;
       mem32[14] = 0x01010101;
       mem32[15] = 0x00020101;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[6] = 0x00000B0B;
       mem32[7] = 0x0B0B0000;
       mem32[8] = 0x00000000;
@@ -24345,7 +24345,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00020101;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[1] = 0x00000101;
       mem32[3] = 0x01010000;
       mem32[5] = 0x00000101;
@@ -24359,7 +24359,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010000;
       mem32[14] = 0x01000000;
       mem32[15] = 0x00000101;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00010000;
       mem32[1] = 0x00000001;
       mem32[2] = 0x01000101;
@@ -24376,7 +24376,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00010101;
       mem32[14] = 0x01010101;
       mem32[15] = 0x02000001;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x02000102;
       mem32[1] = 0x02020000;
       mem32[2] = 0x020B0B0B;
@@ -24384,7 +24384,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B0B01;
       mem32[12] = 0x0B0B0200;
       mem32[14] = 0x0B0B0202;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[1] = 0x00010101;
       mem32[2] = 0x010B0B0B;
       mem32[3] = 0x01010101;
@@ -24398,7 +24398,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x01010101;
       mem32[12] = 0x01010B0B;
       mem32[13] = 0x01010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x01000000;
       mem32[2] = 0x01010101;
@@ -24413,7 +24413,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x00020001;
       mem32[12] = 0x01010101;
       mem32[13] = 0x0B0B0001;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00020001;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00020200;
@@ -24424,7 +24424,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x0B000000;
       mem32[8] = 0x0B000000;
       mem32[10] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x01010100;
       mem32[2] = 0x00000000;
@@ -24432,7 +24432,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x000B0B00;
       mem32[5] = 0x00000000;
       mem32[7] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00010000;
       mem32[1] = 0x02020200;
       mem32[2] = 0x02000101;
@@ -24445,7 +24445,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x00000000;
       mem32[10] = 0x00000B0B;
       mem32[11] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x0B0B0002;
       mem32[2] = 0x0B000000;
       mem32[4] = 0x00000000;
@@ -24500,7 +24500,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[96] = 29;
       enemy->tileTextureIndexes[97] = 30;
       enemy->tileTextureIndexes[98] = 31;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[1] = 0x1111110B;
       mem32[2] = 0x110B0B0B;
       mem32[3] = 0x11111111;
@@ -24512,7 +24512,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x1111110B;
       mem32[13] = 0x2111110B;
       mem32[15] = 0x21211010;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[2] = 0x0B0B1111;
       mem32[4] = 0x0B111111;
       mem32[6] = 0x11111111;
@@ -24523,9 +24523,9 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B11;
       mem32[14] = 0x10101021;
       mem32[15] = 0x0B0B1110;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[15] = 0x0B10100B;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[3] = 0x1010100B;
       mem32[5] = 0x10101010;
       mem32[7] = 0x10101010;
@@ -24534,7 +24534,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101000;
       mem32[14] = 0x210B0B0B;
       mem32[15] = 0x10100000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[1] = 0x21211010;
       mem32[2] = 0x0B0B1010;
       mem32[3] = 0x10101010;
@@ -24550,7 +24550,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21002100;
       mem32[14] = 0x10101010;
       mem32[15] = 0x21212100;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x10101010;
       mem32[1] = 0x0B0B1110;
       mem32[2] = 0x21101010;
@@ -24567,7 +24567,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101000;
       mem32[14] = 0x00212121;
       mem32[15] = 0x10101000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x10100B0B;
       mem32[1] = 0x10101010;
       mem32[2] = 0x10101010;
@@ -24584,7 +24584,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21210010;
       mem32[14] = 0x10101010;
       mem32[15] = 0x21210010;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x0B0B0B10;
       mem32[2] = 0x0B0B1010;
       mem32[4] = 0x0B0B0B10;
@@ -24593,7 +24593,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B2121;
       mem32[12] = 0x0B212121;
       mem32[14] = 0x00000021;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x11110B0B;
       mem32[1] = 0x0B0B0B11;
       mem32[2] = 0x0011110B;
@@ -24608,7 +24608,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x10100011;
       mem32[12] = 0x110B110B;
       mem32[13] = 0x10001111;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x21000B0B;
       mem32[1] = 0x10000021;
       mem32[2] = 0x21210010;
@@ -24622,7 +24622,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x00000B10;
       mem32[11] = 0x210B0B21;
       mem32[12] = 0x0B0B0B10;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x10101010;
       mem32[1] = 0x00000010;
       mem32[2] = 0x10211010;
@@ -24639,7 +24639,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00002121;
       mem32[14] = 0x21212121;
       mem32[15] = 0x00002121;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x21000000;
       mem32[1] = 0x10101021;
       mem32[2] = 0x21212121;
@@ -24656,7 +24656,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21212121;
       mem32[14] = 0x00000000;
       mem32[15] = 0x21212121;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x10101021;
       mem32[1] = 0x21210000;
       mem32[2] = 0x00211010;
@@ -24673,7 +24673,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0000110B;
       mem32[14] = 0x0B0B2121;
       mem32[15] = 0x11110B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x10101000;
       mem32[2] = 0x10101111;
       mem32[3] = 0x0B0B0B10;
@@ -24688,7 +24688,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x10110000;
       mem32[13] = 0x0B0B0B10;
       mem32[14] = 0x10101111;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[7] = 0x21210010;
       mem32[8] = 0x10100B0B;
       mem32[9] = 0x21212100;
@@ -24698,7 +24698,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21212121;
       mem32[14] = 0x0010100B;
       mem32[15] = 0x21212100;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x21210B0B;
       mem32[1] = 0x00000021;
       mem32[2] = 0x00030B0B;
@@ -24715,7 +24715,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101010;
       mem32[14] = 0x00000021;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -24732,7 +24732,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00101010;
       mem32[14] = 0x10101010;
       mem32[15] = 0x00101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x0B210000;
       mem32[1] = 0x110B0B0B;
       mem32[2] = 0x0B0B0300;
@@ -24745,12 +24745,12 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0000;
       mem32[14] = 0x21212121;
       mem32[15] = 0x0B212121;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x0B0B0B11;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[13] = 0x000B0B0B;
       mem32[15] = 0x110B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x1010100B;
       mem32[1] = 0x21212100;
       mem32[2] = 0x1000100B;
@@ -24767,7 +24767,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11101000;
       mem32[14] = 0x10111111;
       mem32[15] = 0x00111010;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00002121;
       mem32[1] = 0x00001010;
       mem32[2] = 0x0B21210B;
@@ -24780,7 +24780,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x10000000;
       mem32[1] = 0x00001010;
       mem32[2] = 0x10101010;
@@ -24794,7 +24794,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x21212121;
       mem32[1] = 0x10101021;
       mem32[2] = 0x00212121;
@@ -24811,7 +24811,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00101010;
       mem32[14] = 0x10100000;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[2] = 0x0B0B0B10;
       mem32[4] = 0x0B0B0B10;
       mem32[6] = 0x0B0B1010;
@@ -24819,14 +24819,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B0010;
       mem32[12] = 0x0B0B1000;
       mem32[14] = 0x0B101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[1] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
       mem32[3] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -24835,7 +24835,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x00000000;
       mem32[6] = 0x000B0B0B;
       mem32[7] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -24846,7 +24846,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x00000000;
       mem32[8] = 0x00000000;
       mem32[9] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x10100000;
       mem32[1] = 0x10101010;
       mem32[2] = 0x10210000;
@@ -24859,7 +24859,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x00000000;
       mem32[10] = 0x00000000;
       mem32[11] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00101010;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x11111111;
@@ -24872,7 +24872,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x0B000000;
       mem32[10] = 0x00000000;
       mem32[11] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[4] = 0x0B0B0B00;
       mem32[6] = 0x0B0B0B00;
       break;
@@ -24921,7 +24921,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[94] = 26;
       enemy->tileTextureIndexes[95] = 27;
       enemy->tileTextureIndexes[96] = 28;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[7] = 0x0B22220B;
       mem32[9] = 0x0B222222;
       mem32[11] = 0x0B222222;
@@ -24929,15 +24929,15 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2222220B;
       mem32[14] = 0x060B0B0B;
       mem32[15] = 0x22220B06;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[14] = 0x0B0B0B22;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[10] = 0x22220B0B;
       mem32[12] = 0x220B0B0B;
       mem32[13] = 0x0B0B0B22;
       mem32[14] = 0x220B0B0B;
       mem32[15] = 0x0B0B0B22;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x060B0B0B;
       mem32[1] = 0x22220606;
       mem32[2] = 0x220B0B0B;
@@ -24954,7 +24954,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01060622;
       mem32[14] = 0x06060B0B;
       mem32[15] = 0x01222206;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x0B0B2222;
       mem32[2] = 0x0B222222;
       mem32[4] = 0x22222222;
@@ -24969,7 +24969,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B222201;
       mem32[14] = 0x01010101;
       mem32[15] = 0x0B222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x220B0B0B;
       mem32[1] = 0x010B0B06;
       mem32[2] = 0x22220B0B;
@@ -24986,7 +24986,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010B0B;
       mem32[14] = 0x06060B0B;
       mem32[15] = 0x010B0B06;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x01010101;
       mem32[2] = 0x01010101;
       mem32[3] = 0x0B0B0B01;
@@ -25002,10 +25002,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01181818;
       mem32[14] = 0x18181818;
       mem32[15] = 0x18001818;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[12] = 0x0B0B1818;
       mem32[14] = 0x0B181818;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x060B0B0B;
       mem32[1] = 0x06060606;
       mem32[2] = 0x220B0B0B;
@@ -25017,7 +25017,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x2222220B;
       mem32[13] = 0x0606060B;
       mem32[15] = 0x06060B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x22010101;
       mem32[1] = 0x22222201;
       mem32[2] = 0x01222222;
@@ -25034,7 +25034,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22012222;
       mem32[14] = 0x22222206;
       mem32[15] = 0x22010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x0606060B;
       mem32[1] = 0x01010606;
       mem32[2] = 0x06060622;
@@ -25051,7 +25051,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06060606;
       mem32[14] = 0x06222222;
       mem32[15] = 0x0B060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x22221818;
       mem32[1] = 0x18181818;
       mem32[2] = 0x22181801;
@@ -25068,12 +25068,12 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B222222;
       mem32[14] = 0x180B0B0B;
       mem32[15] = 0x18222218;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x18181818;
       mem32[2] = 0x180B0B18;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[1] = 0x220B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x01060622;
       mem32[1] = 0x22220101;
       mem32[2] = 0x22060606;
@@ -25084,7 +25084,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x220B0B0B;
       mem32[13] = 0x220B0B0B;
       mem32[15] = 0x220B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x01012222;
       mem32[1] = 0x0B010101;
       mem32[2] = 0x22010122;
@@ -25101,7 +25101,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22220101;
       mem32[14] = 0x01222222;
       mem32[15] = 0x01012201;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[1] = 0x0B181818;
       mem32[4] = 0x0B0B0B01;
       mem32[6] = 0x0B0B0B22;
@@ -25112,13 +25112,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01012201;
       mem32[14] = 0x01220101;
       mem32[15] = 0x01012201;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[10] = 0x0B220101;
       mem32[12] = 0x01012201;
       mem32[13] = 0x0B0B0B01;
       mem32[14] = 0x01012201;
       mem32[15] = 0x0B0B0122;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x22222222;
       mem32[1] = 0x01010122;
       mem32[2] = 0x22222222;
@@ -25128,7 +25128,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x22220B0B;
       mem32[7] = 0x22222222;
       mem32[9] = 0x2222220B;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x01012201;
       mem32[1] = 0x22012201;
       mem32[2] = 0x01012201;
@@ -25138,31 +25138,31 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x22222222;
       mem32[7] = 0x0B0B2222;
       mem32[8] = 0x0B222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x22222222;
       mem32[1] = 0x0B010122;
       mem32[2] = 0x0B0B0B22;
       mem32[3] = 0x0B01220B;
       mem32[5] = 0x0B220B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[15] = 0x0000000B;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[12] = 0x00000000;
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[12] = 0x00000000;
       mem32[13] = 0x0B0B0000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[14] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[1] = 0x00000000;
       mem32[3] = 0x00000000;
       mem32[5] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -25173,7 +25173,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x00000000;
       mem32[8] = 0x000B0B0B;
       mem32[9] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -25183,7 +25183,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x00000000;
       mem32[7] = 0x0B0B0000;
       mem32[8] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x0B0B0000;
       mem32[2] = 0x0B0B0000;
       break;
@@ -25225,21 +25225,21 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[84] = 19;
       enemy->tileTextureIndexes[85] = 20;
       enemy->tileTextureIndexes[86] = 21;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[5] = 0x290B0B0B;
       mem32[7] = 0x29290B0B;
       mem32[9] = 0x29290B0B;
       mem32[11] = 0x29290B0B;
       mem32[13] = 0x29290B0B;
       mem32[15] = 0x29290B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[4] = 0x0B292929;
       mem32[6] = 0x29292929;
       mem32[8] = 0x29292929;
       mem32[10] = 0x29292929;
       mem32[12] = 0x29292929;
       mem32[14] = 0x29292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[3] = 0x29290B0B;
       mem32[5] = 0x2929290B;
       mem32[7] = 0x2929290B;
@@ -25248,7 +25248,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x29292929;
       mem32[14] = 0x290B0B0B;
       mem32[15] = 0x0B0B2929;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[1] = 0x2929290B;
       mem32[2] = 0x29292929;
       mem32[3] = 0x29292929;
@@ -25264,7 +25264,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x29292929;
       mem32[14] = 0x29292929;
       mem32[15] = 0x29292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x29292929;
       mem32[1] = 0x0B0B0B29;
       mem32[2] = 0x29292929;
@@ -25281,7 +25281,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x29292929;
       mem32[14] = 0x29292929;
       mem32[15] = 0x29292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[2] = 0x29292929;
       mem32[4] = 0x29292929;
       mem32[5] = 0x0B0B0B29;
@@ -25294,7 +25294,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B2929;
       mem32[14] = 0x0B0B2929;
       mem32[15] = 0x0B292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x0B290B0B;
       mem32[1] = 0x0B0B0B29;
       mem32[2] = 0x290B290B;
@@ -25308,7 +25308,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B29;
       mem32[14] = 0x0B29290B;
       mem32[15] = 0x0B29290B;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x2929290B;
       mem32[1] = 0x29292929;
       mem32[2] = 0x290B0B0B;
@@ -25320,7 +25320,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x29292929;
       mem32[14] = 0x290B0B0B;
       mem32[15] = 0x29292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x29292929;
       mem32[1] = 0x29292929;
       mem32[2] = 0x29292929;
@@ -25337,7 +25337,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B2929;
       mem32[14] = 0x29292929;
       mem32[15] = 0x0B292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x0B0B0B29;
       mem32[1] = 0x290B290B;
       mem32[3] = 0x29290B0B;
@@ -25350,7 +25350,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B290B29;
       mem32[14] = 0x290B0B0B;
       mem32[15] = 0x29290B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x290B0B0B;
       mem32[1] = 0x29292929;
       mem32[2] = 0x29290B0B;
@@ -25360,7 +25360,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x290B0B0B;
       mem32[7] = 0x0B290B29;
       mem32[15] = 0x290B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x29290B0B;
       mem32[1] = 0x29292929;
       mem32[2] = 0x2929290B;
@@ -25375,7 +25375,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x29292929;
       mem32[12] = 0x29292929;
       mem32[14] = 0x0B292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x29292929;
       mem32[1] = 0x29292929;
       mem32[2] = 0x29292929;
@@ -25390,14 +25390,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x29292929;
       mem32[13] = 0x29290B0B;
       mem32[15] = 0x290B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[1] = 0x0B292929;
       mem32[2] = 0x0B0B0B29;
       mem32[4] = 0x0B0B0B29;
       mem32[10] = 0x0B0B0B29;
       mem32[12] = 0x0B0B2929;
       mem32[14] = 0x0B292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[1] = 0x29290B0B;
       mem32[3] = 0x2929290B;
       mem32[5] = 0x2929290B;
@@ -25406,7 +25406,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x2929290B;
       mem32[13] = 0x29292929;
       mem32[15] = 0x29292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x0B0B2929;
       mem32[2] = 0x0B0B0B29;
       mem32[6] = 0x0B0B0B29;
@@ -25414,7 +25414,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B2929;
       mem32[12] = 0x29292929;
       mem32[14] = 0x29292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[3] = 0x29290B0B;
       mem32[5] = 0x2929290B;
       mem32[7] = 0x2929290B;
@@ -25422,7 +25422,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x2929290B;
       mem32[13] = 0x29292929;
       mem32[15] = 0x29292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x29292929;
       mem32[2] = 0x29292929;
       mem32[4] = 0x0B292929;
@@ -25431,7 +25431,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B292929;
       mem32[12] = 0x0B0B2929;
       mem32[14] = 0x0B0B0B29;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[1] = 0x2929290B;
       mem32[3] = 0x2929290B;
       mem32[5] = 0x290B0B0B;
@@ -25441,7 +25441,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x29292929;
       mem32[10] = 0x29290B0B;
       mem32[11] = 0x29292929;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x29292929;
       mem32[2] = 0x29292929;
       mem32[4] = 0x29292929;
@@ -25449,10 +25449,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x29292929;
       mem32[10] = 0x29292929;
       mem32[11] = 0x0B0B0B29;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[1] = 0x2929290B;
       mem32[3] = 0x290B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x0B292929;
       mem32[2] = 0x29292929;
       break;
@@ -25499,7 +25499,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[94] = 24;
       enemy->tileTextureIndexes[95] = 25;
       enemy->tileTextureIndexes[96] = 26;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[2] = 0x0B0B020B;
       mem32[4] = 0x0B020606;
       mem32[6] = 0x02020606;
@@ -25511,7 +25511,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x00060600;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[3] = 0x0B0B0B02;
       mem32[4] = 0x020B0B0B;
       mem32[5] = 0x0B0B0606;
@@ -25525,23 +25525,23 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0606;
       mem32[14] = 0x06000202;
       mem32[15] = 0x0B0B0006;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[9] = 0x02020202;
       mem32[10] = 0x020B0B0B;
       mem32[11] = 0x02020202;
       mem32[12] = 0x02020B0B;
       mem32[13] = 0x020B0B02;
       mem32[14] = 0x02020B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[10] = 0x0B0B0B02;
       mem32[12] = 0x0B0B0B02;
       mem32[14] = 0x0B0B0B02;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[9] = 0x0B022A0B;
       mem32[11] = 0x0202022A;
       mem32[13] = 0x02020B0B;
       mem32[15] = 0x02020B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[1] = 0x02020B0B;
       mem32[3] = 0x0202020B;
       mem32[5] = 0x02020202;
@@ -25554,7 +25554,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020002;
       mem32[14] = 0x00000202;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00020002;
       mem32[1] = 0x02020000;
       mem32[2] = 0x02020002;
@@ -25571,7 +25571,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06060202;
       mem32[14] = 0x02000002;
       mem32[15] = 0x00000606;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x02000000;
       mem32[1] = 0x2A2A2A00;
       mem32[2] = 0x02020006;
@@ -25588,7 +25588,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x022A0002;
       mem32[14] = 0x00020606;
       mem32[15] = 0x022A2A00;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x02020B0B;
       mem32[2] = 0x02022A2A;
       mem32[4] = 0x022A2A2A;
@@ -25601,10 +25601,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020B0B;
       mem32[14] = 0x00000202;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[8] = 0x0B0B0B2A;
       mem32[10] = 0x0B0B2A02;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x02020B0B;
       mem32[1] = 0x02020B02;
       mem32[2] = 0x02022A0B;
@@ -25616,7 +25616,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x2A0B0B0B;
       mem32[11] = 0x0B0B0202;
       mem32[13] = 0x0B0B0B2A;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x02020200;
       mem32[2] = 0x02020002;
@@ -25631,7 +25631,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x020B0B0B;
       mem32[13] = 0x2A0B0B0B;
       mem32[15] = 0x2A0B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000202;
       mem32[1] = 0x00000006;
       mem32[2] = 0x00020202;
@@ -25648,7 +25648,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0000002A;
       mem32[14] = 0x2A2A2A2A;
       mem32[15] = 0x2A2A2A2A;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000600;
       mem32[1] = 0x022A2A2A;
       mem32[2] = 0x2A000000;
@@ -25665,7 +25665,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2A2A2A2A;
       mem32[14] = 0x2A2A2A2A;
       mem32[15] = 0x0B2A2A2A;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x02020002;
       mem32[1] = 0x02020202;
       mem32[2] = 0x02020002;
@@ -25676,7 +25676,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x02022A2A;
       mem32[8] = 0x00000200;
       mem32[9] = 0x02022A00;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x02020200;
       mem32[2] = 0x02020202;
       mem32[3] = 0x0B0B0B2A;
@@ -25686,7 +25686,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x0B0B0202;
       mem32[10] = 0x0B2A0202;
       mem32[12] = 0x0B0B2A0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[1] = 0x222A2A0B;
       mem32[3] = 0x222A2A2A;
       mem32[5] = 0x2A2A2A2A;
@@ -25695,7 +25695,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x02020202;
       mem32[13] = 0x02020202;
       mem32[15] = 0x0602060B;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x2A2A2222;
       mem32[1] = 0x2222222A;
       mem32[2] = 0x22222222;
@@ -25710,7 +25710,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x2A2A2A2A;
       mem32[12] = 0x0B060606;
       mem32[14] = 0x0B220606;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x2A2A2A22;
       mem32[1] = 0x2A222222;
       mem32[2] = 0x22222222;
@@ -25725,7 +25725,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x02022A2A;
       mem32[13] = 0x02020202;
       mem32[15] = 0x0202020B;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x0B0B0B2A;
       mem32[2] = 0x0B0B2A2A;
       mem32[4] = 0x0B0B2A2A;
@@ -25734,7 +25734,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B020202;
       mem32[12] = 0x0B020202;
       mem32[14] = 0x0B020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[1] = 0x06060606;
       mem32[3] = 0x22060600;
       mem32[4] = 0x0000000B;
@@ -25746,7 +25746,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x00000B0B;
       mem32[11] = 0x22222222;
       mem32[13] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x22222206;
       mem32[2] = 0x00222222;
       mem32[3] = 0x0B000000;
@@ -25762,7 +25762,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x0000000B;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[1] = 0x06060606;
       mem32[3] = 0x06060606;
       mem32[4] = 0x00000000;
@@ -25777,7 +25777,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x22222222;
       mem32[14] = 0x22000000;
       mem32[15] = 0x22222222;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x06060606;
       mem32[2] = 0x06060606;
       mem32[4] = 0x0B060606;
@@ -25789,14 +25789,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B002222;
       mem32[14] = 0x22222222;
       mem32[15] = 0x00002222;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[1] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[3] = 0x00000000;
       mem32[5] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -25849,11 +25849,11 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[86] = 27;
       enemy->tileTextureIndexes[87] = 28;
       enemy->tileTextureIndexes[88] = 29;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[11] = 0x080B0B0B;
       mem32[13] = 0x0808080B;
       mem32[15] = 0x08080808;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x050B0B0B;
       mem32[2] = 0x050B0B0B;
       mem32[4] = 0x050B050B;
@@ -25868,20 +25868,20 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05080505;
       mem32[14] = 0x08080808;
       mem32[15] = 0x05050508;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[12] = 0x0B0B0B08;
       mem32[14] = 0x0B0B0808;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[13] = 0x050B0B0B;
       mem32[15] = 0x050B050B;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[10] = 0x050B050B;
       mem32[11] = 0x0B0B0505;
       mem32[12] = 0x0505050B;
       mem32[13] = 0x0B080808;
       mem32[14] = 0x08080805;
       mem32[15] = 0x0B0B0202;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[1] = 0x08080808;
       mem32[2] = 0x080B0B0B;
       mem32[3] = 0x08080808;
@@ -25897,7 +25897,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x08080808;
       mem32[14] = 0x08020B0B;
       mem32[15] = 0x08080808;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x08080808;
       mem32[1] = 0x08050508;
       mem32[2] = 0x08080808;
@@ -25914,7 +25914,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050808;
       mem32[14] = 0x08080808;
       mem32[15] = 0x05050808;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00080808;
       mem32[2] = 0x08080808;
       mem32[3] = 0x0B050500;
@@ -25930,7 +25930,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000808;
       mem32[14] = 0x00080800;
       mem32[15] = 0x08000808;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[1] = 0x0805050B;
       mem32[2] = 0x0B050B05;
       mem32[3] = 0x08080505;
@@ -25946,13 +25946,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000202;
       mem32[14] = 0x02000808;
       mem32[15] = 0x00000002;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x02020808;
       mem32[2] = 0x0B0B0208;
       mem32[4] = 0x0B0B0B02;
       mem32[12] = 0x0B0B0B00;
       mem32[14] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x08020B0B;
       mem32[1] = 0x08080808;
       mem32[2] = 0x0802020B;
@@ -25969,7 +25969,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x08080202;
       mem32[14] = 0x0002020B;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x08080808;
       mem32[1] = 0x05080808;
       mem32[2] = 0x08080808;
@@ -25986,7 +25986,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x08080808;
       mem32[14] = 0x00020808;
       mem32[15] = 0x08080808;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x08080005;
       mem32[1] = 0x00080000;
       mem32[2] = 0x08000805;
@@ -26003,7 +26003,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x08000808;
       mem32[14] = 0x00000008;
       mem32[15] = 0x08000808;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00080800;
       mem32[1] = 0x00000000;
       mem32[2] = 0x08080000;
@@ -26020,7 +26020,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x08000008;
       mem32[14] = 0x08080008;
       mem32[15] = 0x00080808;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x00000000;
@@ -26029,7 +26029,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x0B0B0B00;
       mem32[12] = 0x0B0B0808;
       mem32[14] = 0x0B0B0008;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[5] = 0x02020B0B;
       mem32[6] = 0x020B0B0B;
       mem32[7] = 0x02020202;
@@ -26037,7 +26037,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x02020000;
       mem32[11] = 0x0002020B;
       mem32[13] = 0x0B000208;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00020202;
       mem32[1] = 0x02020202;
       mem32[2] = 0x00000202;
@@ -26054,7 +26054,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000202;
       mem32[14] = 0x02020B0B;
       mem32[15] = 0x00000202;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00020202;
       mem32[1] = 0x08080802;
       mem32[2] = 0x00020202;
@@ -26071,7 +26071,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x05050500;
       mem32[1] = 0x08080000;
       mem32[2] = 0x05050505;
@@ -26088,7 +26088,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02000505;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00020005;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000808;
       mem32[1] = 0x08061818;
       mem32[2] = 0x08080808;
@@ -26105,7 +26105,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18160202;
       mem32[14] = 0x02000000;
       mem32[15] = 0x18060202;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x0B0B0600;
       mem32[2] = 0x0B0B1808;
       mem32[4] = 0x08080800;
@@ -26118,15 +26118,15 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[11] = 0x08080B06;
       mem32[12] = 0x0B061818;
       mem32[14] = 0x18180618;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[6] = 0x0B0B0B08;
       mem32[8] = 0x0B0B0B08;
       mem32[10] = 0x0B0B0B08;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[1] = 0x020B0B0B;
       mem32[3] = 0x02080B0B;
       mem32[5] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x00000202;
       mem32[2] = 0x02000000;
@@ -26138,7 +26138,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x0002020B;
       mem32[9] = 0x0B000000;
       mem32[10] = 0x0B00080B;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -26149,7 +26149,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x0000000B;
       mem32[9] = 0x0000000B;
       mem32[11] = 0x00000B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x02020000;
       mem32[2] = 0x00000000;
@@ -26161,7 +26161,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[8] = 0x00000000;
       mem32[9] = 0x00000000;
       mem32[10] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00020202;
       mem32[1] = 0x16020200;
       mem32[2] = 0x02000202;
@@ -26174,7 +26174,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[9] = 0x00000000;
       mem32[10] = 0x0000000B;
       mem32[11] = 0x0B000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x0B061616;
       mem32[1] = 0x0B0B0B18;
       mem32[2] = 0x0B161606;
@@ -26182,7 +26182,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x16060202;
       mem32[7] = 0x0B0B0B16;
       mem32[8] = 0x02020000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[1] = 0x090B0B0B;
       mem32[3] = 0x0B09090B;
       mem32[4] = 0x0B0B090B;
@@ -26195,7 +26195,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[12] = 0x090B0B0B;
       mem32[13] = 0x0909090B;
       mem32[15] = 0x090B0B09;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x0B0B0B09;
       mem32[2] = 0x09090609;
       mem32[4] = 0x0906090B;
@@ -26255,11 +26255,11 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[93] = 25;
       enemy->tileTextureIndexes[94] = 26;
       enemy->tileTextureIndexes[95] = 27;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[11] = 0x0B11110B;
       mem32[13] = 0x0B0B1111;
       mem32[15] = 0x0B0B1111;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[6] = 0x11110B0B;
       mem32[8] = 0x11110B0B;
       mem32[9] = 0x0B0B0B11;
@@ -26269,10 +26269,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B2B0B;
       mem32[14] = 0x0B111111;
       mem32[15] = 0x0B0B2B2B;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[13] = 0x020B0B0B;
       mem32[15] = 0x02020B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[1] = 0x1F1F1F0B;
       mem32[3] = 0x1F1F1F1F;
       mem32[4] = 0x1F180B0B;
@@ -26287,7 +26287,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1F1F0202;
       mem32[14] = 0x02000202;
       mem32[15] = 0x18020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x0B0B1F1F;
       mem32[1] = 0x0B0B112B;
       mem32[2] = 0x0B1F1F1F;
@@ -26304,7 +26304,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B111F0A;
       mem32[14] = 0x0A0A1F18;
       mem32[15] = 0x0B2B2B2B;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[1] = 0x110B0B0B;
       mem32[3] = 0x11110B0B;
       mem32[5] = 0x11111111;
@@ -26318,7 +26318,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x111F1F1F;
       mem32[14] = 0x11110B0B;
       mem32[15] = 0x1F1F1F11;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x2B111111;
       mem32[1] = 0x0B0B2B2B;
       mem32[2] = 0x2B2B1111;
@@ -26335,10 +26335,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B2B2B11;
       mem32[14] = 0x11111F1F;
       mem32[15] = 0x0B2B2B2B;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[1] = 0x0202020B;
       mem32[3] = 0x0B0B020B;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x18111102;
       mem32[2] = 0x02020202;
@@ -26355,7 +26355,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0211;
       mem32[14] = 0x1111020B;
       mem32[15] = 0x0B0B0202;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x2B1F1F18;
       mem32[1] = 0x2B2B2B2B;
       mem32[2] = 0x2B1F1F1F;
@@ -26372,7 +26372,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x112B2B2B;
       mem32[14] = 0x2B2B0B0B;
       mem32[15] = 0x11112B2B;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x1111110B;
       mem32[1] = 0x1F1F111F;
       mem32[2] = 0x1F111111;
@@ -26389,7 +26389,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1F1F1F11;
       mem32[14] = 0x1F1F1111;
       mem32[15] = 0x1111111F;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x2B2B2B1F;
       mem32[1] = 0x0B0B2B2B;
       mem32[2] = 0x2B2B1111;
@@ -26402,12 +26402,12 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x1111111F;
       mem32[12] = 0x2B2B2B2B;
       mem32[14] = 0x0B2B2B2B;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[11] = 0x1F110B0B;
       mem32[13] = 0x111F1F1F;
       mem32[14] = 0x1F0B0B0B;
       mem32[15] = 0x111F1F11;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x02020B0B;
       mem32[1] = 0x0B0B0B02;
       mem32[9] = 0x1F0B0B0B;
@@ -26417,7 +26417,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1F1F111F;
       mem32[14] = 0x111F1F1F;
       mem32[15] = 0x1F111F1F;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x1F1F0B0B;
       mem32[1] = 0x111F1F1F;
       mem32[2] = 0x1111110B;
@@ -26434,7 +26434,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x111F1F1F;
       mem32[14] = 0x111F1F1F;
       mem32[15] = 0x11111F1F;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x1F111111;
       mem32[1] = 0x2B2B1F1F;
       mem32[2] = 0x0B111111;
@@ -26445,15 +26445,15 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[10] = 0x0B0B1111;
       mem32[12] = 0x0B0B1111;
       mem32[14] = 0x0B0B1111;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x0B0B1111;
       mem32[2] = 0x0B0B0B2B;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x1F1F0B0B;
       mem32[1] = 0x11111111;
       mem32[2] = 0x111F0B0B;
       mem32[4] = 0x0B110B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x111F1111;
       mem32[1] = 0x111F1F1F;
       mem32[2] = 0x11111111;
@@ -26463,7 +26463,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x110B0B0B;
       mem32[7] = 0x11111111;
       mem32[9] = 0x11110B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x1F1F1F1F;
       mem32[1] = 0x11111111;
       mem32[2] = 0x11111F1F;
@@ -26473,26 +26473,26 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[6] = 0x11111111;
       mem32[7] = 0x0B111111;
       mem32[8] = 0x11111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x0B0B0B11;
       mem32[2] = 0x0B0B0B11;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[12] = 0x000B0B0B;
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[12] = 0x00000000;
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[12] = 0x0B0B0B00;
       mem32[14] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[1] = 0x000B0B0B;
       mem32[3] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -26501,7 +26501,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x00000000;
       mem32[6] = 0x000B0B0B;
       mem32[7] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -26512,7 +26512,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[7] = 0x00000000;
       mem32[8] = 0x00000000;
       mem32[9] = 0x0B0B0000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x0B0B0B00;
       mem32[2] = 0x00000000;
@@ -26560,13 +26560,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[94] = 21;
       enemy->tileTextureIndexes[95] = 22;
       enemy->tileTextureIndexes[96] = 23;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[14] = 0x1818180B;
       mem32[15] = 0x0B0B0B18;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[3] = 0x100B0B0B;
       mem32[5] = 0x100B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x18181818;
       mem32[1] = 0x0B0B1810;
       mem32[2] = 0x18181818;
@@ -26583,7 +26583,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x010B0B0B;
       mem32[14] = 0x04040B0B;
       mem32[15] = 0x01010B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[2] = 0x010B0B0B;
       mem32[3] = 0x0B0B0B01;
       mem32[4] = 0x01010B0B;
@@ -26598,13 +26598,13 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010101;
       mem32[14] = 0x01000000;
       mem32[15] = 0x00000001;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[12] = 0x0B0B0B01;
       mem32[14] = 0x0B0B0101;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[7] = 0x010B0B0B;
       mem32[9] = 0x010B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x04040B0B;
       mem32[1] = 0x00010000;
       mem32[2] = 0x04040101;
@@ -26621,7 +26621,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01000105;
       mem32[14] = 0x05000505;
       mem32[15] = 0x00010105;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00060000;
@@ -26638,7 +26638,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00010101;
       mem32[14] = 0x01010001;
       mem32[15] = 0x01000101;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000100;
       mem32[1] = 0x0B0B0B01;
       mem32[2] = 0x01000100;
@@ -26655,7 +26655,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00010100;
       mem32[14] = 0x01010101;
       mem32[15] = 0x01000100;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[2] = 0x050B0B0B;
       mem32[4] = 0x050B050B;
       mem32[5] = 0x0B050B0B;
@@ -26669,7 +26669,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0B0B0B05;
       mem32[14] = 0x0B0B0501;
       mem32[15] = 0x0B0B0505;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00050505;
       mem32[1] = 0x00010005;
       mem32[2] = 0x05050505;
@@ -26686,7 +26686,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00010101;
       mem32[14] = 0x0004040B;
       mem32[15] = 0x00010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x01010101;
       mem32[1] = 0x01010101;
       mem32[2] = 0x01010100;
@@ -26703,7 +26703,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010101;
       mem32[14] = 0x01010101;
       mem32[15] = 0x01010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x01010101;
       mem32[1] = 0x01010100;
       mem32[2] = 0x01010101;
@@ -26720,14 +26720,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01000101;
       mem32[14] = 0x01010101;
       mem32[15] = 0x0B010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x0B0B0B01;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[11] = 0x000B0B0B;
       mem32[13] = 0x00000000;
       mem32[14] = 0x000B0B0B;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x0104040B;
       mem32[1] = 0x01010101;
       mem32[2] = 0x0104040B;
@@ -26744,7 +26744,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010101;
       mem32[14] = 0x01010404;
       mem32[15] = 0x00010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x01010100;
       mem32[1] = 0x01010101;
       mem32[2] = 0x01010100;
@@ -26761,7 +26761,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010101;
       mem32[14] = 0x01000000;
       mem32[15] = 0x01010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x01010101;
       mem32[1] = 0x0B010101;
       mem32[2] = 0x01010101;
@@ -26778,14 +26778,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010101;
       mem32[14] = 0x00000001;
       mem32[15] = 0x00010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[14] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x000B0B0B;
       mem32[1] = 0x00000000;
       mem32[3] = 0x0000000B;
       mem32[5] = 0x000B0B0B;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000404;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000404;
@@ -26793,7 +26793,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[4] = 0x00000000;
       mem32[5] = 0x00000000;
       mem32[7] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -26802,14 +26802,14 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[5] = 0x00000000;
       mem32[6] = 0x00000000;
       mem32[7] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
       mem32[3] = 0x0B000000;
       mem32[4] = 0x00000000;
       mem32[5] = 0x0B0B0B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x0B0B0B00;
       break;
    case 33:
@@ -26948,7 +26948,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -26965,7 +26965,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -26982,7 +26982,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -26999,7 +26999,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27016,7 +27016,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27033,7 +27033,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27050,7 +27050,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27067,7 +27067,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27084,7 +27084,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27101,7 +27101,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27118,7 +27118,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27135,7 +27135,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27152,7 +27152,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27169,7 +27169,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27186,7 +27186,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27203,7 +27203,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27220,7 +27220,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27237,7 +27237,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27254,7 +27254,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27271,7 +27271,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27288,7 +27288,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27305,7 +27305,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27322,7 +27322,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27339,7 +27339,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27356,7 +27356,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27373,7 +27373,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27390,7 +27390,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27407,7 +27407,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27424,7 +27424,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27441,7 +27441,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27458,7 +27458,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27475,7 +27475,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27492,7 +27492,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27509,7 +27509,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27526,7 +27526,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27543,7 +27543,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27560,7 +27560,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27577,7 +27577,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16060611;
       mem32[14] = 0x00000000;
       mem32[15] = 0x16161606;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27594,7 +27594,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00060616;
       mem32[14] = 0x16161616;
       mem32[15] = 0x00060616;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27611,7 +27611,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27628,7 +27628,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27645,7 +27645,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27662,7 +27662,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27679,7 +27679,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27696,7 +27696,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000404;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x2C000000;
       mem32[2] = 0x00000000;
@@ -27713,7 +27713,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x04042C00;
       mem32[15] = 0x05050404;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00002C2C;
       mem32[1] = 0x00000000;
       mem32[2] = 0x2C2C2C2C;
@@ -27730,7 +27730,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00040405;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x11161600;
       mem32[2] = 0x00000000;
@@ -27747,7 +27747,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x11000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x16161611;
       mem32[1] = 0x06061616;
       mem32[2] = 0x16160611;
@@ -27764,7 +27764,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000011;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27781,7 +27781,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27798,7 +27798,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27815,7 +27815,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27832,7 +27832,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x04040000;
       mem32[2] = 0x00000000;
@@ -27849,7 +27849,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x00000000;
       mem32[15] = 0x05050000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x04040404;
       mem32[1] = 0x00000004;
       mem32[2] = 0x04040404;
@@ -27866,7 +27866,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x04040005;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x04042C00;
       mem32[1] = 0x05040404;
       mem32[2] = 0x05050400;
@@ -27883,7 +27883,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05000505;
       mem32[14] = 0x00000404;
       mem32[15] = 0x05050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x00040405;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00040404;
@@ -27900,7 +27900,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x04000505;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000404;
@@ -27917,7 +27917,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x05000004;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00001111;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00001111;
@@ -27934,7 +27934,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000006;
       mem32[14] = 0x16160000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27951,7 +27951,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27968,7 +27968,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -27985,7 +27985,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28002,7 +28002,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x04000000;
       mem32[1] = 0x05000404;
       mem32[2] = 0x04040000;
@@ -28019,7 +28019,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x0000002C;
       mem32[14] = 0x04000000;
       mem32[15] = 0x2C2C2C04;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x04000005;
       mem32[1] = 0x04050404;
       mem32[2] = 0x00002C2C;
@@ -28036,7 +28036,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x0000002C;
       mem32[15] = 0x05050500;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x05050404;
       mem32[1] = 0x00000000;
       mem32[2] = 0x05050504;
@@ -28053,7 +28053,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000005;
       mem32[14] = 0x00050505;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x04040000;
       mem32[1] = 0x04040404;
       mem32[2] = 0x04040505;
@@ -28070,7 +28070,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00050505;
       mem32[14] = 0x05050500;
       mem32[15] = 0x00050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x05050000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x05050500;
@@ -28087,7 +28087,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x2C2C0000;
       mem32[1] = 0x0000002C;
       mem32[2] = 0x002C2C00;
@@ -28104,7 +28104,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001616;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00060606;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28121,7 +28121,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28138,7 +28138,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28155,7 +28155,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28172,7 +28172,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x2C2C0000;
       mem32[2] = 0x00000000;
@@ -28189,7 +28189,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000005;
       mem32[2] = 0x00000000;
@@ -28206,7 +28206,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000505;
       mem32[14] = 0x05050505;
       mem32[15] = 0x00050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28223,7 +28223,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x04040404;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x05050000;
       mem32[1] = 0x00000005;
       mem32[2] = 0x00000000;
@@ -28240,7 +28240,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050000;
       mem32[14] = 0x00040404;
       mem32[15] = 0x05050000;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28257,7 +28257,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000404;
       mem32[14] = 0x00000505;
       mem32[15] = 0x00000404;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00061111;
       mem32[2] = 0x00000000;
@@ -28274,7 +28274,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28291,7 +28291,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28308,7 +28308,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28325,7 +28325,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28342,7 +28342,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x04000000;
       mem32[2] = 0x00000000;
@@ -28359,7 +28359,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000400;
       mem32[14] = 0x00000000;
       mem32[15] = 0x04040404;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x05050404;
       mem32[1] = 0x00050505;
       mem32[2] = 0x00040404;
@@ -28376,7 +28376,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x04040404;
       mem32[15] = 0x00000004;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x04040400;
       mem32[1] = 0x00000000;
       mem32[2] = 0x04040400;
@@ -28393,7 +28393,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00040400;
       mem32[1] = 0x05050500;
       mem32[2] = 0x00040404;
@@ -28410,7 +28410,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C2C2C00;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x04000505;
       mem32[1] = 0x00000404;
       mem32[2] = 0x04040005;
@@ -28427,7 +28427,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x002C2C04;
       mem32[14] = 0x0404042C;
       mem32[15] = 0x2C2C2C2C;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28444,7 +28444,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28461,7 +28461,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28478,7 +28478,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28495,7 +28495,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28512,7 +28512,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x04040404;
       mem32[2] = 0x2C000000;
@@ -28529,7 +28529,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x04040404;
       mem32[1] = 0x00000004;
       mem32[2] = 0x04040404;
@@ -28546,7 +28546,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28563,7 +28563,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28580,7 +28580,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28597,7 +28597,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28614,7 +28614,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28631,7 +28631,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28648,7 +28648,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28665,7 +28665,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28682,7 +28682,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28699,7 +28699,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28716,7 +28716,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28733,7 +28733,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28750,7 +28750,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28767,7 +28767,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28784,7 +28784,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28801,7 +28801,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28818,7 +28818,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28835,7 +28835,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28852,7 +28852,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28869,7 +28869,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28886,7 +28886,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28903,7 +28903,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28920,7 +28920,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28937,7 +28937,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28954,7 +28954,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -28971,7 +28971,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29125,7 +29125,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29142,7 +29142,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29159,7 +29159,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29176,7 +29176,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29193,7 +29193,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29210,7 +29210,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29227,7 +29227,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29244,7 +29244,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29261,7 +29261,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29278,7 +29278,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29295,7 +29295,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29312,7 +29312,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29329,7 +29329,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29346,7 +29346,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29363,7 +29363,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29380,7 +29380,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29397,7 +29397,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29414,7 +29414,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29431,7 +29431,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29448,7 +29448,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29465,7 +29465,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29482,7 +29482,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29499,7 +29499,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29516,7 +29516,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29533,7 +29533,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29550,7 +29550,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29567,7 +29567,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29584,7 +29584,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29601,7 +29601,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29618,7 +29618,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29635,7 +29635,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29652,7 +29652,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29669,7 +29669,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29686,7 +29686,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29703,7 +29703,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29720,7 +29720,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29737,7 +29737,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29754,7 +29754,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29771,7 +29771,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29788,7 +29788,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29805,7 +29805,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29822,7 +29822,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29839,7 +29839,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29856,7 +29856,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x03000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x03000000;
@@ -29873,7 +29873,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03100303;
       mem32[14] = 0x10101010;
       mem32[15] = 0x03030310;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29890,7 +29890,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00001010;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29907,7 +29907,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x03000300;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29924,7 +29924,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00101010;
       mem32[14] = 0x10101003;
       mem32[15] = 0x00002020;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29941,7 +29941,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29958,7 +29958,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29975,7 +29975,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -29992,7 +29992,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30009,7 +30009,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x10101010;
       mem32[2] = 0x10000000;
@@ -30026,7 +30026,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101010;
       mem32[14] = 0x10200000;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x10101010;
       mem32[1] = 0x10030310;
       mem32[2] = 0x10101010;
@@ -30043,7 +30043,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03031010;
       mem32[14] = 0x10101010;
       mem32[15] = 0x03031010;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x00101010;
       mem32[1] = 0x00000003;
       mem32[2] = 0x10101010;
@@ -30060,7 +30060,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001010;
       mem32[14] = 0x00101000;
       mem32[15] = 0x10001010;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x10030300;
       mem32[2] = 0x00030003;
@@ -30077,7 +30077,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00002020;
       mem32[14] = 0x20001010;
       mem32[15] = 0x00000020;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x20201010;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00002010;
@@ -30094,7 +30094,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30111,7 +30111,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30128,7 +30128,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30145,7 +30145,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30162,7 +30162,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30179,7 +30179,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x10200000;
       mem32[1] = 0x10101010;
       mem32[2] = 0x10202000;
@@ -30196,7 +30196,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10102020;
       mem32[14] = 0x00202000;
       mem32[15] = 0x20202020;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x10101010;
       mem32[1] = 0x03101010;
       mem32[2] = 0x10101010;
@@ -30213,7 +30213,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10101010;
       mem32[14] = 0x00201010;
       mem32[15] = 0x10101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x10100003;
       mem32[1] = 0x00100000;
       mem32[2] = 0x10001003;
@@ -30230,7 +30230,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10001010;
       mem32[14] = 0x00000010;
       mem32[15] = 0x10001010;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x00101000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x10100000;
@@ -30247,7 +30247,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x10000010;
       mem32[14] = 0x10100010;
       mem32[15] = 0x00101010;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30264,7 +30264,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000010;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30281,7 +30281,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30298,7 +30298,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30315,7 +30315,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30332,7 +30332,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30349,7 +30349,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00002010;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00202020;
       mem32[1] = 0x20202020;
       mem32[2] = 0x00002020;
@@ -30366,7 +30366,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00002020;
       mem32[14] = 0x20200000;
       mem32[15] = 0x00002020;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00202020;
       mem32[1] = 0x10101020;
       mem32[2] = 0x00202020;
@@ -30383,7 +30383,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x03030300;
       mem32[1] = 0x10100000;
       mem32[2] = 0x03030303;
@@ -30400,7 +30400,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x20000303;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00200003;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x00001010;
       mem32[1] = 0x10060909;
       mem32[2] = 0x10101010;
@@ -30417,7 +30417,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x090E2020;
       mem32[14] = 0x20000000;
       mem32[15] = 0x09062020;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00000600;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000910;
@@ -30434,7 +30434,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x09090609;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30451,7 +30451,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30468,7 +30468,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30485,7 +30485,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30502,7 +30502,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x20000000;
       mem32[2] = 0x00000000;
@@ -30519,7 +30519,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x20202020;
       mem32[1] = 0x00002020;
       mem32[2] = 0x20000000;
@@ -30536,7 +30536,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30553,7 +30553,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x20200000;
       mem32[2] = 0x00000000;
@@ -30570,7 +30570,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00202020;
       mem32[1] = 0x0E202000;
       mem32[2] = 0x20002020;
@@ -30587,7 +30587,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x00060E0E;
       mem32[1] = 0x00000009;
       mem32[2] = 0x000E0E06;
@@ -30604,7 +30604,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x09000000;
       mem32[2] = 0x00000000;
@@ -30621,7 +30621,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090900;
       mem32[14] = 0x00000000;
       mem32[15] = 0x09000009;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000009;
       mem32[1] = 0x00000000;
       mem32[2] = 0x09090609;
@@ -30638,7 +30638,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000909;
       mem32[14] = 0x09090009;
       mem32[15] = 0x00000009;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30655,7 +30655,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30672,7 +30672,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30689,7 +30689,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30706,7 +30706,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30723,7 +30723,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30740,7 +30740,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30757,7 +30757,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30774,7 +30774,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30791,7 +30791,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30808,7 +30808,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30825,7 +30825,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30842,7 +30842,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30859,7 +30859,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30876,7 +30876,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30893,7 +30893,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30910,7 +30910,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30927,7 +30927,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30944,7 +30944,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30961,7 +30961,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30978,7 +30978,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -30995,7 +30995,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31012,7 +31012,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31029,7 +31029,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31046,7 +31046,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31063,7 +31063,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31080,7 +31080,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31097,7 +31097,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31114,7 +31114,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31131,7 +31131,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31148,7 +31148,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31302,7 +31302,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31319,7 +31319,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31336,7 +31336,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31353,7 +31353,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31370,7 +31370,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31387,7 +31387,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31404,7 +31404,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31421,7 +31421,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31438,7 +31438,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31455,7 +31455,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31472,7 +31472,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31489,7 +31489,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31506,7 +31506,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31523,7 +31523,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31540,7 +31540,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31557,7 +31557,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31574,7 +31574,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31591,7 +31591,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31608,7 +31608,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31625,7 +31625,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31642,7 +31642,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31659,7 +31659,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31676,7 +31676,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31693,7 +31693,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31710,7 +31710,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31727,7 +31727,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31744,7 +31744,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31761,7 +31761,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31778,7 +31778,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31795,7 +31795,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31812,7 +31812,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31829,7 +31829,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31846,7 +31846,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31863,7 +31863,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31880,7 +31880,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31897,7 +31897,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31914,7 +31914,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31931,7 +31931,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31948,7 +31948,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31965,7 +31965,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31982,7 +31982,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -31999,7 +31999,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32016,7 +32016,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32033,7 +32033,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32050,7 +32050,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x05000505;
       mem32[15] = 0x05050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x05000000;
       mem32[1] = 0x05050505;
       mem32[2] = 0x05050000;
@@ -32067,7 +32067,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040505;
       mem32[14] = 0x05050500;
       mem32[15] = 0x04040505;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000005;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000505;
@@ -32084,7 +32084,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00050505;
       mem32[14] = 0x00040404;
       mem32[15] = 0x00050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32101,7 +32101,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x05050505;
       mem32[15] = 0x00000005;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32118,7 +32118,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32135,7 +32135,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32152,7 +32152,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32169,7 +32169,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32186,7 +32186,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00050000;
       mem32[2] = 0x05000000;
@@ -32203,7 +32203,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040000;
       mem32[14] = 0x00040500;
       mem32[15] = 0x05000505;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x05000505;
       mem32[1] = 0x05050005;
       mem32[2] = 0x00000505;
@@ -32220,7 +32220,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040505;
       mem32[14] = 0x05050500;
       mem32[15] = 0x00000005;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x05000500;
       mem32[1] = 0x04040505;
       mem32[2] = 0x00050005;
@@ -32237,7 +32237,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x04040400;
       mem32[15] = 0x04050004;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x00040004;
       mem32[1] = 0x00050505;
       mem32[2] = 0x05000400;
@@ -32254,7 +32254,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040000;
       mem32[14] = 0x04040404;
       mem32[15] = 0x00000404;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x05000505;
       mem32[1] = 0x00000005;
       mem32[2] = 0x05000505;
@@ -32271,7 +32271,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04000000;
       mem32[14] = 0x04000000;
       mem32[15] = 0x04040400;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32288,7 +32288,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32305,7 +32305,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32322,7 +32322,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32339,7 +32339,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32356,7 +32356,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x04040405;
       mem32[1] = 0x04050000;
       mem32[2] = 0x04040005;
@@ -32373,7 +32373,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040400;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x05050000;
       mem32[1] = 0x00040505;
       mem32[2] = 0x05050000;
@@ -32390,7 +32390,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050005;
       mem32[14] = 0x05000000;
       mem32[15] = 0x05050005;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x04040404;
       mem32[1] = 0x05050004;
       mem32[2] = 0x04000000;
@@ -32407,7 +32407,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040404;
       mem32[14] = 0x00050505;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x04000404;
       mem32[1] = 0x04000404;
       mem32[2] = 0x00040404;
@@ -32424,7 +32424,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x05000404;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x00040404;
       mem32[1] = 0x00000404;
       mem32[2] = 0x00040000;
@@ -32441,7 +32441,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000005;
       mem32[14] = 0x00000000;
       mem32[15] = 0x05050500;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x05050505;
       mem32[1] = 0x00000000;
       mem32[2] = 0x05000000;
@@ -32458,7 +32458,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040404;
       mem32[14] = 0x05050505;
       mem32[15] = 0x00040000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32475,7 +32475,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32492,7 +32492,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32509,7 +32509,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32526,7 +32526,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32543,7 +32543,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x05000000;
       mem32[1] = 0x00000505;
       mem32[2] = 0x05000000;
@@ -32560,7 +32560,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040500;
       mem32[14] = 0x05050505;
       mem32[15] = 0x04040005;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x04050505;
       mem32[1] = 0x04040400;
       mem32[2] = 0x00000000;
@@ -32577,7 +32577,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04040404;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x04000404;
       mem32[1] = 0x00050000;
       mem32[2] = 0x00000000;
@@ -32594,7 +32594,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000400;
       mem32[14] = 0x00000000;
       mem32[15] = 0x04040005;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x05050505;
       mem32[2] = 0x05000000;
@@ -32611,7 +32611,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000004;
       mem32[14] = 0x05000404;
       mem32[15] = 0x05000405;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x05050505;
       mem32[1] = 0x00000404;
       mem32[2] = 0x05050505;
@@ -32628,7 +32628,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00040004;
       mem32[14] = 0x00000004;
       mem32[15] = 0x04000004;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32645,7 +32645,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32662,7 +32662,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32679,7 +32679,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32696,7 +32696,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32713,7 +32713,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x05000500;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x05050505;
       mem32[1] = 0x00040405;
       mem32[2] = 0x00000000;
@@ -32730,7 +32730,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x04000000;
       mem32[14] = 0x05050505;
       mem32[15] = 0x00040505;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32747,7 +32747,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00040505;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000505;
       mem32[2] = 0x00000000;
@@ -32764,7 +32764,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050000;
       mem32[14] = 0x05000000;
       mem32[15] = 0x00000505;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x00050000;
       mem32[1] = 0x00000005;
       mem32[2] = 0x05000505;
@@ -32781,7 +32781,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00050505;
       mem32[14] = 0x05050505;
       mem32[15] = 0x04000005;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x04000504;
       mem32[1] = 0x04040000;
       mem32[2] = 0x04000000;
@@ -32798,7 +32798,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000404;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32815,7 +32815,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32832,7 +32832,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32849,7 +32849,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32866,7 +32866,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00050505;
       mem32[2] = 0x05000000;
@@ -32883,7 +32883,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050505;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x05000000;
       mem32[2] = 0x05050505;
@@ -32900,7 +32900,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000005;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00040005;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00040400;
@@ -32917,7 +32917,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x05050500;
       mem32[2] = 0x00000000;
@@ -32934,7 +32934,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00050000;
       mem32[1] = 0x04040400;
       mem32[2] = 0x04000505;
@@ -32951,7 +32951,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000004;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32968,7 +32968,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -32985,7 +32985,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33002,7 +33002,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33019,7 +33019,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33036,7 +33036,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33053,7 +33053,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33070,7 +33070,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33087,7 +33087,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33104,7 +33104,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33121,7 +33121,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33138,7 +33138,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33155,7 +33155,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33172,7 +33172,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33189,7 +33189,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33206,7 +33206,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33223,7 +33223,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33240,7 +33240,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33257,7 +33257,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33274,7 +33274,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33291,7 +33291,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33308,7 +33308,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33325,7 +33325,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33479,7 +33479,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33496,7 +33496,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33513,7 +33513,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33530,7 +33530,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33547,7 +33547,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33564,7 +33564,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33581,7 +33581,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33598,7 +33598,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33615,7 +33615,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33632,7 +33632,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33649,7 +33649,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33666,7 +33666,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33683,7 +33683,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33700,7 +33700,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33717,7 +33717,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33734,7 +33734,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33751,7 +33751,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33768,7 +33768,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33785,7 +33785,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33802,7 +33802,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33819,7 +33819,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33836,7 +33836,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33853,7 +33853,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33870,7 +33870,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33887,7 +33887,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33904,7 +33904,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33921,7 +33921,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33938,7 +33938,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33955,7 +33955,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33972,7 +33972,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -33989,7 +33989,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34006,7 +34006,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34023,7 +34023,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x02000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34040,7 +34040,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01000101;
       mem32[14] = 0x01010202;
       mem32[15] = 0x01010101;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34057,7 +34057,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00020101;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34074,7 +34074,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34091,7 +34091,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34108,7 +34108,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34125,7 +34125,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34142,7 +34142,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34159,7 +34159,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34176,7 +34176,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x02000000;
       mem32[2] = 0x00000000;
@@ -34193,7 +34193,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x01010102;
       mem32[1] = 0x05050101;
       mem32[2] = 0x01010102;
@@ -34210,7 +34210,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x05050000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000101;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000101;
@@ -34227,7 +34227,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x02020200;
       mem32[2] = 0x02000000;
@@ -34244,7 +34244,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x20020200;
       mem32[14] = 0x00000000;
       mem32[15] = 0x20200909;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000202;
@@ -34261,7 +34261,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000002;
       mem32[14] = 0x09090920;
       mem32[15] = 0x00000209;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34278,7 +34278,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00090900;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34295,7 +34295,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000002;
       mem32[14] = 0x02020101;
       mem32[15] = 0x00000002;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34312,7 +34312,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34329,7 +34329,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34346,7 +34346,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34363,7 +34363,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00050500;
       mem32[2] = 0x00000000;
@@ -34380,7 +34380,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000201;
       mem32[14] = 0x01000000;
       mem32[15] = 0x00000001;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34397,7 +34397,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090900;
       mem32[14] = 0x20000000;
       mem32[15] = 0x09090000;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x20200909;
       mem32[2] = 0x00000909;
@@ -34414,7 +34414,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x20002000;
       mem32[14] = 0x09090909;
       mem32[15] = 0x20202000;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x09090909;
       mem32[1] = 0x00000209;
       mem32[2] = 0x20090909;
@@ -34431,7 +34431,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090900;
       mem32[14] = 0x00202020;
       mem32[15] = 0x09090900;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x09090000;
       mem32[1] = 0x09090909;
       mem32[2] = 0x09090909;
@@ -34448,7 +34448,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x20200009;
       mem32[14] = 0x09090909;
       mem32[15] = 0x20200009;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x02020101;
       mem32[1] = 0x00000202;
       mem32[2] = 0x02020101;
@@ -34465,7 +34465,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x01010502;
       mem32[14] = 0x02020101;
       mem32[15] = 0x01010502;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34482,7 +34482,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34499,7 +34499,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34516,7 +34516,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34533,7 +34533,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x02020000;
       mem32[1] = 0x00000002;
       mem32[2] = 0x00020200;
@@ -34550,7 +34550,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09000202;
       mem32[14] = 0x00020202;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x20000000;
       mem32[1] = 0x09000020;
       mem32[2] = 0x20200009;
@@ -34567,7 +34567,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x09090909;
       mem32[1] = 0x00000009;
       mem32[2] = 0x09200909;
@@ -34584,7 +34584,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00002020;
       mem32[14] = 0x20202020;
       mem32[15] = 0x00002020;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x20000000;
       mem32[1] = 0x09090920;
       mem32[2] = 0x20202020;
@@ -34601,7 +34601,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x20202020;
       mem32[14] = 0x00000000;
       mem32[15] = 0x20202020;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x09090920;
       mem32[1] = 0x20200000;
       mem32[2] = 0x00200909;
@@ -34618,7 +34618,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000200;
       mem32[14] = 0x00002020;
       mem32[15] = 0x02020000;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x02020101;
       mem32[1] = 0x01010502;
       mem32[2] = 0x02020101;
@@ -34635,7 +34635,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05050202;
       mem32[14] = 0x02010102;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34652,7 +34652,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34669,7 +34669,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34686,7 +34686,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34703,7 +34703,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00050502;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000500;
@@ -34720,7 +34720,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34737,7 +34737,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x20202020;
       mem32[14] = 0x00090900;
       mem32[15] = 0x20202000;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x20200000;
       mem32[1] = 0x00000020;
       mem32[2] = 0x00050000;
@@ -34754,7 +34754,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090909;
       mem32[14] = 0x00000020;
       mem32[15] = 0x09090909;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34771,7 +34771,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00090909;
       mem32[14] = 0x09090909;
       mem32[15] = 0x00090909;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00200000;
       mem32[1] = 0x02000000;
       mem32[2] = 0x00000500;
@@ -34788,7 +34788,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x20202020;
       mem32[15] = 0x00202020;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x02010102;
       mem32[1] = 0x02020202;
       mem32[2] = 0x02010100;
@@ -34805,7 +34805,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00010101;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000101;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34822,7 +34822,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34839,7 +34839,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34856,7 +34856,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34873,7 +34873,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34890,7 +34890,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x02000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x09090900;
       mem32[1] = 0x20202000;
       mem32[2] = 0x09000900;
@@ -34907,7 +34907,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02090900;
       mem32[14] = 0x09020202;
       mem32[15] = 0x00020909;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x00002020;
       mem32[1] = 0x00000909;
       mem32[2] = 0x00202000;
@@ -34924,7 +34924,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x09000000;
       mem32[1] = 0x00000909;
       mem32[2] = 0x09090909;
@@ -34941,7 +34941,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x20202020;
       mem32[1] = 0x09090920;
       mem32[2] = 0x00202020;
@@ -34958,7 +34958,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00090909;
       mem32[14] = 0x09090000;
       mem32[15] = 0x09090909;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000009;
@@ -34975,7 +34975,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00090909;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -34992,7 +34992,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35009,7 +35009,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35026,7 +35026,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35043,7 +35043,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35060,7 +35060,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35077,7 +35077,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35094,7 +35094,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35111,7 +35111,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x09090000;
       mem32[1] = 0x09090909;
       mem32[2] = 0x09200000;
@@ -35128,7 +35128,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00090909;
       mem32[1] = 0x00000000;
       mem32[2] = 0x02020202;
@@ -35145,7 +35145,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35162,7 +35162,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35179,7 +35179,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35196,7 +35196,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35213,7 +35213,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35230,7 +35230,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35247,7 +35247,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35264,7 +35264,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35281,7 +35281,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35298,7 +35298,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35315,7 +35315,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35332,7 +35332,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35349,7 +35349,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35366,7 +35366,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35383,7 +35383,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35400,7 +35400,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35417,7 +35417,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35434,7 +35434,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35451,7 +35451,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35468,7 +35468,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35485,7 +35485,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35502,7 +35502,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35656,7 +35656,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35673,7 +35673,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35690,7 +35690,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35707,7 +35707,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35724,7 +35724,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35741,7 +35741,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35758,7 +35758,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35775,7 +35775,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35792,7 +35792,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35809,7 +35809,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35826,7 +35826,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35843,7 +35843,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35860,7 +35860,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35877,7 +35877,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35894,7 +35894,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35911,7 +35911,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35928,7 +35928,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35945,7 +35945,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35962,7 +35962,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35979,7 +35979,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -35996,7 +35996,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36013,7 +36013,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36030,7 +36030,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36047,7 +36047,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36064,7 +36064,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36081,7 +36081,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36098,7 +36098,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36115,7 +36115,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36132,7 +36132,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36149,7 +36149,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36166,7 +36166,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36183,7 +36183,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36200,7 +36200,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36217,7 +36217,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36234,7 +36234,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36251,7 +36251,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36268,7 +36268,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36285,7 +36285,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36302,7 +36302,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36319,7 +36319,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36336,7 +36336,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36353,7 +36353,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36370,7 +36370,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36387,7 +36387,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030300;
       mem32[14] = 0x00000000;
       mem32[15] = 0x03030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x2C000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x2C000000;
@@ -36404,7 +36404,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C032C2C;
       mem32[14] = 0x03030303;
       mem32[15] = 0x2C2C2C03;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36421,7 +36421,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000303;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36438,7 +36438,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x2C002C00;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36455,7 +36455,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00030303;
       mem32[14] = 0x0303032C;
       mem32[15] = 0x00000505;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36472,7 +36472,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36489,7 +36489,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36506,7 +36506,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36523,7 +36523,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36540,7 +36540,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x03030303;
       mem32[2] = 0x03000000;
@@ -36557,7 +36557,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030303;
       mem32[14] = 0x03050000;
       mem32[15] = 0x03030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x03030303;
       mem32[1] = 0x032C2C03;
       mem32[2] = 0x03030303;
@@ -36574,7 +36574,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C2C0303;
       mem32[14] = 0x03030303;
       mem32[15] = 0x2C2C0303;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x00030303;
       mem32[1] = 0x0000002C;
       mem32[2] = 0x03030303;
@@ -36591,7 +36591,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000303;
       mem32[14] = 0x00030300;
       mem32[15] = 0x03000303;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x032C2C00;
       mem32[2] = 0x002C002C;
@@ -36608,7 +36608,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000505;
       mem32[14] = 0x05000303;
       mem32[15] = 0x00000005;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x05050303;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000503;
@@ -36625,7 +36625,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36642,7 +36642,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36659,7 +36659,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36676,7 +36676,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36693,7 +36693,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36710,7 +36710,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x03050000;
       mem32[1] = 0x03030303;
       mem32[2] = 0x03050500;
@@ -36727,7 +36727,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030505;
       mem32[14] = 0x00050500;
       mem32[15] = 0x05050505;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x03030303;
       mem32[1] = 0x2C030303;
       mem32[2] = 0x03030303;
@@ -36744,7 +36744,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030303;
       mem32[14] = 0x00050303;
       mem32[15] = 0x03030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x0303002C;
       mem32[1] = 0x00030000;
       mem32[2] = 0x0300032C;
@@ -36761,7 +36761,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03000303;
       mem32[14] = 0x00000003;
       mem32[15] = 0x03000303;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x00030300;
       mem32[1] = 0x00000000;
       mem32[2] = 0x03030000;
@@ -36778,7 +36778,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03000003;
       mem32[14] = 0x03030003;
       mem32[15] = 0x00030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36795,7 +36795,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000003;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36812,7 +36812,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36829,7 +36829,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36846,7 +36846,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36863,7 +36863,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36880,7 +36880,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000503;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00050505;
       mem32[1] = 0x05050505;
       mem32[2] = 0x00000505;
@@ -36897,7 +36897,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000505;
       mem32[14] = 0x05050000;
       mem32[15] = 0x00000505;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x00050505;
       mem32[1] = 0x03030305;
       mem32[2] = 0x00050505;
@@ -36914,7 +36914,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x2C2C2C00;
       mem32[1] = 0x03030000;
       mem32[2] = 0x2C2C2C2C;
@@ -36931,7 +36931,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x05002C2C;
       mem32[14] = 0x00000000;
       mem32[15] = 0x0005002C;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x00000303;
       mem32[1] = 0x03060909;
       mem32[2] = 0x03030303;
@@ -36948,7 +36948,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09160505;
       mem32[14] = 0x05000000;
       mem32[15] = 0x09060505;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00000600;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000903;
@@ -36965,7 +36965,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x09090609;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36982,7 +36982,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -36999,7 +36999,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37016,7 +37016,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37033,7 +37033,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x05000000;
       mem32[2] = 0x00000000;
@@ -37050,7 +37050,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x05050505;
       mem32[1] = 0x00000505;
       mem32[2] = 0x05000000;
@@ -37067,7 +37067,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37084,7 +37084,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x05050000;
       mem32[2] = 0x00000000;
@@ -37101,7 +37101,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x00050505;
       mem32[1] = 0x16050500;
       mem32[2] = 0x05000505;
@@ -37118,7 +37118,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x00061616;
       mem32[1] = 0x00000009;
       mem32[2] = 0x00161606;
@@ -37135,7 +37135,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x09000000;
       mem32[2] = 0x00000000;
@@ -37152,7 +37152,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x09090900;
       mem32[14] = 0x00000000;
       mem32[15] = 0x09000009;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000009;
       mem32[1] = 0x00000000;
       mem32[2] = 0x09090609;
@@ -37169,7 +37169,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000909;
       mem32[14] = 0x09090009;
       mem32[15] = 0x00000009;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37186,7 +37186,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37203,7 +37203,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37220,7 +37220,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37237,7 +37237,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37254,7 +37254,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37271,7 +37271,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37288,7 +37288,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37305,7 +37305,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37322,7 +37322,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37339,7 +37339,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37356,7 +37356,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37373,7 +37373,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37390,7 +37390,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37407,7 +37407,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37424,7 +37424,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37441,7 +37441,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37458,7 +37458,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37475,7 +37475,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37492,7 +37492,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37509,7 +37509,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37526,7 +37526,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37543,7 +37543,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37560,7 +37560,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37577,7 +37577,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37594,7 +37594,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37611,7 +37611,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37628,7 +37628,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37645,7 +37645,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37662,7 +37662,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37679,7 +37679,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37833,7 +37833,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37850,7 +37850,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37867,7 +37867,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37884,7 +37884,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37901,7 +37901,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37918,7 +37918,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37935,7 +37935,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37952,7 +37952,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37969,7 +37969,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -37986,7 +37986,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38003,7 +38003,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38020,7 +38020,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38037,7 +38037,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38054,7 +38054,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38071,7 +38071,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38088,7 +38088,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38105,7 +38105,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38122,7 +38122,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38139,7 +38139,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38156,7 +38156,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38173,7 +38173,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38190,7 +38190,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38207,7 +38207,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38224,7 +38224,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38241,7 +38241,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38258,7 +38258,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38275,7 +38275,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38292,7 +38292,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38309,7 +38309,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38326,7 +38326,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38343,7 +38343,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38360,7 +38360,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38377,7 +38377,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38394,7 +38394,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38411,7 +38411,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38428,7 +38428,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38445,7 +38445,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38462,7 +38462,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38479,7 +38479,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38496,7 +38496,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38513,7 +38513,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38530,7 +38530,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38547,7 +38547,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38564,7 +38564,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38581,7 +38581,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x11110000;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38598,7 +38598,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16161616;
       mem32[14] = 0x16161611;
       mem32[15] = 0x16161616;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38615,7 +38615,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18111616;
       mem32[14] = 0x16161616;
       mem32[15] = 0x11111116;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38632,7 +38632,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x18180000;
       mem32[15] = 0x00000018;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38649,7 +38649,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38666,7 +38666,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38683,7 +38683,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38700,7 +38700,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38717,7 +38717,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38734,7 +38734,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x11111100;
       mem32[2] = 0x00000000;
@@ -38751,7 +38751,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1B1B1B1B;
       mem32[14] = 0x21000000;
       mem32[15] = 0x0000001B;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x16161611;
       mem32[1] = 0x16161621;
       mem32[2] = 0x16160611;
@@ -38768,7 +38768,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21212106;
       mem32[14] = 0x1B1B2121;
       mem32[15] = 0x1B1B0606;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x16162116;
       mem32[1] = 0x11111116;
       mem32[2] = 0x16162121;
@@ -38785,7 +38785,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1B1B1B1B;
       mem32[14] = 0x1B1B0606;
       mem32[15] = 0x1B1B1B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x18181811;
       mem32[1] = 0x00000000;
       mem32[2] = 0x18181811;
@@ -38802,7 +38802,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x0018181B;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38819,7 +38819,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38836,7 +38836,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38853,7 +38853,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38870,7 +38870,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38887,7 +38887,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38904,7 +38904,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x21002121;
       mem32[2] = 0x00000000;
@@ -38921,7 +38921,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00211B1B;
       mem32[14] = 0x1B000000;
       mem32[15] = 0x00211B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x1B181B21;
       mem32[1] = 0x1B1B061B;
       mem32[2] = 0x1B180021;
@@ -38938,7 +38938,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1111111B;
       mem32[14] = 0x1B1B1B00;
       mem32[15] = 0x1B1B1B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x181B1B06;
       mem32[1] = 0x00001B1B;
       mem32[2] = 0x181B1B1B;
@@ -38955,7 +38955,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2100001B;
       mem32[14] = 0x1B001B1B;
       mem32[15] = 0x21001B00;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x00181800;
       mem32[1] = 0x00000000;
       mem32[2] = 0x0018181B;
@@ -38972,7 +38972,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x001B2121;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -38989,7 +38989,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39006,7 +39006,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39023,7 +39023,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39040,7 +39040,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39057,7 +39057,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39074,7 +39074,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x1B000000;
       mem32[1] = 0x1B1B1B1B;
       mem32[2] = 0x00000000;
@@ -39091,7 +39091,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1B001B1B;
       mem32[14] = 0x1B000000;
       mem32[15] = 0x1B001B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x1B1B1B00;
       mem32[1] = 0x1B1B1B1B;
       mem32[2] = 0x1B1B1B1B;
@@ -39108,7 +39108,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1B1B1B1B;
       mem32[14] = 0x1B1B1B1B;
       mem32[15] = 0x1B1B1B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x1B1B001B;
       mem32[1] = 0x001B1B00;
       mem32[2] = 0x1B1B1B1B;
@@ -39125,7 +39125,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1B1B1B1B;
       mem32[14] = 0x1B1B001B;
       mem32[15] = 0x181B1B1B;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x00181818;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00181818;
@@ -39142,7 +39142,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00001818;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39159,7 +39159,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39176,7 +39176,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39193,7 +39193,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39210,7 +39210,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39227,7 +39227,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39244,7 +39244,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x1B000000;
       mem32[1] = 0x1B001B1B;
       mem32[2] = 0x00000000;
@@ -39261,7 +39261,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x1B1B1B1B;
       mem32[1] = 0x1B1B1B1B;
       mem32[2] = 0x1B1B1B1B;
@@ -39278,7 +39278,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x1B1B1B1B;
       mem32[1] = 0x181B1B1B;
       mem32[2] = 0x1B1B1B1B;
@@ -39295,7 +39295,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x18000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x00001B18;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000018;
@@ -39312,7 +39312,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39329,7 +39329,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39346,7 +39346,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39363,7 +39363,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39380,7 +39380,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39397,7 +39397,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39414,7 +39414,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39431,7 +39431,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39448,7 +39448,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39465,7 +39465,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39482,7 +39482,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39499,7 +39499,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39516,7 +39516,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39533,7 +39533,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39550,7 +39550,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39567,7 +39567,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39584,7 +39584,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39601,7 +39601,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39618,7 +39618,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39635,7 +39635,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39652,7 +39652,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39669,7 +39669,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39686,7 +39686,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39703,7 +39703,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39720,7 +39720,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39737,7 +39737,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39754,7 +39754,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39771,7 +39771,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39788,7 +39788,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39805,7 +39805,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39822,7 +39822,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39839,7 +39839,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -39856,7 +39856,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40010,7 +40010,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       enemy->tileTextureIndexes[117] = 117;
       enemy->tileTextureIndexes[118] = 118;
       enemy->tileTextureIndexes[119] = 119;
-      mem32 = (uint32_t*)( enemy->tileTextures[0] );
+      mem32 = (u32*)( enemy->tileTextures[0] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40027,7 +40027,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06061111;
       mem32[14] = 0x00000000;
       mem32[15] = 0x06061111;
-      mem32 = (uint32_t*)( enemy->tileTextures[1] );
+      mem32 = (u32*)( enemy->tileTextures[1] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40044,7 +40044,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001111;
       mem32[14] = 0x06060606;
       mem32[15] = 0x11111111;
-      mem32 = (uint32_t*)( enemy->tileTextures[2] );
+      mem32 = (u32*)( enemy->tileTextures[2] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40061,7 +40061,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[3] );
+      mem32 = (u32*)( enemy->tileTextures[3] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40078,7 +40078,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C002C2C;
       mem32[14] = 0x2C000000;
       mem32[15] = 0x2C212100;
-      mem32 = (uint32_t*)( enemy->tileTextures[4] );
+      mem32 = (u32*)( enemy->tileTextures[4] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40095,7 +40095,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[5] );
+      mem32 = (u32*)( enemy->tileTextures[5] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40112,7 +40112,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[6] );
+      mem32 = (u32*)( enemy->tileTextures[6] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40129,7 +40129,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[7] );
+      mem32 = (u32*)( enemy->tileTextures[7] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40146,7 +40146,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[8] );
+      mem32 = (u32*)( enemy->tileTextures[8] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40163,7 +40163,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[9] );
+      mem32 = (u32*)( enemy->tileTextures[9] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40180,7 +40180,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[10] );
+      mem32 = (u32*)( enemy->tileTextures[10] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x06061111;
       mem32[2] = 0x00000000;
@@ -40197,7 +40197,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[11] );
+      mem32 = (u32*)( enemy->tileTextures[11] );
       mem32[0] = 0x06060606;
       mem32[1] = 0x11111106;
       mem32[2] = 0x06060606;
@@ -40214,7 +40214,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11110000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000011;
-      mem32 = (uint32_t*)( enemy->tileTextures[12] );
+      mem32 = (u32*)( enemy->tileTextures[12] );
       mem32[0] = 0x00000011;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00001100;
@@ -40231,7 +40231,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00001111;
       mem32[14] = 0x00000000;
       mem32[15] = 0x11110000;
-      mem32 = (uint32_t*)( enemy->tileTextures[13] );
+      mem32 = (u32*)( enemy->tileTextures[13] );
       mem32[0] = 0x212C0000;
       mem32[1] = 0x00212121;
       mem32[2] = 0x03060000;
@@ -40248,7 +40248,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030300;
       mem32[14] = 0x00000000;
       mem32[15] = 0x03030000;
-      mem32 = (uint32_t*)( enemy->tileTextures[14] );
+      mem32 = (u32*)( enemy->tileTextures[14] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40265,7 +40265,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00212121;
       mem32[14] = 0x21210303;
       mem32[15] = 0x21212121;
-      mem32 = (uint32_t*)( enemy->tileTextures[15] );
+      mem32 = (u32*)( enemy->tileTextures[15] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40282,7 +40282,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x11002C2C;
       mem32[14] = 0x00212121;
       mem32[15] = 0x0E0E002C;
-      mem32 = (uint32_t*)( enemy->tileTextures[16] );
+      mem32 = (u32*)( enemy->tileTextures[16] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40299,7 +40299,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x1111110E;
       mem32[14] = 0x0E0E0E0E;
       mem32[15] = 0x1111110E;
-      mem32 = (uint32_t*)( enemy->tileTextures[17] );
+      mem32 = (u32*)( enemy->tileTextures[17] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40316,7 +40316,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00001111;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[18] );
+      mem32 = (u32*)( enemy->tileTextures[18] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40333,7 +40333,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[19] );
+      mem32 = (u32*)( enemy->tileTextures[19] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40350,7 +40350,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[20] );
+      mem32 = (u32*)( enemy->tileTextures[20] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40367,7 +40367,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[21] );
+      mem32 = (u32*)( enemy->tileTextures[21] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40384,7 +40384,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[22] );
+      mem32 = (u32*)( enemy->tileTextures[22] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40401,7 +40401,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[23] );
+      mem32 = (u32*)( enemy->tileTextures[23] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x03000000;
       mem32[2] = 0x00000000;
@@ -40418,7 +40418,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030300;
       mem32[14] = 0x00000000;
       mem32[15] = 0x02060303;
-      mem32 = (uint32_t*)( enemy->tileTextures[24] );
+      mem32 = (u32*)( enemy->tileTextures[24] );
       mem32[0] = 0x0E060303;
       mem32[1] = 0x02212121;
       mem32[2] = 0x0E0E0303;
@@ -40435,7 +40435,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02000002;
       mem32[14] = 0x00020202;
       mem32[15] = 0x00020200;
-      mem32 = (uint32_t*)( enemy->tileTextures[25] );
+      mem32 = (u32*)( enemy->tileTextures[25] );
       mem32[0] = 0x2C210202;
       mem32[1] = 0x0E0E0E00;
       mem32[2] = 0x2C020202;
@@ -40452,7 +40452,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x000E0E00;
       mem32[14] = 0x02020000;
       mem32[15] = 0x000E0002;
-      mem32 = (uint32_t*)( enemy->tileTextures[26] );
+      mem32 = (u32*)( enemy->tileTextures[26] );
       mem32[0] = 0x0E0E0E0E;
       mem32[1] = 0x11110000;
       mem32[2] = 0x000E0000;
@@ -40469,7 +40469,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[27] );
+      mem32 = (u32*)( enemy->tileTextures[27] );
       mem32[0] = 0x11111111;
       mem32[1] = 0x00000000;
       mem32[2] = 0x11110000;
@@ -40486,7 +40486,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[28] );
+      mem32 = (u32*)( enemy->tileTextures[28] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40503,7 +40503,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[29] );
+      mem32 = (u32*)( enemy->tileTextures[29] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40520,7 +40520,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[30] );
+      mem32 = (u32*)( enemy->tileTextures[30] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40537,7 +40537,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[31] );
+      mem32 = (u32*)( enemy->tileTextures[31] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x11000011;
       mem32[2] = 0x11001100;
@@ -40554,7 +40554,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00020000;
-      mem32 = (uint32_t*)( enemy->tileTextures[32] );
+      mem32 = (u32*)( enemy->tileTextures[32] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00001100;
@@ -40571,7 +40571,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16161611;
       mem32[14] = 0x16212102;
       mem32[15] = 0x03031616;
-      mem32 = (uint32_t*)( enemy->tileTextures[33] );
+      mem32 = (u32*)( enemy->tileTextures[33] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x02020206;
       mem32[2] = 0x00000000;
@@ -40588,7 +40588,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x16161616;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[34] );
+      mem32 = (u32*)( enemy->tileTextures[34] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x02000000;
       mem32[2] = 0x00000000;
@@ -40605,7 +40605,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02022100;
       mem32[14] = 0x00000000;
       mem32[15] = 0x02022121;
-      mem32 = (uint32_t*)( enemy->tileTextures[35] );
+      mem32 = (u32*)( enemy->tileTextures[35] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x00002C00;
       mem32[2] = 0x00000000;
@@ -40622,7 +40622,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x002C2C02;
       mem32[14] = 0x02020202;
       mem32[15] = 0x002C2C02;
-      mem32 = (uint32_t*)( enemy->tileTextures[36] );
+      mem32 = (u32*)( enemy->tileTextures[36] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40639,7 +40639,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16161600;
       mem32[14] = 0x00000000;
       mem32[15] = 0x03161616;
-      mem32 = (uint32_t*)( enemy->tileTextures[37] );
+      mem32 = (u32*)( enemy->tileTextures[37] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40656,7 +40656,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16160316;
       mem32[14] = 0x03030303;
       mem32[15] = 0x16030316;
-      mem32 = (uint32_t*)( enemy->tileTextures[38] );
+      mem32 = (u32*)( enemy->tileTextures[38] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40673,7 +40673,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000016;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[39] );
+      mem32 = (u32*)( enemy->tileTextures[39] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40690,7 +40690,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[40] );
+      mem32 = (u32*)( enemy->tileTextures[40] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40707,7 +40707,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x16160000;
-      mem32 = (uint32_t*)( enemy->tileTextures[41] );
+      mem32 = (u32*)( enemy->tileTextures[41] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x21000000;
       mem32[2] = 0x00000000;
@@ -40724,7 +40724,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030303;
       mem32[14] = 0x03030316;
       mem32[15] = 0x03030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[42] );
+      mem32 = (u32*)( enemy->tileTextures[42] );
       mem32[0] = 0x16161121;
       mem32[1] = 0x03030303;
       mem32[2] = 0x03161616;
@@ -40741,7 +40741,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x06210303;
       mem32[14] = 0x03161603;
       mem32[15] = 0x21060303;
-      mem32 = (uint32_t*)( enemy->tileTextures[43] );
+      mem32 = (u32*)( enemy->tileTextures[43] );
       mem32[0] = 0x16161616;
       mem32[1] = 0x00000016;
       mem32[2] = 0x16030316;
@@ -40758,7 +40758,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21210303;
       mem32[14] = 0x03030321;
       mem32[15] = 0x21210303;
-      mem32 = (uint32_t*)( enemy->tileTextures[44] );
+      mem32 = (u32*)( enemy->tileTextures[44] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x02020221;
       mem32[2] = 0x21000000;
@@ -40775,7 +40775,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x21212121;
       mem32[15] = 0x02020200;
-      mem32 = (uint32_t*)( enemy->tileTextures[45] );
+      mem32 = (u32*)( enemy->tileTextures[45] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x2C2C2C02;
       mem32[2] = 0x02020202;
@@ -40792,7 +40792,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C2C0202;
       mem32[14] = 0x02020202;
       mem32[15] = 0x2C2C0002;
-      mem32 = (uint32_t*)( enemy->tileTextures[46] );
+      mem32 = (u32*)( enemy->tileTextures[46] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x03161616;
       mem32[2] = 0x16000000;
@@ -40809,7 +40809,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21030303;
       mem32[14] = 0x2C2C2C2C;
       mem32[15] = 0x21030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[47] );
+      mem32 = (u32*)( enemy->tileTextures[47] );
       mem32[0] = 0x03030303;
       mem32[1] = 0x03030316;
       mem32[2] = 0x03030303;
@@ -40826,7 +40826,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03160303;
       mem32[14] = 0x03030621;
       mem32[15] = 0x16160303;
-      mem32 = (uint32_t*)( enemy->tileTextures[48] );
+      mem32 = (u32*)( enemy->tileTextures[48] );
       mem32[0] = 0x00001616;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00161603;
@@ -40843,7 +40843,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x16160303;
       mem32[14] = 0x03030303;
       mem32[15] = 0x16030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[49] );
+      mem32 = (u32*)( enemy->tileTextures[49] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -40860,7 +40860,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000016;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[50] );
+      mem32 = (u32*)( enemy->tileTextures[50] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x03161616;
       mem32[2] = 0x00000000;
@@ -40877,7 +40877,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[51] );
+      mem32 = (u32*)( enemy->tileTextures[51] );
       mem32[0] = 0x03030303;
       mem32[1] = 0x03030303;
       mem32[2] = 0x03030303;
@@ -40894,7 +40894,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030303;
       mem32[14] = 0x03161603;
       mem32[15] = 0x03030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[52] );
+      mem32 = (u32*)( enemy->tileTextures[52] );
       mem32[0] = 0x03031616;
       mem32[1] = 0x21000303;
       mem32[2] = 0x03030316;
@@ -40911,7 +40911,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030306;
       mem32[14] = 0x03030303;
       mem32[15] = 0x03030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[53] );
+      mem32 = (u32*)( enemy->tileTextures[53] );
       mem32[0] = 0x03030321;
       mem32[1] = 0x21212103;
       mem32[2] = 0x21210021;
@@ -40928,7 +40928,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C2C2C2C;
       mem32[14] = 0x2C2C0303;
       mem32[15] = 0x002C2C2C;
-      mem32 = (uint32_t*)( enemy->tileTextures[54] );
+      mem32 = (u32*)( enemy->tileTextures[54] );
       mem32[0] = 0x02212100;
       mem32[1] = 0x00000002;
       mem32[2] = 0x02210021;
@@ -40945,7 +40945,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x02020221;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[55] );
+      mem32 = (u32*)( enemy->tileTextures[55] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x2C2C0200;
       mem32[2] = 0x02020202;
@@ -40962,7 +40962,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00020202;
       mem32[14] = 0x02020202;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[56] );
+      mem32 = (u32*)( enemy->tileTextures[56] );
       mem32[0] = 0x002C2C2C;
       mem32[1] = 0x21030303;
       mem32[2] = 0x21002C2C;
@@ -40979,7 +40979,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03060000;
       mem32[14] = 0x2C2C2100;
       mem32[15] = 0x03032C2C;
-      mem32 = (uint32_t*)( enemy->tileTextures[57] );
+      mem32 = (u32*)( enemy->tileTextures[57] );
       mem32[0] = 0x03030021;
       mem32[1] = 0x16030303;
       mem32[2] = 0x03032121;
@@ -40996,7 +40996,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030303;
       mem32[14] = 0x03030303;
       mem32[15] = 0x03030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[58] );
+      mem32 = (u32*)( enemy->tileTextures[58] );
       mem32[0] = 0x03030303;
       mem32[1] = 0x03030303;
       mem32[2] = 0x03030316;
@@ -41013,7 +41013,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x03030303;
       mem32[14] = 0x16160303;
       mem32[15] = 0x03030303;
-      mem32 = (uint32_t*)( enemy->tileTextures[59] );
+      mem32 = (u32*)( enemy->tileTextures[59] );
       mem32[0] = 0x00001616;
       mem32[1] = 0x00000000;
       mem32[2] = 0x16161603;
@@ -41030,7 +41030,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[60] );
+      mem32 = (u32*)( enemy->tileTextures[60] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41047,7 +41047,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[61] );
+      mem32 = (u32*)( enemy->tileTextures[61] );
       mem32[0] = 0x03031616;
       mem32[1] = 0x03030303;
       mem32[2] = 0x00030316;
@@ -41064,7 +41064,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[62] );
+      mem32 = (u32*)( enemy->tileTextures[62] );
       mem32[0] = 0x03030303;
       mem32[1] = 0x03030303;
       mem32[2] = 0x03020200;
@@ -41081,7 +41081,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21212102;
       mem32[14] = 0x02020000;
       mem32[15] = 0x21210002;
-      mem32 = (uint32_t*)( enemy->tileTextures[63] );
+      mem32 = (u32*)( enemy->tileTextures[63] );
       mem32[0] = 0x03030303;
       mem32[1] = 0x21030303;
       mem32[2] = 0x03030303;
@@ -41098,7 +41098,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21212121;
       mem32[14] = 0x21212100;
       mem32[15] = 0x21212121;
-      mem32 = (uint32_t*)( enemy->tileTextures[64] );
+      mem32 = (u32*)( enemy->tileTextures[64] );
       mem32[0] = 0x02020221;
       mem32[1] = 0x02020202;
       mem32[2] = 0x02020221;
@@ -41115,7 +41115,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x02020202;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[65] );
+      mem32 = (u32*)( enemy->tileTextures[65] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x02020202;
       mem32[2] = 0x02020202;
@@ -41132,7 +41132,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x02020202;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[66] );
+      mem32 = (u32*)( enemy->tileTextures[66] );
       mem32[0] = 0x03000002;
       mem32[1] = 0x03030303;
       mem32[2] = 0x032C0202;
@@ -41149,7 +41149,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C2C002C;
       mem32[14] = 0x2C020202;
       mem32[15] = 0x2C2C002C;
-      mem32 = (uint32_t*)( enemy->tileTextures[67] );
+      mem32 = (u32*)( enemy->tileTextures[67] );
       mem32[0] = 0x03030303;
       mem32[1] = 0x03030303;
       mem32[2] = 0x03030303;
@@ -41166,7 +41166,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x0000002C;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[68] );
+      mem32 = (u32*)( enemy->tileTextures[68] );
       mem32[0] = 0x16030303;
       mem32[1] = 0x03030303;
       mem32[2] = 0x16030303;
@@ -41183,7 +41183,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[69] );
+      mem32 = (u32*)( enemy->tileTextures[69] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41200,7 +41200,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[70] );
+      mem32 = (u32*)( enemy->tileTextures[70] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41217,7 +41217,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[71] );
+      mem32 = (u32*)( enemy->tileTextures[71] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41234,7 +41234,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[72] );
+      mem32 = (u32*)( enemy->tileTextures[72] );
       mem32[0] = 0x02020000;
       mem32[1] = 0x00210200;
       mem32[2] = 0x00020000;
@@ -41251,7 +41251,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x21000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[73] );
+      mem32 = (u32*)( enemy->tileTextures[73] );
       mem32[0] = 0x21212121;
       mem32[1] = 0x21212121;
       mem32[2] = 0x21212121;
@@ -41268,7 +41268,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21210021;
       mem32[14] = 0x21212121;
       mem32[15] = 0x2C210021;
-      mem32 = (uint32_t*)( enemy->tileTextures[74] );
+      mem32 = (u32*)( enemy->tileTextures[74] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x02020202;
       mem32[2] = 0x02020200;
@@ -41285,7 +41285,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x02020200;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[75] );
+      mem32 = (u32*)( enemy->tileTextures[75] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x02020202;
       mem32[2] = 0x02020202;
@@ -41302,7 +41302,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x02020202;
       mem32[15] = 0x02020202;
-      mem32 = (uint32_t*)( enemy->tileTextures[76] );
+      mem32 = (u32*)( enemy->tileTextures[76] );
       mem32[0] = 0x2C020202;
       mem32[1] = 0x2C2C002C;
       mem32[2] = 0x2C000202;
@@ -41319,7 +41319,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C212100;
       mem32[14] = 0x002C0002;
       mem32[15] = 0x2C212121;
-      mem32 = (uint32_t*)( enemy->tileTextures[77] );
+      mem32 = (u32*)( enemy->tileTextures[77] );
       mem32[0] = 0x0000002C;
       mem32[1] = 0x00000000;
       mem32[2] = 0x0000002C;
@@ -41336,7 +41336,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00002C2C;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[78] );
+      mem32 = (u32*)( enemy->tileTextures[78] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41353,7 +41353,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[79] );
+      mem32 = (u32*)( enemy->tileTextures[79] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41370,7 +41370,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[80] );
+      mem32 = (u32*)( enemy->tileTextures[80] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41387,7 +41387,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[81] );
+      mem32 = (u32*)( enemy->tileTextures[81] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41404,7 +41404,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[82] );
+      mem32 = (u32*)( enemy->tileTextures[82] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x21000000;
       mem32[2] = 0x00000000;
@@ -41421,7 +41421,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[83] );
+      mem32 = (u32*)( enemy->tileTextures[83] );
       mem32[0] = 0x21212121;
       mem32[1] = 0x2C21002C;
       mem32[2] = 0x21212121;
@@ -41438,7 +41438,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C2C2C2C;
       mem32[14] = 0x2C2C0000;
       mem32[15] = 0x2C2C2C2C;
-      mem32 = (uint32_t*)( enemy->tileTextures[84] );
+      mem32 = (u32*)( enemy->tileTextures[84] );
       mem32[0] = 0x02000002;
       mem32[1] = 0x02020202;
       mem32[2] = 0x0002022C;
@@ -41455,7 +41455,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x02020202;
       mem32[14] = 0x0000002C;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[85] );
+      mem32 = (u32*)( enemy->tileTextures[85] );
       mem32[0] = 0x02020202;
       mem32[1] = 0x00020202;
       mem32[2] = 0x00000000;
@@ -41472,7 +41472,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21000002;
       mem32[14] = 0x00000000;
       mem32[15] = 0x21000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[86] );
+      mem32 = (u32*)( enemy->tileTextures[86] );
       mem32[0] = 0x002C0200;
       mem32[1] = 0x2C212121;
       mem32[2] = 0x21002C02;
@@ -41489,7 +41489,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C2C2121;
       mem32[14] = 0x21212121;
       mem32[15] = 0x2C2C2121;
-      mem32 = (uint32_t*)( enemy->tileTextures[87] );
+      mem32 = (u32*)( enemy->tileTextures[87] );
       mem32[0] = 0x00002C2C;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00002C2C;
@@ -41506,7 +41506,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[88] );
+      mem32 = (u32*)( enemy->tileTextures[88] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41523,7 +41523,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[89] );
+      mem32 = (u32*)( enemy->tileTextures[89] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41540,7 +41540,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[90] );
+      mem32 = (u32*)( enemy->tileTextures[90] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41557,7 +41557,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[91] );
+      mem32 = (u32*)( enemy->tileTextures[91] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41574,7 +41574,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[92] );
+      mem32 = (u32*)( enemy->tileTextures[92] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41591,7 +41591,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[93] );
+      mem32 = (u32*)( enemy->tileTextures[93] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x2C2C2C2C;
       mem32[2] = 0x00000000;
@@ -41608,7 +41608,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x2C2C2100;
       mem32[14] = 0x2C2C2C2C;
       mem32[15] = 0x002C2100;
-      mem32 = (uint32_t*)( enemy->tileTextures[94] );
+      mem32 = (u32*)( enemy->tileTextures[94] );
       mem32[0] = 0x00002C00;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00002C2C;
@@ -41625,7 +41625,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x2C2C0000;
       mem32[15] = 0x0000002C;
-      mem32 = (uint32_t*)( enemy->tileTextures[95] );
+      mem32 = (u32*)( enemy->tileTextures[95] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x21210000;
       mem32[2] = 0x00000000;
@@ -41642,7 +41642,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[96] );
+      mem32 = (u32*)( enemy->tileTextures[96] );
       mem32[0] = 0x21212121;
       mem32[1] = 0x2C2C2C21;
       mem32[2] = 0x21212121;
@@ -41659,7 +41659,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00002C21;
       mem32[14] = 0x21210000;
       mem32[15] = 0x00002C21;
-      mem32 = (uint32_t*)( enemy->tileTextures[97] );
+      mem32 = (u32*)( enemy->tileTextures[97] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41676,7 +41676,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[98] );
+      mem32 = (u32*)( enemy->tileTextures[98] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41693,7 +41693,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[99] );
+      mem32 = (u32*)( enemy->tileTextures[99] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41710,7 +41710,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[100] );
+      mem32 = (u32*)( enemy->tileTextures[100] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41727,7 +41727,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[101] );
+      mem32 = (u32*)( enemy->tileTextures[101] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41744,7 +41744,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[102] );
+      mem32 = (u32*)( enemy->tileTextures[102] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x2C060000;
       mem32[2] = 0x00000000;
@@ -41761,7 +41761,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[103] );
+      mem32 = (u32*)( enemy->tileTextures[103] );
       mem32[0] = 0x0000002C;
       mem32[1] = 0x002C2C21;
       mem32[2] = 0x21000000;
@@ -41778,7 +41778,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[104] );
+      mem32 = (u32*)( enemy->tileTextures[104] );
       mem32[0] = 0x2C2C0000;
       mem32[1] = 0x00062C2C;
       mem32[2] = 0x2C000000;
@@ -41795,7 +41795,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[105] );
+      mem32 = (u32*)( enemy->tileTextures[105] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41812,7 +41812,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21210600;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00212106;
-      mem32 = (uint32_t*)( enemy->tileTextures[106] );
+      mem32 = (u32*)( enemy->tileTextures[106] );
       mem32[0] = 0x21210000;
       mem32[1] = 0x002C2C21;
       mem32[2] = 0x21000000;
@@ -41829,7 +41829,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21212100;
       mem32[14] = 0x00000000;
       mem32[15] = 0x21000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[107] );
+      mem32 = (u32*)( enemy->tileTextures[107] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41846,7 +41846,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x21212121;
       mem32[14] = 0x00002121;
       mem32[15] = 0x21000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[108] );
+      mem32 = (u32*)( enemy->tileTextures[108] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41863,7 +41863,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000621;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[109] );
+      mem32 = (u32*)( enemy->tileTextures[109] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41880,7 +41880,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[110] );
+      mem32 = (u32*)( enemy->tileTextures[110] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41897,7 +41897,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[111] );
+      mem32 = (u32*)( enemy->tileTextures[111] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41914,7 +41914,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[112] );
+      mem32 = (u32*)( enemy->tileTextures[112] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41931,7 +41931,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[113] );
+      mem32 = (u32*)( enemy->tileTextures[113] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41948,7 +41948,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[114] );
+      mem32 = (u32*)( enemy->tileTextures[114] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41965,7 +41965,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[115] );
+      mem32 = (u32*)( enemy->tileTextures[115] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41982,7 +41982,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[116] );
+      mem32 = (u32*)( enemy->tileTextures[116] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -41999,7 +41999,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[117] );
+      mem32 = (u32*)( enemy->tileTextures[117] );
       mem32[0] = 0x00212121;
       mem32[1] = 0x00000000;
       mem32[2] = 0x21212100;
@@ -42016,7 +42016,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[118] );
+      mem32 = (u32*)( enemy->tileTextures[118] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -42033,7 +42033,7 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
       mem32[13] = 0x00000000;
       mem32[14] = 0x00000000;
       mem32[15] = 0x00000000;
-      mem32 = (uint32_t*)( enemy->tileTextures[119] );
+      mem32 = (u32*)( enemy->tileTextures[119] );
       mem32[0] = 0x00000000;
       mem32[1] = 0x00000000;
       mem32[2] = 0x00000000;
@@ -42054,10 +42054,10 @@ void Enemy_Load( Enemy_t* enemy, uint32_t index )
    }
 }
 
-void TileMap_Load( TileMap_t* tileMap, uint32_t id )
+void TileMap_Load( TileMap_t* tileMap, u32 id )
 {
-   int32_t i, j;
-   uint32_t* tiles32 = (uint32_t*)( tileMap->tiles );
+   i32 i, j;
+   u32* tiles32 = (u32*)( tileMap->tiles );
 
    if ( id == TILEMAP_OVERWORLD_ID ) tileMap->gameFlags->doors = ( 0xFFFF0000 | ( tileMap->gameFlags->doors & 0xFFFF ) );
 
@@ -46297,7 +46297,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[0].position.x = 208;
          tileMap->staticSprites[0].position.y = 160;
          tileMap->npcCount = 5;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 0;
          tileMap->npcs[0].tileIndex = 108;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 1 );
@@ -46416,7 +46416,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[0].position.x = 80;
          tileMap->staticSprites[0].position.y = 96;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 22;
          tileMap->npcs[0].tileIndex = 169;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
@@ -46754,7 +46754,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[1].position.x = 480;
          tileMap->staticSprites[1].position.y = 480;
          tileMap->npcCount = 19;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 5;
          tileMap->npcs[0].tileIndex = 233;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 3 );
@@ -47343,7 +47343,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[1].position.x = 128;
          tileMap->staticSprites[1].position.y = 320;
          tileMap->npcCount = 17;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 23;
          tileMap->npcs[0].tileIndex = 450;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 4 );
@@ -47890,7 +47890,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
          tileMap->staticSpriteCount = 0;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 2147483647;
          tileMap->npcs[0].tileIndex = 150;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 5 );
@@ -47940,7 +47940,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
          tileMap->staticSpriteCount = 0;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 2147483647;
          tileMap->npcs[0].tileIndex = 151;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 5 );
@@ -48111,7 +48111,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[2].position.x = 192;
          tileMap->staticSprites[2].position.y = 256;
          tileMap->npcCount = 8;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 38;
          tileMap->npcs[0].tileIndex = 399;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
@@ -48370,7 +48370,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
          tileMap->staticSpriteCount = 0;
          tileMap->npcCount = 6;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 43;
          tileMap->npcs[0].tileIndex = 103;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 3 );
@@ -49187,7 +49187,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[4].position.x = 432;
          tileMap->staticSprites[4].position.y = 432;
          tileMap->npcCount = 19;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 59;
          tileMap->npcs[0].tileIndex = 125;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 3 );
@@ -49806,7 +49806,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
          tileMap->staticSpriteCount = 0;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 67;
          tileMap->npcs[0].tileIndex = 109;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
@@ -50111,7 +50111,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[3].position.x = 256;
          tileMap->staticSprites[3].position.y = 368;
          tileMap->npcCount = 14;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 49;
          tileMap->npcs[0].tileIndex = 385;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 3 );
@@ -50933,7 +50933,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[1].position.x = 288;
          tileMap->staticSprites[1].position.y = 272;
          tileMap->npcCount = 15;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 68;
          tileMap->npcs[0].tileIndex = 789;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
@@ -51415,7 +51415,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
          tileMap->staticSpriteCount = 0;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 2147483647;
          tileMap->npcs[0].tileIndex = 190;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
@@ -51472,7 +51472,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
          tileMap->staticSpriteCount = 0;
          tileMap->npcCount = 4;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 81;
          tileMap->npcs[0].tileIndex = 87;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 5 );
@@ -51934,7 +51934,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[1].position.x = 176;
          tileMap->staticSprites[1].position.y = 624;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 87;
          tileMap->npcs[0].tileIndex = 800;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 2 );
@@ -53391,7 +53391,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[0].position.x = 176;
          tileMap->staticSprites[0].position.y = 480;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 86;
          tileMap->npcs[0].tileIndex = 785;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 9 );
@@ -53709,7 +53709,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[0].position.x = 144;
          tileMap->staticSprites[0].position.y = 192;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 84;
          tileMap->npcs[0].tileIndex = 148;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
@@ -53776,7 +53776,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[0].position.x = 64;
          tileMap->staticSprites[0].position.y = 96;
          tileMap->npcCount = 1;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 85;
          tileMap->npcs[0].tileIndex = 129;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 8 );
@@ -53888,7 +53888,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->evacPortal.arrivalDirection = (Direction_t)0;
          tileMap->staticSpriteCount = 0;
          tileMap->npcCount = 4;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 0;
          tileMap->npcs[0].tileIndex = 108;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 11 );
@@ -54242,7 +54242,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->staticSprites[1].position.x = 480;
          tileMap->staticSprites[1].position.y = 480;
          tileMap->npcCount = 21;
-         for ( i = 0; i < (int32_t)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
+         for ( i = 0; i < (i32)( tileMap->npcCount ); i++ ) ActiveSprite_Reset( &( tileMap->npcs[i].sprite ) );
          tileMap->npcs[0].id = 7;
          tileMap->npcs[0].tileIndex = 688;
          Sprite_LoadActive( &( tileMap->npcs[0].sprite ), 3 );
@@ -54834,16 +54834,16 @@ void TileMap_LoadHiddenStairs( TileMap_t* tileMap )
    tileMap->portalCount++;
 }
 
-void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
+void Sprite_LoadActive( ActiveSprite_t* sprite, u32 index )
 {
-   int32_t i;
-   uint32_t* mem32 = (uint32_t*)( sprite->textures[0].memory );
+   i32 i;
+   u32* mem32 = (u32*)( sprite->textures[0].memory );
 
    switch( index )
    {
       case 0:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x060C0C06;
          mem32[5] = 0x060C0C0C;
@@ -54888,7 +54888,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0D0D0D0D;
          mem32[58] = 0x0C0C0C0B;
          mem32[61] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x060C0C06;
          mem32[5] = 0x060C0C0C;
@@ -54931,7 +54931,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0C0C0C;
          mem32[58] = 0x0D0D0D0D;
          mem32[62] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[0] = 0x0B060B0B;
          mem32[1] = 0x060C0B0B;
          mem32[2] = 0x0B0B0C06;
@@ -54983,7 +54983,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0C0C0C;
          mem32[58] = 0x0D0D0D0D;
          mem32[62] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[0] = 0x0B060B0B;
          mem32[1] = 0x060C0B0B;
          mem32[2] = 0x0B0B0C06;
@@ -55035,7 +55035,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0D0D0D0D;
          mem32[58] = 0x0C0C0C0B;
          mem32[61] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x060C0C06;
          mem32[2] = 0x0B0C0C0C;
          mem32[4] = 0x06060B0B;
@@ -55078,7 +55078,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0D0D0D0D;
          mem32[58] = 0x0C0C0C0B;
          mem32[61] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[1] = 0x060C0C06;
          mem32[2] = 0x0B0C0C0C;
          mem32[4] = 0x060B0B0B;
@@ -55123,7 +55123,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0C0C0C;
          mem32[58] = 0x0D0D0D0D;
          mem32[62] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[0] = 0x0B060B0B;
          mem32[1] = 0x0C0C0B0B;
          mem32[2] = 0x0B0B0C0C;
@@ -55176,7 +55176,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0C0C0C;
          mem32[58] = 0x0D0D0D0D;
          mem32[62] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[0] = 0x0B060B0B;
          mem32[1] = 0x0C0C0B0B;
          mem32[2] = 0x0B0B0C0C;
@@ -55232,13 +55232,13 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 1:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[0] = 0x060B0B0B;
          mem32[1] = 0x0B06060B;
          mem32[2] = 0x0B06060B;
@@ -55303,7 +55303,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x0B0E0E0E;
          mem32[62] = 0x06060606;
          mem32[63] = 0x0B060606;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[0] = 0x060B060B;
          mem32[1] = 0x0B06060B;
          mem32[2] = 0x0B06060B;
@@ -55371,13 +55371,13 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 2:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[1] = 0x060E060B;
          mem32[2] = 0x0B060E06;
          mem32[4] = 0x060B0B0B;
@@ -55436,7 +55436,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x0606060E;
          mem32[62] = 0x060E0606;
          mem32[63] = 0x0B0B0606;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[1] = 0x060E060B;
          mem32[2] = 0x0B060E06;
          mem32[4] = 0x060B0B0B;
@@ -55498,7 +55498,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 3:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[1] = 0x04040406;
          mem32[2] = 0x0B060404;
          mem32[4] = 0x060B0B0B;
@@ -55538,7 +55538,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x04040404;
          mem32[59] = 0x0B0B0B04;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[1] = 0x04040406;
          mem32[2] = 0x0B060404;
          mem32[4] = 0x060B0B0B;
@@ -55582,7 +55582,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x04040404;
          mem32[58] = 0x0D0D0D0B;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[1] = 0x0604040B;
          mem32[2] = 0x0B040406;
          mem32[3] = 0x0B0B060B;
@@ -55638,7 +55638,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x04040404;
          mem32[59] = 0x0B060B04;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[1] = 0x0604040B;
          mem32[2] = 0x0B040406;
          mem32[5] = 0x06040404;
@@ -55693,7 +55693,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B060B0B;
          mem32[61] = 0x0D0D0D0D;
          mem32[63] = 0x0B060B0B;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x0404060B;
          mem32[2] = 0x06040404;
          mem32[5] = 0x04040406;
@@ -55733,7 +55733,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x04040604;
          mem32[59] = 0x0B0B0B04;
          mem32[62] = 0x0D0D060D;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[1] = 0x0404060B;
          mem32[2] = 0x06040406;
          mem32[5] = 0x04040406;
@@ -55777,7 +55777,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x04040404;
          mem32[58] = 0x0D0D060B;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[1] = 0x0604040B;
          mem32[2] = 0x0B040406;
          mem32[4] = 0x0B060B0B;
@@ -55832,7 +55832,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x0D0D0D0B;
          mem32[60] = 0x0B0B060B;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[0] = 0x0B060B0B;
          mem32[1] = 0x0604040B;
          mem32[2] = 0x0B040406;
@@ -55891,7 +55891,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 4:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
          mem32[5] = 0x0C0C0C0C;
@@ -55933,7 +55933,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0C0C0C0C;
          mem32[58] = 0x0D0D0D0B;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
          mem32[5] = 0x0C0C0C0C;
@@ -55973,7 +55973,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0D0D0D;
          mem32[58] = 0x0C0C0C0C;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
          mem32[5] = 0x0C0C0C0C;
@@ -56021,7 +56021,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0C0C0C0C;
          mem32[58] = 0x0D0D0D0B;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
          mem32[5] = 0x0C0C0C0C;
@@ -56069,7 +56069,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0D0D0D;
          mem32[58] = 0x0C0C0C0C;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
          mem32[5] = 0x0C0C0C0C;
@@ -56109,7 +56109,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0C0C0C0C;
          mem32[58] = 0x0D0D0D0B;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
          mem32[5] = 0x0C0C0C0C;
@@ -56151,7 +56151,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0D0D0D;
          mem32[58] = 0x0C0C0C0C;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
          mem32[5] = 0x0C0C0C0C;
@@ -56199,7 +56199,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0D0D0D;
          mem32[58] = 0x0C0C0C0C;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
          mem32[5] = 0x0C0C0C0C;
@@ -56250,7 +56250,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 5:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0C0C0C0C; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0C0C0B0B;
          mem32[2] = 0x0B0C0C0C;
@@ -56302,7 +56302,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[60] = 0x0C0B0B0B;
          mem32[61] = 0x0C0D0D0D;
          mem32[63] = 0x0B0B0C0C;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0C0C0B0B;
          mem32[2] = 0x0B0C0C0C;
@@ -56353,7 +56353,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[60] = 0x0C0B0B0B;
          mem32[62] = 0x0D0D0D0C;
          mem32[63] = 0x0B0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
@@ -56395,7 +56395,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[60] = 0x0C0C0B0B;
          mem32[61] = 0x0C0D0D0D;
          mem32[63] = 0x0B0B0C0C;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
@@ -56437,7 +56437,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[60] = 0x0C0C0B0B;
          mem32[62] = 0x0D0D0D0C;
          mem32[63] = 0x0B0B0C0C;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0B0C0C;
@@ -56488,7 +56488,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[60] = 0x0C0C0C0B;
          mem32[61] = 0x0C0D0D0D;
          mem32[63] = 0x0B0B0B0C;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0B0C0C;
@@ -56540,7 +56540,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[60] = 0x0C0C0B0B;
          mem32[62] = 0x0D0D0D0C;
          mem32[63] = 0x0B0B0B0C;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
@@ -56596,7 +56596,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[60] = 0x0C0C0B0B;
          mem32[62] = 0x0D0D0D0C;
          mem32[63] = 0x0B0B0C0C;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0C0C0C0B;
          mem32[2] = 0x0B0C0C0C;
@@ -56655,7 +56655,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 6:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[1] = 0x0808080B;
          mem32[2] = 0x0B080808;
          mem32[5] = 0x08080808;
@@ -56706,7 +56706,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x02020202;
          mem32[60] = 0x020B0B0B;
          mem32[61] = 0x02020202;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[1] = 0x0808080B;
          mem32[2] = 0x0B080808;
          mem32[5] = 0x08080808;
@@ -56757,7 +56757,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x0D0D0D0D;
          mem32[61] = 0x020B0B0B;
          mem32[62] = 0x02020202;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[1] = 0x0808080B;
          mem32[2] = 0x0B080808;
          mem32[5] = 0x08080808;
@@ -56814,7 +56814,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B0B0B02;
          mem32[60] = 0x020B0B0B;
          mem32[61] = 0x02020202;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[1] = 0x0808080B;
          mem32[2] = 0x0B080808;
          mem32[5] = 0x08080808;
@@ -56871,7 +56871,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B0B0B0D;
          mem32[62] = 0x02020202;
          mem32[63] = 0x0B0B0B02;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x0808080B;
          mem32[2] = 0x0B080808;
          mem32[5] = 0x08080808;
@@ -56922,7 +56922,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B0B0B02;
          mem32[61] = 0x02020202;
          mem32[62] = 0x0B0B0B02;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[1] = 0x0808080B;
          mem32[2] = 0x0B080808;
          mem32[5] = 0x08080808;
@@ -56973,7 +56973,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B0B0B0D;
          mem32[62] = 0x02020202;
          mem32[63] = 0x0B0B0B02;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[1] = 0x0808080B;
          mem32[2] = 0x0B080808;
          mem32[5] = 0x08080808;
@@ -57030,7 +57030,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B0B0B0D;
          mem32[62] = 0x02020202;
          mem32[63] = 0x0B0B0B02;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[1] = 0x0808080B;
          mem32[2] = 0x0B080808;
          mem32[5] = 0x08080808;
@@ -57090,7 +57090,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 7:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[1] = 0x0E0E0E06;
          mem32[2] = 0x0B060E0E;
          mem32[4] = 0x060B0B0B;
@@ -57139,7 +57139,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0E0E0E0E;
          mem32[58] = 0x0D0D0606;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[1] = 0x0E0E0E06;
          mem32[2] = 0x0B060E0E;
          mem32[4] = 0x060B0B0B;
@@ -57183,7 +57183,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x06060D0D;
          mem32[58] = 0x0E0E0606;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[1] = 0x060E0E0B;
          mem32[2] = 0x0B0E0E06;
          mem32[4] = 0x0B060B0B;
@@ -57240,7 +57240,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0E0E0606;
          mem32[58] = 0x0D0D0D0B;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[1] = 0x060E0E0B;
          mem32[2] = 0x0B0E0E06;
          mem32[3] = 0x0B060B0B;
@@ -57298,7 +57298,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0D0606;
          mem32[58] = 0x0E0E0E0E;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x0E0E060B;
          mem32[2] = 0x060E060E;
          mem32[5] = 0x060E0E06;
@@ -57346,7 +57346,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0E0E0E0E;
          mem32[58] = 0x0D0D0D0B;
          mem32[61] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[1] = 0x0E0E060B;
          mem32[2] = 0x060E0E0E;
          mem32[5] = 0x060E0E06;
@@ -57390,7 +57390,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0D0D0D;
          mem32[58] = 0x0E0E0E0E;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[0] = 0x0B0B060B;
          mem32[1] = 0x060E0E0B;
          mem32[2] = 0x0B0E0E06;
@@ -57448,7 +57448,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x060E0E0E;
          mem32[59] = 0x0B060606;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[0] = 0x0B0B060B;
          mem32[1] = 0x060E0E0B;
          mem32[2] = 0x0B0E0E06;
@@ -57509,7 +57509,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 8:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x04040404; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0404040B;
          mem32[2] = 0x0B040404;
@@ -57557,7 +57557,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x04060606;
          mem32[62] = 0x06040404;
          mem32[63] = 0x0B060606;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0404040B;
          mem32[2] = 0x0B040404;
@@ -57604,7 +57604,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x06060404;
          mem32[62] = 0x06060606;
          mem32[63] = 0x0B060606;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[2] = 0x0B0B0404;
          mem32[3] = 0x0B06060B;
@@ -57647,7 +57647,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x06060606;
          mem32[62] = 0x04040406;
          mem32[63] = 0x0B060604;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[2] = 0x0B0B0404;
          mem32[3] = 0x0B0B0B0B;
@@ -57690,7 +57690,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x06040404;
          mem32[62] = 0x06060606;
          mem32[63] = 0x0B060606;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0404040B;
          mem32[2] = 0x0B040404;
@@ -57744,7 +57744,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x06060606;
          mem32[62] = 0x04060606;
          mem32[63] = 0x0B060404;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x0404040B;
          mem32[2] = 0x06060404;
@@ -57799,7 +57799,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x04040406;
          mem32[62] = 0x06060604;
          mem32[63] = 0x0B060606;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[0] = 0x0B0B0B0B;
          mem32[1] = 0x04040B0B;
          mem32[3] = 0x0B0B0B0B;
@@ -57853,7 +57853,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x06040404;
          mem32[62] = 0x06060606;
          mem32[63] = 0x0B060606;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[0] = 0x0B06060B;
          mem32[1] = 0x04040B0B;
          mem32[3] = 0x0B0B0B0B;
@@ -57910,11 +57910,11 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 9:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x0C0C0C0C;
          mem32[5] = 0x0C0C0C0B;
          mem32[6] = 0x0B0B0C06;
@@ -57960,7 +57960,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x0C0C0C0C;
          mem32[62] = 0x0D0D0D06;
          mem32[63] = 0x0B0B0B0C;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[1] = 0x0C0C0C0C;
          mem32[5] = 0x0C0C0C0B;
          mem32[6] = 0x0B0B0C06;
@@ -58006,7 +58006,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x0C0C0C0C;
          mem32[62] = 0x0D0D0D06;
          mem32[63] = 0x0B0B0B0C;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[0] = 0x0C0B0B0B;
          mem32[1] = 0x0B0B0C0C;
          mem32[2] = 0x0C0B0B0B;
@@ -58071,7 +58071,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[61] = 0x0C0D0D0D;
          mem32[62] = 0x0C0C0C0C;
          mem32[63] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[0] = 0x0C06060B;
          mem32[1] = 0x0B0B0C0C;
          mem32[2] = 0x0C0B0B0B;
@@ -58139,7 +58139,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 10:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[0] = 0x060E060B;
          mem32[1] = 0x0B060E06;
          mem32[2] = 0x060C0C0C;
@@ -58200,7 +58200,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B0E0E0E;
          mem32[61] = 0x0C0B0B0B;
          mem32[62] = 0x0B0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[0] = 0x060E060B;
          mem32[1] = 0x0B060E06;
          mem32[2] = 0x060C0C0C;
@@ -58261,7 +58261,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B0D0D0D;
          mem32[62] = 0x0C0B0B0B;
          mem32[63] = 0x0B0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[0] = 0x0B060B0B;
          mem32[1] = 0x060C0B0B;
          mem32[2] = 0x0B0B0C06;
@@ -58317,7 +58317,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0B0C0C0C;
          mem32[58] = 0x0D0D0D0D;
          mem32[62] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[0] = 0x0B060B0B;
          mem32[1] = 0x060C0B0B;
          mem32[2] = 0x0B0B0C06;
@@ -58374,7 +58374,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0D0D0D0D;
          mem32[58] = 0x0C0C0C0B;
          mem32[61] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[0] = 0x0C0C060B;
          mem32[1] = 0x0C0C0C06;
          mem32[2] = 0x0E0E060B;
@@ -58433,7 +58433,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x0C0C0C0D;
          mem32[60] = 0x0C0C0C0B;
          mem32[61] = 0x0B0B0B0C;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[0] = 0x0C0C0B0B;
          mem32[1] = 0x0C0C0C06;
          mem32[2] = 0x0E0E060B;
@@ -58493,7 +58493,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[56] = 0x0C0C0C0B;
          mem32[57] = 0x0D0D0D0D;
          mem32[61] = 0x0C0C0C0C;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[0] = 0x0E0E0B0B;
          mem32[1] = 0x0B060E06;
          mem32[2] = 0x0C0C0C0C;
@@ -58553,7 +58553,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x0B0B0606;
          mem32[62] = 0x0C0C0B0B;
          mem32[63] = 0x0B0B0C0C;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[0] = 0x0E0E0B0B;
          mem32[1] = 0x0B060E06;
          mem32[2] = 0x0C0C0C0C;
@@ -58616,14 +58616,14 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          break;
       case 11:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[51] = 0x0B0B0101;
          mem32[55] = 0x01010B0B;
          mem32[59] = 0x010B0B0B;
          mem32[63] = 0x010B0B0B;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[32] = 0x0B010B0B;
          mem32[36] = 0x0B010B0B;
          mem32[40] = 0x0B0B010B;
@@ -58632,20 +58632,20 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[52] = 0x0B0B0B01;
          mem32[56] = 0x0B0B0101;
          mem32[60] = 0x01010B0B;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[3] = 0x0B010B0B;
          mem32[7] = 0x0B010B0B;
          mem32[11] = 0x0B0B010B;
          mem32[15] = 0x0B0B010B;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          break;
       case 12:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[39] = 0x0B010B0B;
          mem32[42] = 0x0B0B010B;
          mem32[43] = 0x0B010B0B;
@@ -58655,7 +58655,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[55] = 0x01010B0B;
          mem32[59] = 0x0101010B;
          mem32[63] = 0x01010B01;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[9] = 0x0B0B010B;
          mem32[13] = 0x0B0B010B;
          mem32[17] = 0x0B0B0B01;
@@ -58670,7 +58670,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[52] = 0x0B010101;
          mem32[56] = 0x0B0B0101;
          mem32[60] = 0x01010B01;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[3] = 0x01010B0B;
          mem32[7] = 0x0B010B0B;
          mem32[11] = 0x0B0B010B;
@@ -58681,7 +58681,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[30] = 0x010B0B0B;
          mem32[34] = 0x0B010B0B;
          mem32[38] = 0x0B010B0B;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[0] = 0x0B0B0B01;
          mem32[1] = 0x0B0B0101;
          mem32[4] = 0x0B0B010B;
@@ -58690,13 +58690,13 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[12] = 0x0B0B010B;
          mem32[16] = 0x0B010B0B;
          mem32[20] = 0x0B010B0B;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          break;
       case 13:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[38] = 0x0B010B0B;
          mem32[42] = 0x0B0B010B;
          mem32[46] = 0x0B0B010B;
@@ -58704,7 +58704,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[54] = 0x0B0B0B01;
          mem32[57] = 0x010B0B0B;
          mem32[61] = 0x010B0B0B;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[19] = 0x0B0B0B01;
          mem32[23] = 0x0B0B010B;
          mem32[27] = 0x0B0B010B;
@@ -58723,7 +58723,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x01010101;
          mem32[62] = 0x01010B0B;
          mem32[63] = 0x01010B01;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[1] = 0x0B010B0B;
          mem32[5] = 0x0B010B0B;
          mem32[9] = 0x0B0B010B;
@@ -58744,7 +58744,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[52] = 0x01010101;
          mem32[56] = 0x0B0B0101;
          mem32[60] = 0x01010101;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x010B0B0B;
          mem32[2] = 0x0B0B0101;
          mem32[3] = 0x01010B0B;
@@ -58763,7 +58763,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[54] = 0x0B0B0B01;
          mem32[57] = 0x010B0B0B;
          mem32[61] = 0x010B0B0B;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[0] = 0x010B0B01;
          mem32[1] = 0x0B0B0101;
          mem32[4] = 0x0B0B0101;
@@ -58785,18 +58785,18 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[53] = 0x0B0B010B;
          mem32[57] = 0x0B0B010B;
          mem32[61] = 0x0B0B010B;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[1] = 0x0B010B0B;
          mem32[5] = 0x0B010B0B;
          mem32[9] = 0x0B0B010B;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          break;
       case 14:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[58] = 0x0B010B0B;
          mem32[62] = 0x010B0B0B;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[11] = 0x0B0B010B;
          mem32[15] = 0x0B0B010B;
          mem32[19] = 0x0B0B0B01;
@@ -58812,7 +58812,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x010B0B0B;
          mem32[58] = 0x0B0B0B01;
          mem32[61] = 0x010B0B0B;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[2] = 0x010B0B0B;
          mem32[6] = 0x010B0B0B;
          mem32[11] = 0x0B0B0B01;
@@ -58838,7 +58838,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x01010101;
          mem32[62] = 0x0101010B;
          mem32[63] = 0x01010101;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[1] = 0x01010B0B;
          mem32[5] = 0x0B010B0B;
          mem32[9] = 0x0B01010B;
@@ -58863,7 +58863,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[53] = 0x0B0B0B01;
          mem32[56] = 0x0B010101;
          mem32[60] = 0x01010101;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x01010B0B;
          mem32[2] = 0x0B0B0101;
          mem32[3] = 0x01010101;
@@ -58887,7 +58887,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[54] = 0x0B0B0B01;
          mem32[57] = 0x010B0B0B;
          mem32[61] = 0x01010B0B;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[0] = 0x01010101;
          mem32[1] = 0x0B0B0101;
          mem32[4] = 0x0B0B0101;
@@ -58910,7 +58910,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[45] = 0x0B0B0B01;
          mem32[49] = 0x0B0B0B01;
          mem32[53] = 0x0B0B010B;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
          mem32[1] = 0x0B010B0B;
          mem32[5] = 0x0B01010B;
          mem32[9] = 0x0B0B010B;
@@ -58925,13 +58925,13 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[44] = 0x0B0B010B;
          mem32[48] = 0x0B0B0B01;
          mem32[52] = 0x0B0B0B01;
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          mem32[24] = 0x0B0B0101;
          mem32[28] = 0x01010B0B;
          break;
       case 15:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[1] = 0x04040406;
          mem32[2] = 0x0B060404;
          mem32[4] = 0x060B0B0B;
@@ -58971,7 +58971,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x04040404;
          mem32[59] = 0x0B0B0B04;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[1] = 0x04040406;
          mem32[2] = 0x0B060404;
          mem32[4] = 0x060B0B0B;
@@ -59011,11 +59011,11 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[58] = 0x04040404;
          mem32[59] = 0x0B0B0B04;
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
          mem32[62] = 0x0D0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[1] = 0x0404060B;
          mem32[2] = 0x06040406;
          mem32[5] = 0x04040406;
@@ -59059,7 +59059,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x04040404;
          mem32[58] = 0x0D0D060B;
          mem32[61] = 0x0F0F0F0F;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[1] = 0x0404060B;
          mem32[2] = 0x06040406;
          mem32[5] = 0x04040406;
@@ -59103,12 +59103,12 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x04040404;
          mem32[58] = 0x0D0D060B;
          mem32[61] = 0x0F0F0F0F;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          break;
       case 16:
          for ( i = 0; i < ( SPRITE_TEXTURE_BYTES / 4 ) * ACTIVE_SPRITE_TEXTURES; i++ ) { mem32[i] = 0x0B0B0B0B; }
-         mem32 = (uint32_t*)( sprite->textures[0].memory );
+         mem32 = (u32*)( sprite->textures[0].memory );
          mem32[2] = 0x04040406;
          mem32[3] = 0x0B060404;
          mem32[5] = 0x0D0B0B0B;
@@ -59158,7 +59158,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x04040404;
          mem32[62] = 0x0D0D0B0B;
          mem32[63] = 0x0B0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[1].memory );
+         mem32 = (u32*)( sprite->textures[1].memory );
          mem32[2] = 0x04040406;
          mem32[3] = 0x0B060404;
          mem32[5] = 0x0D0B0B0B;
@@ -59208,9 +59208,9 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[59] = 0x04040404;
          mem32[62] = 0x0D0D0B0B;
          mem32[63] = 0x0B0D0D0D;
-         mem32 = (uint32_t*)( sprite->textures[2].memory );
-         mem32 = (uint32_t*)( sprite->textures[3].memory );
-         mem32 = (uint32_t*)( sprite->textures[4].memory );
+         mem32 = (u32*)( sprite->textures[2].memory );
+         mem32 = (u32*)( sprite->textures[3].memory );
+         mem32 = (u32*)( sprite->textures[4].memory );
          mem32[0] = 0x0404060B;
          mem32[1] = 0x06040404;
          mem32[4] = 0x04040406;
@@ -59260,7 +59260,7 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x04040404;
          mem32[60] = 0x0D0D0D0B;
          mem32[61] = 0x0B0B0D0D;
-         mem32 = (uint32_t*)( sprite->textures[5].memory );
+         mem32 = (u32*)( sprite->textures[5].memory );
          mem32[0] = 0x0404060B;
          mem32[1] = 0x06040404;
          mem32[4] = 0x04040406;
@@ -59310,15 +59310,15 @@ void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index )
          mem32[57] = 0x04040404;
          mem32[60] = 0x0D0D0D0B;
          mem32[61] = 0x0B0B0D0D;
-         mem32 = (uint32_t*)( sprite->textures[6].memory );
-         mem32 = (uint32_t*)( sprite->textures[7].memory );
+         mem32 = (u32*)( sprite->textures[6].memory );
+         mem32 = (u32*)( sprite->textures[7].memory );
          break;
    }
 }
 
-void Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index )
+void Sprite_LoadStatic( StaticSprite_t* sprite, u32 index )
 {
-   uint32_t* mem32 = (uint32_t*)( sprite->texture.memory );
+   u32* mem32 = (u32*)( sprite->texture.memory );
 
    switch( index )
    {
@@ -59919,7 +59919,7 @@ void Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index )
    }
 }
 
-uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
+u32 TileMap_GetTreasureFlag( u32 tileMapId, u32 tileIndex )
 {
    switch( tileMapId )
    {
@@ -59988,7 +59988,7 @@ uint32_t TileMap_GetTreasureFlag( uint32_t tileMapId, uint32_t tileIndex )
    return 0;
 }
 
-uint32_t TileMap_GetDoorFlag( uint32_t tileMapId, uint32_t tileIndex )
+u32 TileMap_GetDoorFlag( u32 tileMapId, u32 tileIndex )
 {
    switch( tileMapId )
    {

@@ -29,19 +29,19 @@ typedef struct Menu_t
    MenuId_t id;
    char title[MENU_LINE_LENGTH];
    MenuItem_t items[MENU_MAX_ITEMS];
-   uint32_t itemCount;
-   uint32_t itemsPerColumn;
-   uint32_t selectedIndex;
+   u32 itemCount;
+   u32 itemsPerColumn;
+   u32 selectedIndex;
 
    Vector2u32_t position;        // position on the screen, in pixels
    Vector2u16_t borderSize;      // overall border size, in characters
    Vector2u16_t borderPadding;   // left and top padding of menu item list, in characters
-   uint32_t columnWidth;         // in characters
-   uint32_t itemPadding;         // individual menu item top padding, in characters
-   uint32_t caratOffset;         // how far to the left to draw the carat, in characters
+   u32 columnWidth;         // in characters
+   u32 itemPadding;         // individual menu item top padding, in characters
+   u32 caratOffset;         // how far to the left to draw the carat, in characters
 
    Bool_t showCarat;
-   float blinkSeconds;
+   r32 blinkSeconds;
 }
 Menu_t;
 

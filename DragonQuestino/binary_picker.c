@@ -21,8 +21,8 @@ void BinaryPicker_Load( BinaryPicker_t* picker,
    picker->option1CallbackData = callbackData1;
    picker->option2CallbackData = callbackData2;
 
-   uint32_t strlen1 = (uint32_t)( strlen( option1 ) );
-   uint32_t strlen2 = (uint32_t)( strlen( option2 ) );
+   u32 strlen1 = (u32)( strlen( option1 ) );
+   u32 strlen2 = (u32)( strlen( option2 ) );
 
    strcpy( picker->option1, option1 );
    strcpy( picker->option2, option2 );
@@ -35,8 +35,8 @@ void BinaryPicker_Load( BinaryPicker_t* picker,
 
 void BinaryPicker_Draw( BinaryPicker_t* picker )
 {
-   uint32_t startX = picker->position.x + ( TEXT_TILE_SIZE * 3 );
-   uint32_t startY = picker->position.y + TEXT_TILE_SIZE;
+   u32 startX = picker->position.x + ( TEXT_TILE_SIZE * 3 );
+   u32 startY = picker->position.y + TEXT_TILE_SIZE;
 
    Screen_DrawTextWindow( picker->screen, picker->position.x, picker->position.y, picker->size.x, picker->size.y );
    Screen_DrawText( picker->screen, picker->option1, startX, startY + 1 );

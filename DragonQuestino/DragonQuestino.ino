@@ -19,7 +19,6 @@ void setup()
 
    g_gigaShield.begin();
    Game_Init( &g_game, g_gigaShield.getBuffer() );
-   g_gigaShield.setScreen( &( g_game.screen ) );
 
    // for NES controller input
    pinMode( INPUT_NES_DATA_PIN, INPUT );

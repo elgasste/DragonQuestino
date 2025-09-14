@@ -15,7 +15,7 @@
 
 typedef struct SpriteTexture_t
 {
-   uint8_t memory[SPRITE_TEXTURE_BYTES];
+   u8 memory[SPRITE_TEXTURE_BYTES];
 }
 SpriteTexture_t;
 
@@ -29,16 +29,16 @@ StaticSprite_t;
 typedef struct ActiveSprite_t
 {
    SpriteTexture_t textures[ACTIVE_SPRITE_TEXTURES];
-   Vector2f_t position;
+   Vector2r32_t position;
    Vector2i32_t offset;
    Vector2u32_t hitBoxSize;
    Direction_t direction;
-   uint32_t currentFrame;
-   float elapsedFrameSeconds;
+   u32 currentFrame;
+   r32 elapsedFrameSeconds;
 
    Bool_t isFlickering;
    Bool_t flickerOff;
-   float elapsedFlickerSeconds;
+   r32 elapsedFlickerSeconds;
 }
 ActiveSprite_t;
 
@@ -53,8 +53,8 @@ void ActiveSprite_Flicker( ActiveSprite_t* sprite );
 void ActiveSprite_StopFlickering( ActiveSprite_t* sprite );
 
 // game_data.c
-void Sprite_LoadStatic( StaticSprite_t* sprite, uint32_t index );
-void Sprite_LoadActive( ActiveSprite_t* sprite, uint32_t index );
+void Sprite_LoadStatic( StaticSprite_t* sprite, u32 index );
+void Sprite_LoadActive( ActiveSprite_t* sprite, u32 index );
 
 #if defined( __cplusplus )
 }

@@ -9,14 +9,14 @@
 
 typedef struct Clock_t
 {
-   uint32_t frameStartMicro;
-   uint32_t lagFrameCount;
+   u32 frameStartMicro;
+   u32 lagFrameCount;
 
 #if defined( VISUAL_STUDIO_DEV )
-   uint32_t absoluteStartMicro;
-   uint32_t absoluteEndMicro;
-   uint32_t lastFrameMicro;
-   uint32_t frameCount;
+   u32 absoluteStartMicro;
+   u32 absoluteEndMicro;
+   u32 lastFrameMicro;
+   u32 frameCount;
 #endif
 }
 Clock_t;

@@ -7,6 +7,6 @@ void Random_Seed()
    QueryPerformanceCounter( &ticks );
 
    // NOTE: normally we'd seed with time( 0 ), but this more closely resembles the kind of seeding we're doing on the Arduino.
-   uint32_t micros = (uint32_t)( ( (double)( ticks.QuadPart ) / (double)( g_globals.performanceFrequency.QuadPart ) ) * (uint64_t)1000000 );
-   srand( micros & (uint16_t)0xFFFF );
+   u32 micros = (u32)( ( (r64)( ticks.QuadPart ) / (r64)( g_globals.performanceFrequency.QuadPart ) ) * (u64)1000000 );
+   srand( micros & (u16)0xFFFF );
 }

@@ -54,20 +54,20 @@
 
 typedef struct Enemy_t
 {
-   uint32_t id;
-   uint32_t groupId;
+   u32 id;
+   u32 groupId;
    char name[16];
    char indefiniteArticle[3];
-   uint8_t minHitPoints;
-   uint8_t maxHitPoints;
-   uint8_t experience;
-   uint8_t minGold;
-   uint8_t maxGold;
-   uint8_t gold;
+   u8 minHitPoints;
+   u8 maxHitPoints;
+   u8 experience;
+   u8 minGold;
+   u8 maxGold;
+   u8 gold;
    BattleStats_t stats;
 
-   uint8_t tileTextures[ENEMY_TILE_TEXTURE_COUNT][ENEMY_TILE_TEXTURE_SIZE_BYTES];
-   int8_t tileTextureIndexes[ENEMY_TILE_COUNT];
+   u8 tileTextures[ENEMY_TILE_TEXTURE_COUNT][ENEMY_TILE_TEXTURE_SIZE_BYTES];
+   i8 tileTextureIndexes[ENEMY_TILE_COUNT];
 }
 Enemy_t;
 
@@ -75,10 +75,10 @@ Enemy_t;
 extern "C" {
 #endif
 
-float Enemy_GetFleeFactor( Enemy_t* enemy );
+r32 Enemy_GetFleeFactor( Enemy_t* enemy );
 
 // game_data.c
-void Enemy_Load( Enemy_t* enemy, uint32_t index );
+void Enemy_Load( Enemy_t* enemy, u32 index );
 
 #if defined( __cplusplus )
 }

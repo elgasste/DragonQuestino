@@ -7,18 +7,18 @@
 extern "C" {
 #endif
 
-uint8_t Math_Min8u( uint8_t l, uint8_t r);
-uint16_t Math_Min16u( uint16_t l, uint16_t r);
-uint32_t Math_Min32u( uint32_t l, uint32_t r);
-int32_t Math_Min32i( int32_t l, int32_t r );
-uint8_t Math_Max8u( uint8_t l, uint8_t r);
-uint16_t Math_Max16u( uint16_t l, uint16_t r);
-uint32_t Math_Max32u( uint32_t l, uint32_t r);
-int32_t Math_Max32i( int32_t l, int32_t r);
-Bool_t Math_RectsIntersect32i( int32_t x1, int32_t y1, int32_t w1, int32_t h1, int32_t x2, int32_t y2, int32_t w2, int32_t h2 );
-Bool_t Math_RectsIntersectF( float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2 );
-Bool_t Math_PointInRectF( float px, float py, float rx, float ry, float rw, float rh );
-uint16_t Math_AmountToCollect16u( uint16_t existing, uint16_t bounty );
+u8 Math_Min8u( u8 l, u8 r);
+u16 Math_Min16u( u16 l, u16 r);
+u32 Math_Min32u( u32 l, u32 r);
+i32 Math_Min32i( i32 l, i32 r );
+u8 Math_Max8u( u8 l, u8 r);
+u16 Math_Max16u( u16 l, u16 r);
+u32 Math_Max32u( u32 l, u32 r);
+i32 Math_Max32i( i32 l, i32 r);
+Bool_t Math_RectsIntersect32i( i32 x1, i32 y1, i32 w1, i32 h1, i32 x2, i32 y2, i32 w2, i32 h2 );
+Bool_t Math_RectsIntersectF( r32 x1, r32 y1, r32 w1, r32 h1, r32 x2, r32 y2, r32 w2, r32 h2 );
+Bool_t Math_PointInRectF( r32 px, r32 py, r32 rx, r32 ry, r32 rw, r32 rh );
+u16 Math_AmountToCollect16u( u16 existing, u16 bounty );
 
 #if defined( __cplusplus )
 }

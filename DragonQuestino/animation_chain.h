@@ -39,15 +39,15 @@ typedef struct AnimationChain_t
    void* callbackDatas[ANIMATIONCHAIN_MAX_LINKS];
    void ( *pendingCallback )( void* );
    void* pendingCallbackData;
-   uint32_t animationCount;
-   uint32_t activeAnimation;
+   u32 animationCount;
+   u32 activeAnimation;
 
    Bool_t isRunning;
    Bool_t startNext;
-   float totalElapsedSeconds;
-   float frameElapsedSeconds;
-   float totalDuration;
-   float frameDuration;
+   r32 totalElapsedSeconds;
+   r32 frameElapsedSeconds;
+   r32 totalDuration;
+   r32 frameDuration;
    Bool_t flag;
 }
 AnimationChain_t;

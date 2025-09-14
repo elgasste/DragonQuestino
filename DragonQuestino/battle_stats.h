@@ -5,16 +5,16 @@
 
 typedef struct BattleStats_t
 {
-   uint8_t hitPoints;
-   uint8_t maxHitPoints;
-   uint8_t magicPoints;
-   uint8_t maxMagicPoints;
-   uint8_t strength;
-   uint8_t agility;
-   uint8_t sleepResist;
-   uint8_t stopSpellResist;
-   uint8_t hurtResist;
-   uint8_t dodge;
+   u8 hitPoints;
+   u8 maxHitPoints;
+   u8 magicPoints;
+   u8 maxMagicPoints;
+   u8 strength;
+   u8 agility;
+   u8 sleepResist;
+   u8 stopSpellResist;
+   u8 hurtResist;
+   u8 dodge;
    Bool_t isAsleep;
    Bool_t isFizzled;
 }

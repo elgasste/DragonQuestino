@@ -10,7 +10,7 @@ internal void Game_DrawPlayerNameEntry( Game_t* game );
 internal void Game_DrawPasswordEntry( Game_t* game );
 internal void Game_DrawEnding1( Game_t* game );
 
-global uint32_t g_battleBackgroundIndexTable[49] =
+global u32 g_battleBackgroundIndexTable[49] =
 {
    0,  1,  2,  3,  3,  4,  5,
    6,  7,  8,  9,  10, 11, 12,
@@ -205,9 +205,9 @@ void Game_DrawOverworld( Game_t* game )
 
 void Game_DrawQuickStatus( Game_t* game )
 {
-   uint32_t memSize;
-   int32_t xOffset = ( game->mainState == MainState_Battle ) ? -8 : 0;
-   uint8_t level = game->player.level + 1;
+   u32 memSize;
+   i32 xOffset = ( game->mainState == MainState_Battle ) ? -8 : 0;
+   u8 level = game->player.level + 1;
    char line[9];
 
    // special case for the game's ending dialogue
@@ -217,7 +217,7 @@ void Game_DrawQuickStatus( Game_t* game )
       return;
    }
 
-   memSize = Math_Min32u( (uint32_t)( strlen( game->player.name ) ), 4 );
+   memSize = Math_Min32u( (u32)( strlen( game->player.name ) ), 4 );
    memcpy( line, game->player.name, sizeof( char ) * memSize );
    line[memSize] = '\0';
    Screen_DrawTextWindowWithTitle( &( game->screen ), 16 + xOffset, 16, 8, 12, line );
@@ -244,7 +244,7 @@ void Game_DrawOverworldDeepStatus( Game_t* game )
    char line[18];
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_NAME, game->player.name );
-   Screen_DrawText( &( game->screen ), line, 104 + ( ( 4 - ( (uint32_t)( ( strlen( game->player.name ) + 1 ) / 2 ) ) ) * TEXT_TILE_SIZE ), 24 );
+   Screen_DrawText( &( game->screen ), line, 104 + ( ( 4 - ( (u32)( ( strlen( game->player.name ) + 1 ) / 2 ) ) ) * TEXT_TILE_SIZE ), 24 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_STRENGTH, game->player.stats.strength );
    Screen_DrawText( &( game->screen ), line, 96, 40 );
@@ -273,7 +273,7 @@ void Game_DrawOverworldDeepStatus( Game_t* game )
 
 void Game_DrawOverworldItemMenu( Game_t* game )
 {
-   uint32_t useableCount = ITEM_GET_MAPUSEABLECOUNT( game->player.items );
+   u32 useableCount = ITEM_GET_MAPUSEABLECOUNT( game->player.items );
 
    if ( ITEM_GET_MAPNONUSEABLECOUNT( game->player.items ) > 0 )
    {
@@ -292,8 +292,8 @@ void Game_DrawOverworldItemMenu( Game_t* game )
 
 void Game_DrawEnemy( Game_t* game )
 {
-   uint8_t x, y, i;
-   uint16_t screenOffsetX, screenOffsetY;
+   u8 x, y, i;
+   u16 screenOffsetX, screenOffsetY;
    Enemy_t* enemy = &( game->battle.enemy );
 
    if ( !game->battle.isOver )
@@ -305,7 +305,7 @@ void Game_DrawEnemy( Game_t* game )
       {
          if ( enemy->tileTextureIndexes[i] >= 0 )
          {
-            uint8_t* texture = enemy->tileTextures[enemy->tileTextureIndexes[i]];
+            u8* texture = enemy->tileTextures[enemy->tileTextureIndexes[i]];
 
             screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
             screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
@@ -321,8 +321,8 @@ void Game_DrawEnemy( Game_t* game )
 
 void Game_DrawBattleBackground( Game_t* game )
 {
-   uint32_t row, col;
-   uint32_t x = 96, y = 52;
+   u32 row, col;
+   u32 x = 96, y = 52;
 
    if ( game->tileMap.isDark )
    {
@@ -350,7 +350,7 @@ void Game_DrawBattleBackground( Game_t* game )
 
 void Game_UpdateTextColor( Game_t* game )
 {
-   float percentage;
+   r32 percentage;
    Player_t* player = &( game->player );
 
    if ( game->gameFlags.joinedDragonlord )
@@ -363,7 +363,7 @@ void Game_UpdateTextColor( Game_t* game )
    }
    else
    {
-      percentage = (float)( player->stats.hitPoints ) / player->stats.maxHitPoints;
+      percentage = (r32)( player->stats.hitPoints ) / player->stats.maxHitPoints;
       game->screen.textColor = ( percentage < PLAYER_LOWHEALTH_PERCENTAGE ) ? COLOR_INJUREDRED : COLOR_WHITE;
    }
 }
@@ -380,7 +380,7 @@ void Game_DrawTileMap( Game_t* game )
 
 void Game_DrawTitleScreenFlash( Game_t* game )
 {
-   uint32_t sx = 181, sy = 58;
+   u32 sx = 181, sy = 58;
    ActiveSprite_t* sprite;
 
    if ( !( game->titleScreenFlash.isFlashing ) )
@@ -420,17 +420,17 @@ void Game_DrawTitleScreenFlash( Game_t* game )
 internal void Game_DrawPlayer( Game_t* game )
 {
    ActiveSprite_t* sprite = &( game->player.sprite );
-   int32_t wx = (int32_t)( sprite->position.x ) + game->player.sprite.offset.x;
-   int32_t wy = (int32_t)( sprite->position.y ) + game->player.sprite.offset.y;
-   int32_t sx = wx - game->tileMap.viewport.x;
-   int32_t sy = wy - game->tileMap.viewport.y;
-   uint32_t textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
-   uint32_t tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
-   uint32_t ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
-   uint32_t tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > game->tileMap.viewport.w ) ? ( game->tileMap.viewport.w - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
-   uint32_t th = ( ( sy + SPRITE_TEXTURE_SIZE ) > game->tileMap.viewport.h ) ? ( game->tileMap.viewport.h - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
-   uint32_t sxu = ( sx < 0 ) ? 0 : sx;
-   uint32_t syu = ( sy < 0 ) ? 0 : sy;
+   i32 wx = (i32)( sprite->position.x ) + game->player.sprite.offset.x;
+   i32 wy = (i32)( sprite->position.y ) + game->player.sprite.offset.y;
+   i32 sx = wx - game->tileMap.viewport.x;
+   i32 sy = wy - game->tileMap.viewport.y;
+   u32 textureIndex = ( (u32)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
+   u32 tx = ( sx < 0 ) ? (u32)( -sx ) : 0;
+   u32 ty = ( sy < 0 ) ? (u32)( -sy ) : 0;
+   u32 tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > game->tileMap.viewport.w ) ? ( game->tileMap.viewport.w - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
+   u32 th = ( ( sy + SPRITE_TEXTURE_SIZE ) > game->tileMap.viewport.h ) ? ( game->tileMap.viewport.h - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
+   u32 sxu = ( sx < 0 ) ? 0 : sx;
+   u32 syu = ( sy < 0 ) ? 0 : sy;
 
    Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
                              sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
@@ -440,7 +440,7 @@ internal void Game_DrawPlayer( Game_t* game )
    {
       Screen_DrawRectColor( &( game->screen ),
                             sx - sprite->offset.x, sy - sprite->offset.y,
-                            (uint32_t)( sprite->hitBoxSize.x ), (uint32_t)( sprite->hitBoxSize.y ),
+                            (u32)( sprite->hitBoxSize.x ), (u32)( sprite->hitBoxSize.y ),
                             COLOR_RED );
    }
 #endif
@@ -448,10 +448,10 @@ internal void Game_DrawPlayer( Game_t* game )
 
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
 {
-   uint32_t x, y;
+   u32 x, y;
    Player_t* player = &( game->player );
-   uint32_t items = player->items;
-   uint32_t itemCount = ITEM_GET_MAPNONUSEABLECOUNT( items );
+   u32 items = player->items;
+   u32 itemCount = ITEM_GET_MAPNONUSEABLECOUNT( items );
    char line[MENU_LINE_LENGTH];
 
    if ( hasUseableItems )
@@ -507,26 +507,26 @@ internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems )
 
 internal void Game_DrawNonPlayerCharacters( Game_t* game )
 {
-   uint32_t i, tx, ty, tw, th, sxu, syu, textureIndex;
-   int32_t sx, sy;
+   u32 i, tx, ty, tw, th, sxu, syu, textureIndex;
+   i32 sx, sy;
    ActiveSprite_t* sprite;
    Vector4i32_t* viewport = &( game->tileMap.viewport );
 
    for ( i = 0; i < game->tileMap.npcCount; i++ )
    {
       sprite = &( game->tileMap.npcs[i].sprite );
-      sx = (int32_t)( sprite->position.x - viewport->x + sprite->offset.x );
-      sy = (int32_t)( sprite->position.y - viewport->y + sprite->offset.y );
+      sx = (i32)( sprite->position.x - viewport->x + sprite->offset.x );
+      sy = (i32)( sprite->position.y - viewport->y + sprite->offset.y );
 
       if ( Math_RectsIntersect32i( sx, sy, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, 0, 0, viewport->w, viewport->h ) )
       {
-         tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
-         ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
+         tx = ( sx < 0 ) ? (u32)( -sx ) : 0;
+         ty = ( sy < 0 ) ? (u32)( -sy ) : 0;
          tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > viewport->w ) ? ( viewport->w - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
          th = ( ( sy + SPRITE_TEXTURE_SIZE ) > viewport->h ) ? ( viewport->h - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
          sxu = ( sx < 0 ) ? 0 : sx;
          syu = ( sy < 0 ) ? 0 : sy;
-         textureIndex = ( (uint32_t)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
+         textureIndex = ( (u32)( sprite->direction ) * ACTIVE_SPRITE_FRAMES ) + sprite->currentFrame;
 
          Screen_DrawMemorySection( &( game->screen ), sprite->textures[textureIndex].memory, SPRITE_TEXTURE_SIZE, tx, ty, tw, th,
                                    sxu + game->tileMap.viewportScreenPos.x, syu + game->tileMap.viewportScreenPos.y, True );
@@ -534,14 +534,14 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game )
 #if defined( VISUAL_STUDIO_DEV )
          if ( g_debugFlags.showHitBoxes )
          {
-            sx = (int32_t)( sprite->position.x - viewport->x );
-            sy = (int32_t)( sprite->position.y - viewport->y );
+            sx = (i32)( sprite->position.x - viewport->x );
+            sy = (i32)( sprite->position.y - viewport->y );
             if ( Math_RectsIntersect32i( sx, sy, sprite->hitBoxSize.x, sprite->hitBoxSize.y, 0, 0, viewport->w, viewport->h ) )
             {
-               tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
-               ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
-               tw = ( ( sx + (int32_t)( sprite->hitBoxSize.x ) ) > viewport->w ) ? ( viewport->w - sx ) : ( (int32_t)( sprite->hitBoxSize.x ) - tx );
-               th = ( ( sy + (int32_t)( sprite->hitBoxSize.y ) ) > viewport->h ) ? ( viewport->h - sy ) : ( (int32_t)( sprite->hitBoxSize.y ) - ty );
+               tx = ( sx < 0 ) ? (u32)( -sx ) : 0;
+               ty = ( sy < 0 ) ? (u32)( -sy ) : 0;
+               tw = ( ( sx + (i32)( sprite->hitBoxSize.x ) ) > viewport->w ) ? ( viewport->w - sx ) : ( (i32)( sprite->hitBoxSize.x ) - tx );
+               th = ( ( sy + (i32)( sprite->hitBoxSize.y ) ) > viewport->h ) ? ( viewport->h - sy ) : ( (i32)( sprite->hitBoxSize.y ) - ty );
                sxu = ( sx < 0 ) ? 0 : sx;
                syu = ( sy < 0 ) ? 0 : sy;
                Screen_DrawRectColor( &( game->screen ), sxu, syu, tw, th, COLOR_RED );
@@ -554,11 +554,11 @@ internal void Game_DrawNonPlayerCharacters( Game_t* game )
 
 internal void Game_DrawPlayerNameEntry( Game_t* game )
 {
-   uint32_t i;
-   uint32_t x = 80;
-   uint32_t y = 146;
-   uint32_t textX = x + ( TEXT_TILE_SIZE * 2 );
-   uint32_t textY = y + ( TEXT_TILE_SIZE * 2 );
+   u32 i;
+   u32 x = 80;
+   u32 y = 146;
+   u32 textX = x + ( TEXT_TILE_SIZE * 2 );
+   u32 textY = y + ( TEXT_TILE_SIZE * 2 );
    size_t length = strlen( game->player.name );
 
    Screen_DrawTextWindow( &( game->screen ), x, y, 12, 5 );
@@ -578,11 +578,11 @@ internal void Game_DrawPlayerNameEntry( Game_t* game )
 
 internal void Game_DrawPasswordEntry( Game_t* game )
 {
-   uint32_t i;
-   uint32_t x = 52;
-   uint32_t y = 146;
-   uint32_t textX = x + ( TEXT_TILE_SIZE * 2 );
-   uint32_t textY = y + ( TEXT_TILE_SIZE * 2 );
+   u32 i;
+   u32 x = 52;
+   u32 y = 146;
+   u32 textX = x + ( TEXT_TILE_SIZE * 2 );
+   u32 textY = y + ( TEXT_TILE_SIZE * 2 );
    size_t length = strlen( game->password );
 
    Screen_DrawTextWindow( &( game->screen ), x, y, 19, 7 );

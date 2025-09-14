@@ -5,47 +5,47 @@
 
 typedef struct Vector2u16_t
 {
-   uint16_t x;
-   uint16_t y;
+   u16 x;
+   u16 y;
 }
 Vector2u16_t;
 
 typedef struct Vector2i32_t
 {
-   int32_t x;
-   int32_t y;
+   i32 x;
+   i32 y;
 }
 Vector2i32_t;
 
 typedef struct Vector2u32_t
 {
-   uint32_t x;
-   uint32_t y;
+   u32 x;
+   u32 y;
 }
 Vector2u32_t;
 
-typedef struct Vector2f_t
+typedef struct Vector2r32_t
 {
-   float x;
-   float y;
+   r32 x;
+   r32 y;
 }
-Vector2f_t;
+Vector2r32_t;
 
 typedef struct Vector4i32_t
 {
-   int32_t x;
-   int32_t y;
-   int32_t w;
-   int32_t h;
+   i32 x;
+   i32 y;
+   i32 w;
+   i32 h;
 }
 Vector4i32_t;
 
 typedef struct Vector4u32_t
 {
-   uint32_t x;
-   uint32_t y;
-   uint32_t w;
-   uint32_t h;
+   u32 x;
+   u32 y;
+   u32 w;
+   u32 h;
 }
 Vector4u32_t;
 

@@ -8,7 +8,7 @@
 #define SPRITE_CHEST_INDEX    0
 #define SPRITE_DOOR_INDEX     1
 
-internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter );
+internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, u32 diameter );
 internal void TileMap_ReduceGlowDiameter( TileMap_t* tileMap );
 internal void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap );
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap );
@@ -34,7 +34,7 @@ void TileMap_Init( TileMap_t* tileMap, Screen_t* screen, GameFlags_t* gameFlags,
 
 void TileMap_CheckThroneRoomPrincess( TileMap_t* tileMap )
 {
-   uint32_t i;
+   u32 i;
    NonPlayerCharacter_t* npc = tileMap->npcs;
 
    if ( tileMap->id == TILEMAP_TANTEGEL_THRONEROOM_ID &&
@@ -61,7 +61,7 @@ void TileMap_CheckThroneRoomPrincess( TileMap_t* tileMap )
 
 void TileMap_ResetNpcs( TileMap_t* tileMap )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < tileMap->npcCount; i++ )
    {
@@ -111,7 +111,7 @@ void TileMap_ResetViewport( TileMap_t* tileMap )
    TileMap_UpdateViewport( tileMap );
 }
 
-void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h )
+void TileMap_ChangeViewportSize( TileMap_t* tileMap, u16 w, u16 h )
 {
    tileMap->viewport.w = w;
    tileMap->viewport.h = h;
@@ -123,10 +123,10 @@ void TileMap_ChangeViewportSize( TileMap_t* tileMap, uint16_t w, uint16_t h )
 
 void TileMap_UpdateViewport( TileMap_t* tileMap )
 {
-   int32_t anchorX = (int32_t)( tileMap->player->sprite.position.x );
-   int32_t anchorY = (int32_t)( tileMap->player->sprite.position.y );
-   uint32_t anchorW = tileMap->player->sprite.hitBoxSize.x;
-   uint32_t anchorH = tileMap->player->sprite.hitBoxSize.y;
+   i32 anchorX = (i32)( tileMap->player->sprite.position.x );
+   i32 anchorY = (i32)( tileMap->player->sprite.position.y );
+   u32 anchorW = tileMap->player->sprite.hitBoxSize.x;
+   u32 anchorH = tileMap->player->sprite.hitBoxSize.y;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
    viewport->x = anchorX - ( viewport->w / 2 ) + ( anchorW / 2 );
@@ -136,7 +136,7 @@ void TileMap_UpdateViewport( TileMap_t* tileMap )
    {
       viewport->x = 0;
    }
-   else if ( ( viewport->x + viewport->w ) > (int32_t)( tileMap->tilesX * TILE_SIZE ) )
+   else if ( ( viewport->x + viewport->w ) > (i32)( tileMap->tilesX * TILE_SIZE ) )
    {
       viewport->x = ( tileMap->tilesX * TILE_SIZE ) - viewport->w;
    }
@@ -145,13 +145,13 @@ void TileMap_UpdateViewport( TileMap_t* tileMap )
    {
       viewport->y = 0;
    }
-   else if ( ( viewport->y + viewport->h ) > (int32_t)( tileMap->tilesY * TILE_SIZE ) )
+   else if ( ( viewport->y + viewport->h ) > (i32)( tileMap->tilesY * TILE_SIZE ) )
    {
       viewport->y = ( tileMap->tilesY * TILE_SIZE ) - viewport->h;
    }
 }
 
-void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, uint32_t targetDiameter )
+void TileMap_SetTargetGlowDiameter( TileMap_t* tileMap, u32 targetDiameter )
 {
    tileMap->targetGlowDiameter = targetDiameter;
 }
@@ -164,10 +164,10 @@ void TileMap_ReduceTargetGlowDiameter( TileMap_t* tileMap )
    }
 }
 
-float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex )
+r32 TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, u32 tileIndex )
 {
-   uint16_t tile = tileMap->tiles[( ( tileIndex / tileMap->tilesX ) * TILE_COUNT_X ) + ( tileIndex % tileMap->tilesX )];
-   uint16_t walkSpeed = TILE_GET_WALKSPEED( tile );
+   u16 tile = tileMap->tiles[( ( tileIndex / tileMap->tilesX ) * TILE_COUNT_X ) + ( tileIndex % tileMap->tilesX )];
+   u16 walkSpeed = TILE_GET_WALKSPEED( tile );
 
 #if defined( VISUAL_STUDIO_DEV )
 
@@ -189,9 +189,9 @@ float TileMap_GetWalkSpeedForTileIndex( TileMap_t* tileMap, uint32_t tileIndex )
    return TILE_WALKSPEED_NORMAL;
 }
 
-TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index )
+TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, u32 index )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < tileMap->portalCount; i++ )
    {
@@ -204,7 +204,7 @@ TilePortal_t* TileMap_GetPortalForTileIndex( TileMap_t* tileMap, uint32_t index 
    return 0;
 }
 
-uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileIndex, Direction_t direction )
+u32 TileMap_GetFacingTileIndex( TileMap_t* tileMap, u32 sourceTileIndex, Direction_t direction )
 {
    switch ( direction )
    {
@@ -219,7 +219,7 @@ uint32_t TileMap_GetFacingTileIndex( TileMap_t* tileMap, uint32_t sourceTileInde
 
 void TileMap_Draw( TileMap_t* tileMap )
 {
-   uint32_t firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, tileIndex, treasureFlag, doorFlag;
+   u32 firstTileX, firstTileY, lastTileX, lastTileY, tileX, tileY, textureIndex, tileOffsetX, tileOffsetY, tileWidth, tileHeight, screenX, screenY, tileIndex, treasureFlag, doorFlag;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
    firstTileX = viewport->x / TILE_SIZE;
@@ -275,7 +275,7 @@ void TileMap_StopNpc( NonPlayerCharacter_t* npc )
 {
    npc->isWandering = False;
    npc->duration = 0.0f;
-   npc->totalDuration = (float)( Random_u8( TILEMAP_NPC_MINPAUSESECONDS, TILEMAP_NPC_MAXPAUSESECONDS ) );
+   npc->totalDuration = (r32)( Random_u8( TILEMAP_NPC_MINPAUSESECONDS, TILEMAP_NPC_MAXPAUSESECONDS ) );
 }
 
 void TileMap_TicNpcWander( NonPlayerCharacter_t* npc )
@@ -294,16 +294,16 @@ void TileMap_TicNpcWander( NonPlayerCharacter_t* npc )
          {
             npc->duration = 0.0f;
             npc->isWandering = True;
-            npc->totalDuration = (float)( Random_u8( TILEMAP_NPC_MINWANDERSECONDS, TILEMAP_NPC_MAXWANDERSECONDS ) );
-            ActiveSprite_SetDirection( &( npc->sprite ), (Direction_t)( Random_u8( 0, (uint8_t)( Direction_Count - 1 ) ) ) );
+            npc->totalDuration = (r32)( Random_u8( TILEMAP_NPC_MINWANDERSECONDS, TILEMAP_NPC_MAXWANDERSECONDS ) );
+            ActiveSprite_SetDirection( &( npc->sprite ), (Direction_t)( Random_u8( 0, (u8)( Direction_Count - 1 ) ) ) );
          }
       }
    }
 }
 
-Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, uint32_t tileIndex, uint32_t* boothId )
+Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, u32 tileIndex, u32* boothId )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < tileMap->boothCount; i++ )
    {
@@ -317,10 +317,10 @@ Bool_t TileMap_HasBoothAtIndex( TileMap_t* tileMap, uint32_t tileIndex, uint32_t
    return False;
 }
 
-internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, uint32_t diameter )
+internal void TileMap_SetGlowDiameter( TileMap_t* tileMap, u32 diameter )
 {
    tileMap->glowDiameter = diameter;
-   TileMap_ChangeViewportSize( tileMap, (uint16_t)( tileMap->glowDiameter * TILE_SIZE ), (uint16_t)tileMap->glowDiameter * TILE_SIZE );
+   TileMap_ChangeViewportSize( tileMap, (u16)( tileMap->glowDiameter * TILE_SIZE ), (u16)tileMap->glowDiameter * TILE_SIZE );
 }
 
 internal void TileMap_ReduceGlowDiameter( TileMap_t* tileMap )
@@ -345,8 +345,8 @@ internal void TileMap_IncreaseGlowDiameter( TileMap_t* tileMap )
 
 internal void TileMap_DrawStaticSprites( TileMap_t* tileMap )
 {
-   uint32_t i, tx, ty, tw, th, sxu, syu;
-   int32_t sx, sy;
+   u32 i, tx, ty, tw, th, sxu, syu;
+   i32 sx, sy;
    StaticSprite_t* sprite;
    Vector4i32_t* viewport = &( tileMap->viewport );
 
@@ -358,8 +358,8 @@ internal void TileMap_DrawStaticSprites( TileMap_t* tileMap )
 
       if ( Math_RectsIntersect32i( sx, sy, SPRITE_TEXTURE_SIZE, SPRITE_TEXTURE_SIZE, 0, 0, viewport->w, viewport->h ) )
       {
-         tx = ( sx < 0 ) ? (uint32_t)( -sx ) : 0;
-         ty = ( sy < 0 ) ? (uint32_t)( -sy ) : 0;
+         tx = ( sx < 0 ) ? (u32)( -sx ) : 0;
+         ty = ( sy < 0 ) ? (u32)( -sy ) : 0;
          tw = ( ( sx + SPRITE_TEXTURE_SIZE ) > viewport->w ) ? ( viewport->w - sx ) : ( SPRITE_TEXTURE_SIZE - tx );
          th = ( ( sy + SPRITE_TEXTURE_SIZE ) > viewport->h ) ? ( viewport->h - sy ) : ( SPRITE_TEXTURE_SIZE - ty );
          sxu = ( sx < 0 ) ? 0 : sx;

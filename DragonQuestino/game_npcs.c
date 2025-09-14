@@ -20,9 +20,9 @@ internal void Game_ReturnPrincessPreFadeCallback( Game_t* game );
 internal void Game_ReturnPrincessFadeOutCallback( Game_t* game );
 internal void Game_ReturnPrincessPostFadeCallback( Game_t* game );
 
-void Game_RunNpcDialog( Game_t* game, uint32_t npcId )
+void Game_RunNpcDialog( Game_t* game, u32 npcId )
 {
-   uint16_t experienceRemaining;
+   u16 experienceRemaining;
    char msg[128];
    char password[32];
    char passwordMsg[34];
@@ -687,7 +687,7 @@ internal void Game_DragonlordJoinedCallback( Game_t* game )
 
 internal void Game_DragonlordJoinFadeCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -769,7 +769,7 @@ internal void Game_RescuePrincessCallback( Game_t* game )
 
 internal void Game_ReturnPrincessCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
    AnimationChain_Reset( &( game->animationChain ) );
 
    for ( i = 0; i < 18; i++ )

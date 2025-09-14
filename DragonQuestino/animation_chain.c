@@ -40,7 +40,7 @@ global Vector2u16_t g_battleCheckerboardPos[49] =
    { 96,  52  }, { 112, 52  }, { 128, 52  }, { 144, 52  }, { 160, 52  }, { 176, 52  }, { 192, 52  }
 };
 
-global uint32_t g_battleBackgroundCheckerboardIndexTable[49] =
+global u32 g_battleBackgroundCheckerboardIndexTable[49] =
 {
    23, 24, 23, 23, 23, 22, 15,
    16, 17, 18, 25, 29, 23, 23,
@@ -51,7 +51,7 @@ global uint32_t g_battleBackgroundCheckerboardIndexTable[49] =
    0,  1,  2,  3,  3,  4,  5
 };
 
-global uint32_t g_squaresDrawn;
+global u32 g_squaresDrawn;
 
 void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap, Game_t* game )
 {
@@ -276,9 +276,9 @@ internal void AnimationChain_Tic_Pause( AnimationChain_t* chain )
 
 internal void AnimationChain_Tic_WhiteOut( AnimationChain_t* chain )
 {
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG;
-   float p;
+   u32 i;
+   u16 rangeR, rangeB, rangeG;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -289,17 +289,17 @@ internal void AnimationChain_Tic_WhiteOut( AnimationChain_t* chain )
       rangeG = 0x3F - ( ( screen->backupPalette[i] & 0x7E0 ) >> 5 );
       rangeB = 0x1F - ( screen->backupPalette[i] & 0x1F );
       p = chain->totalElapsedSeconds / chain->totalDuration;
-      screen->palette[i] = ( ( ( screen->backupPalette[i] >> 11 ) + ( uint16_t )( rangeR * p ) ) << 11 ) |
-         ( ( ( ( screen->backupPalette[i] >> 5 ) & 0x3F ) + ( uint16_t )( rangeG * p ) ) << 5 ) |
-         ( ( ( ( screen->backupPalette[i] ) & 0x1F ) + ( uint16_t )( rangeB * p ) ) );
+      screen->palette[i] = ( ( ( screen->backupPalette[i] >> 11 ) + ( u16 )( rangeR * p ) ) << 11 ) |
+         ( ( ( ( screen->backupPalette[i] >> 5 ) & 0x3F ) + ( u16 )( rangeG * p ) ) << 5 ) |
+         ( ( ( ( screen->backupPalette[i] ) & 0x1F ) + ( u16 )( rangeB * p ) ) );
    }
 }
 
 internal void AnimationChain_Tic_WhiteIn( AnimationChain_t* chain )
 {
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG;
-   float p;
+   u32 i;
+   u16 rangeR, rangeB, rangeG;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -310,17 +310,17 @@ internal void AnimationChain_Tic_WhiteIn( AnimationChain_t* chain )
       rangeG = 0x3F - ( ( screen->backupPalette[i] & 0x7E0 ) >> 5 );
       rangeB = 0x1F - ( screen->backupPalette[i] & 0x1F );
       p = 1.0f - ( chain->totalElapsedSeconds / chain->totalDuration );
-      screen->palette[i] = ( ( ( screen->backupPalette[i] >> 11 ) + ( uint16_t )( rangeR * p ) ) << 11 ) |
-         ( ( ( ( screen->backupPalette[i] >> 5 ) & 0x3F ) + ( uint16_t )( rangeG * p ) ) << 5 ) |
-         ( ( ( ( screen->backupPalette[i] ) & 0x1F ) + ( uint16_t )( rangeB * p ) ) );
+      screen->palette[i] = ( ( ( screen->backupPalette[i] >> 11 ) + ( u16 )( rangeR * p ) ) << 11 ) |
+         ( ( ( ( screen->backupPalette[i] >> 5 ) & 0x3F ) + ( u16 )( rangeG * p ) ) << 5 ) |
+         ( ( ( ( screen->backupPalette[i] ) & 0x1F ) + ( u16 )( rangeB * p ) ) );
    }
 }
 
 internal void AnimationChain_Tic_FadeOut( AnimationChain_t* chain )
 {
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG;
-   float p;
+   u32 i;
+   u16 rangeR, rangeB, rangeG;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -331,15 +331,15 @@ internal void AnimationChain_Tic_FadeOut( AnimationChain_t* chain )
       rangeG = ( screen->backupPalette[i] & 0x7E0 ) >> 5;
       rangeB = screen->backupPalette[i] & 0x1F;
       p =  1.0f - ( chain->totalElapsedSeconds / chain->totalDuration ), 0.0f;
-      screen->palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      screen->palette[i] = ( (u16)( rangeR * p ) << 11 ) | ( (u16)( rangeG * p ) << 5 ) | (u16)( rangeB * p );
    }
 }
 
 internal void AnimationChain_Tic_FadeIn( AnimationChain_t* chain )
 {
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG;
-   float p;
+   u32 i;
+   u16 rangeR, rangeB, rangeG;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -350,15 +350,15 @@ internal void AnimationChain_Tic_FadeIn( AnimationChain_t* chain )
       rangeG = ( screen->backupPalette[i] & 0x7E0 ) >> 5;
       rangeB = screen->backupPalette[i] & 0x1F;
       p = chain->totalElapsedSeconds / chain->totalDuration;
-      screen->palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      screen->palette[i] = ( (u16)( rangeR * p ) << 11 ) | ( (u16)( rangeG * p ) << 5 ) | (u16)( rangeB * p );
    }
 }
 
 internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain )
 {
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG, increment;
-   float p;
+   u32 i;
+   u16 rangeR, rangeB, rangeG, increment;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -369,7 +369,7 @@ internal void AnimationChain_Tic_RainbowBridge_Trippy( AnimationChain_t* chain )
       rangeG = UINT8_MAX - ( ( screen->backupPalette[i] & 0x7E0 ) >> 5 );
       rangeB = UINT8_MAX - ( screen->backupPalette[i] & 0x1F );
       p = chain->totalElapsedSeconds / chain->totalDuration;
-      increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      increment = ( (u16)( rangeR * p ) << 11 ) | ( (u16)( rangeG * p ) << 5 ) | (u16)( rangeB * p );
       screen->palette[i] = screen->backupPalette[i] + increment;
    }
 }
@@ -381,9 +381,9 @@ internal void AnimationChain_Tic_RainbowBridge_WhiteOut( AnimationChain_t* chain
 
 internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain )
 {
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG, increment;
-   float p;
+   u32 i;
+   u16 rangeR, rangeB, rangeG, increment;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -394,7 +394,7 @@ internal void AnimationChain_Tic_RainbowBridge_FadeIn( AnimationChain_t* chain )
       rangeG = 0x3F - ( ( screen->backupPalette[i] & 0x7E0 ) >> 5 );
       rangeB = 0x1F - ( screen->backupPalette[i] & 0x1F );
       p = 1.0f - ( chain->totalElapsedSeconds / chain->totalDuration );
-      increment = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      increment = ( (u16)( rangeR * p ) << 11 ) | ( (u16)( rangeG * p ) << 5 ) | (u16)( rangeB * p );
       screen->palette[i] = screen->backupPalette[i] + increment;
    }
 }
@@ -425,14 +425,14 @@ internal void AnimationChain_Tic_Flash( AnimationChain_t* chain )
 
 internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
 {
-   uint32_t squaresToDraw;
-   int32_t xOffset, yOffset;
+   u32 squaresToDraw;
+   i32 xOffset, yOffset;
 
    chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
 
    while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_CHECKERSQUARE_DURATION )
    {
-      squaresToDraw = (uint32_t)( chain->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION ) + 1;
+      squaresToDraw = (u32)( chain->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION ) + 1;
 
       while ( g_squaresDrawn <= squaresToDraw )
       {
@@ -442,8 +442,8 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
             yOffset = chain->tileMap->isDark ? 4 : 0;
 
             Screen_DrawRectColor( chain->screen,
-                                  (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
-                                  (uint16_t)( (int16_t)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
+                                  (u16)( (i16)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
+                                  (u16)( (i16)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
                                   TILE_SIZE, TILE_SIZE, COLOR_BLACK );
          }
          else
@@ -480,9 +480,9 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
 
 internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain )
 {
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG;
-   float p;
+   u32 i;
+   u16 rangeR, rangeB, rangeG;
+   r32 p;
    Screen_t* screen = chain->screen;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
@@ -493,15 +493,15 @@ internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain )
       rangeG = ( screen->backupPalette[i] & 0x7E0 ) >> 5;
       rangeB = screen->backupPalette[i] & 0x1F;
       p = chain->totalElapsedSeconds / chain->totalDuration;
-      screen->palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      screen->palette[i] = ( (u16)( rangeR * p ) << 11 ) | ( (u16)( rangeG * p ) << 5 ) | (u16)( rangeB * p );
    }
 }
 
 internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain )
 {
-   uint32_t i;
-   uint16_t rangeR, rangeB, rangeG;
-   float p;
+   u32 i;
+   u16 rangeR, rangeB, rangeG;
+   r32 p;
 
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
 
@@ -511,7 +511,7 @@ internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain )
       rangeG = ( chain->screen->backupPalette[i] & 0x7E0 ) >> 5;
       rangeB = chain->screen->backupPalette[i] & 0x1F;
       p = 1.0f - chain->totalElapsedSeconds / chain->totalDuration;
-      chain->screen->palette[i] = ( (uint16_t)( rangeR * p ) << 11 ) | ( (uint16_t)( rangeG * p ) << 5 ) | (uint16_t)( rangeB * p );
+      chain->screen->palette[i] = ( (u16)( rangeR * p ) << 11 ) | ( (u16)( rangeG * p ) << 5 ) | (u16)( rangeB * p );
    }
 }
 

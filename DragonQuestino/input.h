@@ -41,10 +41,10 @@ Bool_t Input_AnyButtonPressed( Input_t* input );
 
 #if defined( VISUAL_STUDIO_DEV )
 void Input_ResetState( Input_t* input );
-void Input_ButtonPressed( Input_t* input, uint32_t button );
-void Input_ButtonReleased( Input_t* input, uint32_t button );
+void Input_ButtonPressed( Input_t* input, u32 button );
+void Input_ButtonReleased( Input_t* input, u32 button );
 #else
-uint8_t Input_ReadNesController();
+u8 Input_ReadNesController();
 #endif
 
 #if defined( __cplusplus )

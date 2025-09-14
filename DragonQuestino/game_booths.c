@@ -1,7 +1,7 @@
 #include "game.h"
 #include "tables.h"
 
-internal void Game_VisitInn( Game_t* game, uint32_t boothId );
+internal void Game_VisitInn( Game_t* game, u32 boothId );
 internal void Game_VisitInnChoiceCallback( Game_t* game );
 internal void Game_VisitInnStayCallback( Game_t* game );
 internal void Game_VisitInnLeaveCallback( Game_t* game );
@@ -10,7 +10,7 @@ internal void Game_VisitInnStayPostAnimationCallback( Game_t* game );
 internal void Game_VisitInnStayMorningCallback( Game_t* game );
 internal void Game_VisitWeaponShop( Game_t* game );
 internal void Game_VisitItemShop( Game_t* game );
-internal void Game_VisitKeyShop( Game_t* game, uint32_t boothId );
+internal void Game_VisitKeyShop( Game_t* game, u32 boothId );
 internal void Game_VisitFairyWaterShop( Game_t* game );
 internal void Game_VisitTantegelWizard( Game_t* game );
 internal void Game_KeyShopLeaveOrStayCallback( Game_t* game );
@@ -29,10 +29,10 @@ internal void Game_WeaponShopPurchaseCallback( Game_t* game );
 internal void Game_ItemShopPurchaseCallback( Game_t* game );
 internal void Game_TantegelWizardCallback( Game_t* game );
 internal void Game_TantegelWizardMagicCallback( Game_t* game );
-internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId );
-internal void Game_LoadItemShop( Game_t* game, uint32_t boothId );
+internal void Game_LoadWeaponShop( Game_t* game, u32 boothId );
+internal void Game_LoadItemShop( Game_t* game, u32 boothId );
 
-void Game_ActivateBooth( Game_t* game, uint32_t boothId )
+void Game_ActivateBooth( Game_t* game, u32 boothId )
 {
    if ( boothId <= 4 )
    {
@@ -185,7 +185,7 @@ void Game_SelectShopItem( Game_t* game )
    Game_OpenDialog( game );
 }
 
-internal void Game_VisitInn( Game_t* game, uint32_t boothId )
+internal void Game_VisitInn( Game_t* game, u32 boothId )
 {
    char msg[128];
 
@@ -235,7 +235,7 @@ internal void Game_VisitInnLeaveCallback( Game_t* game )
 
 internal void Game_VisitInnStayAnimationCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -250,7 +250,7 @@ internal void Game_VisitInnStayAnimationCallback( Game_t* game )
 
 internal void Game_VisitInnStayPostAnimationCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    Game_ChangeSubState( game, SubState_None );
 
@@ -290,7 +290,7 @@ internal void Game_VisitItemShop( Game_t* game )
    Game_OpenDialog( game );
 }
 
-internal void Game_VisitKeyShop( Game_t* game, uint32_t boothId )
+internal void Game_VisitKeyShop( Game_t* game, u32 boothId )
 {
    char msg [128];
 
@@ -332,7 +332,7 @@ internal void Game_KeyShopLeaveOrStayCallback( Game_t* game )
 
 internal void Game_KeyShopPurchaseCallback( Game_t* game )
 {
-   uint32_t keyCount;
+   u32 keyCount;
 
    Dialog_Reset( &( game->dialog ) );
 
@@ -378,7 +378,7 @@ internal void Game_FairyWaterShopLeaveOrBuyCallback( Game_t* game )
 
 internal void Game_FairyWaterShopPurchaseCallback( Game_t* game )
 {
-   uint32_t fairyWaterCount;
+   u32 fairyWaterCount;
 
    Dialog_Reset( &( game->dialog ) );
 
@@ -517,7 +517,7 @@ internal void Game_TantegelWizardMagicCallback( Game_t* game )
    game->player.stats.magicPoints = game->player.stats.maxMagicPoints;
 }
 
-internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
+internal void Game_LoadWeaponShop( Game_t* game, u32 boothId )
 {
    TileMap_t* tileMap = &( game->tileMap );
 
@@ -528,136 +528,136 @@ internal void Game_LoadWeaponShop( Game_t* game, uint32_t boothId )
       case 5: // Brecconary weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_BAMBOOPOLE_ID;
-         tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[0].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[0].price = 10;
          tileMap->shopItems[1].id = WEAPON_CLUB_ID;
-         tileMap->shopItems[1].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[1].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[1].price = 60;
          tileMap->shopItems[2].id = WEAPON_COPPERSWORD_ID;
-         tileMap->shopItems[2].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[2].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[2].price = 180;
          tileMap->shopItems[3].id = ARMOR_CLOTHES_ID;
-         tileMap->shopItems[3].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[3].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[3].price = 20;
          tileMap->shopItems[4].id = ARMOR_LEATHERARMOR_ID;
-         tileMap->shopItems[4].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[4].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[4].price = 70;
          tileMap->shopItems[5].id = SHIELD_SMALLSHIELD_ID;
-         tileMap->shopItems[5].type = (uint32_t)AccessoryType_Shield;
+         tileMap->shopItems[5].type = (u32)AccessoryType_Shield;
          tileMap->shopItems[5].price = 90;
          break;
       case 6: // Garinham weapon shop
          tileMap->shopItemCount = 7;
          tileMap->shopItems[0].id = WEAPON_CLUB_ID;
-         tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[0].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[0].price = 60;
          tileMap->shopItems[1].id = WEAPON_COPPERSWORD_ID;
-         tileMap->shopItems[1].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[1].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[1].price = 180;
          tileMap->shopItems[2].id = WEAPON_HANDAXE_ID;
-         tileMap->shopItems[2].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[2].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[2].price = 560;
          tileMap->shopItems[3].id = ARMOR_LEATHERARMOR_ID;
-         tileMap->shopItems[3].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[3].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[3].price = 70;
          tileMap->shopItems[4].id = ARMOR_CHAINMAIL_ID;
-         tileMap->shopItems[4].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[4].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[4].price = 300;
          tileMap->shopItems[5].id = ARMOR_HALFPLATE_ID;
-         tileMap->shopItems[5].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[5].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[5].price = 1000;
          tileMap->shopItems[6].id = SHIELD_LARGESHIELD_ID;
-         tileMap->shopItems[6].type = (uint32_t)AccessoryType_Shield;
+         tileMap->shopItems[6].type = (u32)AccessoryType_Shield;
          tileMap->shopItems[6].price = 800;
          break;
       case 7: // Kol weapon shop
          tileMap->shopItemCount = 5;
          tileMap->shopItems[0].id = WEAPON_COPPERSWORD_ID;
-         tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[0].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[0].price = 180;
          tileMap->shopItems[1].id = WEAPON_HANDAXE_ID;
-         tileMap->shopItems[1].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[1].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[1].price = 560;
          tileMap->shopItems[2].id = ARMOR_HALFPLATE_ID;
-         tileMap->shopItems[2].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[2].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[2].price = 1000;
          tileMap->shopItems[3].id = ARMOR_FULLPLATE_ID;
-         tileMap->shopItems[3].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[3].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[3].price = 3000;
          tileMap->shopItems[4].id = SHIELD_SMALLSHIELD_ID;
-         tileMap->shopItems[4].type = (uint32_t)AccessoryType_Shield;
+         tileMap->shopItems[4].type = (u32)AccessoryType_Shield;
          tileMap->shopItems[4].price = 90;
          break;
       case 8: // Cantlin upper-right weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_BAMBOOPOLE_ID;
-         tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[0].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[0].price = 10;
          tileMap->shopItems[1].id = WEAPON_CLUB_ID;
-         tileMap->shopItems[1].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[1].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[1].price = 60;
          tileMap->shopItems[2].id = WEAPON_COPPERSWORD_ID;
-         tileMap->shopItems[2].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[2].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[2].price = 180;
          tileMap->shopItems[3].id = ARMOR_LEATHERARMOR_ID;
-         tileMap->shopItems[3].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[3].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[3].price = 70;
          tileMap->shopItems[4].id = ARMOR_CHAINMAIL_ID;
-         tileMap->shopItems[4].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[4].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[4].price = 300;
          tileMap->shopItems[5].id = SHIELD_LARGESHIELD_ID;
-         tileMap->shopItems[5].type = (uint32_t)AccessoryType_Shield;
+         tileMap->shopItems[5].type = (u32)AccessoryType_Shield;
          tileMap->shopItems[5].price = 800;
          break;
       case 9: // Cantlin middle-right weapon shop
          tileMap->shopItemCount = 2;
          tileMap->shopItems[0].id = WEAPON_FLAMESWORD_ID;
-         tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[0].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[0].price = 9800;
          tileMap->shopItems[1].id = SHIELD_SILVERSHIELD_ID;
-         tileMap->shopItems[1].type = (uint32_t)AccessoryType_Shield;
+         tileMap->shopItems[1].type = (u32)AccessoryType_Shield;
          tileMap->shopItems[1].price = 14800;
          break;
       case 10: // Cantlin lower-right weapon shop
          tileMap->shopItemCount = 4;
          tileMap->shopItems[0].id = WEAPON_HANDAXE_ID;
-         tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[0].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[0].price = 560;
          tileMap->shopItems[1].id = WEAPON_BROADSWORD_ID;
-         tileMap->shopItems[1].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[1].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[1].price = 1500;
          tileMap->shopItems[2].id = ARMOR_FULLPLATE_ID;
-         tileMap->shopItems[2].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[2].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[2].price = 3000;
          tileMap->shopItems[3].id = ARMOR_MAGICARMOR_ID;
-         tileMap->shopItems[3].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[3].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[3].price = 7700;
          break;
       case 11: // Rimuldar weapon shop
          tileMap->shopItemCount = 6;
          tileMap->shopItems[0].id = WEAPON_COPPERSWORD_ID;
-         tileMap->shopItems[0].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[0].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[0].price = 180;
          tileMap->shopItems[1].id = WEAPON_HANDAXE_ID;
-         tileMap->shopItems[1].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[1].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[1].price = 560;
          tileMap->shopItems[2].id = WEAPON_BROADSWORD_ID;
-         tileMap->shopItems[2].type = (uint32_t)AccessoryType_Weapon;
+         tileMap->shopItems[2].type = (u32)AccessoryType_Weapon;
          tileMap->shopItems[2].price = 1500;
          tileMap->shopItems[3].id = ARMOR_HALFPLATE_ID;
-         tileMap->shopItems[3].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[3].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[3].price = 1000;
          tileMap->shopItems[4].id = ARMOR_FULLPLATE_ID;
-         tileMap->shopItems[4].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[4].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[4].price = 3000;
          tileMap->shopItems[5].id = ARMOR_MAGICARMOR_ID;
-         tileMap->shopItems[5].type = (uint32_t)AccessoryType_Armor;
+         tileMap->shopItems[5].type = (u32)AccessoryType_Armor;
          tileMap->shopItems[5].price = 7700;
          break;
    }
 }
 
-internal void Game_LoadItemShop( Game_t* game, uint32_t boothId )
+internal void Game_LoadItemShop( Game_t* game, u32 boothId )
 {
    TileMap_t* tileMap = &( game->tileMap );
 

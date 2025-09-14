@@ -29,9 +29,9 @@ internal void Game_TitleScreenFadeInCallback( Game_t* game );
 internal void Game_EnterNameFadeOutCallback( Game_t* game );
 internal void Game_EnterPasswordFadeOutCallback( Game_t* game );
 
-void Game_Init( Game_t* game, uint16_t* screenBuffer )
+void Game_Init( Game_t* game, u16* screenBuffer )
 {
-   uint32_t i;
+   u32 i;
 
    Random_Seed();
    Screen_Init( &( game->screen ), screenBuffer );
@@ -84,8 +84,8 @@ void Game_Reset( Game_t* game )
    game->overworldInactivitySeconds = 0.0f;
 
    Player_SetName( player, "" );
-   player->sprite.position.x = (float)( TILE_SIZE * 8 ) + 2.0f;
-   player->sprite.position.y = (float)( TILE_SIZE * 6 ) + 4.0f;
+   player->sprite.position.x = (r32)( TILE_SIZE * 8 ) + 2.0f;
+   player->sprite.position.y = (r32)( TILE_SIZE * 6 ) + 4.0f;
    player->sprite.direction = Direction_Up;
    player->velocity.x = 0.0f;
    player->velocity.y = 0.0f;
@@ -268,8 +268,8 @@ void Game_Tic( Game_t* game )
       else
       {
          TileMap_ChangeViewportSize( &( game->tileMap ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ),
-                                     TILE_SIZE * (uint16_t)( game->tileMap.glowDiameter ) );
+                                     TILE_SIZE * (u16)( game->tileMap.glowDiameter ),
+                                     TILE_SIZE * (u16)( game->tileMap.glowDiameter ) );
       }
    }
 #endif
@@ -360,7 +360,7 @@ void Game_AnimatePortalEntrance( Game_t* game, TilePortal_t* portal )
 
 void Game_EnterTargetPortal( Game_t* game )
 {
-   uint32_t destinationTileIndex = game->targetPortal->destinationTileIndex;
+   u32 destinationTileIndex = game->targetPortal->destinationTileIndex;
    Direction_t arrivalDirection = game->targetPortal->arrivalDirection;
 
    switch ( game->targetPortal->destinationTileMapIndex )
@@ -375,9 +375,9 @@ void Game_EnterTargetPortal( Game_t* game )
 
    TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
 
-   game->player.sprite.position.x = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.sprite.offset.x ) + COLLISION_THETA;
+   game->player.sprite.position.x = (r32)( ( i32 )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.sprite.offset.x ) + COLLISION_THETA;
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
-   game->player.sprite.position.y = (float)( ( int32_t )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.sprite.offset.y ) - COLLISION_THETA;
+   game->player.sprite.position.y = (r32)( ( i32 )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.sprite.offset.y ) - COLLISION_THETA;
    game->player.tileIndex = destinationTileIndex;
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
    game->targetPortal = 0;
@@ -387,8 +387,8 @@ void Game_EnterTargetPortal( Game_t* game )
    if ( game->tileMap.isDark && !game->gameFlags.defeatedDragonlord )
    {
       TileMap_ChangeViewportSize( &( game->tileMap ),
-                                  (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ),
-                                  (uint16_t)( game->tileMap.glowDiameter * TILE_SIZE ) );
+                                  (u16)( game->tileMap.glowDiameter * TILE_SIZE ),
+                                  (u16)( game->tileMap.glowDiameter * TILE_SIZE ) );
    }
    else
    {
@@ -398,7 +398,7 @@ void Game_EnterTargetPortal( Game_t* game )
 
 void Game_OpenMenu( Game_t* game, MenuId_t id )
 {
-   game->activeMenu = &( game->menus[(int32_t)id] );
+   game->activeMenu = &( game->menus[(i32)id] );
    Menu_Reset( game->activeMenu );
    Game_ChangeSubState( game, SubState_Menu );
 }
@@ -436,7 +436,7 @@ void Game_ResetBattleMenu( Game_t* game )
 
 void Game_HandleDeath( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
@@ -547,7 +547,7 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
 
 internal void Game_TicActiveSprites( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    ActiveSprite_Tic( &( game->player.sprite ) );
 
@@ -613,7 +613,7 @@ internal void Game_DeathPostFadeCallback( Game_t* game )
 
 internal void Game_CursedExpelCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -642,14 +642,14 @@ internal void Game_ResetTitleScreenFlash( Game_t* game )
    game->titleScreenFlash.isFlashing = False;
    game->titleScreenFlash.slowFlash = Random_u32( 0, 1 );
    game->titleScreenFlash.elapsedSeconds = 0.0f;
-   game->titleScreenFlash.pauseSeconds = (float)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
+   game->titleScreenFlash.pauseSeconds = (r32)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
    game->titleScreenFlash.currentFrame = 0;
 }
 
 internal void Game_TicTitleScreenFlash( Game_t* game )
 {
    TitleScreenFlash_t* flash = &( game->titleScreenFlash );
-   float frameDuration;
+   r32 frameDuration;
 
    flash->elapsedSeconds += CLOCK_FRAME_SECONDS;
 
@@ -666,7 +666,7 @@ internal void Game_TicTitleScreenFlash( Game_t* game )
          {
             flash->isFlashing = False;
             flash->elapsedSeconds = 0.0f;
-            flash->pauseSeconds = (float)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
+            flash->pauseSeconds = (r32)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
             break;
          }
       }
@@ -688,7 +688,7 @@ internal void Game_KingQuestionCallback( Game_t* game )
 
 internal void Game_KingQuestionPostDialogCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -742,7 +742,7 @@ internal void Game_GwaelinAccompanyCallback( Game_t* game )
 
 internal void Game_GwaelinAccompanyPostDialogCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    AnimationChain_Reset( &( game->animationChain ) );
 
@@ -778,7 +778,7 @@ internal void Game_QueenGwaelinCallback( Game_t* game )
 
 internal void Game_QueenGwaelinPostDialogCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    for ( i = 0; i < game->tileMap.npcCount; i++ )
    {
@@ -821,7 +821,7 @@ internal void Game_GoFindGwaelinCallback( Game_t* game )
 
 internal void Game_GoFindGwaelinPostDialogCallback( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    game->player.sprite.direction = Direction_Down;
 
@@ -851,7 +851,7 @@ internal void Game_GoFindGwaelinPostDialogPauseCallback( Game_t* game )
 
 internal void Game_StartPostIntroFadeIn( Game_t* game )
 {
-   uint32_t i;
+   u32 i;
 
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
