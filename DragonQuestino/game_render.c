@@ -328,7 +328,7 @@ void Game_DrawBattleBackground( Game_t* game )
    {
       Screen_DrawRectColor( &( game->screen ), 72, 56, 112, 112, COLOR_BLACK );
    }
-   else if ( game->tileMap.isDungeon )
+   else if ( game->tileMap.isDungeon || game->tileMap.id == TILEMAP_HAUKSNESS_ID )
    {
       Screen_DrawRectColor( &( game->screen ), x, y, 112, 112, COLOR_BLACK );
    }
