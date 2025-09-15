@@ -65,6 +65,8 @@ void TileMap_ResetNpcs( TileMap_t* tileMap )
 
    for ( i = 0; i < tileMap->npcCount; i++ )
    {
+      tileMap->npcs[i].isWandering = False;
+
       if ( tileMap->npcs[i].wanders )
       {
          TileMap_StopNpc( &( tileMap->npcs[i] ) );

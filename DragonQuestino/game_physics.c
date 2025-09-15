@@ -161,8 +161,8 @@ void Game_TicPhysics( Game_t* game )
    player->velocity.x = 0;
    player->velocity.y = 0;
 
-   Game_UpdatePlayerTileIndex( game );
    Game_MoveNpcs( game );
+   Game_UpdatePlayerTileIndex( game );
 
 #if defined( VISUAL_STUDIO_DEV )
    if ( !g_debugFlags.noTileDamage ) {
