@@ -436,7 +436,7 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
 
       while ( g_squaresDrawn <= squaresToDraw )
       {
-         if ( chain->tileMap->isDungeon )
+         if ( chain->tileMap->isDungeon || chain->tileMap->id == TILEMAP_HAUKSNESS_ID )
          {
             xOffset = chain->tileMap->isDark ? -24 : 0;
             yOffset = chain->tileMap->isDark ? 4 : 0;
