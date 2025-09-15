@@ -127,7 +127,7 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
 
    Password_ExtractPlayerName( player, encodedBits );
 
-   game->gameFlags.doors = encodedBits[0] >> 16;
+   game->gameFlags.doors = 0xFFFF0000 | ( encodedBits[0] >> 16 );
    game->gameFlags.treasures = encodedBits[1];
    game->gameFlags.specialEnemies = (u8)( ( encodedBits[3] >> 5 ) & 0x7 );
    game->gameFlags.rescuedPrincess = (Bool_t)( ( encodedBits[3] >> 4 ) & 0x1 );
