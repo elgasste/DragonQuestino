@@ -50508,8 +50508,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->boothCount = 2;
          tileMap->booths[0].id = 4;
          tileMap->booths[0].tileIndex = 626;
-         tileMap->booths[1].id = 19;
-         tileMap->booths[1].tileIndex = 170;
+         tileMap->booths[1].id = 11;
+         tileMap->booths[1].tileIndex = 312;
          tileMap->portals[0].sourceTileIndex = 32;
          tileMap->portals[0].destinationTileMapIndex = 0;
          tileMap->portals[0].destinationTileIndex = 11171;
@@ -51402,6 +51402,9 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->tilesX = 20;
          tileMap->tilesY = 15;
          tileMap->portalCount = 2;
+         tileMap->boothCount = 1;
+         tileMap->booths[0].id = 19;
+         tileMap->booths[0].tileIndex = 170;
          tileMap->portals[0].sourceTileIndex = 110;
          tileMap->portals[0].destinationTileMapIndex = 13;
          tileMap->portals[0].destinationTileIndex = 132;
