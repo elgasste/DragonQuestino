@@ -1463,10 +1463,10 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
       private UInt32 GetItemFlags()
       {
          int keys = GetRangedNumberFromString( _keyCount, 7 );
-         int herbs = GetRangedNumberFromString( _keyCount, 7 );
-         int torches = GetRangedNumberFromString( _torchCount, 7 );
+         int herbs = GetRangedNumberFromString( _herbCount, 7 );
          int wings = GetRangedNumberFromString( _wingCount, 7 );
          int fairyWaters = GetRangedNumberFromString( _fairyWaterCount, 7 );
+         int torches = GetRangedNumberFromString( _torchCount, 7 );
 
          return (UInt32)keys
                 | ( (UInt32)herbs << 3 )
@@ -1488,9 +1488,9 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
       {
          KeyCount = ( flags & 0x7 ).ToString();
          HerbCount = ( ( flags >> 3 ) & 0x7 ).ToString();
-         TorchCount = ( ( flags >> 6 ) & 0x7 ).ToString();
-         WingCount = ( ( flags >> 9 ) & 0x7 ).ToString();
-         FairyWaterCount = ( ( flags >> 12 ) & 0x7 ).ToString();
+         WingCount = ( ( flags >> 6 ) & 0x7 ).ToString();
+         FairyWaterCount = ( ( flags >> 9 ) & 0x7 ).ToString();
+         TorchCount = ( ( flags >> 12 ) & 0x7 ).ToString();
       }
 
       private UInt32 GetTownVisitedFlags()
