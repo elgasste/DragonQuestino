@@ -15,25 +15,25 @@ void Game_GetPassword( Game_t* game, char* password )
    Player_t* player = &( game->player );
 
    u32 encodedBits[6] = {
-      ( game->gameFlags.doors << 16 ) |                           // doors not opened (16 bits)
-      ( player->experience ),                                     // experience (16 bits)
+      ( game->gameFlags.doors << 16 ) |                              // doors not opened (16 bits)
+      ( player->experience ),                                        // experience (16 bits)
 
-      game->gameFlags.treasures,                                  // treasures remaining (32 bits)
+      game->gameFlags.treasures,                                     // treasures remaining (32 bits)
 
-      ( player->items << 7 ) |                                    // items (25 bits)
-      ( (u32)( player->townsVisited ) << 1 ) |               // towns visited (6 bits)
-      0x0,                                                        // reserved (1 bit)
+      ( player->items << 7 ) |                                       // items (25 bits)
+      ( (u32)( player->townsVisited & 0x3F ) << 1 ) |                // towns visited (6 bits)
+      0x0,                                                           // reserved (1 bit)
 
-      ( (u32)( player->gold ) << 16 ) |                      // gold (16 bits)
-      ( ( player->weapon.id & 0x7 ) << 13 ) |                     // weapon (3 bits)
-      ( ( player->armor.id & 0x7 ) << 10 ) |                      // armor (3 bits)
-      ( ( player->shield.id & 0x3 ) << 8 ) |                      // shield (2 bits)
-      ( game->gameFlags.specialEnemies & 0x7 << 5 ) |             // special enemies not defeated (3 bits)
-      ( game->gameFlags.rescuedPrincess ? 0x1 << 4 : 0x0 ) |      // rescued princess (1 bit)
-      ( game->gameFlags.foundHiddenStairs ? 0x1 << 3 : 0x0 ) |    // found hidden stairs (1 bit)
-      ( game->gameFlags.usedRainbowDrop ? 0x1 << 2 : 0x0 ) |      // used rainbow drop (1 bit)
-      ( game->gameFlags.gotStaffOfRain ? 0x1 << 1 : 0x0 ) |       // got the staff of rain (1 bit)
-      ( game->gameFlags.gotRainbowDrop ? 0x1 : 0x0 )              // got the rainbow drop (1 bit)
+      ( (u32)( player->gold ) << 16 ) |                              // gold (16 bits)
+      ( (u32)( player->weapon.id & 0x7 ) << 13 ) |                   // weapon (3 bits)
+      ( (u32)( player->armor.id & 0x7 ) << 10 ) |                    // armor (3 bits)
+      ( (u32)( player->shield.id & 0x3 ) << 8 ) |                    // shield (2 bits)
+      ( (u32)( game->gameFlags.specialEnemies & 0x7 ) << 5 ) |       // special enemies not defeated (3 bits)
+      ( game->gameFlags.rescuedPrincess ? ( 0x1 << 4 ) : 0x0 ) |     // rescued princess (1 bit)
+      ( game->gameFlags.foundHiddenStairs ? ( 0x1 << 3 ) : 0x0 ) |   // found hidden stairs (1 bit)
+      ( game->gameFlags.usedRainbowDrop ? ( 0x1 << 2 ) : 0x0 ) |     // used rainbow drop (1 bit)
+      ( game->gameFlags.gotStaffOfRain ? ( 0x1 << 1 ) : 0x0 ) |      // got the staff of rain (1 bit)
+      ( game->gameFlags.gotRainbowDrop ? 0x1 : 0x0 )                 // got the rainbow drop (1 bit)
    };
 
    // the player's encoded name goes on the end, followed by its length
@@ -134,7 +134,7 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    game->gameFlags.foundHiddenStairs = (Bool_t)( ( encodedBits[3] >> 3 ) & 0x1 );
    game->gameFlags.usedRainbowDrop = (Bool_t)( ( encodedBits[3] >> 2 ) & 0x1 );
    game->gameFlags.gotStaffOfRain = (Bool_t)( ( encodedBits[3] >> 1 ) & 0x1 );
-   game->gameFlags.gotRainbowDrop = (Bool_t)( ( encodedBits[3] ) & 0x1 );
+   game->gameFlags.gotRainbowDrop = (Bool_t)( encodedBits[3] & 0x1 );
    game->gameFlags.joinedDragonlord = False;
 
    player->experience = (u16)( encodedBits[0] & 0xFFFF );
