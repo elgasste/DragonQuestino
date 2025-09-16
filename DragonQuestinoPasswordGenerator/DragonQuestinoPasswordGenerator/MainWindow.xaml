@@ -209,8 +209,6 @@
                                IsChecked="{Binding HasErdricksToken, Mode=TwoWay}" />
                      <CheckBox Content="Rainbow Drop"
                                IsChecked="{Binding HasRainbowDrop, Mode=TwoWay}" />
-                     <CheckBox Content="Sphere of Light"
-                               IsChecked="{Binding HasSphereOfLight, Mode=TwoWay}" />
                   </StackPanel>
                </GroupBox>
 
@@ -315,7 +313,8 @@
 
          <!-- RIGHT PANEL, BOTTOM SECTION -->
          <StackPanel Orientation="Horizontal"
-                     HorizontalAlignment="Center">
+                     HorizontalAlignment="Center"
+                     Margin="0 18 0 0" >
 
             <!-- PASSWORD-->
             <GroupBox Header="Password">
