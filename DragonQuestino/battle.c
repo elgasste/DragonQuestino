@@ -566,6 +566,7 @@ internal void Battle_SwitchTurnCallback( Battle_t* battle )
 
          if ( Random_u8( 1, 2 ) == 1 )
          {
+            battle->game->player.stats.isAsleep = False;
             Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_PLAYERWOKEUP, Game_ResetBattleMenu, battle->game );
          }
          else
@@ -611,6 +612,7 @@ internal void Battle_EnemyTurn( Battle_t* battle )
    {
       if ( Random_u8( 1, 3 ) == 1 )
       {
+         battle->enemy.stats.isAsleep = False;
          Dialog_Reset( &( battle->game->dialog ) );
          sprintf( msg, STRING_BATTLE_ENEMYWOKEUP, battle->enemy.name );
          Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyWokeUpCallback, battle );
