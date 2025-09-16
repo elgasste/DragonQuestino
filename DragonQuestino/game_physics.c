@@ -194,7 +194,7 @@ void Game_TicPhysics( Game_t* game )
 void Game_PlayerSteppedOnTile( Game_t* game )
 {
    TilePortal_t* portal;
-   char msg[64];
+   char msg[128];
 
 #if defined VISUAL_STUDIO_DEV
    if ( !g_debugFlags.noTileDamage )
