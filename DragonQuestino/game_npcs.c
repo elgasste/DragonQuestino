@@ -519,8 +519,11 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_CENTERBLUEMAN );
          break;
       case 76: // Rimuldar inn soldier
-         sprintf( msg, STRING_NPC_RIMULDAR_INNSOLDIER, game->player.name );
+         sprintf( msg, STRING_NPC_RIMULDAR_INNSOLDIER_1, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNSOLDIER_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNSOLDIER_3 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNSOLDIER_4 );
          break;
       case 77: // Rimuldar weapon shop soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_WEAPONSHOPSOLDIER );
