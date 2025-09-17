@@ -358,7 +358,8 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTSTATICBLUEMAN );
          break;
       case 29: // Brecconary upper-right soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERRIGHTSOLDIER );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERRIGHTSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERRIGHTSOLDIER_2 );
          break;
       case 30: // Brecconary upper wizard
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERWIZARD );
@@ -367,7 +368,9 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERGREENMAN );
          break;
       case 32: // Brecconary center blue man
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERBLUEMAN );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERBLUEMAN_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERBLUEMAN_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERBLUEMAN_3 );
          break;
       case 33: // Brecconary center red soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERREDSOLDIER_1 );
@@ -395,7 +398,9 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_LEFTWIZARD );
          break;
       case 40: // Garinham outside soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER_3 );
          break;
       case 41: // Garinham outside blue woman
          Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEWOMAN );
@@ -514,8 +519,11 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_CENTERBLUEMAN );
          break;
       case 76: // Rimuldar inn soldier
-         sprintf( msg, STRING_NPC_RIMULDAR_INNSOLDIER, game->player.name );
+         sprintf( msg, STRING_NPC_RIMULDAR_INNSOLDIER_1, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNSOLDIER_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNSOLDIER_3 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_INNSOLDIER_4 );
          break;
       case 77: // Rimuldar weapon shop soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_RIMULDAR_WEAPONSHOPSOLDIER );
@@ -578,6 +586,7 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
             Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_1 );
             Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_2 );
          }
+         break;
       case 86: // Dragonlord
          sprintf( msg, STRING_NPC_CHARLOCK_DRAGONLORD_1_1, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
