@@ -172,6 +172,7 @@ typedef struct TileMap_t
    Player_t* player;
 
    u32 id;
+   u32 previousId;
 
    Bool_t hasEncounters;
    Bool_t blocksMagic;
@@ -200,6 +201,7 @@ typedef struct TileMap_t
    TilePortal_t portals[TILEMAP_MAX_PORTALS];
    u32 portalCount;
    TilePortal_t evacPortal;
+   u32 lastPortalTileIndex;
 
    EnemyIndexPool_t overworldEnemyIndexPools[TILE_OVERWORLD_ENEMY_INDEX_POOLS];
    EnemyIndexPool_t dungeonEnemyIndexPools[TILE_DUNGEON_ENEMY_INDEX_POOLS];
