@@ -519,6 +519,12 @@ internal void Game_SpellEvacCallback( Game_t* game )
    }
    else
    {
+      if ( ( game->tileMap.previousId == TILEMAP_OVERWORLD_ID ) && ( game->tileMap.id == TILEMAP_SWAMPCAVE_ID ) )
+      {
+         // this is a special case for the swamp cave, since it has two entrances
+         game->tileMap.evacPortal.destinationTileIndex = game->tileMap.lastPortalTileIndex;
+      }
+
       AnimationChain_Reset( &( game->animationChain ) );
       Game_AnimatePortalEntrance( game, &( game->tileMap.evacPortal ) );
       AnimationChain_Start( &( game->animationChain ) );

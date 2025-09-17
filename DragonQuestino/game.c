@@ -161,6 +161,8 @@ void Game_Load( Game_t* game, const char* password )
 
    TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Map );
    TileMap_Load( &( game->tileMap ), TILEMAP_TANTEGEL_THRONEROOM_ID );
+   game->tileMap.previousId = game->tileMap.id;
+   game->tileMap.lastPortalTileIndex = 0;
    player->tileIndex = 128; // in front of King Lorik
    Player_SetCanonicalTileIndex( player );
 
@@ -373,6 +375,8 @@ void Game_EnterTargetPortal( Game_t* game )
       case TILEMAP_RIMULDAR_ID: SET_VISITED_RIMULDAR( game->player.townsVisited ); break;
    }
 
+   game->tileMap.previousId = game->tileMap.id;
+   game->tileMap.lastPortalTileIndex = game->player.tileIndex;
    TileMap_Load( &( game->tileMap ), game->targetPortal->destinationTileMapIndex );
 
    game->player.sprite.position.x = (r32)( ( i32 )( TILE_SIZE * ( destinationTileIndex % game->tileMap.tilesX ) ) - game->player.sprite.offset.x ) + COLLISION_THETA;
