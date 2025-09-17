@@ -44,6 +44,8 @@ internal void Battle_EnemyBreatheFireCallback( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFire( Battle_t* battle );
 internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle );
 internal void Battle_EnemyCastSpell( Battle_t* battle, const char* spellName, void ( *callback )( Battle_t* ) );
+internal void Battle_EnemySpellFizzledCallback( Battle_t* battle );
+internal void Battle_EnemySpellFizzledMessageCallback( Battle_t* battle );
 internal void Battle_EnemyCastSizz( Battle_t* battle );
 internal void Battle_EnemyCastSizzCallback( Battle_t* battle );
 internal void Battle_EnemyCastSizzle( Battle_t* battle );
@@ -925,7 +927,25 @@ internal void Battle_EnemyCastSpell( Battle_t* battle, const char* spellName, vo
 
    Dialog_Reset( &( battle->game->dialog ) );
    sprintf( msg, STRING_BATTLE_ENEMY_SPELLCAST, battle->enemy.name, spellName );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, callback, battle );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, ( battle->enemy.stats.isFizzled ) ? Battle_EnemySpellFizzledCallback : callback, battle );
+   Game_OpenDialog( battle->game );
+}
+
+internal void Battle_EnemySpellFizzledCallback( Battle_t* battle )
+{
+   AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
+   AnimationChain_PushAnimationWithCallback( &( battle->game->animationChain ), AnimationId_Pause, Battle_EnemySpellFizzledMessageCallback, battle );
+   Battle_EnemyAnimateSpellWithCallback( battle, Battle_EnemySpellFizzledMessageCallback );
+   AnimationChain_Start( &( battle->game->animationChain ) );
+}
+
+internal void Battle_EnemySpellFizzledMessageCallback( Battle_t* battle )
+{
+   battle->turn = BattleTurn_Player;
+
+   Dialog_Reset( &( battle->game->dialog ) );
+   Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_SPELLFIZZLEDCOMMAND, Game_ResetBattleMenu, battle->game );
    Game_OpenDialog( battle->game );
 }
 

@@ -295,6 +295,7 @@
 #define STRING_BATTLE_NOTENOUGHMP                                    "You do not have enough MP. Command?"
 #define STRING_BATTLE_SPELLCAST                                      "You cast %s!"
 #define STRING_BATTLE_SPELLFIZZLED                                   "But the spell has been blocked!"
+#define STRING_BATTLE_SPELLFIZZLEDCOMMAND                            "But the spell has been blocked! Command?"
 #define STRING_BATTLE_FULLYHEALED                                    "You are already fully healed. Command?"
 #define STRING_BATTLE_SPELL_NOEFFECT                                 "But the spell has no effect on the %s!"
 #define STRING_BATTLE_SPELL_SLEEP_ALREADYASLEEP                      "The %s is already asleep. Command?"
