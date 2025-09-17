@@ -408,7 +408,7 @@ void Screen_LoadTextBitFields( Screen_t* screen )
    screen->textBitFields[52][0] = 0x38;
    screen->textBitFields[52][1] = 0x4C;
    screen->textBitFields[52][2] = 0xC6;
-   screen->textBitFields[52][3] = 0xC6;
+   screen->textBitFields[52][3] = 0xD6;
    screen->textBitFields[52][4] = 0xC6;
    screen->textBitFields[52][5] = 0x64;
    screen->textBitFields[52][6] = 0x38;
