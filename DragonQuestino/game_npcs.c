@@ -395,7 +395,9 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_LEFTWIZARD );
          break;
       case 40: // Garinham outside soldier
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_SOLDIER_3 );
          break;
       case 41: // Garinham outside blue woman
          Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEWOMAN );
