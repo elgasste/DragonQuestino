@@ -379,6 +379,7 @@ void Game_EnterTargetPortal( Game_t* game )
    // the player sprite gets caught on unpassable tiles unless we use COLLISION_THETA here, but for some reason the x-axis has no problems
    game->player.sprite.position.y = (r32)( ( i32 )( TILE_SIZE * ( destinationTileIndex / game->tileMap.tilesX ) ) - game->player.sprite.offset.y ) - COLLISION_THETA;
    game->player.tileIndex = destinationTileIndex;
+   Player_SetCanonicalTileIndex( &( game->player ) );
    game->player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( game->tileMap ), destinationTileIndex );
    game->targetPortal = 0;
 
