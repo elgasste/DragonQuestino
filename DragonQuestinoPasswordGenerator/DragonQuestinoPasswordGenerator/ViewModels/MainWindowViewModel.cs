@@ -1,7 +1,5 @@
 ﻿using DragonQuestinoPasswordGenerator.Commands;
-using System;
 using System.Collections.ObjectModel;
-using System.Numerics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -1491,6 +1489,16 @@ namespace DragonQuestinoPasswordGenerator.ViewModels
          WingCount = ( ( flags >> 6 ) & 0x7 ).ToString();
          FairyWaterCount = ( ( flags >> 9 ) & 0x7 ).ToString();
          TorchCount = ( ( flags >> 12 ) & 0x7 ).ToString();
+
+         HasFairyFlute = ( ( flags >> 15 ) & 0x1 ) != 0;
+         HasSilverHarp = ( ( flags >> 16 ) & 0x1 ) != 0;
+         HasGwaelinsLove = ( ( flags >> 17 ) & 0x1 ) != 0;
+         HasStoneOfSunlight = ( ( flags >> 18 ) & 0x1 ) != 0;
+         HasStaffOfRain = ( ( flags >> 19 ) & 0x1 ) != 0;
+         HasErdricksToken = ( ( flags >> 20 ) & 0x1 ) != 0;
+         HasRainbowDrop = ( ( flags >> 21 ) & 0x1 ) != 0;
+         HasDragonScale = ( ( flags >> 23 ) & 0x1 ) != 0;
+         HasCursedBelt = ( ( flags >> 24 ) & 0x1 ) != 0;
       }
 
       private UInt32 GetTownVisitedFlags()
