@@ -578,6 +578,7 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
             Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_1 );
             Dialog_PushSection( &( game->dialog ), STRING_NPC_SOUTHERNSHRINE_WIZARD_2_2 );
          }
+         break;
       case 86: // Dragonlord
          sprintf( msg, STRING_NPC_CHARLOCK_DRAGONLORD_1_1, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
