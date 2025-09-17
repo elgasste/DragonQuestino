@@ -936,10 +936,7 @@ internal void Game_EnterPasswordFadeOutCallback( Game_t* game )
    // to use it, uncomment this line and comment out all the lines below it.
    //Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" );
 
-   // MUFFINS: delete this later
-   Game_Load( game, "eAwOvX-AAAAAEAxeBqS2sBmq2pnrYf" );
-
-   /*game->alphaPicker.position.x = 28;
+   game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
 }
