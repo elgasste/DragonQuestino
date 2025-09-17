@@ -381,7 +381,7 @@
 #define STRING_BOOTH_CANTLINWYNN2                                    "\"I wonder what still remains of that place?\""
 #define STRING_BOOTH_RIMULDARWIZARD1                                 "\"It is said there is a shrine to the south where great magic exists.\""
 #define STRING_BOOTH_RIMULDARWIZARD2                                 "\"According to legend, it is a place where the sun and rain are destined to meet.\""
-#define STRING_BOOTH_RIMULDARWIZARD3                                 "\"You have visited the souther shrine, haven't you? I can sense it!\""
+#define STRING_BOOTH_RIMULDARWIZARD3                                 "\"You have visited the southern shrine, haven't you? I can sense it!\""
 
 #define STRING_NPC_DEFAULT                                           "No response. How rude."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_1_1                      "\"Hello %s, I am relieved to see you have returned safely!\""
