@@ -939,9 +939,9 @@ internal void Game_EnterPasswordFadeOutCallback( Game_t* game )
 
    // MUFFINS: this gives us some goodies for testing (level 30 with everything except a few treasures).
    // to use it, uncomment this line and comment out all the lines below it.
-   Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" );
+   //Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" );
 
-   /*game->alphaPicker.position.x = 28;
+   game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
 }
