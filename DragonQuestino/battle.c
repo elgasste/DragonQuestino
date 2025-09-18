@@ -521,10 +521,6 @@ internal void Battle_EnemyDefeatedMessageCallback( Battle_t* battle )
 
             Dialog_PushSection( dialog, msg );
          }
-
-         // in case we haven't done it already...
-         player->stats.hitPoints = Math_Max8u( player->stats.hitPoints, player->stats.maxHitPoints / 2 );
-         player->stats.magicPoints = Math_Max8u( player->stats.magicPoints, player->stats.maxMagicPoints / 2 );
       }
 
       if ( battle->specialEnemy != SpecialEnemy_None )
@@ -552,8 +548,6 @@ internal void Battle_GainedPointsCallback( Battle_t* battle )
 {
    battle->game->player.stats.maxHitPoints += battle->hitPointsGained;
    battle->game->player.stats.maxMagicPoints += battle->magicPointsGained;
-   battle->game->player.stats.hitPoints = Math_Max8u( battle->game->player.stats.hitPoints, battle->game->player.stats.maxHitPoints / 2 );
-   battle->game->player.stats.magicPoints = Math_Max8u( battle->game->player.stats.maxMagicPoints, battle->game->player.stats.maxMagicPoints / 2 );
 
    Game_DrawQuickStatus( battle->game );
 }
