@@ -45,6 +45,9 @@ void Game_Draw( Game_t* game )
 
             if ( game->subState == SubState_Dialog )
             {
+               // TODO: this fixes the "blip" when casting heal spells in the overworld,
+               // but I don't really know the full ramifications elsewhere. keep an eye on this.
+               Game_DrawQuickStatus( game );
                Dialog_Draw( &( game->dialog ) );
             }
          }
