@@ -60,5 +60,5 @@ internal u32 Clock_GetMicros()
 {
    LARGE_INTEGER ticks;
    QueryPerformanceCounter( &ticks );
-   return (u32)( ( (r64)( ticks.QuadPart ) / (r64)( g_globals.performanceFrequency.QuadPart ) ) * (u64)1000000 );
+   return (u32)( ( (r64)( ticks.QuadPart ) / (r64)( g_winGlobals.performanceFrequency.QuadPart ) ) * (u64)1000000 );
 }

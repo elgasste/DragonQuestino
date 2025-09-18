@@ -31,7 +31,7 @@
 #define VK_GRAPHICS_SCALE_3         51    // 3
 #define VK_GRAPHICS_SCALE_4         52    // 4
 
-typedef struct GlobalObjects_t
+typedef struct WinGlobalObjects_t
 {
    HWND hWndMain;
    LONG clientPaddingRight;
@@ -45,8 +45,8 @@ typedef struct GlobalObjects_t
    WinPixelBuffer_t screenBuffer;
    r32 graphicsScale;
 }
-GlobalObjects_t;
+WinGlobalObjects_t;
 
-GlobalObjects_t g_globals;
+WinGlobalObjects_t g_winGlobals;
 
 #endif // WIN_COMMON_H

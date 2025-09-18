@@ -8,7 +8,7 @@ void Screen_RenderBuffer( Screen_t* screen )
 {
    u32 i;
    u16* bufferPos16 = screen->buffer;
-   u32* bufferPos32 = g_globals.screenBuffer.memory32;
+   u32* bufferPos32 = g_winGlobals.screenBuffer.memory32;
 
    if ( screen->needsWipe )
    {
@@ -49,6 +49,6 @@ internal void Screen_Wipe( Screen_t* screen )
 
    for ( int i = 0; i < SCREEN_PIXELS; i++ )
    {
-      g_globals.screenBuffer.memory32[i] = color;
+      g_winGlobals.screenBuffer.memory32[i] = color;
    }
 }
