@@ -46849,10 +46849,10 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->npcs[8].sprite.hitBoxSize.y = 16;
          tileMap->npcs[8].wanders = True;
          tileMap->npcs[8].isWandering = False;
-         tileMap->npcs[8].wanderBounds.x = 11;
-         tileMap->npcs[8].wanderBounds.y = 8;
-         tileMap->npcs[8].wanderBounds.w = 3;
-         tileMap->npcs[8].wanderBounds.h = 6;
+         tileMap->npcs[8].wanderBounds.x = 12;
+         tileMap->npcs[8].wanderBounds.y = 7;
+         tileMap->npcs[8].wanderBounds.w = 2;
+         tileMap->npcs[8].wanderBounds.h = 7;
          tileMap->npcs[9].id = 14;
          tileMap->npcs[9].tileIndex = 457;
          Sprite_LoadActive( &( tileMap->npcs[9].sprite ), 5 );
