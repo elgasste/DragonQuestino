@@ -27,6 +27,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    RECT expectedWindowRect = { 0 };
    LONG clientPaddingRight, clientPaddingTop;
    MSG msg;
+   char windowTitle[128];
 
    UNUSED_PARAM( hPrevInstance );
    UNUSED_PARAM( lpCmdLine );
@@ -66,9 +67,15 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    clientPaddingRight = ( expectedWindowRect.right - expectedWindowRect.left ) - SCREEN_WIDTH;
    clientPaddingTop = ( expectedWindowRect.bottom - expectedWindowRect.top ) - SCREEN_HEIGHT;
 
+#if defined( _DEBUG )
+   sprintf( windowTitle, "Dragon Questino Windows Development Tool" );
+#else
+   sprintf( windowTitle, "Dragon Questino" );
+#endif
+
    g_globals.hWndMain = CreateWindowExA( 0,
                                          mainWindowClass.lpszClassName,
-                                         "Dragon Questino Windows Development Tool",
+                                         windowTitle,
                                          windowStyle,
                                          CW_USEDEFAULT,
                                          CW_USEDEFAULT,
