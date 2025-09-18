@@ -17,6 +17,7 @@ internal void ToggleTileDamage();
 internal void ToggleShowHitBoxes();
 internal void GetAllItems();
 internal void MaxOutStats();
+internal void ScaleScreen( r32 scale );
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -25,14 +26,14 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    WNDCLASSA mainWindowClass = { 0 };
    DWORD windowStyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE;
    RECT expectedWindowRect = { 0 };
-   LONG clientPaddingRight, clientPaddingTop;
    MSG msg;
+   char windowTitle[128];
 
    UNUSED_PARAM( hPrevInstance );
    UNUSED_PARAM( lpCmdLine );
    UNUSED_PARAM( nCmdShow );
 
-   if ( !QueryPerformanceFrequency( &( g_globals.performanceFrequency ) ) )
+   if ( !QueryPerformanceFrequency( &( g_winGlobals.performanceFrequency ) ) )
    {
       FatalError( "failed to query performance frequency." );
    }
@@ -63,47 +64,55 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
       FatalError( "failed to adjust window rect." );
    }
 
-   clientPaddingRight = ( expectedWindowRect.right - expectedWindowRect.left ) - SCREEN_WIDTH;
-   clientPaddingTop = ( expectedWindowRect.bottom - expectedWindowRect.top ) - SCREEN_HEIGHT;
+   g_winGlobals.clientPaddingRight = ( expectedWindowRect.right - expectedWindowRect.left ) - SCREEN_WIDTH;
+   g_winGlobals.clientPaddingTop = ( expectedWindowRect.bottom - expectedWindowRect.top ) - SCREEN_HEIGHT;
 
-   g_globals.hWndMain = CreateWindowExA( 0,
-                                         mainWindowClass.lpszClassName,
-                                         "Dragon Questino Windows Development Tool",
-                                         windowStyle,
-                                         CW_USEDEFAULT,
-                                         CW_USEDEFAULT,
-                                         (int)( SCREEN_WIDTH * GRAPHICS_SCALE ) + clientPaddingRight,
-                                         (int)( SCREEN_HEIGHT * GRAPHICS_SCALE ) + clientPaddingTop,
-                                         0,
-                                         0,
-                                         hInstance,
-                                         0 );
+#if defined( _DEBUG )
+   sprintf( windowTitle, "Dragon Questino Windows Development Tool" );
+#else
+   sprintf( windowTitle, "Dragon Questino" );
+#endif
 
-   if ( !g_globals.hWndMain )
+   g_winGlobals.graphicsScale = GRAPHICS_SCALE_DEFAULT;
+
+   g_winGlobals.hWndMain = CreateWindowExA( 0,
+                                            mainWindowClass.lpszClassName,
+                                            windowTitle,
+                                            windowStyle,
+                                            CW_USEDEFAULT,
+                                            CW_USEDEFAULT,
+                                            (int)( SCREEN_WIDTH * g_winGlobals.graphicsScale ) + g_winGlobals.clientPaddingRight,
+                                            (int)( SCREEN_HEIGHT * g_winGlobals.graphicsScale ) + g_winGlobals.clientPaddingTop,
+                                            0,
+                                            0,
+                                            hInstance,
+                                            0 );
+
+   if ( !g_winGlobals.hWndMain )
    {
       FatalError( "failed to create main window." );
    }
 
    SetCursor( LoadCursor( 0, IDC_ARROW ) );
 
-   g_globals.hFont = CreateFontA( 16, 0, 0, 0,
-                                  FW_BOLD, FALSE, FALSE, FALSE,
-                                  ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                  DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS,
-                                  "Consolas" );
+   g_winGlobals.hFont = CreateFontA( 16, 0, 0, 0,
+                                     FW_BOLD, FALSE, FALSE, FALSE,
+                                     ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+                                     DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS,
+                                     "Consolas" );
 
-   WinPixelBuffer_Init( &( g_globals.screenBuffer ), SCREEN_WIDTH, SCREEN_HEIGHT );
-   g_globals.bmpInfo.bmiHeader.biSize = sizeof( BITMAPINFOHEADER );
-   g_globals.bmpInfo.bmiHeader.biWidth = g_globals.screenBuffer.w;
-   g_globals.bmpInfo.bmiHeader.biHeight = -(LONG)( g_globals.screenBuffer.h );
-   g_globals.bmpInfo.bmiHeader.biPlanes = 1;
-   g_globals.bmpInfo.bmiHeader.biBitCount = 32;
-   g_globals.bmpInfo.bmiHeader.biCompression = BI_RGB;
+   WinPixelBuffer_Init( &( g_winGlobals.screenBuffer ), SCREEN_WIDTH, SCREEN_HEIGHT );
+   g_winGlobals.bmpInfo.bmiHeader.biSize = sizeof( BITMAPINFOHEADER );
+   g_winGlobals.bmpInfo.bmiHeader.biWidth = g_winGlobals.screenBuffer.w;
+   g_winGlobals.bmpInfo.bmiHeader.biHeight = -(LONG)( g_winGlobals.screenBuffer.h );
+   g_winGlobals.bmpInfo.bmiHeader.biPlanes = 1;
+   g_winGlobals.bmpInfo.bmiHeader.biBitCount = 32;
+   g_winGlobals.bmpInfo.bmiHeader.biCompression = BI_RGB;
 
    InitButtonMap();
 
-   Game_Init( &( g_globals.game ), g_globals.screenBuffer.memory16 );
-   g_globals.shutdown = False;
+   Game_Init( &( g_winGlobals.game ), g_winGlobals.screenBuffer.memory16 );
+   g_winGlobals.shutdown = False;
    g_debugFlags.showDiagnostics = False;
    g_debugFlags.noClip = False;
    g_debugFlags.fastWalk = False;
@@ -114,27 +123,27 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
    while ( 1 )
    {
-      Clock_StartFrame( &( g_globals.game.clock ) );
-      Input_ResetState( &( g_globals.game.input ) );
+      Clock_StartFrame( &( g_winGlobals.game.clock ) );
+      Input_ResetState( &( g_winGlobals.game.input ) );
       
-      while ( PeekMessageA( &msg, g_globals.hWndMain, 0, 0, PM_REMOVE ) )
+      while ( PeekMessageA( &msg, g_winGlobals.hWndMain, 0, 0, PM_REMOVE ) )
       {
          TranslateMessage( &msg );
          DispatchMessageA( &msg );
       }
 
-      Game_Tic( &( g_globals.game ) );
+      Game_Tic( &( g_winGlobals.game ) );
 
-      InvalidateRect( g_globals.hWndMain, 0, FALSE );
-      Clock_EndFrame( &( g_globals.game.clock ) );
+      InvalidateRect( g_winGlobals.hWndMain, 0, FALSE );
+      Clock_EndFrame( &( g_winGlobals.game.clock ) );
 
-      if ( g_globals.shutdown )
+      if ( g_winGlobals.shutdown )
       {
          break;
       }
    }
 
-   WinPixelBuffer_CleanUp( &( g_globals.screenBuffer ) );
+   WinPixelBuffer_CleanUp( &( g_winGlobals.screenBuffer ) );
    return 0;
 }
 
@@ -160,7 +169,7 @@ internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ W
       case WM_QUIT:
       case WM_CLOSE:
       case WM_DESTROY:
-         g_globals.shutdown = True;
+         g_winGlobals.shutdown = True;
          break;
       case WM_KEYDOWN:
       case WM_KEYUP:
@@ -180,13 +189,13 @@ internal LRESULT CALLBACK MainWindowProc( _In_ HWND hWnd, _In_ UINT uMsg, _In_ W
 
 internal void InitButtonMap()
 {
-   g_globals.buttonMap[Button_Left] = VK_LEFT;
-   g_globals.buttonMap[Button_Up] = VK_UP;
-   g_globals.buttonMap[Button_Right] = VK_RIGHT;
-   g_globals.buttonMap[Button_Down] = VK_DOWN;
-   g_globals.buttonMap[Button_A] = 0x58; // X
-   g_globals.buttonMap[Button_B] = 0x5A; // Z
-   g_globals.buttonMap[Button_Start] = VK_RETURN;
+   g_winGlobals.buttonMap[Button_Left] = VK_LEFT;
+   g_winGlobals.buttonMap[Button_Up] = VK_UP;
+   g_winGlobals.buttonMap[Button_Right] = VK_RIGHT;
+   g_winGlobals.buttonMap[Button_Down] = VK_DOWN;
+   g_winGlobals.buttonMap[Button_A] = 0x58; // X
+   g_winGlobals.buttonMap[Button_B] = 0x5A; // Z
+   g_winGlobals.buttonMap[Button_Start] = VK_RETURN;
 }
 
 internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
@@ -203,20 +212,21 @@ internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
          // ensure alt+F4 still closes the window
          if ( keyCode == VK_F4 && ( flags & ( (LONG_PTR)1 << 29 ) ) )
          {
-            g_globals.shutdown = True;
+            g_winGlobals.shutdown = True;
             return;
          }
 
          for ( i = 0; i < (u32)Button_Count; i++ )
          {
-            if ( g_globals.buttonMap[i] == keyCode )
+            if ( g_winGlobals.buttonMap[i] == keyCode )
             {
-               Input_ButtonPressed( &( g_globals.game.input ), i );
+               Input_ButtonPressed( &( g_winGlobals.game.input ), i );
                break;
             }
          }
 
          // Windows-specific diagnostic/debug keys
+#if defined( _DEBUG )
          switch ( keyCode )
          {
             case VK_F8:
@@ -238,7 +248,7 @@ internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
                MaxOutStats();
                break;
             case VK_TOGGLECURSED:
-               Player_SetCursed( &( g_globals.game.player ), g_globals.game.player.isCursed ? False : True );
+               Player_SetCursed( &( g_winGlobals.game.player ), g_winGlobals.game.player.isCursed ? False : True );
                break;
             case VK_TOGGLEENCOUNTERS:
                ToggleNoEncounters();
@@ -250,14 +260,23 @@ internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
                ToggleShowHitBoxes();
                break;
          }
+#else
+         switch ( keyCode )
+         {
+            case VK_GRAPHICS_SCALE_1: ScaleScreen( 1.0f ); break;
+            case VK_GRAPHICS_SCALE_2: ScaleScreen( 2.0f ); break;
+            case VK_GRAPHICS_SCALE_3: ScaleScreen( 3.0f ); break;
+            case VK_GRAPHICS_SCALE_4: ScaleScreen( 4.0f ); break;
+         }
+#endif
       }
       else
       {
          for ( i = 0; i < (u32)Button_Count; i++ )
          {
-            if ( g_globals.buttonMap[i] == keyCode )
+            if ( g_winGlobals.buttonMap[i] == keyCode )
             {
-               Input_ButtonReleased( &( g_globals.game.input ), i );
+               Input_ButtonReleased( &( g_winGlobals.game.input ), i );
                break;
             }
          }
@@ -272,10 +291,10 @@ internal void RenderScreen()
    HBITMAP bmMem;
    HANDLE hOld;
    PAINTSTRUCT ps;
-   int winWidth = (int)( SCREEN_WIDTH * GRAPHICS_SCALE );
-   int winHeight = (int)( SCREEN_HEIGHT * GRAPHICS_SCALE );
+   int winWidth = (int)( SCREEN_WIDTH * g_winGlobals.graphicsScale );
+   int winHeight = (int)( SCREEN_HEIGHT * g_winGlobals.graphicsScale );
 
-   dc = BeginPaint( g_globals.hWndMain, &ps );
+   dc = BeginPaint( g_winGlobals.hWndMain, &ps );
 
    // create an off-screen DC for double-buffering
    dcMem = CreateCompatibleDC( dc );
@@ -285,10 +304,10 @@ internal void RenderScreen()
    // actually draw everything
    StretchDIBits(
       dcMem,
-      0, 0, (int)( SCREEN_WIDTH * GRAPHICS_SCALE ), (int)( SCREEN_HEIGHT * GRAPHICS_SCALE ), // dest
-      0, 0, g_globals.screenBuffer.w, g_globals.screenBuffer.h, // src
-      g_globals.screenBuffer.memory32,
-      &( g_globals.bmpInfo ),
+      0, 0, (int)( SCREEN_WIDTH * g_winGlobals.graphicsScale ), (int)( SCREEN_HEIGHT * g_winGlobals.graphicsScale ), // dest
+      0, 0, g_winGlobals.screenBuffer.w, g_winGlobals.screenBuffer.h, // src
+      g_winGlobals.screenBuffer.memory32,
+      &( g_winGlobals.bmpInfo ),
       DIB_RGB_COLORS, SRCCOPY
    );
 
@@ -303,7 +322,7 @@ internal void RenderScreen()
    SelectObject( dcMem, hOld );
    DeleteObject( bmMem );
    DeleteDC( dcMem );
-   EndPaint( g_globals.hWndMain, &ps );
+   EndPaint( g_winGlobals.hWndMain, &ps );
 }
 
 internal void DrawDiagnostics( HDC* dcMem )
@@ -311,7 +330,7 @@ internal void DrawDiagnostics( HDC* dcMem )
    u32 gameSeconds, realSeconds;
    RECT r = { 10, 10, 0, 0 };
    char str[STRING_SIZE_DEFAULT];
-   HFONT oldFont = (HFONT)SelectObject( *dcMem, g_globals.hFont );
+   HFONT oldFont = (HFONT)SelectObject( *dcMem, g_winGlobals.hFont );
 
    SetTextColor( *dcMem, 0x00FFFFFF );
    SetBkMode( *dcMem, TRANSPARENT );
@@ -320,60 +339,60 @@ internal void DrawDiagnostics( HDC* dcMem )
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "Last Frame MS: %u", g_globals.game.clock.lastFrameMicro / 1000 );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "Last Frame MS: %u", g_winGlobals.game.clock.lastFrameMicro / 1000 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, " Total Frames: %u", g_globals.game.clock.frameCount );
+   sprintf_s( str, STRING_SIZE_DEFAULT, " Total Frames: %u", g_winGlobals.game.clock.frameCount );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   gameSeconds = g_globals.game.clock.frameCount / CLOCK_FPS;
+   gameSeconds = g_winGlobals.game.clock.frameCount / CLOCK_FPS;
    sprintf_s( str, STRING_SIZE_DEFAULT, " In-Game Time: %u:%02u:%02u", gameSeconds / 3600, gameSeconds / 60, gameSeconds );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   realSeconds = ( g_globals.game.clock.absoluteEndMicro - g_globals.game.clock.absoluteStartMicro ) / 1000000;
+   realSeconds = ( g_winGlobals.game.clock.absoluteEndMicro - g_winGlobals.game.clock.absoluteStartMicro ) / 1000000;
    sprintf_s( str, STRING_SIZE_DEFAULT, "    Real Time: %u:%02u:%02u", realSeconds / 3600, realSeconds / 60, realSeconds );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, " Map Viewport: %i, %i", g_globals.game.tileMap.viewport.x, g_globals.game.tileMap.viewport.y );
+   sprintf_s( str, STRING_SIZE_DEFAULT, " Map Viewport: %i, %i", g_winGlobals.game.tileMap.viewport.x, g_winGlobals.game.tileMap.viewport.y );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "   Player Pos: %u, %u", (u32)( g_globals.game.player.sprite.position.x ), (u32)( g_globals.game.player.sprite.position.y ) );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "   Player Pos: %u, %u", (u32)( g_winGlobals.game.player.sprite.position.x ), (u32)( g_winGlobals.game.player.sprite.position.y ) );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
-   sprintf_s( str, STRING_SIZE_DEFAULT, "   Tile Index: %u", g_globals.game.player.tileIndex );
+   sprintf_s( str, STRING_SIZE_DEFAULT, "   Tile Index: %u", g_winGlobals.game.player.tileIndex );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
    sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
-   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Up].down ? 0x00FFFFFF : 0x00333333 );
+   SetTextColor( *dcMem, g_winGlobals.game.input.buttonStates[Button_Up].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
    sprintf_s( str, STRING_SIZE_DEFAULT, "--" );
-   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Left].down ? 0x00FFFFFF : 0x00333333 );
+   SetTextColor( *dcMem, g_winGlobals.game.input.buttonStates[Button_Left].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    sprintf_s( str, STRING_SIZE_DEFAULT, "   --" );
-   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Right].down ? 0x00FFFFFF : 0x00333333 );
+   SetTextColor( *dcMem, g_winGlobals.game.input.buttonStates[Button_Right].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    sprintf_s( str, STRING_SIZE_DEFAULT, "      B" );
-   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_B].down ? 0x00FFFFFF : 0x00333333 );
+   SetTextColor( *dcMem, g_winGlobals.game.input.buttonStates[Button_B].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
 
    sprintf_s( str, STRING_SIZE_DEFAULT, "        A" );
-   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_A].down ? 0x00FFFFFF : 0x00333333 );
+   SetTextColor( *dcMem, g_winGlobals.game.input.buttonStates[Button_A].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
    sprintf_s( str, STRING_SIZE_DEFAULT, "  |" );
-   SetTextColor( *dcMem, g_globals.game.input.buttonStates[Button_Down].down ? 0x00FFFFFF : 0x00333333 );
+   SetTextColor( *dcMem, g_winGlobals.game.input.buttonStates[Button_Down].down ? 0x00FFFFFF : 0x00333333 );
    DrawTextA( *dcMem, str, -1, &r, DT_SINGLELINE | DT_NOCLIP );
    r.top += 16;
 
@@ -429,11 +448,11 @@ internal void ToggleFastWalk()
 
    if ( g_debugFlags.fastWalk )
    {
-      g_globals.game.player.maxVelocity = TILE_WALKSPEED_FAST;
+      g_winGlobals.game.player.maxVelocity = TILE_WALKSPEED_FAST;
    }
    else
    {
-      g_globals.game.player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( g_globals.game.tileMap ), g_globals.game.player.tileIndex );
+      g_winGlobals.game.player.maxVelocity = TileMap_GetWalkSpeedForTileIndex( &( g_winGlobals.game.tileMap ), g_winGlobals.game.player.tileIndex );
    }
 }
 
@@ -459,51 +478,51 @@ internal void ToggleShowHitBoxes()
 
 internal void GetAllItems()
 {
-   ITEM_SET_KEYCOUNT( g_globals.game.player.items, ITEM_MAXKEYS );
-   ITEM_SET_HERBCOUNT( g_globals.game.player.items, ITEM_MAXHERBS );
-   ITEM_SET_WINGCOUNT( g_globals.game.player.items, ITEM_MAXWINGS );
-   ITEM_SET_FAIRYWATERCOUNT( g_globals.game.player.items, ITEM_MAXFAIRYWATERS );
-   ITEM_SET_TORCHCOUNT( g_globals.game.player.items, ITEM_MAXTORCHES );
+   ITEM_SET_KEYCOUNT( g_winGlobals.game.player.items, ITEM_MAXKEYS );
+   ITEM_SET_HERBCOUNT( g_winGlobals.game.player.items, ITEM_MAXHERBS );
+   ITEM_SET_WINGCOUNT( g_winGlobals.game.player.items, ITEM_MAXWINGS );
+   ITEM_SET_FAIRYWATERCOUNT( g_winGlobals.game.player.items, ITEM_MAXFAIRYWATERS );
+   ITEM_SET_TORCHCOUNT( g_winGlobals.game.player.items, ITEM_MAXTORCHES );
 
-   if ( !ITEM_HAS_FAIRYFLUTE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_FAIRYFLUTE( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASFAIRYFLUTE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASFAIRYFLUTE( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_SILVERHARP( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_SILVERHARP( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASSILVERHARP( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSILVERHARP( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_GWAELYNSLOVE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_GWAELYNSLOVE( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASGWAELYNSLOVE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASGWAELYNSLOVE( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_STONEOFSUNLIGHT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_STONEOFSUNLIGHT( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASSTONEOFSUNLIGHT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSTONEOFSUNLIGHT( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_STAFFOFRAIN( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_STAFFOFRAIN( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASSTAFFOFRAIN( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSTAFFOFRAIN( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_TOKEN( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_TOKEN( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASTOKEN( g_globals.game.player.items );
+      ITEM_TOGGLE_HASTOKEN( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_RAINBOWDROP( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_RAINBOWDROP( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASRAINBOWDROP( g_globals.game.player.items );
+      ITEM_TOGGLE_HASRAINBOWDROP( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_SPHEREOFLIGHT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_SPHEREOFLIGHT( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASSPHEREOFLIGHT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASSPHEREOFLIGHT( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_DRAGONSCALE( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_DRAGONSCALE( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASDRAGONSCALE( g_globals.game.player.items );
+      ITEM_TOGGLE_HASDRAGONSCALE( g_winGlobals.game.player.items );
    }
-   if ( !ITEM_HAS_CURSEDBELT( g_globals.game.player.items ) )
+   if ( !ITEM_HAS_CURSEDBELT( g_winGlobals.game.player.items ) )
    {
-      ITEM_TOGGLE_HASCURSEDBELT( g_globals.game.player.items );
+      ITEM_TOGGLE_HASCURSEDBELT( g_winGlobals.game.player.items );
    }
 }
 
@@ -511,26 +530,38 @@ internal void MaxOutStats()
 {
    u32 i;
 
-   g_globals.game.player.level = STAT_TABLE_SIZE - 1;
-   g_globals.game.player.experience = UINT16_MAX;
-   g_globals.game.player.gold = UINT16_MAX;
+   g_winGlobals.game.player.level = STAT_TABLE_SIZE - 1;
+   g_winGlobals.game.player.experience = UINT16_MAX;
+   g_winGlobals.game.player.gold = UINT16_MAX;
 
-   g_globals.game.player.stats.maxHitPoints = UINT8_MAX;
-   Player_RestoreHitPoints( &( g_globals.game.player ), UINT8_MAX );
-   g_globals.game.player.stats.magicPoints = UINT8_MAX;
-   g_globals.game.player.stats.maxMagicPoints = UINT8_MAX;
-   g_globals.game.player.stats.strength = UINT8_MAX;
-   g_globals.game.player.stats.agility = UINT8_MAX;
-   g_globals.game.player.stats.sleepResist = 15;
-   g_globals.game.player.stats.stopSpellResist = 15;
-   g_globals.game.player.stats.hurtResist = 15;
-   g_globals.game.player.stats.dodge = 2;
+   g_winGlobals.game.player.stats.maxHitPoints = UINT8_MAX;
+   Player_RestoreHitPoints( &( g_winGlobals.game.player ), UINT8_MAX );
+   g_winGlobals.game.player.stats.magicPoints = UINT8_MAX;
+   g_winGlobals.game.player.stats.maxMagicPoints = UINT8_MAX;
+   g_winGlobals.game.player.stats.strength = UINT8_MAX;
+   g_winGlobals.game.player.stats.agility = UINT8_MAX;
+   g_winGlobals.game.player.stats.sleepResist = 15;
+   g_winGlobals.game.player.stats.stopSpellResist = 15;
+   g_winGlobals.game.player.stats.hurtResist = 15;
+   g_winGlobals.game.player.stats.dodge = 2;
 
-   g_globals.game.player.spells = 0x3FF;
-   g_globals.game.player.townsVisited = 0x3F;
+   g_winGlobals.game.player.spells = 0x3FF;
+   g_winGlobals.game.player.townsVisited = 0x3F;
 
    for ( i = 0; i < MenuId_Count; i++ )
    {
-      Menu_Reset( &( g_globals.game.menus[i] ) );
+      Menu_Reset( &( g_winGlobals.game.menus[i] ) );
    }
+}
+
+internal void ScaleScreen( r32 scale )
+{
+   g_winGlobals.graphicsScale = scale;
+
+   SetWindowPos( g_winGlobals.hWndMain, 
+                 NULL, // No change in Z-order
+                 0, 0, // No change in position
+                 (int)( SCREEN_WIDTH * g_winGlobals.graphicsScale ) + g_winGlobals.clientPaddingRight, 
+                 (int)( SCREEN_HEIGHT * g_winGlobals.graphicsScale ) + g_winGlobals.clientPaddingTop,
+                 SWP_NOMOVE | SWP_NOZORDER | SWP_ASYNCWINDOWPOS); 
 }
