@@ -73,14 +73,16 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    sprintf( windowTitle, "Dragon Questino" );
 #endif
 
+   g_globals.graphicsScale = GRAPHICS_SCALE_DEFAULT;
+
    g_globals.hWndMain = CreateWindowExA( 0,
                                          mainWindowClass.lpszClassName,
                                          windowTitle,
                                          windowStyle,
                                          CW_USEDEFAULT,
                                          CW_USEDEFAULT,
-                                         (int)( SCREEN_WIDTH * GRAPHICS_SCALE ) + clientPaddingRight,
-                                         (int)( SCREEN_HEIGHT * GRAPHICS_SCALE ) + clientPaddingTop,
+                                         (int)( SCREEN_WIDTH * g_globals.graphicsScale ) + clientPaddingRight,
+                                         (int)( SCREEN_HEIGHT * g_globals.graphicsScale ) + clientPaddingTop,
                                          0,
                                          0,
                                          hInstance,
@@ -281,8 +283,8 @@ internal void RenderScreen()
    HBITMAP bmMem;
    HANDLE hOld;
    PAINTSTRUCT ps;
-   int winWidth = (int)( SCREEN_WIDTH * GRAPHICS_SCALE );
-   int winHeight = (int)( SCREEN_HEIGHT * GRAPHICS_SCALE );
+   int winWidth = (int)( SCREEN_WIDTH * g_globals.graphicsScale );
+   int winHeight = (int)( SCREEN_HEIGHT * g_globals.graphicsScale );
 
    dc = BeginPaint( g_globals.hWndMain, &ps );
 
@@ -294,7 +296,7 @@ internal void RenderScreen()
    // actually draw everything
    StretchDIBits(
       dcMem,
-      0, 0, (int)( SCREEN_WIDTH * GRAPHICS_SCALE ), (int)( SCREEN_HEIGHT * GRAPHICS_SCALE ), // dest
+      0, 0, (int)( SCREEN_WIDTH * g_globals.graphicsScale ), (int)( SCREEN_HEIGHT * g_globals.graphicsScale ), // dest
       0, 0, g_globals.screenBuffer.w, g_globals.screenBuffer.h, // src
       g_globals.screenBuffer.memory32,
       &( g_globals.bmpInfo ),

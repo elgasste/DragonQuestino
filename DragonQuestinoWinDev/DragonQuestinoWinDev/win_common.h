@@ -14,7 +14,7 @@
 #include "game.h"
 
 #define STRING_SIZE_DEFAULT         1024
-#define GRAPHICS_SCALE              3.0f
+#define GRAPHICS_SCALE_DEFAULT      3.0f
 
 #define VK_NOCLIP                   49    // 1
 #define VK_FASTWALK                 50    // 2
@@ -36,6 +36,7 @@ typedef struct GlobalObjects_t
    Bool_t shutdown;
    BITMAPINFO bmpInfo;   
    WinPixelBuffer_t screenBuffer;
+   r32 graphicsScale;
 }
 GlobalObjects_t;
 
