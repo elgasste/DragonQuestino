@@ -17,7 +17,7 @@ internal void ToggleTileDamage();
 internal void ToggleShowHitBoxes();
 internal void GetAllItems();
 internal void MaxOutStats();
-internal void Win_ScaleScreen( r32 scale );
+internal void ScaleScreen( r32 scale );
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -263,10 +263,10 @@ internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
 #else
          switch ( keyCode )
          {
-            case VK_GRAPHICS_SCALE_1: Win_ScaleScreen( 1.0f ); break;
-            case VK_GRAPHICS_SCALE_2: Win_ScaleScreen( 2.0f ); break;
-            case VK_GRAPHICS_SCALE_3: Win_ScaleScreen( 3.0f ); break;
-            case VK_GRAPHICS_SCALE_4: Win_ScaleScreen( 4.0f ); break;
+            case VK_GRAPHICS_SCALE_1: ScaleScreen( 1.0f ); break;
+            case VK_GRAPHICS_SCALE_2: ScaleScreen( 2.0f ); break;
+            case VK_GRAPHICS_SCALE_3: ScaleScreen( 3.0f ); break;
+            case VK_GRAPHICS_SCALE_4: ScaleScreen( 4.0f ); break;
          }
 #endif
       }
@@ -554,7 +554,7 @@ internal void MaxOutStats()
    }
 }
 
-internal void Win_ScaleScreen( r32 scale )
+internal void ScaleScreen( r32 scale )
 {
    g_winGlobals.graphicsScale = scale;
 
