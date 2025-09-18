@@ -14,7 +14,12 @@
 #include "game.h"
 
 #define STRING_SIZE_DEFAULT         1024
+
+#if defined ( _DEBUG )
 #define GRAPHICS_SCALE_DEFAULT      3.0f
+#else
+#define GRAPHICS_SCALE_DEFAULT      2.0f
+#endif 
 
 #define VK_NOCLIP                   49    // 1
 #define VK_FASTWALK                 50    // 2
