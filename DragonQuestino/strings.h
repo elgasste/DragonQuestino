@@ -126,6 +126,7 @@
 #define STRING_OVERWORLD_DEEPSTATS_WEAPON                            "WEAPON:"
 #define STRING_OVERWORLD_DEEPSTATS_ARMOR                             "ARMOR:"
 #define STRING_OVERWORLD_DEEPSTATS_SHIELD                            "SHIELD:"
+#define STRING_OVERWORLD_DEEPSTATS_SPELLS                            "SPELLS"
 
 #define STRING_DIALOG_NOBODY_THERE                                   "Nobody is there."
 #define STRING_DIALOG_SEARCH                                         "You search the ground all about."

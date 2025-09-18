@@ -243,6 +243,7 @@ void Game_DrawQuickStatus( Game_t* game )
 
 void Game_DrawOverworldDeepStatus( Game_t* game )
 {
+   // status window
    Screen_DrawTextWindow( &( game->screen ), 80, 16, 20, 18 );
    char line[18];
 
@@ -272,6 +273,20 @@ void Game_DrawOverworldDeepStatus( Game_t* game )
    Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_SHIELD, 96, 136 );
    Screen_DrawText( &( game->screen ), game->player.shield.name1, 160, 136 );
    Screen_DrawText( &( game->screen ), game->player.shield.name2, 168, 144 );
+
+   // spells window
+   Screen_DrawTextWindowWithTitle( &( game->screen ), 16, 168, 28, 6, STRING_OVERWORLD_DEEPSTATS_SPELLS );
+
+   if ( SPELL_HAS_HEAL( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_HEAL, 28, 180 );
+   if ( SPELL_HAS_SIZZ( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_SIZZ, 28, 190 );
+   if ( SPELL_HAS_SLEEP( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_SLEEP, 28, 200 );
+   if ( SPELL_HAS_GLOW( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_GLOW, 76, 180 );
+   if ( SPELL_HAS_FIZZLE( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_FIZZLE, 76, 190 );
+   if ( SPELL_HAS_EVAC( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_EVAC, 76, 200 );
+   if ( SPELL_HAS_ZOOM( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_ZOOM, 132, 180 );
+   if ( SPELL_HAS_REPEL( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_REPEL, 132, 190 );
+   if ( SPELL_HAS_MIDHEAL( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_MIDHEAL, 132, 200 );
+   if ( SPELL_HAS_SIZZLE( game->player.spells ) ) Screen_DrawText( &( game->screen ), STRING_SPELL_SIZZLE, 180, 180 );
 }
 
 void Game_DrawOverworldItemMenu( Game_t* game )
