@@ -217,6 +217,7 @@ internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
          }
 
          // Windows-specific diagnostic/debug keys
+#if defined( _DEBUG )
          switch ( keyCode )
          {
             case VK_F8:
@@ -250,6 +251,7 @@ internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
                ToggleShowHitBoxes();
                break;
          }
+#endif
       }
       else
       {
