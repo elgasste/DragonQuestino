@@ -17,6 +17,7 @@ internal void ToggleTileDamage();
 internal void ToggleShowHitBoxes();
 internal void GetAllItems();
 internal void MaxOutStats();
+internal void Win_ScaleScreen( r32 scale );
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -25,7 +26,6 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    WNDCLASSA mainWindowClass = { 0 };
    DWORD windowStyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE;
    RECT expectedWindowRect = { 0 };
-   LONG clientPaddingRight, clientPaddingTop;
    MSG msg;
    char windowTitle[128];
 
@@ -64,8 +64,8 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
       FatalError( "failed to adjust window rect." );
    }
 
-   clientPaddingRight = ( expectedWindowRect.right - expectedWindowRect.left ) - SCREEN_WIDTH;
-   clientPaddingTop = ( expectedWindowRect.bottom - expectedWindowRect.top ) - SCREEN_HEIGHT;
+   g_globals.clientPaddingRight = ( expectedWindowRect.right - expectedWindowRect.left ) - SCREEN_WIDTH;
+   g_globals.clientPaddingTop = ( expectedWindowRect.bottom - expectedWindowRect.top ) - SCREEN_HEIGHT;
 
 #if defined( _DEBUG )
    sprintf( windowTitle, "Dragon Questino Windows Development Tool" );
@@ -81,8 +81,8 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
                                          windowStyle,
                                          CW_USEDEFAULT,
                                          CW_USEDEFAULT,
-                                         (int)( SCREEN_WIDTH * g_globals.graphicsScale ) + clientPaddingRight,
-                                         (int)( SCREEN_HEIGHT * g_globals.graphicsScale ) + clientPaddingTop,
+                                         (int)( SCREEN_WIDTH * g_globals.graphicsScale ) + g_globals.clientPaddingRight,
+                                         (int)( SCREEN_HEIGHT * g_globals.graphicsScale ) + g_globals.clientPaddingTop,
                                          0,
                                          0,
                                          hInstance,
@@ -259,6 +259,14 @@ internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
             case VK_TOGGLESHOWHITBOXES:
                ToggleShowHitBoxes();
                break;
+         }
+#else
+         switch ( keyCode )
+         {
+            case VK_GRAPHICS_SCALE_1: Win_ScaleScreen( 1.0f ); break;
+            case VK_GRAPHICS_SCALE_2: Win_ScaleScreen( 2.0f ); break;
+            case VK_GRAPHICS_SCALE_3: Win_ScaleScreen( 3.0f ); break;
+            case VK_GRAPHICS_SCALE_4: Win_ScaleScreen( 4.0f ); break;
          }
 #endif
       }
@@ -544,4 +552,17 @@ internal void MaxOutStats()
    {
       Menu_Reset( &( g_globals.game.menus[i] ) );
    }
+}
+
+// MUFFINS
+internal void Win_ScaleScreen( r32 scale )
+{
+   g_globals.graphicsScale = scale;
+
+   SetWindowPos( g_globals.hWndMain, 
+                 NULL, // No change in Z-order
+                 0, 0, // No change in position
+                 (int)( SCREEN_WIDTH * g_globals.graphicsScale ) + g_globals.clientPaddingRight, 
+                 (int)( SCREEN_HEIGHT * g_globals.graphicsScale ) + g_globals.clientPaddingTop,
+                 SWP_NOMOVE | SWP_NOZORDER | SWP_ASYNCWINDOWPOS); 
 }

@@ -26,9 +26,16 @@
 #define VK_TOGGLETILEDAMAGE         56    // 8
 #define VK_TOGGLESHOWHITBOXES       57    // 9
 
+#define VK_GRAPHICS_SCALE_1         49    // 1
+#define VK_GRAPHICS_SCALE_2         50    // 2
+#define VK_GRAPHICS_SCALE_3         51    // 3
+#define VK_GRAPHICS_SCALE_4         52    // 4
+
 typedef struct GlobalObjects_t
 {
    HWND hWndMain;
+   LONG clientPaddingRight;
+   LONG clientPaddingTop;
    HFONT hFont;
    LARGE_INTEGER performanceFrequency;
    u32 buttonMap[Button_Count];
