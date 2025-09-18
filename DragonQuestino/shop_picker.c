@@ -26,7 +26,7 @@ void ShopPicker_Reset( ShopPicker_t* picker )
 
 void ShopPicker_Draw( ShopPicker_t* picker )
 {
-   u32 i;
+   u32 i, dx;
    u32 x = picker->position.x + ( TEXT_TILE_SIZE * 2 );
    u32 y = picker->position.y + TEXT_TILE_SIZE;
 
@@ -41,7 +41,8 @@ void ShopPicker_Draw( ShopPicker_t* picker )
          Screen_DrawText( picker->screen, picker->items[i].itemText.line2, x + TEXT_TILE_SIZE, y + TEXT_TILE_SIZE );
       }
 
-      Screen_DrawText( picker->screen, picker->items[i].priceText, x + ( TEXT_TILE_SIZE * 9 ), y );
+      dx = ( strlen( picker->items[i].priceText ) < 5 ) ? 9 : 8;
+      Screen_DrawText( picker->screen, picker->items[i].priceText, x + ( TEXT_TILE_SIZE * dx ), y );
       y += ( TEXT_TILE_SIZE * 2 );
    }
 
