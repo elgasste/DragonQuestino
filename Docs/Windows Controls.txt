@@ -1,0 +1,16 @@
+=======================================
+    BASIC WINDOWS KEYBOARD CONTROLS    
+=======================================
+
+- A button	-> X key
+- B button	-> Z key
+- Start button	-> Enter key
+- Select button	-> Shift key
+- D-Pad buttons	-> Arrow keys
+
+=======================================
+         SCREEN SIZE CONTROLS          
+=======================================
+
+Pressing 1-4 number keys will scale the
+screen accordingly.
