@@ -19,9 +19,9 @@ The wiring is quite simple. The display shield is designed to attach directly to
 ![PXL_20250818_235705632](https://github.com/user-attachments/assets/0f7103da-448b-4b8b-8690-0ae9cf102560)
 ![479279655-0413c9b0-52c0-449b-8687-c0f1bf888ba2](https://github.com/user-attachments/assets/7e3ed6b9-12b9-4a63-8227-ea1412f8d02f)
 
-## Development
+## Windows Development
 
-Although this is an Arduino project, it's much easier to do all the development on a PC, so there are three Visual Studio projects available for that:
+Although this is an Arduino project, it's much easier to do all the development on a Windows PC, so there are three Visual Studio solutions available for that:
 
 - `DragonQuestinoWinDev`: the game itself, but on the Windows platform. It builds and runs super fast, and includes diagnostic information and debugging tools. You can also scale the game up or down.
 - `DragonQuestinoEditor`: this started off as a full-blown tile map editor with other capabilities, but at some point it kinda broke, so now I just edit the JSON data by hand and pretty much just use the "Write Game Data" button when I need to.
