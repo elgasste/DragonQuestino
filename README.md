@@ -1,6 +1,6 @@
 # DragonQuestino
 
-This is a remake of the original [Dragon Quest](https://en.wikipedia.org/wiki/Dragon_Quest_(video_game)) for the NES ("Dragon Warrior" in the US), built specifically for the Arduino Giga R1 board. It started as a challenge to build a video game for the Arduino Mega 2560 R3, but I wasn't able to finish it, so here we are.
+This is a remake of the original [Dragon Quest](https://en.wikipedia.org/wiki/Dragon_Quest_(video_game)) for the NES ("Dragon Warrior" in the US), built specifically for the Arduino Giga R1 board. It started as a challenge to build a video game for the Arduino Mega 2560 R3, but I wasn't able to make it work on that board, so I switched to the Giga R1.
 
 ## Hardware
 
