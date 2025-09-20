@@ -1,6 +1,7 @@
 #include "screen.h"
 
 internal i8 Screen_GetCharIndexFromChar( const char c );
+internal uint16_t Screen_BlendColor( u16 foreground, u16 background, u8 alpha );
 
 void Screen_Init( Screen_t* screen, u16* buffer )
 {
@@ -229,6 +230,113 @@ void Screen_DrawCenteredText( Screen_t* screen, const char* text, u32 y )
    Screen_DrawText( screen, text, x, y );
 }
 
+void Screen_DrawMemorySection( Screen_t* screen, u8* memory, u32 stride,
+                               u32 tx, u32 ty, u32 tw, u32 th,
+                               u32 sx, u32 sy, Bool_t transparency )
+{
+   u32 x, y;
+   u8* textureBufferPos = memory + ( ty * stride ) + tx;
+   u16* screenBufferPos = screen->buffer + ( sy * SCREEN_WIDTH ) + sx;
+
+   if ( transparency )
+   {
+      for ( y = 0; y < th; y++ )
+      {
+         for ( x = 0; x < tw; x++ )
+         {
+            if ( *textureBufferPos != TRANSPARENT_COLOR_INDEX )
+            {
+               *screenBufferPos = screen->palette[*textureBufferPos];
+            }
+
+            textureBufferPos++;
+            screenBufferPos++;
+         }
+
+         textureBufferPos += tx + ( stride - ( tx + tw ) );
+         screenBufferPos += ( SCREEN_WIDTH - tw );
+      }
+   }
+   else
+   {
+      for ( y = 0; y < th; y++ )
+      {
+         for ( x = 0; x < tw; x++ )
+         {
+            *screenBufferPos = screen->palette[*textureBufferPos];
+            textureBufferPos++;
+            screenBufferPos++;
+         }
+
+         textureBufferPos += tx + ( stride - ( tx + tw ) );
+         screenBufferPos += ( SCREEN_WIDTH - tw );
+      }
+   }
+}
+
+void Screen_DrawMemorySectionBlended( Screen_t* screen, u8* memory, u32 stride,
+                                      u32 tx, u32 ty,
+                                      u32 tw, u32 th,
+                                      u32 sx, u32 sy,
+                                      u8 alpha )
+{
+   u32 x, y;
+   u8* textureBufferPos = memory + ( ty * stride ) + tx;
+   u16* screenBufferPos = screen->buffer + ( sy * SCREEN_WIDTH ) + sx;
+
+   for ( y = 0; y < th; y++ )
+   {
+      for ( x = 0; x < tw; x++ )
+      {
+         if ( *textureBufferPos != TRANSPARENT_COLOR_INDEX )
+         {
+            *screenBufferPos = Screen_BlendColor( screen->palette[*textureBufferPos], *screenBufferPos, alpha );
+         }
+
+         textureBufferPos++;
+         screenBufferPos++;
+      }
+
+      textureBufferPos += tx + ( stride - ( tx + tw ) );
+      screenBufferPos += ( SCREEN_WIDTH - tw );
+   }
+}
+
+void Screen_DrawTextWindow( Screen_t* screen, u32 x, u32 y, u32 w, u32 h )
+{
+   u16 i;
+   char line[32];
+   memset( line, 0, sizeof( char ) * 32 );
+
+   // top border
+   line[0] = MENU_BORDER_CHAR_TOPLEFT;
+   for ( i = 1; i < w - 1; i++ ) line[i] = MENU_BORDER_CHAR_TOP;
+   line[w - 1] = MENU_BORDER_CHAR_TOPRIGHT;
+   Screen_DrawText( screen, line, x, y );
+
+   // side borders
+   for ( i = 1; i < h - 1; i++ )
+   {
+      Screen_DrawChar( screen, MENU_BORDER_CHAR_LEFT, x, y + ( i * TEXT_TILE_SIZE ) );
+      Screen_DrawChar( screen, MENU_BORDER_CHAR_RIGHT, x + ( ( w - 1 ) * TEXT_TILE_SIZE ), y + ( i * TEXT_TILE_SIZE ) );
+   }
+
+   // bottom border
+   line[0] = MENU_BORDER_CHAR_BOTTOMLEFT;
+   for ( i = 1; i < w - 1; i++ ) line[i] = MENU_BORDER_CHAR_BOTTOM;
+   line[w - 1] = MENU_BORDER_CHAR_BOTTOMRIGHT;
+   Screen_DrawText( screen, line, x, y + ( ( h - 1 ) * TEXT_TILE_SIZE ) );
+
+   // inner section
+   Screen_DrawRectColor( screen, x + TEXT_TILE_SIZE, y + TEXT_TILE_SIZE, ( w - 2 ) * TEXT_TILE_SIZE, ( h - 2 ) * TEXT_TILE_SIZE, COLOR_BLACK );
+}
+
+void Screen_DrawTextWindowWithTitle( Screen_t* screen, u32 x, u32 y, u32 w, u32 h, const char* title )
+{
+   Screen_DrawTextWindow( screen, x, y, w, h );
+   Screen_DrawText( screen, title, x + ( ( ( w - (u32)( strlen( title ) ) ) / 2 ) * TEXT_TILE_SIZE ), y );
+}
+
 internal i8 Screen_GetCharIndexFromChar( const char c )
 {
    if ( c >= 97 && c <= 122 )
@@ -282,81 +390,20 @@ internal i8 Screen_GetCharIndexFromChar( const char c )
    }
 }
 
-void Screen_DrawMemorySection( Screen_t* screen, u8* memory, u32 stride,
-                               u32 tx, u32 ty, u32 tw, u32 th,
-                               u32 sx, u32 sy, Bool_t transparency )
+internal uint16_t Screen_BlendColor( u16 foreground, u16 background, u8 alpha )
 {
-   u32 x, y;
-   u8* textureBufferPos = memory + ( ty * stride ) + tx;
-   u16* screenBufferPos = screen->buffer + ( sy * SCREEN_WIDTH ) + sx;
+   u8 foregroundR = COLOR_GET_R5( foreground );
+   u8 foregroundG = COLOR_GET_G6( foreground );
+   u8 foregroundB = COLOR_GET_B5( foreground );
 
-   if ( transparency )
-   {
-      for ( y = 0; y < th; y++ )
-      {
-         for ( x = 0; x < tw; x++ )
-         {
-            if ( *textureBufferPos != TRANSPARENT_COLOR_INDEX )
-            {
-               *screenBufferPos = screen->palette[*textureBufferPos];
-            }
+   u8 backgroundR = COLOR_GET_R5( background );
+   u8 backgroundG = COLOR_GET_G6( background );
+   u8 backgroundB = COLOR_GET_B5( background );
 
-            textureBufferPos++;
-            screenBufferPos++;
-         }
+   // Perform blending for each component
+   u8 blendedR = ( ( foregroundR * alpha ) + ( backgroundR * ( 255 - alpha ) ) ) / 255;
+   u8 blendedG = ( ( foregroundG * alpha ) + ( backgroundG * ( 255 - alpha ) ) ) / 255;
+   u8 blendedB = ( ( foregroundB * alpha ) + ( backgroundB * ( 255 - alpha ) ) ) / 255;
 
-         textureBufferPos += tx + ( stride - ( tx + tw ) );
-         screenBufferPos += ( SCREEN_WIDTH - tw );
-      }
-   }
-   else
-   {
-      for ( y = 0; y < th; y++ )
-      {
-         for ( x = 0; x < tw; x++ )
-         {
-            *screenBufferPos = screen->palette[*textureBufferPos];
-            textureBufferPos++;
-            screenBufferPos++;
-         }
-
-         textureBufferPos += tx + ( stride - ( tx + tw ) );
-         screenBufferPos += ( SCREEN_WIDTH - tw );
-      }
-   }
-}
-
-void Screen_DrawTextWindow( Screen_t* screen, u32 x, u32 y, u32 w, u32 h )
-{
-   u16 i;
-   char line[32];
-   memset( line, 0, sizeof( char ) * 32 );
-
-   // top border
-   line[0] = MENU_BORDER_CHAR_TOPLEFT;
-   for ( i = 1; i < w - 1; i++ ) line[i] = MENU_BORDER_CHAR_TOP;
-   line[w - 1] = MENU_BORDER_CHAR_TOPRIGHT;
-   Screen_DrawText( screen, line, x, y );
-
-   // side borders
-   for ( i = 1; i < h - 1; i++ )
-   {
-      Screen_DrawChar( screen, MENU_BORDER_CHAR_LEFT, x, y + ( i * TEXT_TILE_SIZE ) );
-      Screen_DrawChar( screen, MENU_BORDER_CHAR_RIGHT, x + ( ( w - 1 ) * TEXT_TILE_SIZE ), y + ( i * TEXT_TILE_SIZE ) );
-   }
-
-   // bottom border
-   line[0] = MENU_BORDER_CHAR_BOTTOMLEFT;
-   for ( i = 1; i < w - 1; i++ ) line[i] = MENU_BORDER_CHAR_BOTTOM;
-   line[w - 1] = MENU_BORDER_CHAR_BOTTOMRIGHT;
-   Screen_DrawText( screen, line, x, y + ( ( h - 1 ) * TEXT_TILE_SIZE ) );
-
-   // inner section
-   Screen_DrawRectColor( screen, x + TEXT_TILE_SIZE, y + TEXT_TILE_SIZE, ( w - 2 ) * TEXT_TILE_SIZE, ( h - 2 ) * TEXT_TILE_SIZE, COLOR_BLACK );
-}
-
-void Screen_DrawTextWindowWithTitle( Screen_t* screen, u32 x, u32 y, u32 w, u32 h, const char* title )
-{
-   Screen_DrawTextWindow( screen, x, y, w, h );
-   Screen_DrawText( screen, title, x + ( ( ( w - (u32)( strlen( title ) ) ) / 2 ) * TEXT_TILE_SIZE ), y );
+   return COLOR_MAKE_RGB565( blendedR, blendedG, blendedB );
 }
