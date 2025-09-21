@@ -53,7 +53,7 @@ void Game_Init( Game_t* game, u16* screenBuffer )
    AlphaPicker_Init( &( game->alphaPicker ), &( game->screen ) );
    BinaryPicker_Init( &( game->binaryPicker ), &( game->screen ) );
    ShopPicker_Init( &( game->shopPicker ), &( game->screen ), &( game->tileMap ) );
-   Dialog_Init( &( game->dialog ), &( game->screen ), &( game->mainState ) );
+   Dialog_Init( &( game->dialog ), game );
 
    for ( i = 0; i < TILEMAP_TOWN_COUNT; i++ )
    {
@@ -82,6 +82,8 @@ void Game_Reset( Game_t* game )
    game->doAnimation = False;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
+   game->rumbleOffset.x = 0;
+   game->rumbleOffset.y = 0;
 
    Player_SetName( player, "" );
    player->sprite.position.x = (r32)( TILE_SIZE * 8 ) + 2.0f;
@@ -672,7 +674,7 @@ internal void Game_TicTitleScreenFlash( Game_t* game )
          {
             flash->isFlashing = False;
             flash->elapsedSeconds = 0.0f;
-            flash->pauseSeconds = (r32)( Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE ) ));
+            flash->pauseSeconds = (r32)( Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE ) );
             break;
          }
       }
@@ -940,9 +942,9 @@ internal void Game_EnterPasswordFadeOutCallback( Game_t* game )
 
    // MUFFINS: this gives us some goodies for testing (level 30 with everything except a few treasures).
    // to use it, uncomment this line and comment out all the lines below it.
-   //Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" );
+   Game_Load( game, "UCz..xAgIwBJ........HxHdtPf..4" );
 
-   game->alphaPicker.position.x = 28;
+   /*game->alphaPicker.position.x = 28;
    game->alphaPicker.position.y = 28;
-   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );
+   AlphaPicker_Reset( &( game->alphaPicker ), STRING_ALPHAPICKER_PASSWORD_TITLE, True );*/
 }

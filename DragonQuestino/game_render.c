@@ -39,7 +39,7 @@ void Game_Draw( Game_t* game )
             Game_DrawQuickStatus( game );
             Dialog_Draw( &( game->dialog ) );
          }
-         else if ( activeAnimationId != AnimationId_Pause )
+         else if ( ( activeAnimationId != AnimationId_Pause ) && ( activeAnimationId != AnimationId_TileDeath ) )
          {
             Game_DrawOverworld( game );
 
@@ -210,7 +210,7 @@ void Game_DrawOverworld( Game_t* game )
 void Game_DrawQuickStatus( Game_t* game )
 {
    u32 memSize;
-   i32 xOffset = ( game->mainState == MainState_Battle ) ? -8 : 0;
+   i32 xOffset = ( ( game->mainState == MainState_Battle ) ? -8 : 0 ) + game->rumbleOffset.x;
    u8 level = game->player.level + 1;
    char line[9];
 
@@ -224,22 +224,22 @@ void Game_DrawQuickStatus( Game_t* game )
    memSize = Math_Min32u( (u32)( strlen( game->player.name ) ), 4 );
    memcpy( line, game->player.name, sizeof( char ) * memSize );
    line[memSize] = '\0';
-   Screen_DrawTextWindowWithTitle( &( game->screen ), 16 + xOffset, 16, 8, 12, line );
+   Screen_DrawTextWindowWithTitle( &( game->screen ), (u32)( 16 + xOffset ), (u32)( 16 + game->rumbleOffset.y ), 8, 12, line );
 
    sprintf( line, level < 10 ? "%s   %u" : "%s  %u", STRING_QUICKSTATS_LEVEL, level );
-   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 32 );
+   Screen_DrawText( &( game->screen ), line, (u32)( 24 + xOffset ), (u32)( 32 + game->rumbleOffset.y ) );
 
    sprintf( line, game->player.stats.hitPoints < 10 ? "%s   %u" : game->player.stats.hitPoints < 100 ? "%s  %u" : "%s %u", STRING_QUICKSTATS_HP, game->player.stats.hitPoints );
-   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 48 );
+   Screen_DrawText( &( game->screen ), line, (u32)( 24 + xOffset ), (u32)( 48 + game->rumbleOffset.y ) );
 
    sprintf( line, game->player.stats.magicPoints < 10 ? "%s   %u" : game->player.stats.magicPoints < 100 ? "%s  %u" : "%s %u", STRING_QUICKSTATS_MP, game->player.stats.magicPoints );
-   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 64 );
+   Screen_DrawText( &( game->screen ), line, (u32)( 24 + xOffset ), (u32)( 64 + game->rumbleOffset.y ) );
 
    sprintf( line, game->player.gold < 10 ? "%s    %u" : game->player.gold < 100 ? "%s   %u" : game->player.gold < 1000 ? "%s  %u" : game->player.gold < 10000 ? "%s %u" : "%s%u", STRING_QUICKSTATS_GOLD, game->player.gold );
-   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 80 );
+   Screen_DrawText( &( game->screen ), line, (u32)( 24 + xOffset ), (u32)( 80 + game->rumbleOffset.y ) );
 
    sprintf( line, game->player.experience < 10 ? "%s    %u" : game->player.experience < 100 ? "%s   %u" : game->player.experience < 1000 ? "%s  %u" : game->player.experience < 10000 ? "%s %u" : "%s%u", STRING_QUICKSTATS_EXP, game->player.experience );
-   Screen_DrawText( &( game->screen ), line, 24 + xOffset, 96 );
+   Screen_DrawText( &( game->screen ), line, (u32)( 24 + xOffset ), (u32)( 96 + game->rumbleOffset.y ) );
 }
 
 void Game_DrawOverworldDeepStatus( Game_t* game )
@@ -348,7 +348,8 @@ void Game_DrawEnemy( Game_t* game )
 void Game_DrawBattleBackground( Game_t* game )
 {
    u32 row, col;
-   u32 x = 96, y = 52;
+   u32 x = (u32)( 96 + game->rumbleOffset.x );
+   u32 y = (u32)( 52 + game->rumbleOffset.y );
 
    if ( game->tileMap.isDark )
    {

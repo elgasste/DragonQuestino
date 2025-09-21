@@ -5,10 +5,9 @@ internal void Dialog_LoadActiveSectionLines( Dialog_t* dialog );
 internal void Dialog_ResetScroll( Dialog_t* dialog );
 internal void Dialog_FinishSection( Dialog_t* dialog );
 
-void Dialog_Init( Dialog_t* dialog, Screen_t* screen, MainState_t* mainState )
+void Dialog_Init( Dialog_t* dialog, Game_t* game )
 {
-   dialog->screen = screen;
-   dialog->mainState = mainState;
+   dialog->game = game;
 }
 
 void Dialog_Reset( Dialog_t* dialog )
@@ -17,7 +16,7 @@ void Dialog_Reset( Dialog_t* dialog )
    dialog->activeSection = 0;
    dialog->pendingCallback = 0;
 
-   switch ( *( dialog->mainState ) )
+   switch ( dialog->game->mainState )
    {
       case MainState_Overworld:
          dialog->position.x = 32;
@@ -106,12 +105,15 @@ void Dialog_Draw( Dialog_t* dialog )
 {
    u32 i, x, y, stopCharIndex, len;
    char substr[DIALOG_LINE_TEXT_SIZE];
-   Screen_t* screen = dialog->screen;
+   Screen_t* screen = &( dialog->game->screen );
 
-   Screen_DrawTextWindow( screen, dialog->position.x, dialog->position.y, dialog->size.x, dialog->size.y );
+   Screen_DrawTextWindow( screen,
+                          (u32)( (i32)( dialog->position.x + dialog->game->rumbleOffset.x ) ),
+                          (u32)( (i32)( dialog->position.y + dialog->game->rumbleOffset.y ) ),
+                          dialog->size.x, dialog->size.y );
 
-   x = dialog->position.x + TEXT_TILE_SIZE;
-   y = dialog->position.y + TEXT_TILE_SIZE;
+   x = (u32)( (i32)( dialog->position.x + dialog->game->rumbleOffset.x ) ) + TEXT_TILE_SIZE;
+   y = (u32)( (i32)( dialog->position.y + dialog->game->rumbleOffset.y ) ) + TEXT_TILE_SIZE;
 
    if ( dialog->isScrolling )
    {

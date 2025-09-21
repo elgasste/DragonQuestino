@@ -10,12 +10,11 @@
 #define DIALOG_MAX_LINES              7
 #define DIALOG_SCROLL_CHAR_SECONDS    0.015f
 
-typedef struct Screen_t Screen_t;
+typedef struct Game_t Game_t;
 
 typedef struct Dialog_t
 {
-   Screen_t* screen;
-   MainState_t* mainState;
+   Game_t* game;
 
    char sectionTexts[DIALOG_MAX_SECTIONS][DIALOG_SECTION_TEXT_SIZE];
    void ( *sectionCallbacks[DIALOG_MAX_SECTIONS] )( void* );
@@ -46,7 +45,7 @@ Dialog_t;
 extern "C" {
 #endif
 
-void Dialog_Init( Dialog_t* dialog, Screen_t* screen, MainState_t* mainState );
+void Dialog_Init( Dialog_t* dialog, Game_t* game );
 void Dialog_Reset( Dialog_t* dialog );
 void Dialog_Start( Dialog_t* dialog );
 void Dialog_PushSection( Dialog_t* dialog, const char* text );

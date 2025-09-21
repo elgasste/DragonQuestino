@@ -76,6 +76,8 @@ typedef struct Game_t
    u8 pendingPayload8u;
    Spell_t pendingSpell;
 
+   Vector2i32_t rumbleOffset;
+
    char password[PASSWORD_LENGTH + 1];
 }
 Game_t;
