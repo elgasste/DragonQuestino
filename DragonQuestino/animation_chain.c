@@ -230,15 +230,11 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
       case AnimationId_ActiveMidFadeIn:
       case AnimationId_WhiteIn:
       case AnimationId_RainbowBridge_FadeIn:
-      case AnimationId_Battle_EnemyFadeIn:
-      case AnimationId_Battle_EnemySlowFadeIn:
-      case AnimationId_Battle_EnemyFadeOut:
-      case AnimationId_Battle_EnemySlowFadeOut:
          Screen_RestorePalette( chain->screen );
          break;
       case AnimationId_Battle_Checkerboard:
          Screen_BackupPalette( chain->screen );
-         Screen_ClearPalette( chain->screen, COLOR_BLACK );
+         Screen_RestorePalette( chain->screen );
          break;
       case AnimationId_Battle_EnemyDamage:
          Game_DrawEnemy( chain->game );
@@ -480,39 +476,16 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
 
 internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain )
 {
-   u32 i;
-   u16 rangeR, rangeB, rangeG;
-   r32 p;
-   Screen_t* screen = chain->screen;
-
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
 
-   for ( i = 0; i < PALETTE_COLORS; i++ )
-   {
-      rangeR = screen->backupPalette[i] >> 11;
-      rangeG = ( screen->backupPalette[i] & 0x7E0 ) >> 5;
-      rangeB = screen->backupPalette[i] & 0x1F;
-      p = chain->totalElapsedSeconds / chain->totalDuration;
-      screen->palette[i] = ( (u16)( rangeR * p ) << 11 ) | ( (u16)( rangeG * p ) << 5 ) | (u16)( rangeB * p );
-   }
+   chain->game->battle.enemyAlpha = (u8)( 256 * ( chain->totalElapsedSeconds / chain->totalDuration ) );
 }
 
 internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain )
 {
-   u32 i;
-   u16 rangeR, rangeB, rangeG;
-   r32 p;
-
    ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
 
-   for ( i = 0; i < PALETTE_COLORS; i++ )
-   {
-      rangeR = chain->screen->backupPalette[i] >> 11;
-      rangeG = ( chain->screen->backupPalette[i] & 0x7E0 ) >> 5;
-      rangeB = chain->screen->backupPalette[i] & 0x1F;
-      p = 1.0f - chain->totalElapsedSeconds / chain->totalDuration;
-      chain->screen->palette[i] = ( (u16)( rangeR * p ) << 11 ) | ( (u16)( rangeG * p ) << 5 ) | (u16)( rangeB * p );
-   }
+   chain->game->battle.enemyAlpha = (u8)( 255 * ( 1.0f - ( chain->totalElapsedSeconds / chain->totalDuration ) ) );
 }
 
 internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain )
