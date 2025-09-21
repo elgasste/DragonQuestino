@@ -524,36 +524,36 @@ internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain )
       switch ( chain->flag )
       {
          case 0:
-            chain->game->rumbleOffset.x = -1;
+            chain->game->rumbleOffset.x = 0;
             chain->game->rumbleOffset.y = -1;
             break;
          case 1:
-            chain->game->rumbleOffset.x = 0;
-            chain->game->rumbleOffset.y = -1;
-            break;
-         case 2:
-            chain->game->rumbleOffset.x = 1;
-            chain->game->rumbleOffset.y = -1;
-            break;
-         case 3:
             chain->game->rumbleOffset.x = 1;
             chain->game->rumbleOffset.y = 0;
             break;
-         case 4:
-            chain->game->rumbleOffset.x = 1;
-            chain->game->rumbleOffset.y = 1;
-            break;
-         case 5:
+         case 2:
             chain->game->rumbleOffset.x = 0;
             chain->game->rumbleOffset.y = 1;
+            break;
+         case 3:
+            chain->game->rumbleOffset.x = -1;
+            chain->game->rumbleOffset.y = 0;
+            break;
+         case 4:
+            chain->game->rumbleOffset.x = -1;
+            chain->game->rumbleOffset.y = -1;
+            break;
+         case 5:
+            chain->game->rumbleOffset.x = 1;
+            chain->game->rumbleOffset.y = -1;
             break;
          case 6:
             chain->game->rumbleOffset.x = -1;
             chain->game->rumbleOffset.y = 1;
             break;
          case 7:
-            chain->game->rumbleOffset.x = -1;
-            chain->game->rumbleOffset.y = 0;
+            chain->game->rumbleOffset.x = 1;
+            chain->game->rumbleOffset.y = 1;
             break;
       }
 
