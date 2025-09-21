@@ -39,7 +39,7 @@ void Game_Draw( Game_t* game )
             Game_DrawQuickStatus( game );
             Dialog_Draw( &( game->dialog ) );
          }
-         else if ( activeAnimationId != AnimationId_Pause )
+         else if ( ( activeAnimationId != AnimationId_Pause ) && ( activeAnimationId != AnimationId_TileDeath ) )
          {
             Game_DrawOverworld( game );
 

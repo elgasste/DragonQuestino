@@ -28,6 +28,7 @@ internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_PlayerDeath( AnimationChain_t* chain );
+internal void AnimationChain_Tic_TileDeath( AnimationChain_t* chain );
 internal void AnimationChain_Tic_EndingWalk( AnimationChain_t* chain );
 internal void AnimationChain_RedrawBattle( AnimationChain_t* chain );
 internal void AnimationChain_IncrementPlayerDamageFlag( AnimationChain_t* chain );
@@ -124,7 +125,6 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
          case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
          case AnimationId_CastSpell:
-         case AnimationId_TileDeath:
          case AnimationId_Battle_Checkerboard: AnimationChain_Tic_Battle_Checkerboard( chain ); break;
          case AnimationId_Battle_EnemyFadeIn:
          case AnimationId_Battle_EnemySlowFadeIn:
@@ -137,6 +137,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_Battle_EnemyDamage: AnimationChain_Tic_Battle_EnemyDamage( chain ); break;
          case AnimationId_Battle_PlayerDamage: AnimationChain_Tic_Battle_PlayerDamage( chain ); break;
          case AnimationId_Battle_PlayerDeath: AnimationChain_Tic_Battle_PlayerDeath( chain ); break;
+         case AnimationId_TileDeath: AnimationChain_Tic_TileDeath( chain ); break;
       }
    }
 }
@@ -212,13 +213,10 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          chain->flag = 0;
          break;
       case AnimationId_Battle_PlayerDeath:
-         chain->totalDuration = ANIMATION_BATTLE_PLAYERDEATH_DURATION;
-         chain->frameDuration = ANIMATION_BATTLE_PLAYERDEATH_FRAMEDURATION;
-         chain->flag = 0;
-         break;
       case AnimationId_TileDeath:
          chain->totalDuration = ANIMATION_BATTLE_PLAYERDEATH_DURATION;
          chain->frameDuration = ANIMATION_BATTLE_PLAYERDEATH_FRAMEDURATION;
+         chain->flag = 0;
          break;
    }
 
@@ -249,6 +247,9 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
          chain->game->rumbleOffset.x = 0;
          chain->game->rumbleOffset.y = 0;
          AnimationChain_RedrawBattle( chain );
+         break;
+      case AnimationId_TileDeath:
+         Game_DrawOverworld( chain->game );
          break;
    }
 
@@ -560,6 +561,37 @@ internal void AnimationChain_Tic_Battle_PlayerDeath( AnimationChain_t* chain )
       else
       {
          AnimationChain_RedrawBattle( chain );
+      }
+   }
+}
+
+internal void AnimationChain_Tic_TileDeath( AnimationChain_t* chain )
+{
+   local_persist Bool_t fillRed = False;
+   local_persist u32 frameCount = 0;
+
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION )
+   {
+      chain->frameElapsedSeconds -= ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION;
+      frameCount++;
+
+      if ( frameCount > ANIMATION_BATTLE_PLAYERDEATH_FLASHFRAMES )
+      {
+         frameCount = 0;
+         TOGGLE_BOOL( fillRed );
+      }
+
+      if ( fillRed )
+      {
+         Screen_WipeColor( &( chain->game->screen ), COLOR_DEEPRED );
+      }
+      else
+      {
+         Game_DrawOverworld( chain->game );
       }
    }
 }
