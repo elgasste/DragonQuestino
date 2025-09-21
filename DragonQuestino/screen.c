@@ -400,7 +400,6 @@ internal uint16_t Screen_BlendColor( u16 foreground, u16 background, u8 alpha )
    u8 backgroundG = COLOR_GET_G6( background );
    u8 backgroundB = COLOR_GET_B5( background );
 
-   // Perform blending for each component
    u8 blendedR = ( ( foregroundR * alpha ) + ( backgroundR * ( 255 - alpha ) ) ) / 255;
    u8 blendedG = ( ( foregroundG * alpha ) + ( backgroundG * ( 255 - alpha ) ) ) / 255;
    u8 blendedB = ( ( foregroundB * alpha ) + ( backgroundB * ( 255 - alpha ) ) ) / 255;
