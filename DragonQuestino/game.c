@@ -672,7 +672,7 @@ internal void Game_TicTitleScreenFlash( Game_t* game )
          {
             flash->isFlashing = False;
             flash->elapsedSeconds = 0.0f;
-            flash->pauseSeconds = (r32)Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE );
+            flash->pauseSeconds = (r32)( Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE ) ));
             break;
          }
       }
