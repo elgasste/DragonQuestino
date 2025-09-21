@@ -27,8 +27,10 @@ internal void AnimationChain_Tic_Battle_EnemyFadeIn( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain );
+internal void AnimationChain_Tic_Battle_PlayerDeath( AnimationChain_t* chain );
 internal void AnimationChain_Tic_EndingWalk( AnimationChain_t* chain );
 internal void AnimationChain_RedrawBattle( AnimationChain_t* chain );
+internal void AnimationChain_IncrementPlayerDamageFlag( AnimationChain_t* chain );
 
 global Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -123,9 +125,6 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
          case AnimationId_CastSpell:
          case AnimationId_TileDeath:
-         case AnimationId_Battle_PlayerDeath:
-            AnimationChain_Tic_Flash( chain );
-            break;
          case AnimationId_Battle_Checkerboard: AnimationChain_Tic_Battle_Checkerboard( chain ); break;
          case AnimationId_Battle_EnemyFadeIn:
          case AnimationId_Battle_EnemySlowFadeIn:
@@ -137,6 +136,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
             break;
          case AnimationId_Battle_EnemyDamage: AnimationChain_Tic_Battle_EnemyDamage( chain ); break;
          case AnimationId_Battle_PlayerDamage: AnimationChain_Tic_Battle_PlayerDamage( chain ); break;
+         case AnimationId_Battle_PlayerDeath: AnimationChain_Tic_Battle_PlayerDeath( chain ); break;
       }
    }
 }
@@ -208,12 +208,16 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          break;
       case AnimationId_Battle_PlayerDamage:
          chain->totalDuration = ANIMATION_BATTLE_PLAYERDAMAGE_DURATION;
+         chain->frameDuration = ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION;
+         chain->flag = 0;
+         break;
+      case AnimationId_Battle_PlayerDeath:
+         chain->totalDuration = ANIMATION_BATTLE_PLAYERDEATH_DURATION;
+         chain->frameDuration = ANIMATION_BATTLE_PLAYERDEATH_FRAMEDURATION;
          chain->flag = 0;
          break;
       case AnimationId_TileDeath:
-      case AnimationId_Battle_PlayerDeath:
-         chain->screen->wipeColor = COLOR_DEEPRED;
-         chain->totalDuration = ANIMATION_BATTLE_PLAYERDEATH_TOTALDURATION;
+         chain->totalDuration = ANIMATION_BATTLE_PLAYERDEATH_DURATION;
          chain->frameDuration = ANIMATION_BATTLE_PLAYERDEATH_FRAMEDURATION;
          break;
    }
@@ -241,6 +245,7 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
          Game_DrawEnemy( chain->game );
          break;
       case AnimationId_Battle_PlayerDamage:
+      case AnimationId_Battle_PlayerDeath:
          chain->game->rumbleOffset.x = 0;
          chain->game->rumbleOffset.y = 0;
          AnimationChain_RedrawBattle( chain );
@@ -521,45 +526,41 @@ internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain )
    {
       chain->frameElapsedSeconds -= ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION;
 
-      switch ( chain->flag )
+      AnimationChain_IncrementPlayerDamageFlag( chain );
+      AnimationChain_RedrawBattle( chain );
+   }
+}
+
+internal void AnimationChain_Tic_Battle_PlayerDeath( AnimationChain_t* chain )
+{
+   local_persist Bool_t fillRed = False;
+   local_persist u32 frameCount = 0;
+
+   ANIMATIONCHAIN_CHECK_ANIMATIONFINISHED( chain )
+
+   chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
+
+   while ( chain->frameElapsedSeconds > ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION )
+   {
+      chain->frameElapsedSeconds -= ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION;
+      frameCount++;
+
+      if ( frameCount > ANIMATION_BATTLE_PLAYERDEATH_FLASHFRAMES )
       {
-         case 0:
-            chain->game->rumbleOffset.x = 0;
-            chain->game->rumbleOffset.y = -1;
-            break;
-         case 1:
-            chain->game->rumbleOffset.x = 1;
-            chain->game->rumbleOffset.y = 0;
-            break;
-         case 2:
-            chain->game->rumbleOffset.x = 0;
-            chain->game->rumbleOffset.y = 1;
-            break;
-         case 3:
-            chain->game->rumbleOffset.x = -1;
-            chain->game->rumbleOffset.y = 0;
-            break;
-         case 4:
-            chain->game->rumbleOffset.x = -1;
-            chain->game->rumbleOffset.y = -1;
-            break;
-         case 5:
-            chain->game->rumbleOffset.x = 1;
-            chain->game->rumbleOffset.y = -1;
-            break;
-         case 6:
-            chain->game->rumbleOffset.x = -1;
-            chain->game->rumbleOffset.y = 1;
-            break;
-         case 7:
-            chain->game->rumbleOffset.x = 1;
-            chain->game->rumbleOffset.y = 1;
-            break;
+         frameCount = 0;
+         TOGGLE_BOOL( fillRed );
       }
 
-      chain->flag = ( chain->flag >= 7 ) ? 0 : ( chain->flag + 1 );
+      AnimationChain_IncrementPlayerDamageFlag( chain );
 
-      AnimationChain_RedrawBattle( chain );
+      if ( fillRed )
+      {
+         Screen_WipeColor( &( chain->game->screen ), COLOR_DEEPRED );
+      }
+      else
+      {
+         AnimationChain_RedrawBattle( chain );
+      }
    }
 }
 
@@ -586,4 +587,45 @@ internal void AnimationChain_RedrawBattle( AnimationChain_t* chain )
    Game_DrawQuickStatus( chain->game );
    Dialog_Draw( &( chain->game->dialog ) );
    Game_DrawEnemy( chain->game );
+}
+
+internal void AnimationChain_IncrementPlayerDamageFlag( AnimationChain_t* chain )
+{
+   switch ( chain->flag )
+   {
+      case 0:
+         chain->game->rumbleOffset.x = 0;
+         chain->game->rumbleOffset.y = -1;
+         break;
+      case 1:
+         chain->game->rumbleOffset.x = 1;
+         chain->game->rumbleOffset.y = 0;
+         break;
+      case 2:
+         chain->game->rumbleOffset.x = 0;
+         chain->game->rumbleOffset.y = 1;
+         break;
+      case 3:
+         chain->game->rumbleOffset.x = -1;
+         chain->game->rumbleOffset.y = 0;
+         break;
+      case 4:
+         chain->game->rumbleOffset.x = -1;
+         chain->game->rumbleOffset.y = -1;
+         break;
+      case 5:
+         chain->game->rumbleOffset.x = 1;
+         chain->game->rumbleOffset.y = -1;
+         break;
+      case 6:
+         chain->game->rumbleOffset.x = -1;
+         chain->game->rumbleOffset.y = 1;
+         break;
+      case 7:
+         chain->game->rumbleOffset.x = 1;
+         chain->game->rumbleOffset.y = 1;
+         break;
+   }
+
+   chain->flag = ( chain->flag >= 7 ) ? 0 : ( chain->flag + 1 );
 }
