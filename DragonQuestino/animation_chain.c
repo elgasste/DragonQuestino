@@ -124,7 +124,7 @@ void AnimationChain_Tic( AnimationChain_t* chain )
          case AnimationId_RainbowBridge_Trippy: AnimationChain_Tic_RainbowBridge_Trippy( chain ); break;
          case AnimationId_RainbowBridge_WhiteOut: AnimationChain_Tic_RainbowBridge_WhiteOut( chain ); break;
          case AnimationId_RainbowBridge_FadeIn: AnimationChain_Tic_RainbowBridge_FadeIn( chain ); break;
-         case AnimationId_CastSpell:
+         case AnimationId_CastSpell: AnimationChain_Tic_Flash( chain ); break;
          case AnimationId_Battle_Checkerboard: AnimationChain_Tic_Battle_Checkerboard( chain ); break;
          case AnimationId_Battle_EnemyFadeIn:
          case AnimationId_Battle_EnemySlowFadeIn:
