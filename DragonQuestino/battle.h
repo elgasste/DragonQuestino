@@ -35,7 +35,6 @@ typedef struct Battle_t
    Bool_t isOver;
 
    u8 pendingPayload8u;
-
    u16 experienceGained;
    u16 goldGained;
    u8 strengthGained;
@@ -44,6 +43,7 @@ typedef struct Battle_t
    u8 magicPointsGained;
    u16 previousSpells;
    u8 newLevel;
+   u8 enemyAlpha;
 }
 Battle_t;
 

@@ -40,6 +40,11 @@
 
 #define BATTLE_BACKGROUND_TILE_COUNT   36
 
+#define COLOR_GET_R5( c16 ) ( ( ( c16 ) >> 11 ) & 0x1F )
+#define COLOR_GET_G6( c16 ) ( ( ( c16 ) >> 5 ) & 0x3F )
+#define COLOR_GET_B5( c16 ) ( ( c16 ) & 0x1F )
+#define COLOR_MAKE_RGB565( r, g, b ) ( ( ( r ) & 0x1F ) << 11 ) | ( ( ( g ) & 0x3F ) << 5 ) | ( ( b ) & 0x1F )
+
 typedef struct TileTexture_t
 {
    u8 memory[TILE_TEXTURE_BYTES];
@@ -78,8 +83,15 @@ void Screen_DrawChar( Screen_t* screen, char c, u32 x, u32 y );
 void Screen_DrawText( Screen_t* screen, const char* text, u32 x, u32 y );
 void Screen_DrawCenteredText( Screen_t* screen, const char* text, u32 y );
 void Screen_DrawMemorySection( Screen_t* screen, u8* memory, u32 stride,
-                               u32 tx, u32 ty, u32 tw, u32 th,
-                               u32 sx, u32 sy, Bool_t transparency );
+                               u32 tx, u32 ty,
+                               u32 tw, u32 th,
+                               u32 sx, u32 sy,
+                               Bool_t transparency );
+void Screen_DrawMemorySectionBlended( Screen_t* screen, u8* memory, u32 stride,
+                                      u32 tx, u32 ty,
+                                      u32 tw, u32 th,
+                                      u32 sx, u32 sy,
+                                      u8 alpha );
 void Screen_DrawTextWindow( Screen_t* screen, u32 x, u32 y, u32 w, u32 h );
 void Screen_DrawTextWindowWithTitle( Screen_t* screen, u32 x, u32 y, u32 w, u32 h, const char* title );
 

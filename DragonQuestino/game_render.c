@@ -59,6 +59,7 @@ void Game_Draw( Game_t* game )
               activeAnimationId == AnimationId_Battle_EnemyFadeOut ||
               activeAnimationId == AnimationId_Battle_EnemySlowFadeOut )
          {
+            Game_DrawBattleBackground( game );
             Game_DrawEnemy( game );
          }
       }
@@ -310,28 +311,35 @@ void Game_DrawOverworldItemMenu( Game_t* game )
 
 void Game_DrawEnemy( Game_t* game )
 {
-   u8 x, y, i;
+   u8 i;
    u16 screenOffsetX, screenOffsetY;
    Enemy_t* enemy = &( game->battle.enemy );
+   u8 x = 112;
+   u8 y = 68;
 
-   if ( !game->battle.isOver )
+   for ( i = 0; i < ENEMY_TILE_COUNT; i++ )
    {
-      x = 112;
-      y = 68;
-
-      for ( i = 0; i < ENEMY_TILE_COUNT; i++ )
+      if ( enemy->tileTextureIndexes[i] >= 0 )
       {
-         if ( enemy->tileTextureIndexes[i] >= 0 )
+         u8* texture = enemy->tileTextures[enemy->tileTextureIndexes[i]];
+
+         screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
+         screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
+
+         if ( game->battle.enemyAlpha < 255 )
          {
-            u8* texture = enemy->tileTextures[enemy->tileTextureIndexes[i]];
-
-            screenOffsetX = ( i % ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
-            screenOffsetY = ( i / ENEMY_TILES_X ) * ENEMY_TILE_SIZE;
-
+            Screen_DrawMemorySectionBlended( &( game->screen ), texture, ENEMY_TILE_SIZE,
+                                             0, 0,
+                                             ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,
+                                             x + screenOffsetX, y + screenOffsetY,
+                                             game->battle.enemyAlpha );
+         }
+         else
+         {
             Screen_DrawMemorySection( &( game->screen ), texture, ENEMY_TILE_SIZE,
-                                      0, 0,
-                                      ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,
-                                      x + screenOffsetX, y + screenOffsetY, True );
+                                       0, 0,
+                                       ENEMY_TILE_SIZE, ENEMY_TILE_SIZE,
+                                       x + screenOffsetX, y + screenOffsetY, True );
          }
       }
    }
