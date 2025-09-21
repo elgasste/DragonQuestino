@@ -82,6 +82,8 @@ void Game_Reset( Game_t* game )
    game->doAnimation = False;
    game->targetPortal = 0;
    game->overworldInactivitySeconds = 0.0f;
+   game->rumbleOffset.x = 0;
+   game->rumbleOffset.y = 0;
 
    Player_SetName( player, "" );
    player->sprite.position.x = (r32)( TILE_SIZE * 8 ) + 2.0f;
@@ -672,7 +674,7 @@ internal void Game_TicTitleScreenFlash( Game_t* game )
          {
             flash->isFlashing = False;
             flash->elapsedSeconds = 0.0f;
-            flash->pauseSeconds = (r32)( Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE ) ));
+            flash->pauseSeconds = (r32)( Random_u32( TITLESCREEN_FLASH_MINPAUSE, TITLESCREEN_FLASH_MAXPAUSE ) );
             break;
          }
       }

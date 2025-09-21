@@ -28,6 +28,7 @@ internal void AnimationChain_Tic_Battle_EnemyFadeOut( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_EnemyDamage( AnimationChain_t* chain );
 internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain );
 internal void AnimationChain_Tic_EndingWalk( AnimationChain_t* chain );
+internal void AnimationChain_RedrawBattle( AnimationChain_t* chain );
 
 global Vector2u16_t g_battleCheckerboardPos[49] =
 {
@@ -207,7 +208,7 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
          break;
       case AnimationId_Battle_PlayerDamage:
          chain->totalDuration = ANIMATION_BATTLE_PLAYERDAMAGE_DURATION;
-         chain->flag = True;
+         chain->flag = 0;
          break;
       case AnimationId_TileDeath:
       case AnimationId_Battle_PlayerDeath:
@@ -240,10 +241,9 @@ internal void AnimationChain_AnimationFinished( AnimationChain_t* chain )
          Game_DrawEnemy( chain->game );
          break;
       case AnimationId_Battle_PlayerDamage:
-         Game_DrawQuickStatus( chain->game );
-         Dialog_Draw( &( chain->game->dialog ) );
-         Game_DrawBattleBackground( chain->game );
-         Game_DrawEnemy( chain->game );
+         chain->game->rumbleOffset.x = 0;
+         chain->game->rumbleOffset.y = 0;
+         AnimationChain_RedrawBattle( chain );
          break;
    }
 
@@ -521,27 +521,45 @@ internal void AnimationChain_Tic_Battle_PlayerDamage( AnimationChain_t* chain )
    {
       chain->frameElapsedSeconds -= ANIMATION_BATTLE_PLAYERDAMAGE_FRAMEDURATION;
 
-      if ( chain->flag )
+      switch ( chain->flag )
       {
-         Game_DrawQuickStatus( chain->game );
-         Dialog_Draw( &( chain->game->dialog ) );
+         case 0:
+            chain->game->rumbleOffset.x = -1;
+            chain->game->rumbleOffset.y = -1;
+            break;
+         case 1:
+            chain->game->rumbleOffset.x = 0;
+            chain->game->rumbleOffset.y = -1;
+            break;
+         case 2:
+            chain->game->rumbleOffset.x = 1;
+            chain->game->rumbleOffset.y = -1;
+            break;
+         case 3:
+            chain->game->rumbleOffset.x = 1;
+            chain->game->rumbleOffset.y = 0;
+            break;
+         case 4:
+            chain->game->rumbleOffset.x = 1;
+            chain->game->rumbleOffset.y = 1;
+            break;
+         case 5:
+            chain->game->rumbleOffset.x = 0;
+            chain->game->rumbleOffset.y = 1;
+            break;
+         case 6:
+            chain->game->rumbleOffset.x = -1;
+            chain->game->rumbleOffset.y = 1;
+            break;
+         case 7:
+            chain->game->rumbleOffset.x = -1;
+            chain->game->rumbleOffset.y = 0;
+            break;
       }
-      else
-      {
-         if ( chain->game->battle.enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
-         {
-            Screen_WipeColor( &( chain->game->screen ), COLOR_BLACK );
-         }
-         else
-         {
-            Game_DrawTileMap( chain->game );
-            Game_DrawBattleBackground( chain->game );
-         }
 
-         Game_DrawEnemy( chain->game );
-      }
+      chain->flag = ( chain->flag >= 7 ) ? 0 : ( chain->flag + 1 );
 
-      TOGGLE_BOOL( chain->flag );
+      AnimationChain_RedrawBattle( chain );
    }
 }
 
@@ -551,4 +569,21 @@ internal void AnimationChain_Tic_EndingWalk( AnimationChain_t* chain )
 
    chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
    chain->game->player.sprite.position.y += 0.5f;
+}
+
+internal void AnimationChain_RedrawBattle( AnimationChain_t* chain )
+{
+   if ( chain->game->battle.enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
+   {
+      Screen_WipeColor( &( chain->game->screen ), COLOR_BLACK );
+   }
+   else
+   {
+      Game_DrawTileMap( chain->game );
+      Game_DrawBattleBackground( chain->game );
+   }
+
+   Game_DrawQuickStatus( chain->game );
+   Dialog_Draw( &( chain->game->dialog ) );
+   Game_DrawEnemy( chain->game );
 }
