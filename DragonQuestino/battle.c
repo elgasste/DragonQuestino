@@ -887,6 +887,7 @@ internal void Battle_EnemyBreatheFireCallback( Battle_t* battle )
    }
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    Battle_PushPlayerHurtAnimation( battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
@@ -912,6 +913,7 @@ internal void Battle_EnemyBreatheStrongFireCallback( Battle_t* battle )
    }
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    Battle_PushPlayerHurtAnimation( battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
@@ -959,6 +961,7 @@ internal void Battle_EnemyCastSizzCallback( Battle_t* battle )
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    Battle_PushPlayerHurtAnimation( battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
@@ -978,6 +981,7 @@ internal void Battle_EnemyCastSizzleCallback( Battle_t* battle )
 
    AnimationChain_Reset( &( battle->game->animationChain ) );
    AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_CastSpell );
+   AnimationChain_PushAnimation( &( battle->game->animationChain ), AnimationId_Pause );
    Battle_PushPlayerHurtAnimation( battle );
    AnimationChain_Start( &( battle->game->animationChain ) );
 }
