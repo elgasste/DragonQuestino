@@ -443,7 +443,8 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEWIZARD );
          break;
       case 53: // Kol blue man at the entrance
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEBLUEMAN );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEBLUEMAN_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEBLUEMAN_2 );
          break;
       case 54: // Kol blue woman in the courtyard
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBLUEWOMAN );
