@@ -374,7 +374,8 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          break;
       case 33: // Brecconary center red soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERREDSOLDIER_1 );
-         sprintf( msg, STRING_NPC_BRECCONARY_CENTERREDSOLDIER_2, game->player.name );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERREDSOLDIER_2 );
+         sprintf( msg, STRING_NPC_BRECCONARY_CENTERREDSOLDIER_3, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
          break;
       case 34: // Brecconary east of the inn blue woman
