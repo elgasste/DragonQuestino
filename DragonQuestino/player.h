@@ -135,23 +135,23 @@ typedef struct TileMap_t TileMap_t;
 #define HAS_VISITED_BRECCONARY( x )             ( x ) & 0x2
 #define HAS_VISITED_GARINHAM( x )               ( x ) & 0x4
 #define HAS_VISITED_KOL( x )                    ( x ) & 0x8
-#define HAS_VISITED_CANTLIN( x )                ( x ) & 0x10
 #define HAS_VISITED_RIMULDAR( x )               ( x ) & 0x20
+#define HAS_VISITED_CANTLIN( x )                ( x ) & 0x10
 
 #define HAS_VISITED_COUNT( x )                  ( 0 + \
                                                 ( HAS_VISITED_TANTEGEL( x ) ? 1 : 0 ) + \
                                                 ( HAS_VISITED_BRECCONARY( x ) ? 1 : 0 ) + \
                                                 ( HAS_VISITED_GARINHAM( x ) ? 1 : 0 ) + \
                                                 ( HAS_VISITED_KOL( x ) ? 1 : 0 ) + \
-                                                ( HAS_VISITED_CANTLIN( x ) ? 1 : 0 ) + \
-                                                ( HAS_VISITED_RIMULDAR( x ) ? 1 : 0 ) )
+                                                ( HAS_VISITED_RIMULDAR( x ) ? 1 : 0 ) + \
+                                                ( HAS_VISITED_CANTLIN( x ) ? 1 : 0 ) )
 
 #define SET_VISITED_TANTEGEL( x )               ( x ) |= 0x1
 #define SET_VISITED_BRECCONARY( x )             ( x ) |= 0x2
 #define SET_VISITED_GARINHAM( x )               ( x ) |= 0x4
 #define SET_VISITED_KOL( x )                    ( x ) |= 0x8
-#define SET_VISITED_CANTLIN( x )                ( x ) |= 0x10
 #define SET_VISITED_RIMULDAR( x )               ( x ) |= 0x20
+#define SET_VISITED_CANTLIN( x )                ( x ) |= 0x10
 
 #define HOLY_PROTECTION_MAX_STEPS               127
 
