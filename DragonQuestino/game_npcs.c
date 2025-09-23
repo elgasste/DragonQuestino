@@ -355,7 +355,9 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_INNSTATICSOLDIER );
          break;
       case 28: // Brecconary lower-right area static blue man
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTSTATICBLUEMAN );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTSTATICBLUEMAN_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTSTATICBLUEMAN_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_LOWERRIGHTSTATICBLUEMAN_3 );
          break;
       case 29: // Brecconary upper-right soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_UPPERRIGHTSOLDIER_1 );
@@ -374,7 +376,8 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          break;
       case 33: // Brecconary center red soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERREDSOLDIER_1 );
-         sprintf( msg, STRING_NPC_BRECCONARY_CENTERREDSOLDIER_2, game->player.name );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_BRECCONARY_CENTERREDSOLDIER_2 );
+         sprintf( msg, STRING_NPC_BRECCONARY_CENTERREDSOLDIER_3, game->player.name );
          Dialog_PushSection( &( game->dialog ), msg );
          break;
       case 34: // Brecconary east of the inn blue woman
@@ -440,7 +443,8 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEWIZARD );
          break;
       case 53: // Kol blue man at the entrance
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEBLUEMAN );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEBLUEMAN_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_ENTRANCEBLUEMAN_2 );
          break;
       case 54: // Kol blue woman in the courtyard
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBLUEWOMAN );
