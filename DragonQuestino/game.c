@@ -593,6 +593,7 @@ internal void Game_DeathFadeOutCallback( Game_t* game )
    Player_CenterOnTile( &( game->player ) );
    ActiveSprite_SetDirection( &( game->player.sprite ), Direction_Up );
    TileMap_UpdateViewport( &( game->tileMap ) );
+   game->battle.enemyAlpha = 0;
 }
 
 internal void Game_DeathPostFadeCallback( Game_t* game )
