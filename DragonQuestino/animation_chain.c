@@ -55,8 +55,6 @@ global u32 g_battleBackgroundCheckerboardIndexTable[49] =
    0,  1,  2,  3,  3,  4,  5
 };
 
-global u32 g_squaresDrawn;
-
 void AnimationChain_Init( AnimationChain_t* chain, Screen_t* screen, TileMap_t* tileMap, Game_t* game )
 {
    chain->screen = screen;
@@ -186,9 +184,6 @@ internal void AnimationChain_StartAnimation( AnimationChain_t* chain )
       case AnimationId_RainbowBridge_WhiteOut:
       case AnimationId_RainbowBridge_FadeIn:
          chain->totalDuration = ANIMATION_RAINBOWBRIDGE_FADE_DURATION;
-         break;
-      case AnimationId_Battle_Checkerboard:
-         g_squaresDrawn = 0;
          break;
       case AnimationId_CastSpell:
          chain->screen->wipeColor = COLOR_WHITE;
@@ -427,7 +422,7 @@ internal void AnimationChain_Tic_Flash( AnimationChain_t* chain )
 
 internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
 {
-   u32 squaresToDraw;
+   u32 squaresToDraw, squaresDrawn = 0;
    i32 xOffset, yOffset;
 
    chain->frameElapsedSeconds += CLOCK_FRAME_SECONDS;
@@ -436,7 +431,7 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
    {
       squaresToDraw = (u32)( chain->totalElapsedSeconds / ANIMATION_BATTLE_CHECKERSQUARE_DURATION ) + 1;
 
-      while ( g_squaresDrawn <= squaresToDraw )
+      while ( squaresDrawn <= squaresToDraw )
       {
          if ( chain->tileMap->isDungeon || chain->tileMap->id == TILEMAP_HAUKSNESS_ID )
          {
@@ -444,30 +439,30 @@ internal void AnimationChain_Tic_Battle_Checkerboard( AnimationChain_t* chain )
             yOffset = chain->tileMap->isDark ? 4 : 0;
 
             Screen_DrawRectColor( chain->screen,
-                                  (u16)( (i16)( g_battleCheckerboardPos[g_squaresDrawn].x ) + xOffset ),
-                                  (u16)( (i16)( g_battleCheckerboardPos[g_squaresDrawn].y ) + yOffset ),
+                                  (u16)( (i16)( g_battleCheckerboardPos[squaresDrawn].x ) + xOffset ),
+                                  (u16)( (i16)( g_battleCheckerboardPos[squaresDrawn].y ) + yOffset ),
                                   TILE_SIZE, TILE_SIZE, COLOR_BLACK );
          }
          else
          {
             Screen_DrawMemorySection( chain->screen,
-                                      chain->screen->battleBackgroundTileTextures[g_battleBackgroundCheckerboardIndexTable[g_squaresDrawn]].memory,
+                                      chain->screen->battleBackgroundTileTextures[g_battleBackgroundCheckerboardIndexTable[squaresDrawn]].memory,
                                       TILE_SIZE, 0, 0,
                                       TILE_SIZE, TILE_SIZE,
-                                      g_battleCheckerboardPos[g_squaresDrawn].x,
-                                      g_battleCheckerboardPos[g_squaresDrawn].y,
+                                      g_battleCheckerboardPos[squaresDrawn].x,
+                                      g_battleCheckerboardPos[squaresDrawn].y,
                                       False );
          }
          
-         g_squaresDrawn++;
+         squaresDrawn++;
 
-         if ( g_squaresDrawn > 48 )
+         if ( squaresDrawn > 48 )
          {
             break;
          }
       }
 
-      if ( g_squaresDrawn > 48 )
+      if ( squaresDrawn > 48 )
       {
          AnimationChain_AnimationFinished( chain );
          break;
