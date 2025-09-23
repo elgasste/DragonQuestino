@@ -88,6 +88,7 @@ void Battle_Init( Battle_t* battle, Game_t* game )
    battle->enemy.stats.maxMagicPoints = 0;
 
    battle->specialEnemy = SpecialEnemy_None;
+   battle->enemyAlpha = 0;
 }
 
 void Battle_Generate( Battle_t* battle )
