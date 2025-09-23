@@ -469,16 +469,16 @@ internal void Menu_UpdateZoom( Menu_t* menu )
       menu->items[i].command = MenuCommand_Zoom_Kol;
       i++;
    }
-   if ( HAS_VISITED_CANTLIN( tv ) )
-   {
-      strcpy( menu->items[i].text, STRING_TOWN_CANTLIN );
-      menu->items[i].command = MenuCommand_Zoom_Cantlin;
-      i++;
-   }
    if ( HAS_VISITED_RIMULDAR( tv ) )
    {
       strcpy( menu->items[i].text, STRING_TOWN_RIMULDAR );
       menu->items[i].command = MenuCommand_Zoom_Rimuldar;
+      i++;
+   }
+   if ( HAS_VISITED_CANTLIN( tv ) )
+   {
+      strcpy( menu->items[i].text, STRING_TOWN_CANTLIN );
+      menu->items[i].command = MenuCommand_Zoom_Cantlin;
    }
 }
 
