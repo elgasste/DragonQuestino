@@ -409,7 +409,17 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEWOMAN );
          break;
       case 42: // Garinham outside blue man
-         Dialog_PushSection( &( game->dialog ), game->gameFlags.rescuedPrincess ? STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_2 : STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1 );
+         if ( game->gameFlags.rescuedPrincess )
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_2 );
+         }
+         else
+         {
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_1 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_2 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_3 );
+            Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_4 );
+         }
          break;
       case 43: // Garinham inside left guard
          Dialog_PushSection( &( game->dialog ), STRING_NPC_GARINHAMINSIDE_LEFTGUARD );
