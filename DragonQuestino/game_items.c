@@ -313,7 +313,21 @@ internal void Game_UseFairyFluteCallback( Game_t* game )
 
 internal void Game_UseFairyFluteMessageCallback( Game_t* game )
 {
-   if ( game->battle.specialEnemy == SpecialEnemy_Golem && !game->battle.enemy.stats.isAsleep )
+   Bool_t success = False;
+
+   if ( !( game->battle.enemy.stats.isAsleep ) )
+   {
+      if ( ( game->battle.specialEnemy == SpecialEnemy_Golem ) )
+      {
+         success = True;
+      }
+      else
+      {
+         success = ( ( game->battle.enemy.stats.sleepResist > 0 ) && ( Random_u8( 1, 15 ) <= game->battle.enemy.stats.sleepResist ) ) ? 0 : 1;
+      }
+   }
+
+   if ( success )
    {
       Game_SpellSleepSuccessCallback( game );
    }

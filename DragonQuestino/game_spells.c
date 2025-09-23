@@ -409,6 +409,7 @@ internal void Game_SpellHurtCallback( Game_t* game )
 
 internal void Game_SpellSleepCallback( Game_t* game )
 {
+   // MUFFINS: here we go
    if ( game->pendingPayload8u == 0 )
    {
       Game_SpellAnimateNoEffect( game );
