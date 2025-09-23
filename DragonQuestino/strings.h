@@ -356,7 +356,7 @@
 #define STRING_ITEMSHOP_ANYTHINGELSE                                 "\"Would you like to purchase anything else?\""
 #define STRING_ITEMSHOP_THANKYOU                                     "\"Thank you very much! Would you like to purchase anything else?\""
 
-#define STRING_KEYSHOP_WELCOME                                       "\"Magic Keys! They unlock any door, one-use only! %u gold, are you in?\""
+#define STRING_KEYSHOP_WELCOME                                       "\"All-purpose keys! They unlock any door, one-use only! %u gold, are you in?\""
 #define STRING_KEYSHOP_LEAVE                                         "\"You know where to find me!\""
 #define STRING_KEYSHOP_TOOEXPENSIVE                                  "\"I'm afraid you're short on funds, come back when you've got the goods!\""
 #define STRING_KEYSHOP_NOSPACE                                       "\"You can't carry any more keys, I'm afraid I can't sell!\""
@@ -505,7 +505,7 @@
 #define STRING_NPC_TANTEGEL_BASEMENT_WIZARD_DF_2                     "\"Now I can truly rest, please leave this old man at peace.\""
 #define STRING_NPC_BRECCONARY_WESTENTRANCEBLUEMAN                    "\"Welcome to the town of Brecconary!\""
 #define STRING_NPC_BRECCONARY_WEAPONSHOPBLUEWOMAN                    "\"Welcome! To purchase equipment, speak to my father across the desk.\""
-#define STRING_NPC_BRECCONARY_LEFTROOMBLUEMAN                        "\"Somewhere in Alefgard there is a shop that sells magic keys. I hope to go there one day!\""
+#define STRING_NPC_BRECCONARY_LEFTROOMBLUEMAN                        "\"Somewhere in Alefgard there is a shop that sells keys, I hope to go there one day!\""
 #define STRING_NPC_BRECCONARY_RIGHTROOMWIZARD1                       "\"Should you find yourself cursed, come and see me.\""
 #define STRING_NPC_BRECCONARY_RIGHTROOMWIZARD2                       "\"You were right to seek me out, a curse has certainly befallen you!\""
 #define STRING_NPC_BRECCONARY_RIGHTROOMWIZARD3                       "\"Now hold still...\""
