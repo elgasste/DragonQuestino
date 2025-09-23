@@ -417,7 +417,7 @@
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_7                 "\"It is a symbol of my love, for you have stolen my heart.\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_8                 "\"Please take it with you, so that even across great distances we can still be together.\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_9                 "\"I love you, %s!\""
-#define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_10                "King Lorek sheds a tear of joy as you take Gwaelin's token in your hand."
+#define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_10                "King Lorek sheds a tear of joy as you take Gwaelin's locket in your hand."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_11                "It feels as if you can tell Gwaelin's exact location just by looking at it."
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_THANKS_12                "Lorik: \"All hail %s, our courageous hero!!\""
 #define STRING_NPC_TANTEGEL_THRONEROOM_KING_DEATH_1                  "\"%s, what a terrible thing, my soldiers found you and thought you had died!\""
