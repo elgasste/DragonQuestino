@@ -6,6 +6,7 @@ internal void Game_UseWingCallback( Game_t* game );
 internal void Game_UseRainbowDropCallback( Game_t* game );
 internal void Game_RainbowDropTrippyCallback( Game_t* game );
 internal void Game_UseSilverHarpCallback( Game_t* game );
+internal void Game_SilverHarpBattleCallback( Game_t* game );
 internal void Game_UseFairyFluteCallback( Game_t* game );
 internal void Game_UseFairyFluteMessageCallback( Game_t* game );
 internal void Game_UseTorchCallback( Game_t* game );
@@ -280,16 +281,22 @@ internal void Game_UseSilverHarpCallback( Game_t* game )
 {
    if ( game->tileMap.hasEncounters && !game->gameFlags.defeatedDragonlord )
    {
-      Battle_Generate( &( game->battle ) );
-      AnimationChain_Reset( &( game->animationChain ) );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-      AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
-      AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToBattleState, game );
-      AnimationChain_Start( &( game->animationChain ) );
+      game->postRenderCallback = Game_SilverHarpBattleCallback;
+      game->postRenderCallbackData = game;
    }
+}
+
+internal void Game_SilverHarpBattleCallback( Game_t* game )
+{
+   Battle_Generate( &( game->battle ) );
+   AnimationChain_Reset( &( game->animationChain ) );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToBattleState, game );
+   AnimationChain_Start( &( game->animationChain ) );
 }
 
 internal void Game_UseFairyFluteCallback( Game_t* game )
