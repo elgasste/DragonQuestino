@@ -464,7 +464,9 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDSOLDIER_2 );
          break;
       case 56: // Kol brown soldier in the courtyard
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBROWNSOLDIER );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBROWNSOLDIER_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBROWNSOLDIER_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBROWNSOLDIER_3 );
          break;
       case 57: // Kol left-side wizard
          Dialog_PushSection( &( game->dialog ), ITEM_HAS_FAIRYFLUTE( game->player.items ) ? STRING_NPC_KOL_LEFTWIZARD_2 : STRING_NPC_KOL_LEFTWIZARD_1 );
@@ -493,6 +495,9 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
       case 64: // Cantlin Nester
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_NESTER_1 );
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_NESTER_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_NESTER_3 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_NESTER_4 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_NESTER_5 );
          break;
       case 65: // Cantlin right green man
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_RIGHTGREENMAN_1 );
