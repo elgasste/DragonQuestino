@@ -30,7 +30,7 @@
 #define STRING_SPELL_EVAC                                            "Evac"
 #define STRING_SPELL_ZOOM                                            "Zoom"
 #define STRING_SPELL_REPEL                                           "Repel"
-#define STRING_SPELL_MIDHEAL                                         "Midheal"
+#define STRING_SPELL_MIDHEAL                                         "Cure"
 #define STRING_SPELL_SIZZLE                                          "Sizzle"
 
 #define STRING_ACCESSORY_NONE                                        "(none)"
