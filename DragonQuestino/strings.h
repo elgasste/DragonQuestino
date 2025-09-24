@@ -169,7 +169,7 @@
 
 #define STRING_CHESTCOLLECT_KEY                                      "a key"
 #define STRING_CHESTCOLLECT_HERB                                     "an herb"
-#define STRING_CHESTCOLLECT_WING                                     "a Chimaera wing"
+#define STRING_CHESTCOLLECT_WING                                     "a wing"
 #define STRING_CHESTCOLLECT_TORCH                                    "a torch"
 #define STRING_CHESTCOLLECT_DRAGONSCALE                              "a Dragon's scale"
 #define STRING_CHESTCOLLECT_TABLET                                   "Erdrick's Tablet"
@@ -179,9 +179,9 @@
 #define STRING_CHESTCOLLECT_DEATHNECKLACE                            "the Death Necklace"
 
 #define STRING_ITEMUSE_HERB                                          "You grind up an herb and eat it."
-#define STRING_ITEMUSE_WING                                          "You throw a Chimaera wing into the air."
+#define STRING_ITEMUSE_WING                                          "You throw a wing into the air."
 #define STRING_ITEMUSE_FAIRYWATER                                    "You drink a vial of fairy water."
-#define STRING_ITEMUSE_WING_CANTUSE                                  "You cannot use a Chimaera wing here."
+#define STRING_ITEMUSE_WING_CANTUSE                                  "You cannot use a wing here."
 #define STRING_ITEMUSE_TORCH_CANTUSE                                 "You cannot use a torch here."
 #define STRING_ITEMUSE_TORCH_ALREADYUSED                             "A torch has already been lit."
 #define STRING_ITEMUSE_TORCH_SPHEREOFLIGHT                           "The Sphere of Light burns much brighter than a torch!"
