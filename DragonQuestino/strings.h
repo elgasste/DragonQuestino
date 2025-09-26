@@ -265,6 +265,7 @@
 #define STRING_BATTLE_ENEMYAPPROACHES                                "%s approaches!"
 #define STRING_BATTLE_ENEMYAPPROACHESINITIATIVE                      "%s approaches! Command?"
 #define STRING_BATTLE_ENEMYINITIATIVE                                "The %s gets the jump on you!"
+#define STRING_BATTLE_DRAGONLORDINITIATIVE                           "The Dragonlord launches a sneak attack!"
 #define STRING_BATTLE_ATTACKATTEMPT                                  "You attack!"
 #define STRING_BATTLE_ATTACKSUCCEEDED                                "The %s has lost %u hit %s."
 #define STRING_BATTLE_ATTACKEXCELLENTMOVE                            "Excellent move! The %s has lost %u hit %s."

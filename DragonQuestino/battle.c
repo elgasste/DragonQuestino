@@ -591,8 +591,17 @@ internal void Battle_EnemyInitiativeCallback( Battle_t* battle )
    char msg[64];
 
    Dialog_Reset( &( battle->game->dialog ) );
-   sprintf( msg, STRING_BATTLE_ENEMYINITIATIVE, battle->enemy.name );
-   Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyInitiativeMessageCallback, battle );
+
+   if ( battle->enemy.id == ENEMY_DRAGONLORDWIZARD_ID || battle->enemy.id == ENEMY_DRAGONLORDDRAGON_ID )
+   {
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), STRING_BATTLE_DRAGONLORDINITIATIVE, Battle_EnemyInitiativeMessageCallback, battle );
+   }
+   else
+   {
+      sprintf( msg, STRING_BATTLE_ENEMYINITIATIVE, battle->enemy.name );
+      Dialog_PushSectionWithCallback( &( battle->game->dialog ), msg, Battle_EnemyInitiativeMessageCallback, battle );
+   }
+
    Game_OpenDialog( battle->game );
 }
 
