@@ -521,13 +521,27 @@ internal void Game_BattleIntroMessageCallback( Game_t* game )
 
    if ( game->battle.specialEnemy == SpecialEnemy_DragonlordWizard )
    {
-      sprintf( msg, STRING_BATTLE_DRAGONLORD_WIZARDINTRO );
-      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+      if ( game->battle.turn == BattleTurn_Player )
+      {
+         sprintf( msg, STRING_BATTLE_DRAGONLORD_WIZARDINTRO );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+      }
+      else
+      {
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_DRAGONLORD_WIZARDINTRO, Battle_EnemyInitiative, &( game->battle ) );
+      }
    }
    else if ( game->battle.specialEnemy == SpecialEnemy_DragonlordDragon )
    {
-      sprintf( msg, STRING_BATTLE_DRAGONLORD_DRAGONINTRO );
-      Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+      if ( game->battle.turn == BattleTurn_Player )
+      {
+         sprintf( msg, STRING_BATTLE_DRAGONLORD_DRAGONINTRO );
+         Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ResetBattleMenu, game );
+      }
+      else
+      {
+         Dialog_PushSectionWithCallback( &( game->dialog ), STRING_BATTLE_DRAGONLORD_DRAGONINTRO, Battle_EnemyInitiative, &( game->battle ) );
+      }
    }
    else
    {

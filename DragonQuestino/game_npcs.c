@@ -7,7 +7,6 @@ internal void Game_DragonlordJoinCallback( Game_t* game );
 internal void Game_DragonlordJoinTransferCallback( Game_t* game );
 internal void Game_DragonlordJoinedCallback( Game_t* game );
 internal void Game_DragonlordJoinFadeCallback( Game_t* game );
-internal void Game_DragonlordJoinPreFadeCallback( Game_t* game );
 internal void Game_DragonlordJoinPostFadeCallback( Game_t* game );
 internal void Game_DragonlordRefuseCallback( Game_t* game );
 internal void Game_DragonlordRefuseMessageCallback( Game_t* game );
@@ -724,7 +723,7 @@ internal void Game_DragonlordJoinFadeCallback( Game_t* game )
       AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_Pause );
    }
 
-   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_DragonlordJoinPreFadeCallback, game );
+   AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_ChangeToOverworldState, game );
    AnimationChain_PushAnimation( &( game->animationChain ), AnimationId_SlowFadeOut );
 
    for ( i = 0; i < 10; i++ )
@@ -734,13 +733,6 @@ internal void Game_DragonlordJoinFadeCallback( Game_t* game )
 
    AnimationChain_PushAnimationWithCallback( &( game->animationChain ), AnimationId_Pause, Game_DragonlordJoinPostFadeCallback, game );
    AnimationChain_Start( &( game->animationChain ) );
-}
-
-internal void Game_DragonlordJoinPreFadeCallback( Game_t* game )
-{
-   game->mainState = MainState_Overworld;
-   game->subState = SubState_None;
-   game->overworldInactivitySeconds = 0.0f;
 }
 
 internal void Game_DragonlordJoinPostFadeCallback( Game_t* game )
