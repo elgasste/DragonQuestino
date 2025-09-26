@@ -740,6 +740,7 @@ internal void Game_DragonlordJoinPreFadeCallback( Game_t* game )
 {
    game->mainState = MainState_Overworld;
    game->subState = SubState_None;
+   game->overworldInactivitySeconds = 0.0f;
 }
 
 internal void Game_DragonlordJoinPostFadeCallback( Game_t* game )
