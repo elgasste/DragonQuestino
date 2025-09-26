@@ -41,6 +41,7 @@
     <ClInclude Include="..\..\DragonQuestino\shop_picker.h" />
     <ClInclude Include="..\..\DragonQuestino\sprite.h" />
     <ClInclude Include="..\..\DragonQuestino\strings.h" />
+    <ClInclude Include="..\..\DragonQuestino\string_util.h" />
     <ClInclude Include="..\..\DragonQuestino\tables.h" />
     <ClInclude Include="..\..\DragonQuestino\tile_map.h" />
     <ClInclude Include="..\..\DragonQuestino\vector.h" />
@@ -73,6 +74,7 @@
     <ClCompile Include="..\..\DragonQuestino\dialog.c" />
     <ClCompile Include="..\..\DragonQuestino\shop_picker.c" />
     <ClCompile Include="..\..\DragonQuestino\sprite.c" />
+    <ClCompile Include="..\..\DragonQuestino\string_util.c" />
     <ClCompile Include="..\..\DragonQuestino\tile_map.c" />
     <ClCompile Include="win_clock.c" />
     <ClCompile Include="win_input.c" />
