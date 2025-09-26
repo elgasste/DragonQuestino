@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "enemy.h"
 #include "math.h"
+#include "string_util.h"
 
 internal void Game_DrawPlayer( Game_t* game );
 internal void Game_DrawNonUseableItems( Game_t* game, Bool_t hasUseableItems );
@@ -648,6 +649,7 @@ internal void Game_DrawEnding1( Game_t* game )
    game->screen.textColor = COLOR_ENDINGYELLOW;
    Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_1, 32 );
    sprintf( msg, STRING_ENDING_MESSAGE_2, game->player.name );
+   StringUtil_ToUpper( msg );
    Screen_DrawCenteredText( &( game->screen ), msg, 48 );
    Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_3, 64 );
    Screen_DrawCenteredText( &( game->screen ), STRING_ENDING_MESSAGE_4, 80 );
