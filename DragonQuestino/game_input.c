@@ -680,6 +680,6 @@ internal void Game_EndingPauseCallback( Game_t* game )
 
 internal void Game_EndingPostFadeOutCallback( Game_t* game )
 {
-   Game_Reset( game );
    Screen_RestorePalette( &( game->screen ) );
+   Game_Reset( game );
 }
