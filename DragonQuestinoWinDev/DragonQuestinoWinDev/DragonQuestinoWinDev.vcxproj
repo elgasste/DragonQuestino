@@ -45,6 +45,7 @@
     <ClInclude Include="..\..\DragonQuestino\tables.h" />
     <ClInclude Include="..\..\DragonQuestino\tile_map.h" />
     <ClInclude Include="..\..\DragonQuestino\vector.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="win_common.h" />
     <ClInclude Include="win_pixel_buffer.h" />
   </ItemGroup>
@@ -82,6 +83,9 @@
     <ClCompile Include="win_pixel_buffer.c" />
     <ClCompile Include="win_random.c" />
     <ClCompile Include="win_screen.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="version.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
