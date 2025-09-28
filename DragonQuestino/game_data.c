@@ -46511,7 +46511,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->portals[6].arrivalDirection = (Direction_t)3;
          tileMap->portals[7].sourceTileIndex = 1002;
          tileMap->portals[7].destinationTileMapIndex = 0;
-         tileMap->portals[7].destinationTileIndex = 0;
+         tileMap->portals[7].destinationTileIndex = 7193;
          tileMap->portals[7].arrivalDirection = (Direction_t)3;
          tileMap->portals[8].sourceTileIndex = 1003;
          tileMap->portals[8].destinationTileMapIndex = 0;
@@ -53998,7 +53998,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->portals[6].arrivalDirection = (Direction_t)3;
          tileMap->portals[7].sourceTileIndex = 1002;
          tileMap->portals[7].destinationTileMapIndex = 0;
-         tileMap->portals[7].destinationTileIndex = 0;
+         tileMap->portals[7].destinationTileIndex = 7193;
          tileMap->portals[7].arrivalDirection = (Direction_t)3;
          tileMap->portals[8].sourceTileIndex = 1003;
          tileMap->portals[8].destinationTileMapIndex = 0;
