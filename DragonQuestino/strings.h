@@ -344,6 +344,7 @@
 #define STRING_WEAPONSHOP_ALREADYHAVE                                "\"Whoops, it appears you already have this item!\""
 #define STRING_WEAPONSHOP_AREYOUSURE1                                "\"You'd like to purchase the %s, are you sure?\""
 #define STRING_WEAPONSHOP_AREYOUSURE2                                "\"You'd like to purchase the %s %s, are you sure?\""
+#define STRING_WEAPONSHOP_RESELL                                     "\"Then I will trade in your %s for %u gold, is that alright?\""
 #define STRING_WEAPONSHOP_ANYTHINGELSE                               "\"Does anything else catch your eye?\""
 #define STRING_WEAPONSHOP_THANKYOU                                   "\"Thank you for your purchase! Does anything else catch your eye?\""
 

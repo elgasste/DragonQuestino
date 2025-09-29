@@ -282,6 +282,8 @@ void Player_LoadArmor( Player_t* player, u32 armorId );
 void Player_LoadShield( Player_t* player, u32 shieldId );
 void Player_SetCanonicalTileIndex( Player_t* player );
 void Player_CenterOnTile( Player_t* player );
+void Player_GetAccessoryName( Player_t* player, AccessoryType_t type, char* name );
+u16 Player_GetAccessoryResellValue( Player_t* player, AccessoryType_t type );
 
 #if defined( __cplusplus )
 }
