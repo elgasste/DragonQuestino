@@ -256,6 +256,40 @@ void Player_CenterOnTile( Player_t* player )
    player->sprite.position.y = (r32)( tileY + ( ( TILE_SIZE / 2 ) - ( player->sprite.hitBoxSize.y / 2 ) ) );
 }
 
+void Player_GetAccessoryName( Player_t* player, AccessoryType_t type, char* name )
+{
+   Accessory_t* accessory;
+
+   switch ( type )
+   {
+      case AccessoryType_Weapon: accessory = &( player->weapon ); break;
+      case AccessoryType_Armor: accessory = &( player->armor ); break;
+      case AccessoryType_Shield: accessory = &( player->shield ); break;
+      default: return;
+   }
+
+   if ( strlen( accessory->name2 ) > 0 )
+   {
+      sprintf( name, "%s %s", accessory->name1, accessory->name2 );
+   }
+   else
+   {
+      strcpy( name, accessory->name1 );
+   }
+}
+
+u16 Player_GetAccessoryResellValue( Player_t* player, AccessoryType_t type )
+{
+   switch ( type )
+   {
+      case AccessoryType_Weapon: return g_weaponResellTable[player->weapon.id];
+      case AccessoryType_Armor: return g_armorResellTable[player->armor.id];
+      case AccessoryType_Shield: return g_shieldResellTable[player->shield.id];
+   }
+
+   return 0;
+}
+
 internal u32 Player_GetNameSum( Player_t* player )
 {
    u32 i, nameSum = 0;

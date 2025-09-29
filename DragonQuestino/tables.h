@@ -223,7 +223,7 @@ global u8 g_armorEffectTable[ARMOR_TABLE_SIZE] = {
 
 global u16 g_armorCostTable[ARMOR_TABLE_SIZE] = {
    0,
-   10,
+   20,
    70,
    300,
    1000,
@@ -322,6 +322,35 @@ global u32 g_passwordChecksumTable2[32] = {
    19,
    11,
    23
+};
+
+global u16 g_weaponResellTable[WEAPON_TABLE_SIZE] = {
+   0,
+   5,
+   30,
+   90,
+   280,
+   750,
+   4900,
+   0
+};
+
+global u16 g_armorResellTable[ARMOR_TABLE_SIZE] = {
+   0,
+   10,
+   35,
+   150,
+   500,
+   1500,
+   3850,
+   0
+};
+
+global u16 g_shieldResellTable[SHIELD_TABLE_SIZE] = {
+   0,
+   45,
+   400,
+   7400
 };
 
 #endif // TABLES_H
