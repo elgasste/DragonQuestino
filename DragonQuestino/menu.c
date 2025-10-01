@@ -507,7 +507,7 @@ internal void Menu_UpdateSellItem( Menu_t* menu )
    {
       menu->items[i].twoLineText = False;
       sprintf( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_KEY, ITEM_GET_KEYCOUNT( items ) );
-      menu->items[i].command = MenuCommand_Item_Herb;
+      menu->items[i].command = MenuCommand_Item_Key;
       i++;
    }
    if ( ITEM_GET_HERBCOUNT( items ) )

@@ -299,6 +299,8 @@ void Player_SetCanonicalTileIndex( Player_t* player );
 void Player_CenterOnTile( Player_t* player );
 void Player_GetAccessoryName( Player_t* player, AccessoryType_t type, char* name );
 u16 Player_GetAccessoryResellValue( Player_t* player, AccessoryType_t type );
+void Player_GetItemResellName( u32 itemId, char* name );
+u16 Player_GetItemResellValue( u32 itemId );
 
 #if defined( __cplusplus )
 }

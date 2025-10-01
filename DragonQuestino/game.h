@@ -74,6 +74,7 @@ typedef struct Game_t
    Bool_t doAnimation;
 
    u8 pendingPayload8u;
+   u16 pendingPayload16u;
    Spell_t pendingSpell;
 
    Vector2i32_t rumbleOffset;
@@ -166,6 +167,8 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId );
 // game_booths.c
 void Game_ActivateBooth( Game_t* game, u32 boothId );
 void Game_SelectShopItem( Game_t* game );
+void Game_SellItem( Game_t* game, u32 itemId );
+void Game_CancelItemSale( Game_t* game );
 
 #if defined( __cplusplus )
 }

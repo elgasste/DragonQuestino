@@ -181,6 +181,7 @@ typedef enum MenuCommand_t
    MenuCommand_Spell_Midheal,
    MenuCommand_Spell_Sizzle,
 
+   MenuCommand_Item_Key,
    MenuCommand_Item_Herb,
    MenuCommand_Item_Wing,
    MenuCommand_Item_FairyWater,

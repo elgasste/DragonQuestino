@@ -225,38 +225,53 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
    {
       Menu_ResetCarat( game->activeMenu );
 
-      switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
+      if ( game->activeMenu->id == MenuId_SellItem )
       {
-         case MenuCommand_Overworld_Talk: Game_Talk( game ); break;
-         case MenuCommand_Overworld_Status: Game_ChangeSubState( game, SubState_Status ); break;
-         case MenuCommand_Overworld_Search: Game_Search( game ); break;
-         case MenuCommand_Overworld_Spell: Game_OpenOverworldSpellMenu( game ); break;
-         case MenuCommand_Overworld_Item: Game_OpenOverworldItemMenu( game ); break;
-         case MenuCommand_Overworld_Door: Game_OpenDoor( game ); break;
+         switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
+         {
+            case MenuCommand_Item_Key: Game_SellItem( game, ITEM_KEY_ID ); break;
+            case MenuCommand_Item_Herb: Game_SellItem( game, ITEM_HERB_ID ); break;
+            case MenuCommand_Item_Wing: Game_SellItem( game, ITEM_WING_ID ); break;
+            case MenuCommand_Item_FairyWater: Game_SellItem( game, ITEM_FAIRYWATER_ID ); break;
+            case MenuCommand_Item_Torch: Game_SellItem( game, ITEM_TORCH_ID ); break;
+            case MenuCommand_Item_DragonScale: Game_SellItem( game, ITEM_DRAGONSCALE_ID ); break;
+         }
+      }
+      else
+      {
+         switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
+         {
+            case MenuCommand_Overworld_Talk: Game_Talk( game ); break;
+            case MenuCommand_Overworld_Status: Game_ChangeSubState( game, SubState_Status ); break;
+            case MenuCommand_Overworld_Search: Game_Search( game ); break;
+            case MenuCommand_Overworld_Spell: Game_OpenOverworldSpellMenu( game ); break;
+            case MenuCommand_Overworld_Item: Game_OpenOverworldItemMenu( game ); break;
+            case MenuCommand_Overworld_Door: Game_OpenDoor( game ); break;
 
-         case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
-         case MenuCommand_Spell_Glow: Game_CastGlow( game ); break;
-         case MenuCommand_Spell_Evac: Game_CastEvac( game ); break;
-         case MenuCommand_Spell_Zoom: Game_OpenZoomMenu( game ); break;
-         case MenuCommand_Spell_Repel: Game_CastRepel( game ); break;
-         case MenuCommand_Spell_Midheal: Game_CastMidheal( game ); break;
+            case MenuCommand_Spell_Heal: Game_CastHeal( game ); break;
+            case MenuCommand_Spell_Glow: Game_CastGlow( game ); break;
+            case MenuCommand_Spell_Evac: Game_CastEvac( game ); break;
+            case MenuCommand_Spell_Zoom: Game_OpenZoomMenu( game ); break;
+            case MenuCommand_Spell_Repel: Game_CastRepel( game ); break;
+            case MenuCommand_Spell_Midheal: Game_CastMidheal( game ); break;
 
-         case MenuCommand_Item_Herb: Game_UseHerb( game ); break;
-         case MenuCommand_Item_Wing: Game_UseWing( game ); break;
-         case MenuCommand_Item_FairyWater: Game_UseFairyWater( game ); break;
-         case MenuCommand_Item_Torch: Game_UseTorch( game ); break;
-         case MenuCommand_Item_SilverHarp: Game_UseSilverHarp( game ); break;
-         case MenuCommand_Item_FairyFlute: Game_UseFairyFlute( game ); break;
-         case MenuCommand_Item_GwaelynsLove: Game_UseGwaelynsLove( game ); break;
-         case MenuCommand_Item_RainbowDrop: Game_UseRainbowDrop( game ); break;
-         case MenuCommand_Item_CursedBelt: Game_UseCursedBelt( game ); break;
+            case MenuCommand_Item_Herb: Game_UseHerb( game ); break;
+            case MenuCommand_Item_Wing: Game_UseWing( game ); break;
+            case MenuCommand_Item_FairyWater: Game_UseFairyWater( game ); break;
+            case MenuCommand_Item_Torch: Game_UseTorch( game ); break;
+            case MenuCommand_Item_SilverHarp: Game_UseSilverHarp( game ); break;
+            case MenuCommand_Item_FairyFlute: Game_UseFairyFlute( game ); break;
+            case MenuCommand_Item_GwaelynsLove: Game_UseGwaelynsLove( game ); break;
+            case MenuCommand_Item_RainbowDrop: Game_UseRainbowDrop( game ); break;
+            case MenuCommand_Item_CursedBelt: Game_UseCursedBelt( game ); break;
 
-         case MenuCommand_Zoom_Tantegel: Game_CastZoom( game, TILEMAP_TANTEGEL_TOWN_ID ); break;
-         case MenuCommand_Zoom_Brecconary: Game_CastZoom( game, TILEMAP_BRECCONARY_TOWN_ID ); break;
-         case MenuCommand_Zoom_Garinham: Game_CastZoom( game, TILEMAP_GARINHAM_TOWN_ID ); break;
-         case MenuCommand_Zoom_Kol: Game_CastZoom( game, TILEMAP_KOL_TOWN_ID ); break;
-         case MenuCommand_Zoom_Cantlin: Game_CastZoom( game, TILEMAP_CANTLIN_TOWN_ID ); break;
-         case MenuCommand_Zoom_Rimuldar: Game_CastZoom( game, TILEMAP_RIMULDAR_TOWN_ID ); break;
+            case MenuCommand_Zoom_Tantegel: Game_CastZoom( game, TILEMAP_TANTEGEL_TOWN_ID ); break;
+            case MenuCommand_Zoom_Brecconary: Game_CastZoom( game, TILEMAP_BRECCONARY_TOWN_ID ); break;
+            case MenuCommand_Zoom_Garinham: Game_CastZoom( game, TILEMAP_GARINHAM_TOWN_ID ); break;
+            case MenuCommand_Zoom_Kol: Game_CastZoom( game, TILEMAP_KOL_TOWN_ID ); break;
+            case MenuCommand_Zoom_Cantlin: Game_CastZoom( game, TILEMAP_CANTLIN_TOWN_ID ); break;
+            case MenuCommand_Zoom_Rimuldar: Game_CastZoom( game, TILEMAP_RIMULDAR_TOWN_ID ); break;
+         }
       }
    }
    else if ( game->input.buttonStates[Button_B].pressed )
@@ -269,6 +284,9 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             break;
          case MenuId_Zoom:
             game->activeMenu = &( game->menus[MenuId_OverworldSpell] );
+            break;
+         case MenuId_SellItem:
+            Game_CancelItemSale( game );
             break;
          default:
             Game_ChangeToOverworldState( game );

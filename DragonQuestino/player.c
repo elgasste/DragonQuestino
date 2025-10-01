@@ -301,3 +301,31 @@ internal u32 Player_GetNameSum( Player_t* player )
 
    return nameSum;
 }
+
+void Player_GetItemResellName( u32 itemId, char* name )
+{
+   switch ( itemId )
+   {
+      case ITEM_KEY_ID: sprintf( name, STRING_ITEM_SELLKEY ); break;
+      case ITEM_HERB_ID: sprintf( name, STRING_ITEM_SELLHERB ); break;
+      case ITEM_TORCH_ID: sprintf( name, STRING_ITEM_SELLTORCH ); break;
+      case ITEM_WING_ID: sprintf( name, STRING_ITEM_SELLWING ); break;
+      case ITEM_FAIRYWATER_ID: sprintf( name, STRING_ITEM_SELLFAIRYWATER ); break;
+      case ITEM_DRAGONSCALE_ID: sprintf( name, STRING_ITEM_SELLDRAGONSCALE ); break;
+   }
+}
+
+u16 Player_GetItemResellValue( u32 itemId )
+{
+   switch ( itemId )
+   {
+      case ITEM_KEY_ID: return g_itemResellTable[0];
+      case ITEM_HERB_ID: return g_itemResellTable[1];
+      case ITEM_TORCH_ID: return g_itemResellTable[2];
+      case ITEM_WING_ID: return g_itemResellTable[3];
+      case ITEM_FAIRYWATER_ID: return g_itemResellTable[4];
+      case ITEM_DRAGONSCALE_ID: return g_itemResellTable[5];
+   }
+
+   return 0;
+}
