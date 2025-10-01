@@ -7,6 +7,8 @@
 #define STRING_POINTS                                                "points"
 #define STRING_YES                                                   "YES"
 #define STRING_NO                                                    "NO"
+#define STRING_BUY                                                   "BUY"
+#define STRING_SELL                                                  "SELL"
 
 #define STRING_STARTUP_MENU_START                                    "Venture Forth!"
 #define STRING_STARTUP_MENU_PASSWORD                                 "Enter Password"
@@ -348,7 +350,8 @@
 #define STRING_WEAPONSHOP_ANYTHINGELSE                               "\"Does anything else catch your eye?\""
 #define STRING_WEAPONSHOP_THANKYOU                                   "\"Thank you for your purchase! Does anything else catch your eye?\""
 
-#define STRING_ITEMSHOP_WELCOME                                      "\"Welcome! We deal in tools, would you like to see our inventory?\""
+#define STRING_ITEMSHOP_WELCOMEVIEWCHOICE                            "\"Welcome! We deal in tools, would you like to see our inventory?\""
+#define STRING_ITEMSHOP_WELCOMEBUYSELL                               "\"Welcome! We deal in tools, what would you like to do today?\""
 #define STRING_ITEMSHOP_VIEWITEMS                                    "\"Please let me know if you'd like to purchase something.\""
 #define STRING_ITEMSHOP_LEAVE                                        "\"Have a wonderful day!\""
 #define STRING_ITEMSHOP_TOOEXPENSIVE                                 "\"Oh no, it seems you don't have enough gold, sorry!\""

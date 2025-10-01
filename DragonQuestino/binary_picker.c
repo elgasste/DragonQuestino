@@ -13,13 +13,17 @@ void BinaryPicker_Init( BinaryPicker_t* picker, Screen_t* screen )
 
 void BinaryPicker_Load( BinaryPicker_t* picker,
                         const char* option1, const char* option2,
-                        void ( *callback1 )( void* ), void ( *callback2 )( void * ),
-                        void* callbackData1, void* callbackData2 )
+                        void ( *callback1 )( void* ), void ( *callback2 )( void* ), void ( *cancelCallback )( void* ),
+                        void* callbackData1, void* callbackData2, void* cancelCallbackData,
+                        Bool_t allowCancel )
 {
    picker->option1Callback = callback1;
    picker->option2Callback = callback2;
    picker->option1CallbackData = callbackData1;
    picker->option2CallbackData = callbackData2;
+   picker->cancelCallback = cancelCallback;
+   picker->cancelCallbackData = cancelCallbackData;
+   picker->allowCancel = allowCancel;
 
    u32 strlen1 = (u32)( strlen( option1 ) );
    u32 strlen2 = (u32)( strlen( option2 ) );
@@ -92,6 +96,14 @@ void BinaryPicker_Select1( BinaryPicker_t* picker )
 void BinaryPicker_Select2( BinaryPicker_t* picker )
 {
    picker->option2Callback( picker->option2CallbackData );
+}
+
+void BinaryPicker_Cancel( BinaryPicker_t* picker )
+{
+   if ( picker->cancelCallback )
+   {
+      picker->cancelCallback( picker->cancelCallbackData );
+   }
 }
 
 internal void BinaryPicker_DrawCarat( BinaryPicker_t* picker )

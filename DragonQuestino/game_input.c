@@ -583,7 +583,14 @@ internal void Game_HandleOverworldBinaryChoiceInput( Game_t* game )
    }
    else if ( game->input.buttonStates[Button_B].pressed )
    {
-      BinaryPicker_Select2( &( game->binaryPicker ) );
+      if ( game->binaryPicker.allowCancel )
+      {
+         BinaryPicker_Cancel( &( game->binaryPicker ) );
+      }
+      else
+      {
+         BinaryPicker_Select2( &( game->binaryPicker ) );
+      }
    }
    else
    {

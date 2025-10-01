@@ -22,6 +22,7 @@ internal void Game_FairyWaterShopLeaveCallback( Game_t* game );
 internal void Game_ShopLeaveOrStayCallback( Game_t* game );
 internal void Game_ShopViewItemsCallback( Game_t* game );
 internal void Game_ShopViewItemsMessageCallback( Game_t* game );
+internal void Game_ShopSellItemCallback( Game_t* game );
 internal void Game_ShopLeaveCallback( Game_t* game );
 internal void Game_ShopPurchaseOrNotCallback( Game_t* game );
 internal void Game_ShopNoPurchaseCallback( Game_t* game );
@@ -204,8 +205,8 @@ internal void Game_VisitInnChoiceCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_VisitInnStayCallback, Game_VisitInnLeaveCallback,
-                      game, game );
+                      Game_VisitInnStayCallback, Game_VisitInnLeaveCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -289,7 +290,16 @@ internal void Game_VisitWeaponShop( Game_t* game )
 internal void Game_VisitItemShop( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
-   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_WELCOME, Game_ShopLeaveOrStayCallback, game );
+
+   if ( ITEM_HAS_SELLABLE( game->player.items ) )
+   {
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_WELCOMEBUYSELL, Game_ShopLeaveOrStayCallback, game );
+   }
+   else
+   {
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_WELCOMEVIEWCHOICE, Game_ShopLeaveOrStayCallback, game );
+   }
+
    Game_OpenDialog( game );
 }
 
@@ -328,8 +338,8 @@ internal void Game_KeyShopLeaveOrStayCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_KeyShopPurchaseCallback, Game_KeyShopLeaveCallback,
-                      game, game );
+                      Game_KeyShopPurchaseCallback, Game_KeyShopLeaveCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -374,8 +384,8 @@ internal void Game_FairyWaterShopLeaveOrBuyCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_FairyWaterShopPurchaseCallback, Game_FairyWaterShopLeaveCallback,
-                      game, game );
+                      Game_FairyWaterShopPurchaseCallback, Game_FairyWaterShopLeaveCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -418,10 +428,21 @@ internal void Game_FairyWaterShopLeaveCallback( Game_t* game )
 
 internal void Game_ShopLeaveOrStayCallback( Game_t* game )
 {
-   BinaryPicker_Load( &( game->binaryPicker ),
-                      STRING_YES, STRING_NO,
-                      Game_ShopViewItemsCallback, Game_ShopLeaveCallback,
-                      game, game );
+   if ( ITEM_HAS_SELLABLE( game->player.items ) )
+   {
+      BinaryPicker_Load( &( game->binaryPicker ),
+                         STRING_BUY, STRING_SELL,
+                         Game_ShopViewItemsCallback, Game_ShopSellItemCallback, Game_ShopLeaveCallback,
+                         game, game, game, True );
+   }
+   else
+   {
+      BinaryPicker_Load( &( game->binaryPicker ),
+                         STRING_YES, STRING_NO,
+                         Game_ShopViewItemsCallback, Game_ShopLeaveCallback, 0,
+                         game, game, 0, False );
+   }
+
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -441,6 +462,12 @@ internal void Game_ShopViewItemsMessageCallback( Game_t* game )
    Game_ChangeSubState( game, SubState_ShopMenu );
 }
 
+internal void Game_ShopSellItemCallback( Game_t* game )
+{
+   // MUFFINS
+   UNUSED_PARAM( game );
+}
+
 internal void Game_ShopLeaveCallback( Game_t* game )
 {
    Game_ChangeSubState( game, SubState_Dialog );
@@ -454,8 +481,8 @@ internal void Game_ShopPurchaseOrNotCallback( Game_t* game )
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
                       ( game->tileMap.shopType == ShopType_Weapon ) ? Game_WeaponShopPurchaseCallback : Game_ItemShopPurchaseCallback,
-                      Game_ShopNoPurchaseCallback,
-                      game, game );
+                      Game_ShopNoPurchaseCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -495,9 +522,8 @@ internal void Game_WeaponShopResellOrNotCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_WeaponShopPurchaseCompleteCallback,
-                      Game_ShopNoPurchaseCallback,
-                      game, game );
+                      Game_WeaponShopPurchaseCompleteCallback, Game_ShopNoPurchaseCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 

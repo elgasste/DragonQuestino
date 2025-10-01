@@ -115,6 +115,13 @@ typedef struct TileMap_t TileMap_t;
                                                 ( ITEM_HAS_SPHEREOFLIGHT( x ) ? 1 : 0 ) + \
                                                 ( ITEM_HAS_DRAGONSCALE( x ) ? 1 : 0 ) )
 
+#define ITEM_HAS_SELLABLE( x )                  ( ITEM_GET_KEYCOUNT( x ) || \
+                                                  ITEM_GET_HERBCOUNT( x ) || \
+                                                  ITEM_GET_WINGCOUNT( x ) || \
+                                                  ITEM_GET_FAIRYWATERCOUNT( x ) || \
+                                                  ITEM_GET_TORCHCOUNT( x ) || \
+                                                  ITEM_HAS_DRAGONSCALE( x ) )
+
 #define ITEM_SET_KEYCOUNT( x, c )               ( x ) = ( ( ( x ) & 0xFFFFFFF8 ) | ( ( c ) & 0x7 ) )
 #define ITEM_SET_HERBCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFFC7 ) | ( (u32)( c ) & 0x7 ) << 3 )
 #define ITEM_SET_WINGCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFE3F ) | ( (u32)( c ) & 0x7 ) << 6 )
