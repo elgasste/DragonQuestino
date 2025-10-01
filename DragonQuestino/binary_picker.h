@@ -21,8 +21,11 @@ typedef struct BinaryPicker_t
    char option2[BINARYPICKER_OPTION_SIZE];
    void ( *option1Callback )( void* );
    void ( *option2Callback )( void* );
+   void ( *cancelCallback )( void* );
    void* option1CallbackData;
    void* option2CallbackData;
+   void* cancelCallbackData;
+   Bool_t allowCancel;
 }
 BinaryPicker_t;
 
@@ -33,8 +36,9 @@ extern "C" {
 void BinaryPicker_Init( BinaryPicker_t* picker, Screen_t* screen );
 void BinaryPicker_Load( BinaryPicker_t* picker,
                         const char* option1, const char* option2,
-                        void ( *callback1 )( void* ), void ( *callback2 )( void * ),
-                        void* callbackData1, void* callbackData2 ) ;
+                        void ( *callback1 )( void* ), void ( *callback2 )( void * ), void ( *cancelCallback )( void* ),
+                        void* callbackData1, void* callbackData2, void* cancelCallbackData,
+                        Bool_t allowCancel );
 void BinaryPicker_Draw( BinaryPicker_t* picker );
 void BinaryPicker_ResetCarat( BinaryPicker_t* picker );
 void BinaryPicker_MoveSelection( BinaryPicker_t* picker, Direction_t direction );
@@ -42,6 +46,7 @@ void BinaryPicker_Tic( BinaryPicker_t* picker );
 void BinaryPicker_Select( BinaryPicker_t* picker );
 void BinaryPicker_Select1( BinaryPicker_t* picker );
 void BinaryPicker_Select2( BinaryPicker_t* picker );
+void BinaryPicker_Cancel( BinaryPicker_t* picker );
 
 #if defined( __cplusplus )
 }

@@ -22,6 +22,12 @@ internal void Game_FairyWaterShopLeaveCallback( Game_t* game );
 internal void Game_ShopLeaveOrStayCallback( Game_t* game );
 internal void Game_ShopViewItemsCallback( Game_t* game );
 internal void Game_ShopViewItemsMessageCallback( Game_t* game );
+internal void Game_ShopSellItemCallback( Game_t* game );
+internal void Game_ShopCannotSellItemCallback( Game_t* game );
+internal void Game_ShopSellItemMessageCallback( Game_t* game );
+internal void Game_ShopSellItemChoiceCallback( Game_t* game );
+internal void Game_ShopFinalizeItemSaleCallback( Game_t* game );
+internal void Game_ShopDidNotSellItemCallback( Game_t* game );
 internal void Game_ShopLeaveCallback( Game_t* game );
 internal void Game_ShopPurchaseOrNotCallback( Game_t* game );
 internal void Game_ShopNoPurchaseCallback( Game_t* game );
@@ -188,6 +194,28 @@ void Game_SelectShopItem( Game_t* game )
    Game_OpenDialog( game );
 }
 
+void Game_SellItem( Game_t* game, u32 itemId )
+{
+   char itemName[32];
+   char msg[128];
+   
+   Player_GetItemResellName( itemId, itemName );
+   game->pendingPayload8u = (u8)itemId;
+   game->pendingPayload16u = Player_GetItemResellValue( itemId );
+
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_ITEMSHOP_SELLAREYOUSURE, itemName, game->pendingPayload16u );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ShopSellItemChoiceCallback, game );
+   Game_OpenDialog( game );
+}
+
+void Game_CancelItemSale( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_ANYMOREBUSINESS, Game_ShopLeaveOrStayCallback, game );
+   Game_OpenDialog( game );
+}
+
 internal void Game_VisitInn( Game_t* game, u32 boothId )
 {
    char msg[128];
@@ -204,8 +232,8 @@ internal void Game_VisitInnChoiceCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_VisitInnStayCallback, Game_VisitInnLeaveCallback,
-                      game, game );
+                      Game_VisitInnStayCallback, Game_VisitInnLeaveCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -289,7 +317,16 @@ internal void Game_VisitWeaponShop( Game_t* game )
 internal void Game_VisitItemShop( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
-   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_WELCOME, Game_ShopLeaveOrStayCallback, game );
+
+   if ( ITEM_HAS_SELLABLE( game->player.items ) )
+   {
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_WELCOMEBUYSELL, Game_ShopLeaveOrStayCallback, game );
+   }
+   else
+   {
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_WELCOMEVIEWCHOICE, Game_ShopLeaveOrStayCallback, game );
+   }
+
    Game_OpenDialog( game );
 }
 
@@ -328,8 +365,8 @@ internal void Game_KeyShopLeaveOrStayCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_KeyShopPurchaseCallback, Game_KeyShopLeaveCallback,
-                      game, game );
+                      Game_KeyShopPurchaseCallback, Game_KeyShopLeaveCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -374,8 +411,8 @@ internal void Game_FairyWaterShopLeaveOrBuyCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_FairyWaterShopPurchaseCallback, Game_FairyWaterShopLeaveCallback,
-                      game, game );
+                      Game_FairyWaterShopPurchaseCallback, Game_FairyWaterShopLeaveCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -418,10 +455,21 @@ internal void Game_FairyWaterShopLeaveCallback( Game_t* game )
 
 internal void Game_ShopLeaveOrStayCallback( Game_t* game )
 {
-   BinaryPicker_Load( &( game->binaryPicker ),
-                      STRING_YES, STRING_NO,
-                      Game_ShopViewItemsCallback, Game_ShopLeaveCallback,
-                      game, game );
+   if ( ITEM_HAS_SELLABLE( game->player.items ) )
+   {
+      BinaryPicker_Load( &( game->binaryPicker ),
+                         STRING_BUY, STRING_SELL,
+                         Game_ShopViewItemsCallback, Game_ShopSellItemCallback, Game_ShopLeaveCallback,
+                         game, game, game, True );
+   }
+   else
+   {
+      BinaryPicker_Load( &( game->binaryPicker ),
+                         STRING_YES, STRING_NO,
+                         Game_ShopViewItemsCallback, Game_ShopLeaveCallback, 0,
+                         game, game, 0, False );
+   }
+
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -441,6 +489,88 @@ internal void Game_ShopViewItemsMessageCallback( Game_t* game )
    Game_ChangeSubState( game, SubState_ShopMenu );
 }
 
+internal void Game_ShopSellItemCallback( Game_t* game )
+{
+   Game_ChangeSubState( game, SubState_Dialog );
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( game->player.gold == UINT16_MAX )
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMSHOP_CANNOTSELLITEM_1 );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_CANNOTSELLITEM_2, Game_ShopCannotSellItemCallback, game );
+   }
+   else
+   {
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_SELLWHICHITEM, Game_ShopSellItemMessageCallback, game );
+   }
+
+   Game_OpenDialog( game );
+}
+
+internal void Game_ShopCannotSellItemCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_ShopViewItemsCallback, Game_ShopLeaveCallback, 0,
+                      game, game, 0, False );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_ShopSellItemMessageCallback( Game_t* game )
+{
+   Game_OpenMenu( game, MenuId_SellItem );
+}
+
+internal void Game_ShopSellItemChoiceCallback( Game_t* game )
+{
+   BinaryPicker_Load( &( game->binaryPicker ),
+                      STRING_YES, STRING_NO,
+                      Game_ShopFinalizeItemSaleCallback, Game_ShopDidNotSellItemCallback, 0,
+                      game, game, 0, False );
+   Game_ChangeSubState( game, SubState_BinaryChoice );
+}
+
+internal void Game_ShopFinalizeItemSaleCallback( Game_t* game )
+{
+   game->player.gold += game->pendingPayload16u;
+
+   if ( game->player.gold < game->pendingPayload16u ) // overflow
+   {
+      game->player.gold = UINT16_MAX;
+   }
+
+   switch ( game->pendingPayload8u )
+   {
+      case ITEM_KEY_ID: ITEM_SET_KEYCOUNT( game->player.items, ITEM_GET_KEYCOUNT( game->player.items ) - 1 ); break;
+      case ITEM_HERB_ID: ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 ); break;
+      case ITEM_WING_ID: ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 ); break;
+      case ITEM_FAIRYWATER_ID: ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 ); break;
+      case ITEM_TORCH_ID: ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 ); break;
+      case ITEM_DRAGONSCALE_ID: ITEM_TOGGLE_HASDRAGONSCALE( game->player.items ); break;
+   }
+
+   Dialog_Reset( &( game->dialog ) );
+
+   if ( ITEM_HAS_SELLABLE( game->player.items ) )
+   {
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_THANKYOUSELL, Game_ShopLeaveOrStayCallback, game );
+   }
+   else
+   {
+      Dialog_PushSection( &( game->dialog ), STRING_ITEMSHOP_THANKYOUNOTHINGTOSELL );
+      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_CANNOTSELLITEM_2, Game_ShopCannotSellItemCallback, game );
+   }
+
+   Game_OpenDialog( game );
+}
+
+internal void Game_ShopDidNotSellItemCallback( Game_t* game )
+{
+   Dialog_Reset( &( game->dialog ) );
+   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_ANYMOREBUSINESS, Game_ShopLeaveOrStayCallback, game );
+   Game_OpenDialog( game );
+}
+
 internal void Game_ShopLeaveCallback( Game_t* game )
 {
    Game_ChangeSubState( game, SubState_Dialog );
@@ -454,8 +584,8 @@ internal void Game_ShopPurchaseOrNotCallback( Game_t* game )
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
                       ( game->tileMap.shopType == ShopType_Weapon ) ? Game_WeaponShopPurchaseCallback : Game_ItemShopPurchaseCallback,
-                      Game_ShopNoPurchaseCallback,
-                      game, game );
+                      Game_ShopNoPurchaseCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
@@ -495,9 +625,8 @@ internal void Game_WeaponShopResellOrNotCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_WeaponShopPurchaseCompleteCallback,
-                      Game_ShopNoPurchaseCallback,
-                      game, game );
+                      Game_WeaponShopPurchaseCompleteCallback, Game_ShopNoPurchaseCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 

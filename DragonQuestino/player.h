@@ -103,6 +103,14 @@ typedef struct TileMap_t TileMap_t;
                                                 ( ITEM_HAS_RAINBOWDROP( x ) ? 1 : 0 ) + \
                                                 ( ITEM_HAS_CURSEDBELT( x ) ? 1 : 0 ) )
 
+#define ITEM_GET_SELLABLECOUNT( x )           ( 0 + \
+                                              ( ITEM_GET_KEYCOUNT( x ) ? 1 : 0 ) + \
+                                              ( ITEM_GET_HERBCOUNT( x ) ? 1 : 0 ) + \
+                                              ( ITEM_GET_WINGCOUNT( x ) ? 1 : 0 ) + \
+                                              ( ITEM_GET_FAIRYWATERCOUNT( x ) ? 1 : 0 ) + \
+                                              ( ITEM_GET_TORCHCOUNT( x ) ? 1 : 0 ) + \
+                                              ( ITEM_HAS_DRAGONSCALE( x ) ? 1 : 0 ) )
+
 #define ITEM_GET_BATTLEUSEABLECOUNT( x )        ( 0 + \
                                                 ( ITEM_GET_HERBCOUNT( x ) ? 1 : 0 ) + \
                                                 ( ITEM_HAS_FAIRYFLUTE( x ) ? 1 : 0 ) )
@@ -114,6 +122,13 @@ typedef struct TileMap_t TileMap_t;
                                                 ( ITEM_HAS_TOKEN( x ) ? 1 : 0 ) + \
                                                 ( ITEM_HAS_SPHEREOFLIGHT( x ) ? 1 : 0 ) + \
                                                 ( ITEM_HAS_DRAGONSCALE( x ) ? 1 : 0 ) )
+
+#define ITEM_HAS_SELLABLE( x )                  ( ITEM_GET_KEYCOUNT( x ) || \
+                                                  ITEM_GET_HERBCOUNT( x ) || \
+                                                  ITEM_GET_WINGCOUNT( x ) || \
+                                                  ITEM_GET_FAIRYWATERCOUNT( x ) || \
+                                                  ITEM_GET_TORCHCOUNT( x ) || \
+                                                  ITEM_HAS_DRAGONSCALE( x ) )
 
 #define ITEM_SET_KEYCOUNT( x, c )               ( x ) = ( ( ( x ) & 0xFFFFFFF8 ) | ( ( c ) & 0x7 ) )
 #define ITEM_SET_HERBCOUNT( x, c )              ( x ) = ( ( ( x ) & 0xFFFFFFC7 ) | ( (u32)( c ) & 0x7 ) << 3 )
@@ -284,6 +299,8 @@ void Player_SetCanonicalTileIndex( Player_t* player );
 void Player_CenterOnTile( Player_t* player );
 void Player_GetAccessoryName( Player_t* player, AccessoryType_t type, char* name );
 u16 Player_GetAccessoryResellValue( Player_t* player, AccessoryType_t type );
+void Player_GetItemResellName( u32 itemId, char* name );
+u16 Player_GetItemResellValue( u32 itemId );
 
 #if defined( __cplusplus )
 }

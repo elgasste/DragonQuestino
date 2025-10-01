@@ -148,6 +148,7 @@ typedef enum MenuId_t
    MenuId_OverworldSpell,
    MenuId_OverworldItem,
    MenuId_Zoom,
+   MenuId_SellItem,
 
    MenuId_Battle,
    MenuId_BattleSpell,
@@ -180,6 +181,7 @@ typedef enum MenuCommand_t
    MenuCommand_Spell_Midheal,
    MenuCommand_Spell_Sizzle,
 
+   MenuCommand_Item_Key,
    MenuCommand_Item_Herb,
    MenuCommand_Item_Wing,
    MenuCommand_Item_FairyWater,
@@ -189,6 +191,7 @@ typedef enum MenuCommand_t
    MenuCommand_Item_GwaelynsLove,
    MenuCommand_Item_RainbowDrop,
    MenuCommand_Item_CursedBelt,
+   MenuCommand_Item_DragonScale,
 
    MenuCommand_Zoom_Tantegel,
    MenuCommand_Zoom_Brecconary,

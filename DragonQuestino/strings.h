@@ -7,6 +7,8 @@
 #define STRING_POINTS                                                "points"
 #define STRING_YES                                                   "YES"
 #define STRING_NO                                                    "NO"
+#define STRING_BUY                                                   "BUY"
+#define STRING_SELL                                                  "SELL"
 
 #define STRING_STARTUP_MENU_START                                    "Venture Forth!"
 #define STRING_STARTUP_MENU_PASSWORD                                 "Enter Password"
@@ -56,6 +58,13 @@
 #define STRING_ITEM_TORCH                                            "Torch"
 #define STRING_ITEM_DRAGONSCALE1                                     "Dragon"
 #define STRING_ITEM_DRAGONSCALE2                                     "Scale"
+
+#define STRING_ITEM_SELLKEY                                          "key"
+#define STRING_ITEM_SELLHERB                                         "herb"
+#define STRING_ITEM_SELLWING                                         "wing"
+#define STRING_ITEM_SELLTORCH                                        "torch"
+#define STRING_ITEM_SELLFAIRYWATER                                   "Fairy Water"
+#define STRING_ITEM_SELLDRAGONSCALE                                  "Dragon's Scale"
 
 #define STRING_ARMOR_CLOTHES                                         "Clothes"
 #define STRING_ARMOR_LEATHERARMOR1                                   "Leather"
@@ -348,8 +357,14 @@
 #define STRING_WEAPONSHOP_ANYTHINGELSE                               "\"Does anything else catch your eye?\""
 #define STRING_WEAPONSHOP_THANKYOU                                   "\"Thank you for your purchase! Does anything else catch your eye?\""
 
-#define STRING_ITEMSHOP_WELCOME                                      "\"Welcome! We deal in tools, would you like to see our inventory?\""
-#define STRING_ITEMSHOP_VIEWITEMS                                    "\"Please let me know if you'd like to purchase something.\""
+#define STRING_ITEMSHOP_WELCOMEVIEWCHOICE                            "\"Welcome! We deal in tools, would you like to see our inventory?\""
+#define STRING_ITEMSHOP_WELCOMEBUYSELL                               "\"Welcome! We deal in tools, what would you like to do today?\""
+#define STRING_ITEMSHOP_VIEWITEMS                                    "\"What would you like to purchase?\""
+#define STRING_ITEMSHOP_CANNOTSELLITEM_1                             "\"Goodness me, I'm afraid you can't carry any more gold!\""
+#define STRING_ITEMSHOP_CANNOTSELLITEM_2                             "\"Would you like to browse our inventory instead?\""
+#define STRING_ITEMSHOP_SELLWHICHITEM                                "\"I see, and which item are you looking to sell?\""
+#define STRING_ITEMSHOP_SELLAREYOUSURE                               "\"The %s? I can give you %u gold for that, is that okay?\""
+#define STRING_ITEMSHOP_ANYMOREBUSINESS                              "\"Will there be anything else?\""
 #define STRING_ITEMSHOP_LEAVE                                        "\"Have a wonderful day!\""
 #define STRING_ITEMSHOP_TOOEXPENSIVE                                 "\"Oh no, it seems you don't have enough gold, sorry!\""
 #define STRING_ITEMSHOP_NOSPACE                                      "\"Whoops, it seems you can't carry any more of these!\""
@@ -357,6 +372,8 @@
 #define STRING_ITEMSHOP_AREYOUSURE2                                  "\"One %s %s, are you sure?\""
 #define STRING_ITEMSHOP_ANYTHINGELSE                                 "\"Would you like to purchase anything else?\""
 #define STRING_ITEMSHOP_THANKYOU                                     "\"Thank you very much! Would you like to purchase anything else?\""
+#define STRING_ITEMSHOP_THANKYOUSELL                                 "\"Pleasure doing business with you! Will there be anything else?\""
+#define STRING_ITEMSHOP_THANKYOUNOTHINGTOSELL                        "\"Pleasure doing business with you! It seems you have no more items to sell...\""
 
 #define STRING_KEYSHOP_WELCOME                                       "\"All-purpose keys! They unlock any door, one-use only! %u gold, are you in?\""
 #define STRING_KEYSHOP_LEAVE                                         "\"You know where to find me!\""

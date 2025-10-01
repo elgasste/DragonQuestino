@@ -678,8 +678,8 @@ internal void Game_DragonlordChoicePresentationCallback( Game_t* game )
 {
    BinaryPicker_Load( &( game->binaryPicker ),
                       STRING_YES, STRING_NO,
-                      Game_DragonlordJoinCallback, Game_DragonlordRefuseCallback,
-                      game, game );
+                      Game_DragonlordJoinCallback, Game_DragonlordRefuseCallback, 0,
+                      game, game, 0, False );
    Game_ChangeSubState( game, SubState_BinaryChoice );
 }
 
