@@ -12,6 +12,7 @@ internal void Menu_Update( Menu_t* menu );
 internal void Menu_UpdateOverworldSpell( Menu_t* menu );
 internal void Menu_UpdateOverworldItem( Menu_t* menu );
 internal void Menu_UpdateZoom( Menu_t* menu );
+internal void Menu_UpdateSellItem( Menu_t* menu );
 internal void Menu_UpdateBattleSpell( Menu_t* menu );
 internal void Menu_UpdateBattleItem( Menu_t* menu );
 
@@ -153,6 +154,7 @@ internal void Menu_Update( Menu_t* menu )
       case MenuId_OverworldSpell: Menu_UpdateOverworldSpell( menu ); break;
       case MenuId_OverworldItem: Menu_UpdateOverworldItem( menu ); break;
       case MenuId_Zoom: Menu_UpdateZoom( menu ); break;
+      case MenuId_SellItem: Menu_UpdateSellItem( menu ); break;
       case MenuId_BattleSpell: Menu_UpdateBattleSpell( menu ); break;
       case MenuId_BattleItem: Menu_UpdateBattleItem( menu ); break;
    }
@@ -479,6 +481,71 @@ internal void Menu_UpdateZoom( Menu_t* menu )
    {
       strcpy( menu->items[i].text, STRING_TOWN_CANTLIN );
       menu->items[i].command = MenuCommand_Zoom_Cantlin;
+   }
+}
+
+internal void Menu_UpdateSellItem( Menu_t* menu )
+{
+   u32 i = 0;
+   u32 items = menu->player->items;
+
+   menu->title[0] = 0;
+   menu->itemCount = ITEM_GET_SELLABLECOUNT( items );
+   menu->itemsPerColumn = menu->itemCount;
+   menu->selectedIndex = 0;
+   menu->position.x = 128;
+   menu->position.y = 16;
+   menu->borderSize.x = 12;
+   menu->borderSize.y = (u16)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderPadding.x = 1;
+   menu->borderPadding.y = 1;
+   menu->columnWidth = 10;
+   menu->itemPadding = 1;
+   menu->caratOffset = 1;
+
+   if ( ITEM_GET_KEYCOUNT( items ) )
+   {
+      menu->items[i].twoLineText = False;
+      sprintf( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_KEY, ITEM_GET_KEYCOUNT( items ) );
+      menu->items[i].command = MenuCommand_Item_Herb;
+      i++;
+   }
+   if ( ITEM_GET_HERBCOUNT( items ) )
+   {
+      menu->items[i].twoLineText = False;
+      sprintf( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_HERB, ITEM_GET_HERBCOUNT( items ) );
+      menu->items[i].command = MenuCommand_Item_Herb;
+      i++;
+   }
+   if ( ITEM_GET_TORCHCOUNT( items ) )
+   {
+      menu->items[i].twoLineText = False;
+      sprintf( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_TORCH, ITEM_GET_TORCHCOUNT( items ) );
+      menu->items[i].command = MenuCommand_Item_Torch;
+      i++;
+   }
+   if ( ITEM_GET_WINGCOUNT( items ) )
+   {
+      menu->items[i].twoLineText = False;
+      sprintf( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_WING, ITEM_GET_WINGCOUNT( items ) );
+      menu->items[i].command = MenuCommand_Item_Wing;
+      i++;
+   }
+   if ( ITEM_GET_FAIRYWATERCOUNT( items ) )
+   {
+      menu->items[i].twoLineText = True;
+      sprintf( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_FAIRYWATER_1, ITEM_GET_FAIRYWATERCOUNT( items ) );
+      strcpy( menu->items[i].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_FAIRYWATER_2 );
+      menu->items[i].command = MenuCommand_Item_FairyWater;
+      i++;
+   }
+   if ( ITEM_HAS_DRAGONSCALE( items ) )
+   {
+      menu->items[i].twoLineText = True;
+      strcpy( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_DRAGONSCALE_1 );
+      strcpy( menu->items[i].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_DRAGONSCALE_2 );
+      menu->items[i].command = MenuCommand_Item_DragonScale;
+      i++;
    }
 }
 
