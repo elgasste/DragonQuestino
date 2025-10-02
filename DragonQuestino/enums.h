@@ -162,6 +162,7 @@ typedef enum MenuCommand_t
 {
    MenuCommand_Startup_NewGame = 0,
    MenuCommand_Startup_EnterPassword,
+   MenuCommand_Startup_Continue,
 
    MenuCommand_Overworld_Talk,
    MenuCommand_Overworld_Status,

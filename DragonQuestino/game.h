@@ -113,6 +113,10 @@ void Game_TriggerEnding( Game_t* game );
 void Game_GetPassword( Game_t* game, char* password );
 Bool_t Game_LoadFromPassword( Game_t* game, const char* password );
 
+#if defined( VISUAL_STUDIO_DEV )
+Bool_t Game_PasswordIsValid( const char* password );
+#endif
+
 // game_actions.c
 void Game_Talk( Game_t* game );
 void Game_Search( Game_t* game );

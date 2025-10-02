@@ -18,6 +18,7 @@ internal void ToggleShowHitBoxes();
 internal void GetAllItems();
 internal void MaxOutStats();
 internal void ScaleScreen( r32 scale );
+internal void LoadSavedPassword();
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -110,6 +111,7 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_winGlobals.bmpInfo.bmiHeader.biCompression = BI_RGB;
 
    InitButtonMap();
+   LoadSavedPassword();
 
    Game_Init( &( g_winGlobals.game ), g_winGlobals.screenBuffer.memory16 );
    g_winGlobals.shutdown = False;
@@ -564,4 +566,31 @@ internal void ScaleScreen( r32 scale )
                  (int)( SCREEN_WIDTH * g_winGlobals.graphicsScale ) + g_winGlobals.clientPaddingRight, 
                  (int)( SCREEN_HEIGHT * g_winGlobals.graphicsScale ) + g_winGlobals.clientPaddingTop,
                  SWP_NOMOVE | SWP_NOZORDER | SWP_ASYNCWINDOWPOS); 
+}
+
+internal void LoadSavedPassword()
+{
+   FILE* file;
+
+   g_winGlobals.savedPassword[0] = '\0';
+   file = fopen( WIN_SAVE_FILE_NAME, "r" );
+
+   if ( file )
+   {
+      if ( fgets( g_winGlobals.savedPassword, PASSWORD_LENGTH + 1, file ) )
+      {
+         g_winGlobals.savedPassword[PASSWORD_LENGTH] = '\0';
+
+         if ( !Game_PasswordIsValid( g_winGlobals.savedPassword ) )
+         {
+            g_winGlobals.savedPassword[0] = '\0';
+         }
+      }
+      else
+      {
+         g_winGlobals.savedPassword[0] = '\0';
+      }
+
+      fclose( file );
+   }
 }

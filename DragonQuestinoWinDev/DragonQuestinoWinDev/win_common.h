@@ -15,6 +15,8 @@
 
 #define STRING_SIZE_DEFAULT         1024
 
+#define WIN_SAVE_FILE_NAME          "save.dat"
+
 #if defined ( _DEBUG )
 #define GRAPHICS_SCALE_DEFAULT      3.0f
 #else
@@ -49,6 +51,7 @@ typedef struct WinGlobalObjects_t
    BITMAPINFO bmpInfo;   
    WinPixelBuffer_t screenBuffer;
    r32 graphicsScale;
+   char savedPassword[PASSWORD_LENGTH + 1];
 }
 WinGlobalObjects_t;
 
