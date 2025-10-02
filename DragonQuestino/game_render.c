@@ -252,35 +252,41 @@ void Game_DrawQuickStatus( Game_t* game )
 void Game_DrawOverworldDeepStatus( Game_t* game )
 {
    // status window
-   Screen_DrawTextWindow( &( game->screen ), 80, 16, 20, 18 );
+   Screen_DrawTextWindow( &( game->screen ), 80, 16, 20, 19 );
    char line[18];
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_NAME, game->player.name );
    Screen_DrawText( &( game->screen ), line, 104 + ( ( 4 - ( (u32)( ( strlen( game->player.name ) + 1 ) / 2 ) ) ) * TEXT_TILE_SIZE ), 24 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_STRENGTH, game->player.stats.strength );
-   Screen_DrawText( &( game->screen ), line, 96, 40 );
+   Screen_DrawText( &( game->screen ), line, 96, 36 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_AGILITY, game->player.stats.agility );
-   Screen_DrawText( &( game->screen ), line, 104, 56 );
+   Screen_DrawText( &( game->screen ), line, 104, 48 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXHP, game->player.stats.maxHitPoints );
-   Screen_DrawText( &( game->screen ), line, 112, 72 );
+   Screen_DrawText( &( game->screen ), line, 112, 60 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXMP, game->player.stats.maxMagicPoints );
-   Screen_DrawText( &( game->screen ), line, 112, 88 );
+   Screen_DrawText( &( game->screen ), line, 112, 72 );
 
-   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_WEAPON, 96, 104 );
-   Screen_DrawText( &( game->screen ), game->player.weapon.name1, 160, 104 );
-   Screen_DrawText( &( game->screen ), game->player.weapon.name2, 168, 112 );
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_ATTACK, Player_GetAttackPower( &( game->player ) ) );
+   Screen_DrawText( &( game->screen ), line, 112, 84 );
 
-   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_ARMOR, 104, 120 );
-   Screen_DrawText( &( game->screen ), game->player.armor.name1, 160, 120 );
-   Screen_DrawText( &( game->screen ), game->player.armor.name2, 168, 128 );
+   sprintf( line, STRING_OVERWORLD_DEEPSTATS_DEFENSE, Player_GetDefensePower( &( game->player ) ) );
+   Screen_DrawText( &( game->screen ), line, 104, 96 );
 
-   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_SHIELD, 96, 136 );
-   Screen_DrawText( &( game->screen ), game->player.shield.name1, 160, 136 );
-   Screen_DrawText( &( game->screen ), game->player.shield.name2, 168, 144 );
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_WEAPON, 96, 112 );
+   Screen_DrawText( &( game->screen ), game->player.weapon.name1, 160, 112 );
+   Screen_DrawText( &( game->screen ), game->player.weapon.name2, 168, 120 );
+
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_ARMOR, 104, 128 );
+   Screen_DrawText( &( game->screen ), game->player.armor.name1, 160, 128 );
+   Screen_DrawText( &( game->screen ), game->player.armor.name2, 168, 136 );
+
+   Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_SHIELD, 96, 144 );
+   Screen_DrawText( &( game->screen ), game->player.shield.name1, 160, 144 );
+   Screen_DrawText( &( game->screen ), game->player.shield.name2, 168, 152 );
 
    // spells window
    Screen_DrawTextWindowWithTitle( &( game->screen ), 16, 168, 28, 6, STRING_OVERWORLD_DEEPSTATS_SPELLS );
