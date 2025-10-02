@@ -223,18 +223,12 @@ internal u8 Battle_GetAttackDamage( Battle_t* battle )
 {
    Player_t* player = &( battle->game->player );
    Enemy_t* enemy = &( battle->enemy );
-   u8 power, defense, damage, minDamage = 0, maxDamage = 0;
+   u8 defense, damage, minDamage = 0, maxDamage = 0;
+   u8 power = Player_GetAttackPower( player );
 
    if ( !enemy->stats.isAsleep && enemy->stats.dodge > 0 && Random_u8( 1, 64 ) <= enemy->stats.dodge )
    {
       return 0;
-   }
-
-   power = player->stats.strength + player->weapon.effect;
-
-   if ( power < player->stats.strength ) // overflow
-   {
-      power = UINT8_MAX;
    }
 
    if ( ( battle->specialEnemy != SpecialEnemy_DragonlordWizard ) &&
@@ -832,21 +826,10 @@ internal void Battle_PlayerDefeatedPostDialogCallback( Battle_t* battle )
 
 internal u8 Battle_GetEnemyAttackDamage( Battle_t* battle )
 {
-   u8 defense, damage, minDamage = 0, maxDamage = 0;
+   u8 damage, minDamage = 0, maxDamage = 0;
    Enemy_t* enemy = &( battle->enemy );
    Player_t* player = &( battle->game->player );
-
-   defense = ( player->stats.agility / 2 ) + player->armor.effect + player->shield.effect;
-
-   if ( ITEM_HAS_DRAGONSCALE( player->items ) )
-   {
-      defense += 2;
-   }
-
-   if ( defense < ( player->stats.agility / 2 ) ) // overflow
-   {
-      defense = UINT8_MAX;
-   }
+   u8 defense = Player_GetDefensePower( player );
 
    if ( enemy->stats.strength > defense )
    {

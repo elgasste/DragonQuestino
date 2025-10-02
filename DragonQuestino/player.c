@@ -329,3 +329,32 @@ u16 Player_GetItemResellValue( u32 itemId )
 
    return 0;
 }
+
+u8 Player_GetAttackPower( Player_t* player )
+{
+   u8 power = player->stats.strength + player->weapon.effect;
+
+   if ( power < player->stats.strength ) // overflow
+   {
+      power = UINT8_MAX;
+   }
+
+   return power;
+}
+
+u8 Player_GetDefensePower( Player_t* player )
+{
+   u8 defense = ( player->stats.agility / 2 ) + player->armor.effect + player->shield.effect;
+
+   if ( ITEM_HAS_DRAGONSCALE( player->items ) )
+   {
+      defense += 2;
+   }
+
+   if ( defense < ( player->stats.agility / 2 ) ) // overflow
+   {
+      defense = UINT8_MAX;
+   }
+
+   return defense;
+}

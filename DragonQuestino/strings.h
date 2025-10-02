@@ -132,6 +132,8 @@
 #define STRING_OVERWORLD_DEEPSTATS_AGILITY                           "AGILITY: %u"
 #define STRING_OVERWORLD_DEEPSTATS_MAXHP                             "MAX HP: %u"
 #define STRING_OVERWORLD_DEEPSTATS_MAXMP                             "MAX MP: %u"
+#define STRING_OVERWORLD_DEEPSTATS_ATTACK                            "ATTACK: %u"
+#define STRING_OVERWORLD_DEEPSTATS_DEFENSE                           "DEFENSE: %u"
 #define STRING_OVERWORLD_DEEPSTATS_WEAPON                            "WEAPON:"
 #define STRING_OVERWORLD_DEEPSTATS_ARMOR                             "ARMOR:"
 #define STRING_OVERWORLD_DEEPSTATS_SHIELD                            "SHIELD:"

@@ -301,6 +301,8 @@ void Player_GetAccessoryName( Player_t* player, AccessoryType_t type, char* name
 u16 Player_GetAccessoryResellValue( Player_t* player, AccessoryType_t type );
 void Player_GetItemResellName( u32 itemId, char* name );
 u16 Player_GetItemResellValue( u32 itemId );
+u8 Player_GetAttackPower( Player_t* player );
+u8 Player_GetDefensePower( Player_t* player );
 
 #if defined( __cplusplus )
 }
