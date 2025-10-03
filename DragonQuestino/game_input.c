@@ -1,5 +1,9 @@
 #include "game.h"
 
+#if defined( VISUAL_STUDIO_DEV )
+#include "..\DragonQuestinoWinDev\DragonQuestinoWinDev\win_common.h"
+#endif
+
 #define DIAGONAL_SCALAR    0.707f
 
 internal void Game_HandleStartupMenuInput( Game_t* game );
@@ -94,6 +98,11 @@ internal void Game_HandleStartupMenuInput( Game_t* game )
          case MenuCommand_Startup_EnterPassword:
             Game_ChangeToEnterPasswordState( game );
             break;
+#if defined( VISUAL_STUDIO_DEV )
+         case MenuCommand_Startup_Continue:
+            Game_Load( game, g_winGlobals.savedPassword );
+            break;
+#endif
       }
    }
    else

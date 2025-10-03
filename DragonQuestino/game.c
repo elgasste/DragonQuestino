@@ -132,6 +132,7 @@ void Game_Load( Game_t* game, const char* password )
       if ( Game_LoadFromPassword( game, password ) )
       {
          game->password[0] = 0;
+         game->lastPassword[0] = 0;
          game->gameFlags.leftThroneRoom = True;
       }
       else

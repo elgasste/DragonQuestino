@@ -80,6 +80,7 @@ typedef struct Game_t
    Vector2i32_t rumbleOffset;
 
    char password[PASSWORD_LENGTH + 1];
+   char lastPassword[PASSWORD_LENGTH + 1];
 }
 Game_t;
 
@@ -112,6 +113,10 @@ void Game_TriggerEnding( Game_t* game );
 // game_password.c
 void Game_GetPassword( Game_t* game, char* password );
 Bool_t Game_LoadFromPassword( Game_t* game, const char* password );
+
+#if defined( VISUAL_STUDIO_DEV )
+Bool_t Game_PasswordIsValid( const char* password );
+#endif
 
 // game_actions.c
 void Game_Talk( Game_t* game );
@@ -169,6 +174,11 @@ void Game_ActivateBooth( Game_t* game, u32 boothId );
 void Game_SelectShopItem( Game_t* game );
 void Game_SellItem( Game_t* game, u32 itemId );
 void Game_CancelItemSale( Game_t* game );
+
+// win_main.c
+#if defined( VISUAL_STUDIO_DEV )
+void Game_QuickSave( Game_t* game );
+#endif
 
 #if defined( __cplusplus )
 }

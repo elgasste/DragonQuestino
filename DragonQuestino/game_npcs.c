@@ -67,7 +67,12 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
             Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_5 );
             Game_GetPassword( game, password );
             sprintf( passwordMsg, STRING_NPC_TANTEGEL_THRONEROOM_KING_6, password );
+            strcpy( game->lastPassword, password );
+#if defined( VISUAL_STUDIO_DEV )
+            Dialog_PushSectionWithCallback( &( game->dialog ), passwordMsg, Game_QuickSave, game );
+#else
             Dialog_PushSection( &( game->dialog ), passwordMsg );
+#endif
             Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_7 );
             Dialog_PushSection( &( game->dialog ), STRING_NPC_TANTEGEL_THRONEROOM_KING_8 );
          }

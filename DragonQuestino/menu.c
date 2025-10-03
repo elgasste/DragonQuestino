@@ -4,6 +4,10 @@
 #include "clock.h"
 #include "tile_map.h"
 
+#if defined( VISUAL_STUDIO_DEV )
+#include "..\DragonQuestinoWinDev\DragonQuestinoWinDev\win_common.h"
+#endif
+
 internal void Menu_DrawCarat( Menu_t* menu );
 internal void Menu_InitStartup( Menu_t* menu );
 internal void Menu_InitOverworld( Menu_t* menu );
@@ -185,18 +189,38 @@ internal void Menu_DrawCarat( Menu_t* menu )
 
 internal void Menu_InitStartup( Menu_t* menu )
 {
+#if defined( VISUAL_STUDIO_DEV )
+   Bool_t hasSave = strlen( g_winGlobals.savedPassword ) > 0 ? True : False;
+#else
+   Bool_t hasSave = False;
+#endif
+
    strcpy( menu->items[0].text, STRING_STARTUP_MENU_START );
    strcpy( menu->items[1].text, STRING_STARTUP_MENU_PASSWORD );
+
    menu->items[0].command = MenuCommand_Startup_NewGame;
    menu->items[1].command = MenuCommand_Startup_EnterPassword;
-   menu->itemCount = 2;
-   menu->itemsPerColumn = 2;
-   menu->selectedIndex = 0;
 
+   if ( hasSave )
+   {
+      strcpy( menu->items[2].text, STRING_STARTUP_MENU_CONTINUE );
+      menu->items[2].command = MenuCommand_Startup_Continue;
+      menu->itemCount = 3;
+      menu->itemsPerColumn = 3;
+      menu->position.y = 144;
+      menu->borderSize.y = 9;
+   }
+   else
+   {
+      menu->itemCount = 2;
+      menu->itemsPerColumn = 2;
+      menu->position.y = 152;
+      menu->borderSize.y = 7;
+   }
+
+   menu->selectedIndex = 0;
    menu->position.x = 48;
-   menu->position.y = 152;
    menu->borderSize.x = 20;
-   menu->borderSize.y = 7;
    menu->borderPadding.x = 3;
    menu->borderPadding.y = 1;
    menu->columnWidth = 8;

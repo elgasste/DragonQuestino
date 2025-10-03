@@ -159,6 +159,64 @@ Bool_t Game_LoadFromPassword( Game_t* game, const char* password )
    return True;
 }
 
+#if defined( VISUAL_STUDIO_DEV )
+
+Bool_t Game_PasswordIsValid( const char* password )
+{
+   u32 encodedBits[6];
+
+   if ( !Password_ValidateChars( password ) )
+   {
+      return False;
+   }
+
+   encodedBits[0] = ( Password_GetBitsFromChar( password[0] ) << 26 ) |
+      ( Password_GetBitsFromChar( password[1] ) << 20 ) |
+      ( Password_GetBitsFromChar( password[2] ) << 14 ) |
+      ( Password_GetBitsFromChar( password[3] ) << 8 ) |
+      ( Password_GetBitsFromChar( password[4] ) << 2 ) |
+      ( Password_GetBitsFromChar( password[5] ) >> 4 );
+   encodedBits[1] = ( Password_GetBitsFromChar( password[5] ) << 28 ) |
+      ( Password_GetBitsFromChar( password[6] ) << 22 ) |
+      ( Password_GetBitsFromChar( password[7] ) << 16 ) |
+      ( Password_GetBitsFromChar( password[8] ) << 10 ) |
+      ( Password_GetBitsFromChar( password[9] ) << 4 ) |
+      ( Password_GetBitsFromChar( password[10] ) >> 2 );
+   encodedBits[2] = ( Password_GetBitsFromChar( password[10] ) << 30 ) |
+      ( Password_GetBitsFromChar( password[11] ) << 24 ) |
+      ( Password_GetBitsFromChar( password[12] ) << 18 ) |
+      ( Password_GetBitsFromChar( password[13] ) << 12 ) |
+      ( Password_GetBitsFromChar( password[14] ) << 6 ) |
+      ( Password_GetBitsFromChar( password[15] ) );
+   encodedBits[3] = ( Password_GetBitsFromChar( password[16] ) << 26 ) |
+      ( Password_GetBitsFromChar( password[17] ) << 20 ) |
+      ( Password_GetBitsFromChar( password[18] ) << 14 ) |
+      ( Password_GetBitsFromChar( password[19] ) << 8 ) |
+      ( Password_GetBitsFromChar( password[20] ) << 2 ) |
+      ( Password_GetBitsFromChar( password[21] ) >> 4 );
+   encodedBits[4] = ( Password_GetBitsFromChar( password[21] ) << 28 ) |
+      ( Password_GetBitsFromChar( password[22] ) << 22 ) |
+      ( Password_GetBitsFromChar( password[23] ) << 16 ) |
+      ( Password_GetBitsFromChar( password[24] ) << 10 ) |
+      ( Password_GetBitsFromChar( password[25] ) << 4 ) |
+      ( Password_GetBitsFromChar( password[26] ) >> 2 );
+   encodedBits[5] = ( Password_GetBitsFromChar( password[26] ) << 30 ) |
+      ( Password_GetBitsFromChar( password[27] ) << 24 ) |
+      ( Password_GetBitsFromChar( password[28] ) << 18 ) |
+      ( Password_GetBitsFromChar( password[29] ) << 12 );
+
+   if ( !Password_ValidateChecksum( encodedBits ) )
+   {
+      return False;
+   }
+   else
+   {
+      return True;
+   }
+}
+
+#endif
+
 internal void Password_InjectPlayerName( Player_t* player, u32* encodedBits )
 {
    u32 i, encodedChars[8];
