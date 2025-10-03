@@ -15,7 +15,7 @@
 
 #define STRING_SIZE_DEFAULT         1024
 
-#define WIN_SAVE_FILE_NAME          "save.dat"
+#define WIN_SAVE_FILE_NAME          "win_save.dat"
 
 #if defined ( _DEBUG )
 #define GRAPHICS_SCALE_DEFAULT      3.0f

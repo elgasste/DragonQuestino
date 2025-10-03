@@ -594,3 +594,20 @@ internal void LoadSavedPassword()
       fclose( file );
    }
 }
+
+void Game_QuickSave( Game_t* game )
+{
+   char dir[STRING_SIZE_DEFAULT];
+   char filePath[STRING_SIZE_DEFAULT];
+
+   GetCurrentDirectoryA( STRING_SIZE_DEFAULT, dir );
+   snprintf( filePath, STRING_SIZE_DEFAULT, "%s\\%s", dir, WIN_SAVE_FILE_NAME );
+
+   FILE* file = fopen( filePath, "w" );
+
+   if ( file )
+   {
+      fprintf( file, "%s", game->lastPassword );
+      fclose( file );
+   }
+}
