@@ -18,7 +18,9 @@ internal void ToggleShowHitBoxes();
 internal void GetAllItems();
 internal void MaxOutStats();
 internal void ScaleScreen( r32 scale );
-internal void LoadSavedPassword();
+internal void LoadSaveFile();
+internal void LoadSavedPassword( const char* password );
+internal void LoadSavedScreenSize( const char* size );
 
 int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
@@ -111,7 +113,8 @@ int CALLBACK WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
    g_winGlobals.bmpInfo.bmiHeader.biCompression = BI_RGB;
 
    InitButtonMap();
-   LoadSavedPassword();
+   LoadSaveFile();
+   Game_QuickSave( &( g_winGlobals.game ) );
 
    Game_Init( &( g_winGlobals.game ), g_winGlobals.screenBuffer.memory16 );
    g_winGlobals.shutdown = False;
@@ -265,10 +268,10 @@ internal void HandleKeyboardInput( u32 keyCode, LPARAM flags )
 #else
          switch ( keyCode )
          {
-            case VK_GRAPHICS_SCALE_1: ScaleScreen( 1.0f ); break;
-            case VK_GRAPHICS_SCALE_2: ScaleScreen( 2.0f ); break;
-            case VK_GRAPHICS_SCALE_3: ScaleScreen( 3.0f ); break;
-            case VK_GRAPHICS_SCALE_4: ScaleScreen( 4.0f ); break;
+            case VK_GRAPHICS_SCALE_1: ScaleScreen( 1.0f ); Game_QuickSave( &( g_winGlobals.game ) ); break;
+            case VK_GRAPHICS_SCALE_2: ScaleScreen( 2.0f ); Game_QuickSave( &( g_winGlobals.game ) ); break;
+            case VK_GRAPHICS_SCALE_3: ScaleScreen( 3.0f ); Game_QuickSave( &( g_winGlobals.game ) ); break;
+            case VK_GRAPHICS_SCALE_4: ScaleScreen( 4.0f ); Game_QuickSave( &( g_winGlobals.game ) ); break;
          }
 #endif
       }
@@ -568,30 +571,66 @@ internal void ScaleScreen( r32 scale )
                  SWP_NOMOVE | SWP_NOZORDER | SWP_ASYNCWINDOWPOS); 
 }
 
-internal void LoadSavedPassword()
+internal void LoadSaveFile()
 {
    FILE* file;
+   char contents[PASSWORD_LENGTH + 3];
 
    g_winGlobals.savedPassword[0] = '\0';
+   ScaleScreen( GRAPHICS_SCALE_DEFAULT );
+
    file = fopen( WIN_SAVE_FILE_NAME, "r" );
 
    if ( file )
    {
-      if ( fgets( g_winGlobals.savedPassword, PASSWORD_LENGTH + 1, file ) )
+      // this expects a password followed by a space and a single digit for the screen size
+      if ( fgets( contents, PASSWORD_LENGTH + 3, file ) )
       {
-         g_winGlobals.savedPassword[PASSWORD_LENGTH] = '\0';
-
-         if ( !Game_PasswordIsValid( g_winGlobals.savedPassword ) )
+         if ( strlen( contents ) == PASSWORD_LENGTH + 2 )
          {
-            g_winGlobals.savedPassword[0] = '\0';
+            LoadSavedPassword( contents );
+            LoadSavedScreenSize( contents + PASSWORD_LENGTH + 1 );
          }
-      }
-      else
-      {
-         g_winGlobals.savedPassword[0] = '\0';
+         else if ( strlen( contents ) == 2 )
+         {
+            LoadSavedScreenSize( contents + 1 );
+         }
       }
 
       fclose( file );
+   }
+}
+
+internal void LoadSavedPassword( const char* password )
+{
+   u32 i;
+
+   for ( i = 0; i < PASSWORD_LENGTH; i++ )
+   {
+      g_winGlobals.savedPassword[i] = password[i];
+   }
+
+   g_winGlobals.savedPassword[PASSWORD_LENGTH] = '\0';
+
+   if ( !Game_PasswordIsValid( g_winGlobals.savedPassword ) )
+   {
+      g_winGlobals.savedPassword[0] = '\0';
+   }
+   else
+   {
+      strcpy( g_winGlobals.game.lastPassword, g_winGlobals.savedPassword );
+   }
+}
+
+internal void LoadSavedScreenSize( const char* size )
+{
+   switch ( size[0] )
+   {
+      case '1': ScaleScreen( 1.0f ); break;
+      case '2': ScaleScreen( 2.0f ); break;
+      case '3': ScaleScreen( 3.0f ); break;
+      case '4': ScaleScreen( 4.0f ); break;
+      default: ScaleScreen( GRAPHICS_SCALE_DEFAULT ); break;
    }
 }
 
@@ -607,7 +646,7 @@ void Game_QuickSave( Game_t* game )
 
    if ( file )
    {
-      fprintf( file, "%s", game->lastPassword );
+      fprintf( file, "%s %u", game->lastPassword, (u32)g_winGlobals.graphicsScale );
       fclose( file );
    }
 }
