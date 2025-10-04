@@ -473,10 +473,13 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId )
          Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_COURTYARDBROWNSOLDIER_3 );
          break;
       case 57: // Kol left-side wizard
-         Dialog_PushSection( &( game->dialog ), ITEM_HAS_FAIRYFLUTE( game->player.items ) ? STRING_NPC_KOL_LEFTWIZARD_2 : STRING_NPC_KOL_LEFTWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LEFTWIZARD_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LEFTWIZARD_2 );
          break;
       case 58: // Kol lower-left green man
-         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LOWERLEFTGREENMAN );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LOWERLEFTGREENMAN_1 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LOWERLEFTGREENMAN_2 );
+         Dialog_PushSection( &( game->dialog ), STRING_NPC_KOL_LOWERLEFTGREENMAN_3 );
          break;
       case 59: // Cantlin upper-left soldier
          Dialog_PushSection( &( game->dialog ), STRING_NPC_CANTLIN_UPPERLEFTSOLDIER_1 );
