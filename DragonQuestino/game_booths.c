@@ -455,7 +455,7 @@ internal void Game_FairyWaterShopLeaveCallback( Game_t* game )
 
 internal void Game_ShopLeaveOrStayCallback( Game_t* game )
 {
-   if ( ITEM_HAS_SELLABLE( game->player.items ) )
+   if ( game->tileMap.shopType == ShopType_Item && ITEM_HAS_SELLABLE( game->player.items ) )
    {
       BinaryPicker_Load( &( game->binaryPicker ),
                          STRING_BUY, STRING_SELL,
