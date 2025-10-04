@@ -584,7 +584,7 @@
 #define STRING_NPC_KOL_COURTYARDBLUEWOMAN                            "\"Every day I pray for us all to be saved from the minions of the Dragonlord.\""
 #define STRING_NPC_KOL_COURTYARDSOLDIER_1                            "\"A friend of mine from Cantlin told me a secret...\""
 #define STRING_NPC_KOL_COURTYARDSOLDIER_2                            "\"He said the Golem is afraid of the Fairy's music.\""
-#define STRING_NPC_KOL_COURTYARDBROWNSOLDIER_1                       "\"Have met a guy named Nester by any chance? He's been everywhere!\""
+#define STRING_NPC_KOL_COURTYARDBROWNSOLDIER_1                       "\"Have you met a guy named Nester by any chance? He's been everywhere!\""
 #define STRING_NPC_KOL_COURTYARDBROWNSOLDIER_2                       "\"He told me once about a belt he found that he said was cursed, and warned me never to put it on.\""
 #define STRING_NPC_KOL_COURTYARDBROWNSOLDIER_3                       "\"Then he said he had to go all the way to Brecconary to have it removed. Classic Nester!\""
 #define STRING_NPC_KOL_LEFTWIZARD_1                                  "\"Howard used to have the Fairy Flute, but he went to Rimuldar and never returned.\""
