@@ -259,22 +259,22 @@ void Game_DrawOverworldDeepStatus( Game_t* game )
    Screen_DrawText( &( game->screen ), line, 104 + ( ( 4 - ( (u32)( ( strlen( game->player.name ) + 1 ) / 2 ) ) ) * TEXT_TILE_SIZE ), 24 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_STRENGTH, game->player.stats.strength );
-   Screen_DrawText( &( game->screen ), line, 96, 36 );
+   Screen_DrawText( &( game->screen ), line, 96, 38 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_AGILITY, game->player.stats.agility );
-   Screen_DrawText( &( game->screen ), line, 104, 48 );
+   Screen_DrawText( &( game->screen ), line, 104, 50 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXHP, game->player.stats.maxHitPoints );
-   Screen_DrawText( &( game->screen ), line, 112, 60 );
+   Screen_DrawText( &( game->screen ), line, 112, 62 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_MAXMP, game->player.stats.maxMagicPoints );
-   Screen_DrawText( &( game->screen ), line, 112, 72 );
+   Screen_DrawText( &( game->screen ), line, 112, 74 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_ATTACK, Player_GetAttackPower( &( game->player ) ) );
-   Screen_DrawText( &( game->screen ), line, 112, 84 );
+   Screen_DrawText( &( game->screen ), line, 112, 86 );
 
    sprintf( line, STRING_OVERWORLD_DEEPSTATS_DEFENSE, Player_GetDefensePower( &( game->player ) ) );
-   Screen_DrawText( &( game->screen ), line, 104, 96 );
+   Screen_DrawText( &( game->screen ), line, 104, 98 );
 
    Screen_DrawText( &( game->screen ), STRING_OVERWORLD_DEEPSTATS_WEAPON, 96, 112 );
    Screen_DrawText( &( game->screen ), game->player.weapon.name1, 160, 112 );
