@@ -52039,8 +52039,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->portals[1].destinationTileIndex = 418;
          tileMap->portals[1].arrivalDirection = (Direction_t)2;
          tileMap->evacPortal.destinationTileMapIndex = 0;
-         tileMap->evacPortal.destinationTileIndex = 0;
-         tileMap->evacPortal.arrivalDirection = (Direction_t)0;
+         tileMap->evacPortal.destinationTileIndex = 1412;
+         tileMap->evacPortal.arrivalDirection = (Direction_t)3;
          tileMap->staticSpriteCount = 2;
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 272;
@@ -52199,8 +52199,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->portals[5].destinationTileIndex = 1146;
          tileMap->portals[5].arrivalDirection = (Direction_t)0;
          tileMap->evacPortal.destinationTileMapIndex = 0;
-         tileMap->evacPortal.destinationTileIndex = 0;
-         tileMap->evacPortal.arrivalDirection = (Direction_t)0;
+         tileMap->evacPortal.destinationTileIndex = 1412;
+         tileMap->evacPortal.arrivalDirection = (Direction_t)3;
          tileMap->staticSpriteCount = 6;
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 3 );
          tileMap->staticSprites[0].position.x = 192;
@@ -52306,8 +52306,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->portals[6].destinationTileIndex = 432;
          tileMap->portals[6].arrivalDirection = (Direction_t)2;
          tileMap->evacPortal.destinationTileMapIndex = 0;
-         tileMap->evacPortal.destinationTileIndex = 0;
-         tileMap->evacPortal.arrivalDirection = (Direction_t)0;
+         tileMap->evacPortal.destinationTileIndex = 1412;
+         tileMap->evacPortal.arrivalDirection = (Direction_t)3;
          tileMap->staticSpriteCount = 7;
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 400;
@@ -52460,8 +52460,8 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->portals[1].destinationTileIndex = 777;
          tileMap->portals[1].arrivalDirection = (Direction_t)0;
          tileMap->evacPortal.destinationTileMapIndex = 0;
-         tileMap->evacPortal.destinationTileIndex = 0;
-         tileMap->evacPortal.arrivalDirection = (Direction_t)0;
+         tileMap->evacPortal.destinationTileIndex = 1412;
+         tileMap->evacPortal.arrivalDirection = (Direction_t)3;
          tileMap->staticSpriteCount = 2;
          Sprite_LoadStatic( &( tileMap->staticSprites[0] ), 2 );
          tileMap->staticSprites[0].position.x = 176;
