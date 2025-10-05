@@ -130,7 +130,7 @@ void Game_UseFairyFlute( Game_t* game )
 
 void Game_UseGwaelynsLove( Game_t* game )
 {
-   u32 px, py, tx, ty, exp;
+   u32 px, py, tx, ty, exp, value1, value2;
    char msg[128], loc[64];
 
    Dialog_Reset( &( game->dialog ) );
@@ -155,19 +155,22 @@ void Game_UseGwaelynsLove( Game_t* game )
 
       if ( px == tx && py == ty )
       {
+         // I don't think this is possible, but let's cover it anyway
          strcpy( loc, STRING_ITEMUSE_GWAELINSLOVE_3_HOME );
       }
       else if ( px == tx || py == ty )
       {
-         sprintf( loc, STRING_ITEMUSE_GWAELINSLOVE_3_SINGLE,
-                  ( py == ty ) ? ( ( px > tx ) ? ( px - tx ) : ( tx - px ) ) : ( ( py > ty ) ? ( py - ty ) : ( ty - py ) ),
+         value1 = ( py == ty ) ? ( ( px > tx ) ? ( px - tx ) : ( tx - px ) ) : ( ( py > ty ) ? ( py - ty ) : ( ty - py ) );
+         sprintf( loc, STRING_ITEMUSE_GWAELINSLOVE_3_SINGLE, value1, ( value1 == 1 ) ? STRING_LEAGUE : STRING_LEAGUES,
                   ( py == ty ) ? ( ( px > tx ) ? STRING_WEST : STRING_EAST ) : ( ( py > ty ) ? STRING_NORTH : STRING_SOUTH ) );
       }
       else
       {
+         value1 = ( py > ty ) ? ( py - ty ) : ( ty - py );
+         value2 = ( px > tx ) ? ( px - tx ) : ( tx - px );
          sprintf( loc, STRING_ITEMUSE_GWAELINSLOVE_3_DOUBLE,
-                  ( py > ty ) ? ( py - ty ) : ( ty - py ), ( py > ty ) ? STRING_NORTH : STRING_SOUTH,
-                  ( px > tx ) ? ( px - tx ) : ( tx - px ), ( px > tx ) ? STRING_WEST : STRING_EAST );
+                  value1, ( value1 == 1 ) ? STRING_LEAGUE : STRING_LEAGUES, ( py > ty ) ? STRING_NORTH : STRING_SOUTH,
+                  value2, ( px > tx ) ? STRING_WEST : STRING_EAST );
       }
 
       sprintf( msg, STRING_ITEMUSE_GWAELINSLOVE_3, loc );
