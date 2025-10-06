@@ -836,10 +836,6 @@ internal u8 Battle_GetEnemyAttackDamage( Battle_t* battle )
       minDamage = ( enemy->stats.strength - defense ) / 4;
       maxDamage = ( enemy->stats.strength - defense ) / 2;
    }
-   else
-   {
-      maxDamage = ( enemy->stats.strength + 4 ) / 6;
-   }
 
    damage = Random_u8( minDamage, maxDamage );
 
