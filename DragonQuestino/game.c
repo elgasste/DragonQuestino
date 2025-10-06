@@ -38,7 +38,6 @@ void Game_Init( Game_t* game, u16* screenBuffer )
    Screen_LoadBattleBackgroundTileTextures( &( game->screen ) );
    TileMap_Init( &( game->tileMap ), &( game->screen ), &( game->gameFlags ), &( game->player ) );
    AnimationChain_Init( &( game->animationChain ), &( game->screen ), &( game->tileMap ), game );
-   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
    Clock_Init( &( game->clock ) );
    Input_Init( &( game->input ) );
    Player_Init( &( game->player ), &( game->tileMap ) );
@@ -109,6 +108,7 @@ void Game_Reset( Game_t* game )
    Player_LoadWeapon( player, WEAPON_NONE_ID );
    Player_LoadArmor( player, ARMOR_NONE_ID );
    Player_LoadShield( player, SHIELD_NONE_ID );
+   Sprite_LoadActive( &( game->player.sprite ), ACTIVE_SPRITE_PLAYER_ID );
 
    TileMap_LoadTextures( &( game->tileMap ), TileTextureType_Title );
    TileMap_Load( &( game->tileMap ), TILEMAP_TITLESCREEN_ID );
