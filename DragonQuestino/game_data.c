@@ -54363,7 +54363,7 @@ void TileMap_Load( TileMap_t* tileMap, uint32_t id )
          tileMap->npcs[9].wanders = True;
          tileMap->npcs[9].isWandering = False;
          tileMap->npcs[9].wanderBounds.x = 17;
-         tileMap->npcs[9].wanderBounds.y = 4;
+         tileMap->npcs[9].wanderBounds.y = 2;
          tileMap->npcs[9].wanderBounds.w = 5;
          tileMap->npcs[9].wanderBounds.h = 5;
          tileMap->npcs[10].id = 19;
