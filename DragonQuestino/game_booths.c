@@ -359,7 +359,7 @@ internal void Game_VisitInnStayMorningCallback( Game_t* game )
 internal void Game_VisitWeaponShop( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
-   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_WEAPONSHOP_WELCOME, Game_ShopLeaveOrStayCallback, game );
+   Dialog_PushSectionWithCallback( &( game->dialog ), ( Player_GetSellableWeaponCount( &( game->player ) ) > 0 ) ? STRING_WEAPONSHOP_WELCOMEBUYSELL : STRING_WEAPONSHOP_WELCOMEVIEWCHOICE, Game_ShopLeaveOrStayCallback, game );
    Game_OpenDialog( game );
 }
 
