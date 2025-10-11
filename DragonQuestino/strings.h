@@ -592,7 +592,7 @@
 #define STRING_NPC_GARINHAMOUTSIDE_BLUEWOMAN                         "\"Welcome to Garinham, enjoy your stay here!\""
 #define STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_1                       "\"I've heard rumors that the Princess was kidnapped and taken to a cave to the east.\""
 #define STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_2                       "\"Although, there's another cave in the mountains to the south of here, maybe she was taken there?\""
-#define STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_3                       "\"I hope that isn't the case, legends say an object of great disfortune resides there.\""
+#define STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_3                       "\"I hope that isn't the case, legends say an object of great misfortune resides there.\""
 #define STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_1_4                       "\"If the stories are true, there's a chest that contains either great treasure or great peril.\""
 #define STRING_NPC_GARINHAMOUTSIDE_BLUEMAN_2                         "\"I've heard rumors that the princess has been rescued, I hope they are true!\""
 #define STRING_NPC_GARINHAMINSIDE_LEFTGUARD                          "\"I'm a little busy over here, could you ask the other guard?\""
