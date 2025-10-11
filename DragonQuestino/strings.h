@@ -637,7 +637,7 @@
 #define STRING_NPC_CANTLIN_BARRIERWIZARD_1                           "\"Seek from the King's home, and ye shall find...\""
 #define STRING_NPC_CANTLIN_BARRIERWIZARD_2                           "\"70 leagues to the south, 40 leagues to the east...\""
 #define STRING_NPC_CANTLIN_BARRIERWIZARD_3                           "\"The Token of Erdrick, his descendant awaiteth!\""
-#define STRING_NPC_CANTLINCOURTYARD_WIZARD                           "\"I've heard tell that someone in this very town knows where to find Erdrick's token!\""
+#define STRING_NPC_CANTLINCOURTYARD_WIZARD                           "\"I've heard tell that someone in this very town knows where to find Erdrick's Token!\""
 #define STRING_NPC_RIMULDAR_INNWIZARD_1                              "\"Good day to you, my name is Howard!\""
 #define STRING_NPC_RIMULDAR_INNWIZARD_2                              "\"I'll let you in on a secret... take a look four paces south of the bath in Kol.\""
 #define STRING_NPC_RIMULDAR_UPPERSTATICBLUEWOMAN                     "\"Who are you? Please leave me alone, or I'll call my friends over!\""
