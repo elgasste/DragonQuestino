@@ -957,7 +957,7 @@ internal void Game_EnterPasswordFadeOutCallback( Game_t* game )
    game->mainState = MainState_EnterPassword;
    game->subState = SubState_Menu;
 
-   // MUFFINS: this gives us some goodies for testing (level 30 with everything except a few treasures).
+   // MUFFINS: this gives you some goodies for testing (level 30 with everything except a few treasures).
    // to use it, uncomment this line and comment out all the lines below it.
    //Game_Load( game, "2Ah1RBAAAADJ0LP.jev.Hxmq2pnrYf" );
 

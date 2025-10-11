@@ -149,6 +149,7 @@ typedef enum MenuId_t
    MenuId_OverworldItem,
    MenuId_Zoom,
    MenuId_SellItem,
+   MenuId_SellWeapon,
 
    MenuId_Battle,
    MenuId_BattleSpell,
@@ -194,6 +195,24 @@ typedef enum MenuCommand_t
    MenuCommand_Item_CursedBelt,
    MenuCommand_Item_DragonScale,
 
+   MenuCommand_Weapon_BambooPole,
+   MenuCommand_Weapon_Club,
+   MenuCommand_Weapon_CopperSword,
+   MenuCommand_Weapon_HandAxe,
+   MenuCommand_Weapon_BroadSword,
+   MenuCommand_Weapon_FlameSword,
+
+   MenuCommand_Armor_Clothes,
+   MenuCommand_Armor_LeatherArmor,
+   MenuCommand_Armor_ChainMail,
+   MenuCommand_Armor_HalfPlate,
+   MenuCommand_Armor_FullPlate,
+   MenuCommand_Armor_MagicArmor,
+
+   MenuCommand_Shield_SmallShield,
+   MenuCommand_Shield_LargeShield,
+   MenuCommand_Shield_SilverShield,
+
    MenuCommand_Zoom_Tantegel,
    MenuCommand_Zoom_Brecconary,
    MenuCommand_Zoom_Garinham,
@@ -237,6 +256,17 @@ typedef enum ShopType_t
    ShopType_Count
 }
 ShopType_t;
+
+typedef enum SellType_t
+{
+   SellType_Item = 0,
+   SellType_Weapon,
+   SellType_Armor,
+   SellType_Shield,
+
+   SellType_Count
+}
+SellType_t;
 
 typedef enum TileTextureType_t
 {

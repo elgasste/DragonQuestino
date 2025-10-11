@@ -17,6 +17,10 @@ internal void Menu_UpdateOverworldSpell( Menu_t* menu );
 internal void Menu_UpdateOverworldItem( Menu_t* menu );
 internal void Menu_UpdateZoom( Menu_t* menu );
 internal void Menu_UpdateSellItem( Menu_t* menu );
+internal void Menu_UpdateSellWeapon( Menu_t* menu );
+internal void Menu_SetWeaponText( MenuItem_t* item, Player_t* player );
+internal void Menu_SetArmorText( MenuItem_t* item, Player_t* player );
+internal void Menu_SetShieldText( MenuItem_t* item, Player_t* player );
 internal void Menu_UpdateBattleSpell( Menu_t* menu );
 internal void Menu_UpdateBattleItem( Menu_t* menu );
 
@@ -159,6 +163,7 @@ internal void Menu_Update( Menu_t* menu )
       case MenuId_OverworldItem: Menu_UpdateOverworldItem( menu ); break;
       case MenuId_Zoom: Menu_UpdateZoom( menu ); break;
       case MenuId_SellItem: Menu_UpdateSellItem( menu ); break;
+      case MenuId_SellWeapon: Menu_UpdateSellWeapon( menu ); break;
       case MenuId_BattleSpell: Menu_UpdateBattleSpell( menu ); break;
       case MenuId_BattleItem: Menu_UpdateBattleItem( menu ); break;
    }
@@ -570,6 +575,128 @@ internal void Menu_UpdateSellItem( Menu_t* menu )
       strcpy( menu->items[i].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_DRAGONSCALE_2 );
       menu->items[i].command = MenuCommand_Item_DragonScale;
       i++;
+   }
+}
+
+internal void Menu_UpdateSellWeapon( Menu_t* menu )
+{
+   u32 i = 0;
+
+   menu->title[0] = 0;
+   menu->itemCount = Player_GetSellableWeaponCount( menu->player );
+   menu->itemsPerColumn = menu->itemCount;
+   menu->selectedIndex = 0;
+   menu->position.x = 96;
+   menu->position.y = 16;
+   menu->borderSize.x = 16;
+   menu->borderSize.y = (u16)( ( menu->itemCount * 2 ) + 3 );
+   menu->borderPadding.x = 1;
+   menu->borderPadding.y = 1;
+   menu->columnWidth = 10;
+   menu->itemPadding = 1;
+   menu->caratOffset = 1;
+
+   if ( ( menu->player->weapon.id != WEAPON_NONE_ID ) && ( menu->player->weapon.id != WEAPON_ERDRICKSSWORD_ID ) )
+   {
+      Menu_SetWeaponText( &( menu->items[i] ), menu->player );
+      i++;
+   }
+   if ( ( menu->player->armor.id != ARMOR_NONE_ID && menu->player->armor.id != ARMOR_ERDRICKSARMOR_ID ) )
+   {
+      Menu_SetArmorText( &( menu->items[i] ), menu->player );
+      i++;
+   }
+   if ( menu->player->shield.id != SHIELD_NONE_ID )
+   {
+      Menu_SetShieldText( &( menu->items[i] ), menu->player );
+      i++;
+   }
+}
+
+internal void Menu_SetWeaponText( MenuItem_t* item, Player_t* player )
+{
+   item->twoLineText = False;
+
+   switch ( player->weapon.id )
+   {
+      case WEAPON_BAMBOOPOLE_ID:
+         strcpy( item->text, STRING_WEAPON_SELLBAMBOOPOLE );
+         item->command = MenuCommand_Weapon_BambooPole;
+         break;
+      case WEAPON_CLUB_ID:
+         strcpy( item->text, STRING_WEAPON_SELLCLUB );
+         item->command = MenuCommand_Weapon_Club;
+         break;
+      case WEAPON_COPPERSWORD_ID:
+         strcpy( item->text, STRING_WEAPON_SELLCOPPERSWORD );
+         item->command = MenuCommand_Weapon_CopperSword;
+         break;
+      case WEAPON_HANDAXE_ID:
+         strcpy( item->text, STRING_WEAPON_SELLHANDAXE );
+         item->command = MenuCommand_Weapon_HandAxe;
+         break;
+      case WEAPON_BROADSWORD_ID:
+         strcpy( item->text, STRING_WEAPON_SELLBROADSWORD );
+         item->command = MenuCommand_Weapon_BroadSword;
+         break;
+      case WEAPON_FLAMESWORD_ID:
+         strcpy( item->text, STRING_WEAPON_SELLFLAMESWORD );
+         item->command = MenuCommand_Weapon_FlameSword;
+         break;
+   }
+}
+
+internal void Menu_SetArmorText( MenuItem_t* item, Player_t* player )
+{
+   item->twoLineText = False;
+
+   switch ( player->armor.id )
+   {
+      case ARMOR_CLOTHES_ID:
+         strcpy( item->text, STRING_ARMOR_SELLCLOTHES );
+         item->command = MenuCommand_Armor_Clothes;
+         break;
+      case ARMOR_LEATHERARMOR_ID:
+         strcpy( item->text, STRING_ARMOR_SELLLEATHERARMOR );
+         item->command = MenuCommand_Armor_LeatherArmor;
+         break;
+      case ARMOR_CHAINMAIL_ID:
+         strcpy( item->text, STRING_ARMOR_SELLCHAINMAIL );
+         item->command = MenuCommand_Armor_ChainMail;
+         break;
+      case ARMOR_HALFPLATE_ID:
+         strcpy( item->text, STRING_ARMOR_SELLHALFPLATE );
+         item->command = MenuCommand_Armor_HalfPlate;
+         break;
+      case ARMOR_FULLPLATE_ID:
+         strcpy( item->text, STRING_ARMOR_SELLFULLPLATE );
+         item->command = MenuCommand_Armor_FullPlate;
+         break;
+      case ARMOR_MAGICARMOR_ID:
+         strcpy( item->text, STRING_ARMOR_SELLMAGICARMOR );
+         item->command = MenuCommand_Armor_MagicArmor;
+         break;
+   }
+}
+
+internal void Menu_SetShieldText( MenuItem_t* item, Player_t* player )
+{
+   item->twoLineText = False;
+
+   switch ( player->shield.id )
+   {
+      case SHIELD_SMALLSHIELD_ID:
+         strcpy( item->text, STRING_SHIELD_SELLSMALL );
+         item->command = MenuCommand_Shield_SmallShield;
+         break;
+      case SHIELD_LARGESHIELD_ID:
+         strcpy( item->text, STRING_SHIELD_SELLLARGE );
+         item->command = MenuCommand_Shield_LargeShield;
+         break;
+      case SHIELD_SILVERSHIELD_ID:
+         strcpy( item->text, STRING_SHIELD_SELLSILVER );
+         item->command = MenuCommand_Shield_SilverShield;
+         break;
    }
 }
 

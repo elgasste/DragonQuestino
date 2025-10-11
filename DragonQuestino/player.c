@@ -330,6 +330,58 @@ u16 Player_GetItemResellValue( u32 itemId )
    return 0;
 }
 
+void Player_GetWeaponResellName( u32 weaponId, char* name )
+{
+   switch ( weaponId )
+   {
+      case WEAPON_BAMBOOPOLE_ID: sprintf( name, STRING_WEAPON_SELLBAMBOOPOLE ); break;
+      case WEAPON_CLUB_ID: sprintf( name, STRING_WEAPON_SELLCLUB ); break;
+      case WEAPON_COPPERSWORD_ID: sprintf( name, STRING_WEAPON_SELLCOPPERSWORD ); break;
+      case WEAPON_HANDAXE_ID: sprintf( name, STRING_WEAPON_SELLHANDAXE ); break;
+      case WEAPON_BROADSWORD_ID: sprintf( name, STRING_WEAPON_SELLBROADSWORD ); break;
+      case WEAPON_FLAMESWORD_ID: sprintf( name, STRING_WEAPON_SELLFLAMESWORD ); break;
+   }
+}
+
+u16 Player_GetWeaponResellValue( u32 weaponId )
+{
+   return g_weaponResellTable[weaponId];
+}
+
+void Player_GetArmorResellName( u32 armorId, char* name )
+{
+   switch ( armorId )
+   {
+      case ARMOR_CLOTHES_ID: sprintf( name, STRING_ARMOR_SELLCLOTHES ); break;
+      case ARMOR_LEATHERARMOR_ID: sprintf( name, STRING_ARMOR_SELLLEATHERARMOR ); break;
+      case ARMOR_CHAINMAIL_ID: sprintf( name, STRING_ARMOR_SELLCHAINMAIL ); break;
+      case ARMOR_HALFPLATE_ID: sprintf( name, STRING_ARMOR_SELLHALFPLATE ); break;
+      case ARMOR_FULLPLATE_ID: sprintf( name, STRING_ARMOR_SELLFULLPLATE ); break;
+      case ARMOR_MAGICARMOR_ID: sprintf( name, STRING_ARMOR_SELLMAGICARMOR ); break;
+   
+   }
+}
+
+u16 Player_GetArmorResellValue( u32 armorId )
+{
+   return g_armorResellTable[armorId];
+}
+
+void Player_GetShieldResellName( u32 shieldId, char* name )
+{
+   switch ( shieldId )
+   {
+      case SHIELD_SMALLSHIELD_ID: sprintf( name, STRING_SHIELD_SELLSMALL ); break;
+      case SHIELD_LARGESHIELD_ID: sprintf( name, STRING_SHIELD_SELLLARGE ); break;
+      case SHIELD_SILVERSHIELD_ID: sprintf( name, STRING_SHIELD_SELLSILVER ); break;
+   }
+}
+
+u16 Player_GetShieldResellValue( u32 shieldId )
+{
+   return g_shieldResellTable[shieldId];
+}
+
 u8 Player_GetAttackPower( Player_t* player )
 {
    u8 power = player->stats.strength + player->weapon.effect;
@@ -357,4 +409,24 @@ u8 Player_GetDefensePower( Player_t* player )
    }
 
    return defense;
+}
+
+u32 Player_GetSellableWeaponCount( Player_t* player )
+{
+   u32 count = 0;
+
+   if ( ( player->weapon.id != WEAPON_NONE_ID ) && ( player->weapon.id != WEAPON_ERDRICKSSWORD_ID ) )
+   {
+      count++;
+   }
+   if ( ( player->armor.id != ARMOR_NONE_ID && player->armor.id != ARMOR_ERDRICKSARMOR_ID ) )
+   {
+      count++;
+   }
+   if ( player->shield.id != SHIELD_NONE_ID )
+   {
+      count++;
+   }
+
+   return count;
 }
