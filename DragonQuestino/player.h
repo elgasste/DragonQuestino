@@ -301,8 +301,15 @@ void Player_GetAccessoryName( Player_t* player, AccessoryType_t type, char* name
 u16 Player_GetAccessoryResellValue( Player_t* player, AccessoryType_t type );
 void Player_GetItemResellName( u32 itemId, char* name );
 u16 Player_GetItemResellValue( u32 itemId );
+void Player_GetWeaponResellName( u32 weaponId, char* name );
+u16 Player_GetWeaponResellValue( u32 weaponId );
+void Player_GetArmorResellName( u32 armorId, char* name );
+u16 Player_GetArmorResellValue( u32 armorId );
+void Player_GetShieldResellName( u32 shieldId, char* name );
+u16 Player_GetShieldResellValue( u32 shieldId );
 u8 Player_GetAttackPower( Player_t* player );
 u8 Player_GetDefensePower( Player_t* player );
+u32 Player_GetSellableWeaponCount( Player_t* player );
 
 #if defined( __cplusplus )
 }

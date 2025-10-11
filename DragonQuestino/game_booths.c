@@ -200,6 +200,7 @@ void Game_SellItem( Game_t* game, u32 itemId )
    char msg[128];
    
    Player_GetItemResellName( itemId, itemName );
+   game->tileMap.sellType = SellType_Item;
    game->pendingPayload8u = (u8)itemId;
    game->pendingPayload16u = Player_GetItemResellValue( itemId );
 
@@ -209,10 +210,58 @@ void Game_SellItem( Game_t* game, u32 itemId )
    Game_OpenDialog( game );
 }
 
+void Game_SellWeapon( Game_t* game, u32 weaponId )
+{
+   char weaponName[32];
+   char msg[128];
+
+   Player_GetWeaponResellName( weaponId, weaponName );
+   game->tileMap.sellType = SellType_Weapon;
+   game->pendingPayload8u = (u8)weaponId;
+   game->pendingPayload16u = Player_GetWeaponResellValue( weaponId );
+
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_ITEMSHOP_SELLAREYOUSURE, weaponName, game->pendingPayload16u );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ShopSellItemChoiceCallback, game );
+   Game_OpenDialog( game );
+}
+
+void Game_SellArmor( Game_t* game, u32 armorId )
+{
+   char armorName[32];
+   char msg[128];
+
+   Player_GetArmorResellName( armorId, armorName );
+   game->tileMap.sellType = SellType_Armor;
+   game->pendingPayload8u = (u8)armorId;
+   game->pendingPayload16u = Player_GetArmorResellValue( armorId );
+
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_ITEMSHOP_SELLAREYOUSURE, armorName, game->pendingPayload16u );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ShopSellItemChoiceCallback, game );
+   Game_OpenDialog( game );
+}
+
+void Game_SellShield( Game_t* game, u32 shieldId )
+{
+   char shieldName[32];
+   char msg[128];
+
+   Player_GetShieldResellName( shieldId, shieldName );
+   game->tileMap.sellType = SellType_Shield;
+   game->pendingPayload8u = (u8)shieldId;
+   game->pendingPayload16u = Player_GetShieldResellValue( shieldId );
+
+   Dialog_Reset( &( game->dialog ) );
+   sprintf( msg, STRING_ITEMSHOP_SELLAREYOUSURE, shieldName, game->pendingPayload16u );
+   Dialog_PushSectionWithCallback( &( game->dialog ), msg, Game_ShopSellItemChoiceCallback, game );
+   Game_OpenDialog( game );
+}
+
 void Game_CancelItemSale( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
-   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_ANYMOREBUSINESS, Game_ShopLeaveOrStayCallback, game );
+   Dialog_PushSectionWithCallback( &( game->dialog ), ( game->tileMap.shopType == ShopType_Item ) ? STRING_ITEMSHOP_ANYMOREBUSINESS : STRING_WEAPONSHOP_ANYMOREBUSINESS, Game_ShopLeaveOrStayCallback, game );
    Game_OpenDialog( game );
 }
 
@@ -455,7 +504,14 @@ internal void Game_FairyWaterShopLeaveCallback( Game_t* game )
 
 internal void Game_ShopLeaveOrStayCallback( Game_t* game )
 {
-   if ( game->tileMap.shopType == ShopType_Item && ITEM_HAS_SELLABLE( game->player.items ) )
+   if ( ( game->tileMap.shopType == ShopType_Item ) && ITEM_HAS_SELLABLE( game->player.items ) )
+   {
+      BinaryPicker_Load( &( game->binaryPicker ),
+                         STRING_BUY, STRING_SELL,
+                         Game_ShopViewItemsCallback, Game_ShopSellItemCallback, Game_ShopLeaveCallback,
+                         game, game, game, True );
+   }
+   else if ( ( game->tileMap.shopType == ShopType_Weapon ) && ( Player_GetSellableWeaponCount( &( game->player ) ) > 0 ) )
    {
       BinaryPicker_Load( &( game->binaryPicker ),
                          STRING_BUY, STRING_SELL,
@@ -496,12 +552,12 @@ internal void Game_ShopSellItemCallback( Game_t* game )
 
    if ( game->player.gold == UINT16_MAX )
    {
-      Dialog_PushSection( &( game->dialog ), STRING_ITEMSHOP_CANNOTSELLITEM_1 );
-      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_CANNOTSELLITEM_2, Game_ShopCannotSellItemCallback, game );
+      Dialog_PushSection( &( game->dialog ), ( game->tileMap.shopType == ShopType_Item ) ? STRING_ITEMSHOP_CANNOTSELLITEM_1 : STRING_WEAPONSHOP_CANNOTSELLWEAPON_1 );
+      Dialog_PushSectionWithCallback( &( game->dialog ), ( game->tileMap.shopType == ShopType_Item ) ? STRING_ITEMSHOP_CANNOTSELLITEM_2 : STRING_WEAPONSHOP_CANNOTSELLWEAPON_2, Game_ShopCannotSellItemCallback, game );
    }
    else
    {
-      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_SELLWHICHITEM, Game_ShopSellItemMessageCallback, game );
+      Dialog_PushSectionWithCallback( &( game->dialog ), ( game->tileMap.shopType == ShopType_Item ) ? STRING_ITEMSHOP_SELLWHICHITEM : STRING_WEAPONSHOP_SELLWHICHWEAPON, Game_ShopSellItemMessageCallback, game );
    }
 
    Game_OpenDialog( game );
@@ -518,7 +574,7 @@ internal void Game_ShopCannotSellItemCallback( Game_t* game )
 
 internal void Game_ShopSellItemMessageCallback( Game_t* game )
 {
-   Game_OpenMenu( game, MenuId_SellItem );
+   Game_OpenMenu( game, ( game->tileMap.shopType == ShopType_Item ) ? MenuId_SellItem : MenuId_SellWeapon );
 }
 
 internal void Game_ShopSellItemChoiceCallback( Game_t* game )
@@ -539,26 +595,41 @@ internal void Game_ShopFinalizeItemSaleCallback( Game_t* game )
       game->player.gold = UINT16_MAX;
    }
 
-   switch ( game->pendingPayload8u )
+   switch ( game->tileMap.sellType )
    {
-      case ITEM_KEY_ID: ITEM_SET_KEYCOUNT( game->player.items, ITEM_GET_KEYCOUNT( game->player.items ) - 1 ); break;
-      case ITEM_HERB_ID: ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 ); break;
-      case ITEM_WING_ID: ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 ); break;
-      case ITEM_FAIRYWATER_ID: ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 ); break;
-      case ITEM_TORCH_ID: ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 ); break;
-      case ITEM_DRAGONSCALE_ID: ITEM_TOGGLE_HASDRAGONSCALE( game->player.items ); break;
+      case SellType_Item:
+         switch ( game->pendingPayload8u )
+         {
+            case ITEM_KEY_ID: ITEM_SET_KEYCOUNT( game->player.items, ITEM_GET_KEYCOUNT( game->player.items ) - 1 ); break;
+            case ITEM_HERB_ID: ITEM_SET_HERBCOUNT( game->player.items, ITEM_GET_HERBCOUNT( game->player.items ) - 1 ); break;
+            case ITEM_WING_ID: ITEM_SET_WINGCOUNT( game->player.items, ITEM_GET_WINGCOUNT( game->player.items ) - 1 ); break;
+            case ITEM_FAIRYWATER_ID: ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 ); break;
+            case ITEM_TORCH_ID: ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 ); break;
+            case ITEM_DRAGONSCALE_ID: ITEM_TOGGLE_HASDRAGONSCALE( game->player.items ); break;
+         }
+         break;
+      case SellType_Weapon:
+         Player_LoadWeapon( &( game->player ), WEAPON_NONE_ID );
+         break;
+      case SellType_Armor:
+         Player_LoadArmor( &( game->player ), ARMOR_NONE_ID );
+         break;
+      case SellType_Shield:
+         Player_LoadShield( &( game->player ), SHIELD_NONE_ID );
+         break;
    }
 
    Dialog_Reset( &( game->dialog ) );
 
-   if ( ITEM_HAS_SELLABLE( game->player.items ) )
+   if ( ( ( game->tileMap.shopType == ShopType_Item ) && ITEM_HAS_SELLABLE( game->player.items ) ) ||
+        ( ( game->tileMap.shopType == ShopType_Weapon ) && ( Player_GetSellableWeaponCount( &( game->player ) ) > 0 ) ) )
    {
       Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_THANKYOUSELL, Game_ShopLeaveOrStayCallback, game );
    }
    else
    {
-      Dialog_PushSection( &( game->dialog ), STRING_ITEMSHOP_THANKYOUNOTHINGTOSELL );
-      Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_CANNOTSELLITEM_2, Game_ShopCannotSellItemCallback, game );
+      Dialog_PushSection( &( game->dialog ), ( game->tileMap.shopType == ShopType_Item) ? STRING_ITEMSHOP_THANKYOUNOTHINGTOSELL : STRING_WEAPONSHOP_THANKYOUNOTHINGTOSELL );
+      Dialog_PushSectionWithCallback( &( game->dialog ), ( game->tileMap.shopType == ShopType_Item ) ? STRING_ITEMSHOP_CANNOTSELLITEM_2 : STRING_WEAPONSHOP_CANNOTSELLWEAPON_2, Game_ShopCannotSellItemCallback, game );
    }
 
    Game_OpenDialog( game );
@@ -567,7 +638,7 @@ internal void Game_ShopFinalizeItemSaleCallback( Game_t* game )
 internal void Game_ShopDidNotSellItemCallback( Game_t* game )
 {
    Dialog_Reset( &( game->dialog ) );
-   Dialog_PushSectionWithCallback( &( game->dialog ), STRING_ITEMSHOP_ANYMOREBUSINESS, Game_ShopLeaveOrStayCallback, game );
+   Dialog_PushSectionWithCallback( &( game->dialog ), ( game->tileMap.shopType == ShopType_Item ) ? STRING_ITEMSHOP_ANYMOREBUSINESS : STRING_WEAPONSHOP_ANYMOREBUSINESS, Game_ShopLeaveOrStayCallback, game );
    Game_OpenDialog( game );
 }
 

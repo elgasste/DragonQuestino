@@ -246,6 +246,29 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             case MenuCommand_Item_DragonScale: Game_SellItem( game, ITEM_DRAGONSCALE_ID ); break;
          }
       }
+      else if ( game->activeMenu->id == MenuId_SellWeapon )
+      {
+         switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
+         {
+            case MenuCommand_Weapon_BambooPole: Game_SellWeapon( game, WEAPON_BAMBOOPOLE_ID ); break;
+            case MenuCommand_Weapon_Club: Game_SellWeapon( game, WEAPON_CLUB_ID ); break;
+            case MenuCommand_Weapon_CopperSword: Game_SellWeapon( game, WEAPON_COPPERSWORD_ID ); break;
+            case MenuCommand_Weapon_HandAxe: Game_SellWeapon( game, WEAPON_HANDAXE_ID ); break;
+            case MenuCommand_Weapon_BroadSword: Game_SellWeapon( game, WEAPON_BROADSWORD_ID ); break;
+            case MenuCommand_Weapon_FlameSword: Game_SellWeapon( game, WEAPON_FLAMESWORD_ID ); break;
+
+            case MenuCommand_Armor_Clothes: Game_SellArmor( game, ARMOR_CLOTHES_ID ); break;
+            case MenuCommand_Armor_LeatherArmor: Game_SellArmor( game, ARMOR_LEATHERARMOR_ID ); break;
+            case MenuCommand_Armor_ChainMail: Game_SellArmor( game, ARMOR_CHAINMAIL_ID ); break;
+            case MenuCommand_Armor_HalfPlate: Game_SellArmor( game, ARMOR_HALFPLATE_ID ); break;
+            case MenuCommand_Armor_FullPlate: Game_SellArmor( game, ARMOR_FULLPLATE_ID ); break;
+            case MenuCommand_Armor_MagicArmor: Game_SellArmor( game, ARMOR_MAGICARMOR_ID ); break;
+
+            case MenuCommand_Shield_SmallShield: Game_SellShield( game, SHIELD_SMALLSHIELD_ID ); break;
+            case MenuCommand_Shield_LargeShield: Game_SellShield( game, SHIELD_LARGESHIELD_ID ); break;
+            case MenuCommand_Shield_SilverShield: Game_SellShield( game, SHIELD_SILVERSHIELD_ID ); break;
+         }
+      }
       else
       {
          switch ( game->activeMenu->items[game->activeMenu->selectedIndex].command )
@@ -295,6 +318,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             game->activeMenu = &( game->menus[MenuId_OverworldSpell] );
             break;
          case MenuId_SellItem:
+         case MenuId_SellWeapon:
             Game_CancelItemSale( game );
             break;
          default:

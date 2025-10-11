@@ -173,6 +173,9 @@ void Game_RunNpcDialog( Game_t* game, u32 npcId );
 void Game_ActivateBooth( Game_t* game, u32 boothId );
 void Game_SelectShopItem( Game_t* game );
 void Game_SellItem( Game_t* game, u32 itemId );
+void Game_SellWeapon( Game_t* game, u32 weaponId );
+void Game_SellArmor( Game_t* game, u32 armorId );
+void Game_SellShield( Game_t* game, u32 shieldId );
 void Game_CancelItemSale( Game_t* game );
 
 // win_main.c
