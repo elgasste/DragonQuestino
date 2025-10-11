@@ -367,8 +367,9 @@
 #define STRING_INN_LEAVE                                             "\"Come back anytime, our door is always open!\""
 #define STRING_INN_MORNING                                           "\"We hope you rested well, be safe in your travels!\""
 
-#define STRING_WEAPONSHOP_WELCOME                                    "\"Welcome! We deal in weapons and armor, how can I help you?\""
-#define STRING_WEAPONSHOP_VIEWITEMS                                  "\"Excellent! What would you like to purchase?\""
+#define STRING_WEAPONSHOP_WELCOMEBUYSELL                             "\"Welcome! We deal in weapons and armor, how can I help you?\""
+#define STRING_WEAPONSHOP_WELCOMEVIEWCHOICE                          "\"Welcome! We deal in weapons and armor, would you like to see our wares?\""
+#define STRING_WEAPONSHOP_VIEWITEMS                                  "\"What would you like to purchase?\""
 #define STRING_WEAPONSHOP_LEAVE                                      "\"We hope you drop by again!\""
 #define STRING_WEAPONSHOP_TOOEXPENSIVE                               "\"Sorry, but it appears you don't have enough gold for this item.\""
 #define STRING_WEAPONSHOP_ERDRICKSSWORD                              "\"This weapon is no match for the one you carry, I'm afraid I cannot allow it!\""
