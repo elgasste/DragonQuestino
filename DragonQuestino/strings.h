@@ -244,7 +244,8 @@
 #define STRING_CHEST_TABLET_4                                        "\"I gathered these items, reached the Isle, and there defeated a creature of great evil.\""
 #define STRING_CHEST_TABLET_5                                        "\"Now I have entrusted the three items to three worthy keepers.\""
 #define STRING_CHEST_TABLET_6                                        "\"Their descendants will protect the items until thy quest leads thee to seek them out.\""
-#define STRING_CHEST_TABLET_7                                        "\"When a new evil arises, find these three items, then fight!\""
+#define STRING_CHEST_TABLET_7                                        "\"When a new evil arises, find these three items, and defeat thy foe!\""
+#define STRING_CHEST_TABLET_8                                        "The language is very old, but something about it resonates within you..."
 
 #define STRING_FOUNDITEM_TOKEN                                       "Erdrick's Token"
 #define STRING_FOUNDITEM_FAIRYFLUTE                                  "the Fairy Flute"
