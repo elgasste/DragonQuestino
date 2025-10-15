@@ -217,14 +217,14 @@ void Game_UseCursedBelt( Game_t* game )
       Dialog_PushSection( &( game->dialog ), STRING_NPC_OVERWORLD_PRINCESS_NOCURSE_2 );
       Game_OpenDialog( game );
    }
-   else if ( game->tileMap.id == TILEMAP_TANTEGEL_ID || game->tileMap.id == TILEMAP_TANTEGEL_THRONEROOM_ID || game->tileMap.id == TILEMAP_TANTEGEL_BASEMENT_ID )
+   else if ( game->tileMap.id == TILEMAP_TANTEGEL_ID || game->tileMap.id == TILEMAP_TANTEGEL_THRONEROOM_ID || game->tileMap.id == TILEMAP_TANTEGEL_BASEMENT_ID || game->tileMap.id == TILEMAP_TANTEGEL_VICTORY_ID )
    {
       Dialog_PushSection( &( game->dialog ), STRING_DIALOG_CURSEDBELT_TANTEGEL_1 );
       Dialog_PushSection( &( game->dialog ), STRING_DIALOG_CURSEDBELT_TANTEGEL_2 );
    }
    else
    {
-      if ( !ITEM_HAS_CURSEDBELT( game->player.items ) )
+      if ( ITEM_HAS_CURSEDBELT( game->player.items ) )
       {
          ITEM_TOGGLE_HASCURSEDBELT( game->player.items );
       }

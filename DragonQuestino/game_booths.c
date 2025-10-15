@@ -606,6 +606,7 @@ internal void Game_ShopFinalizeItemSaleCallback( Game_t* game )
             case ITEM_FAIRYWATER_ID: ITEM_SET_FAIRYWATERCOUNT( game->player.items, ITEM_GET_FAIRYWATERCOUNT( game->player.items ) - 1 ); break;
             case ITEM_TORCH_ID: ITEM_SET_TORCHCOUNT( game->player.items, ITEM_GET_TORCHCOUNT( game->player.items ) - 1 ); break;
             case ITEM_DRAGONSCALE_ID: ITEM_TOGGLE_HASDRAGONSCALE( game->player.items ); break;
+            case ITEM_CURSEDBELT_ID: ITEM_TOGGLE_HASCURSEDBELT( game->player.items ); break;
          }
          break;
       case SellType_Weapon:

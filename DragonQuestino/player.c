@@ -312,6 +312,7 @@ void Player_GetItemResellName( u32 itemId, char* name )
       case ITEM_WING_ID: sprintf( name, STRING_ITEM_SELLWING ); break;
       case ITEM_FAIRYWATER_ID: sprintf( name, STRING_ITEM_SELLFAIRYWATER ); break;
       case ITEM_DRAGONSCALE_ID: sprintf( name, STRING_ITEM_SELLDRAGONSCALE ); break;
+      case ITEM_CURSEDBELT_ID: sprintf( name, STRING_ITEM_SELLCURSEDBELT ); break;
    }
 }
 
@@ -325,6 +326,7 @@ u16 Player_GetItemResellValue( u32 itemId )
       case ITEM_WING_ID: return g_itemResellTable[3];
       case ITEM_FAIRYWATER_ID: return g_itemResellTable[4];
       case ITEM_DRAGONSCALE_ID: return g_itemResellTable[5];
+      case ITEM_CURSEDBELT_ID: return g_itemResellTable[6];
    }
 
    return 0;
