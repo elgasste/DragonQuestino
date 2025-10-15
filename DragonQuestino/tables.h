@@ -9,7 +9,7 @@
 #define ARMOR_TABLE_SIZE                     8
 #define SHIELD_TABLE_SIZE                    4
 #define INNPRICE_TABLE_SIZE                  5
-#define ITEM_RESELL_TABLE_SIZE               6
+#define ITEM_RESELL_TABLE_SIZE               7
 
 global u16 g_experienceTable[STAT_TABLE_SIZE] = {
    0,
@@ -360,7 +360,8 @@ global u16 g_itemResellTable[ITEM_RESELL_TABLE_SIZE] = {
    4,
    35,
    19,
-   10
+   10,
+   180
 };
 
 #endif // TABLES_H

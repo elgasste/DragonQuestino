@@ -244,6 +244,7 @@ internal void Game_HandleOverworldMenuInput( Game_t* game )
             case MenuCommand_Item_FairyWater: Game_SellItem( game, ITEM_FAIRYWATER_ID ); break;
             case MenuCommand_Item_Torch: Game_SellItem( game, ITEM_TORCH_ID ); break;
             case MenuCommand_Item_DragonScale: Game_SellItem( game, ITEM_DRAGONSCALE_ID ); break;
+            case MenuCommand_Item_CursedBelt: Game_SellItem( game, ITEM_CURSEDBELT_ID ); break;
          }
       }
       else if ( game->activeMenu->id == MenuId_SellWeapon )

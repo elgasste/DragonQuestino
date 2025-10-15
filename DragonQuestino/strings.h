@@ -66,6 +66,7 @@
 #define STRING_ITEM_SELLTORCH                                        "torch"
 #define STRING_ITEM_SELLFAIRYWATER                                   "Fairy Water"
 #define STRING_ITEM_SELLDRAGONSCALE                                  "Dragon's Scale"
+#define STRING_ITEM_SELLCURSEDBELT                                   "Cursed Belt"
 
 #define STRING_WEAPON_SELLBAMBOOPOLE                                 "Bamboo Pole"
 #define STRING_WEAPON_SELLCLUB                                       "Club"

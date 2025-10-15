@@ -576,6 +576,14 @@ internal void Menu_UpdateSellItem( Menu_t* menu )
       menu->items[i].command = MenuCommand_Item_DragonScale;
       i++;
    }
+   if ( ITEM_HAS_CURSEDBELT( items ) )
+   {
+      menu->items[i].twoLineText = True;
+      strcpy( menu->items[i].text, STRING_OVERWORLD_ITEMMENU_CURSEDBELT_1 );
+      strcpy( menu->items[i].text + MENU_LINE_LENGTH, STRING_OVERWORLD_ITEMMENU_CURSEDBELT_2 );
+      menu->items[i].command = MenuCommand_Item_CursedBelt;
+      i++;
+   }
 }
 
 internal void Menu_UpdateSellWeapon( Menu_t* menu )
