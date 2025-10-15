@@ -656,6 +656,11 @@ internal void Game_StaffOfRainNpcCallback( Game_t* game )
 {
    game->gameFlags.gotStaffOfRain = True;
 
+   if ( ITEM_HAS_SILVERHARP( game->player.items ) )
+   {
+      ITEM_TOGGLE_HASSILVERHARP( game->player.items );
+   }
+
    if ( !ITEM_HAS_STAFFOFRAIN( game->player.items ) )
    {
       ITEM_TOGGLE_HASSTAFFOFRAIN( game->player.items );
