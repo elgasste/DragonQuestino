@@ -109,6 +109,8 @@ void Game_TicPhysics( Game_t* game )
          }
       }
 
+      player->sprite.position.x = newPos.x;
+
       // clip to unpassable vertical tiles
       if ( newPos.y != player->sprite.position.y )
       {
@@ -153,11 +155,16 @@ void Game_TicPhysics( Game_t* game )
          }
       }
 
+      player->sprite.position.y = newPos.y;
+
 #if defined( VISUAL_STUDIO_DEV )
+   }
+   else
+   {
+      player->sprite.position = newPos;
    }
 #endif
 
-   player->sprite.position = newPos;
    player->velocity.x = 0;
    player->velocity.y = 0;
 
